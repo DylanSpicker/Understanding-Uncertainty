@@ -872,7 +872,10 @@ window.Quarto = {
   <li><a href="#basic-introduction-to-r-programming" id="toc-basic-introduction-to-r-programming" class="nav-link" data-scroll-target="#basic-introduction-to-r-programming"><span class="header-section-number">1.3.1</span> Basic Introduction to R Programming</a></li>
   <li><a href="#function-calls-in-r" id="toc-function-calls-in-r" class="nav-link" data-scroll-target="#function-calls-in-r"><span class="header-section-number">1.3.2</span> Function Calls in R</a></li>
   <li><a href="#moving-beyond-numeric-data" id="toc-moving-beyond-numeric-data" class="nav-link" data-scroll-target="#moving-beyond-numeric-data"><span class="header-section-number">1.3.3</span> Moving Beyond Numeric Data</a></li>
-  <li><a href="#r-programming-for-probability-interpretations" id="toc-r-programming-for-probability-interpretations" class="nav-link" data-scroll-target="#r-programming-for-probability-interpretations"><span class="header-section-number">1.3.4</span> R Programming for Probability Interpretations</a></li>
+  <li><a href="#program-control-flow" id="toc-program-control-flow" class="nav-link" data-scroll-target="#program-control-flow"><span class="header-section-number">1.3.4</span> Program Control Flow</a></li>
+  <li><a href="#reading-through-a-more-complex-r-program" id="toc-reading-through-a-more-complex-r-program" class="nav-link" data-scroll-target="#reading-through-a-more-complex-r-program"><span class="header-section-number">1.3.5</span> Reading Through a More Complex R Program</a></li>
+  <li><a href="#r-programming-for-probability-interpretations" id="toc-r-programming-for-probability-interpretations" class="nav-link" data-scroll-target="#r-programming-for-probability-interpretations"><span class="header-section-number">1.3.6</span> R Programming for Probability Interpretations</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1073,7 +1076,7 @@ Solution
 </div>
 </div>
 </div>
-<p>Looking at <a href="#exm-basic-prob" class="quarto-xref">Example&nbsp;<span>1.2</span></a>, we can see that Sadie should likely have not paid. Only one out of every four times would she have had to pay, given the first coin being heads. However, we can not be certain that, had all three tosses been observed, Sadie would <em>not</em> have paid. It is possible that we would have observed two tails, making her responsible for the bill. This possibility happens one time out of four, which is more likely than the probability of rolling a four on a six-sided die<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Fours are rolled on six-sided dice quite frequently<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, and so it is not all together unreasonable for her to have paid.</p>
+<p>Looking at <a href="#exm-basic-prob" class="quarto-xref">Example&nbsp;<span>1.1</span></a>, we can see that Sadie should likely have not paid. Only one out of every four times would she have had to pay, given the first coin being heads. However, we can not be certain that, had all three tosses been observed, Sadie would <em>not</em> have paid. It is possible that we would have observed two tails, making her responsible for the bill. This possibility happens one time out of four, which is more likely than the probability of rolling a four on a six-sided die<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Fours are rolled on six-sided dice quite frequently<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, and so it is not all together unreasonable for her to have paid.</p>
 <p>This seemingly simple concept is the core of probability. Probability serves as a method for quantifying uncertainty. It allows us to make numeric statements regarding the set of outcomes that we can observe, by quantifying the frequency with which we expect to observe those outcomes. Probability does not <em>remove</em> the uncertainty. We still need to flip the coin or roll the die to know what will happen. All probability gives us is a set of tools to quantify this uncertainty. These tools are critical for decision making in the face of the ever-present uncertainty around us.</p>
 </section>
 <section id="how-to-interpret-probabilities-like-a-frequentist" class="level2" data-number="1.2">
@@ -1102,7 +1105,7 @@ Figure&nbsp;1.1: This plot simulates the repeated tossing of a coin. The x-axis 
 </div>
 <p>Suppose that an experiment is able to be performed as many times as one likes, limited only by your boredom. If you take <span class="math inline">\(k_N\)</span> to represent the number of times that the event of interest occurs when you perform the experiment <span class="math inline">\(N\)</span> times, then a Frequentist would define the probability of the event as <span class="math display">\[\text{probability} = \lim_{N\to\infty}\frac{k_N}{N}.\]</span> This course does not assume that you have any familiarity with calculus, and yet, this definition relies on limits, a concept taken directly from calculus. However, we will not actually require the ability to work with limits for this course. Instead, when you see a statement of the form <span class="math display">\[\lim_{x\to\infty} f(x),\]</span> simply think “what is happening to the function <span class="math inline">\(f(x)\)</span> as <span class="math inline">\(x\)</span> grows and grows (off to <span class="math inline">\(\infty\)</span>)?”</p>
 <p>In practice this means that, in order to interpret probabilities, we think about repeating an experiment many, many times over. As we do that, we observe the proportion of times that any particular outcome occurs, and take that to be the defining relation for probabilities. The reason that we say the probability of flipping a heads is <span class="math inline">\(0.5\)</span> is because if we were to sit around and flip a coin<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> over, and over, and over again, then in the long-run we would observe a head<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> in <span class="math inline">\(0.5\)</span> of cases.</p>
-<div id="exm-basic-prob" class="theorem example">
+<div id="exm-prob-interp" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1.2 (Probability Interpretation)</strong></span> How do we interpret the statement “the probability that Sadie would have had to pay, given a head on the first toss, is <span class="math inline">\(0.25\)</span>”? Recall that in the game, they toss three coins, and Sadie pays if two of them show tails.</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
@@ -1161,7 +1164,7 @@ qwebrCreateMonacoEditorInstance(
   1);
 </script>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p>Here, the we ask the computer to perform some simple arithmetic operations. We use <code>+</code> for addition, <code>-</code> for subtraction, <code>*</code> for multiplication, <code>/</code> for division, and <code>^</code> for exponentiation. With the use of parentheses, any expressions relating to these basic operations can be performed. Note that here the result is simply output after it is computed. Try modifying the exact expressions being computed, allowing you to feel comfortable with these types of mathematical operations.</p>
+<p>Here, we ask the computer to perform some simple arithmetic operations. We use <code>+</code> for addition, <code>-</code> for subtraction, <code>*</code> for multiplication, <code>/</code> for division, and <code>^</code> for exponentiation. With the use of parentheses, any expressions relating to these basic operations can be performed. Note that here the result is simply output after it is computed. Try modifying the exact expressions being computed, allowing you to feel comfortable with these types of mathematical operations.</p>
 <div id="qwebr-insertion-location-2"></div>
 <script type="module">
 // Retrieve the insertion point
@@ -1355,6 +1358,7 @@ rounded_value`,
 </script>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <p>There are a few things to note about this sequence of function calls. First, note that we assign the output of a function to a new variable. This behaves exactly as we saw above with simple numeric calculations. Next, consider that the output of the function<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> has a value of <span class="math inline">\(3.142\)</span>. That is: we rounded the value to <span class="math inline">\(3\)</span> decimal points, exactly as would be expected. The final part to note is that the second parameter passed to the function call is <strong>named</strong>. That is, instead of simply calling <code>round(unrounded_value, 3)</code>, we have <code>round(unrounded_value, digits = 3)</code>. If you had made the first call this would have worked perfectly.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> However, R also provides the ability to pass in parameter names alongside the parameter values with the syntax <code>function_name(param_name = param_value, ...)</code>. The benefit to doing this is two-fold. First, it is easier to read what is happening, especially for function calls that you have never seen before. Second, it removes the need to have the parameters ordered correctly. It is best practice to <strong>always</strong> include parameter names where you can.</p>
+<p>Now, you may be wondering “how do you know what the parameter names should be?” The names are built-in to the different functions that you are working with and so overtime you will become quite familiar with them. However, at any point you can also run the command <code>?function_name</code>, replacing <code>function_name</code> with the name of a function you are interested in, to open documentation about that function. There you will see not only the names of the different parameters, but useful information regarding what the function does, examples of how to call it, and so forth.</p>
 <div id="qwebr-insertion-location-10"></div>
 <script type="module">
 // Retrieve the insertion point
@@ -1370,24 +1374,11 @@ currentDocumentLocation.appendChild(initializedElement);
 
 // Initialize a Monaco Editor Instance
 qwebrCreateMonacoEditorInstance(
-  `unrounded_value <- 3.141592
-rounded_value <- round(digits = 3, x = unrounded_value)
-
-rounded_value`, 
+  `?round`, 
   10);
 </script>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p>This code produces the exact same output, where now both parameters are named. Specifically, we could read this function call as “round the value of <code>x</code> to have <code>digits</code> decimal points.” If you had instead written <code>round(3, unrounded_value)</code>, you would get the value <code>3</code>, since now we are rounding <code>3</code> to <code>3.141592</code> decimal points.</p>
-</section>
-<section id="moving-beyond-numeric-data" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="moving-beyond-numeric-data"><span class="header-section-number">1.3.3</span> Moving Beyond Numeric Data</h3>
-<p>So far, everything that we have looked at has been numeric data. We have seen integers, and decimals. You can have negative results, say by taking <code>my_var &lt;- -5</code>. And while numbers are frequently useful, we will require further types of data to write useful computer programs. For this course we will focus on three additional data types: textual data which (referred to as <strong>strings</strong>), true and false binary data (referred to as <strong>booleans</strong>), and lists of the same data type (referred to as <strong>vectors</strong>). They will behave in much the same way as numeric data,</p>
-</section>
-<section id="r-programming-for-probability-interpretations" class="level3" data-number="1.3.4">
-<h3 data-number="1.3.4" class="anchored" data-anchor-id="r-programming-for-probability-interpretations"><span class="header-section-number">1.3.4</span> R Programming for Probability Interpretations</h3>
-<p>Recall that the motivation for the discussion of R was the Frequentist interpretation of probability. One task that computers are very effective at is repeatedly performing some action. As a result, we can use computers to mimic the idea of repeatedly performing an experiment. Consider the simple case of flipping a coin over and over again.</p>
-<p>We can use <code>sample(x, size)</code> as a function to select <code>size</code> realizations from the set contained in <code>x</code>. Thus, if we take <code>sample(x = c("H","T"), size=1)</code> we can view this as flipping a coin one time. If we use the loop structure we talked before, then we can simulate the experience of repeatedly flipping a coin. Consider the following R code.</p>
-<p>Consider the following code block and this time actually see if you can update the sample sizes, or change the generation process at all. There is no harm in trying: anything you do can be undone simply be reloading the page!</p>
+<p>Here we are given <em>a lot</em> of information. We can see the function name, the details, how it’s called, and so forth. In the <strong>Arguments</strong> section we get a list of all of the arguments we can pass to the function, along with a description of them. In this case we see that <code>round</code> can take a parameter called <code>x</code> for the number to be rounded, and <code>digits</code> (which we have previously seen).</p>
 <div id="qwebr-insertion-location-11"></div>
 <script type="module">
 // Retrieve the insertion point
@@ -1396,6 +1387,575 @@ const currentDocumentLocation = document.getElementById("qwebr-insertion-locatio
 // Initalize an interactive element
 const initializedElement =   qwebrCreateInteractiveElement(
     11
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `unrounded_value <- 3.141592
+rounded_value <- round(digits = 3, x = unrounded_value)
+
+rounded_value`, 
+  11);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>This code produces the exact same output, where now both parameters are named. Specifically, we could read this function call as “round the value of <code>x</code> to have <code>digits</code> decimal points.” If you had instead written <code>round(3, unrounded_value)</code>, you would get the value <code>3</code>, since now we are rounding <code>3</code> to <code>3.141592</code> decimal points.</p>
+</section>
+<section id="moving-beyond-numeric-data" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="moving-beyond-numeric-data"><span class="header-section-number">1.3.3</span> Moving Beyond Numeric Data</h3>
+<p>So far, everything that we have looked at has been numeric data. We have seen integers, and decimals. You can have negative results, say by taking <code>my_var &lt;- -5</code>. And while numbers are frequently useful, we will require further types of data to write useful computer programs. For this course we will focus on three additional data types: textual data which (referred to as <strong>strings</strong>), true and false binary data (referred to as <strong>booleans</strong>), and lists of the same data type (referred to as <strong>vectors</strong>). They will behave in much the same way as numeric data, with different functions and techniques which can be applied to them.</p>
+<p>To define a string of text, we simply encapsulate the text that we are interested in within quotation marks (either single <code>'</code> or double <code>"</code> quotation marks will work).</p>
+<div id="qwebr-insertion-location-12"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-12");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    12
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `first_string <- "This is a string."
+second_string <- 'This is also a string.'
+
+first_string`, 
+  12);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Two commonly used functions which rely on strings are <code>paste</code> and <code>print</code>. Each will take in strings as input, and they do not need to be named. The function <code>paste</code> can take in as many strings as you would like. It will “paste” together all the strings provided, creating a longer string out of these. The function <code>print</code> will display the string that is passed as output. Until now we have been running these programs in a way where all calls are displayed as output: this will not always be the case, and so print can come in handy there.</p>
+<div id="qwebr-insertion-location-13"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-13");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    13
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `my_greeting <- "Hello! Welcome to R programming,"
+my_name <- "Dylan"
+
+combined_string <- paste(my_greeting, my_name, "!")
+print(combined_string)`, 
+  13);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Note that <code>paste</code> has several additional options which can be investigated in the documentation for <code>paste</code>. This is only the simplest use case for it. In general, strings are particularly helpful when we wish to have output from the computer that will be human readable. Where strings are largely for humans, booleans are largely for computers.</p>
+<p>Much of what computer programming entails is checking whether certain conditions hold, and then taking different actions depending on what is found. In order to do this, the computer needs a way to represent true and false statements. In R, these are codified with the values <code>TRUE</code> and <code>FALSE</code>. Note, the capital letters here make a difference. You cannot use <code>true</code> or <code>True</code> or any other combination thereof. More important than simply being able to specify the values <code>TRUE</code> and <code>FALSE</code> directly is the ability to detect whether certain statements are <code>TRUE</code> or <code>FALSE</code>. For this we require comparison operators.</p>
+<p>If we think of mathematical comparisons we can state whether two things are equal, or not equal, and whether one thing is less than (or equal to) or greater than (or equal to) another. We can run all of these same checks in R.</p>
+<ul>
+<li>To check whether two quantities are equal you use <code>quantity_1 == quantity_2</code>. This statement will be <code>TRUE</code> if <code>quantity_1</code> and <code>quantity_2</code> are exactly the same, and will be <code>FALSE</code> otherwise.</li>
+<li>To check whether two quantities are not equal, you can use <code>quantity_1 != quantity_2</code>. This statement will be <code>TRUE</code> if the quantities differ from one another.</li>
+<li>To check whether one quantity is larger than another, you can use <code>quantity_1 &gt; quantity_2</code>. If you want to know whether it is greater than <em>or</em> equal to, you can use <code>quantity_1 &gt;= quantity_2</code>.</li>
+<li>To check whether one quantity is smaller than another, you can use <code>quantity_1 &lt; quantity_2</code>. If you want to know whether it is less than <em>or</em> equal to, you can use <code>quantity_1 &lt;= quantity_2</code>.</li>
+</ul>
+<div id="qwebr-insertion-location-14"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-14");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    14
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `5 == 5 # TRUE
+5 == 6 # FALSE
+
+5 != 5 # FALSE 
+5 != 6 # TRUE 
+
+5 > 6 # FALSE
+5 > 5 # FALSE
+
+5 >= 6 # FALSE
+5 >= 5 # TRUE
+
+5 < 6 # TRUE
+5 < 5 # FALSE 
+
+5 <= 6 # TRUE 
+5 <= 5 # TRUE `, 
+  14);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>There are two key points to note beyond this. First, we will of course not normally compare two constants to one another. We already know that <code>5==5</code> and so we would not need to check it. We can, however, plug-in variables, perhaps with unknown values, and have the same types of statements being made. Second, the checks for equality and inequality also work with other data types (like strings).</p>
+<div id="qwebr-insertion-location-15"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-15");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    15
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `string1 <- "STRING1"
+string2 <- "STRING1"
+string3 <- "string1"
+string4 <- "5"
+string5 <- "5.3421"
+num1 <- 5
+num2 <- 1
+num3 <- 0
+bool1 <- TRUE 
+bool2 <- FALSE 
+
+string1 == string2 # TRUE
+string1 == string3 # FALSE 
+string2 != string3 # TRUE
+string1 != string4 # TRUE 
+
+string4 == num1    # TRUE 
+string1 == num2    # FALSE
+num1 == string5    # FALSE
+num2 == bool1      # TRUE 
+bool2 == num3      # TRUE 
+bool2 == num2      # FALSE`, 
+  15);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>The final checks may be slightly odd. Here we are comparing across different types of data. When we do this R will automatically try to convert from one type to the other. With strings and numbers this is not too challenging. If they can be converted nicely between types, then they are and the values are compared. Otherwise, R will conclude they are not equal by default. For booleans, it is important to note that <code>TRUE == 1</code> and <code>FALSE == 0</code>. We will often use these values interchangeably.</p>
+<p>The final data type that we will consider are vectors. Vectors store many different values, of the same type, in a single object. Thus, we may have a vector of numeric data, or a vector of strings, or a vector of booleans. The vectors will always contain the same type throughout, but they are stored in a single object (and as such, for instance, can be stored in a single variable). To define a vector we call <code>c(...)</code>, where the <code>...</code> contains the set of objects we want to store in the vector. The <code>c</code> stands for <strong>c</strong>oncatenate, as we are <em>concatenating</em> together the set of items into a single container.</p>
+<div id="qwebr-insertion-location-16"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-16");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    16
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `v1 <- c("vector", "of", "strings")
+v2 <- c(3, 1, 4, 1, 5)
+v3 <- c(TRUE, TRUE, FALSE, TRUE)
+v4 <- c(1==2, 2==2, 3==4)
+v1
+v2
+v3
+v4`, 
+  16);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>We see that each of these vectors holds one type of object. Vectors can be of arbitrary and different lengths. It is also possible to combine multiple vectors <em>of the same type</em> into one, by using the <code>c</code> function again.</p>
+<div id="qwebr-insertion-location-17"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-17");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    17
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `v1 <- c(3,1,4,1,5)
+v2 <- c(9,2,6)
+v3 <- c(5)
+num1 <- 3
+
+combined_v1 <- c(v1, v2)
+combined_v2 <- c(combined_v1, v3)
+combined_v3 <- c(combined_v2, num1)
+
+combined_v3`, 
+  17);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Here we combine different numeric vectors together. We also show, when forming <code>combined_v3</code>, how numeric vectors can have single items added onto them. That is, if you have a single number, it can be treated as a vector with one element in it. This becomes very useful when building up vectors within code. In addition to combining multiple vectors together, we can also select elements out of a vector. To do this, we use a set of square brackets after the vector’s name, with a number within those square brackets specifying the <strong>index</strong> of the vector we are interested in. The index is simply the element position starting at 1<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a> and running to the length of the vector. We can include a vector of indices to select multiple elements at once.</p>
+<div id="qwebr-insertion-location-18"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-18");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    18
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `alpha_vector <- c("A","B","C","D","E","F","G","H","I",
+                  "J","K","L","M","N","O","P","Q","R",
+                  "S","T","U","V","W","X","Y","Z")
+
+alpha_vector[4]    # D
+alpha_vector[25]   # Y 
+alpha_vector[12]   # L
+alpha_vector[1]    # A
+alpha_vector[14]   # N
+
+my_name <- alpha_vector[c(4,25,12,1,14)]
+
+my_name `, 
+  18);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Note that, each element is selectable individually, giving a single item of that type (in this case, strings). If you select multiple of the elements together, it will create a vector of that type (in this case, a string vector). Note that in addition to selecting elements in this way by their indices, you can also update the elements in the same way.</p>
+<div id="qwebr-insertion-location-19"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-19");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    19
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `cur_year <- c(2,0,2,3)
+cur_year 
+
+# After Midnight on December 31
+cur_year[4] <- 4
+cur_year `, 
+  19);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>In this example we are changing the last element of the vector. Sometimes we may not know how long the vector actually is, if for instance, it is being built-up as our code runs. If we ever want to check the length of a vector, we can simply call the function <code>length</code> which takes as input only one vector, and outputs the numeric value of its length.</p>
+<div id="qwebr-insertion-location-20"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-20");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    20
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `v1 <- c(1,2,3,4,5)
+length(v1)`, 
+  20);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="program-control-flow" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="program-control-flow"><span class="header-section-number">1.3.4</span> Program Control Flow</h3>
+<p>We have seen different types of data, different ways of manipulating data, functions, and variables so far. In order to bring all of these concepts together into useful programs we need some way to control the flow of our programs. We have seen that, by default, programs execute from the top until the bottom. However, it will often be the case that we want want to have certain code running only if certain conditions hold, or that we want to repeat some piece of code many times over. To accomplish these tasks we require <strong>control flow statements</strong>. We will consider only two types of control flow statements now, which will serve well enough to read most of what needs to be read for this course.</p>
+<p>The first type of statement is the <strong>conditional statement</strong>. Conditional statements execute only when certain conditions hold. The simplest conditional statement is an <strong>if</strong> statement. The format to define an if statement if <code>if (condition){ ... }</code>, where <code>condition</code> is some logical condition to be evaluated. If the condition is <code>TRUE</code> then the code contained in { … } is evaluated. If the condition is <code>FALSE</code> it is not.</p>
+<div id="qwebr-insertion-location-21"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-21");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    21
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `my_number <- 5
+
+if(my_number > 0) {
+    print("My number is a positive.")
+}
+
+if(my_number < 0) {
+    print("My number is a negative.")
+}`, 
+  21);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>In this case, these simple conditional statement check to see whether the number we entered is larger than zero and whether the number we entered is smaller than zero, respectively. When run, notice that only one of the statements is executed.<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a> In this case, we know that only one (or neither) of these statements can be true. When that is the case it may make sense to make use of <code>else</code> clauses in our conditional logic.</p>
+<div id="qwebr-insertion-location-22"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-22");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    22
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `my_number <- -5
+
+if(my_number > 0) {
+    print("My number is a positive.")
+} else {
+    print("My number is not a positive.")
+}`, 
+  22);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Here, <em>if</em> the number is greater than <code>0</code>, then we run the first block of code, <em>otherwise</em> we run the second block of code. Thus, whenever a positive number is entered, we see “My number is a positive”, and whenever a non-positive number is entered, we see “My number is not a positive.” We can extend <code>else</code> blocks to be <code>else if</code> blocks, where further conditions can be specified.</p>
+<div id="qwebr-insertion-location-23"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-23");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    23
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `my_number <- 100
+
+if(my_number > 50) {
+    print("My number is a large positive value.")
+} else if(my_number > 0){
+    print("My number is a small positive value.")
+} else if(my_number < -50) {
+    print("My number is a large negative value.")
+} else if(my_number < 0) {
+    print("My number is a small negative value.")
+} else {
+    print("My number is zero.")
+}`, 
+  23);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>In these case we can simply pass through each conditional statement in order. First, is the number larger than <code>50</code>? If so, print the statement, otherwise we check the next condition, is the number greater than <code>0</code>? Note that if we are checking this condition we <em>know</em> that the number is less than or equal to <code>50</code> since it failed the first check. We continue through the rest of this procedure down until the last else block. This block is run only when all of the other conditions fail: that is, our value is not larger than <code>50</code>, or larger than <code>0</code>, or smaller than <code>-50</code>, or smaller than <code>0</code>. The only value that satisfies this is <code>0</code> itself.</p>
+<p>Sometimes, we wish to check compound conditions. That is, we want to know whether multiple conditions hold, or perhaps, whether at least one of many conditions hold. These statements can be converted into “and” and “or” statements, respectively. To denote “and” statements we use <code>&amp;&amp;</code> and to denote “or” statements we use <code>||</code>. Thus, the check <code>my_val &gt; 0 &amp;&amp; my_val &lt; 100</code> returns true only if <code>my_val</code> is both above <code>0</code> <strong>and</strong> below 100. The check <code>my_val &lt; -50 || my_val &gt; 50</code> returns true whenever <strong>either</strong> <code>my_val</code> is less than <code>-50</code> <strong>or</strong> <code>my_val</code> is greater than <code>50</code>.</p>
+<div id="qwebr-insertion-location-24"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-24");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    24
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `my_number <- 5
+
+if(my_number < 50 && my_number > 10) {
+    print("A moderate, positive number.")
+} else if(my_number != 5 && my_number <= 10 && my_number >= 0) {
+    print("A positive value which is not 5.")
+} else if(my_number == 5 || my_number < 0) {
+    print("Either 5 or a negative value.")
+}`, 
+  24);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Conditional statements can grow to be very complex, however, with these rules you can read through them top-to-bottom, substituting for “and” and “or” where necessary. It is also possible, where required, to place one conditional statement inside the code block for another, and to combine them with any of the other techniques that we have learned thus far.</p>
+<p>The final piece of control flow that we will consider for now is the <code>for</code> loop. The idea with a <code>for</code> loop is that we want to repeat the same action either a certain number of times, or for every item in a set of items. To do so, we use the syntax <code>for(x in vector){...}</code>, where the code in <code>...</code> will be performed once for every single item in the vector. Within the code block specified by <code>...</code>, the value <code>x</code> will take on the current value in the loop.</p>
+<div id="qwebr-insertion-location-25"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-25");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    25
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `for(x in c(1,2,3)){
+    print(x)
+}`, 
+  25);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Notice that three values are printed, in order, <code>1</code> then <code>2</code> then <code>3</code>. The loop code is run three different times, one for each element in the list. Each time the loop is running the next value from the list gets assigned to the variable <code>x</code>. The first time it runs it gets the first element, and so forth. As a result, we can use these values in our calculations in whatever way we need to.</p>
+<div id="qwebr-insertion-location-26"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-26");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    26
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `for(x in c(1,2,3)){
+    x_sq <- x^2
+    print(paste("The square of", x, 'is', x_sq))
+}`, 
+  26);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Whenever we are trying to form a numeric vector with consecutive elements, as we are in <code>c(1,2,3)</code>, we can make this easier on ourselves by simply specifying the upper and lower bounds of the range, separated by a colon. That is <code>c(1,2,3) == 1:3</code>. This is often useful when specify a loop as we very often want to repeat something a set number of times. Note that we do not ever <em>need</em> to use the value of the looping variable. Sometimes, we just want things to repeat, and so the loop is a convenient way to do that.</p>
+<div id="qwebr-insertion-location-27"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-27");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    27
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `times_to_loop <- 5
+
+for(x in 1:times_to_loop){
+    print(paste("This will get printed", times_to_loop, "times."))
+}`, 
+  27);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="reading-through-a-more-complex-r-program" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="reading-through-a-more-complex-r-program"><span class="header-section-number">1.3.5</span> Reading Through a More Complex R Program</h3>
+<p>Take a moment to read through the following R program and try to understand what is happening exactly. There are comments throughout which will assist in the parsing of the script. We have seen comments up until now, without drawing explicit attention to them. In R, anything placed after a <code>#</code> on the line is considered a comment. The programming language ignores these and so they are only there to help other individuals who may be reading through. It is good practice to comment your code to help others, and also to help yourself whenever you return to it in the future. In the course notes code will typically be commented. If you are reading the PDF version of the notes often these comments will be annotations beside the code (numbering certain lines) with the comments provided below, for the sake of legibility.</p>
+<p>Note, this combines everything that we have learned, and it is entirely understandable if it takes some time to process. Fortunately, you can always try running the script yourself, and playing with different components of it. Remember, if you do not know what a function call does, you can use the documentation<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a> and try playing with it some yourself. To help with the interpretation here, note that this is an implementation of the game that Charles and Sadie have been playing.</p>
+<div id="qwebr-insertion-location-28"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-28");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    28
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# Define some variables which dictate how the game runs.
+player1 <- "Charles"
+player2 <- "Sadie"
+num_of_flips <- 3
+flip_option1 <- "H"
+flip_option2 <- "T"
+
+# Begin with the game setup
+num_to_win <- round(x = num_of_flips / 2, 0)
+flip_results <- c()
+flip_options <- c(flip_option1, flip_option2)
+total_1 <- 0
+total_2 <- 0
+player_name <- "" # This is an 'empty string'
+
+# Start Playing the Game
+for(game_round in 1:num_of_flips) {
+    print(paste("Now starting round", game_round))
+
+    # Select a flip of the coin, using the sample function.
+    # See more details with ?sample
+    flip_result <- sample(x = flip_options, size = 1)
+
+    # See who benefits from this flip
+    # Then set player_name to be the player who benefits from the flip,
+    # and update their score variable.
+    if (flip_result == flip_option1) {
+        player_name <- player1
+        total_1 <- total_1 + 1
+    } else if (flip_result == flip_option2) {
+        player_name <- player2
+        total_2 <- total_2 + 1
+    }
+
+    print(paste("The flip was a", flip_result, "which benefits", player_name))
+
+    # Check to see if either player has won at this point.
+    if(total_1 >= num_to_win) {
+        print(paste(player1, "has scored enough points to win."))
+    } else if(total_2 >= num_to_win){
+        print(paste(player2, "has scored enough points to win."))
+    }
+}
+
+# The game is over
+# Select the winner based on who scored above the threshold 
+# and then print out the results.
+winner <- player1 
+
+if(total_2 >= num_to_win) {
+    winner <- player2 
+}
+
+print(paste("After flipping the coin", num_of_flips, "times,", player1, 
+            "scored a total of", total_1, "points, while", player2, 
+            "scored a total of", total_2, "points. As a result",
+            winner, "won the game and will not have to pay!"))`, 
+  28);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="r-programming-for-probability-interpretations" class="level3" data-number="1.3.6">
+<h3 data-number="1.3.6" class="anchored" data-anchor-id="r-programming-for-probability-interpretations"><span class="header-section-number">1.3.6</span> R Programming for Probability Interpretations</h3>
+<p>Recall that the motivation for the discussion of R was the Frequentist interpretation of probability. One task that computers are very effective at is repeatedly performing some action. As a result, we can use computers to mimic the idea of repeatedly performing an experiment. Consider the simple case of flipping a coin over and over again.</p>
+<p>We can use <code>sample(x, size)</code> as a function to select <code>size</code> realizations from the set contained in <code>x</code>. Thus, if we take <code>sample(x = c("H","T"), size=1)</code> we can view this as flipping a coin one time. If we use the loop structure we talked before, then we can simulate the experience of repeatedly flipping a coin. Consider the following R code.</p>
+<p>Consider the following code block and this time actually see if you can update the sample sizes, or change the generation process at all. There is no harm in trying: anything you do can be undone simply be reloading the page!</p>
+<div id="qwebr-insertion-location-29"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-29");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    29
   );
 
 // Add the interactive element into the document scope
@@ -1431,10 +1991,13 @@ for(idx in 1:number_of_runs){
 
 # Return the mean of all of the tosses.
 mean(tosses) `, 
-  11);
+  29);
 </script>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <p>It is worth adjusting some of the parameters within the simulation, and seeing what happens. What if you ran the experiment only 5 times? Ten thousand times? What if instead of counting the number of heads, we wanted to count the number of tails? What if we wanted to count the number of times that a six-sided die rolled a 4? All of these settings can be investigated with simple modifications to the provided script.</p>
+</section>
+<section id="references" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="references">References</h3>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -1468,6 +2031,9 @@ Gigerenzer, Gerd, Ralph Hertwig, Eva Van Den Broek, Barbara Fasolo, and Konstant
 <li id="fn16"><p>Note: when you begin to write programs for yourself, a lot of your time will be spent writing custom functions. If this is of interest to you, I suggest looking into programming more! For this course we will not need to define our own functions, except perhaps ones that will be defined for you.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn17"><p>Which we have stored in the variable <code>rounded_value</code><a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn18"><p>Try it out to convince yourself!<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>If you have programmed in the past there is a good chance the language you have learned is “0 indexed” rather than “1 indexed”. In R, all vectors start at position 1 and count up, which is not the case in many languages. Be careful of this.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20"><p>In fact, if <code>my_number</code> is set to <code>0</code> then none of the statements are executed.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p>The internet is also a wonderful resource, one which even very experienced developers make frequent use of.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
