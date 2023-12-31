@@ -52,3 +52,4 @@ execute:
 knitr:
   opts_chunk: 
     collapse: true
+    results: hold

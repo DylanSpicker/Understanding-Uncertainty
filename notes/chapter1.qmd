@@ -297,6 +297,7 @@ Now, you may be wondering "how do you know what the parameter names should be?" 
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
+#| eval: false
 ?round
 ```
 :::
@@ -305,7 +306,7 @@ Now, you may be wondering "how do you know what the parameter names should be?" 
 ?round
 ```
 :::
-Here we are given *a lot* of information. We can see the function name, the details, how it's called, and so forth. In the **Arguments** section we get a list of all of the arguments we can pass to the function, along with a description of them. In this case we see that `round` can take a parameter called `x` for the number to be rounded, and `digits` (which we have previously seen).
+When we run this code, we are given *a lot* of information. We can see the function name, the details, how it's called, and so forth. In the **Arguments** section we get a list of all of the arguments we can pass to the function, along with a description of them. In this case we see that `round` can take a parameter called `x` for the number to be rounded, and `digits` (which we have previously seen).
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
@@ -842,10 +843,12 @@ if(total_2 >= num_to_win) {
     winner <- player2 
 }
 
+# Separate these statements into multiple lines to ensure the text is 
+# not too wide.
 print(paste("After flipping the coin", num_of_flips, "times,", player1, 
-            "scored a total of", total_1, "points, while", player2, 
-            "scored a total of", total_2, "points. As a result",
-            winner, "won the game and will not have to pay!"))
+            "scored a total of", total_1, "points"))
+print(paste("while", player2, "scored a total of", total_2, "points."))
+print(paste("As a result", winner, "won the game and will not have to pay!"))
 ```
 :::
 ::: {.content-visible when-format="html"}
