@@ -6,4 +6,6 @@ TODO: Write this.
 ## Using These Notes 
 TODO: Write this.
 
+## Some Mathematical Background
+
 ## Additional Resources

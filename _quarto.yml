@@ -45,3 +45,10 @@ comments:
     theme: classic
     enableExperimentalNewNoteButton: true 
     showHighlights: whenSidebarOpen
+
+execute:
+  eval: true
+
+knitr:
+  opts_chunk: 
+    collapse: true

@@ -34,3 +34,24 @@
     border-radius: 0.25rem;
     margin-bottom: 1em;
 }
+
+.theorem.definition p:last-child{
+    margin-bottom: 0px;
+}
+
+
+.proof.remark {
+    border-left-color: var(--bs-gray-700) !important;
+    padding: 0.4em 0.7em;
+    border-left: 5px solid;
+    border-right: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    margin-bottom: 1em;
+}
+
+.proof-title em, .proof-title {
+    font-weight: bold;
+    font-style: normal;
+}
