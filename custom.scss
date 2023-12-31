@@ -1,0 +1,22 @@
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+.question {
+    font-size: $h5-font-size;
+    font-weight: bolder;
+    padding: 2px;
+    display: block;
+}
+
+.callout.solution {
+    margin-bottom: 5px !important;
+}
+
+.callout.callout-style-default .callout-body {
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+.callout.callout-style-default>div.callout-header {
+    font-size: 1.1rem;
+}

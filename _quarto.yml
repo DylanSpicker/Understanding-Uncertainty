@@ -1,0 +1,44 @@
+project:
+  type: book
+  output-dir: _book
+  preview:
+    port: 9123
+    browser: false
+    host: 0.0.0.0
+  
+
+book:
+  title: "STAT 1793: Course Notes"
+  subtitle: "Introduction to Probability and Statistics I"
+  author: "Dylan Spicker"
+  date: "12/30/2023"
+  downloads: ["pdf"]
+  chapters:
+    - index.qmd
+    - part: "Part 1: Probability"
+      chapters:
+      - notes/chapter1.qmd
+      - notes/chapter2.qmd
+      - notes/chapter3.qmd
+      - notes/chapter4.qmd
+      - notes/chapter5.qmd
+      - notes/chapter6.qmd
+    - part: "Part 2: Statistics"
+
+engine: knitr
+filters: 
+- webr
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: 
+    - cosmo
+    - custom.scss
+    code-annotations: select
+  pdf:
+    documentclass: scrreprt
+
+
+
