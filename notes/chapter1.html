@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -75,8 +95,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -104,6 +122,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "classic",
+  "enableExperimentalNewNoteButton": true,
+  "showHighlights": "whenSidebarOpen"
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
   
@@ -868,10 +899,9 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-this-course" id="toc-what-is-this-course" class="nav-link active" data-scroll-target="#what-is-this-course"><span class="header-section-number">1.1</span> What is this Course?</a></li>
-  <li><a href="#what-is-probability" id="toc-what-is-probability" class="nav-link" data-scroll-target="#what-is-probability"><span class="header-section-number">1.2</span> What is Probability?</a></li>
-  <li><a href="#how-to-interpret-probabilities-like-a-frequentist" id="toc-how-to-interpret-probabilities-like-a-frequentist" class="nav-link" data-scroll-target="#how-to-interpret-probabilities-like-a-frequentist"><span class="header-section-number">1.3</span> How to Interpret Probabilities (like a frequentist)</a></li>
-  <li><a href="#r-programming-for-probability-and-statistics" id="toc-r-programming-for-probability-and-statistics" class="nav-link" data-scroll-target="#r-programming-for-probability-and-statistics"><span class="header-section-number">1.4</span> R Programming for Probability and Statistics</a></li>
+  <li><a href="#what-is-probability" id="toc-what-is-probability" class="nav-link active" data-scroll-target="#what-is-probability"><span class="header-section-number">1.1</span> What is Probability?</a></li>
+  <li><a href="#how-to-interpret-probabilities-like-a-frequentist" id="toc-how-to-interpret-probabilities-like-a-frequentist" class="nav-link" data-scroll-target="#how-to-interpret-probabilities-like-a-frequentist"><span class="header-section-number">1.2</span> How to Interpret Probabilities (like a Frequentist)</a></li>
+  <li><a href="#r-programming-for-probability-and-statistics" id="toc-r-programming-for-probability-and-statistics" class="nav-link" data-scroll-target="#r-programming-for-probability-and-statistics"><span class="header-section-number">1.3</span> R Programming for Probability and Statistics</a></li>
   </ul>
 </nav>
     </div>
@@ -1039,27 +1069,14 @@ globalThis.qwebrCreateMonacoEditorInstance = function (
 </header>
 
 
-<section id="what-is-this-course" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="what-is-this-course"><span class="header-section-number">1.1</span> What is this Course?</h2>
-<p>TODO: Write this.</p>
-</section>
-<section id="what-is-probability" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="what-is-probability"><span class="header-section-number">1.2</span> What is Probability?</h2>
-<p>At its core, statistics is the study of uncertainty. Uncertainty permeates the world around us, and in order to make sense of the world, we need to make sense of uncertainty. The language of uncertainty is <strong>probability</strong>. Probability is a concept which we all likely have some intuitive sense of: if there was a 90% probability of rain today, you likely considered grabbing an umbrella; you are not likely to wager your life savings on a game that has only a 1% probability of paying out; etc. We have a sense that probability provides a measure of <em>likelihood</em>. Defining probability is a non-trivial task, and there have been many attempts to formalize it throughout history. While we will spend a good deal of time formalizing notions of probability in this course, let us pause and emphasize the intuitive basis you are starting with.</p>
-<p>Suppose that two friends, Charles and Sadie, meet for coffee once a week. During their meetings they have wide-ranging, deep, philosophical conversations spanning the important issues from “do we all really see green as the same colour” to “why is it that ‘q’ comes as early in the alphabet as it does? it deserves to be with UVWXYZ.” Beyond making progress on the most pressing issues of our time, Charles and Sadie each adore probability. As a result, at the end of each of their meetings, they play a game to decide who will pay: they flip a coin three times. If two or more heads come up, Charles pays, otherwise, Sadie pays.</p>
-<p>We can think about the strategy that they are using here and intuitively feel that this is going to be “fair”. With two or more heads, Charles pays; with two or more tails, Sadie pays; there always has to be either two or more heads <em>or</em> two or more tails, and each is equally likely to come up [footnote: TODO: recent literature on fair coins]. The outcome of their game is uncertain before it begins, but we know that in the long-run neither of the friends is going to be disadvantaged relative to the other. We can say that the probability that either of them pays is equal, it’s 50-50, everything is balanced.</p>
-<p>One day, in the middle of their game, Charles gets a very important phone call (someone has just pointed out the irony in the fact that there is no synonym for synonym [footnote: TODO: is this actually ture?]) and he leaves abruptly after the first coin has been tossed. The first coin toss showed a heads. Sadie, recognizing the gravity of the phone call, pays for the both of them, but she also recognizes that Charles was well on the way to having to pay.</p>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="text-success"><i class="fa-solid fa-question-circle" aria-label="question-circle"></i></span> Example: Basic Probability Enumeration
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="lead">What is the probability that Sadie would have had to pay in the aforementioned scenario? That is, assuming that the first coin shows a head, what is the probability that at least two heads are shown on the first three coin tosses?</span></p>
+<section id="what-is-probability" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="what-is-probability"><span class="header-section-number">1.1</span> What is Probability?</h2>
+<p>At its core, statistics is the study of uncertainty. Uncertainty permeates the world around us, and in order to make sense of the world, we need to make sense of uncertainty. The language of uncertainty is <strong>probability</strong>. Probability is a concept which we all likely have some intuitive sense of. If there was a 90% probability of rain today, you likely considered grabbing an umbrella. You are not likely to wager your life savings on a game that has only a 1% probability of paying out. We have a sense that probability provides a measure of <em>likelihood</em>. Defining probability mathematically is a non-trivial task, and there have been many attempts to formalize it throughout history. While we will spend a good deal of time formalizing notions of probability in this course, we first pause to emphasize the familiarity with probability that you are likely starting with.</p>
+<p>Suppose that two friends, Charles and Sadie, meet for coffee once a week. During their meetings they have wide-ranging, deep, philosophical conversations spanning across many important topics.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Beyond making progress on some of the most pressing issues of our time, Charles and Sadie each adore probability. As a result, at the end of each of their meetings, they play a game to decide who will pay. The game proceeds by having them flip a coin three times. If two or more heads come up Charles pays, and otherwise Sadie pays.</p>
+<p>We can think about the strategy that they are using here and <em>feel</em> that this is going to be “fair”. With two or more heads, Charles pays. With two or more tails, Sadie pays. There always has to be either two or more heads <em>or</em> two or more tails, and each is equally likely to come up<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. The outcome of their game is uncertain before it begins, but we know that in the long run neither of the friends is going to be disadvantaged relative to the other. We can say that the probability that either of them pays is equal. It’s 50-50. Everything is balanced.</p>
+<p>Now imagine that one day, in the middle of their game, Charles gets a very important phone call <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and he leaves abruptly after the first coin has been tossed. The first coin toss showed a heads. Sadie, recognizing the gravity of the phone call, pays for the both of them, but she also realizes that Charles was well on the way to having to pay.</p>
+<div id="exm-basic-prob" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.1 (Basic Probability Enumeration)</strong></span> What is the probability that Sadie would have had to pay in the aforementioned scenario? That is, assuming that the first coin shows a head, what is the probability that at least two heads are shown on the first three coin tosses?</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1072,25 +1089,49 @@ Solution
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Sadie figures that any coin toss is equally likely to show heads or tails. because the first coin showed heads, then there are four possible sequences that could have shown up: <span class="math inline">\(H,H,H\)</span>, <span class="math inline">\(H,H,T\)</span>, <span class="math inline">\(H,T,H\)</span>, <span class="math inline">\(H,T,T\)</span>.</p>
-<p>In three of these situations (<span class="math inline">\(H,H,H\)</span>, <span class="math inline">\(H,H,T\)</span>, <span class="math inline">\(H,T,H\)</span>) there are two heads and so Charles would have to pay. In one of them there are two tails, and so Sadie would have to pay. As a result, Charles would have to pay with probability <span class="math inline">\(0.25\)</span> and Sadie with probability <span class="math inline">\(0.75\)</span>.</p>
+<p>Sadie figures that any coin toss is equally likely to show heads or tails. because the first coin showed heads, then there are four possible sequences that could have shown up:</p>
+<ol type="1">
+<li><span class="math inline">\(H,H,H\)</span>;</li>
+<li><span class="math inline">\(H,H,T\)</span>;</li>
+<li><span class="math inline">\(H,T,H\)</span>;</li>
+<li><span class="math inline">\(H,T,T\)</span>.</li>
+</ol>
+<p>In three of these situations ((1) <span class="math inline">\(H,H,H\)</span>, (2) <span class="math inline">\(H,H,T\)</span>, and (3) <span class="math inline">\(H,T,H\)</span>) there are two heads and so Charles would have to pay. In one of them there are two tails, and so Sadie would have to pay. As a result, Charles would have to pay in <span class="math inline">\(3\)</span> of the <span class="math inline">\(4\)</span> (with probability <span class="math inline">\(0.75\)</span>) and Sadie in <span class="math inline">\(1\)</span> of the <span class="math inline">\(4\)</span> (with probability <span class="math inline">\(0.25\)</span>).</p>
 </div>
 </div>
 </div>
 </div>
-</div>
-<p>We can see from this example that Sadie should likely have not paid. Only one times out of four would she have had to, given the first head. However, we can not be certain that, had all three tosses been observed, Sadie would not have paid. It is possible that we would have observed two tails, making her responsible for the bill. This possibility happens one time out of four, which is more likely than the probability of rolling a 4 on a six-sided die. Of course, 4s are rolled on six-sided dice quite frequently (about one out of every six rolls), and so it is not all together unreasonable for her to have paid.</p>
-<p>This seemingly simple concept is the core of probability. Probability serves as a method for quantifying uncertainty. It allows us to make numeric statements regarding the set of outcomes that we can observe, quantifying the freqneucy with which we expect to observe those outcomes. However, probability does not <em>remove</em> the uncertainty. We still need to flip the coin or roll the die to understand what will happen. All probability has given us is a set of tools to exactly quantify this uncertainty. It turns out that these tools are critical for decision making in the face of the ever present uncertainty around us.</p>
+<p>Looking at <a href="#exm-basic-prob" class="quarto-xref">Example&nbsp;<span>1.1</span></a>, we can see that Sadie should likely have not paid. Only one out of every four times would she have had to pay, given the first coin being heads. However, we can not be certain that, had all three tosses been observed, Sadie would <em>not</em> have paid. It is possible that we would have observed two tails, making her responsible for the bill. This possibility happens one time out of four, which is more likely than the probability of rolling a four on a six-sided die<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Fours are rolled on six-sided dice quite frequently<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, and so it is not all together unreasonable for her to have paid.</p>
+<p>This seemingly simple concept is the core of probability. Probability serves as a method for quantifying uncertainty. It allows us to make numeric statements regarding the set of outcomes that we can observe, by quantifying the frequency with which we expect to observe those outcomes. Probability does not <em>remove</em> the uncertainty. We still need to flip the coin or roll the die to know what will happen. All probability gives us is a set of tools to quantify this uncertainty. These tools are critical for decision making in the face of the ever-present uncertainty around us.</p>
 </section>
-<section id="how-to-interpret-probabilities-like-a-frequentist" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="how-to-interpret-probabilities-like-a-frequentist"><span class="header-section-number">1.3</span> How to Interpret Probabilities (like a frequentist)</h2>
-<p>We indicated that, intuitively, probability is a measure of the frequency with which a particular outcome occurs. This intuition can be codified exactly with the <strong>frequentist interpretation</strong> of probability. According to the frequentist interpretation (or frequentism, as it is often called), probabilities correspond to the proportion of time that whatever the event of interest is (be that flipping a heads, rolling a four, or observing rain on a given day) actually occcurs, in the long run. For a frequentist, you imagine yourself performing the experiment you are running over, and over, and over, and over, and over again. Each time you record “did the event happen?” and you count up those occurences. As you do this more and more and more, wherever that proportion lands corresponds to the probability.</p>
-<p>TODO: Insert R Diagram for This (Coin Tosses)</p>
-<p>To formalize this in terms of mathematics, we have to define several important terms. An <strong>experiment</strong> is any action whose outcome cannot be known with ceertainty, before it is performed. An <strong>event</strong> is a specified result that may or may not occur when an experiment is performed.</p>
-<p>Suppose that an experiment is able to be performed as many times as one likes, limited only by your boredom. If you take <span class="math inline">\(k_N\)</span> to represent the number of times that the event of interest occurs when you perform the experiment <span class="math inline">\(N\)</span> times, then a frequentist would define the probability of the event as <span class="math display">\[\text{probability} = \lim_{N\to\infty}\frac{k_N}{N}.\]</span></p>
-<p>In practice this means that, in order to interpret probabilities, we think about repeating an experiment many, many times over. As we do that, we observe the proportion of times that any particular outcome occurs, and take that to be the defining relation for probabilities. The reason that we say the probability of fllipping a heads is <span class="math inline">\(0.5\)</span> is because if we were to sit around and flip a coin (experiment) over, and over, and over again, then in the long-run we would observea head (event) in <span class="math inline">\(0.5\)</span> of cases.</p>
-<p>Many situations in the real world are not able to be run over and over again. Think about, for instance, the probability that a particular candidate wins in a particualr election. There is uncertainty there, of course, but the election can only be run once. What then? There are several ways through these types of events.</p>
-<p>First, we can rely on the <strong>power of imagination</strong>. There is nothing stopping us from envisioning the hypothetical possibility of running the election over, and over, and over, and over again. If we step outside of reality for a moment, we can ask “if we could play the day of the election many, many, many times, what proportion of those days would end with the candidate being elected?” If we say that the candidate has a 75% chance of being elected, then we mean that in <span class="math inline">\(0.75\)</span> of those imaginaed worlds, the candidate wins. It is crucial to stress that in our imagination here, we need to be thinking about the <strong>exact same day</strong> over and over again. We cannot imagine a different path leading to the election, different speeches being given in advance, or different opposition candidates. If we start from the same place, and play it out many times over, what happens in each of those worlds?</p>
+<section id="how-to-interpret-probabilities-like-a-frequentist" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="how-to-interpret-probabilities-like-a-frequentist"><span class="header-section-number">1.2</span> How to Interpret Probabilities (like a Frequentist)</h2>
+<p>We indicated that, intuitively, probability is a measure of the frequency with which a particular outcome occurs. This intuition can be codified exactly with the <strong>Frequentist interpretation</strong> of probability. According to the Frequentist interpretation (or frequentism, as it is often called), probabilities correspond to the proportion of time any event of interest is<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> actually occurs in the long run. For a Frequentist, you imagine yourself performing the experiment you are running over, and over, and over, and over, and over again. Each time you answer “did the event happen?” and you count up those occurrences. As you do this more and more and more, wherever that proportion lands corresponds to the probability.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-plot" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter1_files/figure-html/fig-plot-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: This plot simulates the repeated tossing of a coin. The x-axis represents the number of coins being tossed, and the y-axis plots the proportion of times that heads has shown up cumulatively over the tosses thus far. We can see in the long run that this proportion tends towards <span class="math inline">\(0.5\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>To formalize this mathematically, we first define several important terms.</p>
+<div id="def-experiment" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.1 (Experiment)</strong></span> Any action to be performed whose outcome is not (or cannot) be known with certainty, before it is performed.</p>
+</div>
+<div id="def-event" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.2 (Event [Informally])</strong></span> A specified result that may or may not occur when an experiment is performed.</p>
+</div>
+<p>Suppose that an experiment is able to be performed as many times as one likes, limited only by your boredom. If you take <span class="math inline">\(k_N\)</span> to represent the number of times that the event of interest occurs when you perform the experiment <span class="math inline">\(N\)</span> times, then a Frequentist would define the probability of the event as <span class="math display">\[\text{probability} = \lim_{N\to\infty}\frac{k_N}{N}.\]</span></p>
+<p>In practice this means that, in order to interpret probabilities, we think about repeating an experiment many, many times over. As we do that, we observe the proportion of times that any particular outcome occurs, and take that to be the defining relation for probabilities. The reason that we say the probability of flipping a heads is <span class="math inline">\(0.5\)</span> is because if we were to sit around and flip a coin (experiment) over, and over, and over again, then in the long-run we would observe a head (event) in <span class="math inline">\(0.5\)</span> of cases.</p>
+<p>Many situations in the real world are not able to be run over and over again. Think about, for instance, the probability that a particular candidate wins in a particular election. There is uncertainty there, of course, but the election can only be run once. What then? There are several ways through these types of events.</p>
+<p>First, we can rely on the <strong>power of imagination</strong>. There is nothing stopping us from envisioning the hypothetical possibility of running the election over, and over, and over, and over again. If we step outside of reality for a moment, we can ask “if we could play the day of the election many, many, many times, what proportion of those days would end with the candidate being elected?” If we say that the candidate has a 75% chance of being elected, then we mean that in <span class="math inline">\(0.75\)</span> of those imagined worlds, the candidate wins. It is crucial to stress that in our imagination here, we need to be thinking about the <strong>exact same day</strong> over and over again. We cannot imagine a different path leading to the election, different speeches being given in advance, or different opposition candidates. If we start from the same place, and play it out many times over, what happens in each of those worlds?</p>
 <p>The repeated imagination is not for everyone. In light of these types of shortcomings, alternative proposals to the definition of probability had been made. Most popularly, the <strong>Bayesian interpretation</strong> has become prominent in recent-ish years. To Bayesians, probability is a measure of subjective belief. To say that there is a <span class="math inline">\(50\%\)</span> chance of a coin coming up is a statement about one’s knowledge in the world: typically, coins show up heads half the time, so that’s our belief about heads. The Bayesian view, though built around subjective confidence in the state of the world, can be formalized mathematically as well. A Bayesian considers the prior evidence that they have about the world, whatever evidence has been collected, and then they update their subject beliefs balancing these two sources of information.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1104,7 +1145,7 @@ Bayesian Probabilities and Belief Updating
 <div class="callout-body-container callout-body">
 <p>Suppose that a Bayesian is flipping a coin. Before any flips have been made the Bayesian, understandably believes that the coin will come up heads <span class="math inline">\(50\%\)</span> of the time. However, when the coin starts to be flipped, the observations are a string of tails in a row.</p>
 <p>After having flipped the coin five times, the individual has observed five tails. Of course, it is totally possible to flip a fair coin five times and see five tails, but there is a level of skepticism growing.</p>
-<p>After 10 flips, the Bayesian has still not seen a head. At this point, the subjective belief is that there is likely something unfair about this coin: even though the experiment started with a baseline assumption that it was fair, the Bayesian no longer believes that the enxt flip will be a head.</p>
+<p>After 10 flips, the Bayesian has still not seen a head. At this point, the subjective belief is that there is likely something unfair about this coin: even though the experiment started with a baseline assumption that it was fair, the Bayesian no longer believes that the next flip will be a head.</p>
 <p>As this goes on, you can imagine the Bayesian continuing to update their view of the world. The probability is an evolving concept, capturing what was thought, and what has been observed.</p>
 </div>
 </div>
@@ -1112,13 +1153,13 @@ Bayesian Probabilities and Belief Updating
 <p>In this course, we will focus on the frequentist interpretation. In part this is because frequentist probability is an easier introduction to the concepts that are necessary for taming uncertainty. In part this is because frequentist interpretations have been shown to give individuals a better grasp on understanding probabilities [CITE?]. However, it is important to know and recognize that there is a world beyond frequentist probability and statistics, one which can be very powerful once it is unlocked. (More on that in later years, if you so desire!)</p>
 <p>If probability measures the long-term frequency of times that a particular event occurs, then how can we go about computing probabilities? Do we require to perform an experiment over and over again? Fortunately, the answer is no. The tools of probability we will cover allow us to make concrete statements about the probabilities of events without the need for repeated experimental runs. However, before dismissing the idea of repeatedly running an experiment at face value it is worth considering a tool we have at our disposal that renders this more possible than it has ever been: computers.</p>
 </section>
-<section id="r-programming-for-probability-and-statistics" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="r-programming-for-probability-and-statistics"><span class="header-section-number">1.4</span> R Programming for Probability and Statistics</h2>
-<p>Throughout this course we will make use of a programming language for statistical computing, called <code>R</code>. While clasically introductory statistics involved heavy computation of particular quantities, by hand, the use of a programming language (like R) frees us from the tedium of calculation, allowing for a far deeper focus on understanding, explanation, decision-making, and complex problem solving. While you will not be expected to write large R programs on your own, you will be expected to read simple scripts, make basic modifications, and to run code that is given to you.</p>
-<p>Throughout these course notes, where relevant, R code will be provided to demonstrate the ideas being discussed. It may be useful to have R open alongside the notes to ensure that you can get the same results that are preinted throughout the notes. In this section we will cover some of the very basics of using R, and reading R code. If you are interested, there are plenty of resources to becoming a more proficient R programmer: this is a skill that will benefit you not only in this course, but in many courses to come, and far beyond your university training. If you have any programming in your background, R is a fairly simple language to learn; if not, R can be quite beginner friendly.</p>
+<section id="r-programming-for-probability-and-statistics" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="r-programming-for-probability-and-statistics"><span class="header-section-number">1.3</span> R Programming for Probability and Statistics</h2>
+<p>Throughout this course we will make use of a programming language for statistical computing, called <code>R</code>. While classically introductory statistics involved heavy computation of particular quantities, by hand, the use of a programming language (like R) frees us from the tedium of calculation, allowing for a far deeper focus on understanding, explanation, decision-making, and complex problem solving. While you will not be expected to write large R programs on your own, you will be expected to read simple scripts, make basic modifications, and to run code that is given to you.</p>
+<p>Throughout these course notes, where relevant, R code will be provided to demonstrate the ideas being discussed. It may be useful to have R open alongside the notes to ensure that you can get the same results that are printed throughout the notes. In this section we will cover some of the very basics of using R, and reading R code. If you are interested, there are plenty of resources to becoming a more proficient R programmer: this is a skill that will benefit you not only in this course, but in many courses to come, and far beyond your university training. If you have any programming in your background, R is a fairly simple language to learn; if not, R can be quite beginner friendly.</p>
 <p>TODO: Write some basic intro to R stuff.</p>
-<p>Recall that the motivation for the discussion of R was the frequentist interpretation of probability. One task that computers are very effective at is repeatedly performing some action. As a result, we can use computers to mimick the idea of repeatedly performing some experiment. Consider the simple case of flipping a coin over and over again.</p>
-<p>We can use <code>sample(options, size)</code> as a function to select <code>size</code> realizations from the set contained in <code>options</code>. Thus, if we take T we can view this as flipping a coin one time. If we use the loop structure we talked before, then we can simulate the experience of repeatedly flipping a coin. Consider the following R code.</p>
+<p>Recall that the motivation for the discussion of R was the frequentist interpretation of probability. One task that computers are very effective at is repeatedly performing some action. As a result, we can use computers to mimic the idea of repeatedly performing some experiment. Consider the simple case of flipping a coin over and over again.</p>
+<p>We can use <code>sample(options, size)</code> as a function to select <code>size</code> realizations from the set contained in <code>options</code>. Thus, if we take H we can view this as flipping a coin one time. If we use the loop structure we talked before, then we can simulate the experience of repeatedly flipping a coin. Consider the following R code.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3141592</span>)</span>
 <span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1126,12 +1167,12 @@ Bayesian Probabilities and Belief Updating
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-4" class="code-annotation-target"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>tosses <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
 <span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4">4</button><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(idx <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>number_of_runs){</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5">5</button><span id="annotated-cell-1-7" class="code-annotation-target"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>    toss <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"H"</span>,<span class="st">"T"</span>), <span class="dv">1</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="6">6</button><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(toss <span class="sc">==</span> <span class="st">"H"</span>){</span>
-<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>        tosses <span class="ot">&lt;-</span> <span class="fu">c</span>(tosses, <span class="dv">1</span>)</span>
-<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a>        tosses <span class="ot">&lt;-</span> <span class="fu">c</span>(tosses, <span class="dv">0</span>)</span>
-<span id="annotated-cell-1-12"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5">5</button><span id="annotated-cell-1-7" class="code-annotation-target"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>  toss <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"H"</span>,<span class="st">"T"</span>), <span class="dv">1</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="6">6</button><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(toss <span class="sc">==</span> <span class="st">"H"</span>){</span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>    tosses <span class="ot">&lt;-</span> <span class="fu">c</span>(tosses, <span class="dv">1</span>)</span>
+<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a>    tosses <span class="ot">&lt;-</span> <span class="fu">c</span>(tosses, <span class="dv">0</span>)</span>
+<span id="annotated-cell-1-12"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="annotated-cell-1-13"><a href="#annotated-cell-1-13" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="annotated-cell-1-14"><a href="#annotated-cell-1-14" aria-hidden="true" tabindex="-1"></a></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="7">7</button><span id="annotated-cell-1-15" class="code-annotation-target"><a href="#annotated-cell-1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(tosses)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1194,12 +1235,12 @@ number_of_runs <- 1000
 tosses <- c() 
 
 for(idx in 1:number_of_runs){ 
-    toss <- sample(c("H","T"), 1) 
-    if(toss == "H"){  
-        tosses <- c(tosses, 1) 
-    } else { 
-        tosses <- c(tosses, 0) 
-    }
+  toss <- sample(c("H","T"), 1) 
+  if(toss == "H"){ 
+    tosses <- c(tosses, 1) 
+  } else { 
+    tosses <- c(tosses, 0) 
+  }
 }
 
 mean(tosses) `, 
@@ -1208,6 +1249,22 @@ mean(tosses) `,
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-fairCoin" class="csl-entry" role="listitem">
+Bartoš, František, Alexandra Sarafoglou, Henrik R. Godmann, Amir Sahrani, David Klein Leunk, Pierre Y. Gui, David Voss, et al. 2023. <span>“Fair Coins Tend to Land on the Same Side They Started: Evidence from 350,757 Flips.”</span> <a href="https://arxiv.org/abs/2310.04153">https://arxiv.org/abs/2310.04153</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>For instance they ask “do we all really see green as the same colour?” or “why is it that ‘q’ comes as early in the alphabet as it does? it deserves to be with ‘UVWXYZ’?”<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>There has been some recent literature, see <span class="citation" data-cites="fairCoin">Bartoš et al. (<a href="#ref-fairCoin" role="doc-biblioref">2023</a>)</span>, which may suggest that a coin is ever so slightly more likely to land on the same side it started on, perhaps undermining this assertion.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Someone has just pointed out the irony in the fact that there is no synonym for synonym. Technically, there are the words <em>metonym</em> and <em>poecilonym</em> and <em>polyonym</em>, but these are rarely used and Charles would wager that there is a very high probability you have never seen them.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>This event happens one time out of every six.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Again, about one out of every six rolls<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Be that flipping a heads, rolling a four, or observing rain on a given day.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
