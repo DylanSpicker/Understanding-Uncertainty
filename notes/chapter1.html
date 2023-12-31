@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -901,7 +867,13 @@ window.Quarto = {
   <ul>
   <li><a href="#what-is-probability" id="toc-what-is-probability" class="nav-link active" data-scroll-target="#what-is-probability"><span class="header-section-number">1.1</span> What is Probability?</a></li>
   <li><a href="#how-to-interpret-probabilities-like-a-frequentist" id="toc-how-to-interpret-probabilities-like-a-frequentist" class="nav-link" data-scroll-target="#how-to-interpret-probabilities-like-a-frequentist"><span class="header-section-number">1.2</span> How to Interpret Probabilities (like a Frequentist)</a></li>
-  <li><a href="#r-programming-for-probability-and-statistics" id="toc-r-programming-for-probability-and-statistics" class="nav-link" data-scroll-target="#r-programming-for-probability-and-statistics"><span class="header-section-number">1.3</span> R Programming for Probability and Statistics</a></li>
+  <li><a href="#r-programming-for-probability-and-statistics" id="toc-r-programming-for-probability-and-statistics" class="nav-link" data-scroll-target="#r-programming-for-probability-and-statistics"><span class="header-section-number">1.3</span> R Programming for Probability and Statistics</a>
+  <ul class="collapse">
+  <li><a href="#basic-introduction-to-r-programming" id="toc-basic-introduction-to-r-programming" class="nav-link" data-scroll-target="#basic-introduction-to-r-programming"><span class="header-section-number">1.3.1</span> Basic Introduction to R Programming</a></li>
+  <li><a href="#function-calls-in-r" id="toc-function-calls-in-r" class="nav-link" data-scroll-target="#function-calls-in-r"><span class="header-section-number">1.3.2</span> Function Calls in R</a></li>
+  <li><a href="#moving-beyond-numeric-data" id="toc-moving-beyond-numeric-data" class="nav-link" data-scroll-target="#moving-beyond-numeric-data"><span class="header-section-number">1.3.3</span> Moving Beyond Numeric Data</a></li>
+  <li><a href="#r-programming-for-probability-interpretations" id="toc-r-programming-for-probability-interpretations" class="nav-link" data-scroll-target="#r-programming-for-probability-interpretations"><span class="header-section-number">1.3.4</span> R Programming for Probability Interpretations</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -1101,7 +1073,7 @@ Solution
 </div>
 </div>
 </div>
-<p>Looking at <a href="#exm-basic-prob" class="quarto-xref">Example&nbsp;<span>1.1</span></a>, we can see that Sadie should likely have not paid. Only one out of every four times would she have had to pay, given the first coin being heads. However, we can not be certain that, had all three tosses been observed, Sadie would <em>not</em> have paid. It is possible that we would have observed two tails, making her responsible for the bill. This possibility happens one time out of four, which is more likely than the probability of rolling a four on a six-sided die<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Fours are rolled on six-sided dice quite frequently<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, and so it is not all together unreasonable for her to have paid.</p>
+<p>Looking at <a href="#exm-basic-prob" class="quarto-xref">Example&nbsp;<span>1.2</span></a>, we can see that Sadie should likely have not paid. Only one out of every four times would she have had to pay, given the first coin being heads. However, we can not be certain that, had all three tosses been observed, Sadie would <em>not</em> have paid. It is possible that we would have observed two tails, making her responsible for the bill. This possibility happens one time out of four, which is more likely than the probability of rolling a four on a six-sided die<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Fours are rolled on six-sided dice quite frequently<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, and so it is not all together unreasonable for her to have paid.</p>
 <p>This seemingly simple concept is the core of probability. Probability serves as a method for quantifying uncertainty. It allows us to make numeric statements regarding the set of outcomes that we can observe, by quantifying the frequency with which we expect to observe those outcomes. Probability does not <em>remove</em> the uncertainty. We still need to flip the coin or roll the die to know what will happen. All probability gives us is a set of tools to quantify this uncertainty. These tools are critical for decision making in the face of the ever-present uncertainty around us.</p>
 </section>
 <section id="how-to-interpret-probabilities-like-a-frequentist" class="level2" data-number="1.2">
@@ -1128,92 +1100,48 @@ Figure&nbsp;1.1: This plot simulates the repeated tossing of a coin. The x-axis 
 <div id="def-event" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1.2 (Event [Informally])</strong></span> A specified result that may or may not occur when an experiment is performed.</p>
 </div>
-<p>Suppose that an experiment is able to be performed as many times as one likes, limited only by your boredom. If you take <span class="math inline">\(k_N\)</span> to represent the number of times that the event of interest occurs when you perform the experiment <span class="math inline">\(N\)</span> times, then a Frequentist would define the probability of the event as <span class="math display">\[\text{probability} = \lim_{N\to\infty}\frac{k_N}{N}.\]</span></p>
-<p>In practice this means that, in order to interpret probabilities, we think about repeating an experiment many, many times over. As we do that, we observe the proportion of times that any particular outcome occurs, and take that to be the defining relation for probabilities. The reason that we say the probability of flipping a heads is <span class="math inline">\(0.5\)</span> is because if we were to sit around and flip a coin (experiment) over, and over, and over again, then in the long-run we would observe a head (event) in <span class="math inline">\(0.5\)</span> of cases.</p>
-<p>Many situations in the real world are not able to be run over and over again. Think about, for instance, the probability that a particular candidate wins in a particular election. There is uncertainty there, of course, but the election can only be run once. What then? There are several ways through these types of events.</p>
-<p>First, we can rely on the <strong>power of imagination</strong>. There is nothing stopping us from envisioning the hypothetical possibility of running the election over, and over, and over, and over again. If we step outside of reality for a moment, we can ask “if we could play the day of the election many, many, many times, what proportion of those days would end with the candidate being elected?” If we say that the candidate has a 75% chance of being elected, then we mean that in <span class="math inline">\(0.75\)</span> of those imagined worlds, the candidate wins. It is crucial to stress that in our imagination here, we need to be thinking about the <strong>exact same day</strong> over and over again. We cannot imagine a different path leading to the election, different speeches being given in advance, or different opposition candidates. If we start from the same place, and play it out many times over, what happens in each of those worlds?</p>
-<p>The repeated imagination is not for everyone. In light of these types of shortcomings, alternative proposals to the definition of probability had been made. Most popularly, the <strong>Bayesian interpretation</strong> has become prominent in recent-ish years. To Bayesians, probability is a measure of subjective belief. To say that there is a <span class="math inline">\(50\%\)</span> chance of a coin coming up is a statement about one’s knowledge in the world: typically, coins show up heads half the time, so that’s our belief about heads. The Bayesian view, though built around subjective confidence in the state of the world, can be formalized mathematically as well. A Bayesian considers the prior evidence that they have about the world, whatever evidence has been collected, and then they update their subject beliefs balancing these two sources of information.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<p>Suppose that an experiment is able to be performed as many times as one likes, limited only by your boredom. If you take <span class="math inline">\(k_N\)</span> to represent the number of times that the event of interest occurs when you perform the experiment <span class="math inline">\(N\)</span> times, then a Frequentist would define the probability of the event as <span class="math display">\[\text{probability} = \lim_{N\to\infty}\frac{k_N}{N}.\]</span> This course does not assume that you have any familiarity with calculus, and yet, this definition relies on limits, a concept taken directly from calculus. However, we will not actually require the ability to work with limits for this course. Instead, when you see a statement of the form <span class="math display">\[\lim_{x\to\infty} f(x),\]</span> simply think “what is happening to the function <span class="math inline">\(f(x)\)</span> as <span class="math inline">\(x\)</span> grows and grows (off to <span class="math inline">\(\infty\)</span>)?”</p>
+<p>In practice this means that, in order to interpret probabilities, we think about repeating an experiment many, many times over. As we do that, we observe the proportion of times that any particular outcome occurs, and take that to be the defining relation for probabilities. The reason that we say the probability of flipping a heads is <span class="math inline">\(0.5\)</span> is because if we were to sit around and flip a coin<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> over, and over, and over again, then in the long-run we would observe a head<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> in <span class="math inline">\(0.5\)</span> of cases.</p>
+<div id="exm-basic-prob" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.2 (Probability Interpretation)</strong></span> How do we interpret the statement “the probability that Sadie would have had to pay, given a head on the first toss, is <span class="math inline">\(0.25\)</span>”? Recall that in the game, they toss three coins, and Sadie pays if two of them show tails.</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Bayesian Probabilities and Belief Updating
+Solution
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Suppose that a Bayesian is flipping a coin. Before any flips have been made the Bayesian, understandably believes that the coin will come up heads <span class="math inline">\(50\%\)</span> of the time. However, when the coin starts to be flipped, the observations are a string of tails in a row.</p>
+<p>This statement means that, if Sadie were to repeatedly be in the situation where one head has shown and there are two coins left to toss, then in <span class="math inline">\(0.25\)</span> of these situations (in the limit, as this is repeated an infinite number of times) will end up showing two tails.</p>
+</div>
+</div>
+</div>
+</div>
+<p>Many situations in the real world are not able to be run over and over again. Think about, for instance, the probability that a particular candidate wins in a particular election. There is uncertainty there, of course, but the election can only be run once. What then? There are several ways through these types of events.</p>
+<p>First, we can rely on the <strong>power of imagination</strong>. There is nothing stopping us from envisioning the hypothetical possibility of running the election over, and over, and over, and over again. If we step outside of reality for a moment, we can ask “if we could play the day of the election many, many, many times, what proportion of those days would end with the candidate being elected?” If we say that the candidate has a 75% chance of being elected, then we mean that in <span class="math inline">\(0.75\)</span> of those imagined worlds, the candidate wins. It is crucial to stress that in our imagination here, we need to be thinking about the <strong>exact same day</strong> over and over again. We cannot imagine a different path leading to the election, different speeches being given in advance, or different opposition candidates. If we start from the same place, and play it out many times over, what happens in each of those worlds?</p>
+<p>This repeated imagining is not for everyone. As a result, alternative proposals to the interpretation of probability have been made. Most popularly, the <strong>Bayesian interpretation</strong> has recently become prominent. To Bayesians, probability is a measure of subjective belief. To say that there is a <span class="math inline">\(50\%\)</span> chance of a coin coming up is a statement about one’s knowledge of the world. Typically, coins show up heads half the time, so that’s our belief about heads. The Bayesian view, built around subjective confidence in the state of the world, can be formalized mathematically as well. A Bayesian considers the <em>prior evidence</em> that they have about the world<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> and combine this with current observations in order to update their subject beliefs, balancing these two sources of information.</p>
+<div class="proof remark">
+<p><span class="proof-title"><em>Remark</em> (Bayesian Probabilities and Belief Updating). </span>Suppose that a Bayesian is flipping a coin. Before any flips have been made the Bayesian understandably believes that the coin will come up heads <span class="math inline">\(50\%\)</span> of the time. However, when the coin starts to be flipped, the observations are a string of tails in a row.</p>
 <p>After having flipped the coin five times, the individual has observed five tails. Of course, it is totally possible to flip a fair coin five times and see five tails, but there is a level of skepticism growing.</p>
-<p>After 10 flips, the Bayesian has still not seen a head. At this point, the subjective belief is that there is likely something unfair about this coin: even though the experiment started with a baseline assumption that it was fair, the Bayesian no longer believes that the next flip will be a head.</p>
-<p>As this goes on, you can imagine the Bayesian continuing to update their view of the world. The probability is an evolving concept, capturing what was thought, and what has been observed.</p>
+<p>After 10 flips, the Bayesian has still not seen a head. At this point, the subjective belief is that there is likely something unfair about this coin. Even though the experiment started with a baseline assumption that the coin was fair the Bayesian no longer believes that the next flip will be a head.</p>
+<p>As this goes on, you can imagine the Bayesian continuing to update their view of the world. To them, the probability is an evolving concept, capturing what was believed and what has been observed.</p>
 </div>
-</div>
-<p>For the election example, the Bayesian interpretation is easier to write out: based on everything that has been observed, and any prior beliefs about the viability of the candidates, the probability that a candidate wins the election is the subjective likelihood assigned to that outcome. Of course, if we disagree about prior beliefs, or have experienced different pieces of information, then we may disagree on the probability: that is okay.</p>
-<p>In this course, we will focus on the frequentist interpretation. In part this is because frequentist probability is an easier introduction to the concepts that are necessary for taming uncertainty. In part this is because frequentist interpretations have been shown to give individuals a better grasp on understanding probabilities [CITE?]. However, it is important to know and recognize that there is a world beyond frequentist probability and statistics, one which can be very powerful once it is unlocked. (More on that in later years, if you so desire!)</p>
-<p>If probability measures the long-term frequency of times that a particular event occurs, then how can we go about computing probabilities? Do we require to perform an experiment over and over again? Fortunately, the answer is no. The tools of probability we will cover allow us to make concrete statements about the probabilities of events without the need for repeated experimental runs. However, before dismissing the idea of repeatedly running an experiment at face value it is worth considering a tool we have at our disposal that renders this more possible than it has ever been: computers.</p>
+<p>For the election example, the Bayesian interpretation is somewhat easier to think through. To say that a candidate has a <span class="math inline">\(75\%\)</span> chance of winning the election means that “based on everything that has been observed, and any prior beliefs about the viability of the candidates, the subjective likelihood that the candidate wins the election is <span class="math inline">\(0.75\)</span>”. If we disagree about prior beliefs, or have experienced different pieces of information, then we may disagree on the probability. That is okay.</p>
+<p>In this course, we focus on the Frequentist interpretation. This is, in part, because Frequentist probability is an easier introduction to the concepts that are necessary for grasping uncertainty. Additionally, there is some research to suggest that Frequentist interpretations are fairly well understood by the general public <a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>. However, it is important to know and recognize that there is a world beyond Frequentist Probability and Statistics, one which can be very powerful once it is unlocked. <a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<p>If probability measures the long term proportion of times that a particular event occurs, how can we go about computing probabilities? Do we require to perform an experiment over and over again? Fortunately, the answer is no. The tools of probability we will cover allow us to make concrete statements about the probabilities of events without the need for repeated experimental runs. However, before dismissing the idea of repeatedly running an experiment at face value, it is worth considering a tool we have at our disposal that renders this more possible than it has ever been: computers.</p>
 </section>
 <section id="r-programming-for-probability-and-statistics" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="r-programming-for-probability-and-statistics"><span class="header-section-number">1.3</span> R Programming for Probability and Statistics</h2>
-<p>Throughout this course we will make use of a programming language for statistical computing, called <code>R</code>. While classically introductory statistics involved heavy computation of particular quantities, by hand, the use of a programming language (like R) frees us from the tedium of calculation, allowing for a far deeper focus on understanding, explanation, decision-making, and complex problem solving. While you will not be expected to write large R programs on your own, you will be expected to read simple scripts, make basic modifications, and to run code that is given to you.</p>
-<p>Throughout these course notes, where relevant, R code will be provided to demonstrate the ideas being discussed. It may be useful to have R open alongside the notes to ensure that you can get the same results that are printed throughout the notes. In this section we will cover some of the very basics of using R, and reading R code. If you are interested, there are plenty of resources to becoming a more proficient R programmer: this is a skill that will benefit you not only in this course, but in many courses to come, and far beyond your university training. If you have any programming in your background, R is a fairly simple language to learn; if not, R can be quite beginner friendly.</p>
-<p>TODO: Write some basic intro to R stuff.</p>
-<p>Recall that the motivation for the discussion of R was the frequentist interpretation of probability. One task that computers are very effective at is repeatedly performing some action. As a result, we can use computers to mimic the idea of repeatedly performing some experiment. Consider the simple case of flipping a coin over and over again.</p>
-<p>We can use <code>sample(options, size)</code> as a function to select <code>size</code> realizations from the set contained in <code>options</code>. Thus, if we take H we can view this as flipping a coin one time. If we use the loop structure we talked before, then we can simulate the experience of repeatedly flipping a coin. Consider the following R code.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3141592</span>)</span>
-<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>number_of_runs <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-4" class="code-annotation-target"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>tosses <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4">4</button><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(idx <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>number_of_runs){</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5">5</button><span id="annotated-cell-1-7" class="code-annotation-target"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>  toss <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"H"</span>,<span class="st">"T"</span>), <span class="dv">1</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="6">6</button><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(toss <span class="sc">==</span> <span class="st">"H"</span>){</span>
-<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>    tosses <span class="ot">&lt;-</span> <span class="fu">c</span>(tosses, <span class="dv">1</span>)</span>
-<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a>    tosses <span class="ot">&lt;-</span> <span class="fu">c</span>(tosses, <span class="dv">0</span>)</span>
-<span id="annotated-cell-1-12"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="annotated-cell-1-13"><a href="#annotated-cell-1-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="annotated-cell-1-14"><a href="#annotated-cell-1-14" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="7">7</button><span id="annotated-cell-1-15" class="code-annotation-target"><a href="#annotated-cell-1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(tosses)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="1" data-code-annotation="1">A seed ensures that the random numbers generated by the program are always the same. This helps to be able to reproduce our work.</span>
-</dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="3" data-code-annotation="2">This is how many times we want to repeat the experiment.</span>
-</dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="4" data-code-annotation="3">This is where we are going to store the results of our tosses. It creates an empty list for us.</span>
-</dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="6" data-code-annotation="4">Here we are going to loop over the experiments, one for each run.</span>
-</dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
-<dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="5">This is our coin toss. We are going to sample 1 from either ‘H’ or ‘T’</span>
-</dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="6">6</dt>
-<dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="8,9,10,11" data-code-annotation="6">If the coin toss is heads, then we add a 1 to the list. Otherwise, we add a zero to the list.</span>
-</dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="7">7</dt>
-<dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="15" data-code-annotation="7">Return the mean of all of the tosses.</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.522</code></pre>
-</div>
-</div>
-<p>It is worth adjusting some of the parameters within the simulation, and seeing what happens. What if you ran the experiment only 5 times? Ten thousand times? What if instead of counting the number of heads, we wanted to count the number of tails? What if we wanted to count the number of times that a six-sided die rolled a 4? All of these settings can be investigated with simple modifications to the provided script.</p>
-<p>When viewing the notes on the web, you will have the capacity to actually run the code, directly in your browser, and play around with the values that it gives. The code running will be somewhat limited, and so there may be cases where you are better copying the code onto your own computer, but this provides a really excellent method for getting used to working with R code directly. Consider the following code block and this time actually see if you can update the sample sizes, or change the generation process at all. There is no harm in trying: anything you do can be undone simply be reloading the page!</p>
+<p>Throughout this course we will make use of a programming language for statistical computing, called R. Classically, introductory statistics courses involved heavy computation of particular quantities by hand. The use of a programming language (like R) frees us from the tedium of these calculations, allowing for a deeper focus on understanding, explanation, decision-making, and complex problem solving. This is <strong>not</strong> to say we will <em>never</em> do problems by hand<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>, however, we will emphasize the use of statistical computing often. While you will not be expected to write R programs on your own, you will be expected to read simple scripts, make basic modifications, and to run code that is given to you.</p>
+<p>Throughout these course notes, where relevant, R code will be provided to demonstrate the ideas being discussed. When viewing the notes on the web, you will have the capacity to actually run the code, directly in your browser, and play around with the values that it gives. The code running will be somewhat limited, and so there may be cases where you are better copying the code onto your own computer, but this provides a really excellent method for getting used to working with R code directly. In this section we will cover some of the very basics of using R, and reading R code. If you are interested, there are plenty of resources to becoming a more proficient R programmer. This is a skill that will benefit you not only in this course, but in many courses to come, and far beyond your university training. If you have any programming in your background, R is a fairly simple language to learn; if not, R can be quite beginner friendly.</p>
+<section id="basic-introduction-to-r-programming" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="basic-introduction-to-r-programming"><span class="header-section-number">1.3.1</span> Basic Introduction to R Programming</h3>
+<p>When programming, the basic idea is that we are going to write instructions in a <strong>script</strong> which we will tell our computer to execute. These instructions are<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> performed one-by-one, from the top to the bottom of the script. We can have instructions which operate on their own, or which interact with previous (or future) instructions to add to the complexity. The trick with programming then is to determine which actions you need the computer to perform, in which order, to accomplish the task that you are setting out to do.</p>
+<p>To begin, we may consider a very simple R program, one which uses the programming language as a basic calculator.</p>
 <div id="qwebr-insertion-location-1"></div>
 <script type="module">
 // Retrieve the insertion point
@@ -1229,31 +1157,295 @@ currentDocumentLocation.appendChild(initializedElement);
 
 // Initialize a Monaco Editor Instance
 qwebrCreateMonacoEditorInstance(
-  `set.seed(3141592) 
-
-number_of_runs <- 1000 
-tosses <- c() 
-
-for(idx in 1:number_of_runs){ 
-  toss <- sample(c("H","T"), 1) 
-  if(toss == "H"){ 
-    tosses <- c(tosses, 1) 
-  } else { 
-    tosses <- c(tosses, 0) 
-  }
-}
-
-mean(tosses) `, 
+  `5 + 3 - (10*2) + 8^(25/3)`, 
   1);
 </script>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Here, the we ask the computer to perform some simple arithmetic operations. We use <code>+</code> for addition, <code>-</code> for subtraction, <code>*</code> for multiplication, <code>/</code> for division, and <code>^</code> for exponentiation. With the use of parentheses, any expressions relating to these basic operations can be performed. Note that here the result is simply output after it is computed. Try modifying the exact expressions being computed, allowing you to feel comfortable with these types of mathematical operations.</p>
+<div id="qwebr-insertion-location-2"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-2");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    2
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `5 + 3 - (10*2) + 8^(25/3)
+8 * 5`, 
+  2);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Here, we have two lines of math running with simple operations. Each is simply output when it is computed. These two results have no ability to interact with one another, and if we were to add more and more lines beneath, the same would continue to happen. If we want different commands to be able to interact with one another, we need a method for storing the results. To do so, we can define <strong>variables</strong>. In R, to define a variable, we use the syntax <code>variable_name &lt;- variable_value</code>. We can choose <em>almost</em> anything that we want for the variable name<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> and the variable value can also be of many types.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> The arrow between the two is the <strong>assignment operator</strong> and it simply tells R to assign the <code>variable_value</code> to be accessible from the <code>variable_name</code>.</p>
+<div id="qwebr-insertion-location-3"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-3");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    3
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `my_5 <- 5
+my_8 <- 8
+my_5
+my_8`, 
+  3);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>In this code we assign the variable <code>my_5</code> to contain the value 5, and the variable <code>my_8</code> to contain the value 8. We can output these as expressions themselves, simply by typing the variable name. Simply outputting these variables is not of particular interest, however, we can use the variables in later statements by simply including the variable name in them.</p>
+<div id="qwebr-insertion-location-4"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-4");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    4
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `my_5 <- 5
+my_8 <- 8
+my_5*my_8`, 
+  4);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Here, instead of simply outputting the variables, we multiply them together. We could have used <code>5 * 8</code> in this case for the same result, however, we are afforded a lot more flexibility with this approach. Much of this flexibility comes from our capacity to <em>change</em> the values of variables over time. Consider the following script, and try to understand why the output is the way that it is.</p>
+<div id="qwebr-insertion-location-5"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-5");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    5
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `my_5 <- 5
+my_8 <- 8
+my_5*my_8
+
+my_5 <- 10
+my_5*my_8`, 
+  5);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>At the top point in the script, before the first <code>my_5*my_8</code> call, The variable <code>my_5</code> has the value <code>5</code>. However, after this is called, the value is updated to be <code>10</code>. Then, when we call <code>my_5*my_8</code> again, this is now simplified to <code>10 * 8</code>, giving the result. Perhaps more importantly, we can take the value of an expression and assign that to a variable itself.</p>
+<div id="qwebr-insertion-location-6"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-6");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    6
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `my_5 <- 5
+my_8 <- 8
+result <- my_5*my_8
+result `, 
+  6);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Here, we define another variable. This time, <code>result</code> now contains the result of multiplying our previous two variables. Thus, when we output it, we get the same value. Take a moment to read through the following script, and try to understand what will happen at the end.</p>
+<div id="qwebr-insertion-location-7"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-7");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    7
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `my_5 <- 5
+my_8 <- 8
+result <- my_5*my_8
+
+my_5 <- result
+my_8 <- my_5
+result <- my_5 * my_8
+
+result `, 
+  7);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>The result is 1600. Why? We can read through this step-by-step in order to understand this. First we set our variables to have the values of <code>5</code> and <code>8</code>. Then, <code>result</code> is made to be the product of our two variables, which in this case is <code>40</code>. After that, we set the value of <code>my_5</code> to be the same as the value of <code>result</code>, which gives <code>my_5</code> equal to <code>40</code>. At this point, <code>result</code> equals <code>40</code>, <code>my_5</code> equals <code>40</code>, and <code>my_8</code> is equal to <code>8</code>. The next line updates <code>my_8</code> to be the same as the value of <code>my_5</code>, which we just clarified was <code>40</code>. As a result, all of the variables we have defined now take on the value of <code>40</code>. The final line before output, <code>result &lt;- my_5 * my_8</code> updates the value of <code>result</code> to be the product of the two variables again, this time giving <code>40 * 40</code> which gives 1600.</p>
+</section>
+<section id="function-calls-in-r" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="function-calls-in-r"><span class="header-section-number">1.3.2</span> Function Calls in R</h3>
+<p>Up until this point we have simply used numerical operations and variable assignment. While this allows R to serve as a very powerful calculator, we often want computers to do much more than arithmetic. As a result, we need to explore <strong>functions</strong> in R. A function is a piece of code which takes in various arguments and outputs some value (or values). Most of the way that we will use R in this course is through the use of function calls.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> This is exactly analogous to a mathematical function: it is simply some rule which maps input to output. In fact, some of the most basic functions in R are functions which relate to mathematical functions.</p>
+<div id="qwebr-insertion-location-8"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-8");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    8
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `x <- 10 
+
+exp(x)  # Computes the exponential, e to the power of x.
+sqrt(x) # Computes the square root of x.
+log(x)  # Computes the natural logarithm of x.`, 
+  8);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>The basic format of a function call will always be <code>function_name(param1, param2, ...)</code>. Each of these functions required only a single parameter, however, there are some functions which take more than one parameter. If we have decimal numbers, for instance, we may wish to round them. To do so, we can use the <code>round</code> function in R, which takes two parameters: the number we wish to round, and how many digits we wish to keep.</p>
+<div id="qwebr-insertion-location-9"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-9");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    9
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `unrounded_value <- 3.141592
+rounded_value <- round(unrounded_value, digits = 3)
+
+rounded_value`, 
+  9);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>There are a few things to note about this sequence of function calls. First, note that we assign the output of a function to a new variable. This behaves exactly as we saw above with simple numeric calculations. Next, consider that the output of the function<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> has a value of <span class="math inline">\(3.142\)</span>. That is: we rounded the value to <span class="math inline">\(3\)</span> decimal points, exactly as would be expected. The final part to note is that the second parameter passed to the function call is <strong>named</strong>. That is, instead of simply calling <code>round(unrounded_value, 3)</code>, we have <code>round(unrounded_value, digits = 3)</code>. If you had made the first call this would have worked perfectly.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> However, R also provides the ability to pass in parameter names alongside the parameter values with the syntax <code>function_name(param_name = param_value, ...)</code>. The benefit to doing this is two-fold. First, it is easier to read what is happening, especially for function calls that you have never seen before. Second, it removes the need to have the parameters ordered correctly. It is best practice to <strong>always</strong> include parameter names where you can.</p>
+<div id="qwebr-insertion-location-10"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-10");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    10
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `unrounded_value <- 3.141592
+rounded_value <- round(digits = 3, x = unrounded_value)
+
+rounded_value`, 
+  10);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>This code produces the exact same output, where now both parameters are named. Specifically, we could read this function call as “round the value of <code>x</code> to have <code>digits</code> decimal points.” If you had instead written <code>round(3, unrounded_value)</code>, you would get the value <code>3</code>, since now we are rounding <code>3</code> to <code>3.141592</code> decimal points.</p>
+</section>
+<section id="moving-beyond-numeric-data" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="moving-beyond-numeric-data"><span class="header-section-number">1.3.3</span> Moving Beyond Numeric Data</h3>
+<p>So far, everything that we have looked at has been numeric data. We have seen integers, and decimals. You can have negative results, say by taking <code>my_var &lt;- -5</code>. And while numbers are frequently useful, we will require further types of data to write useful computer programs. For this course we will focus on three additional data types: textual data which (referred to as <strong>strings</strong>), true and false binary data (referred to as <strong>booleans</strong>), and lists of the same data type (referred to as <strong>vectors</strong>). They will behave in much the same way as numeric data,</p>
+</section>
+<section id="r-programming-for-probability-interpretations" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="r-programming-for-probability-interpretations"><span class="header-section-number">1.3.4</span> R Programming for Probability Interpretations</h3>
+<p>Recall that the motivation for the discussion of R was the Frequentist interpretation of probability. One task that computers are very effective at is repeatedly performing some action. As a result, we can use computers to mimic the idea of repeatedly performing an experiment. Consider the simple case of flipping a coin over and over again.</p>
+<p>We can use <code>sample(x, size)</code> as a function to select <code>size</code> realizations from the set contained in <code>x</code>. Thus, if we take <code>sample(x = c("H","T"), size=1)</code> we can view this as flipping a coin one time. If we use the loop structure we talked before, then we can simulate the experience of repeatedly flipping a coin. Consider the following R code.</p>
+<p>Consider the following code block and this time actually see if you can update the sample sizes, or change the generation process at all. There is no harm in trying: anything you do can be undone simply be reloading the page!</p>
+<div id="qwebr-insertion-location-11"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-11");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    11
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# A seed ensures that the random numbers generated by the program 
+# are always the same. This helps to be able to reproduce our work.
+set.seed(3141592) 
+
+# This is how many times we want to repeat the experiment.
+number_of_runs <- 1000 
+
+# This is where we are going to store the results of our tosses. 
+# It creates an empty list for us.
+tosses <- c() 
+
+# Here we are going to loop over the experiments, one for each run.
+for(idx in 1:number_of_runs){ 
+    # This is our coin toss. We are going to sample 1 from either 
+    # 'H' or 'T'
+    toss <- sample(x = c("H","T"), size = 1) 
+
+    # If the coin toss is heads, then we add a 1 to the list. 
+    # Otherwise, we add a zero to the list.
+    if(toss == "H"){ 
+        tosses <- c(tosses, 1) 
+    } else { 
+        tosses <- c(tosses, 0) 
+    }
+}
+
+# Return the mean of all of the tosses.
+mean(tosses) `, 
+  11);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>It is worth adjusting some of the parameters within the simulation, and seeing what happens. What if you ran the experiment only 5 times? Ten thousand times? What if instead of counting the number of heads, we wanted to count the number of tails? What if we wanted to count the number of times that a six-sided die rolled a 4? All of these settings can be investigated with simple modifications to the provided script.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-fairCoin" class="csl-entry" role="listitem">
 Bartoš, František, Alexandra Sarafoglou, Henrik R. Godmann, Amir Sahrani, David Klein Leunk, Pierre Y. Gui, David Voss, et al. 2023. <span>“Fair Coins Tend to Land on the Same Side They Started: Evidence from 350,757 Flips.”</span> <a href="https://arxiv.org/abs/2310.04153">https://arxiv.org/abs/2310.04153</a>.
 </div>
+<div id="ref-rainPaper" class="csl-entry" role="listitem">
+Gigerenzer, Gerd, Ralph Hertwig, Eva Van Den Broek, Barbara Fasolo, and Konstantinos V Katsikopoulos. 2005. <span>“<span>‘A 30% Chance of Rain Tomorrow’</span>: How Does the Public Understand Probabilistic Weather Forecasts?”</span> <em>Risk Analysis: An International Journal</em> 25 (3): 623–29.
 </div>
+</div>
+</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -1264,6 +1456,18 @@ Bartoš, František, Alexandra Sarafoglou, Henrik R. Godmann, Amir Sahrani, Davi
 <li id="fn4"><p>This event happens one time out of every six.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>Again, about one out of every six rolls<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Be that flipping a heads, rolling a four, or observing rain on a given day.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Our experiment.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Our event.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Any relevant evidence that has previously been collected.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>See, for instance <span class="citation" data-cites="rainPaper">Gigerenzer et al. (<a href="#ref-rainPaper" role="doc-biblioref">2005</a>)</span>, where they study how people interpret the statement “there is a <span class="math inline">\(30\%\)</span> chance of rain tomorrow.” Interestingly, most people can convert this into a frequency statement (<span class="math inline">\(3\)</span> out of <span class="math inline">\(10\)</span>, say), even if the specific meaning is sometimes lost. They conclude that there are other issues in attempting to understanding this statement, issues which we will address later on.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>More on this in later years, if you so desire! Come have a chat, if that sounds interesting.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>To the contrary, some amount of by-hand problem solving helps to solidify these concepts.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Typically. There are some exceptions to this, but if this is your first time programming, you need not worry about that!<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>The variable name must start with a letter and can be a combination of letters, numbers, periods, and underscore.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>more on this later<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Note: when you begin to write programs for yourself, a lot of your time will be spent writing custom functions. If this is of interest to you, I suggest looking into programming more! For this course we will not need to define our own functions, except perhaps ones that will be defined for you.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>Which we have stored in the variable <code>rounded_value</code><a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>Try it out to convince yourself!<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
