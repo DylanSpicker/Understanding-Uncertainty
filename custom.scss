@@ -1,13 +1,6 @@
 /*-- scss:defaults --*/
 
 /*-- scss:rules --*/
-.question {
-    font-size: $h5-font-size;
-    font-weight: bolder;
-    padding: 2px;
-    display: block;
-}
-
 .callout.solution {
     margin-bottom: 5px !important;
 }
@@ -19,4 +12,25 @@
 
 .callout.callout-style-default>div.callout-header {
     font-size: 1.1rem;
+}
+
+.theorem.example {
+    border-left-color: var(--bs-pink) !important;
+    padding: 0.4em 0.7em;
+    border-left: 5px solid;
+    border-right: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    margin-bottom: 1em;
+}
+
+.theorem.definition {
+    padding: 0.4em 0.7em;
+    border-left: 5px solid;
+    border-right: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    margin-bottom: 1em;
 }

@@ -61,7 +61,7 @@ With the exception of the differences indicated until this point, there is other
 Just as with discrete distributions, there are continuous named distributions. These are typically governed by either a density function or else a distribution function, alongside the expected value and variance. And just like the named  discrete distributions, by matching the underlying scenario to the correct process, we are able to side step a lot of work in understanding the beahviour of the random quantities. Now, because there is no assumed knowledge of calculus, we will not work too widely with continuous distributions. We will introduce only two named continuosu distributions: the uniform distribution, which we have already started to see, and the normal distribution, which is far and away the most important distribution (discrete or continuous) in all of probability and statistics.
 
 ## The Uniform Distribution
-The uniform distribution, sometimes called the continuous uniform distribution to distinguish it from the discrete counterpart, is parameterized over a set interval specified as $(a,b)$. On this interval, equal probability density is given to every event,  which is to say that the density function is constant. Specifically, for $X\sim\text{Unif}(a,b)$ we note that $$f(x) = \begin{cases}\frac{1}{b-a} & x \in (a,b) \\ 0 & \text{otherwise}.\end{cases}$$ From the density function we can work out that $$F(x) = \frac{x - a}{b - a}$$ for $x \in (a,b)$, with $F(x) = 0$ for $x < a$ and $F(x) = 1$ for $x > b$. Moreover, we have $E[X] = \frac{a+b}{2}$ and $\var(X) = \frac{(b-a)^2}{12}$.
+The uniform distribution, sometimes called the continuous uniform distribution to distinguish it from the discrete counterpart, is parameterized over a set interval specified as $(a,b)$. On this interval, equal probability density is given to every event,  which is to say that the density function is constant. Specifically, for $X\sim\text{Unif}(a,b)$ we note that $$f(x) = \begin{cases}\frac{1}{b-a} & x \in (a,b) \\ 0 & \text{otherwise}.\end{cases}$$ From the density function we can work out that $$F(x) = \frac{x - a}{b - a}$$ for $x \in (a,b)$, with $F(x) = 0$ for $x < a$ and $F(x) = 1$ for $x > b$. Moreover, we have $E[X] = \frac{a+b}{2}$ and $\text{var}(X) = \frac{(b-a)^2}{12}$.
 
 TODO: Include some calculations
 
@@ -76,7 +76,7 @@ Perhaps more important than the places where the normal distribution arises in n
 
 ## The Specification of the Distribution
 A normal distribution is parameterized by two different parameters: the mean, $\mu$, and the varaince $\sigma^2$. We write $X\sim N(\mu,
-\sigma^2)$. These parameters directly correspond to the relevant quantities such that $E[X] =  \mu$ and $\var(X) = \sigma^2$. The density function is given by $$f(x) = \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).$$ This can be quite unwieldy to work with, however, when it is plotted we ssee that the normal distribution takes on a bell curve which is centered at $\mu$.
+\sigma^2)$. These parameters directly correspond to the relevant quantities such that $E[X] =  \mu$ and $\text{var}(X) = \sigma^2$. The density function is given by $$f(x) = \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).$$ This can be quite unwieldy to work with, however, when it is plotted we ssee that the normal distribution takes on a bell curve which is centered at $\mu$.
 
 TODO: include plots
 
@@ -87,7 +87,7 @@ Now, consider dividing this by $\sigma$, or equivalently, multiply by $\frac{1}{
 
 TODO: Include example
 
-If $Z\sim N(0,1)$, then we use a special notation for the density function and distribution function of $Z$. Specifically, we take the density function to be denoted $\varphi(z)$ and the cumulative distribution function to be given by $P(Z \leq z) = \Phi(z)$. The cumulative distribution function does not have a nice form to be written down, however, it is a commonly applied enough function that many  computing languages have implemented it, including of course R.
+If $Z\sim N(0,1)$, then we use a special notation for the density function and distribution function of $Z$. Specifically, we take the density function to be denoted $\text{var}phi(z)$ and the cumulative distribution function to be given by $P(Z \leq z) = \Phi(z)$. The cumulative distribution function does not have a nice form to be written down, however, it is a commonly applied enough function that many  computing languages have implemented it, including of course R.
 
 TODO: Demonstration of using *norm.
 
@@ -132,7 +132,7 @@ This becomes particularly useful when we think of generating many iid realizatio
 ## Normal Approximations
 A final utility to the normal distribution is in its ability to approximate other distributions. While several of these approximations exist, we will focus on the normal approximation to the binomial as an illustrative example. Historically, these approximations were critical for computing probabilities by hand in a timely fashion. Owing to the widespread use of statistical software, these usecases are more and more limited, which removes the necessity of these approximations directly. However, there  are two major advantages to learning these approximations. First, with an approximation it becomes easier to leverage the intuition you will build regarding the normal distribution in order to better understand the behaviour of other random quantities. Second, the normal approximation has the same "flavour" as many results in statistics, and so it presents an additional path to familiarity with these types of findings.
 
-Suppose that $X\sim\text{Bin}(n,p)$. Through knowledge of the binomial distribution, we know that $E[X] = np$ and $\var(X) = np(1-p)$. If $n$ is sufficiently large then it is possible to approximate a binomial distribution using a normal distribution with the corresponding mean and variance. That is, for $n$ large enough, we can take $X\sim\text{Bin}(n,p)$ to have approximately the same distribution as $W\sim N(np, np(1-p))$.
+Suppose that $X\sim\text{Bin}(n,p)$. Through knowledge of the binomial distribution, we know that $E[X] = np$ and $\text{var}(X) = np(1-p)$. If $n$ is sufficiently large then it is possible to approximate a binomial distribution using a normal distribution with the corresponding mean and variance. That is, for $n$ large enough, we can take $X\sim\text{Bin}(n,p)$ to have approximately the same distribution as $W\sim N(np, np(1-p))$.
 
 TODO: Brief example.
 

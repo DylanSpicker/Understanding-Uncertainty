@@ -1,3 +1,9 @@
 # Preface {.unnumbered}
 
-TODO: Write the front matter.
+## What is this Course?
+TODO: Write this.
+
+## Using These Notes 
+TODO: Write this.
+
+## Additional Resources
