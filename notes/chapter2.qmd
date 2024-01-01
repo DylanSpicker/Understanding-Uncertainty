@@ -244,20 +244,17 @@ setdiff(x = sample_space, y = union(E2, E3))
 ## Venn Diagrams
 The sample space is partitioned into outcomes, and the outcomes can be grouped together into events. These events are sets  and can be manipulated via basic set operations. Sometimes it is convenient to represent this process graphically through the use of Venn diagrams. In a Venn diagram, the sample space is represented by a rectangle with the possible outcomes placed inside, and events are drawn  inside of this as circles containing the relevant outcomes.
 
-![A basic Venn diagram, representing the sample space and two different events. In practice, the sample space would have the possible outcomes written into the rectangle, and the circled events would end up containing the relevant outcomes for those events.](/graphics/ch2-venn-diagram-basic.svg){#fig-venn-diagram}
+![A basic Venn diagram, representing the sample space and two different events. In practice, the sample space would have the possible outcomes written into the rectangle, and the circled events would end up containing the relevant outcomes for those events.](/graphics/ch2-venn-diagram-basic){#fig-venn-diagram}
 
 On the Venn diagram then, the overlap between circles represents their intersection, the combined area of two (or more) circles represents their union, and everything outside of a given circle represents the complement of a set. This can be a fairly useful method for representing sample spaces, and for visualizing the basic set operations that we use to manipulate events inside the sample spaces. A word of caution: Venn diagrams are useful tools, but they are not suitable as proofs themselves. It is possible to convince yourself of false truths if the wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than asa rigorous tool in and of themselves.^[This is a general principle in mathematics. Coming up with one example that makes something *seem* true does not form an argument demonstrating that it *is* true. Venn Diagrams should largely be thought of as specific examples of the underlying phenomena, which are great if you're a visual learner!]
 
-::: {#fig-venn-diagram-set-operations layout-nrow=3}
+![**Union:** The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two.](/graphics/ch2-venn-diagram-union){#fig-venn-diagram-union}
 
-![**Union:** The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two.](/graphics/ch2-venn-diagram-union.svg){#fig-venn-diagram-union}
+![**Intersection:** The intersection of events A and B is shaded here in red. The intersection of two sets is all of the content shared by both sets, given by the overlapping area of the two circles.](/graphics/ch2-venn-diagram-intersection){#fig-venn-diagram-intersection}
 
-![**Intersection:** The intersection of events A and B is shaded here in red. The intersection of two sets is all of the content shared by both sets, given by the overlapping area of the two circles.](/graphics/ch2-venn-diagram-intersection.svg){#fig-venn-diagram-intersection}
+![**Complement:** The complement of event A is shaded here in red. The complement of a sets is all of area inside of the sample space, not inside of the set. Here we show the complement of Event A, though Event B would be similar.](/graphics/ch2-venn-diagram-complement){#fig-venn-diagram-complement}
 
-![**Complement:** The complement of event A is shaded here in red. The complement of a sets is all of area inside of the sample space, not inside of the set. Here we show the complement of Event A, though Event B would be similar.](/graphics/ch2-venn-diagram-complement.svg){#fig-venn-diagram-complement}
-
-The basic set operations (unions, intersections, and complements) displayed as Venn Diagrams.
-:::
+{{< pagebreak >}}
 
 :::{#exm-charles-and-sadie-vd}
 ## Venn Diagram with Defined Events
@@ -267,7 +264,7 @@ Draw a Venn diagram representing the original game that Charles and Sadie played
 ## Solution
 The sample space contains the eight possible options. Only $(\text{T}, \text{T}, \text{T})$ does not belong to at least one of the events. Both events share $(\text{H},\text{H},\text{T})$, $(\text{H},\text{T},\text{H})$, and $(\text{T},\text{H},\text{H})$. 
 
-![](/graphics/ch2-venn-diagram-example.svg)
+![](/graphics/ch2-venn-diagram-example)
 ::::
 :::
 

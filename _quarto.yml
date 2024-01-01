@@ -37,8 +37,11 @@ format:
     - cosmo
     - custom.scss
     code-annotations: select
+    default-image-extension: svg
   pdf:
     documentclass: scrreprt
+    default-image-extension: png
+    fig-pos: H
 
 comments:
   hypothesis: 
