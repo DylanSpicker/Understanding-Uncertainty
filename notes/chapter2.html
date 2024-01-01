@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>STAT 1793: Course Notes - 2&nbsp; Core Concepts of Probability</title>
+<title>STAT 1793: Course Notes - 2&nbsp; The Mathematical Foundations of Statistical Experiments</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -41,8 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -83,6 +81,633 @@ ul.task-list li input[type="checkbox"] {
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">.monaco-editor pre {
+  background-color: unset !important;
+}
+
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-button-run {
+  background-color: #EEEEEE;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; /* Extra styling for consistency */
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration: none;
+  /* vertical-align: middle; */ /* Prevents a space from appearing between the code cell and button */
+  -webkit-user-select: none;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button-run:hover {
+  color: #000;
+  background-color: #e3e6ea;
+  border-color: #e1e5e9;
+}
+
+.qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+  pointer-events: none;
+  opacity: .65
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+</style>
+<script type="module">// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Determine if we need to install R packages
+var installRPackagesList = [''];
+// Check to see if we have an empty array, if we do set to skip the installation.
+var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+var autoloadRPackages = true;
+
+// Display a startup message?
+var showStartupMessage = true;
+var showHeaderMessage = false;
+if (showStartupMessage) {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  var startupMessageWebR = document.createElement("p");
+  startupMessageWebR.innerText = "🟡 Loading...";
+  startupMessageWebR.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  startupMessageWebR.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(startupMessageWebR);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML) {
+    // Append to the existing "title-block-header" element
+    headerHTML.appendChild(quartoTitleMeta);
+  } else if (headerRevealJS) {
+    // If using RevealJS, add to the "title-slide" div
+    headerRevealJS.appendChild(firstInnerDiv);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+// Retrieve the webr.mjs
+import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.2/webr.mjs";
+
+// Populate WebR options with defaults or new values based on 
+// webr meta
+globalThis.webR = new WebR({
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": ChannelType.Automatic
+});
+
+// Initialization WebR
+await webR.init();
+
+// Setup a shelter
+globalThis.webRCodeShelter = await new webR.Shelter();
+
+// Setup a pager to allow processing help documentation 
+await webR.evalRVoid('webr::pager_install()'); 
+
+// Function to set the button text
+function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message
+function qwebrUpdateStatusHeader(message) {
+  startupMessageWebR.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await globalThis.webR.installPackages([packageName]);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await globalThis.webR.evalRVoid(`library(${packageName});`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+    
+    // Display the update
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await globalThis.webR.flush();
+  }
+}
+
+
+// Check to see if any packages need to be installed
+if (setupRPackages) {
+  // Obtain only a unique list of packages
+  const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+  // Install R packages one at a time (either silently or with a status update)
+  await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+  if(autoloadRPackages) {
+    // Load R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+  }
+}
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+// Release document status as ready
+if (showStartupMessage) {
+  startupMessageWebR.innerText = "🟢 Ready!"
+}
+
+qwebrSetInteractiveButtonState(
+  `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+  true
+);
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};</script>
+<script type="module">// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+    Interactive: 'interactive',
+    Setup: 'setup',
+    Output: 'output',
+});
+
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await webR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await webR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // ---- 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid(`webr::canvas(width=${options["fig-width"]}, height=${options["fig-height"]})`);
+
+    const result = await webRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    try {
+
+        // Stop creating images
+        await webR.evalRVoid("dev.off()");
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${qwebrEscapeHTMLCharacters(evt.data)}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await webR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * options["fig-width"]);
+                canvas.setAttribute("height", 2 * options["fig-height"]);
+                canvas.style.width = "700px";
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            elements.outputGraphDiv.appendChild(canvas);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        webRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    evalType = EvalTypes.Interactive,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { "fig-width": 504, "fig-height": 360 };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+</script>
+<script type="module">// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (insertElement,
+  qwebrCounter, 
+  evalType = EvalTypes.Interactive,
+  options = {}) {
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive: 
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter);
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter);
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter);
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  insertElement.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-interactive-area';
+
+  // Create button element
+  var button = document.createElement('button');
+  button.className = 'btn btn-default qwebr-button-run';
+  button.disabled = true;
+  button.type = 'button';
+  button.id = 'qwebr-button-run-' + qwebrCounter;
+  button.textContent = '🟡 Loading webR...';
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(button);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-area';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-setup-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-setup-area';
+
+  return mainDiv;
+}</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -125,7 +750,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core Concepts of Probability</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Mathematical Foundations of Statistical Experiments</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -177,31 +802,31 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core Concepts of Probability</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Mathematical Foundations of Statistical Experiments</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Probailities with More than One Event</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Core Concepts of Probability</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Random Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probailities with More than One Event</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The Named Discrete Distributtions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Continuous Random Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Named Discrete Distributtions</span></span></a>
   </div>
 </li>
       </ul>
@@ -220,19 +845,163 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#basic-probability-models" id="toc-basic-probability-models" class="nav-link active" data-scroll-target="#basic-probability-models"><span class="header-section-number">2.1</span> Basic Probability Models</a></li>
-  <li><a href="#rules-of-probability" id="toc-rules-of-probability" class="nav-link" data-scroll-target="#rules-of-probability"><span class="header-section-number">2.2</span> Rules of Probability</a></li>
-  <li><a href="#secondary-properties-of-probabilities" id="toc-secondary-properties-of-probabilities" class="nav-link" data-scroll-target="#secondary-properties-of-probabilities"><span class="header-section-number">2.3</span> Secondary Properties of Probabilities</a></li>
-  <li><a href="#combinatorics" id="toc-combinatorics" class="nav-link" data-scroll-target="#combinatorics"><span class="header-section-number">2.4</span> Combinatorics</a></li>
+  <li><a href="#the-sample-space-and-events" id="toc-the-sample-space-and-events" class="nav-link active" data-scroll-target="#the-sample-space-and-events"><span class="header-section-number">2.1</span> The Sample Space and Events</a></li>
+  <li><a href="#set-operations-for-event-manipulation" id="toc-set-operations-for-event-manipulation" class="nav-link" data-scroll-target="#set-operations-for-event-manipulation"><span class="header-section-number">2.2</span> Set Operations for Event Manipulation</a>
+  <ul class="collapse">
+  <li><a href="#using-r-to-represent-sample-spaces-and-events-and-performing-set-operations" id="toc-using-r-to-represent-sample-spaces-and-events-and-performing-set-operations" class="nav-link" data-scroll-target="#using-r-to-represent-sample-spaces-and-events-and-performing-set-operations"><span class="header-section-number">2.2.1</span> Using R To Represent Sample Spaces and Events and Performing Set Operations</a></li>
+  </ul></li>
+  <li><a href="#venn-diagrams" id="toc-venn-diagrams" class="nav-link" data-scroll-target="#venn-diagrams"><span class="header-section-number">2.3</span> Venn Diagrams</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core Concepts of Probability</span></a></li></ol></nav>
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
+<script type="module">// Global dictionary to store Monaco Editor instances
+const qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (
+    initialCode, 
+    qwebrCounter) {
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value
+    editor.__qwebrinitialCode = initialCode;
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter,
+            EvalTypes.Interactive);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, EvalTypes.Interactive);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, EvalTypes.Interactive);
+  };
+
+}</script>
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Mathematical Foundations of Statistical Experiments</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core Concepts of Probability</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Mathematical Foundations of Statistical Experiments</span></h1>
 </div>
 
 
@@ -249,21 +1018,15 @@ window.Quarto = {
 </header>
 
 
-<section id="basic-probability-models" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="basic-probability-models"><span class="header-section-number">2.1</span> Basic Probability Models</h2>
-<p>While we gave the mathematical formulation for the frequentist interpretation of probability, we will typically require a more detailed mathematical model to work with probabilities. We want a description, framed in terms of mathematical objects, which will allow us to work out the probabilities of interest. In general, to form such a probability model we need both a list of all possible outcomes that the experiment can produce, as well as the probabilities of these outcomes.</p>
+<section id="the-sample-space-and-events" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="the-sample-space-and-events"><span class="header-section-number">2.1</span> The Sample Space and Events</h2>
+<p>While we gave the mathematical formulation for the Frequentist interpretation of probability, we will typically require a more detailed mathematical model to work with probabilities. We want a description, framed in terms of mathematical objects, which will allow us to work out the probabilities of interest. In general, to form such a probability model we need both a list of all possible outcomes that the experiment can produce, as well as the probabilities of these outcomes.</p>
 <p>We call the list of outcomes that can occur from an experiment the <strong>sample space</strong> of the experiment. The sample space is denoted <span class="math inline">\(\mathcal{S}\)</span>, and is defined as the set of all possible outcomes from the experiment. For instance, if the experiment is flipping a coin we have <span class="math inline">\(\mathcal{S} = \{\text{H}, \text{T}\}\)</span>. If the experiment is rolling a six-sided die then <span class="math inline">\(\mathcal{S} = \{1,2,3,4,5,6\}\)</span>.</p>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<div id="def-sample-space" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.1 (Sample Space)</strong></span> The sample space of a statistical experiment is the set of all possible outcomes that can be realized from that experiment. The sample space is typically denoted <span class="math inline">\(\mathcal{S}\)</span>, or with similar script letters.</p>
 </div>
-<div class="callout-title-container flex-fill">
-<span class="text-success"><i class="fa-solid fa-question-circle" aria-label="question-circle"></i></span> Example: Enumerating Sample Spaces
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="lead">Write down the complete sample space, <span class="math inline">\(\mathcal{S}\)</span> for the game that Sadie and Charles play, based on flipping and observing a coin three times in sequence.</span></p>
+<div id="exm-sample-space-basic" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.1 (Enumerating Sample Spaces)</strong></span> Write down the complete sample space, <span class="math inline">\(\mathcal{S}\)</span> for the game that Sadie and Charles play, based on flipping and observing a coin three times in sequence.</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -281,21 +1044,32 @@ Solution
 </div>
 </div>
 </div>
+<p>With the sample space formally defined, we can revisit <a href="chapter1.html#def-event-inf" class="quarto-xref">Definition&nbsp;<span>1.2</span></a>, and formally define the concept of an event.</p>
+<div id="def-event" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.2 (Event)</strong></span> An event is any collection of outcomes from a sample space for a statistical experiment. Mathematically, an event, <span class="math inline">\(E\)</span>, is a subset of <span class="math inline">\(\mathcal{S}\)</span>, and we write <span class="math inline">\(E\subset\mathcal{S}\)</span>.</p>
 </div>
-<p>With the sample space formally defined, we can introduce the formal concept of an event. Formally, an <strong>event</strong> is any collection of outcomes from an experiment. Mathematically, that means that an event is a subset of the sample space. Take for instance the experiment of a single coin. In this case, <span class="math inline">\(\{\text{H}\}\)</span>, <span class="math inline">\(\{\text{T}\}\)</span>, and <span class="math inline">\(\{\text{H},\text{T}\}\)</span> are examples of possible events. [TODO: clarify <span class="math inline">\(E_j\)</span>.] Here, <span class="math inline">\(E_1\)</span> corresponds to the event that a head is observed, <span class="math inline">\(E_2\)</span> corresponds to the event that a tail is observed, and <span class="math inline">\(E_3\)</span> corresponds to the event that either a tails or a heads was observed. Note that for each event we have <span class="math inline">\(E_1 \subset \mathcal{S}\)</span>, <span class="math inline">\(E_2 \subset \mathcal{S}\)</span>, and <span class="math inline">\(E_3 \subseteq \mathcal{S}\)</span>.</p>
-<p>While <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> each correspond to a simple outcome from the sample space, <span class="math inline">\(E_3\)</span> corresponds to a combined event. We call direct outcomes <strong>simple events</strong> and more complex outcomes like <span class="math inline">\(E_3\)</span> <strong>compound events</strong>. A simple event is an event that occurs in only one way: it is a direct outcome of the experiment. A compound event is an event that can occur in multiple, different ways, with multiple outcomes satisfying the event.</p>
-<p>If we consider rolling a six-sided die, then an example of a simple event is that a four shows up, denoted <span class="math inline">\(\{4\}\)</span>. A compound event could be that an even number is rolled, <span class="math inline">\(\{2,4,6\}\)</span>, or that a number greater than or equal to four is rolled, <span class="math inline">\(\{4, 5, 6\}\)</span>.</p>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
+<p>Take for instance the experiment of a single coin. In this case, <span class="math inline">\(E_1 = \{\text{H}\}\)</span>, <span class="math inline">\(E_2 = \{\text{T}\}\)</span>, and <span class="math inline">\(E_3 = \{\text{H},\text{T}\}\)</span> are examples of possible events. Here, <span class="math inline">\(E_1\)</span> corresponds to the event that a head is observed, <span class="math inline">\(E_2\)</span> corresponds to the event that a tail is observed, and <span class="math inline">\(E_3\)</span> corresponds to the event that either a tails or a heads was observed. Note that for each event we have <span class="math inline">\(E_1 \subset \mathcal{S}\)</span>, <span class="math inline">\(E_2 \subset \mathcal{S}\)</span>, and <span class="math inline">\(E_3 \subseteq \mathcal{S}\)</span>.</p>
+<div id="exm-basic-events" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.2 (Basic Event Listing)</strong></span> List several events from the game that Charles and Sadie are playing. Indicate why these are events.</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="text-success"><i class="fa-solid fa-question-circle" aria-label="question-circle"></i></span> Example: Specifying Events
+Solution
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="lead">What are the event(s) of interest for Charles and Sadie in the game that they are playing?</span></p>
+<p>Recall that an event is any subset of the sample space. In <a href="#exm-sample-space-basic" class="quarto-xref">Example&nbsp;<span>2.1</span></a> we define <span class="math inline">\(\mathcal{S}\)</span> for this game. As a result we can take sets which contain any combinations of these elements. For instance <span class="math inline">\(E_1 = \{(\text{H},\text{H},\text{H})\}\)</span>, or <span class="math inline">\(E_2 = \{(\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H})\}\)</span>, or <span class="math display">\[E_3 = \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{H},\text{T},\text{T}), (\text{T},\text{H},\text{H}), (\text{T},\text{H},\text{T}), (\text{T},\text{T},\text{H}), (\text{T},\text{T},\text{T})\}.\]</span> These are all events since <span class="math inline">\(E_1 \subset \mathcal{S}\)</span>, <span class="math inline">\(E_2 \subset \mathcal{S}\)</span>, and <span class="math inline">\(E_3 \subset \mathcal{S}\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="exm-event-identification" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.3 (Event Identification)</strong></span> Is “Charles has to pay” an event from the game that Charles and Sadie are playing? Why?</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -308,102 +1082,305 @@ Solution
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The event of interest in the game played by Sadie and Charles is either that at least two heads are rolled, or that at least two tails are rolled. These are both compound events as there are multiple possible outcomes that correspond to each event. For instance, we can take the event that at least two heads are rolled to be given by <span class="math inline">\(\{(\text{H},\text{H},\text{H}),(\text{H},\text{H},\text{T}), (\text{T},\text{H},\text{H}), (\text{H},\text{T},\text{H})\}\)</span>.</p>
+<p>No.&nbsp;“Charles has to pay” is not an event as it is not a subset of the sample space. This could plausibly be seen as a real-world description of a possible event, but it is not <em>itself</em> an event. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 </div>
 </div>
 </div>
 </div>
+<div id="exm-event-conversion" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.4 (Defining Events from Real-World Descriptions)</strong></span> What event corresponds to the description “Charles has to pay” in the game that Charles and Sadie are playing? Recall that they flip a coin three times, and Charles will pay if at least two heads come up, while Sadie will pay if at least two tails come up.</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
 </div>
-<p>We say that an event “occurs” if any of the outcomes comprising the event occur. As a result we can have more than one event occurring as the result of an experimental run. Consider the events “an even number was rolled” and “a number greater than or equal to four was rolled.” If a four or a six are rolled, both of these events happen simultaneously.</p>
-<p>Above, with <span class="math inline">\(E_3\)</span>, we saw that <span class="math inline">\(\mathcal{S}\)</span> can be thought of as an event since <span class="math inline">\(\mathcal{S} \subseteq \mathcal{S}\)</span>. This is the event that some (any) outcome is observed, which is certain to happen, and so we know it happens with probability <span class="math inline">\(1\)</span>. There is one further “special” event which is important to consider the so-called <em>null event</em>. Denote <span class="math inline">\(\emptyset\)</span>, the null event is an event that corresponds to “nothing in the sample space”. We know that everytime an experiment is run something in the sample space occurs, and so the null event is assigned probability zero.</p>
-<p>Ultimately, we think of all events as being sets. These sets are subsets of the sample space, and can contain single or multiple outcomes. Every quantity that we are interested in can be expressed as some set of outcomes of interest. In building up these sets it is common to construct through the use of “and”, “or”, and “not” language.</p>
-<p>Consider the example of drawing cards from a standard 52-card deck. In such a deck there are 13 card ranks, and four card suits, with one of each combination present. If we draw a single card we can think of the outcomes of the experiment as being any of the 52 possible combinations of rank and suit. However, we are often interested in an event such as “the card is red”, which is the same as saying “the card is a heart <strong>or</strong> the card is a diamond.” If we are interested in the event that the ace of spades was drawn, this can be expressed by saying that “the card was a spade <strong>and</strong> the card was an ace.” Perhaps we want to know whether the card was an ace through ten, this is the same as saying “the card is not a Jack, Queen, <strong>or</strong> King.”</p>
-<p>As you beginto pay attention to the linguistic representation of events that we use, you will notice more and more the use of these words to form compound events in particular. As a result, we give each of them a mathematical operation which allow us to quickly and compactly express these quantities in notation.</p>
-<p>We incapsulate <strong>or</strong> through the use of an operation known as the union. The union between two sets, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, is denoted mathematically as <span class="math inline">\(A \cup B\)</span>, and is read <span class="math inline">\(A\)</span> union <span class="math inline">\(B\)</span>. In words, the union of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is the set which contains all elements that are in either <span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span> (or both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>). When we wish to take the union of many sets, we write this as <span class="math display">\[\bigcup_{i=1}^n A_i.\]</span></p>
-<p>Alongside the union, we introduce the intersection, which captures “and”. The intersection of two sets, <span class="math inline">\(A\)</span>, and <span class="math inline">\(B\)</span>, is the set that contains all elements that belong to both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. We write this as <span class="math inline">\(A \cap B\)</span>, and say “<span class="math inline">\(A\)</span> intersect <span class="math inline">\(B\)</span>.” When we wish to take the union of many sets, we write this as <span class="math display">\[\bigcap_{i=1}^n A_i.\]</span></p>
-<p>Finally, we can consider making formal the concept of “not.” In particular, we take the <strong>complement</strong> of a set to be the set of all elements which occur in the universe but are not in the given set. We write this as <span class="math inline">\(A^C\)</span> and say “<span class="math inline">\(A\)</span> complement.” When dealing with a sample space, <span class="math inline">\(\mathcal{S}\)</span>, the complement of <span class="math inline">\(A\)</span> is the set of all elements in the sample space that are not in <span class="math inline">\(A\)</span>.</p>
-<p>TODO: example block with card hands.</p>
-<p>These concepts allow us to more compactly express sets of interest, and in particular, will be quite useful when it comes to assigning probability. To practice, considering rolling a 6-sided die, and take the outcomes <span class="math inline">\(A\)</span> to be that a <span class="math inline">\(6\)</span> is rolled, <span class="math inline">\(B\)</span> to be the outcome that the roll was at least <span class="math inline">\(5\)</span>, <span class="math inline">\(C\)</span> to be the outcome that the roll was less than a <span class="math inline">\(4\)</span>, and <span class="math inline">\(D\)</span> to be the outcome that the roll was odd.</p>
-<p>If we consider <span class="math inline">\(D^C\)</span> this is the event that the roll was even; <span class="math inline">\(A \cup C\)</span> is the event that a <span class="math inline">\(6\)</span> was rolled or that a number less than 44$ was rolled, which is to say anything other than a <span class="math inline">\(4\)</span> or a <span class="math inline">\(5\)</span>; if we take <span class="math inline">\(A \cup B\)</span> then this will be the same as <span class="math inline">\(B\)</span>, and <span class="math inline">\(A\cap B\)</span> will be <span class="math inline">\(A\)</span>. If we take the event <span class="math inline">\(A\cap C\)</span>, notice that no outcomes satisfy both conditions, and so <span class="math inline">\(A \cap C = \emptyset\)</span>. We can also join together multiple operations. <span class="math inline">\(D^C \cap C\)</span> gives us even numbers than less than <span class="math inline">\(4\)</span>, which is to say the outcome <span class="math inline">\(2\)</span>. <span class="math inline">\((A \cap B)^C\)</span> would represent the event that a number less than <span class="math inline">\(6\)</span> is rolled.</p>
-<p>Working with these basic set operations should become second nature. There are often very many ways of expressing the same event of interest using these different operations, and finding the most useful method of representing a particular event can often be the key to solving challenging probability questions. The first step in making sure that these tools are available to you is in ensuring that the basic operations are fully understood, and this comes via practice. Remember, unions represent “ors”, intersections represent “ands”, and complements represent “nots”.</p>
-<p>The sample space is partitioned into outcomes, and the oujtcomes can be grouped together into events. These events are sets and can be manipulated via basic set operations. Sometimes it is convenient to represent this process graphically through the use of Venn diagrams. In a Venn diagram, the sample space is represented by a rectangle with the possible outcomes placed inside, and events are drawn inside of this as circles containing the relevant outcomes.</p>
-<p>On the Venn diagram then, the overlap between circles represents their intersection, the combined area of two (or more) circles represents their union, and everything outside of a given circle represents the complement of a set. This can be a fairly useful method for representing sample spaces, and for visualizing the basic set operations that we use to manipulate events inside the sample spaces. A word of caution: Venn diagrams are useful tools, but they are not suitable as proof tools. It is possible to convince yourself of false truths if th e wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than asa rigorous tool in and of themselves.</p>
-<p>TODO: Add Example with Graphical Venn Diagrams</p>
-<p>Sample spaces, events, and the manipulation of these quantities forms a critical component of understanding probability models. In particular, they describe the complete set of occurences in a statistical experiment that we could be interested in assigning proobability values to. To finish formalizing a probability model, however, we also need some rule for assigning probability values.</p>
-<p>There are a plethora of ways to assign probabilities to diffferent events. At the most basic of levels any rule that maps from the space of possible events to numbers between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> are possible candidates for probability assignment. That is, probability assignmnet at its core is simply a set of rules which says “for this event, assign this probability.”</p>
-<p>TODO: Add example of coin toss space.</p>
-<p>Not every assignment of probability values is going to be valid. Suppose, for instance, that we have a six-sided die, each side labelled with a number from one to six. If I told you that there was a probability of <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(1\)</span>, <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(2\)</span>, <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(3\)</span>, <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(4\)</span>, <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(5\)</span> and <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(6\)</span>, you would probably call me a liar (or else conclude that I was mistaken and likely should not be teaching probability). If, as we have previously seen, probabilities represent the long-run proportion of time that a particular event is observed, we cannot have <span class="math inline">\(6\)</span> different outcomes each occuring in half of all caes.</p>
-<p>beyond the requirements that we can impose on what consitutes a “valid” probability function, we have another concern: scalability. It is perfectly acceptable to indicate that in an experiment with <span class="math inline">\(3\)</span> outcomes, the first has a probability of <span class="math inline">\(0.25\)</span>, the second of <span class="math inline">\(0.3\)</span>, and the third of <span class="math inline">\(0.45\)</span>. What if the experiment has <span class="math inline">\(100\)</span> possible outcomes? Or <span class="math inline">\(1000\)</span>?It quickly becomes apparent that enumerating the probabilities of each event in the sample space is an efficient way of assigning probabilities in practice.</p>
-<p>A core focus of our study of probability will be on finding techniques that allow us to efficiently encode probability information into manageable objects. Once we have done this, we will be in a position where we can manipulate these (comparatively) simple mathematical quantities in order to make statements and conclusions about any of the events of interest, even if they have never been explicitly outlined as having an assigned probability.</p>
-<p>While we will consider myriad methods for accomplishing these goals throughout our study of probability, we begin with a very useful model which simplifies probability assignment, without any added complexity, and creates a solid foundation for us to explore the properties of probability models. We start by considering <strong>equally likely outcomes.</strong> As the name suggests, the probability model considering equally likely outcomes assigns an equal probability to every possible outcome of the experiment. This is a probability model that we are already distinctly familiar with: flipping a coin, rolling a die, or drawing a card are all examples of experiments which rely on theequally likely outcomes framework.</p>
-<p>TODO: Write aside about the use of urn models.</p>
-<p>If we have an experiment with a sample space <span class="math inline">\(\mathcal{S}\)</span> which has <span class="math inline">\(|\mathcal{S}| = k\)</span> total elements, then each element of the sample space occurs with probability <span class="math inline">\(\frac{1}{k}\)</span>. In the case of the coin toss example, <span class="math inline">\(\mathcal{S} = \{\text{H}, \text{T}\}\)</span>, and so <span class="math inline">\(k=2\)</span> and each outcome occurs with probability <span class="math inline">\(\frac{1}{2}\)</span>. in the case of drawing a card at random, there are <span class="math inline">\(52\)</span> different outcomes, and so <span class="math inline">\(k=52\)</span>, and the probability of drawing any particular card is <span class="math inline">\(\frac{1}{52}\)</span>.</p>
-<p>It is critically important to recognize that the equal probability model assigns equal likelihood to the possible outcomes of an experiment, not the possible events of interest. It will not be the case in general that all events have the same probability. To make this concrete, consider the events <span class="math inline">\(A\)</span> “the ace of spades is drawn” and <span class="math inline">\(B\)</span> “any spade is drawn”. It is quite clear that <span class="math inline">\(B\)</span> happens more frequently than <span class="math inline">\(A\)</span>, even though we have said that this is an experiment with equally likely outcomes. Remember: an outcome is an observation from a single experimental run, an event is any subset of these possible outcomes.</p>
-<p>A core goal is then bridging the gap between the probability of an outcome - something which in the equally likely outcomes frameowkr we know - and the probability of an event - the quantity we are actually interested in. In ordder to do so, we will next consider the rules of probability, introducing the properties that are required for valid probability assignments and the techniques for manipulating probabilities to calculate the quantities of interest.</p>
-</section>
-<section id="rules-of-probability" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="rules-of-probability"><span class="header-section-number">2.2</span> Rules of Probability</h2>
-<p>We have previously seen that not every probability assignment can be valid. For instance, assigning <span class="math inline">\(0.5\)</span> probability to each outcome on a die leads to a nonsenical scenario. with just a little imagine we can conjure equally nonsensical scenarios in other regards. For instance, it would make very little sense to discuss the probability of an event being a negative value. What would it mean for an event to occur in a negative proportion of occurences? Alternatively, we can consider two events that are nested in one another: say event <span class="math inline">\(A\)</span> is that we draw the ace of spades, and event <span class="math inline">\(B\)</span> is that we draw any spade. Every single time that <span class="math inline">\(A\)</span> happens, we know that <span class="math inline">\(B\)</span> also happens. But there are ways that <span class="math inline">\(B\)</span> can occur wwhere <span class="math inline">\(A\)</span> does not (for instance, the Queen of spades being drawn). If I told you the probability of <span class="math inline">\(A\)</span> was <span class="math inline">\(0.5\)</span> and the probability of <span class="math inline">\(B\)</span> was <span class="math inline">\(0.2\)</span>, this would violate our base instincts: how can it be more likely to draw the ace of spades than it would be to draw any spade at all?</p>
-<p>Often in mathematics when we have an intuitive set of rules that particular quantities must obey, we work to add formality through defining properties of these concepts. To this end, we can define the key properties that probabilities must obey in order to be well-defined, valid probabilities.</p>
-<p>It turns out that with three (fairly) basic properties, we can completely specify what must be true in order for a set of probabilities to be valid.</p>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Charles will have to pay whenever there are two or more heads. As a result we can enumerate the possible outcomes that leads to Charles paying. We have</p>
 <ol type="1">
-<li><strong>Unitary</strong> Every valid set of probabilities must assign a probability of <span class="math inline">\(1\)</span> to the full sample space. That is, <span class="math inline">\(P(\mathcal{S}) = 1\)</span>. This is an intuitive requirement as every time the experiment is run we observe an outcome in the sample space, and as a result, in every experimental run the event <span class="math inline">\(\mathcal{S}\)</span> occurs.</li>
-<li><strong>Non-negative:</strong> We require that every probability is non-negative. We can have probabilities of <span class="math inline">\(0\)</span>, but we can never have a probability less than zero. Again, this is sensible (what would it mean to have a negative probability?), but is important to include in our formalization. Specifically, for everyevent <span class="math inline">\(E\)</span>, <span class="math inline">\(P(X) \geq 0\)</span>.</li>
-<li><strong>Additivity:</strong> the final property requires slightly more parsing on first pass. Suppose that we define a sequence of events, <span class="math inline">\(E_1, E_2, E_3, \dots\)</span> such that no two events have any overlap. That is, <span class="math inline">\(E_j \cap E_\ell = \emptyset\)</span> for all <span class="math inline">\(\ell\neq j\)</span>. Then, the final property we require for probabilities is that <span class="math display">\[P\left(\bigcup_i E_i\right) = \sum_i P(E_i).\]</span> That is, the probability of the union of disjoint events is the summation of the probability of these events.</li>
+<li><span class="math inline">\((\text{H},\text{H},\text{H})\)</span>;</li>
+<li><span class="math inline">\((\text{T},\text{H},\text{H})\)</span>;</li>
+<li><span class="math inline">\((\text{H},\text{T},\text{H})\)</span>;</li>
+<li><span class="math inline">\((\text{H},\text{H},\text{T})\)</span>.</li>
 </ol>
-<p>It is worth dwelling slightly on property (or axiom) 3 further. Consider the case of drawing a card at random from a deck of <span class="math inline">\(52\)</span> cards. Using the equally likely outcome model for probability we know that the probability that any card is drawn is given by <span class="math inline">\(\frac{1}{52}\)</span>. If I were to ask “what is the probability you draw that ace of spades?” under this model you can respond, immediately, with <span class="math inline">\(\frac{1}{52}\)</span>. Now, if I were to ask “what is the probability that you draw the ace of spades or two of spades?” intuitively you likely figure that this will be <span class="math inline">\(\frac{2}{52}\)</span>. Note that the event <span class="math inline">\(E_1\)</span>, “draw the ace of spades” and the event <span class="math inline">\(E_2\)</span> “draw the two of spades”, are disjoint events. Moreover, recall that the union is the “or” and so <span class="math inline">\(E_1\cup E_2\)</span> is the same as <span class="math inline">\(E_1\)</span> or <span class="math inline">\(E_2\)</span>. Taken together then, <span class="math display">\[P(E_1\cup E_2) = P(E_1) + P(E_2).\]</span> The axiom of additivity simply extends this intuition to an arbitrary number of events.</p>
-<p>TODO: insert example about additivity.</p>
-<p>These three axioms fully define valid probabilities. Any mechanism that assigns probability values to events which conforms to these rules will assign valid probabilities. While it may seem counter intuitive that such basic rules fully define our notion of a probability, these rules readily give rise to many other properties that are indispensible when working with probabilities.</p>
+<p>Any other outcome will have fewer than two heads, and as a result, Charles will not have to pay. Thus, to form an event, we consider the set with each of these outcomes in it. This gives <span class="math display">\[E = \{(\text{H},\text{H},\text{H}), (\text{T},\text{H},\text{H}), (\text{H},\text{T},\text{H}), (\text{H},\text{H},\text{T})\}.\]</span></p>
+</div>
+</div>
+</div>
+</div>
+<p>While the events <span class="math inline">\(E_1 = \{\text{H}\}\)</span> and <span class="math inline">\(E_2 = \{\text{T}\}\)</span> each correspond to a simple outcome from the sample space, <span class="math inline">\(E_3 = \{\text{H},\text{T}\}\)</span> corresponds to a combined event. We call direct outcomes <strong>simple events</strong> and more complex outcomes like <span class="math inline">\(E_3\)</span> <strong>compound events</strong>.</p>
+<div id="def-simple-event" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.3 (Simple Event)</strong></span> A simple event is any event which corresponds to exactly one outcome from the sample space. A simple event only has one way of occurring. The size of the set for a simple event will be <span class="math inline">\(1\)</span>. The sample space, in turn, is made up of a collection of simple events.</p>
+</div>
+<div id="def-compound-event" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.4 (Compound Event)</strong></span> A compound event is any event which corresponds to more than one outcome from the sample space. A compound event can occur in multiple different ways. The size of the set for the compound event will be greater than <span class="math inline">\(1\)</span>.</p>
+</div>
+<p>If we consider rolling a six-sided die, then an example of a simple event is that a four shows up, denoted <span class="math inline">\(\{4\}\)</span>. A compound event could be that an even number is rolled, <span class="math inline">\(\{2,4,6\}\)</span>, or that a number greater than or equal to four is rolled, <span class="math inline">\(\{4, 5, 6\}\)</span>.</p>
+<div id="exm-simple-versus-compound" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.5 (Identifying Simple and Compound Events)</strong></span> List an example of (at least) one simple and one compound event from the game that Charles and Sadie are playing.</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>An example of a simple event would be <span class="math inline">\(E_1 = \{(\text{H},\text{H},\text{H})\}\)</span> since it is comprised of exactly one outcome. If three heads are rolled, this event occurs, there is no other way for it to occur. An example of a compound event would be <span class="math display">\[E_2 = \{(\text{H},\text{H},\text{H}), (\text{T},\text{H},\text{H}), (\text{H},\text{T},\text{H}), (\text{H},\text{H},\text{T})\}.\]</span> Here there are four outcomes that correspond to this event, and if any of those outcomes are observed the event occurs.</p>
+</div>
+</div>
+</div>
+</div>
+<p>We say that an event “occurs” if any of the outcomes comprising the event occur. As a result we can have more than one event occurring as the result of a run of a statistical experimental. Suppose that we are rolling a fair, six-sided die. Consider the events “an even number was rolled” and “a number greater than or equal to four was rolled.” If a four or a six are rolled, both of these events happen simultaneously. Our goal when working with probability will be to assign probability values to different events. We will talk about how likely, or unlikely, events of interest are, given the underlying statistical experiment.</p>
+<p>Above, we defined <span class="math inline">\(E_3\)</span> to be equal to <span class="math inline">\(\mathcal{S}\)</span>. As a result, we can say that <span class="math inline">\(\mathcal{S}\)</span> <em>is</em> an event since <span class="math inline">\(\mathcal{S} \subseteq \mathcal{S}\)</span>. This is the event that any outcome is observed, which is certain to happen. Since it is certain to happen, we know it happens with probability <span class="math inline">\(1\)</span>. There is another “special” event which is important to consider. We call this the <em>null event</em>. Denote <span class="math inline">\(\emptyset\)</span>, the null event is an event that corresponds to “nothing in the sample space”. We know that every time an experiment is run something in the sample space occurs, and so the null event is assigned probability zero.</p>
+<div id="def-null-event" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.5 (Null Event)</strong></span> The null event, denoted <span class="math inline">\(\emptyset\)</span> or <span class="math inline">\(\{\}\)</span>, is an event from a statistical experiment which corresponds to nothing within the sample space. The null event has probability zero, and it is impossible to observe. Note that, no matter the sample space, <span class="math inline">\(\emptyset\subset\mathcal{S}\)</span>.</p>
+</div>
 </section>
-<section id="secondary-properties-of-probabilities" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="secondary-properties-of-probabilities"><span class="header-section-number">2.3</span> Secondary Properties of Probabilities</h2>
+<section id="set-operations-for-event-manipulation" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="set-operations-for-event-manipulation"><span class="header-section-number">2.2</span> Set Operations for Event Manipulation</h2>
+<p>Ultimately, we think of all events as being sets. These sets are subsets of the sample space, and can contain single or multiple outcomes. Every quantity that we are interested in can be expressed as some set of outcomes of interest. In building up these sets it is common to construct through the use of “and”, “or”, and “not” statements. That is, we may say that our event occurs if some outcome <strong>OR</strong> another outcome occurs, or perhaps our outcomes occurs if some outcome does <strong>NOT</strong> occur.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Consider the example of drawing cards from a standard 52-card deck. In such a deck there are 13 card ranks, and four card suits, with one of each combination present. If we draw a single card we can think of the outcomes of the experiment as being any of the 52 possible combinations of rank and suit. We are often interested in an event such as “the card is red”, which is the same as saying “the card is a heart <strong>or</strong> the card is a diamond.” Perhaps we want to know whether the card was an ace through ten, this is the same as saying “the card is <strong>not</strong> a Jack <strong>or</strong> a Queen <strong>or</strong> a King.” If we are interested in the event that the ace of spades was drawn, this can be expressed by saying that “the card was a spade <strong>and</strong> the card was an ace.”</p>
+<p>As you begin to pay attention to the linguistic representation of events that we use, you will notice more and more the use of these words to form compound events in particular. As a result, we give each of them a mathematical operation which allow us to quickly and compactly express these quantities in notation.</p>
+<div id="exm-linguistic-description" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.6 (Description of Events)</strong></span> Describe “Charles has to pay”, based on the game Charles and Sadie are playing, using language revolving around “or”, “and”, and “not” each. That is, describe observing at least two heads, on three flips of a coin, one time using “or”, one time using “and”, and one time using “not”.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There are plausibly many possible ways of doing so. Consider the following:</p>
 <ol type="1">
-<li><span class="math inline">\(P(E^C) = 1-P(E)\)</span>, and equivalently, <span class="math inline">\(P(E) = 1 - P(E^C)\)</span>.</li>
-<li><span class="math inline">\(P(\emptyset) = 0\)</span>.</li>
-<li><span class="math inline">\(P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1\cap E_2)\)</span>.</li>
-<li><span class="math inline">\(P(E_1 \cup E_2 \cup E_3) = P(E_1) + P(E_2) + P(E_3) - P(E_1\cap E_2) - P(E_1 \cap E_3) - P(E_2 \cap E_3) + P(E_1 \cap E_2 \cap E_3)\)</span>.</li>
-<li><span class="math inline">\(P(\bigcup_i E_i) \leq \sum_i P(E_i)\)</span>.</li>
+<li><strong>OR</strong>: Two heads are observed OR three heads are observed.</li>
+<li><strong>AND</strong>: Not two tails are observed AND not three tails are observed.</li>
+<li><strong>NOT</strong>: Not more than one tails are observed.</li>
 </ol>
-<p>TODO: write aside that proves these from the basic properties.</p>
-<p>TODO: am I missing any?</p>
-<p>These properties are immensely useful when computing probabilities. in fact, these secondary properties will be used with more frequency than the basic axioms when manipulating probabilities in practice. It is worth building comfort with these properties, early and often, as they will assist in manipulating all probability expressions in the future.</p>
-<p>TODO: Example showing complement trick.</p>
-<p>While these properties hold in general for all probability models, it is instructive to consider to focus on the equal probability model to begin building familiarity with probability broadly. These porperties allow us to take events – whether compound or simple – and combine, rewrite, and manipulate expressions to assist in the handling of the computations. Eventually, however, we require the ability to assign numerical values to these probabilities.</p>
-<p>Consider a simple event, <span class="math inline">\(A\)</span>. Recall that a simple event is defined as a possible outcome of an experiment, and so in this case, <span class="math inline">\(A\)</span> corresponds directly to an event that may be observed. If our sample space is <span class="math inline">\(k\)</span> elements large, then <span class="math inline">\(P(A) = \frac{1}{k}\)</span> in this framework. For instance, if <span class="math inline">\(A\)</span> is the event that a two is rolled on a six-sided fair die, then <span class="math inline">\(P(A) = \frac{1}{6}\)</span>.</p>
-<p>Now, suppose that a compound event is defined, <span class="math inline">\(B\)</span>. By definition, a compound event can be expressed as a set of possible outcomes from the experiment. Suppose that we enumerate these possible events as <span class="math inline">\(b_1, b_2, \dots, b_\ell\)</span>. Then we know that <span class="math inline">\(B\)</span> occurs if any of <span class="math inline">\(b_1,b_2,\dots,b_\ell\)</span> occur. Each <span class="math inline">\(b_j\)</span> are elements of the sample space and correspond to possible outcomes of the experiment. As a result, we know that <span class="math inline">\(P(b_j) = \frac{1}{k}\)</span>, based on the equal probability assumption. Now, if we take any two distinct <span class="math inline">\(b_j\)</span>, say <span class="math inline">\(b_i\)</span> and <span class="math inline">\(b_j\)</span>, we know that they must be disjoint: <span class="math inline">\(b_i \cap b_j = \emptyset\)</span>. This is because in an experiment run only one outcome can occur – there is nothing common between these two events, by definition. Moreover, we can say that <span class="math inline">\(B = b_1 \cup b_2 \cup\cdots\cup b_\ell\)</span>.</p>
-<p>Using the axioms of probability outlined above we therefore know that <span class="math inline">\(P(B) = \sum_{j=1}^\ell P(b_j) = \sum_{j=1}^\ell \frac{1}{k} = \frac{\ell}{k}\)</span>. This holds in general for any compound event in this setting. If we take <span class="math inline">\(B\)</span> to be the event that an even number is rolled on a six-sided die, then we would have <span class="math inline">\(b_1\)</span> is the event that a two is rolled, <span class="math inline">\(b_2\)</span> is the event that a four is rolled, and <span class="math inline">\(b_3\)</span> is the event that a six is rolled. There are three such events, and so the probability that an even number is rolled must be <span class="math inline">\(\frac{3}{6} = 0.5\)</span>, which matches our intuition.</p>
-<p>If we consider what this process is doing at its core, we can reframe the calculation as counting up the number of ways that event can happen and dividing by the total number of events. In our previous discussion, there were <span class="math inline">\(\ell\)</span> ways of <span class="math inline">\(B\)</span> occuring, a total of <span class="math inline">\(k\)</span> outcomes, and so the probability becomes <span class="math inline">\(\frac{\ell}{k}\)</span>. in the equal probability model, this will always be the case, the probability of any event <span class="math inline">\(A\)</span> occuring is given by <span class="math display">\[P(A) = \frac{N_A}{k},\]</span> where <span class="math inline">\(N_A\)</span> is the number of unique ways that <span class="math inline">\(A\)</span> can occur. In other words, <span class="math inline">\(N_A\)</span> is the size of the set <span class="math inline">\(A\)</span>.</p>
-<p>As a result of the realization, a large part of computing probabilities is in the counting of possible outcomes corresponding to different events. If we can determine the count of <span class="math inline">\(A\)</span>, <span class="math inline">\(N_A\)</span>, and the count of the total number of occurences, <span class="math inline">\(k\)</span>, then we can determine the probability of <span class="math inline">\(A\)</span>. This study of counting is known as <strong>combinatorics</strong>, and it is where we will turn our attention next.</p>
-<p>TODO: include example that shows the utility of complements, again. Show specifically for counting where, for instance, the complement is very small and is easier to count.</p>
+</div>
+</div>
+</div>
+</div>
+<p>We define mathematical operations to encapsulate the use of <strong>or</strong>, <strong>and</strong>, and <strong>not</strong>. These operations apply to any mathematical sets, whether they refer to events or not.</p>
+<div id="def-union" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.6 (Union)</strong></span> The union encodes the use of “or” in reference to two or more sets. Formally, with two sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, the union of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is the set of all elements that are contained in <span class="math inline">\(A\)</span>, or <span class="math inline">\(B\)</span>, or both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. We write <span class="math inline">\(A \cup B\)</span> and read that as <span class="math inline">\(A\)</span> union <span class="math inline">\(B\)</span>. When we wish to take the union of many sets, <span class="math inline">\(A_1,A_2,\dots,A_n\)</span>, we write this as <span class="math display">\[\bigcup_{i=1}^n A_i.\]</span></p>
+</div>
+<div id="def-intersection" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.7 (Intersection)</strong></span> The intersection captures the use of “and” in reference to two or more sets. Formally, the intersection of two sets, <span class="math inline">\(A\)</span>, and <span class="math inline">\(B\)</span>, is the set that contains all elements that belong to both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. We write <span class="math inline">\(A \cap B\)</span>, and say “<span class="math inline">\(A\)</span> intersect <span class="math inline">\(B\)</span>.” When we wish to take the union of many sets, <span class="math inline">\(A_1,A_2,\dots,A_n\)</span>, we write <span class="math display">\[\bigcap_{i=1}^n A_i.\]</span></p>
+</div>
+<div id="def-complement" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.8 (Complement)</strong></span> The complement makes formal the concept of “not.” The complement of a set to be the set of all elements which occur in the sample space but are not in the given set. We write this as <span class="math inline">\(A^C\)</span> and say “<span class="math inline">\(A\)</span> complement.” When dealing with a sample space, <span class="math inline">\(\mathcal{S}\)</span>, the complement of <span class="math inline">\(A\)</span> is the set of all elements in <span class="math inline">\(\mathcal{S}\)</span> that are not in <span class="math inline">\(A\)</span>.</p>
+</div>
+<div id="exm-basic-set-operations" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.7 (Basic Set Operations)</strong></span> For the game being played by Charles and Sadie, take <span class="math inline">\(E_1 = \{(\text{H}, \text{H}, \text{H})\}\)</span>, <span class="math inline">\(E_2 = \{(\text{H}, \text{H}, \text{H}), (\text{T}, \text{H}, \text{H}), (\text{H}, \text{T}, \text{H})\}\)</span>, and <span class="math inline">\(E_3 = \{(\text{H}, \text{H}, \text{T})\}\)</span>. Express the following events.</p>
+<ol type="a">
+<li><span class="math inline">\(E_1 \cup E_2\)</span>;</li>
+<li><span class="math inline">\(E_1 \cap E_2\)</span>;</li>
+<li><span class="math inline">\(E_2^C\)</span>;</li>
+<li><span class="math inline">\(E_2 \cap E_3\)</span>;</li>
+<li><span class="math inline">\(E_1 \cup E_2 \cup E_3\)</span>.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Directly from definitions we can write down each of the following sets:</p>
+<ol type="a">
+<li><span class="math display">\[E_1 \cup E_2 =  \{(\text{H}, \text{H}, \text{H}), (\text{T}, \text{H}, \text{H}), (\text{H}, \text{T}, \text{H})\} = E_2.\]</span> As a result, the union of <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> is simply <span class="math inline">\(E_2\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
+<li><span class="math display">\[E_1 \cap E_2 = \{(\text{H}, \text{H}, \text{H})\} = E_1.\]</span> As a result, the intersection of <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> is simply <span class="math inline">\(E_1\)</span>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></li>
+<li><span class="math display">\[E_2^C =  \{(\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{T}), (\text{T},\text{H},\text{T}), (\text{T},\text{T},\text{H}), (\text{T},\text{T},\text{T})\}.\]</span></li>
+<li>For <span class="math inline">\(E_2\cap E_3\)</span> note that they share no elements. As a result, the intersection will be empty since there are no elements common to both of them. This gives <span class="math inline">\(E_2\cap E_3 = \emptyset\)</span>.</li>
+<li><span class="math display">\[E_1 \cup E_2 \cup E_3 = \{(\text{H}, \text{H}, \text{H}), (\text{T}, \text{H}, \text{H}), (\text{H}, \text{T}, \text{H}), (\text{H}, \text{H}, \text{T})\}.\]</span></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>These concepts allow us to more compactly express sets of interest, and in particular, will be quite useful when it comes to assigning probability. The more times you work with the set operations, the more familiar they will become, and as a result, practice is always useful. Considering rolling a 6-sided die, and take <span class="math inline">\(A\)</span> to be the event that a <span class="math inline">\(6\)</span> is rolled, <span class="math inline">\(B\)</span> to be the event that the roll was at least <span class="math inline">\(5\)</span>, <span class="math inline">\(C\)</span> to be the event that the roll was less than <span class="math inline">\(4\)</span>, and <span class="math inline">\(D\)</span> to be the event that the roll was odd.</p>
+<ul>
+<li>If we consider <span class="math inline">\(D^C\)</span> this is the event that the roll was even;</li>
+<li><span class="math inline">\(A \cup C\)</span> is the event that a <span class="math inline">\(6\)</span> was rolled or that a number less than 44$ was rolled, which is to say anything other than a <span class="math inline">\(4\)</span> or a <span class="math inline">\(5\)</span>;</li>
+<li>If we take <span class="math inline">\(A \cup B\)</span> then this will be the same as <span class="math inline">\(B\)</span>, and <span class="math inline">\(A\cap B\)</span> will be <span class="math inline">\(A\)</span>.</li>
+<li>If we take the event <span class="math inline">\(A\cap C\)</span>, notice that no outcomes satisfy both conditions, and so <span class="math inline">\(A \cap C = \emptyset\)</span>.</li>
+<li>We can also join together multiple operations. <span class="math inline">\(D^C \cap C\)</span> gives us even numbers than less than <span class="math inline">\(4\)</span>, which is to say the outcome <span class="math inline">\(2\)</span>.</li>
+<li>Similarly, <span class="math inline">\((A \cap B)^C\)</span> would represent the event that a number less than <span class="math inline">\(6\)</span> is rolled.</li>
+</ul>
+<div id="exm-card-set-operations" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.8 (Set Operations with Decks of Cards)</strong></span> Charles and Sadie are tiring of flipping their coin, and so they wish to start using decks of cards sometimes instead. Before they formalize a game based on decks of cards, they want to make sure that they are both very comfortable working with these. Suppose that the sample space is defined to be the set of <span class="math inline">\(52\)</span> standard cards that may be drawn on a single draw. Describe how set operations can be used to form events corresponding to:</p>
+<ol type="a">
+<li>A red card is observed.</li>
+<li>Any card between an ace and a ten is observed.</li>
+<li>The ace of spades is observed.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>First, we define several events. Note, these can be defined in shorthand to prevent needing to write out many different cards. we take <span class="math inline">\(D\)</span> to be the event that a diamond is observed, we take <span class="math inline">\(H\)</span> to be the event that a heart is observed, take <span class="math inline">\(S\)</span> to be the event that a spade is observed<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and then take <span class="math inline">\(A\)</span> to be the event that an ace is observed, <span class="math inline">\(J\)</span> to be the event that a Jack is observed, <span class="math inline">\(Q\)</span> to be the event that a Queen is observed, and <span class="math inline">\(K\)</span> to be the event that a King is observed<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> then we can use unions, intersections, and complements to express the previously mentioned scenarios.</p>
+<ol type="a">
+<li>To represent outcomes corresponding to “the card is red”, we can use <span class="math inline">\(D \cup H\)</span>.</li>
+<li>To represent outcomes corresponding to “an ace through ten”, we can use <span class="math inline">\((J \cup Q \cup K)^C\)</span>.</li>
+<li>To represent the outcome “the ace of spades”, we may use <span class="math inline">\(A \cap S\)</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>Working with these basic set operations should eventually become second nature. There are often very many ways of expressing the same event using these different operations, and finding the most useful method of representing a particular event can often be the key to solving challenging probability questions. The first step in making sure that these tools are available to you is in ensuring that the basic operations are fully understood, and this comes via practice. Remember, unions represent “ors”, intersections represent “ands”, and complements represent “nots”.</p>
+<section id="using-r-to-represent-sample-spaces-and-events-and-performing-set-operations" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="using-r-to-represent-sample-spaces-and-events-and-performing-set-operations"><span class="header-section-number">2.2.1</span> Using R To Represent Sample Spaces and Events and Performing Set Operations</h3>
+<p>We have seen how R can encode sets of elements using vectors. For instance, we may take <code>sample_space &lt;- 1:6</code> to represent the sample space of rolling a six-sided die. We can form events by taking subsets of the relevant quantities, selecting via indices. Fortunately, there are also all of the basic set operations implemented in R. We can use <code>union(x, y)</code> to perform the union of <code>x</code> and <code>y</code>, <code>intersect(x, y)</code> to perform the intersection of <code>x</code> and <code>y</code>, and <code>setdiff(x = sample_space, y)</code> to perform the complement of <code>y</code> (assuming that <code>sample_space</code> contains the full sample space).<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# Define the Sample Space of Rolling a 20 Sided Die
+sample_space <- 1:20
+
+# Define some Events
+E1 <- sample_space[2]
+E2 <- sample_space[c(1, 3, 5, 7)]
+E3 <- sample_space[c(1, 2, 4, 8)]
+
+# Consider Set Operations
+union(x = E1, y = E2) # E1 union E2 = {1, 2, 3, 5, 7}
+union(x = E1, y = E3) # E1 union E3 = {1, 2, 4, 8}
+
+intersect(x = E1, y = E3) # E1 intersect E3 = {2}
+intersect(x = E1, y = E2) # E1 intersect E2 = {}
+
+setdiff(x = sample_space, y = E1) # E1 complement
+
+# (E2 union E3) complement
+setdiff(x = sample_space, y = union(E2, E3)) `, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </section>
-<section id="combinatorics" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="combinatorics"><span class="header-section-number">2.4</span> Combinatorics</h2>
-<p>Fundamentally, counting is a matter of assessing the size of a collection of items. Sometimes, this is very straightforward: if you want to count the number of students in a classroom, you start at <span class="math inline">\(1\)</span> and enumerate upwards through the integers. To count the number of days until the next Holiday, you do the same thin, sizing up the time that has to pass. If you really need to sleep, perhaps you will count imaginary sleep until you drift off. There is not much to this type of counting, and it is certainly deeply familiar to you all. However, it is also quite limited in its utility.</p>
-<p>Imagine that you are interested in determining how many possible ways there are of arranging a deck of $524 cards. You could of course arrange them in a particular order, then count each of those. That would take a tremendous amount of time, so perhaps instead of using an actual deck you just write down the combinations. Still, each combination is going to be <span class="math inline">\(52\)</span> cards long, and keeping track of that all will be a tremendous challenge. This seems like an approachable question, and yet, it illustrates how complicated (and large) these types of “counting” problems can become, very quickly.</p>
-<p>Fortunately for us there are some strategies for simplifying these problems down, some of which you are likely already familiar with. Think about trying to form an outfit where you have <span class="math inline">\(4\)</span> different sweaters, <span class="math inline">\(3\)</span>$ pairs of pants, and <span class="math inline">\(2\)</span> options for your shoes. Suppose that any combination of these will work well. How many are there? Well, if you have already picked your sweater and pants, then there are going to be <span class="math inline">\(2\)</span> different outfits using these: one wiht each of the pairs of shoes. This is true for each ppossible sweater-pant combination, and so we can count <span class="math inline">\(2\)</span> for each one these. In otherwords, to get the total number of outfits we multiply the number of sweater pant combinations by the number of shoe options (<span class="math inline">\(2\)</span>). the same rationale can be applied to count the total number of sweater-pant combinations. For each sweater, there are <span class="math inline">\(3\)</span> pairs of possible pants, and so to get the total number there we can take <span class="math inline">\(3\)</span> for each possible sweeater, or in other words, #3$.</p>
-<p>Taken together then we have <span class="math inline">\(4\times 3\times 2 = 24\)</span> total possible outfits. Another way of framining this is that we have to make three sequential decisions: which of the <span class="math inline">\(4\)</span> sweaters, which of the <span class="math inline">\(3\)</span> pants, and which of the <span class="math inline">\(2\)</span> shoes are to be worn. When we do this we multiply through the number of alternatives at each decision point to get the total number of combinations.</p>
-<p>This is known as the <strong>multiplication rule for counting</strong>, and it is a very general rule for counting up total combinations. Any time that we have to make a sequence of <span class="math inline">\(k\)</span> choices, and each choices <span class="math inline">\(j=1,\dots,k\)</span> has <span class="math inline">\(n_j\)</span> options, then the total number of combinations will be <span class="math inline">\(N = n_1\times n_2\times\cdots\times n_k\)</span>.</p>
-<p>TODO: add examples for the counting rule.</p>
-<p>Sometimes it is helpful to express the counting rule graphically. To do so we rely on <strong>tree diagrams</strong>. A tree diagram puts each of the decisions in sequence, and draws a branch for each separate option. You start with the first choice, drawing one branch for each of the <span class="math inline">\(n_1\)</span> alternatives, labelling each. Then, at the second choice, you do the same process at the end of each of the branches you drew for choice <span class="math inline">\(1\)</span>, this time drawing <span class="math inline">\(n_2\)</span> branches there (so you will have just drawn <span class="math inline">\(n_1\times n_2\)</span> branches). Then for each of those you draw the <span class="math inline">\(n_3\)</span> further branches, and so on and so forth until the end.</p>
-<p>If you want to know the total number of choices, you simply count the end points at the very end of the diagram. Each branch corresponds to a single option. To determine which combination of choices it corresponds to, you simply read off the branch labels at each branch you take. If you want to know how many possible combinations come with certain options selected, you canlook at only those branches which are downstream from the choices that you care about.</p>
-<p>TODO: include tree diagram.</p>
-<p>While tree diagrams can be quite useful for visualizing a problem, they often grow to be overly complex. As a result, we often need to fall back on the numerical representation afforded to us through the product rule for counting. Counting problems, in general, can very quickly become tremendously large and complex. For this reason, we have several tools to assist us in reducing this complexity based on common types of problems that we would like to count.</p>
-<p>The first useful tool for simplifying these problems is the <strong>factorial</strong>. The factorial of an integer, denoted by <span class="math inline">\(x!\)</span> (factorials are exciting because they always look like they are shouting!) is given by the product of all integers from <span class="math inline">\(x\)</span> to <span class="math inline">\(1\)</span>. That is, <span class="math inline">\(x! = x(x-1)(x-2)\cdots(2)(1)\)</span>. If we consider the product rule for counting then note that if <span class="math inline">\(n_1=1\)</span>, <span class="math inline">\(n_2=2\)</span>, … , <span class="math inline">\(n_k = k\)</span>, then the total number of options is <span class="math inline">\(k\times(k-1)\times\cdots\times 1 = k!\)</span>. The most common reason that this comes up is when we want to order a collection of items. Suppose that you have <span class="math inline">\(10\)</span> books that you want to plae on a shelf. You can view this as making <span class="math inline">\(10\)</span> sequential decisions: what book goes first, second, third, and so on. There are <span class="math inline">\(10\)</span> options for the first book, then <span class="math inline">\(9\)</span> for the second (any except for the first one), and then <span class="math inline">\(8\)</span> for the third (any except for the first <span class="math inline">\(2\)</span>). This continues down to the last book, and so we conclude that there are <span class="math inline">\(10\times9\times8\times\cdots\times1 = 10!\)</span> ways of arranging these books.</p>
-<p>TODO: Additional example on factorial.</p>
-<p>Sometimes, we want to still order items from a collection, but we want to only use a subset of these tiems. That is, suppose that you have <span class="math inline">\(20\)</span> books, only <span class="math inline">\(10\)</span> of them will fit on the self, and so you want to know: how many ways can you put <span class="math inline">\(10\)</span> books on the shelf, in order, from your collection of <span class="math inline">\(20\)</span>. Using the product rule of counting for this directly we can recognize that there are <span class="math inline">\(20\)</span> options for the first, then <span class="math inline">\(19\)</span>, then <span class="math inline">\(18\)</span>, and so on until there are <span class="math inline">\(11\)</span> choices for the <span class="math inline">\(10\)</span>th book to place. We can write this out in a seemingly strange way. <span class="math display">\[\frac{20(19)(18)(17)(16)(15)(14)(13)(12)(11)(10)(9)(8)(7)(6)(5)(4)(3)(2)(1)}{10(9)(8)(7)(6)(5)(4)(3)(2)(1)}.\]</span></p>
-<p>This expression is <span class="math inline">\(20!\)</span> divided by <span class="math inline">\(10!\)</span>, and gives the same as our argument from the product rule for counting directly. This is a more general result than our example with books would suggest. If we have <span class="math inline">\(n\)</span> items, and we want to choose <span class="math inline">\(k\)</span> of them and then order those choices, it will always be <span class="math inline">\(n!\)</span> divided by <span class="math inline">\((n-k)!\)</span>. We call this a <strong>permutation</strong>. Formally, we write <span class="math display">\[P_{n,k} = \frac{n!}{(n-k)!}.\]</span></p>
-<p>Permutations arise when we select ordered subsets from a collection. We often, in combinatorial problems, talk about ordering, though sometimes what we mean by this is slightly more abstract. Suppose that you want to form a committee with <span class="math inline">\(5\)</span> different people, each of whcih occupies a different role: the president, vice president, treasurer, note taker, and critic. If there are <span class="math inline">\(30\)</span> people to select for this, then there are <span class="math inline">\(P_{30,5}\)</span> total possible committees that can be formed. While there is not a sequential order here, we talk about this as being ordered since we can differentiate between the five roles. Instead of labelling them with their names, we could label them <span class="math inline">\(1\)</span> through <span class="math inline">\(5\)</span> and make the ordering more explicit.</p>
-<p>TODO: include additional example on permutations. TODO: 0! = 1.</p>
-<p>Factorials compute the number of orderings for a set of objects, and permutations compute the number of ordered subsets from a collection of ojects. What about when we do not wish to differentiate the order of subsets? Suppose that you still need to form a <span class="math inline">\(5\)</span> person committee, but you do not have explicit roles for the different members of the committee. Here we cannot use a permutation directly, as we know that this takes into account the order. Suppose that we formulate the ordered committee in a separate way: first, we select <span class="math inline">\(5\)</span> people without concern for their order, then we choose which order they will have.</p>
-<p>If <span class="math inline">\(M\)</span> represents the number of unordered sets of <span class="math inline">\(5\)</span> from this population, the product rule for counting tells us that the total number of ordered committees will be <span class="math inline">\(M\times 5!\)</span>, since there are <span class="math inline">\(5!\)</span> arrangements. Thus, we can write this down as <span class="math display">\[P_{30,5} = \frac{30!}{25!} = M\times 5! \implies M = \frac{30!}{25!5!}.\]</span> Once again, this will be true far more broadly than our committee example: if we want to select <span class="math inline">\(k\)</span> items from a collection of <span class="math inline">\(n\)</span>, we will have <span class="math inline">\(n!\)</span> divided by the product of <span class="math inline">\(k!\)</span> and <span class="math inline">\((n-k)!\)</span>. We refer to these as <strong>combinations</strong>.</p>
-<p>We will write <span class="math inline">\(\binom{n}{k}\)</span>, which we read as “<span class="math inline">\(n\)</span> choose <span class="math inline">\(k\)</span>”, which translates to “select <span class="math inline">\(k\)</span> items from a population of <span class="math inline">\(n\)</span> total options, without concern for their order.” Formally, a combination is defined as <span class="math display">\[\binom{n}{k} = \frac{n!}{k!(n-k)!}.\]</span></p>
-<p>To summarize: factorials allow us to order a complete collection, permutations allow us to select a subset with consideration of the ordering, and combinations allow us to select a subset from the collection without regard to the order. These three techniques can be used in combination with the product rule for counting to allow us to have very complex total summations.</p>
-<p>TODO: introduce example for combinations. TODO: introduce extended examples for counting, mixing the different techniques.</p>
-<p>There are other types of counting problems which ocassionally need to be considered. [TODO: include counting with replacement].</p>
-<p>While combinatorics is a field of study on its own, with many intriguing tools and developments surrounding the neumeration of objects, for the purposes of simple probability models these tools will suffice. Ultimately, we care about counting since in the equal probability model, the probability of any event can be determined by counting the number of ways that the event can occur and dividing by the total number of outcomes that are possible. That is, we use these tools to derive <span class="math inline">\(N_A\)</span>, the total number of ways that <span class="math inline">\(A\)</span> can occur, and <span class="math inline">\(N\)</span>, the total number of experimental outcomes, and then we conclude that <span class="math display">\[P(A) = \frac{N_A}{N}.\]</span></p>
-<p>TODO: include brief probability example.</p>
+</section>
+<section id="venn-diagrams" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="venn-diagrams"><span class="header-section-number">2.3</span> Venn Diagrams</h2>
+<p>The sample space is partitioned into outcomes, and the outcomes can be grouped together into events. These events are sets and can be manipulated via basic set operations. Sometimes it is convenient to represent this process graphically through the use of Venn diagrams. In a Venn diagram, the sample space is represented by a rectangle with the possible outcomes placed inside, and events are drawn inside of this as circles containing the relevant outcomes.</p>
+<div id="fig-venn-diagram" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-venn-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: A basic Venn diagram, representing the sample space and two different events. In practice, the sample space would have the possible outcomes written into the rectangle, and the circled events would end up containing the relevant outcomes for those events.
+</figcaption>
+<div aria-describedby="fig-venn-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="..\graphics/ch2-venn-diagram-basic.svg" class="img-fluid figure-img">
+</div>
+</figure>
+</div>
+<p>On the Venn diagram then, the overlap between circles represents their intersection, the combined area of two (or more) circles represents their union, and everything outside of a given circle represents the complement of a set. This can be a fairly useful method for representing sample spaces, and for visualizing the basic set operations that we use to manipulate events inside the sample spaces. A word of caution: Venn diagrams are useful tools, but they are not suitable as proofs themselves. It is possible to convince yourself of false truths if the wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than asa rigorous tool in and of themselves.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<div id="fig-venn-diagram-union" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-venn-diagram-union-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: <strong>Union:</strong> The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two.
+</figcaption>
+<div aria-describedby="fig-venn-diagram-union-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="..\graphics/ch2-venn-diagram-union.svg" class="img-fluid figure-img">
+</div>
+</figure>
+</div>
+<div id="fig-venn-diagram-intersection" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-venn-diagram-intersection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.3: <strong>Intersection:</strong> The intersection of events A and B is shaded here in red. The intersection of two sets is all of the content shared by both sets, given by the overlapping area of the two circles.
+</figcaption>
+<div aria-describedby="fig-venn-diagram-intersection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="..\graphics/ch2-venn-diagram-intersection.svg" class="img-fluid figure-img">
+</div>
+</figure>
+</div>
+<div id="fig-venn-diagram-complement" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-venn-diagram-complement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.4: <strong>Complement:</strong> The complement of event A is shaded here in red. The complement of a sets is all of area inside of the sample space, not inside of the set. Here we show the complement of Event A, though Event B would be similar.
+</figcaption>
+<div aria-describedby="fig-venn-diagram-complement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="..\graphics/ch2-venn-diagram-complement.svg" class="img-fluid figure-img">
+</div>
+</figure>
+</div>
+<div style="page-break-after: always;"></div>
+<div id="exm-charles-and-sadie-vd" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.9 (Venn Diagram with Defined Events)</strong></span> Draw a Venn diagram representing the original game that Charles and Sadie played. On the diagram draw the events corresponding to “At least one head <strong>and</strong> one tail are observed”, and “Sadie won the game”. Recall that three coins are tossed, and Sadie wins if at least two of them show heads.</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The sample space contains the eight possible options. Only <span class="math inline">\((\text{T}, \text{T}, \text{T})\)</span> does not belong to at least one of the events. Both events share <span class="math inline">\((\text{H},\text{H},\text{T})\)</span>, <span class="math inline">\((\text{H},\text{T},\text{H})\)</span>, and <span class="math inline">\((\text{T},\text{H},\text{H})\)</span>.</p>
+<p><img src="..\graphics/ch2-venn-diagram-example.svg" class="img-fluid"></p>
+</div>
+</div>
+</div>
+</div>
+<p>Sample spaces, events, and the manipulation of these quantities forms a critical component of understanding probability models. In particular, they describe the complete set of occurrences in a statistical experiment that we could be interested in assigning probability values to. To formalize a probability model, however, we also need some rule for assigning probability values.</p>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>As time goes on we will become less strict about this language. When speaking to a statistician, they would understand “Charles has to pay” as an event that <em>can</em> occur based on the defined sample space, by simply transforming it into the language of the sample space. However, the distinction is important to make: events are always subsets of the sample space. Once this is second nature, it is a rule that can be loosened, as the knowledge can always be fallen back on when needed. Simply put: you need to know the rules in order to break them!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>While both <em>or</em> and <em>not</em> language is likely clear from the examples we have seen so far, <em>and</em> language may be slightly less obvious. While we will explore this in more depth shortly, note that you could not have two simple events occurring simultaneously. If <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> are both simple events, then you can have <span class="math inline">\(E_1\)</span> <strong>or</strong> <span class="math inline">\(E_2\)</span>, and you can have <strong>not</strong> <span class="math inline">\(E_1\)</span>, but you cannot have <span class="math inline">\(E_1\)</span> <strong>and</strong> <span class="math inline">\(E_2\)</span>. This is <em>not</em> true for compound events.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>It may be helpful to notice that you can mix and match these terms to your hearts content!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Note that whenever we have two events, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, with <span class="math inline">\(A\subset B\)</span>, then <span class="math inline">\(A\cup B = B\)</span>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Note that whenever we have two events, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, with <span class="math inline">\(A\subset B\)</span> then <span class="math inline">\(A \cap B = A\)</span>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Note, these three are compound events with <span class="math inline">\(13\)</span> different outcomes contained within them.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Compound events with four different options.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>R does not implement complements directly, and instead implements the set difference operation. The set difference function, <code>setdiff(x, y)</code> returns the set of all elements in <code>x</code> which are not in <code>y</code>, a sort of subtracting of sets. The complement of a set is defined to be <span class="math inline">\(A^C = \text{setdiff}(\mathcal{S}, A)\)</span>, indicating why this works!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>This is a general principle in mathematics. Coming up with one example that makes something <em>seem</em> true does not form an argument demonstrating that it <em>is</em> true. Venn Diagrams should largely be thought of as specific examples of the underlying phenomena, which are great if you’re a visual learner!<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -837,8 +1814,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/chapter3.html" class="pagination-link" aria-label="<span class='chapter-number'>3</span>&nbsp; <span class='chapter-title'>Probailities with More than One Event</span>">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Probailities with More than One Event</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../notes/chapter3.html" class="pagination-link" aria-label="<span class='chapter-number'>3</span>&nbsp; <span class='chapter-title'>The Core Concepts of Probability</span>">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Core Concepts of Probability</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
