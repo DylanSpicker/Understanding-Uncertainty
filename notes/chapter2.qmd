@@ -1,180 +1,274 @@
-# Core Concepts of Probability
-## Basic Probability Models
-While we gave the mathematical formulation for the frequentist interpretation of probability, we will typically require a more detailed mathematical model to work with probabilities. We want a description, framed in terms of mathematical objects,  which will allow us to work out the probabilities of interest. In general, to form such a probability model we need both a list of all possible outcomes that the experiment can produce, as well as the probabilities of these outcomes.
+# The Mathematical Foundations of Statistical Experiments
+## The Sample Space and Events
+While we gave the mathematical formulation for the Frequentist interpretation of probability, we will typically require a more detailed mathematical model to work with probabilities. We want a description, framed in terms of mathematical objects,  which will allow us to work out the probabilities of interest. In general, to form such a probability model we need both a list of all possible outcomes that the experiment can produce, as well as the probabilities of these outcomes.
 
 We call the list of outcomes that can occur from an experiment the **sample space** of the experiment. The sample space is denoted $\mathcal{S}$, and is defined as the set of all possible outcomes from the experiment. For instance, if the experiment is flipping a coin we have $\mathcal{S} = \{\text{H}, \text{T}\}$. If the experiment is rolling a six-sided die then $\mathcal{S} = \{1,2,3,4,5,6\}$. 
 
-:::{.callout-tip icon=false}
-## [{{<fa question-circle>}}]{.text-success} Example: Enumerating Sample Spaces
-[Write down the complete sample space, $\mathcal{S}$ for the game that Sadie and Charles play, based on flipping and observing a coin three times in sequence.]{.lead}
+:::{#def-sample-space}
+## Sample Space
+The sample space of a statistical experiment is the set of all possible outcomes that can be realized from that experiment. The sample space is typically denoted $\mathcal{S}$, or with similar script letters.
+:::
+
+:::{#exm-sample-space-basic}
+## Enumerating Sample Spaces
+
+Write down the complete sample space, $\mathcal{S}$ for the game that Sadie and Charles play, based on flipping and observing a coin three times in sequence.
 
 ::::{.callout .solution collapse="true"}
 ## Solution
+
 For Sadie and Charles their experiment involves tossing a coin three times in sequence. As a result each outcome is a three-dimensional list of values, given for instance by $(\text{H},\text{H},\text{H})$. As a result, we can write down the full sample space as $$\mathcal{S} = \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{H},\text{T},\text{T}), (\text{T},\text{H},\text{H}), (\text{T},\text{H},\text{T}), (\text{T},\text{T},\text{H}), (\text{T},\text{T},\text{T})\}.$$
 ::::
 :::
 
-With the sample space formally defined, we can introduce the formal concept of an event. Formally, an **event** is any collection of outcomes from an experiment. Mathematically, that means that an event is a subset of the sample space. Take for instance the experiment of a single coin. In this case, $\{\text{H}\}$, $\{\text{T}\}$, and $\{\text{H},\text{T}\}$ are examples of possible events. [TODO: clarify $E_j$.] Here, $E_1$ corresponds to the event that a head is observed, $E_2$ corresponds to the event that a tail is observed, and $E_3$ corresponds to the event that either a tails or a heads was observed. Note that for each event we have $E_1 \subset \mathcal{S}$, $E_2 \subset \mathcal{S}$, and $E_3 \subseteq \mathcal{S}$.
+With the sample space formally defined, we can revisit @def-event-inf, and formally define the concept of an event. 
 
-While $E_1$ and $E_2$ each correspond to a simple outcome from the sample space, $E_3$ corresponds to a combined event. We call direct outcomes **simple events** and more complex outcomes like $E_3$ **compound events**. A simple event is an event that occurs in only one way: it is a direct outcome of the experiment. A compound event is an event that can occur in multiple, different ways, with multiple outcomes satisfying the event. 
+:::{#def-event}
+## Event 
 
-If we consider rolling a six-sided die, then an example of a simple event is that a four shows up, denoted $\{4\}$. A compound event could be that an even number is rolled, $\{2,4,6\}$, or that a number greater  than or equal to four is rolled, $\{4, 5, 6\}$. 
+An event is any collection of outcomes from a sample space for a statistical experiment. Mathematically, an event, $E$, is a subset of $\mathcal{S}$, and we write $E\subset\mathcal{S}$.
+:::
 
-:::{.callout-tip icon=false}
-## [{{<fa question-circle>}}]{.text-success} Example: Specifying Events
-[What are the event(s) of interest for Charles and Sadie in the game that they are playing?]{.lead}
+Take for instance the experiment of a single coin. In this case, $E_1 = \{\text{H}\}$, $E_2 = \{\text{T}\}$, and $E_3 = \{\text{H},\text{T}\}$ are examples of possible events. Here, $E_1$ corresponds to the event that a head is observed, $E_2$ corresponds to the event that a tail is observed, and $E_3$ corresponds to the event that either a tails or a heads was observed. Note that for each event we have $E_1 \subset \mathcal{S}$, $E_2 \subset \mathcal{S}$, and $E_3 \subseteq \mathcal{S}$.
 
-::::{.callout .solution collapse="true"}
+:::{#exm-basic-events}
+## Basic Event Listing
+List several events from the game that Charles and Sadie are playing. Indicate why these are events.
+
+::::{.callout .solution collapse='true'}
 ## Solution
-The event of interest in the game played by Sadie and Charles is either that at least two heads are rolled, or that at least two tails are rolled. These are both compound events as there are multiple possible outcomes that correspond to each event. For instance, we can take the event that at least two heads are rolled to be given by $\{(\text{H},\text{H},\text{H}),(\text{H},\text{H},\text{T}), (\text{T},\text{H},\text{H}), (\text{H},\text{T},\text{H})\}$.
+Recall that an event is any subset of the sample space. In @exm-sample-space-basic we define $\mathcal{S}$ for this game. As a result we can take sets which contain any combinations of these elements. For instance $E_1 = \{(\text{H},\text{H},\text{H})\}$, or $E_2 = \{(\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H})\}$, or $$E_3 = \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{H},\text{T},\text{T}), (\text{T},\text{H},\text{H}), (\text{T},\text{H},\text{T}), (\text{T},\text{T},\text{H}), (\text{T},\text{T},\text{T})\}.$$ These are all events since $E_1 \subset \mathcal{S}$, $E_2 \subset \mathcal{S}$, and $E_3 \subset \mathcal{S}$.
 ::::
 :::
 
-We say that an event "occurs" if any of the outcomes comprising the event occur. As a result we can have more than one event occurring as the result of an experimental run. Consider the events "an even number was rolled" and "a number greater than or equal to four was rolled." If a four or a six are rolled, both of these events happen simultaneously. 
+:::{#exm-event-identification}
+## Event Identification
+Is "Charles has to pay" an event from the game that Charles and Sadie are playing? Why?
 
-Above, with $E_3$, we saw that $\mathcal{S}$ can be thought of as an event since $\mathcal{S} \subseteq \mathcal{S}$. This is the event that some (any) outcome is observed, which is certain to happen, and so we know it happens with probability $1$. There is one further "special" event which is important to consider the so-called *null event*. Denote $\emptyset$, the null event is an event that corresponds to "nothing in the sample space". We know that everytime an experiment is run something in the sample space occurs, and so the null event is assigned probability zero.
+::::{.callout .solution collapse='true'}
+## Solution
+No. "Charles has to pay" is not an event as it is not a subset of the sample space. This could plausibly be seen as a real-world description of a possible event, but it is not *itself* an event. ^[As time goes on we will become less strict about this language. When speaking to a statistician, they would understand "Charles has to pay" as an event that *can* occur based on the defined sample space, by simply transforming it into the language of the sample space. However, the distinction is important to make: events are always subsets of the sample space. Once this is second nature, it is a rule that can be loosened, as the knowledge can always be fallen back on when needed. Simply put: you need to know the rules in order to break them!]
+::::
+:::
+
+:::{#exm-event-conversion}
+## Defining Events from Real-World Descriptions
+What event corresponds to the description "Charles has to pay" in the game that Charles and Sadie are playing? Recall that they flip a coin three times, and Charles will pay if at least two heads come up, while Sadie will pay if at least two tails come up.
 
-Ultimately,  we think of all events as being sets. These sets are subsets of the sample space, and can contain single or multiple outcomes. Every quantity that we are interested in can be expressed as some set of outcomes of interest. In building up these sets it is common to construct through the use of "and", "or", and "not" language.
+::::{.callout .solution collapse='true'}
+## Solution
+Charles will have to pay whenever there are two or more heads. As a result we can enumerate the possible outcomes that leads to Charles paying. We have
+
+1. $(\text{H},\text{H},\text{H})$; 
+2. $(\text{T},\text{H},\text{H})$; 
+3. $(\text{H},\text{T},\text{H})$; 
+4. $(\text{H},\text{H},\text{T})$.
+
+Any other outcome will have fewer than two heads, and as a result, Charles will not have to pay. Thus, to form an event, we consider the set with each of these outcomes in it. This gives $$E = \{(\text{H},\text{H},\text{H}), (\text{T},\text{H},\text{H}), (\text{H},\text{T},\text{H}), (\text{H},\text{H},\text{T})\}.$$
+::::
+:::
+
+While the events $E_1 = \{\text{H}\}$ and $E_2 = \{\text{T}\}$ each correspond to a simple outcome from the sample space, $E_3 = \{\text{H},\text{T}\}$ corresponds to a combined event. We call direct outcomes **simple events** and more complex outcomes like $E_3$ **compound events**. 
+
+:::{#def-simple-event}
+## Simple Event
+A simple event is any event which corresponds to exactly one outcome from the sample space. A simple event only has one way of occurring. The size of the set for a simple event will be $1$. The sample space, in turn, is made up of a collection of simple events.
+:::
+
+:::{#def-compound-event}
+## Compound Event
+A compound event is any event which corresponds to more than one outcome from the sample space. A compound event can occur in multiple different ways. The size of the set for the compound event will be greater than $1$.
+:::
+
+If we consider rolling a six-sided die, then an example of a simple event is that a four shows up, denoted $\{4\}$. A compound event could be that an even number is rolled, $\{2,4,6\}$, or that a number greater  than or equal to four is rolled, $\{4, 5, 6\}$. 
+
+:::{#exm-simple-versus-compound}
+## Identifying Simple and Compound Events
+List an example of (at least) one simple and one compound event from the game that Charles and Sadie are playing. 
+
+::::{.callout .solution collapse='true'}
+## Solution
+An example of a simple event would be $E_1 = \{(\text{H},\text{H},\text{H})\}$ since it is comprised of exactly one outcome. If three heads are rolled, this event occurs, there is no other way for it to occur. An example of a compound event would be $$E_2 = \{(\text{H},\text{H},\text{H}), (\text{T},\text{H},\text{H}), (\text{H},\text{T},\text{H}), (\text{H},\text{H},\text{T})\}.$$ Here there are four outcomes that correspond to this event, and if any of those outcomes are observed the event occurs.
+::::
+:::
+
+We say that an event "occurs" if any of the outcomes comprising the event occur. As a result we can have more than one event occurring as the result of a run of a statistical experimental. Suppose that we are rolling a fair, six-sided die. Consider the events "an even number was rolled" and "a number greater than or equal to four was rolled." If a four or a six are rolled, both of these events happen simultaneously. Our goal when working with probability will be to assign probability values to different events. We will talk about how likely, or unlikely, events of interest are, given the underlying statistical experiment.
+
+Above, we defined $E_3$ to be equal to $\mathcal{S}$. As a result, we can say that $\mathcal{S}$ *is* an event since $\mathcal{S} \subseteq \mathcal{S}$. This is the event that any outcome is observed, which is certain to happen. Since it is certain to happen, we know it happens with probability $1$. There is another "special" event which is important to consider. We call this the *null event*. Denote $\emptyset$, the null event is an event that corresponds to "nothing in the sample space". We know that every time an experiment is run something in the sample space occurs, and so the null event is assigned probability zero.
+
+:::{#def-null-event}
+## Null Event
+The null event, denoted $\emptyset$ or $\{\}$, is an event from a statistical experiment which corresponds to nothing within the sample space. The null event has probability zero, and it is impossible to observe. Note that, no matter the sample space, $\emptyset\subset\mathcal{S}$.
+:::
+
+## Set Operations for Event Manipulation
+Ultimately, we think of all events as being sets. These sets are subsets of the sample space, and can contain single or multiple outcomes. Every quantity that we are interested in can be expressed as some set of outcomes of interest. In building up these sets it is common to construct through the use of "and", "or", and "not" statements. That is, we may say that our event occurs if some outcome **OR** another outcome occurs, or perhaps our outcomes occurs if some outcome does **NOT** occur.^[While both *or* and *not* language is likely clear from the examples we have seen so far, *and* language may be slightly less obvious. While we will explore this in more depth shortly, note that you could not have two simple events occurring simultaneously. If $E_1$ and $E_2$ are both simple events, then you can have $E_1$ **or** $E_2$, and you can have **not** $E_1$, but you cannot have $E_1$ **and** $E_2$. This is *not* true for compound events.]
+
+Consider the example of drawing cards from a standard 52-card deck. In such a deck there are 13 card ranks, and four card suits, with one of each combination present. If we draw a single card we can think of the outcomes of the experiment as being any of the 52 possible combinations of rank and suit. We are often interested in an event such as "the card is red", which is the same as saying "the card is a heart **or** the card is a diamond." Perhaps we want to know whether the card was an ace through ten, this is the same as saying "the card is **not** a Jack **or** a Queen **or** a King." If we are interested in the event that the ace of spades was drawn, this can be expressed by saying that "the card was a spade **and** the card was an ace." 
+
+As you begin to pay attention to the linguistic representation of events that we use, you will notice more and more the use of these words to form compound events in particular. As a result, we give each of them a mathematical operation which allow us to quickly and compactly express these quantities in notation.
+
+:::{#exm-linguistic-description}
+## Description of Events
+Describe "Charles has to pay", based on the game Charles and Sadie are playing, using language revolving around "or", "and", and "not" each. That is, describe observing at least two heads, on three flips of a coin, one time using "or", one time using "and", and one time using "not".^[It may be helpful to notice that you can mix and match these terms to your hearts content!]
+
+::::{.callout .solution collapse='true'}
+## Solution
+There are plausibly many possible ways of doing so. Consider the following:
+
+1. **OR**: Two heads are observed OR three heads are observed. 
+2. **AND**: Not two tails are observed AND not three tails are observed.
+3. **NOT**: Not more than one tails are observed.
+::::
+:::
+
+We define mathematical operations to encapsulate the use of **or**, **and**, and **not**. These operations apply to any mathematical sets, whether they refer to events or not. 
+
+:::{#def-union}
+## Union
+The union encodes the use of "or" in reference to two or more sets. Formally, with two sets $A$ and $B$, the union of $A$ and $B$ is the set of all elements that are contained in $A$, or $B$, or both $A$ and $B$. We write $A \cup B$ and read that as $A$ union $B$. When we wish to take the union of many sets, $A_1,A_2,\dots,A_n$, we write this as $$\bigcup_{i=1}^n A_i.$$
+:::
+
+:::{#def-intersection}
+## Intersection
+The intersection captures the use of "and" in reference to two or more sets. Formally, the intersection of two sets, $A$, and $B$, is the set that contains all elements that belong to both $A$ and $B$. We write $A \cap B$, and say "$A$ intersect $B$." When we wish to take the union of many sets, $A_1,A_2,\dots,A_n$, we write $$\bigcap_{i=1}^n A_i.$$
+:::
+
+:::{#def-complement}
+## Complement
+The complement makes formal the concept of "not." The complement of a set to be the set of all elements which occur in the sample space but are not in the given set. We write this as $A^C$ and say "$A$ complement." When dealing with a sample space, $\mathcal{S}$, the complement of $A$ is the set of all elements in $\mathcal{S}$ that are not in $A$.
+:::
+
+:::{#exm-basic-set-operations}
+## Basic Set Operations
+For the game being played by Charles and Sadie, take $E_1 = \{(\text{H}, \text{H}, \text{H})\}$, $E_2 = \{(\text{H}, \text{H}, \text{H}), (\text{T}, \text{H}, \text{H}), (\text{H}, \text{T}, \text{H})\}$, and $E_3 = \{(\text{H}, \text{H}, \text{T})\}$. Express the following events.
+
+a. $E_1 \cup E_2$;
+b. $E_1 \cap E_2$;
+c. $E_2^C$;
+d. $E_2 \cap E_3$;
+e. $E_1 \cup E_2 \cup E_3$.
 
-Consider the example of drawing cards from a standard 52-card deck. In such a deck there are 13 card ranks, and four card suits, with one of each combination present. If we draw a single card we can think of the outcomes of the experiment as being any of the 52 possible combinations of rank and suit. However, we are often interested in an event such as "the card is red", which is the same as saying "the card is a heart **or** the card is a diamond." If we are interested in the event that the ace of spades was drawn, this can be expressed by saying that "the card was a spade **and** the card was an ace." Perhaps we want to know whether the card was an ace through ten, this is the same as saying "the card is not a Jack, Queen, **or** King."
+::::{.callout .solution collapse='true'}
+## Solution
+Directly from definitions we can write down each of the following sets:
 
-As you beginto pay attention to the linguistic representation of events that we use, you will notice more and more the use of these words to form compound events in particular. As a result, we give each of them a mathematical operation which allow us to quickly and compactly express these quantities in notation.
 
-We incapsulate **or** through the use of an operation known as the union. The union between two sets, $A$ and $B$, is denoted mathematically as $A \cup B$, and is read $A$ union $B$. In words, the union of $A$ and $B$ is the set which contains all elements that are in either $A$ or $B$ (or both $A$ and $B$). When we wish to take the union of many sets, we write this as $$\bigcup_{i=1}^n A_i.$$
+a. $$E_1 \cup E_2 =  \{(\text{H}, \text{H}, \text{H}), (\text{T}, \text{H}, \text{H}), (\text{H}, \text{T}, \text{H})\} = E_2.$$ As a result, the union of $E_1$ and $E_2$ is simply $E_2$.^[Note that whenever we have two events, $A$ and $B$, with $A\subset B$, then $A\cup B = B$.]
+b. $$E_1 \cap E_2 = \{(\text{H}, \text{H}, \text{H})\} = E_1.$$ As a result, the intersection of $E_1$ and $E_2$ is simply $E_1$.^[Note that whenever we have two events, $A$ and $B$, with $A\subset B$ then $A \cap B = A$.]
+c. $$E_2^C =  \{(\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{T}), (\text{T},\text{H},\text{T}), (\text{T},\text{T},\text{H}), (\text{T},\text{T},\text{T})\}.$$
+d. For $E_2\cap E_3$ note that they share no elements. As a result, the intersection will be empty since there are no elements common to both of them. This gives $E_2\cap E_3 = \emptyset$.
+e. $$E_1 \cup E_2 \cup E_3 = \{(\text{H}, \text{H}, \text{H}), (\text{T}, \text{H}, \text{H}), (\text{H}, \text{T}, \text{H}), (\text{H}, \text{H}, \text{T})\}.$$
+::::
+:::
 
-Alongside the union, we introduce the intersection, which captures "and". The intersection of two sets, $A$, and $B$, is the set that contains all elements that belong to both $A$ and $B$. We write this as $A \cap B$, and say "$A$ intersect $B$." When we wish to take the union of many sets, we write this as $$\bigcap_{i=1}^n A_i.$$
+These concepts allow us to more compactly express sets of interest, and in particular, will be quite useful when it comes to assigning probability. The more times you work with the set operations, the more familiar they will become, and as a result, practice is always useful. Considering rolling a 6-sided die, and take $A$ to be the event that a $6$ is rolled, $B$ to be the event that the roll was at least $5$, $C$ to be the event that the roll was less than $4$, and $D$ to be the event that the roll was odd.
 
-Finally, we can consider making formal the concept of "not." In particular, we take the **complement** of a set to be the set of all elements which occur in the universe  but are not in the given set. We write this as $A^C$ and say "$A$ complement." When dealing with a sample space, $\mathcal{S}$, the complement of $A$ is the set of all elements in the sample space that are not in $A$.
+* If we consider $D^C$ this is the event that the roll was even; 
+* $A \cup C$ is the event that a $6$ was rolled or that a number less than 44$ was rolled, which is to say anything other than a $4$ or a $5$; 
+* If we take  $A \cup B$ then this will be the same as $B$, and $A\cap B$ will be $A$. 
+* If we take the event $A\cap C$, notice that no outcomes satisfy both conditions, and so $A \cap C = \emptyset$. 
+* We can also join together multiple operations. $D^C \cap C$ gives us even numbers than less than $4$, which is to say the outcome $2$. 
+* Similarly, $(A \cap B)^C$ would represent the event that a number less than $6$ is rolled. 
 
-TODO: example block with card hands.
+:::{#exm-card-set-operations}
+## Set Operations with Decks of Cards
+Charles and Sadie are tiring of flipping their coin, and so they wish to start using decks of cards sometimes instead. Before they formalize a game based on decks of cards, they want to make sure that they are both very comfortable working with these. Suppose that the sample space is defined to be the set of $52$ standard cards that may be drawn on a single draw. Describe how set operations can be used to form events corresponding to:
 
-These concepts allow us to more compactly express sets of interest, and in particular, will be quite useful when it comes to assigning probability. To practice, considering rolling a 6-sided die, and take the outcomes $A$ to be that a $6$ is rolled, $B$ to be the outcome that the roll was at least $5$, $C$ to be the outcome that the roll was less than a $4$, and $D$ to be the outcome that the roll was odd.
+a. A red card is observed.
+b. Any card between an ace and a ten is observed.
+c. The ace of spades is observed.
 
-If we consider $D^C$ this is the event that the roll was even; $A \cup C$ is the event that a $6$ was rolled or that a number less than 44$ was rolled, which is to say anything other than a $4$ or a $5$; if we take  $A \cup B$ then this will be the same as $B$, and $A\cap B$ will be $A$. If we take the event $A\cap C$, notice that no outcomes satisfy both conditions, and so $A \cap C = \emptyset$. We can also join together multiple operations. $D^C \cap C$ gives us even numbers than less than $4$, which is to say the outcome $2$. $(A \cap B)^C$ would represent the event that a number less than $6$ is rolled. 
+::::{.callout .solution collapse='true'}
+## Solution
+First, we define several events. Note, these can be defined in shorthand to prevent needing to write out many different cards. we take $D$ to be the event that a diamond is observed, we take $H$ to be the event that a heart is observed, take $S$ to be the event that a spade is observed^[Note, these three are compound events with $13$ different outcomes contained within them.] and then take $A$ to be the event that an ace is observed, $J$ to be the event that a Jack is observed, $Q$ to be the event that a Queen is observed, and $K$ to be the event that a King is observed^[Compound events with four different options.] then we can use unions, intersections, and complements to express the previously mentioned scenarios. 
 
-Working with these basic set operations should become second nature. There are often very many ways of expressing the same event of interest using these different operations, and finding the most useful method of representing a particular event can often be the key to solving challenging probability questions. The first step in making sure that these tools are available to you is in ensuring that the basic operations are fully understood, and this comes via practice. Remember, unions represent "ors", intersections represent "ands", and complements represent "nots". 
+a. To represent outcomes corresponding to "the card is red", we can use $D \cup H$. 
+b. To represent outcomes corresponding to "an ace through ten", we can use $(J \cup Q \cup K)^C$. 
+c. To represent the outcome "the ace of spades", we may use $A \cap S$.
+::::
+:::
 
-The sample space is partitioned into outcomes, and the oujtcomes can be grouped together into events. These events are sets  and can be manipulated via basic set operations. Sometimes it is convenient to represent this process graphically through the use of Venn diagrams. In a Venn diagram, the sample space is represented by a rectangle with the possible outcomes placed inside, and events are drawn  inside of this as circles containing the relevant outcomes.
+Working with these basic set operations should eventually become second nature. There are often very many ways of expressing the same event using these different operations, and finding the most useful method of representing a particular event can often be the key to solving challenging probability questions. The first step in making sure that these tools are available to you is in ensuring that the basic operations are fully understood, and this comes via practice. Remember, unions represent "ors", intersections represent "ands", and complements represent "nots". 
 
-On the Venn diagram then, the overlap between circles represents their intersection, the combined area of two (or more) circles represents their union, and everything outside of a given circle represents the complement of a set. This can be a fairly useful method for representing sample spaces, and for visualizing the basic set operations that we use to manipulate events inside the sample spaces. A word of caution: Venn diagrams are useful tools, but they are not suitable as proof tools. It is possible to convince yourself of false truths if th e wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than asa rigorous tool in and of themselves.
+### Using R To Represent Sample Spaces and Events and Performing Set Operations
+We have seen how R can encode sets of elements using vectors. For instance, we may take `sample_space <- 1:6` to represent the sample space of rolling a six-sided die. We can form events by taking subsets of the relevant quantities, selecting via indices. Fortunately, there are also all of the basic set operations implemented in R. We can use `union(x, y)` to perform the union of `x` and `y`, `intersect(x, y)` to perform the intersection of `x` and `y`, and `setdiff(x = sample_space, y)` to perform the complement of `y` (assuming that `sample_space` contains the full sample space).^[R does not implement complements directly, and instead implements the set difference operation. The set difference function, `setdiff(x, y)` returns the set of all elements in `x` which are not in `y`, a sort of subtracting of sets. The complement of a set is defined to be $A^C = \text{setdiff}(\mathcal{S}, A)$, indicating why this works!]
 
-TODO: Add Example with Graphical Venn Diagrams
+::: {.content-visible when-format='pdf'}
+```{r}
+# Define the Sample Space of Rolling a 20 Sided Die
+sample_space <- 1:20
 
-Sample spaces, events, and the manipulation of these quantities forms a critical component of understanding probability models. In particular, they describe the complete set of occurences in a statistical experiment that we could be interested in assigning proobability values to. To finish formalizing a probability model, however, we also need some rule for assigning probability values.
+# Define some Events
+E1 <- sample_space[2]
+E2 <- sample_space[c(1, 3, 5, 7)]
+E3 <- sample_space[c(1, 2, 4, 8)]
 
-There are a plethora of ways to assign probabilities to diffferent events. At the most basic of levels any rule that maps from the space of possible events to numbers between $0$ and $1$ are possible candidates for probability assignment. That is, probability assignmnet at its core is simply a set of rules which says "for this event, assign this probability."
+# Consider Set Operations
+union(x = E1, y = E2) # E1 union E2 = {1, 2, 3, 5, 7}
+union(x = E1, y = E3) # E1 union E3 = {1, 2, 4, 8}
 
-TODO: Add example of coin toss space.
+intersect(x = E1, y = E3) # E1 intersect E3 = {2}
+intersect(x = E1, y = E2) # E1 intersect E2 = {}
 
-Not every assignment of probability values is going to be valid. Suppose, for instance, that we have a six-sided die, each side labelled with a number from one to six. If I told you that there was a probability of $0.5$ that it comes up $1$, $0.5$ that it comes up $2$, $0.5$ that it comes up $3$, $0.5$ that it comes up $4$, $0.5$ that it comes up $5$ and $0.5$ that it comes up $6$, you  would probably call me a liar (or else conclude that I was mistaken and likely should not be teaching probability). If, as we have previously seen, probabilities represent the long-run proportion of time that a particular event is observed, we cannot have $6$ different outcomes each occuring in half of all caes.
+setdiff(x = sample_space, y = E1) # E1 complement
 
-beyond the requirements that we can impose on what consitutes a "valid" probability function, we have another concern: scalability. It is perfectly acceptable to indicate that in an experiment with $3$ outcomes, the first has a probability of $0.25$, the second of $0.3$, and the third of $0.45$. What if the experiment has $100$ possible outcomes? Or $1000$?It quickly becomes apparent that enumerating the probabilities of each event in the sample space is an efficient way of assigning probabilities in practice.
+# (E2 union E3) complement
+setdiff(x = sample_space, y = union(E2, E3))
+```
+:::
+::: {.content-visible when-format='html'}
+```{webr-r}
+# Define the Sample Space of Rolling a 20 Sided Die
+sample_space <- 1:20
 
-A core focus of our study of probability will be on finding techniques that allow us to efficiently encode probability information into manageable objects. Once we have done this, we will be in a position where we can manipulate these (comparatively) simple mathematical quantities in order to make statements and conclusions about any of the events of interest, even if they have never been explicitly outlined as having an assigned probability.
+# Define some Events
+E1 <- sample_space[2]
+E2 <- sample_space[c(1, 3, 5, 7)]
+E3 <- sample_space[c(1, 2, 4, 8)]
 
-While we will consider myriad methods for accomplishing these goals throughout our study of probability, we begin  with a very useful model which simplifies probability assignment,  without any added complexity,  and creates a solid foundation for us to explore the properties of probability models. We start by considering **equally likely outcomes.** As the name suggests, the probability model considering equally likely outcomes assigns an equal probability to every possible outcome of the experiment. This is a probability model that we are already distinctly familiar with: flipping a coin, rolling a die, or drawing a card are all examples of experiments which rely on theequally likely outcomes framework.
+# Consider Set Operations
+union(x = E1, y = E2) # E1 union E2 = {1, 2, 3, 5, 7}
+union(x = E1, y = E3) # E1 union E3 = {1, 2, 4, 8}
 
-TODO: Write aside about the use of urn models.
+intersect(x = E1, y = E3) # E1 intersect E3 = {2}
+intersect(x = E1, y = E2) # E1 intersect E2 = {}
 
-If we have an experiment with a sample space $\mathcal{S}$ which has $|\mathcal{S}| = k$ total elements, then each element of the sample space occurs with probability $\frac{1}{k}$. In the case of the coin toss example, $\mathcal{S} = \{\text{H}, \text{T}\}$, and so $k=2$ and each outcome occurs with probability $\frac{1}{2}$. in the case of drawing a card at random, there are $52$ different outcomes, and so $k=52$, and the probability of drawing any particular card is $\frac{1}{52}$.
+setdiff(x = sample_space, y = E1) # E1 complement
 
-It is critically important to recognize that the equal probability model assigns equal likelihood to the possible outcomes of an experiment, not the possible  events of interest. It will not be the case in general that all events have the same probability. To make this concrete, consider the events $A$ "the ace of spades is drawn" and $B$ "any spade is drawn". It is quite clear that $B$ happens more frequently than $A$, even though we have said that this is an experiment with equally likely outcomes. Remember: an outcome is an observation from a single experimental run, an event is any subset of these possible outcomes.
+# (E2 union E3) complement
+setdiff(x = sample_space, y = union(E2, E3)) 
+```
+:::
 
-A core goal is then bridging the gap between the probability of an outcome - something which in the equally likely outcomes frameowkr we know - and the probability of an event - the quantity we are actually interested in. In ordder to do so, we will next consider the rules of probability, introducing the properties that are required for valid probability assignments and the techniques for  manipulating probabilities to calculate the quantities of interest.
+## Venn Diagrams
+The sample space is partitioned into outcomes, and the outcomes can be grouped together into events. These events are sets  and can be manipulated via basic set operations. Sometimes it is convenient to represent this process graphically through the use of Venn diagrams. In a Venn diagram, the sample space is represented by a rectangle with the possible outcomes placed inside, and events are drawn  inside of this as circles containing the relevant outcomes.
 
-## Rules of Probability
-We have previously seen that not every probability assignment can be valid. For instance, assigning $0.5$ probability to each outcome on a die leads to a nonsenical scenario. with just a little imagine we can conjure equally nonsensical scenarios in other regards. For instance, it would make very little sense to discuss the probability of an event being a negative value. What would it mean for an event to occur in a negative proportion of occurences? Alternatively, we can consider two events that are nested in one another: say event $A$ is that we draw the ace of spades, and event $B$ is that we draw any spade. Every single time that $A$ happens, we know that $B$ also happens. But there are ways that $B$ can occur wwhere $A$ does not (for instance, the Queen of spades being drawn). If I told you the probability of $A$ was $0.5$ and the probability of $B$ was $0.2$, this would violate our base instincts: how can it be more likely to draw the ace of spades than it would be to draw any spade at all?
+![A basic Venn diagram, representing the sample space and two different events. In practice, the sample space would have the possible outcomes written into the rectangle, and the circled events would end up containing the relevant outcomes for those events.](/graphics/ch2-venn-diagram-basic.svg){#fig-venn-diagram}
 
-Often in mathematics when we have an intuitive set of rules that particular quantities must obey, we work to add formality through defining properties of these concepts. To this end, we can define the key properties that probabilities must obey in order to be well-defined, valid probabilities.
+On the Venn diagram then, the overlap between circles represents their intersection, the combined area of two (or more) circles represents their union, and everything outside of a given circle represents the complement of a set. This can be a fairly useful method for representing sample spaces, and for visualizing the basic set operations that we use to manipulate events inside the sample spaces. A word of caution: Venn diagrams are useful tools, but they are not suitable as proofs themselves. It is possible to convince yourself of false truths if the wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than asa rigorous tool in and of themselves.^[This is a general principle in mathematics. Coming up with one example that makes something *seem* true does not form an argument demonstrating that it *is* true. Venn Diagrams should largely be thought of as specific examples of the underlying phenomena, which are great if you're a visual learner!]
 
-It turns out that with three (fairly) basic properties, we can completely specify what must be true in order for a set of probabilities to be valid. 
+::: {#fig-venn-diagram-set-operations layout-nrow=3}
 
-1. **Unitary** Every valid set of probabilities must assign a probability of $1$ to the full sample space. That is, $P(\mathcal{S}) = 1$. This is an intuitive requirement as  every  time the experiment is run we observe an outcome in the sample space, and as  a result, in every experimental run the event $\mathcal{S}$ occurs.
-2. **Non-negative:** We require that every probability is non-negative. We can have probabilities of $0$, but we can never have a probability less than zero. Again, this is sensible (what would it mean to have a negative probability?), but is important to include in our formalization. Specifically, for everyevent $E$, $P(X) \geq 0$.
-3. **Additivity:** the final property  requires slightly more parsing on first pass. Suppose that we define a sequence of events,  $E_1, E_2, E_3, \dots$ such that no two events have any overlap. That is, $E_j \cap E_\ell = \emptyset$ for all $\ell\neq j$. Then, the final property we require for probabilities is that $$P\left(\bigcup_i E_i\right) = \sum_i P(E_i).$$ That is, the probability of the union of disjoint events is the summation of the probability of these events.
+![**Union:** The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two.](/graphics/ch2-venn-diagram-union.svg){#fig-venn-diagram-union}
 
-It is worth dwelling slightly on property (or axiom) 3 further. Consider the case of drawing a card at random from a deck of $52$ cards. Using the equally likely outcome model for probability we know that the probability that any card is drawn is given by $\frac{1}{52}$. If I were to ask  "what is the probability you draw that ace of spades?" under this model you can respond, immediately,  with $\frac{1}{52}$. Now, if I were to ask "what is the probability that you draw the ace of spades or two  of spades?" intuitively you likely figure that this will be $\frac{2}{52}$. Note that the event $E_1$, "draw the ace of spades" and the event $E_2$ "draw the two of spades", are disjoint events. Moreover, recall that the union is the "or" and so $E_1\cup E_2$ is the same as $E_1$ or $E_2$. Taken together then, $$P(E_1\cup E_2) = P(E_1) + P(E_2).$$ The axiom of additivity simply extends this intuition to an arbitrary number of events.
+![**Intersection:** The intersection of events A and B is shaded here in red. The intersection of two sets is all of the content shared by both sets, given by the overlapping area of the two circles.](/graphics/ch2-venn-diagram-intersection.svg){#fig-venn-diagram-intersection}
 
-TODO: insert example about additivity.
+![**Complement:** The complement of event A is shaded here in red. The complement of a sets is all of area inside of the sample space, not inside of the set. Here we show the complement of Event A, though Event B would be similar.](/graphics/ch2-venn-diagram-complement.svg){#fig-venn-diagram-complement}
 
-These three axioms fully define valid probabilities. Any mechanism that assigns probability values to events which conforms to these rules will assign valid probabilities. While it may seem counter intuitive that such basic rules fully define our notion of a probability, these rules readily give rise to many other properties that are indispensible when working with probabilities.
+The basic set operations (unions, intersections, and complements) displayed as Venn Diagrams.
+:::
 
-## Secondary Properties of Probabilities
-1. $P(E^C) = 1-P(E)$, and equivalently, $P(E) = 1 - P(E^C)$.
-2. $P(\emptyset) = 0$.
-3. $P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1\cap E_2)$.
-4. $P(E_1 \cup E_2 \cup E_3) = P(E_1) + P(E_2) + P(E_3) - P(E_1\cap E_2) - P(E_1 \cap E_3) - P(E_2 \cap E_3) + P(E_1 \cap E_2 \cap E_3)$.
-5. $P(\bigcup_i E_i) \leq \sum_i P(E_i)$.
+:::{#exm-charles-and-sadie-vd}
+## Venn Diagram with Defined Events
+Draw a Venn diagram representing the original game that Charles and Sadie played. On the diagram draw the events corresponding to "At least one head **and** one tail are observed", and "Sadie won the game". Recall that three coins are tossed, and Sadie wins if at least two of them show heads.
 
-TODO: write aside that proves these from the basic properties.
+::::{.callout .solution collapse='true'}
+## Solution
+The sample space contains the eight possible options. Only $(\text{T}, \text{T}, \text{T})$ does not belong to at least one of the events. Both events share $(\text{H},\text{H},\text{T})$, $(\text{H},\text{T},\text{H})$, and $(\text{T},\text{H},\text{H})$. 
 
-TODO: am I missing any?
+![](/graphics/ch2-venn-diagram-example.svg)
+::::
+:::
 
-These properties are immensely useful when computing probabilities. in fact, these secondary properties will be used with more frequency than the basic axioms when manipulating probabilities in practice. It is worth building comfort with these properties, early and often, as they will assist in manipulating all probability expressions in the future. 
-
-TODO: Example showing complement trick.
-
-While these properties hold in general for all probability models, it is instructive to consider to focus on the equal probability model to begin building familiarity with probability broadly. These porperties allow us to take events -- whether compound or simple -- and combine, rewrite, and manipulate expressions to assist in the handling of the computations. Eventually, however, we require the ability to  assign numerical values to these probabilities.
-
-Consider a simple event, $A$. Recall that a simple event is defined as  a possible outcome of an experiment, and so in this case,  $A$ corresponds directly to an event that may be observed. If our sample space is $k$ elements large, then $P(A) = \frac{1}{k}$ in this framework. For instance, if $A$ is the event that a two is rolled on a six-sided fair die, then $P(A) = \frac{1}{6}$. 
-
-Now, suppose that a compound event is defined, $B$. By definition, a compound event can be expressed as a set of possible outcomes from the experiment. Suppose that we enumerate these possible events as $b_1, b_2, \dots, b_\ell$. Then we know that $B$ occurs if any of $b_1,b_2,\dots,b_\ell$ occur. Each $b_j$ are elements of the sample space and correspond to possible outcomes of the experiment. As a result, we know that $P(b_j) = \frac{1}{k}$, based on the equal probability assumption. Now, if we take any two distinct $b_j$, say $b_i$ and $b_j$, we know that they must be disjoint: $b_i \cap b_j = \emptyset$. This is because in an experiment run only one outcome can occur -- there is nothing common between these two events, by definition. Moreover, we can say that $B = b_1 \cup b_2 \cup\cdots\cup b_\ell$.
-
-Using the axioms of probability outlined above we therefore know that $P(B) = \sum_{j=1}^\ell P(b_j) = \sum_{j=1}^\ell \frac{1}{k} = \frac{\ell}{k}$. This holds in general for any compound event in  this setting. If we take $B$ to be the event that an even number is rolled on a six-sided die, then we would have $b_1$ is the event that a two is rolled, $b_2$ is the event that a four is rolled, and $b_3$ is the event that a six is rolled. There are three such events, and so the probability that an even number is rolled must be $\frac{3}{6} = 0.5$, which matches our intuition.
-
-If we consider what this process  is doing at its core, we can reframe the calculation as counting up the number of ways that event can happen and dividing by the total number of events. In our previous discussion, there were $\ell$ ways of $B$ occuring, a total of $k$ outcomes, and so the probability becomes $\frac{\ell}{k}$. in the equal probability model, this will always be the case, the probability of any event $A$ occuring is given by $$P(A) = \frac{N_A}{k},$$ where $N_A$ is the number of unique ways that $A$ can occur.  In other words, $N_A$ is the size of the set $A$.
-
-As a result of the realization, a large part of computing probabilities is in the counting of possible outcomes corresponding to different events. If we can determine the count of $A$, $N_A$, and the count of the total number of occurences, $k$, then we can determine the probability of $A$. This study of counting is known as **combinatorics**, and it is where we will turn our attention next.
-
-TODO: include example that shows  the utility of complements,  again.  Show specifically for counting where,  for instance, the complement is very small and is easier to count. 
-
-## Combinatorics
-Fundamentally, counting is a matter of assessing the size of a collection of items. Sometimes, this is very straightforward: if you want to count the number of students in a classroom, you  start  at $1$ and enumerate upwards through the integers. To count the number of days until the next Holiday, you do the same thin, sizing up the time that has to pass. If you really need to sleep, perhaps you will count imaginary sleep until you drift off. There is not much to this type of counting, and it is certainly deeply familiar to you all. However, it is also quite limited in its utility.
-
-Imagine that you are interested in determining how many possible ways there are of arranging a deck of $524 cards. You could of course arrange them in a particular order, then count each of those. That would take a tremendous amount of time, so perhaps instead of using an actual deck you just write down the combinations. Still, each combination is going to be $52$ cards long, and keeping track of that all will be a tremendous challenge. This seems like an approachable question, and yet, it illustrates how complicated (and large) these types of "counting" problems can become, very quickly.
-
-Fortunately for us there are some strategies for simplifying these problems down, some of which you are likely already familiar with. Think about trying to form an outfit where you have $4$ different sweaters, $3$$ pairs of pants, and $2$ options for your shoes. Suppose that any combination of these will work well. How many are there? Well, if you have already picked your sweater and pants, then there are going to be $2$ different outfits using these: one wiht each of the pairs of shoes. This is true for each ppossible sweater-pant combination, and so we can count $2$ for each one these. In otherwords, to get the total number of outfits we multiply the number of sweater pant combinations by the number of shoe options ($2$). the same rationale can be applied to count the total number of sweater-pant combinations. For each sweater, there are $3$ pairs of possible pants, and so to get the total number there we can take $3$ for each possible sweeater, or in other words, #3\times 4$. 
-
-Taken together then we have $4\times 3\times 2 = 24$ total possible outfits. Another way of framining this is that we have to make three sequential decisions: which of the $4$ sweaters, which of the $3$ pants, and which of the $2$ shoes are to be worn. When we do this we multiply through the number of alternatives at each decision point to get the total number of combinations.
-
-This is known as the **multiplication rule for counting**, and it is a very general rule for counting up total combinations. Any time that we have to make a sequence of $k$ choices, and each choices $j=1,\dots,k$ has $n_j$ options, then the total number of combinations will be $N = n_1\times n_2\times\cdots\times n_k$.
-
-TODO: add examples for the counting rule.
-
-Sometimes it is helpful to express the counting rule graphically. To do so we rely on **tree diagrams**. A tree diagram puts each of the decisions in sequence, and draws a branch for each separate option. You start with the first choice, drawing one branch for each of the $n_1$ alternatives, labelling each. Then, at the second choice, you do the same process at the end of each of the branches you drew for choice $1$, this time drawing $n_2$ branches there (so you will have just drawn $n_1\times n_2$ branches). Then for each of those you draw the $n_3$ further branches, and so on and so forth until the end. 
-
-If you want to know the total number of choices, you simply count the end points at the very end of the diagram. Each branch corresponds to a single option. To determine which combination of choices it corresponds to, you simply read off the branch labels at each branch you take. If you want to know how many possible combinations come with certain options selected, you canlook at only those branches which are downstream from the choices that you care about.
-
-TODO: include tree diagram.
-
-While tree diagrams can be quite useful for visualizing a problem, they often grow to be overly complex. As a result, we often need to fall back on the numerical representation afforded to us through the product rule for counting. Counting problems, in general, can very quickly become tremendously large and complex. For this reason, we have several tools to assist us in reducing this complexity based on common types of problems that we would like to count.
-
-The first useful tool for simplifying these problems is the **factorial**. The factorial of an integer, denoted by $x!$ (factorials are exciting because they always look like they are shouting!) is given by the product of all integers from $x$ to $1$. That is, $x! = x(x-1)(x-2)\cdots(2)(1)$. If we consider the product rule for counting then note that if $n_1=1$, $n_2=2$, ... , $n_k = k$, then the total number of options is $k\times(k-1)\times\cdots\times 1 = k!$. The most common reason that this comes up is when we want to order a collection of items. Suppose that you have $10$ books that you want to plae on a  shelf. You can view this as making $10$ sequential decisions: what book goes first, second, third, and so on. There are $10$ options for the first book, then $9$ for the second (any except for the first one), and then $8$ for the third (any except for the first $2$). This continues down to the last book, and so we conclude that there are $10\times9\times8\times\cdots\times1 = 10!$ ways of arranging these books.
-
-TODO: Additional example on factorial.
-
-Sometimes, we want to still order items from a collection, but we want to only use a subset of these tiems. That is, suppose that you have $20$ books, only $10$ of them will fit on the self, and so you want to know: how many ways can you put $10$ books on the shelf, in order, from your collection of $20$. Using the product rule of counting for this directly  we can recognize that there are $20$ options for the first, then $19$, then $18$, and so on until there are $11$ choices for the $10$th book to place. We can write this out in a seemingly strange way. $$\frac{20(19)(18)(17)(16)(15)(14)(13)(12)(11)(10)(9)(8)(7)(6)(5)(4)(3)(2)(1)}{10(9)(8)(7)(6)(5)(4)(3)(2)(1)}.$$
-
-This expression is $20!$ divided by $10!$, and gives the same as our argument from the product rule for counting directly. This is a more general result than our example with books would suggest. If we have $n$ items, and we want to choose $k$ of them and then order those choices, it will always be $n!$ divided by $(n-k)!$. We call this a **permutation**. Formally, we write $$P_{n,k} = \frac{n!}{(n-k)!}.$$
-
-Permutations arise when we select ordered subsets from a collection. We often, in combinatorial problems, talk about ordering, though sometimes what we mean by this is slightly more abstract. Suppose that you want to form a committee with $5$ different people, each of whcih occupies a different role: the president, vice president, treasurer, note taker, and critic. If there are $30$ people to select for this, then there are $P_{30,5}$ total possible committees that can be formed. While there is not a sequential order here, we talk about this as being ordered since we can differentiate between the five roles. Instead of labelling them with their names, we could label them $1$ through $5$ and make the ordering more explicit. 
-
-TODO: include additional example on permutations.
-TODO: 0! = 1.
-
-Factorials compute the number of orderings for a set of objects, and permutations compute the number of ordered subsets from a collection of ojects. What about when we do not wish to differentiate the order of subsets? Suppose that you still need to form a $5$ person committee, but you do not have explicit roles for the different members of the committee. Here we cannot use a permutation directly, as we know that this takes into account the order. Suppose that we formulate the ordered committee in a separate way: first, we select $5$ people without concern for their order, then we choose which order they will have.
-
-If $M$ represents the number of unordered sets of $5$ from this population, the product rule for counting tells us that the total number of ordered committees will be $M\times 5!$, since there are $5!$ arrangements. Thus, we can write this down as $$P_{30,5} = \frac{30!}{25!} = M\times 5! \implies M = \frac{30!}{25!5!}.$$ Once again, this will be true far more broadly than our committee example: if we want to select $k$ items from a collection of $n$, we will have $n!$ divided by the product of $k!$ and $(n-k)!$. We refer to these as **combinations**. 
-
-We will write $\binom{n}{k}$, which we read as "$n$ choose $k$", which translates to "select $k$ items from a population of $n$ total options, without concern for their order." Formally, a combination is defined as $$\binom{n}{k} = \frac{n!}{k!(n-k)!}.$$
-
-To summarize: factorials allow us to order a complete collection, permutations allow us to select a subset with consideration of the ordering, and combinations allow us to select a subset from the collection without regard to the order. These three techniques can be used in combination with the product rule for counting to allow us to have very complex total summations. 
-
-TODO: introduce example for combinations.
-TODO: introduce extended examples for counting, mixing the different techniques. 
-
-There are other types of counting problems which ocassionally need to be considered. [TODO: include counting with replacement].
-
-While combinatorics is a field of study on its own, with many intriguing tools and developments surrounding the neumeration of objects, for the purposes of simple probability models these tools will suffice. Ultimately, we care about counting since in the equal probability model, the probability of any event can be determined by counting the number of ways that the event can occur and dividing by the total number of outcomes that are possible. That is, we use these tools to derive $N_A$, the total number of ways that $A$ can occur, and $N$, the total number of experimental outcomes, and then we conclude that $$P(A) = \frac{N_A}{N}.$$
-
-TODO: include brief probability example.
+Sample spaces, events, and the manipulation of these quantities forms a critical component of understanding probability models. In particular, they describe the complete set of occurrences in a statistical experiment that we could be interested in assigning probability values to. To formalize a probability model, however, we also need some rule for assigning probability values. 

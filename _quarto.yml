@@ -53,3 +53,5 @@ knitr:
   opts_chunk: 
     collapse: true
     results: hold
+
+fig-cap-location: top
