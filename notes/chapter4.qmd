@@ -1,133 +1,426 @@
-# Probailities with More than One Event
-## Conditional Probability (and related theorems)
-Regardless of whether we are using the equally likely outcome model, or not, there are several properties of probability which can be derived that are either of direct interest themselves, or else are useful for manipulating probability expressions. These rules apply to any probability model, and greatly increase the flexibility of working with these models. 
+---
+engine: knitr
+---
+# Probabilities with More than One Event
+## Marginal and Joint Probabilities
+Up until this point we have primarily focused on assigning probabilities to particular events. If we have some event of interest, $A$, then $P(A)$ is the probability that $A$ occurs in any manner. If we are using our equally likely probability model, then $P(A) = \frac{N_A}{N}$. This is the probability of the event $A$ where nothing else is known at all. If we smooth over anything which could alter the likelihood, if we have no additional information, if we want the best guess for the likelihood of occurrence in a vacuum, this is the probability of interest. We refer to such quantities as marginal probabilities. 
 
-Up until this point we have primarily focused on assigning probabilities to particular events. If we have some event of interest, $A$, then $P(A)$ is the probability that $A$ occurs in any manner. If we are using our equally likely probability model, then $P(A) = \frac{N_A}{N}$. This is the probability of the event $A$ where nothing else is known at all. If we smooth over anything which could alter the likelihood, if we have no additional information, if we want the best guess for the likelihood of occurence in a vaccuum, this is the probability of interest. We refer to such quantities as **marginal probabilities**. 
+:::{#def-marginal-probability}
+## Marginal Probability
+The marginal probability of a single event, $A$, is the probability that the event happens without considering any information. This is simply the probability that the event happens, denoted $P(A)$.
+:::
 
-While marginal probabilities are often of interest, and frequently are the best tool for summarizing the overall state of the world (or our knowledge regarding the state of the world), in pracctice we know that sometimes information that we have will change our understanding of the probability of an event. Suppose the event $A$ corresponds to the event that it snows tomorrow, in some particular city. It is possible to think about how often it snows on average, and report a value related to that as $P(A)$. Now, what if we know that it is currently the middle of summer? In this case, while $P(A)$ does not shrink to $0$, it becomes far less likely than if we did not have that information. Similarly, if we know that it is winter, the likelihood that it snows tomorrow increases. 
+It is useful to specifically call these marginal probabilities to differentiate them from probabilities which depend on two or more events. Specifically, we can think about taking the intersection of two events, say $A \cap B$. In words this is the event that $A$ occurs **and** $B$ occurs. Until this point we have thought about solving for probabilities related to intersections as a two-step procedure: first, find an event $C = A \cap B$, and then second solve for the marginal probability of $C$. While this is a useful technique for calculation, sometimes it is more useful to think of the probability of the intersection as the probability of $A$ and $B$ occurring simultaneously. We call this the joint probability of $A$ and $B$.
 
-In order to formall capture this we can introduce the idea of **conditional probability**. Unlike in the cas of marginal probabilities, conditional probabilities allow us to *condition* on extra pieces of information. Instead of asking "what is the porbability of this event", they instead ask, "given that we know this piece of information, what is the probability of this event?" The subtle distinction becomes quite powerful, both in terms of manipulating and working with probabilities, but also in terms  of expressing the correct events of interest for ourselves.
+:::{#def-joint-probability}
+## Joint Probability
+The joint probability of two events, $A$ and $B$, is given by the probability of their intersection. That is, $P(A\cap B)$. This is sometimes denoted $P(A,B)$ and corresponds to the probability that both $A$ and $B$ occur. The joint probability of more than two events extends in the same way. Suppose there exists a sequence of events, $A_1, \dots, A_n$, then the joint probability of these events is $$P(A_1,A_2,\dots,A_n) = P\left(\bigcap_{i=1}^n A_i\right).$$
+:::
 
-To make use of conditional probabilities,  we will think of the process of **conditioning** on (one or more) events. That is, we will talk of the probability of $A$ conditional on $B$,  where $A$ and $B$ are two events of interest. We write this quantity as $P(A|B)$, and typically will read this as "the probability of $A$ given $B$." Intuitively,  this it the probability of $A$ happening, supposing that we know that $B$ has  already happened. 
+## What are Conditional Probabilities?
+Marginal probabilities are often of interest, and frequently are the best tool for summarizing the overall state of the world, or our knowledge regarding the state of the world. Joint probabilities can be useful when working with compound events, or thinking of complex outcomes that we wish to consider. However, there are many scenarios which are not covered by either the joint or marginal probabilities we have seen. In practice we know that sometimes information that we have will change our understanding of the probability of an event. Suppose the event $A$ corresponds to the event that it snows tomorrow, in some particular city. It is possible to think about how often it snows on average, and report a value related to that as $P(A)$. Now, what if we know that it is currently the middle of summer? In this case, while $P(A)$ does not shrink to $0$, it becomes far less likely than if we did not have that information. Similarly, if we know that it is winter, the likelihood that it snows tomorrow increases. In order to formally capture this we can introduce the idea of conditional probability. 
 
-TODO: Include some examples.
+:::{#def-conditional-probability}
+## Conditional Probability
+The conditional probability of an event $A$ given an event $B$, is the probability that $A$ occurs assuming that we know that $B$ occurs. The conditional probability takes into account additional information codified through the occurrence of an additional event. We write this quantity as $P(A|B)$, and will read this as "the probability of $A$ given $B$."
+:::
 
-Recall that $A$ and $B$, as  events, are merely subsets of the sample space, $\mathcal{S}$. Each item in either $A$ or $B$ is one of the possible outcomes from the experiment or process that we are observing. Suppose that we know that $B$ has occurred. What this  means is that, one of the outcomes in the set $B$ was the observed outcome from the experiment. Now, if we want to know $P(A|B)$, we want  to know the probability, working from the assumption that $B$ has happened, that $A$ also happens. That is, knowing that $B$ has happened, what is the probability that $A$ and $B$ happen. 
+Unlike in the case of marginal probabilities, conditional probabilities allow us to *condition* on extra pieces of information. Instead of asking "what is the probability of this event", we instead ask, "given that we know this piece of information, what is the probability of this event?" Joint probabilities ask "what is the probability that both of these events occur simultaneously" which is distinct in that we do not have any additional information about the state of the world when working with joint probabilities. The subtle distinction becomes quite powerful, both in terms of manipulating and working with probabilities, but also in terms of expressing the correct events of interest for ourselves. 
 
-Thinking back to our discussion of events, $A$ and $B$ is denoted by $A \cap B$, and it corresponds to the set of events inside the set $B$, which also belong to the  set $A$. Now, instead of considering the event $P(A\cap B)$ directly, we need to acknowledge that for $A|B$, only the events in $B$ were possible. That is, instead of being divided by the whole space, we can only divide by the space of $B$. In some sense, we can view conditioning on $B$ as treating $B$ as though it is the full sample space, and finding probabilities within that. In general, $B$ will be smaller than  $\mathcal{S}$, and so $P(B) < 1$. Instead of the conditional probability being "out of" $1$, it will instead be "out of" $P(B)$, which gives $P(A|B) = \frac{P(A\cap B)}{P(B)}$.
+To make use of conditional probabilities, we will think of the process of **conditioning** on one or more events. We will talk of the probability of $A$ conditional on $B$, where $A$ and $B$ are two events of interest. Intuitively, this it the probability of $A$ happening, supposing that we know that $B$ has already happened. 
 
-To make this more clear, let's consider a simple example. Suppose that we take $A$ to be the event that a $2$ is rolled on a fair, six-sided die, and $B$ to be the event that an even number was rolled. This is an equal probability model, and so each outcome gets $\frac{1}{6}$ probability. The original sample space is  $\mathcal{S} = \{1,2,3,4,5,6\}$, the event $A$ is $\{2\}$, and the event $B$ is $\{2,4,6\}$. In order for both $A$ and $B$ to occur, we note that we need $A \cap B = \{2\}$. If we know that $B$ has occured, then we know that either a $2$, $4$, or $6$ has been rolled, with equal probability for each. Thus, intuitively,  we can view $B$ as the new sample space, and say that rolling a $2$ has a $\frac{1}{3}$ probability, given that there are $3$ outcomes and $1$ of them is the event  of interest. Another way to consider this is to note that $P(B) = \frac{1}{2}$, and so we need to scale each event by $\frac{1}{1/2}$ in order to make sure that the total probability of our reduced sample space equals $1$. Then $P(A\cap B) = \frac{1}{6}$, so $$P(A|B) = \frac{1/6}{1/2} = \frac{1}{3}.$$
+:::{#exm-basic-conditional-probability}
+## Six from the Sum
+Charles and Sadie are playing a new game using two dice. In the game they each take turns rolling the two dice into a container that the other player cannot see. They add up the dice and then report this sum to the other player. The other player then has to guess whether or not there is a six showing.
 
-TODO: try rewriting this a bit.
+a. On one round, Charles does not hear the sum that Sadie reports as he was not paying attention. Sadie is strict and insists that she will not repeat herself. What should Charles guess?
+b. Determine a strategy which optimizes the likelihood that the guessing player will be correct.
 
-Suppose that, instead of a fair die, it was  weighted so that $6$ comes up more frequently than the other options, coming up with probability $0.5$, and the other fives each coming up with probability $0.10$. If $A$ and $B$ are the same events as above, then $P(B) = 0.7$ now. If we know that $B$ has occurred, then the new sample space is $\{2,4,6\}$ where $P(2) = \frac{0.1}{0.7} = \frac{1}{7}$, $P(4) = \frac{0.1}{0.7}$, and $P(6) = \frac{0.5}{0.7} = \frac{5}{7}$. Note that these three probabilities sum to $1$ still, which constitutes a valid probability model, and so $P(A|B) = \frac{1}{7}$.
+::::{.callout .solution collapse='true'}
+## Solution
+a. In this case we want the **marginal probability** of a six showing up on the roll of two dice. Take $E$ to represent the event wherein at least one six is showing on the roll of two dice. Thus, $E^C$ is the event that no sixes are showing. There are $5\times 5=25$ (using the product rule for counting) ways of *not* rolling a $6$, meaning that $$P(E^C) = \frac{25}{36} \implies P(E) = 1 - \frac{25}{36} = \frac{11}{36}$. Thus, Charles should guess that there is no $6$ as the probability is only $11/36 \approx 0.31$.
 
-TODO: Add example about this.
+b.  Here we wish to determine conditional probabilities. We take $E$ to be the event that at least one $6$ is showing, and then $S$ to be a variable representing the sum of the two dice. For $s= 1, \dots, 12$ we wish to find $P(E|\{S=s\})$. Notice that for $s=2,\dots,6$ $P(E|S=s) = 0$. If the sum is $2$ we know that there could not have been a $6$. Moreover, for $s=11,12$ we know that $P(E|S=s) = 1$ since the only way to form $11$ is a five and a six, and the only way to form $12$ is to have two sixes. This leaves $s = 7,\dots,10$ to check. The following table gives the set of values, the possible combinations to reach the value, and then the combinations that end up involving a $6$. 
+    
+    | Value | Combinations                            | Involving 6   |
+    |-------|-----------------------------------------|---------------|
+    | 7     | (1,6) (2,5) (3, 4) (4, 3) (5, 2) (6, 1) | (1, 6) (6, 1) |
+    | 8     | (2,6) (3,5) (4, 4) (5, 3) (6, 2)        | (2, 6) (6, 2) |
+    | 9     | (3,6) (4,5) (5, 4) (6, 3)               | (2, 6) (6, 2) |
+    | 10    | (4, 6) (5, 5) (6, 4)                    | (4, 6) (6, 4) |
 
-Ultimately, the conditional probability of $A$ given $B$ is gtgiven the definition of $$P(A|B) = \frac{PA\cap B}{P(B)}.$$ This is defined only for when $P(B) > 0$. The numerator in the expression, $P(A \cap B)$ is called the **joint probability** of $A$ and $B$, and may also be written as $P(A,B)$. Sometimes, we wish to condition on more than one event. To do so, the same process extends naturally. For instance, suppose we  want to know the probability of $A$ given $B$ and $C$. This would be written $$P(A|B,C) = \frac{P(A\cap B\cap C)}{P(B \cap C)} = \frac{P(A,B,C)}{P(B,C)}.$$ Moving beyond two  events occurs in the expected way.
+    Referencing from this table we can read off the following probabilities \begin{align*}
+P(E|S=7) &= \frac{2}{6} = \frac{1}{3}\\
+P(E|S=8) &= \frac{2}{5} \\
+P(E|S=9) &= \frac{2}{4} \\
+P(E|S=10) &= \frac{2}{3}.
+\end{align*} As a result, the best strategy is to guess "yes" when a $10$, $11$, or $12$ is rolled and to be indifferent to the guess when a $9$ is rolled. Otherwise, guess "no."
+::::
+:::
 
-Conditional probability is a mechanism for capturing our knowledge of the world, and using that to update our sense of the uncertainties at play. For instance, suppose that we are interested in drawing a random card from a deck of $52$, and we want to know the probability that it is a heart. Without any additional knowledge, the probability of this event is $\frac{1}{4}$. Now, suppose that you know that it is a red card. In this case, we now know that itis either a heart or a diamond, and there are equal numbes of each, meaning that the new probability is $0.5$. We can work this out directly $$P(\text{Heart}|\text{Red}) = \frac{P(\text{Heart},\text{Red})}{P(\text{Red})} = \frac{P(\text{Heart})}{1/2} = \frac{1/4}{1/2} = 0.5.$$ Suppose instaead that wwe had been told that the card was an ace. Here we now know that there are four possible outcomes that correspond to an ace, and only one of these is a heart, meaning the probability is $\frac{1}{4}$. In this case, $P(A|B) = P(A)$, and our beliefs did not update.
+Recall that $A$ and $B$, as events, are merely subsets of the sample space, $\mathcal{S}$. Each item in either $A$ or $B$ is one of the possible outcomes from the experiment or process that we are observing. Suppose that we know that $B$ has occurred. What this means is that, one of the outcomes in the set $B$ was the observed outcome from the experiment. Now, if we want to know $P(A|B)$, we want to know the probability, working from the assumption that $B$ has happened, that $A$ also happens. That is, knowing that $B$ has happened, what is the probability that $A$ and $B$ both happen. 
 
-What if instead we had considered the second event to be "the card was a spade." In this case if we want to know $P(A|B)$ then, given a spade being drawn, we know that the probability of drawing a heart is  $0$. 
+The event that $A$ and $B$ both happen is denoted by the intersection, $A \cap B$. This corresponds to the set of events inside the set $B$ which also belong to the set $A$. Now, instead of considering the joint probability directly, we need to acknowledge that for $A|B$, only the events in $B$ were possible. That is, instead of being divided by the whole space, we can only divide by the space of $B$. In some sense, we can view conditioning on $B$ as treating $B$ as though it is the full sample space, and finding probabilities within that. In general, $B$ will be smaller than $\mathcal{S}$, and so $P(B) < 1$. Instead of the conditional probability being "out of" $1$, it will instead be "out of" $P(B)$, which gives $P(A|B) = \frac{P(A\cap B)}{P(B)}$.
 
-TODO: Add further examples of conditional probabilities. 
+:::{.callout-tip icon="false"}
+## Computing Conditional Probabilities
+For an event $A$, and an event $B$ with probability $P(B) > 0$, the conditional probability of $A$ given $B$ is $$P(A|B) = \frac{P(A\cap B)}{P(B)}.$$
+:::
 
-While sometimes we will want to work out the  conditional probability, knowing the joint and marginal probabilities, there are other times where it is easier to determine the conditional probability directly, but where  we  wish to understand the marginal probability. That is, we may be able to know $P(A|B)$, but we want ot make statements regarding $P(A)$ or $P(A,B)$.
+To make this more clear, let's consider a simple example. Suppose that we take $A$ to be the event that a $2$ is rolled on a fair, six-sided die, and $B$ to be the event that an even number was rolled. This is an equal probability model, and so each outcome gets $\frac{1}{6}$ probability. The original sample space is $\mathcal{S} = \{1,2,3,4,5,6\}$, the event $A$ is $\{2\}$, and the event $B$ is $\{2,4,6\}$. In order for both $A$ and $B$ to occur, we note that we need $A \cap B = \{2\}$. If we know that $B$ has occurred, then we know that either a $2$, $4$, or $6$ has been rolled, with equal probability for each. Thus, intuitively, we can view $B$ as the new sample space, and say that rolling a $2$ has a $\frac{1}{3}$ probability, given that there are $3$ outcomes and $1$ of them is the event of interest. Another way to consider this is to note that $P(B) = \frac{1}{2}$, and so we need to scale each event by $\frac{1}{1/2}$ in order to make sure that the total probability of our reduced sample space equals $1$. Then $P(A\cap B) = \frac{1}{6}$, so $$P(A|B) = \frac{1/6}{1/2} = \frac{1}{3}.$$
 
-In this case, we can simply rearrange the defining relationship of conditional probability, to solve for the quantities of interest. Because of the importance of this procedure, we actually give the most straightforward rearrangment a special name. Note that, by multiplying both sides of the definition of $P(A|B)$ by $P(B)$, wwe get that $$P(A\cap B) = P(A|B)P(B).$$ This is known as the **multiplication rule**. In particular, it states that we can solve for the joint probability of $A$ and $B$ by multiplying the conditional probability of $A$ given $B$, by the marginal probability of $B$. Note that this is symmetric in $A$ and $B$ so that $$P(A\cap B) = P(B|A)P(A).$$  This is useful as  sometimes it is easier to determine $B$ given  $A$. 
+Suppose that, instead of a fair die, it was weighted so that $6$ comes up more frequently than the other options. Consider the probability of observing a six to be $0.5$, with the other five values each coming up with probability $0.10$. If $A$ and $B$ are the same events as above, then $P(B) = 0.7$. If we know that $B$ has occurred then the new sample space is $\{2,4,6\}$ where $P(2) = \frac{0.1}{0.7} = \frac{1}{7}$, $P(4) = \frac{0.1}{0.7}$, and $P(6) = \frac{0.5}{0.7} = \frac{5}{7}$. Note that these three probabilities sum to $1$ still, which constitutes a valid probability model, and so $P(A|B) = \frac{1}{7}$.
 
-TODO: Example regarding the multiplication rule.
+:::{#exm-basic-conditional-probability-rev}
+## Six from the Sum - Revisited
+Sadie sees the solution worked out for the best strategy in the dice game above, but is having trouble understanding it in the context of conditional probability more broadly. For the sums $7, 8, 9$, and $10$, describe the process of limiting the sample space to get the correct conditional probability, and use the formula to show that the probabilities worked out in @exm-basic-conditional-probability are correct.
 
-While the multiplication rule gives us the capacity to solve for joint probabilities, often  we  wish to make statements regarding marginal probabilities. Fortunately, we can extend this process outlined in the multiplication rule to solve directly for marginal probabilities as well. To do so, we first introduce the concept of a **partition**.
+::::{.callout .solution collapse='true'}
+## Solution
+The relevant table of solutions is copied from above. 
 
-A **partition** is simply a collection of sets which divide up the sample space such that all of the sets are disjoint from one another, and there is no overlap between any of the sets. For instance, if the sample space were all the positive integers, we could partition this space into all the even numbers as one set and all the odd numbers as a second. We could also partition this into the set of numbers which are less than $10$, the set of numnbers that are greater than $10$, and then $10$. In both examples we have sets that form the full sample space with no overlap. In notation, if our partition is formed of $B_1, B_2, B_3, \dots$, then we require $\bigcup_i B_i = \mathcal{S}$ and that $B_i \cap B_\ell = \emptyset$. Note that we could not partition the set into multiples of $2$ and multiples of $3$, since (i) not all values are contained between these two sets, and (ii) there is overlap between these two sets. 
+| Value | Combinations                            | Involving 6   |
+|-------|-----------------------------------------|---------------|
+| 7     | (1,6) (2,5) (3, 4) (4, 3) (5, 2) (6, 1) | (1, 6) (6, 1) |
+| 8     | (2,6) (3,5) (4, 4) (5, 3) (6, 2)        | (2, 6) (6, 2) |
+| 9     | (3,6) (4,5) (5, 4) (6, 3)               | (2, 6) (6, 2) |
+| 10    | (4, 6) (5, 5) (6, 4)                    | (4, 6) (6, 4) |
 
-TODO: Include further partition examples
+Here, given a sum, we **know** that one of the events listed under "combinations" has occurred. As a result, once we have conditioned on what the sum is, we are able to treat the "combinations" column as the full sample space of possible outcomes. Each of these in this case is equally likely, and so we can divide the number which contain a $6$, by the total number in the reduced sample space.
 
-Given  a partition, $B_1, B_2, \dots$, suppose that we can work out both $P(B_i)$ for all $i$, and $P(A|B_i)$ for all $i$. In this case we can work out the marginal probability of $A$ using **the law of total probability**. To do so we take $$P(A) = \sum_i P(A|B_i)P(B_i).$$ Intuitively, since the whole sample space is divided into the different $B_i$s, this rule breaks  down the calculation of $A$ happening into manageable chunks. Each term in the summation is "the probability that $A$ happens,  given $B_i$ happening" weighted by how likely it is that $B_i$ happens. Then by summing over all possible $B_i$, we know that we must be capturing all possible ways that $A$ can occur since all parts of the sample space are contained in exactly one of the sets of our partition.
+To do this algebraically, we first note that \begin{align*}
+    P(S=7) &= \frac{6}{36} \\
+    P(S=8) &= \frac{5}{36} \\
+    P(S=9) &= \frac{4}{36} \\
+    P(S=10) &= \frac{3}{36}.
+\end{align*} Now, suppose we consider the event $E\cap\{S=7\}$. This is the set $\{(1,6),(6,1)\}$ and so $P(E\cap\{S=7\}) = 2/36$. In fact, the same holds true for all of the joint events. As a result, we get \begin{align*}
+    P(E|S=7) &= \frac{\frac{2}{36}}{\frac{6}{36}} = \frac{2}{6} \\
+    P(E|S=8) &= \frac{\frac{2}{36}}{\frac{5}{36}} = \frac{2}{5} \\
+    P(E|S=9) &= \frac{\frac{2}{36}}{\frac{4}{36}} = \frac{2}{4} \\
+    P(E|S=10) &= \frac{\frac{2}{36}}{\frac{3}{36}} = \frac{2}{3}.
+\end{align*} This corresponds exactly to the values we found before.
+::::
+:::
 
-The law of total probability is  an  indispensible tool for computing probabilities in practice. Suppose that an online retailer uses two different services to send out their packages, the first one delivers later with probability $0.05$ and the second delivers late with probability $0.1$. If the chances that a customer selects the first supplier are $0.75$, then with this information we can work out the probability that any randomly selected package will be late.  First note that in this case our sample space is comprised of $\mathcal{S} = \{(L,A),(L,B),(O,A),(O,B)\}$ where $L$ stands for late, $O$ for on time, $A$ for the first compnay,  and $B$ for the second. We want to know $P(L)$, where $L = \{(L,A),(L,B)\}$. Note that we can partition  the space into those sent by $A$ and those sent by $B$, and we know that $P(A) = 0.75$ and $P(B) = 0.25$. Moreover, we know that $P(L|A) = 0.05$ and $P(L|B) = 0.10$ and so combining this all together we get $$P(L) = P(L|A)P(A) + P(L|B)P(B) = (0.05)(0.75) + (0.10)(0.25) = 0.0625.$$
+Sometimes, we wish to condition on more than one event. To do so, the same process extends naturally. For instance, suppose we want to know the probability of $A$ given $B$ and $C$. This would be written $$P(A|B,C) = \frac{P(A\cap B\cap C)}{P(B \cap C)} = \frac{P(A,B,C)}{P(B,C)}.$$ Moving beyond two events occurs in the expected way.
 
-TODO: Write another example on the utility of L.o.T.P.
+## Using Conditional Probabilities
+Conditional probability is a mechanism for capturing our knowledge of the world, and using that to update our sense of the uncertainties at play. For instance, suppose that we are interested in drawing a random card from a deck of $52$, and we want to know the probability that it is a heart. Without any additional knowledge, the probability of this event is $\frac{1}{4}$. Now, suppose that you know that it is a red card. In this case, we now know that it is either a heart or a diamond, and there are equal numbers of each, meaning that the new probability is $0.5$. We can work this out directly $$P(\text{Heart}|\text{Red}) = \frac{P(\text{Heart},\text{Red})}{P(\text{Red})} = \frac{P(\text{Heart})}{1/2} = \frac{1/4}{1/2} = 0.5.$$ Suppose instead that we had been told that the card was an ace. Here we now know that there are four possible outcomes that correspond to an ace, and only one of these is a heart, meaning the probability is $\frac{1}{4}$. In this case, $P(A|B) = P(A)$, and our beliefs did not update.
 
-We have seen the direct computation of marginal probabilities (while using an equally likely outcome model), the computation of conditional probabilities, the use of the multiplication rule for joint probabilities, and the use of the law of total probability to indirectly calculate marginal probabilities through conditioning arguments. Throughout these discussions we have been primarily concerned with keeping events $A$ and $B$ arbitrary. Everything that we have indicated for $P(A)$ holds for $P(B)$, as does $P(A|B)$ and $P(B|A)$. In reality, it will often be the case that conditioning on one of the events will be natural, while conditioning on  the other will be more tricky. In these events, it can be useful to be able to transform statements regarding $P(A|B)$ into statements regarding $P(B|A)$, and vice versa.
+What if instead we had considered the second event to be "the card was a spade." In this case if we want to know $P(A|B)$ then, given a spade being drawn, we know that the probability of drawing a heart is $0$. 
 
-Note that the symmetry of definitions gives the fact that $$P(A|B)P(B) = P(A,B) = P(B|A)P(A).$$ This is an application of the multiplication rule in two different orientations. If we divide both sides of the equality by $P(B)$, assuming that it is not $0$,  then we get $$P(A|B) = \frac{P(B|A)P(A)}{P(B)}.$$ Now, if we form a partition, say $A,A_2,A_3,\cdots$, then we can rewrite $P(B)$ using the law of total probability as $$P(B) =  P(B|A)P(A) + P(B|A_2)P(A_2) + \cdots,$$ which can replace $P(B)$ in the expression. Taken together, we refer to this relationship as **Bayes' Theorem**, and it is typically expressed as $$P(A|B) = \frac{P(B|A)P(A)}{P(B|A)P(A) + \sum_i P(B|A_i)P(A_i)}.$$
+:::{#exm-conditional-probability-urn}
+## Charles's Mismatched Urn Mishap
+Charles's love of probability prompts a spontaneous decision: buy an urn and some coloured balls to fill it up with. Unfortunately, the supplier of the balls misunderstood the request and sent over an assortment of different shapes rather than just spheres. There are some spheres, some cubes, some pyramids, and some cones. There are also five different colours present, red, blue, green, yellow, and black. Charles is slightly dismayed as, when reaching into the urn, it is very easy to feel what shape you are pulling out before you see the object, and the distribution of colour-shape combinations is not even. Despite the dismay, Charles shows Sadie, who is deeply excited, explaining how this mismatched urn is perfect for understanding conditional probabilities deeply. The distribution of shapes and colours is presented in the following table.
 
-Bayes' Theorem allows us to convert statements regarding $P(B|A)$ into statements regarding $P(A|B)$. Note that, as we derived above, Bayes' Theorem is really just an application of the multiplication rule and an application of the law of total probability. Sometimes we may have $P(B)$ directly, rendering the law of total probability in the denominator unnecessary. Often, the natural  partition to select when we do need the law of total probability is to take $A,A^C$. Note that any set with its complement forms a partition, since by definition they occupy the entire space and are non-overlapping. When this is  done we get the slightly more compact relationship of $$P(A|B) = \frac{P(B|A)P(A)}{P(B|A)P(A) + P(B|A^C)P(A^C)}.$$
+| **Colour** | **Sphere** | **Cube** | **Pyramid** | **Cone** |
+|-|:--:|:--:|:--:|:--:|
+| **Red**    | 2          | 3        | 2           | 0        |
+| **Blue**   | 1          | 0        | 0           | 6        |
+| **Green**  | 2          | 2        | 1           | 2        |
+| **Yellow** | 0          | 4        | 2           | 1        |
+| **Black**  | 3          | 1        | 1           | 2        |
 
-Unlike our previous relationships, Bayes' Theorem allows us to translate one set of conditional knowledge into another. The most common example application is in  medical testing. Suppose that we know the performance characteristics of a particular medical test:  it is $99\%$ accurate for positive cases, and $95\%$ accurate for negative cases. That is,  wit h probability $0.99$ it correctly returns positive when an individual is infected, and with probability $0.95$ it returns negative when an individual is not infected. These are both statements of conditional probability. If  we take $A$ to be the event that the test returns positive, and $B$ to be the event that the patient is infected, then we are saying that $P(A|B) = 0.99$ and $P(A^C|B^C) = 0.95$ which means that $P(A|B^C) = 0.05$. Suppose that we know that, across the entire population, one in a thousand individuals is likely to be infected. This means that $P(B) = 0.001$. Now suppose that a random individual goes into a doctor's appointment, and tests positive for the disease. How likely are they to actually be infected?
+a. What is the probability of drawing each colour, if items are selected at random, without knowledge of the shape?
+b. Assuming that the shape is known, what is the probability of selecting each colour?
 
-Note that in  this case we want to know the probability of them being infected given that they have tested positive. In notation, this is $P(B|A)$. We do not know this quantity directly, but given a simple application of Bayes' Theorem, we can work it out. Here using the natural partition of $B,B^C$, we get $$P(B|A) = \frac{P(A|B)P(A)}{P(A|B)P(B)+P(A|B^C)P(B^C)} = \frac{(0.99)(0.001)}{(0.99)(0.001)+(0.05)(0.999)} \approx 0.019.$$ That is, despite the fact that this test is exceptionally effective at detecting this disease, a positive test still means that an individual has a probability of only $0.019$ of actually having the illness. This counter intuitive fact was an intensely frustrating reality for statisticians everywhere during the height of the COVID-19 pandemic, when politicians and the population at large turned away from testing owing to its perceived ineffectiveness. 
+::::{.callout .solution collapse='true'}
+## Solution
+a. Note that there are $2+3+2=7$ red, $1+6=7$ blue, $2+2+1+2=7$ green, $4+2+1=7$ yellow, and $3+1+1+2=7$ black objects. As a result, each colour is going to be equally likely, with a probability of $0.2$.
 
-TODO: Add another exmaple regarding Bayes' Theorem
+b.  Take $S$, $C$, $P$, $Cn$ to be the events that a sphere, cube, pyramid, or cone are drawn, respectively. Take $R$, $B$, $G$, $Y$, $Bk$ to be the events that a red, blue, green, yellow, or black object is drawn, respectively. We want the probability of each colour, given the corresponding shape. There are a total of $20$ conditional probabilities to solve for here. We walk through, in full, the first conditional probability calculation. Afterwards, the same process follows to get the (provided) answer. 
 
-Bayes' Theorem highlights  a key lesson  when considering conditional probabilities, and it's a common mistake to make which  should be avoided at all costs. Namely,  we cannot interchange  $P(A|B)$ with $P(B|A)$. These probabilities are not necessarily highly correlated  with one another, and it is important to distinguish clearly which is the probability of interest. Mixing up $P(B|A)$ and $P(A|B)$ is often called "confusion of the inverse," and it can lead to very faulty conclusions when ignored. In the medical testing example above, it is important to not confuse "the probability that the test returns positive, assuming you  have theillness" with "the probability that you have the illness, given that the test returns positive." The stakes of these types of confusion can be quite high, and it is tremendously important to ensure that you are conditioning on the correct events. Fortunately, Bayes' Theorem allows us to translate ebtween events for conditioning, giving a mecchanism from translating between the two.
+    First note that there are $8$ spheres, $10$ cubes, $6$ pyramids, and $11$ cones. Thus, the marginal probabilities are $P(S) = 8/35$, $P(C) = 10/35$, $P(P) = 6/35$, and $P(Cn) = 11/35$. Note further that the joint probability between any colour-shape combination is going to be given by the number of that combination that exist, divided by $35$. Thus, suppose we want $P(R|S)$. There are $2$ red spheres, so $P(R \cap S) = 2/35$. The marginal probability $P(S) = 8/35$, so taken together this gives $$P(R|S) = \frac{2/35}{8/35} = \frac{2}{8} = \frac{1}{4}.$$
 
-TODO: Include Another Example (perhaps Smoking vs. lung cancer)
+    Applying the same process gives the following probabilities, reported in the table for convenience.
 
-TODO: Fix Bayes' to Bayes'
+    | **Colour** | **Sphere**                  | **Cube**     | **Pyramid** | **Cone**     |
+    |-|:--:|:--:|:--:|:--:|
+    | **Red**    | $\frac{2}{8} = \frac{1}{4}$ |$\frac{3}{10}$|$\frac{1}{3}$|$0$           |
+    | **Blue**   | $\frac{1}{8}$               |$0$           |$0$          |$\frac{6}{11}$|
+    | **Green**  | $\frac{2}{8} = \frac{1}{4}$ |$\frac{1}{5}$ |$\frac{1}{6}$|$\frac{2}{11}$|
+    | **Yellow** | $0$                         |$\frac{2}{5}$ |$\frac{1}{3}$|$\frac{1}{11}$|
+    | **Black**  | $\frac{3}{8}$               |$\frac{1}{10}$|$\frac{1}{6}$|$\frac{2}{11}$|
+::::
+:::
 
-TODO: Add in subsections
+### The Multiplication Rule
+While sometimes we will want to work out the conditional probability using our knowledge of the joint and marginal probabilities, there are other times where it is easier to determine the conditional probability directly. In these settings we may wish to understand the marginal or joint probabilities. That is, we may know $P(A|B)$, but we want to make statements regarding $P(A)$ or $P(A,B)$.
+
+To do so, we can simply rearrange the defining relationship of conditional probability, to solve for the quantities of interest. Because of the importance of this procedure, we actually give this mostly straightforward rearrangement a special name. 
+
+:::{#def-multiplication-rule}
+## Multiplication Rule
+The multiplication rule states that, for two events $A$ and $B$ where $P(B) > 0$, $$P(A\cap B) = P(A|B)P(B).$$ 
+:::
+
+Note that, by multiplying both sides of the definition of $P(A|B)$ by $P(B)$ gives the result. In words it states that we can solve for the joint probability of $A$ and $B$ by multiplying the conditional probability of $A$ given $B$, by the marginal probability of $B$. This is symmetric in $A$ and $B$ so that $$P(A\cap B) = P(B|A)P(A).$$ This is useful as sometimes it is easier to determine $B$ given $A$. 
+
+:::{#exm-package-delivery-times}
+## Package Delivery Times
+To thank Sadie for the help in seeing the silver lining with the urn mishap, Charles decides to order a small gift online, sending it direct to Sadie. Unfortunately, the website does not list which delivery company each package is sent out with. After some sleuthing, Charles determines that there are two different companies that it may have been sent with. Looking at online reviews it appears as though company $A$ is late $75\%$ of the time while company $B$ is late $15\%$ of the time. 
+
+If the store that Charles ordered from sends out $10\%$ of packages with company $A$, and the rest with company $B$, which is more likely: that the package is late and was sent with $A$, or that the package was late and sent with $B$?
+
+::::{.callout .solution collapse='true'}
+## Solution
+We will take $L$ to correspond to the events where the package is late, $A$ to the events where the package was sent with $A$ and $B$ to be the events where the package was sent with $B$. We wish to compare $P(L, A)$ and $P(L, B)$. We know that $P(A) = 0.1$ and $P(B) = 0.9$, and we know that $P(L|A) = 0.75$ and $P(L|B) = 0.15$. As a result, we can use the multiplication rule to find the joint probabilities. First, $P(L, A) = P(L|A)P(A) = (0.75)(0.1) = 0.075$. Additionally, $P(L, B) = P(L|B)P(B) = (0.15)(0.9) = 0.135$. As a result it is more likely to have the package late and sent with $B$ then the package late and sent with $A$.^[Note, this is another result which seems to (on the surface) defy expectations. We will see this again later on in this chapter in a slightly different context. It seems strange that company $A$ is more likely to be late, and yet, we are more likely to see a late package that is sent by company $B$ then a late package that is sent by company $A$. The reason for this is that company $B$ is used much more frequently than company $A$, which overcomes the added likelihood of company $A$ being late.]
+::::
+:::
+
+### Partitions and the Law of Total Probability
+While the multiplication rule gives us the capacity to solve for joint probabilities, often we wish to make statements regarding marginal probabilities. Fortunately, we can extend this process outlined in the multiplication rule to solve directly for marginal probabilities as well. To do so, we first introduce the concept of a partition.
+
+:::{#def-partition}
+## Partition
+A partition is a collection of sets which divide up the sample space such that all of the sets are disjoint from one another, and the sample space is given by the union of all of the sets. That is, $A_1,\dots,A_n$ is a partition of $\mathcal{S}$ if:
+
+1. $A_i \cap A_j = \emptyset$ for all $i \neq j$, and 
+2. $$\bigcup_{i=1}^n A_i = \mathcal{S}.$$
+:::
+
+For instance, if the sample space were all the positive integers, we could partition this space into all the even numbers as one set and all the odd numbers as a second. We could also partition this into the set of numbers which are less than $10$, the set of numbers that are greater than $10$, and then $10$. In both examples we have sets whose union forms the full sample space with no overlap. Note that we could not partition the set into multiples of $2$ and multiples of $3$, since (i) not all values are contained between these two sets,^[For instance, $5$ is neither a multiple of $2$ nor of $3$.] and (ii) there is overlap between these two sets.^[For instance, $6$ is a multiple of both $2$ and $3$.]
+
+:::{#exm-simple-partitions}
+## Partitions of the Coin Game
+Charles and Sadie are thinking back with fondness to their original coin flipping game, where they would toss a coin three times in a row. If two or more heads showed up, Charles would pay. Otherwise, Sadie would. 
+
+To help them reminisce, Write down three different partitions of the sample space, each with a different number of partitioning sets. Describe your partitions using words.
+
+::::{.callout .solution collapse='true'}
+## Solution
+There are many possible partitions to write down. The following are examples.
+
+1. We can partition the space into games where Charles pays and games where Sadie pays. This gives \begin{align*}
+B_1 &= \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{T},\text{H},\text{H})\}\\
+B_2 &= \{(\text{T},\text{T},\text{T}), (\text{T},\text{T},\text{H}), (\text{T},\text{H},\text{T}), (\text{H},\text{T},\text{T})\}.\end{align*}
+
+2. We can partition the space into those with $0$, $1$, $2$, or $3$ heads. This gives \begin{align*}
+B_1 &= \{(\text{H},\text{H},\text{H})\}\\
+B_2 &= \{(\text{T},\text{T},\text{H}), (\text{T},\text{H},\text{T}), (\text{H},\text{T},\text{T})\}\\
+B_3 &= \{(\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{T},\text{H},\text{H})\}\\
+B_4 &= \{(\text{H},\text{H},\text{H})\}.
+\end{align*}
+
+3. We can partition the space into the number of times the sequence switches between heads and tails. There will be either $0$ switches, $1$ switch, or $2$ switches. This gives \begin{align*}
+B_1 &= \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{H})\}\\
+B_2 &= \{(\text{T},\text{T},\text{H}), (\text{H},\text{T},\text{T}), (\text{H},\text{H},\text{T}), (\text{T},\text{H},\text{H})\}\\
+B_3 &= \{(\text{T},\text{H},\text{T}),  (\text{H},\text{T},\text{H})\}.
+\end{align*}
+::::
+:::
+
+Partitions allow us to move from discussions regarding the joint probability of events to the marginal probability of an event. Suppose that we have a partition given by $B_1, B_2, \dots$. This means that our full sample space can be cut up into these various non-overlapping sets, and every single outcome belongs to exactly one of them. Now, suppose we are interested in some other event $A$. We can ask: how can $A$ occur, in terms of the events $B_1, B_2, \dots$? Since every single event in the sample space belongs to exactly one of our partitioning sets, then it **must** be the case that every single event in $A$ belongs to exactly one of our partitioning sets. This means that if we consider $A\cap B_j$, for all $j$, then every single event in $A$ must belong to exactly one of these. In other words, it must be the case that $$A = \bigcup_{j} A\cap B_j,$$ for any partition $B_1, B_2,\dots$. Moreover, every single $A\cap B_j$ is disjoint from every other $A \cap B_\ell$, whenever $\ell \neq j$. This means that we can use the axiom of additivity to give $$P(A) = P\left(\bigcup_{j} A\cap B_j\right) = \sum_{j} P(A \cap B_j).$$ In other words: the marginal probability of $A$ can be found by summing over **all** joint probabilities between $A$ and sets that form a partition. This argument gives the **law of total probability**.
+
+![This graphic shows the argument that summing over the joint probabilities between an event and a partition gives the full marginal probability. Note that $B_1,\dots,B_7$ forms a partition of the space where every possible outcome is contained in exactly one of these sets. Then, if we take an arbitrary event $A$, we can divide $A$ into the components that intersect with each partitioning set, namely $A \cap B_1$, $A \cap B_2$, and so forth.](/graphics/ch4-basic-partition){#fig-basic-partition}
+
+:::{.callout-tip icon="false"}
+## The Law of Total Probability
+Given a partition, $B_1, B_2, \dots$, and an event $A$, the law of total probability states that $$P(A) = \sum_i P(A, B_i) = \sum_i P(A|B_i)P(B_i).$$
+:::
+
+Intuitively, since the whole sample space is divided into the different $B_i$s, this rule breaks down the calculation of $A$ happening into manageable chunks. Each term in the summation is "the probability that $A$ happens, given $B_i$ happening" weighted by how likely it is that $B_i$ happens. Then by summing over all possible $B_i$, we know that we must be capturing all possible ways that $A$ can occur since all parts of the sample space are contained in exactly one of the sets of our partition. The law of total probability is an indispensible tool for computing probabilities in practice. 
+
+:::{#exm-lotp-example}
+## Sadie's Possibly Late Package
+Sadie has still not received the package that Charles had ordered. While it is not late yet, Charles decides to figure out the probability that the package will end up being late. Recall that company $A$ is late $75\%$ of the time while company $B$ is late $15\%$ of the time, and the store that Charles ordered from sends out $10\%$ of packages with company $A$, and the rest with company $B$, which is more likely. 
+
+What is the probability that the package is late?
+
+::::{.callout .solution collapse='true'}
+## Solution
+Note that $A, B$ forms a partition of the sample space as every package is either sent with $A$ or with $B$, and no package can be sent with both. Further, if $L$ represents the event that the package is late, then we know that $P(L|A) = 0.75$ and $P(L|B) = 0.15$. Since $P(A) = 0.1$ and $P(B) = 0.9$, an application of the law of total probability gives $$P(L) = P(L|A)P(A) + P(L|B)P(B) = (0.75)(0.1) + (0.15)(0.9) = 0.21.$$ As a result, knowing nothing else, the package has a probability of $0.21$ of being late.
+::::
+:::
+
+:::{#exm-lotp-example-two}
+## Charles' Many Urns
+While shopping at some garage sales one Sunday morning, Charles and Sadie stumble across a wonderful find! They see three urns which are **exactly** identical to the one that Charles had already purchased to store the different balls which turned out to not be balls at all. Realizing the opportunity they splurge and purchase them all, and then divide the various objects between the four urns, placing all the spheres in one container, all the cubes in another, all the pyramids in a third, and all the cones in a fourth.
+
+Once done, they use a different selection mechanism. First, they pick an urn at random. Next, they random grab one of the items from within it. The distribution of colours and shapes is included in the following table.
+
+| **Colour** | **Sphere (Urn 1)** | **Cube (Urn 2)** | **Pyramid (Urn 3)** | **Cone (Urn 4)** |
+|-|:--:|:--:|:--:|:--:|
+| **Red**    | 2          | 3        | 2           | 0        |
+| **Blue**   | 1          | 0        | 0           | 6        |
+| **Green**  | 2          | 2        | 1           | 2        |
+| **Yellow** | 0          | 4        | 2           | 1        |
+| **Black**  | 3          | 1        | 1           | 2        |
+
+
+a. What is the probability that they select any of the five colours under this sampling scheme? 
+b. How does this change if the probability that each urn is selected is proportional to the number of items in it? (Thus, urn 1 is selected with probability $8/35$, and so forth).
+
+::::{.callout .solution collapse='true'}
+## Solution
+a.  Let $R$, $B$, $G$, $Y$, and $Bk$ be the events that a red, blue, green, yellow, or black ball are selected. Further, let $U_1$, $U_2$, $U_3$, and $U_4$ be the events that the first, second, third, or fourth urn are selected. Then note that, according to the law of total probability, $$P(R) = P(R, U_1) + P(R, U_2) + P(R, U_3) + P(R, U_4) = \sum_{j=1}^4 P(R|U_j)P(U_j).$$ An equivalent argument holds for each of the other colours. Now, $$P(R|U_j) = \frac{N_{R\cap U_j}}{N_{U_j}},$$ where $N_{R\cap U_j}$ is the number of red objects in urn $j$ and $N_{U_j}$ is the total number in urn $j$. Plugging this in and simplifying we get $$P(R) = \sum_{j=1}^4P(R|U_j)\left(\frac{1}{4}\right) = \frac{1}{4}\left\{\frac{2}{8} + \frac{3}{10} + \frac{2}{6}\right\} = \frac{53}{240}.$$
+
+    We can apply analogous arguments to the other colours giving \begin{align*}
+P(B) &= \frac{1}{4}\left\{\frac{1}{8} + \frac{6}{11}\right\} = \frac{59}{352} \\
+P(G) &= \frac{1}{4}\left\{\frac{2}{8} + \frac{2}{10} + \frac{1}{6} + \frac{2}{11}\right\} = \frac{527}{2640}\\
+P(Y) &= \frac{1}{4}\left\{\frac{4}{10} + \frac{2}{6} + \frac{1}{11}\right\} = \frac{34}{165}\\
+P(Bk) &= \frac{1}{4}\left\{\frac{3}{8} + \frac{1}{10} + \frac{1}{6} + \frac{2}{11}\right\} = \frac{1087}{5280}.
+\end{align*}
+
+    Note that these probabilities sum to $1$. In decimal these simplify to approximately `r paste0(round(c(53/240, 59/352, 527/2640, 34/165, 1087/5280), 3), collapse = ", ")`.
+
+b.  Using the same setup as before, we have $$P(R) = P(R, U_1) + P(R, U_2) + P(R, U_3) + P(R, U_4) = \sum_{j=1}^4 P(R|U_j)P(U_j).$$ Now $P(U_1) = 8/35$, $P(U_2) = 10/35$, $P(U_3) = 6/35$, and $P(U_4) = 11/35$. Moreover, the conditional probabilities themselves do not change, and so instead we have $$P(R) = \left\{\frac{2}{8}\cdot\frac{8}{35} + \frac{3}{10}\cdot\frac{10}{35} + \frac{2}{6}\frac{6}{35} + \frac{0}{11}\cdot\frac{11}{35}\right\} = \frac{N_R}{35}.$$ Note that when multiplying by the marginal probability of the urn, the denominator will always cancel. As a result, we end up with the total number of reds over $35$, which leads to $P(R) = \frac{1}{5}$. The same will be true for the other colours, and as a result, if we choose the urn based on a weighted selection, this will result in equal probability once more.
+::::
+:::
+
+### Bayes' Theorem
+We have seen the direct computation of marginal probabilities (while using an equally likely outcome model), the computation of conditional probabilities, the use of the multiplication rule for joint probabilities, and the use of the law of total probability to indirectly calculate marginal probabilities through conditioning arguments. Throughout these discussions we have been primarily concerned with keeping events $A$ and $B$ arbitrary. Everything that we have indicated for $P(A)$ holds for $P(B)$, as does $P(A|B)$ and $P(B|A)$. In reality, it will often be the case that conditioning on one of the events will be natural, while conditioning on the other will be more tricky. In these events, it can be useful to be able to transform statements regarding $P(A|B)$ into statements regarding $P(B|A)$, and vice versa.
+
+Note that because the definitions are symmetric, $$P(A|B)P(B) = P(A,B) = P(B|A)P(A).$$ This is an application of the multiplication rule in two different orientations. If we divide both sides of the equality by $P(B)$, assuming that it is not $0$, then we get $$P(A|B) = \frac{P(B|A)P(A)}{P(B)}.$$ Now, if we form a partition, say $A,A_2,A_3,\dots$, then we can rewrite $P(B)$ using the law of total probability as $$P(B) = P(B|A)P(A) + P(B|A_2)P(A_2) + \cdots = P(B|A)P(A) + \sum_{i=2}P(B|A_i)P(A_i),$$ which can replace $P(B)$. Taken together this gives a result known as Bayes' Theorem.^[Bayes' Theorem is named in the same way that the Bayesian interpretation of probability is, and that Bayesian statistics is more broadly. The connections are more than merely surface: Bayes' Theorem can be viewed as the primary technique with which we can update subjective beliefs about the world. Importantly, however, even those who use a Frequentist view of statistics accept the math of Bayes' Theorem, and use it frequently.]
+
+:::{.callout-tip icon='false'}
+## Bayes' Theorem
+Suppose that there are two events, $A$ and $B$, with $P(B) > 0$. Moreover, suppose that $A$ taken with $A_2, A_3, \dots$ forms a partition. Then Bayes' Theorem states that $$P(A|B) = \frac{P(B|A)P(A)}{P(B)} = \frac{P(B|A)P(A)}{P(B|A)P(A) + \sum_{i=2} P(B|A_i)P(A_i)}.$$
+:::
+
+Bayes' Theorem allows us to convert statements regarding $P(B|A)$ into statements regarding $P(A|B)$. Note that, as we derived above, Bayes' Theorem is an application of the multiplication rule and an application of the law of total probability.^[In fact, I would go as far as to suggest that learning Bayes' Theorem by itself is less important than fully grasping the definition of conditional probability alongside the multiplication rule and the law of total probability. I myself do not remember Bayes' Theorem directly, but can write it down directly from these definitions without any thought.] Sometimes we may have $P(B)$ directly, rendering the law of total probability in the denominator unnecessary. 
+
+Often, the natural partition to select when we do need the law of total probability is to take $A$ and $A^C$. Note that any set with its complement forms a partition, since by definition they occupy the entire space and are non-overlapping. When this is done we get the slightly more compact relationship of $$P(A|B) = \frac{P(B|A)P(A)}{P(B|A)P(A) + P(B|A^C)P(A^C)}.$$
+
+Bayes' Theorem differs from our previous relationships as it allows us to translate one set of conditional probabilities into another. Every other relationship we have looked at has moved between types of probabilities, whereas Bayes' Theorem deals directly with conditional relationships. 
+
+The most commonly cited example application is in medical testing. Suppose that we know the performance characteristics of a particular medical test: it is $99\%$ accurate for positive cases, and $95\%$ accurate for negative cases. That is, with probability $0.99$ it correctly returns positive when an individual is infected, and with probability $0.95$ it returns negative when an individual is not infected.These are both statements of conditional probability. If we take $A$ to be the event that the test returns positive, and $B$ to be the event that the patient is infected,^[It is worth drawing attention to the language that we have started to use at this point in the notes regarding "events". In this case our sample space would actually be formed using pairs of information. In particular, we might have $$\mathcal{S} = \{(\text{Pos. Test}, \text{Illness}), (\text{Neg. Test}, \text{Illness}),(\text{Pos. Test}, \text{No Illness}),(\text{Neg. Test}, \text{No Illness})\}.$$ Then the event $A$ here is actually $A = \{(\text{Pos. Test}, \text{Illness}),(\text{Pos. Test}, \text{No Illness})\}$ and $B$ is $\{(\text{Pos. Test}, \text{Illness}),(\text{Neg. Test}, \text{Illness})\}$. It is far more clunky to make explicit these events, and so we move towards using more natural language. Until you feel confident that you can identify the specific outcomes associated with the events of interest, it is worth writing these out in full.] then we are saying that $P(A|B) = 0.99$ and $P(A^C|B^C) = 0.95$ which means that $P(A|B^C) = 0.05$. Suppose that we know that, across the entire population, one in a thousand individuals is likely to be infected. This means that $P(B) = 0.001$. 
+
+Now if a random individual goes into a doctor's office and tests positive for the disease, how likely are they to actually be infected? In this case we want to know the probability of them being infected given that they have tested positive. In notation, this is $P(B|A)$. We do not know this quantity directly, but given an application of Bayes' Theorem, we can find it. Using the natural partition of $B$ and $B^C$, we get $$P(B|A) = \frac{P(A|B)P(A)}{P(A|B)P(B)+P(A|B^C)P(B^C)} = \frac{(0.99)(0.001)}{(0.99)(0.001)+(0.05)(0.999)} \approx 0.019.$$ That is, despite the fact that this test is exceptionally effective at detecting this disease, a positive test still means that an individual has a probability of only $0.019$ of actually having the illness.^[This counter intuitive fact was an intensely frustrating reality for statisticians everywhere during the height of the COVID-19 pandemic, when politicians and the population at large turned away from testing owing to its perceived "ineffectiveness". The quantity of interest for knowing how good a test is is $P(A|B)$ and $P(A^C|B^C)$. However, if a disease is sufficiently rare, with $P(B)$ sufficiently small, then no matter how effective the tests are you will likely have $P(B|A)$ to be low. Note that $P(B|A) >> P(B)$ in the example, and this will also be true in general. A single test cannot say with certainty, however, they are an incredibly effective tool at reducing our uncertainty.]
+
+:::{#exm-bayes-theorem}
+## Sadie's Late Package
+Sadie eventually received the package that Charles had sent, but it arrived very late. Sadie was not home when the package was delivered and there no obvious markings on the box to indicate which of the two delivery companies had sent it. 
+
+Given this information, and knowing that company $A$ is late $75\%$ of the time while company $B$ is late $15\%$ of the time, and the store that Charles ordered from sends out $10\%$ of packages with company $A$, and the rest with company $B$, what is the probability that the package was delivered by each of the two companies?
+
+::::{.callout .solution collapse='true'}
+## Solution
+We want to determine $P(A|L)$ and $P(B|L)$. We know that $P(L|A) = 0.75$ and $P(L|B) = 0.15$. Moreover, we know that $P(A) = 0.1$ and $P(B) = 0.9$. Applying Bayes' Theorem directly we get $$P(A|L) = \frac{P(L|A)P(A)}{P(L|A)P(A) + P(L|B)P(B)} = \frac{(0.75)(0.10)}{(0.75)(0.10) + (.10)(0.90)} = \frac{5}{11}.$$ Similarly, we get $$P(B|L) = \frac{P(B|A)P(B)}{P(L|A)P(A) + P(L|B)P(B)} = \frac{(0.15)(0.90)}{(0.75)(0.10) + (.10)(0.90)} = \frac{6}{11}.$$ Note, we could have also used the fact that $P(A|L) + P(B|L) = 1$ to determine this. As a result, it is more likely that $B$ delivered the package than $A$.^[Note that this is another example of a counterintuitive result. Here, $A$ is far more likely to be late, but it is more likely that $B$ delivered a late package to us than $A$ because of the **base rates**. That is, $P(B)$ is much higher to begin than $P(A)$, and so that is hard to overcome. It is worth noting, however, that originally $P(B)$ is $9$ times more likely than $P(A)$, and after knowing that package is late it is $\frac{6}{5} = 1.2$ times more likely. This major reduction in the relative likelihood is owed to how much more likely $A$ is to deliver late packages than $B$.]
+::::
+:::
+
+Bayes' Theorem highlights a key lesson when considering conditional probabilities, and it's a common mistake to make which should be avoided at all costs. Namely, we cannot interchange $P(A|B)$ with $P(B|A)$. These probabilities are not necessarily highly correlated with one another, and it is important to distinguish clearly which is the probability of interest.^[Mixing up $P(B|A)$ and $P(A|B)$ is often called *confusion of the inverse*, and it can lead to very faulty conclusions when ignored. In the medical testing example above, it is important to not confuse "the probability that the test returns positive, assuming you have the illness" with "the probability that you have the illness, given that the test returns positive." This type of faulty logic has long been used to justify discriminatory behaviour in medicine, the law, and so on. A thorough understanding of statistics and probability helps to ensure that these types of errors are not made, and gives you the tools to push-back on the spots where people are making these arguments incorrectly, particularly when the stakes are high or harm is being done.] The stakes of these types of confusion can be quite high, and it is tremendously important to ensure that you are conditioning on the correct events. Fortunately, Bayes' Theorem allows us to translate between events for conditioning, giving a mechanism from translating between the two.^[When discussing Bayes' Theorem we introduced two frequently occurring sources of error when reasoning about probabilities, and showed how to remedy them. *Confusion of the inverse* occurs when you mix up $P(A|B)$ with $P(B|A)$, and can lead to disastrous consequences. The *base rate fallacy* occurs when you fail to take into account the rareness of the marginal events and instead only consider the conditionals (such as seeing that delivery company $A$ was more likely to be late than $B$, without considering that $B$ was more likely to be used than $A$). These are both examples of the challenges at the heart of probability and statistics: namely, the subjects are fairly unintuitive once moving beyond the basics. As a result, we need to rely on building up our intuitions over time by making use of the formal rules that we are able to derive.]
 
 ## Independence
-We have seen that, in most cases,  when we have conditioned on an event it has  changed the probability of that event.  For instance, if we want to know the probability it is raining, if we condition on knowing that it is a day full of gray skies, then the probability likely increases. By considering how tehse probabilities change when we condition, we are in effect indicating a dependence of  the events on one another. In terms of probability, this dependence is captured by an influence on the degree of uncertainty present, depending on what we know.
+We have seen that, in most cases, conditioning on an event changes the probability of that event. For instance, if we want to know the probability it is raining, if we condition on knowing that it is a day full of gray skies, the conditional probability is likely higher than the marginal probability. By considering how the marginal and conditional probabilities differ, we are in effect indicating a dependence of the events on one another. In terms of probability, this dependence is captured by an influence on the degree of uncertainty present depending on what we know.
 
-It is of course, totally possible that two  events do not influence one another. The weeather outside today is likely not influenced by your favourite sports team's performance last night, for instance. In this case, we would be suggest that $P(A|B) = P(A)$. We saw an example where this was concerned previously when we wanted to know the probability of a randomly selected card being a heart ($A$), given  that it was  an  ace ($B$).  We found tat this was  $\frac{1}{4}$, exactly the same as the probability if we did not know that it was an ace. Thus here we have $P(A|B)=P(A)$. Note that in this case,  we could have also  said that $P(B|A)=P(B)=\frac{1}{13}$.
+It is totally possible that two events do not influence one another at all. The weather outside today is likely not influenced by your favourite sports team's performance last night.^[Though, perhaps the world will freeze over if *(insert-your-least-favourite-team-here)* wins the *(insert-the-name-of-the-championship-for-the-league-you-care-about-here)*?] In this case, we would have $P(A|B) = P(A)$. 
 
-The symmetry of these events makes it somewhat more convenient to express this relationship differently.  If we multiply both sides of the $P(A|B)=P(A)$, by $P(B)$, then applying the multiplication rule gives  $$P(A,B) = P(A)P(B).$$ Any two events that satisfy this relationship are said to be **independent**. If $A$ and $B$ are independent we write $A\perp B$. 
+We saw an example of this previously when we wanted to know the probability of a randomly selected card being a heart ($A$) given that it was an ace ($B$). We found that this was $\frac{1}{4}$, exactly the same as the probability if we did not know that it was an ace. Thus here we have $P(A|B)=P(A)$. We could have also said that $P(B|A)=P(B)=\frac{1}{13}$. The symmetry of these events makes it somewhat more convenient to express this relationship differently. 
 
-Note that independence is always a symmetric property: if $A$ is independent of $B$, then $B$ is independent of $A$. To check whether two evetns are independent, we simply need to check whether their joint probability (that is, the proobability of $A$ and $B$) is equal to the product of their marginal probabilities. If $P(A)\neq 0$, then we can divide both sides by $P(A)$ to gives $P(B|A) = P(B)$. Similarly, if $P(B)\neq 0$, then we can divide both sides by $P(B)$ to give $P(A|B)=P(A)$.
+Instead of writing $P(A|B) = P(A)$ and $P(B|A) = P(B)$, we can multiply the first relationship by $P(B)$ on both sides, or the second by $P(A)$ on both sides. The multiplication rule gives $P(A|B)P(B) = P(A,B)$, and so the first relationship becomes $P(A,B) = P(A)P(B)$. The second follows exactly the same. Any two events that satisfy this relationship are said to be independent. 
 
-This expression in terms of conditional probabilities is the more intuitive expression of independence. It directly captures the idea that "knowing $B$ does not change our beleif about $A$", which is how independence is best thought of. However, we must be careful. This conditional argument is only valid when the event that is being conditioned on is not probability $0$, where the defining relationship, $P(A,B) = P(A)P(B)$, will hold for any events.
+:::{#def-independence}
+## Independence
+Any two events, $A$ and $B$, which satisfy $P(A,B) = P(A)P(B)$ are said to be independent. If $A$ and $B$ are independent we write $A\perp B$, and read "$A$ is independent of $B$". Any events which are not independent are said to be dependent, and we write $A\not\perp B$.
+:::
 
-TODO: Example assessing the independence of several events.
+Note that independence is always a symmetric property: if $A$ is independent of $B$, then $B$ is independent of $A$. To check whether two events are independent, we check whether their joint probability is equal to the product of their marginal probabilities.
 
-When two events are not independent, we say that they are dependent, and may sometimes write $A\not\perp B$. Note that we saw that, in general, $P(A\cap B) =  P(A)+P(B)-P(A\cup B)$. It is only when assuming independence that this simplifies further. 
+:::{.callout-warning icon='false' collapse='true'}
+## Properties of Independence
+Note that if $A\perp B$, then $A^C\perp B$, $A^C\perp B^C$, and vice versa. To see this note $$P(A^C, B) + P(A, B) = P(B),$$ by the Law of Total Probability. Then, by independence of $A$ and $B$ this gives \begin{align*}
+P(A^C, B) + P(A)P(B) &= P(B) \\
+\implies P(A^C, B) &= P(B) - P(A)P(B) \\
+&= P(B)(1 - P(A)) \\
+&= P(B)P(A^C),\end{align*} as is required. The other combinations follow in the same manner.
+:::
 
-Importantly,  if $A\perp B$, then $A\cap B\neq \emptyset$ unless either $A=\emptyset$ or $B=\emptyset$ or both. To see this recall that $P(\emptyset) = 0$, and so if $A\cap B = \emptyset$ then $P(A\cap B) = P(A)P(B) = P(\emptyset) = 0$. This only holds if either $P(A) = 0$ or $P(B) = 0$. This may seem to be a rather technical point, however, it is the source of much confusion regarding independence. In particular, it is common to mistake independent events for **mutually exclusive events**.
+If $P(A)\neq 0$, then we can divide both sides by $P(A)$ to gives $P(B|A) = P(B)$. Similarly, if $P(B)\neq 0$, then we can divide both sides by $P(B)$ to give $P(A|B)=P(A)$. This expression in terms of conditional probabilities is the more intuitive expression of independence. It directly captures the idea that "knowing $B$ does not change our belief about $A$". However, we must be careful. This conditional argument is only valid when the event that is being conditioned on is not probability $0$, where the defining relationship, $P(A,B) = P(A)P(B)$, will hold for all events. Recall that, in general, $P(A\cap B) = P(A)+P(B)-P(A\cup B)$. It is only when assuming independence that this simplifies further. 
 
-Suppose that my partner and I always eat dinner together. It will either be the case that I cook at home, that they cook at home, that we order in, or that we go out to eat. If we take these to be four events, $A$, $B$, $C$, and $D$, then it reasonable to suggest that only one of these can happen on any given night. Whenever this is the case, we refer to the events as being mututally exclusive: if one happens, we know that the others did not. Mutually exclusive events are always dependent since knowing that $A$ occurs dramatically shifts our belief about $B$,$C$, and $D$ (namely, we now know that they are impossible).
+:::{#exm-assessing-independence}
+## Independence and Board Games
+Charles and Sadie are invited over to a friends house, Garth, to play some board games. Both of them are quite excited by this prospect as board games feel like the next logical step for the two of them, being as into probability and games as they are! Garth has a large board game collection, and begins to explain the games to Charles and Sadie across a variety of axes:
 
-The primary concern with mututally exclusive and independent events is a linguistic one. We often use words like independent to mean unrelated, and in a sense, mututally exclusive events are unrelated in that one has nothing to do with another. However, in statistics and probability, when we discuss independence, it is not an independence of the events themselves but rather an independence relating to our beliefs regarding the uncertainty associated with the events. In this sense, mutually exclusive events are very informative regarding the uncertainty associated with them.
+* Whether the games are competitive or cooperative.
+* How many players the games play best at ($\{1, 2, 3, 4+\}$).
+* How "heavy" the games tend to be (friendly for everyone, moderately involved, or very heavy).
 
-TODO: Write example regarding mututally exclusive and independent events.
+While Garth continues on about several other topics including the themes, the mechanics, or the rating on BoardGameGeek, Charles drifts off wondering whether the traits listed are independent in Garth's collection. Suppose that Garth has $100$ games, of which:
+
+* $25$ are cooperative.
+* $5$ are best played at one player, $20$ at two, and $55$ at three. 
+* $10$ are friendly for everyone and $45$ are moderately involved. 
+
+a. If $5$ games are best played at two players and are cooperative, are these events independent?
+b. If $20$ games are heavy and best played with $4+$ players, are these events independent?
+c. If $0$ games are both moderately involved and cooperative, are these events independent?
+d. Charles figures that competitive games and two player games are independent. How many competitive two player games are there?
+e. Is it possible that competitive games are independent of heavy games?
+
+::::{.callout .solution collapse='true'}
+## Solution
+a. We are suggesting that $P(A,B) = 0.05$, where $A$ is "two player" and $B$ is "cooperative". We know that $P(B) = 0.25$ and $P(A) = 0.20$. Calculating $P(A)P(B) = (0.20)(0.25) = 0.05 = P(A,B)$, and so these traits **are** independent.
+
+b. We have $P(A,B) = 0.2$ where $A$ is "heavy" and $B$ is "$4+$ players. We know that $P(A) = 0.45$ and $P(B) = 0.20$, and so $P(A)P(B) = (0.45)(0.20) = 0.09 \neq P(A,B)$. As a result, these traits are **not** independent.
+
+c. We know that $P(A) > 0$ and $P(B) > 0$ for $A$ being moderately involved and $B$ being cooperative. As a result, $P(A)P(B) > 0$, and so if $P(A,B) = 0$, they must **not** be independent. 
+
+d. Taking $A$ to be "competitive" we have $P(A) = 0.75$. Taking $B$ to be "two player" we have $P(B) = 0.20$. As a result, if $A\perp B$ then $P(A,B) = P(A)P(B) = (0.75)(0.20) = 0.15$. Thus, there must be $15$ competitive, two player games.
+
+e. Taking $A$ to be "competitive" we have $P(A) = 0.75$. Taking $B$ to be "heavy" weh ave $P(B) = 0.45$. Thus, if they were independent, we would have $P(A,B) = P(A)P(B) = (0.75)(0.45) = 0.3375$. This would require $33.75$ games to be heavy, competitive games and so we must conclude that they are **not** independent. 
+
+::::
+:::
+
+#### Mutually Exclusive Events
+Importantly, if $A\perp B$, then $A\cap B\neq \emptyset$ unless either $A=\emptyset$, $B=\emptyset$, or both. To see this recall that $P(\emptyset) = 0$, and so if $A\cap B = \emptyset$ then $P(A\cap B) = P(A)P(B) = P(\emptyset) = 0$. This only holds if either $P(A) = 0$ or $P(B) = 0$. This may seem to be a rather technical point, however, it is the source of much confusion regarding independence. In particular, it is common to mistake independent events for mutually exclusive events.
+
+:::{#def-mutually-exclusive-events}
+## Mutually Exclusive Events
+Two events, $A$ and $B$ are said to be mutually exclusive if they are disjoint. In particular, if $P(A,B) = 0$ then $A$ and $B$ are mutually exclusive. If $A$ and $B$ are mutually exclusive events, with $P(A) > 0$ and $P(B) > 0$, then $A\not\perp B$.
+:::
+
+Whenever only one event from a set of events can happen, we refer to the events as being mutually exclusive. If one happens, we know that the others did not. Mutually exclusive events are always dependent since knowing that $A$ occurs dramatically shifts our belief about $B$,$C$, and $D$.^[Namely, we know that all of the others are then impossible.]
+
+The primary concern with mutually exclusive and independent events is a linguistic one. We often use words like independent to mean unrelated, and in a sense, mutually exclusive events are unrelated in that one has nothing to do with another. However, in statistics and probability, when we discuss independence, it is not an independence of the events themselves but rather an independence relating to our beliefs regarding the uncertainty associated with the events. In this sense, mutually exclusive events are very informative regarding the uncertainty associated with them.
+
+:::{#exm-independence-two}
+## Charles and Sadie Cooking Dinner
+Suppose that Charles and Sadie always eat dinner together. It will either be the case that Charles cooks at home, that Sadie cooks at home, that the two of them order in, or that they go out to eat. If we take these to be four events, $A$, $B$, $C$, and $D$, then are any of these events independent? Mutually exclusive? Explain.
+
+::::{.callout .solution collapse='true'}
+## Solution
+Assuming, as it seems reasonable given the information in the question, that only one of the possible tasks occurs for dinner in a night, then we *know* that $$P(A,B) = P(A,C) = P(A,D) = P(B,C) = P(B,D) = P(C,D) = 0.$$ As a result, all of the events described are mutually exclusive, and correspondingly, are *not* independent.
+::::
+:::
 
 ## Contingency Tables
-Through to this point we have discussed probabilities in the abstract, either through an  enumeration of equally likely outcomes, or else by directly specifying the likelihood of various events. While these are useful in many regards, we are often looking for more concise manners of summarizing information of interest. One tool for accomplishing this is a **contingency table**. A contingency table summarizes teh frequency of occurence of a variable (or multiple variables) across a population of interest.
+Through to this point we have discussed probabilities in the abstract, either through an enumeration of equally likely outcomes, or else by directly specifying the likelihood of various events. While these are useful in many regards, we are often looking for more concise manners of summarizing information of interest. One tool for accomplishing this is a **contingency table**. A contingency table summarizes teh frequency of occurrence of a variable (or multiple variables) across a population of interest.
 
-For instance, you could form a contingency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you  convert the frequencies to proportions,  and these proportions can be viewed as probabilities.
+For instance, you could form a contingency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you convert the frequencies to proportions, and these proportions can be viewed as probabilities.
 
 TODO: write-up frequency and prop table.
 
-The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool. Often, when a single trait is displayed we will not refer to them as contingency tables but rather as frequency tables or frequency distributions.  A contingency table will typically plot two or more traits on the same table, with each cell representing the frequency of both traits occurring simultaneously in the population. For instance, we may further include the student's years to see the breakdown of both faculty and year of study, in one table.
+The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool. Often, when a single trait is displayed we will not refer to them as contingency tables but rather as frequency tables or frequency distributions. A contingency table will typically plot two or more traits on the same table, with each cell representing the frequency of both traits occurring simultaneously in the population. For instance, we may further include the student's years to see the breakdown of both faculty and year of study, in one table.
 
 TODO: Include updated table
 
-By including two (or more) factors on the table we are able to capture not only the marginal probabilities for the population, but also the joint probabilities for the population,  and in turn, the conditional probabilities for the population. Being able to concisely summarize all of these concepts regarding traits in a population of interest renders contingency tables immensely useful in the study  of uncertainty broadly.
+By including two (or more) factors on the table we are able to capture not only the marginal probabilities for the population, but also the joint probabilities for the population, and in turn, the conditional probabilities for the population. Being able to concisely summarize all of these concepts regarding traits in a population of interest renders contingency tables immensely useful in the study of uncertainty broadly.
 
 TODO: Include example(s) of contingency tables.
 
-Suppose we consider a two-way contingency table. Each cell  consists of frequnecy with which a combination of two traits occurs in the population. If we take events corresponding to each of the levels of the two varaibles of interest, then these central cells represent the frequncy of joint events. That is, each interior cell gives the total number of observations with a set level for variable one AND a set level for variable two. Each row is summed, with the total number following into the corresponding row recorded in the right hand margin.  each column is summed, with the total number corresponding to the given column recorded in the bottom margin. Then the margin totals are summed and the total is recorded in the lower right margin space. 
+Suppose we consider a two-way contingency table. Each cell consists of frequency with which a combination of two traits occurs in the population. If we take events corresponding to each of the levels of the two variables of interest, then these central cells represent the frequency of joint events. That is, each interior cell gives the total number of observations with a set level for variable one AND a set level for variable two. Each row is summed, with the total number following into the corresponding row recorded in the right hand margin. each column is summed, with the total number corresponding to the given column recorded in the bottom margin. Then the margin totals are summed and the total is recorded in the lower right margin space. 
 
 TODO: Include graphic with summation of margins
 
-Whether the rows or columns are summed, they should sum to the same total, which is the total of the population under consideeartion. This is the same as  simply adding all of the observed interior frequencies. To turn a frequency into a probability, you need only divide the correct frquency by the correct total.
+Whether the rows or columns are summed, they should sum to the same total, which is the total of the population under consideration. This is the same as simply adding all of the observed interior frequencies. To turn a frequency into a probability, you need only divide the correct frequency by the correct total.
 
-For the standard joint probabilities, you take the interior cell count and divide by the population total. Here we are saying that some fixed number, $m$, of the $N$ total individuals have both traits under consideration. If instead you wish to find a marginal probability, you have to consider the value in the corresponding margin: this is the total number of individuals with the given trait, ignoring the level of the other variable. These marginal values are also divided by the total population size. For conditional probbailities, we restrict our focus to either only one row, or one column. Then, we can take teh joint cell  and divide by the value in the margin, which gives the conditional probability of interest.
+For the standard joint probabilities, you take the interior cell count and divide by the population total. Here we are saying that some fixed number, $m$, of the $N$ total individuals have both traits under consideration. If instead you wish to find a marginal probability, you have to consider the value in the corresponding margin: this is the total number of individuals with the given trait, ignoring the level of the other variable. These marginal values are also divided by the total population size. For conditional probabilities, we restrict our focus to either only one row, or one column. Then, we can take teh joint cell and divide by the value in the margin, which gives the conditional probability of interest.
 
-TODO: show probability caluclations for the various scenarios that we saw.
+TODO: show probability calculations for the various scenarios that we saw.
 
-Note that these procedures are exactl in line with what we had seen before. The conditional probability is defined as the joint probability divided by the marginal probability. The process of computing the marginal can be seen as an application of the law of total probability. As a result, contingency tables can be a useful, tangible tool for investigating the techniques we have been discussing: they are not a substitutefor direct manipulation of the mathematical objedts, but they can present insight into the underlying processes where it may be hard to derive that insight otherwise.
+Note that these procedures are exactly in line with what we had seen before. The conditional probability is defined as the joint probability divided by the marginal probability. The process of computing the marginal can be seen as an application of the law of total probability. As a result, contingency tables can be a useful, tangible tool for investigating the techniques we have been discussing: they are not a substitute for direct manipulation of the mathematical objects, but they can present insight into the underlying processes where it may be hard to derive that insight otherwise.
 
 TODO: show example of conditional probability derivation.
 
-TODO: show example of law of total probabilitty derivation.
+TODO: show example of law of total probability derivation.
 
-It is important to note that there is redundant information within a contingency table. For instance, the margins need not be listed explicit, as they can be directly  calculated from the interior points. Same goes for interior points,  given the margins of the table (assuming other interior points are also presented). TThis can be useful for a campact representation of the information, and manipulating these tables, finding the required information in many places, should become second anture as you continue to work with them more and more.
+It is important to note that there is redundant information within a contingency table. For instance, the margins need not be listed explicit, as they can be directly calculated from the interior points. Same goes for interior points, given the margins of the table (assuming other interior points are also presented). TThis can be useful for a compact representation of the information, and manipulating these tables, finding the required information in many places, should become second nature as you continue to work with them more and more.
 
 TODO: include fill-in-the-blank contingency table
 
-It is also important to recognize that independence and mutually exclusive events can be codified via the table as  well. Zeros on the  interior points indicate events which are mutually exclusive: if we know that one of them occurred, we also know that the other one did not. For independence, it requires a degree of solving proportions. We can  either check that the joint probability ($N_{A,B}/N$) is equal to the product of the two marginal probabilities, ($N_AN_B/N^2$), or else (assuming that the events are all non-zero), that the conditional probability ($N_{A,B}/N_A$) equals the marginal probability $N_B/N$. Either way this is represented by $N\times N_{A,B} = N_AN_B$, and when this holds, we can  conclude that the events are independent.
+It is also important to recognize that independence and mutually exclusive events can be codified via the table as well. Zeros on the interior points indicate events which are mutually exclusive: if we know that one of them occurred, we also know that the other one did not. For independence, it requires a degree of solving proportions. We can either check that the joint probability ($N_{A,B}/N$) is equal to the product of the two marginal probabilities, ($N_AN_B/N^2$), or else (assuming that the events are all non-zero), that the conditional probability ($N_{A,B}/N_A$) equals the marginal probability $N_B/N$. Either way this is represented by $N\times N_{A,B} = N_AN_B$, and when this holds, we can conclude that the events are independent.
 
-TODO: Example on mututally exclusive / independent events on a contingency table.
+TODO: Example on mutually exclusive / independent events on a contingency table.

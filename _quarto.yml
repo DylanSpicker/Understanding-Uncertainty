@@ -6,7 +6,6 @@ project:
     browser: false
     host: 0.0.0.0
   
-
 book:
   title: "STAT 1793: Course Notes"
   subtitle: "Introduction to Probability and Statistics I"
@@ -27,6 +26,7 @@ book:
     - part: "Part 2: Statistics"
 
 engine: knitr
+
 filters: 
 - webr
 
