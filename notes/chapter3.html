@@ -101,6 +101,633 @@ div.csl-indent {
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">.monaco-editor pre {
+  background-color: unset !important;
+}
+
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-button-run {
+  background-color: #EEEEEE;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; /* Extra styling for consistency */
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration: none;
+  /* vertical-align: middle; */ /* Prevents a space from appearing between the code cell and button */
+  -webkit-user-select: none;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button-run:hover {
+  color: #000;
+  background-color: #e3e6ea;
+  border-color: #e1e5e9;
+}
+
+.qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+  pointer-events: none;
+  opacity: .65
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+</style>
+<script type="module">// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Determine if we need to install R packages
+var installRPackagesList = [''];
+// Check to see if we have an empty array, if we do set to skip the installation.
+var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+var autoloadRPackages = true;
+
+// Display a startup message?
+var showStartupMessage = true;
+var showHeaderMessage = false;
+if (showStartupMessage) {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  var startupMessageWebR = document.createElement("p");
+  startupMessageWebR.innerText = "🟡 Loading...";
+  startupMessageWebR.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  startupMessageWebR.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(startupMessageWebR);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML) {
+    // Append to the existing "title-block-header" element
+    headerHTML.appendChild(quartoTitleMeta);
+  } else if (headerRevealJS) {
+    // If using RevealJS, add to the "title-slide" div
+    headerRevealJS.appendChild(firstInnerDiv);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+// Retrieve the webr.mjs
+import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.2/webr.mjs";
+
+// Populate WebR options with defaults or new values based on 
+// webr meta
+globalThis.webR = new WebR({
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": ChannelType.Automatic
+});
+
+// Initialization WebR
+await webR.init();
+
+// Setup a shelter
+globalThis.webRCodeShelter = await new webR.Shelter();
+
+// Setup a pager to allow processing help documentation 
+await webR.evalRVoid('webr::pager_install()'); 
+
+// Function to set the button text
+function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message
+function qwebrUpdateStatusHeader(message) {
+  startupMessageWebR.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await globalThis.webR.installPackages([packageName]);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await globalThis.webR.evalRVoid(`library(${packageName});`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+    
+    // Display the update
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await globalThis.webR.flush();
+  }
+}
+
+
+// Check to see if any packages need to be installed
+if (setupRPackages) {
+  // Obtain only a unique list of packages
+  const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+  // Install R packages one at a time (either silently or with a status update)
+  await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+  if(autoloadRPackages) {
+    // Load R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+  }
+}
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+// Release document status as ready
+if (showStartupMessage) {
+  startupMessageWebR.innerText = "🟢 Ready!"
+}
+
+qwebrSetInteractiveButtonState(
+  `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+  true
+);
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};</script>
+<script type="module">// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+    Interactive: 'interactive',
+    Setup: 'setup',
+    Output: 'output',
+});
+
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await webR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await webR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // ---- 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid(`webr::canvas(width=${options["fig-width"]}, height=${options["fig-height"]})`);
+
+    const result = await webRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    try {
+
+        // Stop creating images
+        await webR.evalRVoid("dev.off()");
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${qwebrEscapeHTMLCharacters(evt.data)}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await webR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * options["fig-width"]);
+                canvas.setAttribute("height", 2 * options["fig-height"]);
+                canvas.style.width = "700px";
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            elements.outputGraphDiv.appendChild(canvas);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        webRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    evalType = EvalTypes.Interactive,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { "fig-width": 504, "fig-height": 360 };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+</script>
+<script type="module">// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (insertElement,
+  qwebrCounter, 
+  evalType = EvalTypes.Interactive,
+  options = {}) {
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive: 
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter);
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter);
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter);
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  insertElement.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-interactive-area';
+
+  // Create button element
+  var button = document.createElement('button');
+  button.className = 'btn btn-default qwebr-button-run';
+  button.disabled = true;
+  button.type = 'button';
+  button.id = 'qwebr-button-run-' + qwebrCounter;
+  button.textContent = '🟡 Loading webR...';
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(button);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-area';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-setup-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-setup-area';
+
+  return mainDiv;
+}</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -244,7 +871,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#assigning-probabilities-and-the-equally-likely-outcome-model" id="toc-assigning-probabilities-and-the-equally-likely-outcome-model" class="nav-link active" data-scroll-target="#assigning-probabilities-and-the-equally-likely-outcome-model"><span class="header-section-number">3.1</span> Assigning Probabilities (and The Equally Likely Outcome Model)</a></li>
+  <li><a href="#assigning-probabilities-and-the-equally-likely-outcome-model" id="toc-assigning-probabilities-and-the-equally-likely-outcome-model" class="nav-link active" data-scroll-target="#assigning-probabilities-and-the-equally-likely-outcome-model"><span class="header-section-number">3.1</span> Assigning Probabilities (and The Equally Likely Outcome Model)</a>
+  <ul class="collapse">
+  <li><a href="#using-r-for-the-equally-likely-probability-model" id="toc-using-r-for-the-equally-likely-probability-model" class="nav-link" data-scroll-target="#using-r-for-the-equally-likely-probability-model"><span class="header-section-number">3.1.1</span> Using R for the Equally Likely Probability Model</a></li>
+  </ul></li>
   <li><a href="#the-axioms-of-probability" id="toc-the-axioms-of-probability" class="nav-link" data-scroll-target="#the-axioms-of-probability"><span class="header-section-number">3.2</span> The Axioms of Probability</a></li>
   <li><a href="#secondary-properties-of-probabilities" id="toc-secondary-properties-of-probabilities" class="nav-link" data-scroll-target="#secondary-properties-of-probabilities"><span class="header-section-number">3.3</span> Secondary Properties of Probabilities</a></li>
   <li><a href="#combinatorics" id="toc-combinatorics" class="nav-link" data-scroll-target="#combinatorics"><span class="header-section-number">3.4</span> Combinatorics</a>
@@ -264,6 +894,148 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
+<script type="module">// Global dictionary to store Monaco Editor instances
+const qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (
+    initialCode, 
+    qwebrCounter) {
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value
+    editor.__qwebrinitialCode = initialCode;
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter,
+            EvalTypes.Interactive);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, EvalTypes.Interactive);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, EvalTypes.Interactive);
+  };
+
+}</script>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter3.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Core Concepts of Probability</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -317,11 +1089,52 @@ Solution
 <p>If we have an experiment with a sample space <span class="math inline">\(\mathcal{S}\)</span> which has <span class="math inline">\(|\mathcal{S}| = k\)</span> total elements<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, then each element of the sample space occurs with probability <span class="math inline">\(\frac{1}{k}\)</span>. In the case of the coin toss example, <span class="math inline">\(\mathcal{S} = \{\text{H}, \text{T}\}\)</span>, and so <span class="math inline">\(k=2\)</span> and each outcome occurs with probability <span class="math inline">\(\frac{1}{2}\)</span>. In the case of drawing a card at random, there are <span class="math inline">\(52\)</span> different outcomes, and so <span class="math inline">\(k=52\)</span>, and the probability of drawing any particular card is <span class="math inline">\(\frac{1}{52}\)</span>.</p>
 <p>It is critically important to recognize that the equal probability model assigns equal likelihood to the possible outcomes of an experiment, not the possible events of interest. It will not be the case that all events have the same probability. To make this concrete, consider the events <span class="math inline">\(A\)</span> “the ace of spades is drawn” and <span class="math inline">\(B\)</span> “any spade is drawn”. It is clear that <span class="math inline">\(B\)</span> happens more frequently than <span class="math inline">\(A\)</span>, even though we have said that this is an experiment with equally likely outcomes. Remember: an outcome is an observation from a single experimental run, an event is any collection of these possible outcomes.</p>
 <p>A core goal is then bridging the gap between the probability of an outcome<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and the probability of an event. In order to do so, we will next consider the rules of probability, introducing properties that are required for valid probability assignments, and the techniques for manipulating probabilities to calculate the probabilities of quantities of interest.</p>
+<section id="using-r-for-the-equally-likely-probability-model" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="using-r-for-the-equally-likely-probability-model"><span class="header-section-number">3.1.1</span> Using R for the Equally Likely Probability Model</h3>
+<p>In the previous chapter we saw how we can codify sample spaces and events using vectors in R. In the introduction we actually saw how can sample from a sample space using the equally likely outcome framework. Specifically, an application of the <code>sample</code> function will draw a set number of values from a sample space, giving each value an equal probability to be drawn.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# Define the Sample Space of Rolling a 20 Sided Die
+sample_space <- 1:20
+
+# Recall that whenever we wish to perform an experiment in R with
+# randomness, we should call set.seed
+set.seed(31415)
+
+# The sample function takes three main parameters:
+#   x: the sample space
+#   size: the number of items to draw
+#   replace: a boolean representing whether the draws should be
+#            with replacement or not.
+one_roll <- sample(x = sample_space, size = 1)
+ten_rolls_with_replacement <- sample(x = sample_space, size = 10, replace = TRUE)
+ten_rolls_without_replacement <- sample(x = sample_space, size = 10, replace = FALSE)
+
+one_roll
+ten_rolls_with_replacement
+ten_rolls_without_replacement`, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
 </section>
 <section id="the-axioms-of-probability" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="the-axioms-of-probability"><span class="header-section-number">3.2</span> The Axioms of Probability</h2>
-<p>We have previously seen that not every probability assignment can be valid. For instance, assigning <span class="math inline">\(0.5\)</span> probability to each outcome on a die leads to a nonsensical scenario. With just a little imagination, we can conjure equally nonsensical scenarios in other ways. For instance, it would make very little sense to discuss the probability of an event being a negative value. What would it mean for an event to occur in a negative proportion of experimental runs? Alternatively, we can consider two events that are nested in one another: say event <span class="math inline">\(A\)</span> is that we draw the ace of spades, and event <span class="math inline">\(B\)</span> is that we draw any spade. Every single time that <span class="math inline">\(A\)</span> happens, we know that <span class="math inline">\(B\)</span> also happens. But there are ways that <span class="math inline">\(B\)</span> can occur where <span class="math inline">\(A\)</span> does not.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> If I told you the probability of <span class="math inline">\(A\)</span> was <span class="math inline">\(0.5\)</span> and the probability of <span class="math inline">\(B\)</span> was <span class="math inline">\(0.2\)</span>, this would violate our base instincts. How can it be more likely to draw the ace of spades than it would be to draw any spade at all?<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
-<p>Often in mathematics when we have an intuitive set of rules<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> that particular quantities must obey, we work to add formality through defining properties of these concepts. To this end, we can define the key properties that probabilities must obey in order to be well-defined, valid probabilities. With three fairly basic properties, we can completely specify what must be true in order for a set of probabilities to be “valid”, and to in turn match with our intuitions.</p>
+<p>We have previously seen that not every probability assignment can be valid. For instance, assigning <span class="math inline">\(0.5\)</span> probability to each outcome on a die leads to a nonsensical scenario. With just a little imagination, we can conjure equally nonsensical scenarios in other ways. For instance, it would make very little sense to discuss the probability of an event being a negative value. What would it mean for an event to occur in a negative proportion of experimental runs? Alternatively, we can consider two events that are nested in one another: say event <span class="math inline">\(A\)</span> is that we draw the ace of spades, and event <span class="math inline">\(B\)</span> is that we draw any spade. Every single time that <span class="math inline">\(A\)</span> happens, we know that <span class="math inline">\(B\)</span> also happens. But there are ways that <span class="math inline">\(B\)</span> can occur where <span class="math inline">\(A\)</span> does not.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> If I told you the probability of <span class="math inline">\(A\)</span> was <span class="math inline">\(0.5\)</span> and the probability of <span class="math inline">\(B\)</span> was <span class="math inline">\(0.2\)</span>, this would violate our base instincts. How can it be more likely to draw the ace of spades than it would be to draw any spade at all?<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>Often in mathematics when we have an intuitive set of rules<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> that particular quantities must obey, we work to add formality through defining properties of these concepts. To this end, we can define the key properties that probabilities must obey in order to be well-defined, valid probabilities. With three fairly basic properties, we can completely specify what must be true in order for a set of probabilities to be “valid”, and to in turn match with our intuitions.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -334,7 +1147,7 @@ The Axioms of Probability
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><strong>Unitary:</strong> Every valid set of probabilities must assign a probability of <span class="math inline">\(1\)</span> to the full sample space. That is, <span class="math inline">\(P(\mathcal{S}) = 1\)</span>. This is an intuitive requirement as every time the experiment is run we observe an outcome in the sample space. As a result, in every experimental run the event <span class="math inline">\(\mathcal{S}\)</span> occurs.</li>
-<li><strong>Non-negative:</strong> We require that every probability is non-negative. We can have probabilities of <span class="math inline">\(0\)</span>, but we can never have a probability less than zero. Again, this is sensible<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> but is important to include in our formalization. Specifically, for every event <span class="math inline">\(E\)</span>, we must have <span class="math inline">\(P(E) \geq 0\)</span>.</li>
+<li><strong>Non-negative:</strong> We require that every probability is non-negative. We can have probabilities of <span class="math inline">\(0\)</span>, but we can never have a probability less than zero. Again, this is sensible<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> but is important to include in our formalization. Specifically, for every event <span class="math inline">\(E\)</span>, we must have <span class="math inline">\(P(E) \geq 0\)</span>.</li>
 <li><strong>Additivity:</strong> the final property requires slightly more parsing on first pass. Suppose that we define a sequence of events, <span class="math inline">\(E_1, E_2, E_3, \dots\)</span> such that no two events have any overlap. That is, <span class="math inline">\(E_j \cap E_\ell = \emptyset\)</span> for all <span class="math inline">\(\ell\neq j\)</span>. Then, the final property we require for probabilities is that <span class="math display">\[P\left(\bigcup_i E_i\right) = \sum_i P(E_i).\]</span> That is, the probability of the union of disjoint events is the summation of the probability of these events.</li>
 </ol>
 </div>
@@ -435,7 +1248,7 @@ Solution
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This problem is conceptually no different from <a href="#exm-complement-trick" class="quarto-xref">Example&nbsp;<span>3.3</span></a>. There will be a total of <span class="math inline">\(d_1\times d_2\)</span> possible combinations of the two dice to be rolled.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> Of these, the dice will match in <span class="math inline">\(\min\{d_1, d_2\}\)</span> events.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> Then, with the same complement trick discussed above, we get <span class="math display">\[P(E) = 1 - P(E^C) = 1 - \frac{\min\{d_1,d_2\}}{d_1\times d_2}.\]</span></p>
+<p>This problem is conceptually no different from <a href="#exm-complement-trick" class="quarto-xref">Example&nbsp;<span>3.3</span></a>. There will be a total of <span class="math inline">\(d_1\times d_2\)</span> possible combinations of the two dice to be rolled.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> Of these, the dice will match in <span class="math inline">\(\min\{d_1, d_2\}\)</span> events.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> Then, with the same complement trick discussed above, we get <span class="math display">\[P(E) = 1 - P(E^C) = 1 - \frac{\min\{d_1,d_2\}}{d_1\times d_2}.\]</span></p>
 </div>
 </div>
 </div>
@@ -492,7 +1305,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="chapter3_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="chapter3_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -524,7 +1337,7 @@ Figure&nbsp;3.1: A generic tree diagram. Here the first choice has three differe
 </section>
 <section id="the-factorial" class="level3" data-number="3.4.3">
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="the-factorial"><span class="header-section-number">3.4.3</span> The Factorial</h3>
-<p>The first useful tool for simplifying these problems is the <strong>factorial</strong>. The factorial of an integer, denoted by <span class="math inline">\(x!\)</span> is given by the product of all integers from <span class="math inline">\(x\)</span> to <span class="math inline">\(1\)</span>.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> That is, <span class="math display">\[x! = x(x-1)(x-2)\cdots(2)(1).\]</span> If we consider the product rule for counting then note that if <span class="math inline">\(n_1=1\)</span>, <span class="math inline">\(n_2=2\)</span>, … , <span class="math inline">\(n_k = k\)</span>, then the total number of options is <span class="math inline">\(k\times(k-1)\times\cdots\times 1 = k!\)</span>. The most common reason that this comes up is when we want to order a collection of items. Suppose that you have <span class="math inline">\(10\)</span> books that you want to place on a shelf. You can view this as making <span class="math inline">\(10\)</span> sequential decisions: what book goes first, second, third, and so on. There are <span class="math inline">\(10\)</span> options for the first book, then <span class="math inline">\(9\)</span> for the second (any except for the first one), and then <span class="math inline">\(8\)</span> for the third (any except for the first <span class="math inline">\(2\)</span>). This continues down to the last book, and so we conclude that there are <span class="math inline">\(10\times9\times8\times\cdots\times1 = 10!\)</span> ways of arranging these books.</p>
+<p>The first useful tool for simplifying these problems is the <strong>factorial</strong>. The factorial of an integer, denoted by <span class="math inline">\(x!\)</span> is given by the product of all integers from <span class="math inline">\(x\)</span> to <span class="math inline">\(1\)</span>.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> That is, <span class="math display">\[x! = x(x-1)(x-2)\cdots(2)(1).\]</span> If we consider the product rule for counting then note that if <span class="math inline">\(n_1=1\)</span>, <span class="math inline">\(n_2=2\)</span>, … , <span class="math inline">\(n_k = k\)</span>, then the total number of options is <span class="math inline">\(k\times(k-1)\times\cdots\times 1 = k!\)</span>. The most common reason that this comes up is when we want to order a collection of items. Suppose that you have <span class="math inline">\(10\)</span> books that you want to place on a shelf. You can view this as making <span class="math inline">\(10\)</span> sequential decisions: what book goes first, second, third, and so on. There are <span class="math inline">\(10\)</span> options for the first book, then <span class="math inline">\(9\)</span> for the second (any except for the first one), and then <span class="math inline">\(8\)</span> for the third (any except for the first <span class="math inline">\(2\)</span>). This continues down to the last book, and so we conclude that there are <span class="math inline">\(10\times9\times8\times\cdots\times1 = 10!\)</span> ways of arranging these books.</p>
 <div id="exm-factorial" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3.7 (Seating in a (Full) Coffee Shop)</strong></span> One day Charles and Sadie walk into the coffee shop and find that it is completely full. There are ten seats and ten people sitting in them. They are disappointed that they do not have room to sit themselves, however, they are never ones to pass up an interesting probability question.</p>
 <ol type="a">
@@ -547,15 +1360,15 @@ Solution
 <ol type="a">
 <li><p>Here, we can think about lining up the ten seats in a row, each number <span class="math inline">\(1\)</span> through <span class="math inline">\(10\)</span>. Then, we want to place one patron into each of the seats. This is no different from ordering <span class="math inline">\(10\)</span> books, and so the total is <span class="math inline">\(10!\)</span> which is <span class="math inline">\(3,628,800\)</span>.</p></li>
 <li><p>Note that we still have to make the seat choices from part (a), so there are <span class="math inline">\(10!\)</span> ways of getting the <span class="math inline">\(10\)</span> people sat in the <span class="math inline">\(10\)</span> chairs. Once there, we can think of handing out the drinks to each of the numbered combinations of person-chair. This is no different from passing out the people as well, giving <span class="math inline">\(10!\)</span> ways of doing this. We use the product rule to combine these two choices, with <span class="math inline">\(10!\times 10!\)</span> total combinations of people-chair-drink. This is <span class="math inline">\(13,168,189,440,000\)</span>.</p></li>
-<li><p>Extending the same logic before, there are <span class="math inline">\(10!\times 10!\)</span> ways of getting each person sat in a chair with a drink. Then, there will be an additional <span class="math inline">\(10!\)</span> ways of passing out the snacks to these people. Taken together this gives <span class="math inline">\(10!\times 10!\times 10!\)</span> which is <span class="math inline">\(47,784,725,839,872,000,000\)</span>.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p></li>
+<li><p>Extending the same logic before, there are <span class="math inline">\(10!\times 10!\)</span> ways of getting each person sat in a chair with a drink. Then, there will be an additional <span class="math inline">\(10!\)</span> ways of passing out the snacks to these people. Taken together this gives <span class="math inline">\(10!\times 10!\times 10!\)</span> which is <span class="math inline">\(47,784,725,839,872,000,000\)</span>.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p></li>
 </ol>
 </div>
 </div>
 </div>
 </div>
 <div class="proof remark">
-<p><span class="proof-title"><em>Remark</em> (0!). </span>Depending on how factorials are thought of, some trouble can come up around a quantity like <span class="math inline">\(0!\)</span>. On one hand, if we view factorials as multiplying each number between <span class="math inline">\(n\)</span> and <span class="math inline">\(1\)</span> together then <span class="math inline">\(0! = 0\times 1\)</span> and we get <span class="math inline">\(0! = 0\)</span>. On the other hand, if we view factorials as counting the number of ways which we can order a set of <span class="math inline">\(n\)</span> items, then <span class="math inline">\(0!\)</span> is the number of ways we can order <span class="math inline">\(0\)</span> items, which is <span class="math inline">\(1\)</span>.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> So, which is it?</p>
-<p>We take <span class="math inline">\(0!\)</span> to be equal to <span class="math inline">\(1\)</span>. The ordering argument is perhaps the most convincing. However, if you are algebraically minded you may wonder how we get around the tricky issue of using our algebraic definition. The key insight is to not define <span class="math inline">\(n!\)</span> as the product of the numbers from <span class="math inline">\(n\)</span> to <span class="math inline">\(1\)</span>, but rather, to define <span class="math display">\[(n-1)! = \frac{n!}{n},\]</span> and specify that <span class="math inline">\(1! = 1\)</span>. Then in this case we get all of the usual requirements for how we have discussed factorials, but we also get that <span class="math inline">\(0! = \frac{(0+1)!}{(0+1)} = 1\)</span>. As a result, we will take <span class="math inline">\(0! = 1\)</span>.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a></p>
+<p><span class="proof-title"><em>Remark</em> (0!). </span>Depending on how factorials are thought of, some trouble can come up around a quantity like <span class="math inline">\(0!\)</span>. On one hand, if we view factorials as multiplying each number between <span class="math inline">\(n\)</span> and <span class="math inline">\(1\)</span> together then <span class="math inline">\(0! = 0\times 1\)</span> and we get <span class="math inline">\(0! = 0\)</span>. On the other hand, if we view factorials as counting the number of ways which we can order a set of <span class="math inline">\(n\)</span> items, then <span class="math inline">\(0!\)</span> is the number of ways we can order <span class="math inline">\(0\)</span> items, which is <span class="math inline">\(1\)</span>.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> So, which is it?</p>
+<p>We take <span class="math inline">\(0!\)</span> to be equal to <span class="math inline">\(1\)</span>. The ordering argument is perhaps the most convincing. However, if you are algebraically minded you may wonder how we get around the tricky issue of using our algebraic definition. The key insight is to not define <span class="math inline">\(n!\)</span> as the product of the numbers from <span class="math inline">\(n\)</span> to <span class="math inline">\(1\)</span>, but rather, to define <span class="math display">\[(n-1)! = \frac{n!}{n},\]</span> and specify that <span class="math inline">\(1! = 1\)</span>. Then in this case we get all of the usual requirements for how we have discussed factorials, but we also get that <span class="math inline">\(0! = \frac{(0+1)!}{(0+1)} = 1\)</span>. As a result, we will take <span class="math inline">\(0! = 1\)</span>.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a></p>
 </div>
 </section>
 <section id="permutations-and-combinations" class="level3" data-number="3.4.4">
@@ -656,7 +1469,7 @@ Solution
 <section id="permutations-with-identical-objects" class="level4" data-number="3.4.5.3">
 <h4 data-number="3.4.5.3" class="anchored" data-anchor-id="permutations-with-identical-objects"><span class="header-section-number">3.4.5.3</span> Permutations with Identical Objects</h4>
 <p>Finally, it is worth understanding how to handle identical objects in combinatorial problems. Suppose that, of the <span class="math inline">\(10\)</span> books that we wish to place on a shelf, we have <span class="math inline">\(2\)</span> copies of one of them, <span class="math inline">\(3\)</span> copies of another one, and the other <span class="math inline">\(5\)</span> have one copy each. Supposing that there is no way to tell these identical objects apart, how many ways can we arrange the bookshelf?</p>
-<p>First, if we pretend that all of the items are actually able to be differentiated then there are <span class="math inline">\(10!\)</span> ways of placing these books. Now, in any of these permutations, had we swapped the order of the first book (with <span class="math inline">\(2\)</span> copies) the ordering would have been indistinguishable. As a result, for every ordering of the <span class="math inline">\(8\)</span> other books, we counted that permutation twice (when it should have only been counted once!). So to address the two repeated copies we need to take <span class="math inline">\(10!/2\)</span>. Now, a similar argument is going to hold for the book with <span class="math inline">\(3\)</span> repeated copies. However, instead of there being <span class="math inline">\(2\)</span> permutations which are identical, there are going to be <span class="math inline">\(3! = 6\)</span> permutations which are identical. This is because we can reorder the <span class="math inline">\(3\)</span> copies of the book in anyway we choose, and still wind up with the same overall permutation.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> As a result, the total number is going to be <span class="math display">\[\frac{10!}{2!\cdot3!} = 302400.\]</span></p>
+<p>First, if we pretend that all of the items are actually able to be differentiated then there are <span class="math inline">\(10!\)</span> ways of placing these books. Now, in any of these permutations, had we swapped the order of the first book (with <span class="math inline">\(2\)</span> copies) the ordering would have been indistinguishable. As a result, for every ordering of the <span class="math inline">\(8\)</span> other books, we counted that permutation twice (when it should have only been counted once!). So to address the two repeated copies we need to take <span class="math inline">\(10!/2\)</span>. Now, a similar argument is going to hold for the book with <span class="math inline">\(3\)</span> repeated copies. However, instead of there being <span class="math inline">\(2\)</span> permutations which are identical, there are going to be <span class="math inline">\(3! = 6\)</span> permutations which are identical. This is because we can reorder the <span class="math inline">\(3\)</span> copies of the book in anyway we choose, and still wind up with the same overall permutation.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> As a result, the total number is going to be <span class="math display">\[\frac{10!}{2!\cdot3!} = 302400.\]</span></p>
 <p>We can see this same result through an alternative construction. First, we select which of the <span class="math inline">\(10\)</span> slots should have the first book. We do not care about the order, and so there are <span class="math inline">\(\binom{10}{2}\)</span> ways of doing this. Next, we can select which of the <span class="math inline">\(8\)</span> remaining slots should have the second book. Like the first one there will be <span class="math inline">\(\binom{8}{3}\)</span> ways of placing these. Now, there are <span class="math inline">\(5\)</span> slots remaining, and <span class="math inline">\(5\)</span> books to place, so as a result, we can order those in <span class="math inline">\(5!\)</span> different ways, and then slot them into the remaining places in order. This gives, in total <span class="math display">\[\binom{10}{2}\binom{8}{3}(5!) = \frac{10!}{2!\cancel{8!}}\cdot\frac{\cancel{8!}}{3!\cancel{5!}}\cdot\cancel{5!} = \frac{10!}{2!3!}.\]</span></p>
 <p>To generalize this, if we want to order <span class="math inline">\(n\)</span> elements, such that there are <span class="math inline">\(k\)</span> distinguishable elements with <span class="math inline">\(n_1\)</span> of the first type, <span class="math inline">\(n_2\)</span> of the second, and so forth until <span class="math inline">\(n_k\)</span> of the last type (<span class="math inline">\(n = n_1 + n_2 + \cdots + n_k\)</span>), then the total number of orderings will be <span class="math display">\[\frac{n!}{n_1!\cdot n_2!\cdots n_k!}.\]</span></p>
 </section>
@@ -690,7 +1503,7 @@ Solution
 <ol type="a">
 <li><p>A straight necessitates drawing five cards in order, with each of any suit. Just as with the straight flush, there are <span class="math inline">\(10\)</span> possible starting values for the straight. Once we have selected the starting value, then for each of the five cards we can pick any of the four suits, resulting in <span class="math inline">\(4\)</span> choices each. That gives <span class="math display">\[N_A = 10\times 4\times 4\times 4\times 4\times 4 = 10\times 4^5 = 10240.\]</span></p></li>
 <li><p>A flush necessitates drawing <strong>any</strong> five cards from the same suit. If we had a suit fixed, there would be <span class="math inline">\({13\choose 5}\)</span> ways of doing this, since we do not care about ordering. If we think about first choosing the suit, we have <span class="math inline">\(4\)</span> ways of doing that, resulting in <span class="math display">\[N_A = 4 \times {13 \choose 5} = 5148.\]</span></p></li>
-<li><p>To find the probabilities of each of these, we need to know the total number of <span class="math inline">\(5\)</span> card hands. We do not consider order, and so <span class="math inline">\(N = \binom{52}{5} = 2598960\)</span>. Then, the probability is simply the number of combinations (calculated above) divided by the number of hands. This gives, for straights, <span class="math display">\[P(A) = \frac{10240}{2598960} = \frac{128}{32487} \approx 0.00394,\]</span> and for flushes, <span class="math display">\[P(A) = \frac{5148}{2598960} = \frac{33}{16660} \approx 0.00198.\]</span> As a result, we see that straights are roughly twice as common as flushes are.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a></p></li>
+<li><p>To find the probabilities of each of these, we need to know the total number of <span class="math inline">\(5\)</span> card hands. We do not consider order, and so <span class="math inline">\(N = \binom{52}{5} = 2598960\)</span>. Then, the probability is simply the number of combinations (calculated above) divided by the number of hands. This gives, for straights, <span class="math display">\[P(A) = \frac{10240}{2598960} = \frac{128}{32487} \approx 0.00394,\]</span> and for flushes, <span class="math display">\[P(A) = \frac{5148}{2598960} = \frac{33}{16660} \approx 0.00198.\]</span> As a result, we see that straights are roughly twice as common as flushes are.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a></p></li>
 <li><p>Note that to form a straight flush, we first have to fix a suit. There are <span class="math inline">\({4\choose 1}=4\)</span> total ways of doing this. Next, we need to pick which starting value we will use. Once a card has been selected as a starting value, the remaining cards are fixed. The start value ranges from A through to <span class="math inline">\(10\)</span>. Correspondingly, we have <span class="math display">\[N_A = {4\choose 1}{10 \choose 1} = 4\times10 = 40.\]</span> As a result, we get that <span class="math display">\[P(A) = \frac{40}{2598960} = \frac{1}{64974}.\]</span></p></li>
 <li><p>From (d) exactly <span class="math inline">\(40\)</span> of the straights and <span class="math inline">\(40\)</span> of the flushes are also straight flushes. We can thus remove <span class="math inline">\(40\)</span> from the totals of each of these, giving <span class="math inline">\(\frac{10200}{2598960}\)</span> for straights and <span class="math inline">\(\frac{5108}{2598960}\)</span> for flushes.</p></li>
 </ol>
@@ -717,18 +1530,19 @@ Kahneman, Daniel, and Amos Tversky. 1972. <span>“Subjective Probability: A Jud
 <li id="fn3"><p>This does not help to explain why we use urns so much, of course. When was the last time any of us drew a ball from an urn?<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Note that, when we have a set, using the absolute value symbols <span class="math inline">\(|\cdot|\)</span> stands for the <strong>cardinality</strong> of the set. Cardinality is just a fancy way of saying the size or the number of elements that the set has in it.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>A quantity which in the equally likely outcome framework, we know exactly.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>For instance, the Queen of spades being drawn.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>This is actually a scenario where our instincts may lead us awry in some situations. Consider the following from <span class="citation" data-cites="kahneman">Kahneman and Tversky (<a href="#ref-kahneman" role="doc-biblioref">1972</a>)</span>: <span class="blockquote d-block">Linda is 31 years old, single, outspoken, and very bright. She majored in philosophy. As a student, she was deeply concerned with issues of discrimination and social justice, and also participated in anti-nuclear demonstrations. Which is more probable? (a) Linda is a bank teller, or (b) Linda is a bank teller and is active in the feminist movement.</span> A majority of respondents rate (b) as being more probable, even though (a) is contained in (b).<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>These rules, which we call “properties” are formally known as “axioms”.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>What would it mean to have a negative probability? It is perhaps a more interesting question than it seems at first glance. It is a topic that has come up in some pretty strange places and, while it is not presently sensible to call them “probabilities” in a traditional sense, there are interesting results which follow.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>Note: if this is not yet clear to you, that’s okay! In the very next section we begin to discuss how to count the possible combinations in these types of scenarios.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>Suppose that <span class="math inline">\(d_1 = 2\)</span> and <span class="math inline">\(d_2 = 4\)</span>. Then here, the dice can match when they show either <span class="math inline">\(1\)</span> or <span class="math inline">\(2\)</span>, but if the second die shows <span class="math inline">\(3\)</span> or <span class="math inline">\(4\)</span> there is no possibility of having a match at all.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12"><p>Factorials are exciting because they always look like they are shouting!<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13"><p>It is somewhat interesting to note how large these values get relatively quickly. This is a comparatively small question: only <span class="math inline">\(10\)</span> people with <span class="math inline">\(10\)</span> drinks and <span class="math inline">\(10\)</span> snacks. If you consider any counting problem with a larger number of items, these problems quickly grow to be intensely complex. For instance, a count of my main home book collection reveals <span class="math inline">\(376\)</span> of them. To order these would give <span class="math inline">\(376!\)</span> possible orderings. In decimal representation this is <span class="math display">\[4.992244775852435618292576458782762114148884082811840265632\dots\times10^{806}.\]</span> This is an <span class="math inline">\(807\)</span> digit long number. This is an incomprehensibly large number. This number is <span class="math inline">\(8×10^{726}\)</span> <strong>times larger than</strong> the number of atoms in the universe. That is, if every atom in the universe were given some arrangements of books to hold onto, they would need to hold <span class="math inline">\(8×10^{726}\)</span> of them in order for all of the arrangements to be held. I point this out because combinatorics <em>explodes</em> in this way. Even simple problems grow out of hand very, very quickly. This is where comfort with the algebraic tools is required, rather than a reliance on intuition. There is simply no way to have intuition regarding the scope of these numbers, at least, not without a lot of practice.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn14"><p>Imagine I am placing books on my shelf. With <span class="math inline">\(3\)</span> books there are <span class="math inline">\(3! = 6\)</span> ways my shelf can look at the end. With <span class="math inline">\(2\)</span> books there are <span class="math inline">\(2! = 2\)</span> ways my shelf can look at the end. With <span class="math inline">\(1\)</span> book there are <span class="math inline">\(1! = 1\)</span> ways my shelf can look at the end. With <span class="math inline">\(0\)</span> books there are <span class="math inline">\(0! = 1\)</span> ways my shelf can look at the end.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn15"><p>Note, this does not help us with the factorials of negative numbers, nor of fractional numbers. Factorials <em>can</em> be extended to these in sensible ways, but these are not for combinatorial purposes and are no longer “factorials” exactly.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn16"><p>In fact, the reason that there are <span class="math inline">\(2\)</span> ways of doing this with the book with <span class="math inline">\(2\)</span> copies is since <span class="math inline">\(2! = 2\)</span>.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn17"><p>This is <em>still</em> a deeply unintuitive result to me. To me it feels like it should be harder to get a nice ordering of cards all in a row than it is to find ones of the same suit. And yet, it is about twice as likely to have the straights. Now, if you think about this deeply, it makes a lot of sense: there is a lot more leeway in selecting the straight than the flush. However, my brain refuses to accept this as intuitive. This is something that can often occur in probability questions where the true results can be far from what we would expect. An interesting question is how long does a straight have to be to be less likely than a flush of the same length. Note that the number of ways of choosing a flush will always be <span class="math inline">\(4\times\binom{13}{k}\)</span>, and the number of ways of forming a straight will always be <span class="math inline">\(10\times 4^k\)</span>. If we consider <span class="math inline">\(k\)</span> from <span class="math inline">\(1\)</span> to <span class="math inline">\(13\)</span>, we can take the ratios of these to see just how much more (or less) likely a straight is. Doing this gives: <span class="font-monospace text-light bg-dark m-2 p-2 block">k=1 gives 0.769. k=2 gives 0.513. k=3 gives 0.559. k=4 gives 0.895. k=5 gives 1.989. k=6 gives 5.967. k=7 gives 23.869. k=8 gives 127.304. k=9 gives 916.587. k=10 gives 9165.874. k=11 gives 134432.821. k=12 gives 3226387.692. k=13 gives 167772160.</span> Up to (and including) <span class="math inline">\(4\)</span> cards the straight is indeed harder to achieve. However, this does not last long!<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>The <code>sample</code> function can also be used without equally likely events by specifying a vector of probabilities, however, this is a less common use case.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>For instance, the Queen of spades being drawn.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>This is actually a scenario where our instincts may lead us awry in some situations. Consider the following from <span class="citation" data-cites="kahneman">Kahneman and Tversky (<a href="#ref-kahneman" role="doc-biblioref">1972</a>)</span>: <span class="blockquote d-block">Linda is 31 years old, single, outspoken, and very bright. She majored in philosophy. As a student, she was deeply concerned with issues of discrimination and social justice, and also participated in anti-nuclear demonstrations. Which is more probable? (a) Linda is a bank teller, or (b) Linda is a bank teller and is active in the feminist movement.</span> A majority of respondents rate (b) as being more probable, even though (a) is contained in (b).<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>These rules, which we call “properties” are formally known as “axioms”.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>What would it mean to have a negative probability? It is perhaps a more interesting question than it seems at first glance. It is a topic that has come up in some pretty strange places and, while it is not presently sensible to call them “probabilities” in a traditional sense, there are interesting results which follow.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Note: if this is not yet clear to you, that’s okay! In the very next section we begin to discuss how to count the possible combinations in these types of scenarios.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Suppose that <span class="math inline">\(d_1 = 2\)</span> and <span class="math inline">\(d_2 = 4\)</span>. Then here, the dice can match when they show either <span class="math inline">\(1\)</span> or <span class="math inline">\(2\)</span>, but if the second die shows <span class="math inline">\(3\)</span> or <span class="math inline">\(4\)</span> there is no possibility of having a match at all.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Factorials are exciting because they always look like they are shouting!<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>It is somewhat interesting to note how large these values get relatively quickly. This is a comparatively small question: only <span class="math inline">\(10\)</span> people with <span class="math inline">\(10\)</span> drinks and <span class="math inline">\(10\)</span> snacks. If you consider any counting problem with a larger number of items, these problems quickly grow to be intensely complex. For instance, a count of my main home book collection reveals <span class="math inline">\(376\)</span> of them. To order these would give <span class="math inline">\(376!\)</span> possible orderings. In decimal representation this is <span class="math display">\[4.992244775852435618292576458782762114148884082811840265632\dots\times10^{806}.\]</span> This is an <span class="math inline">\(807\)</span> digit long number. This is an incomprehensibly large number. This number is <span class="math inline">\(8×10^{726}\)</span> <strong>times larger than</strong> the number of atoms in the universe. That is, if every atom in the universe were given some arrangements of books to hold onto, they would need to hold <span class="math inline">\(8×10^{726}\)</span> of them in order for all of the arrangements to be held. I point this out because combinatorics <em>explodes</em> in this way. Even simple problems grow out of hand very, very quickly. This is where comfort with the algebraic tools is required, rather than a reliance on intuition. There is simply no way to have intuition regarding the scope of these numbers, at least, not without a lot of practice.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>Imagine I am placing books on my shelf. With <span class="math inline">\(3\)</span> books there are <span class="math inline">\(3! = 6\)</span> ways my shelf can look at the end. With <span class="math inline">\(2\)</span> books there are <span class="math inline">\(2! = 2\)</span> ways my shelf can look at the end. With <span class="math inline">\(1\)</span> book there are <span class="math inline">\(1! = 1\)</span> ways my shelf can look at the end. With <span class="math inline">\(0\)</span> books there are <span class="math inline">\(0! = 1\)</span> ways my shelf can look at the end.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Note, this does not help us with the factorials of negative numbers, nor of fractional numbers. Factorials <em>can</em> be extended to these in sensible ways, but these are not for combinatorial purposes and are no longer “factorials” exactly.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>In fact, the reason that there are <span class="math inline">\(2\)</span> ways of doing this with the book with <span class="math inline">\(2\)</span> copies is since <span class="math inline">\(2! = 2\)</span>.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>This is <em>still</em> a deeply unintuitive result to me. To me it feels like it should be harder to get a nice ordering of cards all in a row than it is to find ones of the same suit. And yet, it is about twice as likely to have the straights. Now, if you think about this deeply, it makes a lot of sense: there is a lot more leeway in selecting the straight than the flush. However, my brain refuses to accept this as intuitive. This is something that can often occur in probability questions where the true results can be far from what we would expect. An interesting question is how long does a straight have to be to be less likely than a flush of the same length. Note that the number of ways of choosing a flush will always be <span class="math inline">\(4\times\binom{13}{k}\)</span>, and the number of ways of forming a straight will always be <span class="math inline">\(10\times 4^k\)</span>. If we consider <span class="math inline">\(k\)</span> from <span class="math inline">\(1\)</span> to <span class="math inline">\(13\)</span>, we can take the ratios of these to see just how much more (or less) likely a straight is. Doing this gives: <span class="font-monospace text-light bg-dark m-2 p-2 block">k=1 gives 0.769. k=2 gives 0.513. k=3 gives 0.559. k=4 gives 0.895. k=5 gives 1.989. k=6 gives 5.967. k=7 gives 23.869. k=8 gives 127.304. k=9 gives 916.587. k=10 gives 9165.874. k=11 gives 134432.821. k=12 gives 3226387.692. k=13 gives 167772160.</span> Up to (and including) <span class="math inline">\(4\)</span> cards the straight is indeed harder to achieve. However, this does not last long!<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

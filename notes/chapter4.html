@@ -83,6 +83,633 @@ ul.task-list li input[type="checkbox"] {
 </script>
 <script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">.monaco-editor pre {
+  background-color: unset !important;
+}
+
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-button-run {
+  background-color: #EEEEEE;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; /* Extra styling for consistency */
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration: none;
+  /* vertical-align: middle; */ /* Prevents a space from appearing between the code cell and button */
+  -webkit-user-select: none;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button-run:hover {
+  color: #000;
+  background-color: #e3e6ea;
+  border-color: #e1e5e9;
+}
+
+.qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+  pointer-events: none;
+  opacity: .65
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+</style>
+<script type="module">// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Determine if we need to install R packages
+var installRPackagesList = [''];
+// Check to see if we have an empty array, if we do set to skip the installation.
+var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+var autoloadRPackages = true;
+
+// Display a startup message?
+var showStartupMessage = true;
+var showHeaderMessage = false;
+if (showStartupMessage) {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  var startupMessageWebR = document.createElement("p");
+  startupMessageWebR.innerText = "🟡 Loading...";
+  startupMessageWebR.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  startupMessageWebR.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(startupMessageWebR);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML) {
+    // Append to the existing "title-block-header" element
+    headerHTML.appendChild(quartoTitleMeta);
+  } else if (headerRevealJS) {
+    // If using RevealJS, add to the "title-slide" div
+    headerRevealJS.appendChild(firstInnerDiv);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+// Retrieve the webr.mjs
+import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.2/webr.mjs";
+
+// Populate WebR options with defaults or new values based on 
+// webr meta
+globalThis.webR = new WebR({
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": ChannelType.Automatic
+});
+
+// Initialization WebR
+await webR.init();
+
+// Setup a shelter
+globalThis.webRCodeShelter = await new webR.Shelter();
+
+// Setup a pager to allow processing help documentation 
+await webR.evalRVoid('webr::pager_install()'); 
+
+// Function to set the button text
+function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message
+function qwebrUpdateStatusHeader(message) {
+  startupMessageWebR.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await globalThis.webR.installPackages([packageName]);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await globalThis.webR.evalRVoid(`library(${packageName});`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+    
+    // Display the update
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await globalThis.webR.flush();
+  }
+}
+
+
+// Check to see if any packages need to be installed
+if (setupRPackages) {
+  // Obtain only a unique list of packages
+  const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+  // Install R packages one at a time (either silently or with a status update)
+  await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+  if(autoloadRPackages) {
+    // Load R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+  }
+}
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+// Release document status as ready
+if (showStartupMessage) {
+  startupMessageWebR.innerText = "🟢 Ready!"
+}
+
+qwebrSetInteractiveButtonState(
+  `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+  true
+);
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};</script>
+<script type="module">// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+    Interactive: 'interactive',
+    Setup: 'setup',
+    Output: 'output',
+});
+
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await webR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await webR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // ---- 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid(`webr::canvas(width=${options["fig-width"]}, height=${options["fig-height"]})`);
+
+    const result = await webRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    try {
+
+        // Stop creating images
+        await webR.evalRVoid("dev.off()");
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${qwebrEscapeHTMLCharacters(evt.data)}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await webR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * options["fig-width"]);
+                canvas.setAttribute("height", 2 * options["fig-height"]);
+                canvas.style.width = "700px";
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            elements.outputGraphDiv.appendChild(canvas);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        webRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    evalType = EvalTypes.Interactive,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { "fig-width": 504, "fig-height": 360 };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+</script>
+<script type="module">// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (insertElement,
+  qwebrCounter, 
+  evalType = EvalTypes.Interactive,
+  options = {}) {
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive: 
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter);
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter);
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter);
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  insertElement.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-interactive-area';
+
+  // Create button element
+  var button = document.createElement('button');
+  button.className = 'btn btn-default qwebr-button-run';
+  button.disabled = true;
+  button.type = 'button';
+  button.id = 'qwebr-button-run-' + qwebrCounter;
+  button.textContent = '🟡 Loading webR...';
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(button);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-area';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-setup-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-setup-area';
+
+  return mainDiv;
+}</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -241,6 +868,148 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
+<script type="module">// Global dictionary to store Monaco Editor instances
+const qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (
+    initialCode, 
+    qwebrCounter) {
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value
+    editor.__qwebrinitialCode = initialCode;
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter,
+            EvalTypes.Interactive);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, EvalTypes.Interactive);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, EvalTypes.Interactive);
+  };
+
+}</script>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilities with More than One Event</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -924,7 +1693,7 @@ Solution
 <div id="def-contingency-table" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 4.8 (Contingency Table)</strong></span> A contingency table is a tabular summary of information which summarizes the joint probabilities of two or more variables. Typically a contingency table will take one factor for the columns and a secondary factor for the rows, where each cell then represents the frequency with which observations occur in the two corresponding categories simultaneously.</p>
 </div>
-<p>To begin, you could imagine constructing a frequency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you convert the frequencies to proportions, and these proportions can be viewed as probabilities. The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
+<p>To begin, you could imagine constructing a frequency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you convert the frequencies to proportions, and these proportions can be viewed as probabilities. (See <a href="#tbl-uni-frequency" class="quarto-xref">Table&nbsp;<span>4.1</span></a>.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>) The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p>
 <div class="cell" data-tbl-colwidths="[20,40,40]">
 <div id="tbl-uni-frequency" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -996,9 +1765,114 @@ Table&nbsp;4.1: Frequency and corresponding proportions of enrolment by faculty 
 <div id="tbl-uni-contingency" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-uni-contingency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.2: Proportions of enrolment by faculty and year of study in a university.
+Table&nbsp;4.2: Frequency of enrolment by faculty and year of study in a university.
 </figcaption>
 <div aria-describedby="tbl-uni-contingency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Year 1</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Year 2</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Year 3</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Year 4</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Year 5+</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Arts</td>
+<td style="text-align: center;">222</td>
+<td style="text-align: center;">276</td>
+<td style="text-align: center;">273</td>
+<td style="text-align: center;">225</td>
+<td style="text-align: center;">270</td>
+<td style="text-align: center; font-weight: bold;">1266</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Comp. Sci.</td>
+<td style="text-align: center;">164</td>
+<td style="text-align: center;">87</td>
+<td style="text-align: center;">164</td>
+<td style="text-align: center;">90</td>
+<td style="text-align: center;">244</td>
+<td style="text-align: center; font-weight: bold;">749</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Education</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">136</td>
+<td style="text-align: center;">184</td>
+<td style="text-align: center;">128</td>
+<td style="text-align: center;">238</td>
+<td style="text-align: center; font-weight: bold;">786</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Engineering</td>
+<td style="text-align: center;">189</td>
+<td style="text-align: center;">290</td>
+<td style="text-align: center;">354</td>
+<td style="text-align: center;">298</td>
+<td style="text-align: center;">184</td>
+<td style="text-align: center; font-weight: bold;">1315</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Law</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;">58</td>
+<td style="text-align: center;">37</td>
+<td style="text-align: center;">67</td>
+<td style="text-align: center; font-weight: bold;">266</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Nursing</td>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;">90</td>
+<td style="text-align: center;">154</td>
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">132</td>
+<td style="text-align: center; font-weight: bold;">543</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Science</td>
+<td style="text-align: center;">242</td>
+<td style="text-align: center;">114</td>
+<td style="text-align: center;">206</td>
+<td style="text-align: center;">183</td>
+<td style="text-align: center;">131</td>
+<td style="text-align: center; font-weight: bold;">876</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; font-weight: bold;"></td>
+<td style="text-align: center; font-weight: bold;">1026</td>
+<td style="text-align: center; font-weight: bold;">1043</td>
+<td style="text-align: center; font-weight: bold;">1393</td>
+<td style="text-align: center; font-weight: bold;">1073</td>
+<td style="text-align: center; font-weight: bold;">1266</td>
+<td style="text-align: center; font-weight: bold; font-weight: bold;">5801</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>By including two (or more) factors in the table we are able to capture not only the marginal probabilities for the population, but also the joint probabilities for the population, and in turn, the conditional probabilities for the population. Being able to concisely summarize all of these concepts regarding traits in a population of interest renders contingency tables immensely useful in the study of uncertainty broadly.</p>
+<p>Consider the two-way contingency table, <a href="#tbl-uni-contingency" class="quarto-xref">Table&nbsp;<span>4.2</span></a>. Each cell consists of frequency with which a combination of the two traits occurs in the population.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> If we take events corresponding to each of the levels of the two variables of interest, then these central cells represent the frequency of joint events. That is, each interior cell gives the total number of observations with a set level for variable one<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> AND a set level for variable two<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>. For instance, there are 50 individuals who are in Law and studying in Year 2.</p>
+<p>Each row is then summed, with the total number following into the corresponding row recorded in the right hand margin. each column is summed, with the total number corresponding to the given column recorded in the bottom margin. For instance there are a total of 786 students in Education and a total of 1393 in Year 3. Then the margin totals are summed and the total is recorded in the lower right margin space (in this case, 5801). Whether the rows or columns are summed, they should sum to the same total, which is the total of the population under consideration. This is the same as simply adding all of the observed interior frequencies. To turn a frequency into a probability, you need only divide the correct frequency by the correct total.</p>
+<div class="cell" data-tbl-colwidths="[20,40,40]">
+<div id="tbl-uni-prop" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-uni-prop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.3: Proportions of enrolment by faculty and year of study in a university.
+</figcaption>
+<div aria-describedby="tbl-uni-prop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1020,7 +1894,7 @@ Table&nbsp;4.2: Proportions of enrolment by faculty and year of study in a unive
 <td style="text-align: center;">0.0470609</td>
 <td style="text-align: center;">0.0387864</td>
 <td style="text-align: center;">0.0465437</td>
-<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.2182382</td>
+<td style="text-align: center; font-weight: bold;">0.2182382</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Comp. Sci.</td>
@@ -1029,7 +1903,7 @@ Table&nbsp;4.2: Proportions of enrolment by faculty and year of study in a unive
 <td style="text-align: center;">0.0282710</td>
 <td style="text-align: center;">0.0155146</td>
 <td style="text-align: center;">0.0420617</td>
-<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.1291157</td>
+<td style="text-align: center; font-weight: bold;">0.1291157</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Education</td>
@@ -1038,7 +1912,7 @@ Table&nbsp;4.2: Proportions of enrolment by faculty and year of study in a unive
 <td style="text-align: center;">0.0317187</td>
 <td style="text-align: center;">0.0220652</td>
 <td style="text-align: center;">0.0410274</td>
-<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.1354939</td>
+<td style="text-align: center; font-weight: bold;">0.1354939</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Engineering</td>
@@ -1047,7 +1921,7 @@ Table&nbsp;4.2: Proportions of enrolment by faculty and year of study in a unive
 <td style="text-align: center;">0.0610240</td>
 <td style="text-align: center;">0.0513705</td>
 <td style="text-align: center;">0.0317187</td>
-<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.2266851</td>
+<td style="text-align: center; font-weight: bold;">0.2266851</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Law</td>
@@ -1056,7 +1930,7 @@ Table&nbsp;4.2: Proportions of enrolment by faculty and year of study in a unive
 <td style="text-align: center;">0.0099983</td>
 <td style="text-align: center;">0.0063782</td>
 <td style="text-align: center;">0.0115497</td>
-<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.0458542</td>
+<td style="text-align: center; font-weight: bold;">0.0458542</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Nursing</td>
@@ -1065,16 +1939,16 @@ Table&nbsp;4.2: Proportions of enrolment by faculty and year of study in a unive
 <td style="text-align: center;">0.0265471</td>
 <td style="text-align: center;">0.0193070</td>
 <td style="text-align: center;">0.0227547</td>
-<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.0936046</td>
+<td style="text-align: center; font-weight: bold;">0.0936046</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; font-weight: bold; border-bottom: 1px solid;">Science</td>
-<td style="text-align: center; border-bottom: 1px solid;">0.0417169</td>
-<td style="text-align: center; border-bottom: 1px solid;">0.0196518</td>
-<td style="text-align: center; border-bottom: 1px solid;">0.0355111</td>
-<td style="text-align: center; border-bottom: 1px solid;">0.0315463</td>
-<td style="text-align: center; border-bottom: 1px solid;">0.0225823</td>
-<td style="text-align: center; font-weight: bold; border-left: 1px solidborder-bottom;">0.1510084</td>
+<td style="text-align: left; font-weight: bold;">Science</td>
+<td style="text-align: center;">0.0417169</td>
+<td style="text-align: center;">0.0196518</td>
+<td style="text-align: center;">0.0355111</td>
+<td style="text-align: center;">0.0315463</td>
+<td style="text-align: center;">0.0225823</td>
+<td style="text-align: center; font-weight: bold;">0.1510084</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold; font-weight: bold;"></td>
@@ -1083,7 +1957,7 @@ Table&nbsp;4.2: Proportions of enrolment by faculty and year of study in a unive
 <td style="text-align: center; font-weight: bold;">0.2401310</td>
 <td style="text-align: center; font-weight: bold;">0.1849681</td>
 <td style="text-align: center; font-weight: bold;">0.2182382</td>
-<td style="text-align: center; font-weight: bold; border-left: 1px solidfont-weight;">1.0000000</td>
+<td style="text-align: center; font-weight: bold; font-weight: bold;">1.0000000</td>
 </tr>
 </tbody>
 </table>
@@ -1094,22 +1968,347 @@ Table&nbsp;4.2: Proportions of enrolment by faculty and year of study in a unive
 </figure>
 </div>
 </div>
-<p>By including two (or more) factors on the table we are able to capture not only the marginal probabilities for the population, but also the joint probabilities for the population, and in turn, the conditional probabilities for the population. Being able to concisely summarize all of these concepts regarding traits in a population of interest renders contingency tables immensely useful in the study of uncertainty broadly.</p>
-<p>TODO: Include example(s) of contingency tables.</p>
-<p>Suppose we consider a two-way contingency table. Each cell consists of frequency with which a combination of two traits occurs in the population. If we take events corresponding to each of the levels of the two variables of interest, then these central cells represent the frequency of joint events. That is, each interior cell gives the total number of observations with a set level for variable one AND a set level for variable two. Each row is summed, with the total number following into the corresponding row recorded in the right hand margin. each column is summed, with the total number corresponding to the given column recorded in the bottom margin. Then the margin totals are summed and the total is recorded in the lower right margin space.</p>
-<p>TODO: Include graphic with summation of margins</p>
-<p>Whether the rows or columns are summed, they should sum to the same total, which is the total of the population under consideration. This is the same as simply adding all of the observed interior frequencies. To turn a frequency into a probability, you need only divide the correct frequency by the correct total.</p>
-<p>For the standard joint probabilities, you take the interior cell count and divide by the population total. Here we are saying that some fixed number, <span class="math inline">\(m\)</span>, of the <span class="math inline">\(N\)</span> total individuals have both traits under consideration. If instead you wish to find a marginal probability, you have to consider the value in the corresponding margin: this is the total number of individuals with the given trait, ignoring the level of the other variable. These marginal values are also divided by the total population size. For conditional probabilities, we restrict our focus to either only one row, or one column. Then, we can take teh joint cell and divide by the value in the margin, which gives the conditional probability of interest.</p>
-<p>TODO: show probability calculations for the various scenarios that we saw.</p>
+<p>For the standard joint probabilities, you take the interior cell count and divide by the population total. Here we are saying that some fixed number, <span class="math inline">\(m\)</span>, of the <span class="math inline">\(N\)</span> total individuals have both traits under consideration. For instance, the joint probability that a student is in Law and studying in Year 2 is 0.0086192.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> If instead you wish to find a marginal probability, you have to consider the value in the corresponding margin: this is the total number of individuals with the given trait, ignoring the level of the other variable. These marginal values are also divided by the total population size. For instance, there is a 0.1354939 probability of observing a student in Education and a probability 0.240131 of observing a student in Year 3.</p>
+<p>Outside of joint and marginal probabilities, we can also find conditional probabilities. To do so, we restrict our focus to either only one row, or one column. Then, we can take the joint cell and divide by the value in the margin, which gives the conditional probability of interest. Note, this works with <em>either</em> the contingency table directly <strong>or</strong> with the propensity table. The reasoning is that the propensity table divided by the same totals in the numerator and the denominator. Suppose we take some cell, <span class="math inline">\(A\cap B\)</span>, which has <span class="math inline">\(N_{A, B}\)</span> in the contingency table. Then, <span class="math display">\[P(A\cap B) = \frac{N_{A, B}}{N} \quad\quad\text{and}\quad\quad P(B) = \frac{N_B}{N}.\]</span> If we consider then forming <span class="math inline">\(P(A|B)\)</span> we get <span class="math display">\[P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{N_{A \cap B}/\cancel{N}}{N_B/\cancel{N}} = \frac{N_{A, B}}{N_B}.\]</span> Thus, given that we know a student is in Education, then the probability that they are in Year 3 is approximately 0.2341.</p>
 <p>Note that these procedures are exactly in line with what we had seen before. The conditional probability is defined as the joint probability divided by the marginal probability. The process of computing the marginal can be seen as an application of the law of total probability. As a result, contingency tables can be a useful, tangible tool for investigating the techniques we have been discussing: they are not a substitute for direct manipulation of the mathematical objects, but they can present insight into the underlying processes where it may be hard to derive that insight otherwise.</p>
-<p>TODO: show example of conditional probability derivation.</p>
-<p>TODO: show example of law of total probability derivation.</p>
-<p>It is important to note that there is redundant information within a contingency table. For instance, the margins need not be listed explicit, as they can be directly calculated from the interior points. Same goes for interior points, given the margins of the table (assuming other interior points are also presented). TThis can be useful for a compact representation of the information, and manipulating these tables, finding the required information in many places, should become second nature as you continue to work with them more and more.</p>
-<p>TODO: include fill-in-the-blank contingency table</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Law of Total Probability: Contingency Table’s Version
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Recall that the law of total probability states that, if <span class="math inline">\(B_1,\dots,B_n\)</span> forms a partition of the sample space, then <span class="math display">\[P(A) = \sum_{i=1}^n P(A|B_i)P(B_i) = \sum_{i=1}^n P(A, B_i)\]</span>. In a contingency table it is easier to see how either of the two factors at play (either those in the rows or the columns) forms a partition of the space. Every observation has to fall in exactly one row and exactly one column. Thus, if we want to know the marginal frequency of a single trait (say represented by some row of the table), then one way to find this total is to sum up every observation in each of the corresponding columns. This is <em>precisely</em> the same process as the law of total probability. Note that, denoting each column as <span class="math inline">\(B_i\)</span>, and supposing there are <span class="math inline">\(k\)</span> total columns, then the total number in a row is taken to be <span class="math display">\[N_A = \sum_{i=1}^k N_{A, B_i},\]</span> simply as the summation of the corresponding row. By definition, <span class="math inline">\(P(A) = \frac{N_A}{N}\)</span>, and so dividing both sides by <span class="math inline">\(N\)</span> gives <span class="math display">\[P(A) = \frac{N_A}{N} = \frac{1}{N}\sum_{i=1}^k N_{A, B_i} = \sum_{i=1}^k \frac{N_{A, B_i}}{N} = \sum_{i=1}^n P(A\cap B_i).\]</span></p>
+</div>
+</div>
+</div>
+<p>It is important to note that there is redundant information within a contingency table. For instance, the margins need not be listed explicitly, as they can be directly calculated from the interior points. Same goes for interior points, given the margins of the table (assuming <em>some</em> interior points are also presented). This can be useful for a compact representation of the information, and manipulating these tables – being able to find the required information in many places – should become familiar to you as you continue to work with them more and more.</p>
+<div id="exm-charles-contingency-table" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.11 (The Evolving Contents of Charle’s Urns)</strong></span> After learning of contingency tables, Sadie points out to Charles that with the whole urn debacle they went through, the two of them actually ended up using a contingency table to summarize the information. How neat! In the interim, there has been some development in the contents of Charles’s urns, and armed with the new knowledge of contingency tables, the following summary is produced.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Cone</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Cube</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Pyramid</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Sphere</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Black</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center; font-weight: bold;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Blue</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center; font-weight: bold;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Green</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center; font-weight: bold;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Red</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center; font-weight: bold;">D</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Yellow</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center; font-weight: bold;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; font-weight: bold;"></td>
+<td style="text-align: center; font-weight: bold;">13</td>
+<td style="text-align: center; font-weight: bold;">E</td>
+<td style="text-align: center; font-weight: bold;">13</td>
+<td style="text-align: center; font-weight: bold;">12</td>
+<td style="text-align: center; font-weight: bold; font-weight: bold;">50</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Sadly, Charles does not have the best writing and Sadie cannot make out what values were written in for the cells marked <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, <span class="math inline">\(D\)</span>, and <span class="math inline">\(E\)</span>.</p>
+<ol type="a">
+<li>What are the values for the missing values?</li>
+<li>What is the probability that a black cube is drawn?</li>
+<li>What is the probability that a red object is drawn?</li>
+<li>What is the probability that a cube is drawn?</li>
+<li>Given that the drawn object was a pyramid, what is the probability that it is green?</li>
+<li>Given that the object is green, what is the probability that it is a pyramid.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>We start by filling in the missing cells, in order.</p>
+<ol type="i">
+<li><p>For <span class="math inline">\(A\)</span> we can note that <span class="math inline">\(2 + A + 1 + 3 = 10\)</span>, which gives that <span class="math inline">\(A = 4\)</span>. We could have also tried a column sum, however, this would involve <span class="math inline">\(3\)</span> unknowns and so would not have given a numeric result.</p></li>
+<li><p>For <span class="math inline">\(B\)</span> either a row sum or column sum would produce the correct answer. We either take <span class="math inline">\(3 + 3 + B + 5 = 15\)</span> giving <span class="math inline">\(B = 4\)</span> or <span class="math inline">\(1 + 1 + B + 3 + 4 = 13\)</span> giving <span class="math inline">\(B=4\)</span>.</p></li>
+<li><p><span class="math inline">\(C\)</span> is more challenging as we either have that <span class="math inline">\(2 + C + 3 + 2 = D\)</span> or <span class="math inline">\(4 + 2 + 3 + C + 3 = E\)</span><a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a> As a result, for this technique we will need to find either <span class="math inline">\(D\)</span> or <span class="math inline">\(E\)</span> first. There is an alternative technique to use, which would be to note that we have <em>all</em> the internal points specified at this point, and we know that these sum to <span class="math inline">\(50\)</span>. As a result, we could note that <span class="math inline">\(C = 50 - 10 - 5 - 15 - 13 - 2 - 3 - 2 = 0\)</span> or that <span class="math inline">\(C =  50 - 13 - 13 - 12 - 4 - 2 - 3 - 3 = 0\)</span>.</p></li>
+<li><p>We can find <span class="math inline">\(D\)</span> either by subtracting from the total, <span class="math inline">\(D = 50 - 10 - 5 - 15 - 13 = 7\)</span>, or by adding along the row, <span class="math inline">\(2 + 0 + 3 + 2 = 7\)</span>.<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a> Note that with <span class="math inline">\(D = 7\)</span>, had we not found <span class="math inline">\(C = 0\)</span> above, we could now take <span class="math inline">\(2 + C + 3 + 2 = 7\)</span> and find <span class="math inline">\(C = 0\)</span>.</p></li>
+<li><p>Like <span class="math inline">\(D\)</span>, we have two options for working this out. Either <span class="math inline">\(E = 50 - 13 - 13 - 12 = 12\)</span> or <span class="math inline">\(E = 4 + 2 + 3 + 0 + 3 = 12\)</span>.<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a> Like with <span class="math inline">\(D\)</span>, had we solved for <span class="math inline">\(E\)</span> first, then we could find <span class="math inline">\(C\)</span> via <span class="math inline">\(4 + 2 + 3 + C + 3 = 12\)</span>.</p></li>
+</ol></li>
+<li><p>Here we want <span class="math inline">\(P(\text{Black}, \text{Cube})\)</span>. This is given by the frequency of black cubes divided by <span class="math inline">\(50\)</span>. Thus, <span class="math display">\[P(\text{Black}, \text{Cube}) = \frac{A}{50} = \frac{4}{50} = 0.08.\]</span></p></li>
+<li><p>Here we want <span class="math inline">\(P(\text{Red})\)</span>. This is given by the marginal frequency of red objects divided by <span class="math inline">\(50\)</span>. Thus, <span class="math display">\[P(\text{Red}) = \frac{D}{50} = \frac{7}{50} = 0.14.\]</span></p></li>
+<li><p>Here we want <span class="math inline">\(P(\text{Cube})\)</span>. This is given by the marginal frequency of cubes divided by <span class="math inline">\(50\)</span>. Thus, <span class="math display">\[P(\text{Cube}) = \frac{E}{50} = \frac{12}{50} = 0.24.\]</span></p></li>
+<li><p>Here we want <span class="math inline">\(P(\text{Green}|\text{Pyramid})\)</span>. This is given by the frequency of green pyramids divided by the marginal frequency of pyramids. Thus <span class="math display">\[P(\text{Green}|\text{Pyramid}) = \frac{B}{13} = \frac{4}{13} \approx 0.308.\]</span></p></li>
+<li><p>Here we want <span class="math inline">\(P(\text{Pyramid}|\text{Green})\)</span>. This is given by the frequency of green pyramids divided by the marginal frequency of green objects.<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a> Thus <span class="math display">\[P(\text{Pyramid}|\text{Green}) = \frac{B}{15} = \frac{4}{15} \approx 0.267.\]</span></p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
 <p>It is also important to recognize that independence and mutually exclusive events can be codified via the table as well. Zeros on the interior points indicate events which are mutually exclusive: if we know that one of them occurred, we also know that the other one did not. For independence, it requires a degree of solving proportions. We can either check that the joint probability (<span class="math inline">\(N_{A,B}/N\)</span>) is equal to the product of the two marginal probabilities, (<span class="math inline">\(N_AN_B/N^2\)</span>), or else (assuming that the events are all non-zero), that the conditional probability (<span class="math inline">\(N_{A,B}/N_A\)</span>) equals the marginal probability <span class="math inline">\(N_B/N\)</span>. Either way this is represented by <span class="math inline">\(N\times N_{A,B} = N_AN_B\)</span>, and when this holds, we can conclude that the events are independent.</p>
-<p>TODO: Example on mutually exclusive / independent events on a contingency table.</p>
+<div id="exm-contingency-table-mututally-exclusive" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.12 (Independent or Mutually Exclusive Urn Shapes)</strong></span> After helping Charles <em>neatly</em> fill in the contingency table, Sadie begins to wonder about whether there are any shape-colour combinations which are independent, or if any are mutually exclusive.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Cone</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Cube</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Pyramid</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Sphere</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Black</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center; font-weight: bold;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Blue</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center; font-weight: bold;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Green</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center; font-weight: bold;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Red</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center; font-weight: bold;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Yellow</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center; font-weight: bold;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; font-weight: bold;"></td>
+<td style="text-align: center; font-weight: bold;">13</td>
+<td style="text-align: center; font-weight: bold;">12</td>
+<td style="text-align: center; font-weight: bold;">13</td>
+<td style="text-align: center; font-weight: bold;">12</td>
+<td style="text-align: center; font-weight: bold; font-weight: bold;">50</td>
+</tr>
+</tbody>
+</table>
 
 
+</div>
+</div>
+<ol type="a">
+<li>Are there any events represented in the contingency table which are mutually exclusive?</li>
+<li>Are there any events represented in the contingency table which are independent?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Mutually exclusive events are codified via a <span class="math inline">\(0\)</span> frequency. We can see then that <span class="math inline">\(\text{Cube}\)</span> and <span class="math inline">\(\text{Red}\)</span> are mutually exclusive. That is, if we know that an object is red, we also know that it is not a cube. And if we know that an object is a cube, then we know that it is not red.</p></li>
+<li><p>Independence is more cumbersome to check. We require the product of marginal counts to be equal to the total times by the joint counts. As a result, the easiest way to check is to consider the product of each marginal value in the columns by each marginal value in the row, divided by <span class="math inline">\(50\)</span>. If this value corresponds to the value in that row/column pairing, then we know that those features are independent. Note that immediately we can rule out any products which are not divisible by <span class="math inline">\(50\)</span>, since we know that <span class="math inline">\(N_{A,B}\)</span> is an integer for all <span class="math inline">\(A,B\)</span> and <span class="math inline">\(N_{A,B} = N_AN_B/50\)</span> if there is independence. To this end, we only need to check the product of each of the row totals with each of <span class="math inline">\(12\)</span> and <span class="math inline">\(13\)</span> (as those are the only two unique column totals). This gives, in order <span class="math inline">\(120\)</span>, <span class="math inline">\(130\)</span>, <span class="math inline">\(60\)</span>, <span class="math inline">\(65\)</span>, <span class="math inline">\(180\)</span>, <span class="math inline">\(195\)</span>, <span class="math inline">\(84\)</span>, <span class="math inline">\(91\)</span>, <span class="math inline">\(156\)</span>, and <span class="math inline">\(169\)</span>. None of these values are divisible by <span class="math inline">\(50\)</span> and as a result we know that there is <strong>no independence</strong> codified in this table.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<section id="contingency-tables-and-data-frames-in-r" class="level4" data-number="4.5.0.1">
+<h4 data-number="4.5.0.1" class="anchored" data-anchor-id="contingency-tables-and-data-frames-in-r"><span class="header-section-number">4.5.0.1</span> Contingency Tables and Data Frames in R</h4>
+<p>In R we can use the <code>table</code> and <code>prop.table</code> to calculate the (interior) of a contingency table. This will return a <code>table</code> type object in R, which can be thought of as a matrix of sorts. On it, we can use the functions <code>rowSums</code> and <code>colSums</code> to get the summation of the rows and columns, respectively. Typically the object we pass to <code>table</code> will be a <strong>data frame</strong>. A data frame is another R object type that we have not yet seen. The idea with a data frame is that we have multiple columns with different variables (of possibly different types) represented. Each row corresponds to a single observation, and then each column is read as a feature of those observations. Data frames are essentially large spreadsheets (or data tables) which indicate the various observations that we have. In practice, data frames are the most commonly used object in an R analysis, and we will see them plenty going forward.</p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# As always, when randomization is to be used, we call
+# the set.seed function to ensure that the analysis can be
+# replicated.
+set.seed(314)
+
+# Begin by Defining the possible shapes and colours for
+# the objects in Charles's urns
+shapes <- c("Sphere", "Cube", "Pyramid", "Cone")
+colours <- c("Red", "Blue", "Green", "Yellow", "Black")
+
+# Use sample to draw 50 different shapes, and 50 different
+# colours. We are drawing *with* replacement.
+all_shapes <- sample(x = shapes, size = 50, replace = TRUE)
+all_colours <- sample(x = colours, size = 50, replace = TRUE)
+
+# Now we form the data frame. This will consist of two columns,
+# one called "Colours" and one called "Shapes". The values to 
+# place here will correspond to the random colours and shapes we
+# sampled above.
+charles_data <- data.frame("Colours" = all_colours, "Shapes" = all_shapes)
+
+# To get a sense of the data frame we can use the head function
+# which will return the first few rows of our data frame.
+head(charles_data)`, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>With a data frame specified, we can then use the <code>table</code> function called on it to form a contingency table.</p>
+<div id="qwebr-insertion-location-2"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-2");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    2
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `charles_c_table <- table(charles_data)
+
+charles_c_table`, 
+  2);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Then, to get the totals, we can either use <code>rowSums</code> or <code>colSums</code> to return a vector with the corresponding row or column sums.</p>
+<div id="qwebr-insertion-location-3"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-3");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    3
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `marginal_shapes <- colSums(charles_c_table)
+marginal_colours <- rowSums(charles_c_table)
+
+marginal_shapes
+marginal_colours`, 
+  3);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Finally, we can take our formed contingency table, and use <code>prop.table</code> on it, in order to return a table with the proportions (rather than the frequencies).</p>
+<div id="qwebr-insertion-location-4"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-4");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    4
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `charles_p_table <- prop.table(charles_c_table)
+
+charles_p_table`, 
+  4);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+
+
+</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -1126,7 +2325,16 @@ Table&nbsp;4.2: Proportions of enrolment by faculty and year of study in a unive
 <li id="fn10"><p>When discussing Bayes’ Theorem we introduced two frequently occurring sources of error when reasoning about probabilities, and showed how to remedy them. <em>Confusion of the inverse</em> occurs when you mix up <span class="math inline">\(P(A|B)\)</span> with <span class="math inline">\(P(B|A)\)</span>, and can lead to disastrous consequences. The <em>base rate fallacy</em> occurs when you fail to take into account the rareness of the marginal events and instead only consider the conditionals (such as seeing that delivery company <span class="math inline">\(A\)</span> was more likely to be late than <span class="math inline">\(B\)</span>, without considering that <span class="math inline">\(B\)</span> was more likely to be used than <span class="math inline">\(A\)</span>). These are both examples of the challenges at the heart of probability and statistics: namely, the subjects are fairly unintuitive once moving beyond the basics. As a result, we need to rely on building up our intuitions over time by making use of the formal rules that we are able to derive.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>Though, perhaps the world will freeze over if <em>(insert-your-least-favourite-team-here)</em> wins the <em>(insert-the-name-of-the-championship-for-the-league-you-care-about-here)</em>?<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p>Namely, we know that all of the others are then impossible.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13"><p>This provides further emphasis for the utility of urn models. If you imagine an urn that has balls with two or more traits (say like those in <a href="#exm-conditional-probability-urn" class="quarto-xref">Example&nbsp;<span>4.3</span></a>), then randomly selecting a single ball from this population has an analogous probability distribution.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Note, the values in this table are <em>roughly</em> inspired by a subset of the <a href="https://web.archive.org/web/20240103124753/https://www.unb.ca/finance/_assets/documents/rpb/factbooktables/2022enrollment/20221215-tablee3-enrolment-ftehc-fac-acad-lvl-2022fa-final.pdf">Fall 2022 University of New Brunswick Enrolment Numbers</a>.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>This provides further emphasis for the utility of urn models. If you imagine an urn that has balls with two or more traits (say like those in <a href="#exm-conditional-probability-urn" class="quarto-xref">Example&nbsp;<span>4.3</span></a>), then randomly selecting a single ball from this population has an analogous probability distribution.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>That is, the number of students who are enrolled in that faculty, in that year of study.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Faculty.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>Year of study.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>It is worth reemphasizing what this probability actually means. If we were to randomly sample, with equal probability, individuals from this population then the probability that an individual selected has both the faculty and year specified is given by the joint probability. That is to say, if we did this over and over and over again (with replacement) in the long-term, these probabilities represent proportion of time those combinations would be observed.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>Note here, <span class="math inline">\(A=4\)</span> has been filled in.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20"><p>We have filled in <span class="math inline">\(C = 0\)</span> here.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p>This uses <span class="math inline">\(A=4\)</span> and <span class="math inline">\(C=0\)</span>.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22"><p>Note, we could also apply Bayes’ Theorem to find the result here. We know that <span class="math inline">\(P(\text{Green}|\text{Pyramid}) = 4/13\)</span>, that <span class="math inline">\(P(\text{Green}) = 15/50\)</span> and that <span class="math inline">\(P(\text{Pyramid}) = 13/50\)</span>. Thus, Bayes’ Theorem gives <span class="math display">\[P(\text{Pyramid}|\text{Green}) = \frac{(4/13)(13/50)}{15/50} = \frac{4}{15},\]</span> exactly as in the direct derivation.<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
