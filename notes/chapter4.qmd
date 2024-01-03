@@ -387,15 +387,75 @@ Assuming, as it seems reasonable given the information in the question, that onl
 :::
 
 ## Contingency Tables
-Through to this point we have discussed probabilities in the abstract, either through an enumeration of equally likely outcomes, or else by directly specifying the likelihood of various events. While these are useful in many regards, we are often looking for more concise manners of summarizing information of interest. One tool for accomplishing this is a **contingency table**. A contingency table summarizes teh frequency of occurrence of a variable (or multiple variables) across a population of interest.
+Through to this point we have discussed probabilities in the abstract, either through an enumeration of equally likely outcomes, or else by directly specifying the likelihood of various events. While these are useful in many regards, we are often looking for more concise manners of summarizing information of interest. One tool for accomplishing this is a contingency table. 
 
-For instance, you could form a contingency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you convert the frequencies to proportions, and these proportions can be viewed as probabilities.
+:::{#def-contingency-table}
+## Contingency Table
+A contingency table is a tabular summary of information which summarizes the joint probabilities of two or more variables. Typically a contingency table will take one factor for the columns and a secondary factor for the rows, where each cell then represents the frequency with which observations occur in the two corresponding categories simultaneously.
+:::
 
-TODO: write-up frequency and prop table.
+To begin, you could imagine constructing a frequency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you convert the frequencies to proportions, and these proportions can be viewed as probabilities. The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool.^[This provides further emphasis for the utility of urn models. If you imagine an urn that has balls with two or more traits (say like those in @exm-conditional-probability-urn), then randomly selecting a single ball from this population has an analogous probability distribution.]
 
-The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool. Often, when a single trait is displayed we will not refer to them as contingency tables but rather as frequency tables or frequency distributions. A contingency table will typically plot two or more traits on the same table, with each cell representing the frequency of both traits occurring simultaneously in the population. For instance, we may further include the student's years to see the breakdown of both faculty and year of study, in one table.
+```{r}
+#| echo: false
+#| label: tbl-uni-frequency
+#| tbl-cap: "Frequency and corresponding proportions of enrolment by faculty in a university."
+#| tbl-colwidths: [20,40,40]
 
-TODO: Include updated table
+library(knitr)
+library(kableExtra)
+
+faculties <- c("Arts", "Computer Science", "Education", "Engineering", "Law", "Nursing", "Science", "Total")
+counts <- c(1266, 749, 786, 1315, 266, 543, 876)
+total <- sum(counts)
+counts <- c(counts, total)
+props <- counts / total
+kable(data.frame(Faculty = faculties, Enrolment = counts, Proportion = props)) %>%
+    column_spec(1, bold = TRUE) %>% 
+    row_spec(7, hline_after = TRUE, extra_css = "border-bottom: 1px solid") %>% 
+    row_spec(8, bold = TRUE) 
+
+```
+
+When a single trait is displayed we refer to these tabular summaries as frequency tables or frequency distributions. A contingency table instead plots two or more traits on the same table, with each cell representing the frequency of both traits occurring simultaneously in the population. Extending the university example, we may further include the student's current year of study to see the breakdown of both faculty and year of study, in one table.
+
+```{r}
+#| echo: false
+#| label: tbl-uni-contingency
+#| tbl-cap: "Proportions of enrolment by faculty and year of study in a university."
+#| tbl-colwidths: [20,40,40]
+
+library(knitr)
+library(kableExtra)
+
+set.seed(315)
+
+faculties <- c("Arts", "Comp. Sci.", "Education", "Engineering", "Law", "Nursing", "Science")
+counts <- c(1266, 749, 786, 1315, 266, 543, 876)
+
+count_break_down <- matrix(nrow = length(counts), ncol = 5)
+
+for(ii in 1:length(counts)) {
+    break_down <- runif(5, 0.1, 0.3)
+    break_down <- break_down/sum(break_down)
+    my_counts <- round(break_down * counts[ii], 0)
+    my_counts[5] <- my_counts[5] + (counts[ii] - sum(my_counts))
+    count_break_down[ii, ] <- my_counts
+}
+
+rownames(count_break_down) <- faculties
+colnames(count_break_down) <- c("Year 1", "Year 2", "Year 3", "Year 4", "Year 5+")
+
+tab1 <- prop.table(count_break_down)
+tab1 <- cbind(tab1, rowSums(tab1))
+tab1 <- rbind(tab1, colSums(tab1))
+
+kable(tab1, align=rep('c', 7))  %>%
+    column_spec(1, bold = TRUE) %>%
+    column_spec(7, bold = TRUE, background = "white", border_left = "1px solid") %>%
+    row_spec(8, bold = TRUE) %>% 
+    row_spec(7, hline_after = TRUE, extra_css = "border-bottom: 1px solid")
+```
 
 By including two (or more) factors on the table we are able to capture not only the marginal probabilities for the population, but also the joint probabilities for the population, and in turn, the conditional probabilities for the population. Being able to concisely summarize all of these concepts regarding traits in a population of interest renders contingency tables immensely useful in the study of uncertainty broadly.
 
