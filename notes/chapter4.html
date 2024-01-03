@@ -81,6 +81,8 @@ ul.task-list li input[type="checkbox"] {
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
+<script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -123,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probailities with More than One Event</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilities with More than One Event</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -187,7 +189,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter4.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probailities with More than One Event</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilities with More than One Event</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -240,7 +242,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probailities with More than One Event</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilities with More than One Event</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilities with More than One Event</span></h1>
 </div>
@@ -918,11 +920,180 @@ Solution
 </section>
 <section id="contingency-tables" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="contingency-tables"><span class="header-section-number">4.5</span> Contingency Tables</h2>
-<p>Through to this point we have discussed probabilities in the abstract, either through an enumeration of equally likely outcomes, or else by directly specifying the likelihood of various events. While these are useful in many regards, we are often looking for more concise manners of summarizing information of interest. One tool for accomplishing this is a <strong>contingency table</strong>. A contingency table summarizes teh frequency of occurrence of a variable (or multiple variables) across a population of interest.</p>
-<p>For instance, you could form a contingency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you convert the frequencies to proportions, and these proportions can be viewed as probabilities.</p>
-<p>TODO: write-up frequency and prop table.</p>
-<p>The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool. Often, when a single trait is displayed we will not refer to them as contingency tables but rather as frequency tables or frequency distributions. A contingency table will typically plot two or more traits on the same table, with each cell representing the frequency of both traits occurring simultaneously in the population. For instance, we may further include the student’s years to see the breakdown of both faculty and year of study, in one table.</p>
-<p>TODO: Include updated table</p>
+<p>Through to this point we have discussed probabilities in the abstract, either through an enumeration of equally likely outcomes, or else by directly specifying the likelihood of various events. While these are useful in many regards, we are often looking for more concise manners of summarizing information of interest. One tool for accomplishing this is a contingency table.</p>
+<div id="def-contingency-table" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.8 (Contingency Table)</strong></span> A contingency table is a tabular summary of information which summarizes the joint probabilities of two or more variables. Typically a contingency table will take one factor for the columns and a secondary factor for the rows, where each cell then represents the frequency with which observations occur in the two corresponding categories simultaneously.</p>
+</div>
+<p>To begin, you could imagine constructing a frequency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you convert the frequencies to proportions, and these proportions can be viewed as probabilities. The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
+<div class="cell" data-tbl-colwidths="[20,40,40]">
+<div id="tbl-uni-frequency" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-uni-frequency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: Frequency and corresponding proportions of enrolment by faculty in a university.
+</figcaption>
+<div aria-describedby="tbl-uni-frequency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Faculty</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Enrolment</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Arts</td>
+<td style="text-align: right;">1266</td>
+<td style="text-align: right;">0.2182382</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Computer Science</td>
+<td style="text-align: right;">749</td>
+<td style="text-align: right;">0.1291157</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Education</td>
+<td style="text-align: right;">786</td>
+<td style="text-align: right;">0.1354939</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Engineering</td>
+<td style="text-align: right;">1315</td>
+<td style="text-align: right;">0.2266851</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Law</td>
+<td style="text-align: right;">266</td>
+<td style="text-align: right;">0.0458542</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Nursing</td>
+<td style="text-align: right;">543</td>
+<td style="text-align: right;">0.0936046</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; border-bottom: 1px solid;">Science</td>
+<td style="text-align: right; border-bottom: 1px solid;">876</td>
+<td style="text-align: right; border-bottom: 1px solid;">0.1510084</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; font-weight: bold;">Total</td>
+<td style="text-align: right; font-weight: bold;">5801</td>
+<td style="text-align: right; font-weight: bold;">1.0000000</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>When a single trait is displayed we refer to these tabular summaries as frequency tables or frequency distributions. A contingency table instead plots two or more traits on the same table, with each cell representing the frequency of both traits occurring simultaneously in the population. Extending the university example, we may further include the student’s current year of study to see the breakdown of both faculty and year of study, in one table.</p>
+<div class="cell" data-tbl-colwidths="[20,40,40]">
+<div id="tbl-uni-contingency" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-uni-contingency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.2: Proportions of enrolment by faculty and year of study in a university.
+</figcaption>
+<div aria-describedby="tbl-uni-contingency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Year 1</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Year 2</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Year 3</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Year 4</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Year 5+</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Arts</td>
+<td style="text-align: center;">0.0382693</td>
+<td style="text-align: center;">0.0475780</td>
+<td style="text-align: center;">0.0470609</td>
+<td style="text-align: center;">0.0387864</td>
+<td style="text-align: center;">0.0465437</td>
+<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.2182382</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Comp. Sci.</td>
+<td style="text-align: center;">0.0282710</td>
+<td style="text-align: center;">0.0149974</td>
+<td style="text-align: center;">0.0282710</td>
+<td style="text-align: center;">0.0155146</td>
+<td style="text-align: center;">0.0420617</td>
+<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.1291157</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Education</td>
+<td style="text-align: center;">0.0172384</td>
+<td style="text-align: center;">0.0234442</td>
+<td style="text-align: center;">0.0317187</td>
+<td style="text-align: center;">0.0220652</td>
+<td style="text-align: center;">0.0410274</td>
+<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.1354939</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Engineering</td>
+<td style="text-align: center;">0.0325806</td>
+<td style="text-align: center;">0.0499914</td>
+<td style="text-align: center;">0.0610240</td>
+<td style="text-align: center;">0.0513705</td>
+<td style="text-align: center;">0.0317187</td>
+<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.2266851</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Law</td>
+<td style="text-align: center;">0.0093087</td>
+<td style="text-align: center;">0.0086192</td>
+<td style="text-align: center;">0.0099983</td>
+<td style="text-align: center;">0.0063782</td>
+<td style="text-align: center;">0.0115497</td>
+<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.0458542</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Nursing</td>
+<td style="text-align: center;">0.0094811</td>
+<td style="text-align: center;">0.0155146</td>
+<td style="text-align: center;">0.0265471</td>
+<td style="text-align: center;">0.0193070</td>
+<td style="text-align: center;">0.0227547</td>
+<td style="text-align: center; font-weight: bold; border-left: 1px solid;">0.0936046</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; border-bottom: 1px solid;">Science</td>
+<td style="text-align: center; border-bottom: 1px solid;">0.0417169</td>
+<td style="text-align: center; border-bottom: 1px solid;">0.0196518</td>
+<td style="text-align: center; border-bottom: 1px solid;">0.0355111</td>
+<td style="text-align: center; border-bottom: 1px solid;">0.0315463</td>
+<td style="text-align: center; border-bottom: 1px solid;">0.0225823</td>
+<td style="text-align: center; font-weight: bold; border-left: 1px solidborder-bottom;">0.1510084</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; font-weight: bold;"></td>
+<td style="text-align: center; font-weight: bold;">0.1768661</td>
+<td style="text-align: center; font-weight: bold;">0.1797966</td>
+<td style="text-align: center; font-weight: bold;">0.2401310</td>
+<td style="text-align: center; font-weight: bold;">0.1849681</td>
+<td style="text-align: center; font-weight: bold;">0.2182382</td>
+<td style="text-align: center; font-weight: bold; border-left: 1px solidfont-weight;">1.0000000</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</figure>
+</div>
+</div>
 <p>By including two (or more) factors on the table we are able to capture not only the marginal probabilities for the population, but also the joint probabilities for the population, and in turn, the conditional probabilities for the population. Being able to concisely summarize all of these concepts regarding traits in a population of interest renders contingency tables immensely useful in the study of uncertainty broadly.</p>
 <p>TODO: Include example(s) of contingency tables.</p>
 <p>Suppose we consider a two-way contingency table. Each cell consists of frequency with which a combination of two traits occurs in the population. If we take events corresponding to each of the levels of the two variables of interest, then these central cells represent the frequency of joint events. That is, each interior cell gives the total number of observations with a set level for variable one AND a set level for variable two. Each row is summed, with the total number following into the corresponding row recorded in the right hand margin. each column is summed, with the total number corresponding to the given column recorded in the bottom margin. Then the margin totals are summed and the total is recorded in the lower right margin space.</p>
@@ -955,6 +1126,7 @@ Solution
 <li id="fn10"><p>When discussing Bayes’ Theorem we introduced two frequently occurring sources of error when reasoning about probabilities, and showed how to remedy them. <em>Confusion of the inverse</em> occurs when you mix up <span class="math inline">\(P(A|B)\)</span> with <span class="math inline">\(P(B|A)\)</span>, and can lead to disastrous consequences. The <em>base rate fallacy</em> occurs when you fail to take into account the rareness of the marginal events and instead only consider the conditionals (such as seeing that delivery company <span class="math inline">\(A\)</span> was more likely to be late than <span class="math inline">\(B\)</span>, without considering that <span class="math inline">\(B\)</span> was more likely to be used than <span class="math inline">\(A\)</span>). These are both examples of the challenges at the heart of probability and statistics: namely, the subjects are fairly unintuitive once moving beyond the basics. As a result, we need to rely on building up our intuitions over time by making use of the formal rules that we are able to derive.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>Though, perhaps the world will freeze over if <em>(insert-your-least-favourite-team-here)</em> wins the <em>(insert-the-name-of-the-championship-for-the-league-you-care-about-here)</em>?<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p>Namely, we know that all of the others are then impossible.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>This provides further emphasis for the utility of urn models. If you imagine an urn that has balls with two or more traits (say like those in <a href="#exm-conditional-probability-urn" class="quarto-xref">Example&nbsp;<span>4.3</span></a>), then randomly selecting a single ball from this population has an analogous probability distribution.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
