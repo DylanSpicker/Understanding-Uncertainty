@@ -394,7 +394,7 @@ Through to this point we have discussed probabilities in the abstract, either th
 A contingency table is a tabular summary of information which summarizes the joint probabilities of two or more variables. Typically a contingency table will take one factor for the columns and a secondary factor for the rows, where each cell then represents the frequency with which observations occur in the two corresponding categories simultaneously.
 :::
 
-To begin, you could imagine constructing a frequency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you convert the frequencies to proportions, and these proportions can be viewed as probabilities. The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool.^[This provides further emphasis for the utility of urn models. If you imagine an urn that has balls with two or more traits (say like those in @exm-conditional-probability-urn), then randomly selecting a single ball from this population has an analogous probability distribution.]
+To begin, you could imagine constructing a frequency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you convert the frequencies to proportions, and these proportions can be viewed as probabilities. (See @tbl-uni-frequency.^[Note, the values in this table are *roughly* inspired by a subset of the [Fall 2022 University of New Brunswick Enrolment Numbers](https://web.archive.org/web/20240103124753/https://www.unb.ca/finance/_assets/documents/rpb/factbooktables/2022enrollment/20221215-tablee3-enrolment-ftehc-fac-acad-lvl-2022fa-final.pdf).]) The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool.^[This provides further emphasis for the utility of urn models. If you imagine an urn that has balls with two or more traits (say like those in @exm-conditional-probability-urn), then randomly selecting a single ball from this population has an analogous probability distribution.]
 
 ```{r}
 #| echo: false
@@ -422,7 +422,7 @@ When a single trait is displayed we refer to these tabular summaries as frequenc
 ```{r}
 #| echo: false
 #| label: tbl-uni-contingency
-#| tbl-cap: "Proportions of enrolment by faculty and year of study in a university."
+#| tbl-cap: "Frequency of enrolment by faculty and year of study in a university."
 #| tbl-colwidths: [20,40,40]
 
 library(knitr)
@@ -446,41 +446,269 @@ for(ii in 1:length(counts)) {
 rownames(count_break_down) <- faculties
 colnames(count_break_down) <- c("Year 1", "Year 2", "Year 3", "Year 4", "Year 5+")
 
-tab1 <- prop.table(count_break_down)
+# tab1 <- prop.table(count_break_down)
+tab1 <- count_break_down
 tab1 <- cbind(tab1, rowSums(tab1))
 tab1 <- rbind(tab1, colSums(tab1))
 
 kable(tab1, align=rep('c', 7))  %>%
     column_spec(1, bold = TRUE) %>%
-    column_spec(7, bold = TRUE, background = "white", border_left = "1px solid") %>%
+    column_spec(7, bold = TRUE) %>%
     row_spec(8, bold = TRUE) %>% 
-    row_spec(7, hline_after = TRUE, extra_css = "border-bottom: 1px solid")
+    row_spec(7, hline_after = TRUE)
 ```
 
-By including two (or more) factors on the table we are able to capture not only the marginal probabilities for the population, but also the joint probabilities for the population, and in turn, the conditional probabilities for the population. Being able to concisely summarize all of these concepts regarding traits in a population of interest renders contingency tables immensely useful in the study of uncertainty broadly.
+By including two (or more) factors in the table we are able to capture not only the marginal probabilities for the population, but also the joint probabilities for the population, and in turn, the conditional probabilities for the population. Being able to concisely summarize all of these concepts regarding traits in a population of interest renders contingency tables immensely useful in the study of uncertainty broadly.
 
-TODO: Include example(s) of contingency tables.
+Consider the two-way contingency table, @tbl-uni-contingency. Each cell consists of frequency with which a combination of the two traits occurs in the population.^[That is, the number of students who are enrolled in that faculty, in that year of study.] If we take events corresponding to each of the levels of the two variables of interest, then these central cells represent the frequency of joint events. That is, each interior cell gives the total number of observations with a set level for variable one^[Faculty.] AND a set level for variable two^[Year of study.]. For instance, there are `r tab1[5, 2]` individuals who are in `r rownames(tab1)[5]` and studying in `r colnames(tab1)[2]`. 
 
-Suppose we consider a two-way contingency table. Each cell consists of frequency with which a combination of two traits occurs in the population. If we take events corresponding to each of the levels of the two variables of interest, then these central cells represent the frequency of joint events. That is, each interior cell gives the total number of observations with a set level for variable one AND a set level for variable two. Each row is summed, with the total number following into the corresponding row recorded in the right hand margin. each column is summed, with the total number corresponding to the given column recorded in the bottom margin. Then the margin totals are summed and the total is recorded in the lower right margin space. 
+Each row is then summed, with the total number following into the corresponding row recorded in the right hand margin. each column is summed, with the total number corresponding to the given column recorded in the bottom margin. For instance there are a total of `r tab1[3,6]` students in `r rownames(tab1)[3]` and a total of `r tab1[8,3]` in `r colnames(tab1)[3]`. Then the margin totals are summed and the total is recorded in the lower right margin space (in this case, `r tab1[8,6]`). Whether the rows or columns are summed, they should sum to the same total, which is the total of the population under consideration. This is the same as simply adding all of the observed interior frequencies. To turn a frequency into a probability, you need only divide the correct frequency by the correct total.
 
-TODO: Include graphic with summation of margins
+```{r}
+#| echo: false
+#| label: tbl-uni-prop
+#| tbl-cap: "Proportions of enrolment by faculty and year of study in a university."
+#| tbl-colwidths: [20,40,40]
 
-Whether the rows or columns are summed, they should sum to the same total, which is the total of the population under consideration. This is the same as simply adding all of the observed interior frequencies. To turn a frequency into a probability, you need only divide the correct frequency by the correct total.
+library(knitr)
+library(kableExtra)
 
-For the standard joint probabilities, you take the interior cell count and divide by the population total. Here we are saying that some fixed number, $m$, of the $N$ total individuals have both traits under consideration. If instead you wish to find a marginal probability, you have to consider the value in the corresponding margin: this is the total number of individuals with the given trait, ignoring the level of the other variable. These marginal values are also divided by the total population size. For conditional probabilities, we restrict our focus to either only one row, or one column. Then, we can take teh joint cell and divide by the value in the margin, which gives the conditional probability of interest.
+# tab1 <- prop.table(count_break_down)
+tab2 <- prop.table(count_break_down)
+tab2 <- cbind(tab2, rowSums(tab2))
+tab2 <- rbind(tab2, colSums(tab2))
 
-TODO: show probability calculations for the various scenarios that we saw.
+kable(tab2, align=rep('c', 7))  %>%
+    column_spec(1, bold = TRUE) %>%
+    column_spec(7, bold = TRUE) %>%
+    row_spec(8, bold = TRUE) %>% 
+    row_spec(7, hline_after = TRUE)
+```
+
+For the standard joint probabilities, you take the interior cell count and divide by the population total. Here we are saying that some fixed number, $m$, of the $N$ total individuals have both traits under consideration. For instance, the joint probability that a student is in `r rownames(tab2)[5]` and studying in `r colnames(tab2)[2]` is `r tab2[5, 2]`.^[It is worth reemphasizing what this probability actually means. If we were to randomly sample, with equal probability, individuals from this population then the probability that an individual selected has both the faculty and year specified is given by the joint probability. That is to say, if we did this over and over and over again (with replacement) in the long-term, these probabilities represent proportion of time those combinations would be observed.] If instead you wish to find a marginal probability, you have to consider the value in the corresponding margin: this is the total number of individuals with the given trait, ignoring the level of the other variable. These marginal values are also divided by the total population size. For instance, there is a `r tab2[3,6]` probability of observing a student in `r rownames(tab2)[3]` and a probability `r tab2[8,3]` of observing a student in `r colnames(tab2)[3]`.
+
+Outside of joint and marginal probabilities, we can also find conditional probabilities. To do so, we restrict our focus to either only one row, or one column. Then, we can take the joint cell and divide by the value in the margin, which gives the conditional probability of interest. Note, this works with *either* the contingency table directly **or** with the propensity table. The reasoning is that the propensity table divided by the same totals in the numerator and the denominator. Suppose we take some cell, $A\cap B$, which has $N_{A, B}$ in the contingency table. Then, $$P(A\cap B) = \frac{N_{A, B}}{N} \quad\quad\text{and}\quad\quad P(B) = \frac{N_B}{N}.$$ If we consider then forming $P(A|B)$ we get $$P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{N_{A \cap B}/\cancel{N}}{N_B/\cancel{N}} = \frac{N_{A, B}}{N_B}.$$ Thus, given that we know a student is in `r rownames(tab2)[3]`, then the probability that they are in `r colnames(tab2)[3]` is approximately `r round(tab2[3,3]/tab2[3,6],5)`.
 
 Note that these procedures are exactly in line with what we had seen before. The conditional probability is defined as the joint probability divided by the marginal probability. The process of computing the marginal can be seen as an application of the law of total probability. As a result, contingency tables can be a useful, tangible tool for investigating the techniques we have been discussing: they are not a substitute for direct manipulation of the mathematical objects, but they can present insight into the underlying processes where it may be hard to derive that insight otherwise.
 
-TODO: show example of conditional probability derivation.
+:::{.callout-warning collapse="true" icon="false"}
+## The Law of Total Probability: Contingency Table's Version
+Recall that the law of total probability states that, if $B_1,\dots,B_n$ forms a partition of the sample space, then $$P(A) = \sum_{i=1}^n P(A|B_i)P(B_i) = \sum_{i=1}^n P(A, B_i)$$. In a contingency table it is easier to see how either of the two factors at play (either those in the rows or the columns) forms a partition of the space. Every observation has to fall in exactly one row and exactly one column. Thus, if we want to know the marginal frequency of a single trait (say represented by some row of the table), then one way to find this total is to sum up every observation in each of the corresponding columns. This is *precisely* the same process as the law of total probability. Note that, denoting each column as $B_i$, and supposing there are $k$ total columns, then the total number in a row is taken to be $$N_A = \sum_{i=1}^k N_{A, B_i},$$ simply as the summation of the corresponding row. By definition, $P(A) = \frac{N_A}{N}$, and so dividing both sides by $N$ gives $$P(A) = \frac{N_A}{N} = \frac{1}{N}\sum_{i=1}^k N_{A, B_i} = \sum_{i=1}^k \frac{N_{A, B_i}}{N} = \sum_{i=1}^n P(A\cap B_i).$$
+:::
 
-TODO: show example of law of total probability derivation.
+It is important to note that there is redundant information within a contingency table. For instance, the margins need not be listed explicitly, as they can be directly calculated from the interior points. Same goes for interior points, given the margins of the table (assuming *some* interior points are also presented). This can be useful for a compact representation of the information, and manipulating these tables -- being able to find the required information in many places -- should become familiar to you as you continue to work with them more and more.
 
-It is important to note that there is redundant information within a contingency table. For instance, the margins need not be listed explicit, as they can be directly calculated from the interior points. Same goes for interior points, given the margins of the table (assuming other interior points are also presented). TThis can be useful for a compact representation of the information, and manipulating these tables, finding the required information in many places, should become second nature as you continue to work with them more and more.
+:::{#exm-charles-contingency-table}
+## The Evolving Contents of Charle's Urns
+After learning of contingency tables, Sadie points out to Charles that with the whole urn debacle they went through, the two of them actually ended up using a contingency table to summarize the information. How neat! In the interim, there has been some development in the contents of Charles's urns, and armed with the new knowledge of contingency tables, the following summary is produced. 
+```{r}
+#| echo: false
 
-TODO: include fill-in-the-blank contingency table
+library(knitr)
+library(kableExtra)
+
+set.seed(314)
+
+shapes <- c("Sphere", "Cube", "Pyramid", "Cone")
+colours <- c("Red", "Blue", "Green", "Yellow", "Black")
+
+all_shapes <- sample(shapes, 50, TRUE)
+all_colours <- sample(colours, 50, TRUE)
+
+charles_data <- data.frame("Colours" = all_colours, "Shapes" = all_shapes)
+
+## Form a Contingency Table
+charles_table <- table(charles_data)
+charles_table <- cbind(charles_table, rowSums(charles_table))
+charles_table <- rbind(charles_table, colSums(charles_table))
+
+# Render the Table to be a Character Vector
+charles_table[1, 2] <- "A"
+charles_table[3, 3] <- "B"
+charles_table[4, 2] <- "C"
+charles_table[4, 5] <- "D"
+charles_table[6, 2] <- "E"
+
+kable(charles_table, align = rep("c",5))  %>%
+    column_spec(1, bold = TRUE) %>%
+    column_spec(6, bold = TRUE) %>%
+    row_spec(6, bold = TRUE)
+```
+Sadly, Charles does not have the best writing and Sadie cannot make out what values were written in for the cells marked $A$, $B$, $C$, $D$, and $E$. 
+
+a. What are the values for the missing values?
+b. What is the probability that a black cube is drawn?
+c. What is the probability that a red object is drawn?
+d. What is the probability that a cube is drawn?
+e. Given that the drawn object was a pyramid, what is the probability that it is green?
+f. Given that the object is green, what is the probability that it is a pyramid. 
+
+::::{.callout .solution collapse='true'}
+## Solution
+a. We start by filling in the missing cells, in order.
+    i. For $A$ we can note that $2 + A + 1 + 3 = 10$, which gives that $A = 4$. We could have also tried a column sum, however, this would involve $3$ unknowns and so would not have given a numeric result.
+
+    ii. For $B$ either a row sum or column sum would produce the correct answer. We either take $3 + 3 + B + 5 = 15$ giving $B = 4$ or $1 + 1 + B + 3 + 4 = 13$ giving $B=4$. 
+
+    iii. $C$ is more challenging as we either have that $2 + C + 3 + 2 = D$ or $4 + 2 + 3 + C + 3 = E$^[Note here, $A=4$ has been filled in.] As a result, for this technique we will need to find either $D$ or $E$ first. There is an alternative technique to use, which would be to note that we have *all* the internal points specified at this point, and we know that these sum to $50$. As a result, we could note that $C = 50 - 10 - 5 - 15 - 13 - 2 - 3 - 2 = 0$ or that $C =  50 - 13 - 13 - 12 - 4 - 2 - 3 - 3 = 0$. 
+
+    iv. We can find $D$ either by subtracting from the total, $D = 50 - 10 - 5 - 15 - 13 = 7$, or by adding along the row, $2 + 0 + 3 + 2 = 7$.^[We have filled in $C = 0$ here.] Note that with $D = 7$, had we not found $C = 0$ above, we could now take $2 + C + 3 + 2 = 7$ and find $C = 0$.
+
+    v. Like $D$, we have two options for working this out. Either $E = 50 - 13 - 13 - 12 = 12$ or $E = 4 + 2 + 3 + 0 + 3 = 12$.^[This uses $A=4$ and $C=0$.] Like with $D$, had we solved for $E$ first, then we could find $C$ via $4 + 2 + 3 + C + 3 = 12$.
+
+b. Here we want $P(\text{Black}, \text{Cube})$. This is given by the frequency of black cubes divided by $50$. Thus, $$P(\text{Black}, \text{Cube}) = \frac{A}{50} = \frac{4}{50} = 0.08.$$
+
+c. Here we want $P(\text{Red})$. This is given by the marginal frequency of red objects divided by $50$. Thus, $$P(\text{Red}) = \frac{D}{50} = \frac{7}{50} = 0.14.$$
+
+d.  Here we want $P(\text{Cube})$. This is given by the marginal frequency of cubes divided by $50$. Thus, $$P(\text{Cube}) = \frac{E}{50} = \frac{12}{50} = 0.24.$$
+
+e. Here we want $P(\text{Green}|\text{Pyramid})$. This is given by the frequency of green pyramids divided by the marginal frequency of pyramids. Thus $$P(\text{Green}|\text{Pyramid}) = \frac{B}{13} = \frac{4}{13} \approx 0.308.$$ 
+
+f. Here we want $P(\text{Pyramid}|\text{Green})$. This is given by the frequency of green pyramids divided by the marginal frequency of green objects.^[Note, we could also apply Bayes' Theorem to find the result here. We know that $P(\text{Green}|\text{Pyramid}) = 4/13$, that $P(\text{Green}) = 15/50$ and that $P(\text{Pyramid}) = 13/50$. Thus, Bayes' Theorem gives $$P(\text{Pyramid}|\text{Green}) = \frac{(4/13)(13/50)}{15/50} = \frac{4}{15},$$ exactly as in the direct derivation.] Thus $$P(\text{Pyramid}|\text{Green}) = \frac{B}{15} = \frac{4}{15} \approx 0.267.$$
+
+::::
+:::
 
 It is also important to recognize that independence and mutually exclusive events can be codified via the table as well. Zeros on the interior points indicate events which are mutually exclusive: if we know that one of them occurred, we also know that the other one did not. For independence, it requires a degree of solving proportions. We can either check that the joint probability ($N_{A,B}/N$) is equal to the product of the two marginal probabilities, ($N_AN_B/N^2$), or else (assuming that the events are all non-zero), that the conditional probability ($N_{A,B}/N_A$) equals the marginal probability $N_B/N$. Either way this is represented by $N\times N_{A,B} = N_AN_B$, and when this holds, we can conclude that the events are independent.
 
-TODO: Example on mutually exclusive / independent events on a contingency table.
+:::{#exm-contingency-table-mututally-exclusive}
+## Independent or Mutually Exclusive Urn Shapes
+After helping Charles *neatly* fill in the contingency table, Sadie begins to wonder about whether there are any shape-colour combinations which are independent, or if any are mutually exclusive. 
+
+```{r}
+#| echo: false
+charles_table <- table(charles_data)
+charles_table <- cbind(charles_table, rowSums(charles_table))
+charles_table <- rbind(charles_table, colSums(charles_table))
+
+kable(charles_table, align = rep("c",5))  %>%
+    column_spec(1, bold = TRUE) %>%
+    column_spec(6, bold = TRUE) %>%
+    row_spec(6, bold = TRUE)
+```
+
+a. Are there any events represented in the contingency table which are mutually exclusive?
+b. Are there any events represented in the contingency table which are independent?
+
+::::{.callout .solution collapse='true'}
+## Solution
+a. Mutually exclusive events are codified via a $0$ frequency. We can see then that $\text{Cube}$ and $\text{Red}$ are mutually exclusive. That is, if we know that an object is red, we also know that it is not a cube. And if we know that an object is a cube, then we know that it is not red.
+
+b. Independence is more cumbersome to check. We require the product of marginal counts to be equal to the total times by the joint counts. As a result, the easiest way to check is to consider the product of each marginal value in the columns by each marginal value in the row, divided by $50$. If this value corresponds to the value in that row/column pairing, then we know that those features are independent. Note that immediately we can rule out any products which are not divisible by $50$, since we know that $N_{A,B}$ is an integer for all $A,B$ and $N_{A,B} = N_AN_B/50$ if there is independence. To this end, we only need to check the product of each of the row totals with each of $12$ and $13$ (as those are the only two unique column totals). This gives, in order $120$, $130$, $60$, $65$, $180$, $195$, $84$, $91$, $156$, and $169$. None of these values are divisible by $50$ and as a result we know that there is **no independence** codified in this table.
+::::
+:::
+
+#### Contingency Tables and Data Frames in R
+In R we can use the `table` and `prop.table` to calculate the (interior) of a contingency table. This will return a `table` type object in R, which can be thought of as a matrix of sorts. On it, we can use the functions `rowSums` and `colSums` to get the summation of the rows and columns, respectively. Typically the object we pass to `table` will be a **data frame**. A data frame is another R object type that we have not yet seen. The idea with a data frame is that we have multiple columns with different variables (of possibly different types) represented. Each row corresponds to a single observation, and then each column is read as a feature of those observations. Data frames are essentially large spreadsheets (or data tables) which indicate the various observations that we have. In practice, data frames are the most commonly used object in an R analysis, and we will see them plenty going forward.
+
+::: {.content-visible when-format='pdf'}
+```{r}
+# As always, when randomization is to be used, we call
+# the set.seed function to ensure that the analysis can be
+# replicated.
+set.seed(314)
+
+# Begin by Defining the possible shapes and colours for
+# the objects in Charles's urns
+shapes <- c("Sphere", "Cube", "Pyramid", "Cone")
+colours <- c("Red", "Blue", "Green", "Yellow", "Black")
+
+# Use sample to draw 50 different shapes, and 50 different
+# colours. We are drawing *with* replacement.
+all_shapes <- sample(x = shapes, size = 50, replace = TRUE)
+all_colours <- sample(x = colours, size = 50, replace = TRUE)
+
+# Now we form the data frame. This will consist of two columns,
+# one called "Colours" and one called "Shapes". The values to 
+# place here will correspond to the random colours and shapes we
+# sampled above.
+charles_data <- data.frame("Colours" = all_colours, "Shapes" = all_shapes)
+
+# To get a sense of the data frame we can use the head function
+# which will return the first few rows of our data frame.
+head(charles_data)
+```
+:::
+::: {.content-visible when-format='html'}
+```{webr-r}
+# As always, when randomization is to be used, we call
+# the set.seed function to ensure that the analysis can be
+# replicated.
+set.seed(314)
+
+# Begin by Defining the possible shapes and colours for
+# the objects in Charles's urns
+shapes <- c("Sphere", "Cube", "Pyramid", "Cone")
+colours <- c("Red", "Blue", "Green", "Yellow", "Black")
+
+# Use sample to draw 50 different shapes, and 50 different
+# colours. We are drawing *with* replacement.
+all_shapes <- sample(x = shapes, size = 50, replace = TRUE)
+all_colours <- sample(x = colours, size = 50, replace = TRUE)
+
+# Now we form the data frame. This will consist of two columns,
+# one called "Colours" and one called "Shapes". The values to 
+# place here will correspond to the random colours and shapes we
+# sampled above.
+charles_data <- data.frame("Colours" = all_colours, "Shapes" = all_shapes)
+
+# To get a sense of the data frame we can use the head function
+# which will return the first few rows of our data frame.
+head(charles_data)
+```
+:::
+
+With a data frame specified, we can then use the `table` function called on it to form a contingency table. 
+
+::: {.content-visible when-format='pdf'}
+```{r}
+charles_c_table <- table(charles_data)
+
+charles_c_table
+```
+:::
+::: {.content-visible when-format='html'}
+```{webr-r}
+charles_c_table <- table(charles_data)
+
+charles_c_table
+```
+:::
+
+Then, to get the totals, we can either use `rowSums` or `colSums` to return a vector with the corresponding row or column sums.
+
+::: {.content-visible when-format='pdf'}
+```{r}
+marginal_shapes <- colSums(charles_c_table)
+marginal_colours <- rowSums(charles_c_table)
+
+marginal_shapes
+marginal_colours
+```
+:::
+::: {.content-visible when-format='html'}
+```{webr-r}
+marginal_shapes <- colSums(charles_c_table)
+marginal_colours <- rowSums(charles_c_table)
+
+marginal_shapes
+marginal_colours
+```
+:::
+
+Finally, we can take our formed contingency table, and use `prop.table` on it, in order to return a table with the proportions (rather than the frequencies).
+
+::: {.content-visible when-format='pdf'}
+```{r}
+charles_p_table <- prop.table(charles_c_table)
+
+charles_p_table
+```
+:::
+::: {.content-visible when-format='html'}
+```{webr-r}
+charles_p_table <- prop.table(charles_c_table)
+
+charles_p_table
+```
+:::

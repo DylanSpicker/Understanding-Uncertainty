@@ -33,6 +33,62 @@ It is critically important to recognize that the equal probability model assigns
 
 A core goal is then bridging the gap between the probability of an outcome^[A quantity which in the equally likely outcome framework, we know exactly.] and the probability of an event. In order to do so, we will next consider the rules of probability, introducing properties that are required for valid probability assignments, and the techniques for manipulating probabilities to calculate the probabilities of quantities of interest.
 
+### Using R for the Equally Likely Probability Model
+In the previous chapter we saw how we can codify sample spaces and events using vectors in R. In the introduction we actually saw how can sample from a sample space using the equally likely outcome framework. Specifically, an application of the `sample` function will draw a set number of values from a sample space, giving each value an equal probability to be drawn.^[The `sample` function can also be used without equally likely events by specifying a vector of probabilities, however, this is a less common use case.] 
+
+
+::: {.content-visible when-format='pdf'}
+```{r}
+# Define the Sample Space of Rolling a 20 Sided Die
+sample_space <- 1:20
+
+# Recall that whenever we wish to perform an experiment in R with
+# randomness, we should call set.seed
+set.seed(31415)
+
+# The sample function takes three main parameters:
+#   x: the sample space
+#   size: the number of items to draw
+#   replace: a boolean representing whether the draws should be
+#            with replacement or not.
+one_roll <- sample(x = sample_space, size = 1)
+ten_rolls_with_replacement <- sample(x = sample_space, 
+                                     size = 10, 
+                                     replace = TRUE)
+ten_rolls_without_replacement <- sample(x = sample_space, 
+                                        size = 10, 
+                                        replace = FALSE)
+
+one_roll
+ten_rolls_with_replacement
+ten_rolls_without_replacement
+```
+:::
+::: {.content-visible when-format='html'}
+```{webr-r}
+# Define the Sample Space of Rolling a 20 Sided Die
+sample_space <- 1:20
+
+# Recall that whenever we wish to perform an experiment in R with
+# randomness, we should call set.seed
+set.seed(31415)
+
+# The sample function takes three main parameters:
+#   x: the sample space
+#   size: the number of items to draw
+#   replace: a boolean representing whether the draws should be
+#            with replacement or not.
+one_roll <- sample(x = sample_space, size = 1)
+ten_rolls_with_replacement <- sample(x = sample_space, size = 10, replace = TRUE)
+ten_rolls_without_replacement <- sample(x = sample_space, size = 10, replace = FALSE)
+
+one_roll
+ten_rolls_with_replacement
+ten_rolls_without_replacement
+```
+:::
+
+
 ## The Axioms of Probability
 We have previously seen that not every probability assignment can be valid. For instance, assigning $0.5$ probability to each outcome on a die leads to a nonsensical scenario. With just a little imagination, we can conjure equally nonsensical scenarios in other ways. For instance, it would make very little sense to discuss the probability of an event being a negative value. What would it mean for an event to occur in a negative proportion of experimental runs? Alternatively, we can consider two events that are nested in one another: say event $A$ is that we draw the ace of spades, and event $B$ is that we draw any spade. Every single time that $A$ happens, we know that $B$ also happens. But there are ways that $B$ can occur where $A$ does not.^[For instance, the Queen of spades being drawn.] If I told you the probability of $A$ was $0.5$ and the probability of $B$ was $0.2$, this would violate our base instincts. How can it be more likely to draw the ace of spades than it would be to draw any spade at all?^[This is actually a scenario where our instincts may lead us awry in some situations. Consider the following from @kahneman: [Linda is 31 years old, single, outspoken, and very bright. She majored in philosophy. As a student, she was deeply concerned with issues of discrimination and social justice, and also participated in anti-nuclear demonstrations. Which is more probable? (a) Linda is a bank teller, or (b) Linda is a bank teller and is active in the feminist movement.]{.blockquote .d-block} A majority of respondents rate (b) as being more probable, even though (a) is contained in (b).]
 
