@@ -68,19 +68,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script type="application/json" class="js-hypothesis-config">
-{
-  "theme": "classic",
-  "enableExperimentalNewNoteButton": true,
-  "showHighlights": "whenSidebarOpen"
-}
-</script>
-<script async="" src="https://hypothes.is/embed.js"></script>
-<script>
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    document.body.classList.add('hypothesis-enabled');
-  });
-</script>
 <script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
@@ -822,19 +809,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../notes/chapter6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Named Discrete Distributtions</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../notes/chapter7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Continuous Random Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summarizing Statistical Experiments with Random Variables</span></span></a>
   </div>
 </li>
       </ul>
@@ -1048,7 +1023,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (
 <p><span class="theorem-title"><strong>Definition 4.3 (Conditional Probability)</strong></span> The conditional probability of an event <span class="math inline">\(A\)</span> given an event <span class="math inline">\(B\)</span>, is the probability that <span class="math inline">\(A\)</span> occurs assuming that we know that <span class="math inline">\(B\)</span> occurs. The conditional probability takes into account additional information codified through the occurrence of an additional event. We write this quantity as <span class="math inline">\(P(A|B)\)</span>, and will read this as “the probability of <span class="math inline">\(A\)</span> given <span class="math inline">\(B\)</span>.”</p>
 </div>
 <p>Unlike in the case of marginal probabilities, conditional probabilities allow us to <em>condition</em> on extra pieces of information. Instead of asking “what is the probability of this event”, we instead ask, “given that we know this piece of information, what is the probability of this event?” Joint probabilities ask “what is the probability that both of these events occur simultaneously” which is distinct in that we do not have any additional information about the state of the world when working with joint probabilities. The subtle distinction becomes quite powerful, both in terms of manipulating and working with probabilities, but also in terms of expressing the correct events of interest for ourselves.</p>
-<p>To make use of conditional probabilities, we will think of the process of <strong>conditioning</strong> on one or more events. We will talk of the probability of <span class="math inline">\(A\)</span> conditional on <span class="math inline">\(B\)</span>, where <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are two events of interest. Intuitively, this it the probability of <span class="math inline">\(A\)</span> happening, supposing that we know that <span class="math inline">\(B\)</span> has already happened.</p>
+<p>To make use of conditional probabilities, we will think of the process of <em>conditioning</em> on one or more events. We will talk of the probability of <span class="math inline">\(A\)</span> conditional on <span class="math inline">\(B\)</span>, where <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are two events of interest. Intuitively, this it the probability of <span class="math inline">\(A\)</span> happening, supposing that we know that <span class="math inline">\(B\)</span> has already happened.</p>
 <div id="exm-basic-conditional-probability" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4.1 (Six from the Sum)</strong></span> Charles and Sadie are playing a new game using two dice. In the game they each take turns rolling the two dice into a container that the other player cannot see. They add up the dice and then report this sum to the other player. The other player then has to guess whether or not there is a six showing.</p>
 <ol type="a">
@@ -1332,45 +1307,23 @@ Solution
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="the-multiplication-rule"><span class="header-section-number">4.3.1</span> The Multiplication Rule</h3>
 <p>While sometimes we will want to work out the conditional probability using our knowledge of the joint and marginal probabilities, there are other times where it is easier to determine the conditional probability directly. In these settings we may wish to understand the marginal or joint probabilities. That is, we may know <span class="math inline">\(P(A|B)\)</span>, but we want to make statements regarding <span class="math inline">\(P(A)\)</span> or <span class="math inline">\(P(A,B)\)</span>.</p>
 <p>To do so, we can simply rearrange the defining relationship of conditional probability, to solve for the quantities of interest. Because of the importance of this procedure, we actually give this mostly straightforward rearrangement a special name.</p>
-<div id="def-multiplication-rule" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4.4 (Multiplication Rule)</strong></span> The multiplication rule states that, for two events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> where <span class="math inline">\(P(B) &gt; 0\)</span>, <span class="math display">\[P(A\cap B) = P(A|B)P(B).\]</span></p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Multiplication Rule
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The multiplication rule states that, for two events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> where <span class="math inline">\(P(B) &gt; 0\)</span>, <span class="math display">\[P(A\cap B) = P(A|B)P(B).\]</span></p>
+</div>
 </div>
 <p>Note that, by multiplying both sides of the definition of <span class="math inline">\(P(A|B)\)</span> by <span class="math inline">\(P(B)\)</span> gives the result. In words it states that we can solve for the joint probability of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> by multiplying the conditional probability of <span class="math inline">\(A\)</span> given <span class="math inline">\(B\)</span>, by the marginal probability of <span class="math inline">\(B\)</span>. This is symmetric in <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> so that <span class="math display">\[P(A\cap B) = P(B|A)P(A).\]</span> This is useful as sometimes it is easier to determine <span class="math inline">\(B\)</span> given <span class="math inline">\(A\)</span>.</p>
 <div id="exm-package-delivery-times" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4.4 (Package Delivery Times)</strong></span> To thank Sadie for the help in seeing the silver lining with the urn mishap, Charles decides to order a small gift online, sending it direct to Sadie. Unfortunately, the website does not list which delivery company each package is sent out with. After some sleuthing, Charles determines that there are two different companies that it may have been sent with. Looking at online reviews it appears as though company <span class="math inline">\(A\)</span> is late <span class="math inline">\(75\%\)</span> of the time while company <span class="math inline">\(B\)</span> is late <span class="math inline">\(15\%\)</span> of the time.</p>
 <p>If the store that Charles ordered from sends out <span class="math inline">\(10\%\)</span> of packages with company <span class="math inline">\(A\)</span>, and the rest with company <span class="math inline">\(B\)</span>, which is more likely: that the package is late and was sent with <span class="math inline">\(A\)</span>, or that the package was late and sent with <span class="math inline">\(B\)</span>?</p>
-<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>We will take <span class="math inline">\(L\)</span> to correspond to the events where the package is late, <span class="math inline">\(A\)</span> to the events where the package was sent with <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> to be the events where the package was sent with <span class="math inline">\(B\)</span>. We wish to compare <span class="math inline">\(P(L, A)\)</span> and <span class="math inline">\(P(L, B)\)</span>. We know that <span class="math inline">\(P(A) = 0.1\)</span> and <span class="math inline">\(P(B) = 0.9\)</span>, and we know that <span class="math inline">\(P(L|A) = 0.75\)</span> and <span class="math inline">\(P(L|B) = 0.15\)</span>. As a result, we can use the multiplication rule to find the joint probabilities. First, <span class="math inline">\(P(L, A) = P(L|A)P(A) = (0.75)(0.1) = 0.075\)</span>. Additionally, <span class="math inline">\(P(L, B) = P(L|B)P(B) = (0.15)(0.9) = 0.135\)</span>. As a result it is more likely to have the package late and sent with <span class="math inline">\(B\)</span> then the package late and sent with <span class="math inline">\(A\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="partitions-and-the-law-of-total-probability" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="partitions-and-the-law-of-total-probability"><span class="header-section-number">4.3.2</span> Partitions and the Law of Total Probability</h3>
-<p>While the multiplication rule gives us the capacity to solve for joint probabilities, often we wish to make statements regarding marginal probabilities. Fortunately, we can extend this process outlined in the multiplication rule to solve directly for marginal probabilities as well. To do so, we first introduce the concept of a partition.</p>
-<div id="def-partition" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4.5 (Partition)</strong></span> A partition is a collection of sets which divide up the sample space such that all of the sets are disjoint from one another, and the sample space is given by the union of all of the sets. That is, <span class="math inline">\(A_1,\dots,A_n\)</span> is a partition of <span class="math inline">\(\mathcal{S}\)</span> if:</p>
-<ol type="1">
-<li><span class="math inline">\(A_i \cap A_j = \emptyset\)</span> for all <span class="math inline">\(i \neq j\)</span>, and</li>
-<li><span class="math display">\[\bigcup_{i=1}^n A_i = \mathcal{S}.\]</span></li>
-</ol>
-</div>
-<p>For instance, if the sample space were all the positive integers, we could partition this space into all the even numbers as one set and all the odd numbers as a second. We could also partition this into the set of numbers which are less than <span class="math inline">\(10\)</span>, the set of numbers that are greater than <span class="math inline">\(10\)</span>, and then <span class="math inline">\(10\)</span>. In both examples we have sets whose union forms the full sample space with no overlap. Note that we could not partition the set into multiples of <span class="math inline">\(2\)</span> and multiples of <span class="math inline">\(3\)</span>, since (i) not all values are contained between these two sets,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and (ii) there is overlap between these two sets.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<div id="exm-simple-partitions" class="theorem example">
-<p><span class="theorem-title"><strong>Example 4.5 (Partitions of the Coin Game)</strong></span> Charles and Sadie are thinking back with fondness to their original coin flipping game, where they would toss a coin three times in a row. If two or more heads showed up, Charles would pay. Otherwise, Sadie would.</p>
-<p>To help them reminisce, Write down three different partitions of the sample space, each with a different number of partitioning sets. Describe your partitions using words.</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1382,6 +1335,38 @@ Solution
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We will take <span class="math inline">\(L\)</span> to correspond to the events where the package is late, <span class="math inline">\(A\)</span> to the events where the package was sent with <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> to be the events where the package was sent with <span class="math inline">\(B\)</span>. We wish to compare <span class="math inline">\(P(L, A)\)</span> and <span class="math inline">\(P(L, B)\)</span>. We know that <span class="math inline">\(P(A) = 0.1\)</span> and <span class="math inline">\(P(B) = 0.9\)</span>, and we know that <span class="math inline">\(P(L|A) = 0.75\)</span> and <span class="math inline">\(P(L|B) = 0.15\)</span>. As a result, we can use the multiplication rule to find the joint probabilities. First, <span class="math inline">\(P(L, A) = P(L|A)P(A) = (0.75)(0.1) = 0.075\)</span>. Additionally, <span class="math inline">\(P(L, B) = P(L|B)P(B) = (0.15)(0.9) = 0.135\)</span>. As a result it is more likely to have the package late and sent with <span class="math inline">\(B\)</span> then the package late and sent with <span class="math inline">\(A\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="partitions-and-the-law-of-total-probability" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="partitions-and-the-law-of-total-probability"><span class="header-section-number">4.3.2</span> Partitions and the Law of Total Probability</h3>
+<p>While the multiplication rule gives us the capacity to solve for joint probabilities, often we wish to make statements regarding marginal probabilities. Fortunately, we can extend this process outlined in the multiplication rule to solve directly for marginal probabilities as well. To do so, we first introduce the concept of a partition.</p>
+<div id="def-partition" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.4 (Partition)</strong></span> A partition is a collection of sets which divide up the sample space such that all of the sets are disjoint from one another, and the sample space is given by the union of all of the sets. That is, <span class="math inline">\(A_1,\dots,A_n\)</span> is a partition of <span class="math inline">\(\mathcal{S}\)</span> if:</p>
+<ol type="1">
+<li><span class="math inline">\(A_i \cap A_j = \emptyset\)</span> for all <span class="math inline">\(i \neq j\)</span>, and</li>
+<li><span class="math display">\[\bigcup_{i=1}^n A_i = \mathcal{S}.\]</span></li>
+</ol>
+</div>
+<p>For instance, if the sample space were all the positive integers, we could partition this space into all the even numbers as one set and all the odd numbers as a second. We could also partition this into the set of numbers which are less than <span class="math inline">\(10\)</span>, the set of numbers that are greater than <span class="math inline">\(10\)</span>, and then <span class="math inline">\(10\)</span>. In both examples we have sets whose union forms the full sample space with no overlap. Note that we could not partition the set into multiples of <span class="math inline">\(2\)</span> and multiples of <span class="math inline">\(3\)</span>, since (i) not all values are contained between these two sets,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and (ii) there is overlap between these two sets.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div id="exm-simple-partitions" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.5 (Partitions of the Coin Game)</strong></span> Charles and Sadie are thinking back with fondness to their original coin flipping game, where they would toss a coin three times in a row. If two or more heads showed up, Charles would pay. Otherwise, Sadie would.</p>
+<p>To help them reminisce, Write down three different partitions of the sample space, each with a different number of partitioning sets. Describe your partitions using words.</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>There are many possible partitions to write down. The following are examples.</p>
 <ol type="1">
@@ -1404,7 +1389,7 @@ B_3 &amp;= \{(\text{T},\text{H},\text{T}),  (\text{H},\text{T},\text{H})\}.
 </div>
 </div>
 </div>
-<p>Partitions allow us to move from discussions regarding the joint probability of events to the marginal probability of an event. Suppose that we have a partition given by <span class="math inline">\(B_1, B_2, \dots\)</span>. This means that our full sample space can be cut up into these various non-overlapping sets, and every single outcome belongs to exactly one of them. Now, suppose we are interested in some other event <span class="math inline">\(A\)</span>. We can ask: how can <span class="math inline">\(A\)</span> occur, in terms of the events <span class="math inline">\(B_1, B_2, \dots\)</span>? Since every single event in the sample space belongs to exactly one of our partitioning sets, then it <strong>must</strong> be the case that every single event in <span class="math inline">\(A\)</span> belongs to exactly one of our partitioning sets. This means that if we consider <span class="math inline">\(A\cap B_j\)</span>, for all <span class="math inline">\(j\)</span>, then every single event in <span class="math inline">\(A\)</span> must belong to exactly one of these. In other words, it must be the case that <span class="math display">\[A = \bigcup_{j} A\cap B_j,\]</span> for any partition <span class="math inline">\(B_1, B_2,\dots\)</span>. Moreover, every single <span class="math inline">\(A\cap B_j\)</span> is disjoint from every other <span class="math inline">\(A \cap B_\ell\)</span>, whenever <span class="math inline">\(\ell \neq j\)</span>. This means that we can use the axiom of additivity to give <span class="math display">\[P(A) = P\left(\bigcup_{j} A\cap B_j\right) = \sum_{j} P(A \cap B_j).\]</span> In other words: the marginal probability of <span class="math inline">\(A\)</span> can be found by summing over <strong>all</strong> joint probabilities between <span class="math inline">\(A\)</span> and sets that form a partition. This argument gives the <strong>law of total probability</strong>.</p>
+<p>Partitions allow us to move from discussions regarding the joint probability of events to the marginal probability of an event. Suppose that we have a partition given by <span class="math inline">\(B_1, B_2, \dots\)</span>. This means that our full sample space can be cut up into these various non-overlapping sets, and every single outcome belongs to exactly one of them. Now, suppose we are interested in some other event <span class="math inline">\(A\)</span>. We can ask: how can <span class="math inline">\(A\)</span> occur, in terms of the events <span class="math inline">\(B_1, B_2, \dots\)</span>? Since every single event in the sample space belongs to exactly one of our partitioning sets, then it <strong>must</strong> be the case that every single event in <span class="math inline">\(A\)</span> belongs to exactly one of our partitioning sets. This means that if we consider <span class="math inline">\(A\cap B_j\)</span>, for all <span class="math inline">\(j\)</span>, then every single event in <span class="math inline">\(A\)</span> must belong to exactly one of these. In other words, it must be the case that <span class="math display">\[A = \bigcup_{j} A\cap B_j,\]</span> for any partition <span class="math inline">\(B_1, B_2,\dots\)</span>. Moreover, every single <span class="math inline">\(A\cap B_j\)</span> is disjoint from every other <span class="math inline">\(A \cap B_\ell\)</span>, whenever <span class="math inline">\(\ell \neq j\)</span>. This means that we can use the axiom of additivity to give <span class="math display">\[P(A) = P\left(\bigcup_{j} A\cap B_j\right) = \sum_{j} P(A \cap B_j).\]</span> In other words: the marginal probability of <span class="math inline">\(A\)</span> can be found by summing over <strong>all</strong> joint probabilities between <span class="math inline">\(A\)</span> and sets that form a partition. This argument gives the law of total probability.</p>
 <div id="fig-basic-partition" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-basic-partition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1433,7 +1418,7 @@ The Law of Total Probability
 <p><span class="theorem-title"><strong>Example 4.6 (Sadie’s Possibly Late Package)</strong></span> Sadie has still not received the package that Charles had ordered. While it is not late yet, Charles decides to figure out the probability that the package will end up being late. Recall that company <span class="math inline">\(A\)</span> is late <span class="math inline">\(75\%\)</span> of the time while company <span class="math inline">\(B\)</span> is late <span class="math inline">\(15\%\)</span> of the time, and the store that Charles ordered from sends out <span class="math inline">\(10\%\)</span> of packages with company <span class="math inline">\(A\)</span>, and the rest with company <span class="math inline">\(B\)</span>, which is more likely.</p>
 <p>What is the probability that the package is late?</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1442,7 +1427,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Note that <span class="math inline">\(A, B\)</span> forms a partition of the sample space as every package is either sent with <span class="math inline">\(A\)</span> or with <span class="math inline">\(B\)</span>, and no package can be sent with both. Further, if <span class="math inline">\(L\)</span> represents the event that the package is late, then we know that <span class="math inline">\(P(L|A) = 0.75\)</span> and <span class="math inline">\(P(L|B) = 0.15\)</span>. Since <span class="math inline">\(P(A) = 0.1\)</span> and <span class="math inline">\(P(B) = 0.9\)</span>, an application of the law of total probability gives <span class="math display">\[P(L) = P(L|A)P(A) + P(L|B)P(B) = (0.75)(0.1) + (0.15)(0.9) = 0.21.\]</span> As a result, knowing nothing else, the package has a probability of <span class="math inline">\(0.21\)</span> of being late.</p>
 </div>
@@ -1512,7 +1497,7 @@ Solution
 <li>How does this change if the probability that each urn is selected is proportional to the number of items in it? (Thus, urn 1 is selected with probability <span class="math inline">\(8/35\)</span>, and so forth).</li>
 </ol>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1521,7 +1506,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
 <li><p>Let <span class="math inline">\(R\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(G\)</span>, <span class="math inline">\(Y\)</span>, and <span class="math inline">\(Bk\)</span> be the events that a red, blue, green, yellow, or black ball are selected. Further, let <span class="math inline">\(U_1\)</span>, <span class="math inline">\(U_2\)</span>, <span class="math inline">\(U_3\)</span>, and <span class="math inline">\(U_4\)</span> be the events that the first, second, third, or fourth urn are selected. Then note that, according to the law of total probability, <span class="math display">\[P(R) = P(R, U_1) + P(R, U_2) + P(R, U_3) + P(R, U_4) = \sum_{j=1}^4 P(R|U_j)P(U_j).\]</span> An equivalent argument holds for each of the other colours. Now, <span class="math display">\[P(R|U_j) = \frac{N_{R\cap U_j}}{N_{U_j}},\]</span> where <span class="math inline">\(N_{R\cap U_j}\)</span> is the number of red objects in urn <span class="math inline">\(j\)</span> and <span class="math inline">\(N_{U_j}\)</span> is the total number in urn <span class="math inline">\(j\)</span>. Plugging this in and simplifying we get <span class="math display">\[P(R) = \sum_{j=1}^4P(R|U_j)\left(\frac{1}{4}\right) = \frac{1}{4}\left\{\frac{2}{8} + \frac{3}{10} + \frac{2}{6}\right\} = \frac{53}{240}.\]</span></p>
@@ -1565,7 +1550,7 @@ Bayes’ Theorem
 <p><span class="theorem-title"><strong>Example 4.8 (Sadie’s Late Package)</strong></span> Sadie eventually received the package that Charles had sent, but it arrived very late. Sadie was not home when the package was delivered and there no obvious markings on the box to indicate which of the two delivery companies had sent it.</p>
 <p>Given this information, and knowing that company <span class="math inline">\(A\)</span> is late <span class="math inline">\(75\%\)</span> of the time while company <span class="math inline">\(B\)</span> is late <span class="math inline">\(15\%\)</span> of the time, and the store that Charles ordered from sends out <span class="math inline">\(10\%\)</span> of packages with company <span class="math inline">\(A\)</span>, and the rest with company <span class="math inline">\(B\)</span>, what is the probability that the package was delivered by each of the two companies?</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1574,7 +1559,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We want to determine <span class="math inline">\(P(A|L)\)</span> and <span class="math inline">\(P(B|L)\)</span>. We know that <span class="math inline">\(P(L|A) = 0.75\)</span> and <span class="math inline">\(P(L|B) = 0.15\)</span>. Moreover, we know that <span class="math inline">\(P(A) = 0.1\)</span> and <span class="math inline">\(P(B) = 0.9\)</span>. Applying Bayes’ Theorem directly we get <span class="math display">\[P(A|L) = \frac{P(L|A)P(A)}{P(L|A)P(A) + P(L|B)P(B)} = \frac{(0.75)(0.10)}{(0.75)(0.10) + (.10)(0.90)} = \frac{5}{11}.\]</span> Similarly, we get <span class="math display">\[P(B|L) = \frac{P(B|A)P(B)}{P(L|A)P(A) + P(L|B)P(B)} = \frac{(0.15)(0.90)}{(0.75)(0.10) + (.10)(0.90)} = \frac{6}{11}.\]</span> Note, we could have also used the fact that <span class="math inline">\(P(A|L) + P(B|L) = 1\)</span> to determine this. As a result, it is more likely that <span class="math inline">\(B\)</span> delivered the package than <span class="math inline">\(A\)</span>.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 </div>
@@ -1591,11 +1576,11 @@ Solution
 <p>We saw an example of this previously when we wanted to know the probability of a randomly selected card being a heart (<span class="math inline">\(A\)</span>) given that it was an ace (<span class="math inline">\(B\)</span>). We found that this was <span class="math inline">\(\frac{1}{4}\)</span>, exactly the same as the probability if we did not know that it was an ace. Thus here we have <span class="math inline">\(P(A|B)=P(A)\)</span>. We could have also said that <span class="math inline">\(P(B|A)=P(B)=\frac{1}{13}\)</span>. The symmetry of these events makes it somewhat more convenient to express this relationship differently.</p>
 <p>Instead of writing <span class="math inline">\(P(A|B) = P(A)\)</span> and <span class="math inline">\(P(B|A) = P(B)\)</span>, we can multiply the first relationship by <span class="math inline">\(P(B)\)</span> on both sides, or the second by <span class="math inline">\(P(A)\)</span> on both sides. The multiplication rule gives <span class="math inline">\(P(A|B)P(B) = P(A,B)\)</span>, and so the first relationship becomes <span class="math inline">\(P(A,B) = P(A)P(B)\)</span>. The second follows exactly the same. Any two events that satisfy this relationship are said to be independent.</p>
 <div id="def-independence" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4.6 (Independence)</strong></span> Any two events, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, which satisfy <span class="math inline">\(P(A,B) = P(A)P(B)\)</span> are said to be independent. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are independent we write <span class="math inline">\(A\perp B\)</span>, and read “<span class="math inline">\(A\)</span> is independent of <span class="math inline">\(B\)</span>”. Any events which are not independent are said to be dependent, and we write <span class="math inline">\(A\not\perp B\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 4.5 (Independence)</strong></span> Any two events, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, which satisfy <span class="math inline">\(P(A,B) = P(A)P(B)\)</span> are said to be independent. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are independent we write <span class="math inline">\(A\perp B\)</span>, and read “<span class="math inline">\(A\)</span> is independent of <span class="math inline">\(B\)</span>”. Any events which are not independent are said to be dependent, and we write <span class="math inline">\(A\not\perp B\)</span>.</p>
 </div>
 <p>Note that independence is always a symmetric property: if <span class="math inline">\(A\)</span> is independent of <span class="math inline">\(B\)</span>, then <span class="math inline">\(B\)</span> is independent of <span class="math inline">\(A\)</span>. To check whether two events are independent, we check whether their joint probability is equal to the product of their marginal probabilities.</p>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1604,7 +1589,7 @@ Properties of Independence
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Note that if <span class="math inline">\(A\perp B\)</span>, then <span class="math inline">\(A^C\perp B\)</span>, <span class="math inline">\(A^C\perp B^C\)</span>, and vice versa. To see this note <span class="math display">\[P(A^C, B) + P(A, B) = P(B),\]</span> by the Law of Total Probability. Then, by independence of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> this gives <span class="math display">\[\begin{align*}
 P(A^C, B) + P(A)P(B) &amp;= P(B) \\
@@ -1636,7 +1621,7 @@ P(A^C, B) + P(A)P(B) &amp;= P(B) \\
 <li>Is it possible that competitive games are independent of heavy games?</li>
 </ol>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1645,7 +1630,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
 <li><p>We are suggesting that <span class="math inline">\(P(A,B) = 0.05\)</span>, where <span class="math inline">\(A\)</span> is “two player” and <span class="math inline">\(B\)</span> is “cooperative”. We know that <span class="math inline">\(P(B) = 0.25\)</span> and <span class="math inline">\(P(A) = 0.20\)</span>. Calculating <span class="math inline">\(P(A)P(B) = (0.20)(0.25) = 0.05 = P(A,B)\)</span>, and so these traits <strong>are</strong> independent.</p></li>
@@ -1662,14 +1647,14 @@ Solution
 <h4 data-number="4.4.0.1" class="anchored" data-anchor-id="mutually-exclusive-events"><span class="header-section-number">4.4.0.1</span> Mutually Exclusive Events</h4>
 <p>Importantly, if <span class="math inline">\(A\perp B\)</span>, then <span class="math inline">\(A\cap B\neq \emptyset\)</span> unless either <span class="math inline">\(A=\emptyset\)</span>, <span class="math inline">\(B=\emptyset\)</span>, or both. To see this recall that <span class="math inline">\(P(\emptyset) = 0\)</span>, and so if <span class="math inline">\(A\cap B = \emptyset\)</span> then <span class="math inline">\(P(A\cap B) = P(A)P(B) = P(\emptyset) = 0\)</span>. This only holds if either <span class="math inline">\(P(A) = 0\)</span> or <span class="math inline">\(P(B) = 0\)</span>. This may seem to be a rather technical point, however, it is the source of much confusion regarding independence. In particular, it is common to mistake independent events for mutually exclusive events.</p>
 <div id="def-mutually-exclusive-events" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4.7 (Mutually Exclusive Events)</strong></span> Two events, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are said to be mutually exclusive if they are disjoint. In particular, if <span class="math inline">\(P(A,B) = 0\)</span> then <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are mutually exclusive. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are mutually exclusive events, with <span class="math inline">\(P(A) &gt; 0\)</span> and <span class="math inline">\(P(B) &gt; 0\)</span>, then <span class="math inline">\(A\not\perp B\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 4.6 (Mutually Exclusive Events)</strong></span> Two events, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are said to be mutually exclusive if they are disjoint. In particular, if <span class="math inline">\(P(A,B) = 0\)</span> then <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are mutually exclusive. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are mutually exclusive events, with <span class="math inline">\(P(A) &gt; 0\)</span> and <span class="math inline">\(P(B) &gt; 0\)</span>, then <span class="math inline">\(A\not\perp B\)</span>.</p>
 </div>
 <p>Whenever only one event from a set of events can happen, we refer to the events as being mutually exclusive. If one happens, we know that the others did not. Mutually exclusive events are always dependent since knowing that <span class="math inline">\(A\)</span> occurs dramatically shifts our belief about <span class="math inline">\(B\)</span>,<span class="math inline">\(C\)</span>, and <span class="math inline">\(D\)</span>.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
 <p>The primary concern with mutually exclusive and independent events is a linguistic one. We often use words like independent to mean unrelated, and in a sense, mutually exclusive events are unrelated in that one has nothing to do with another. However, in statistics and probability, when we discuss independence, it is not an independence of the events themselves but rather an independence relating to our beliefs regarding the uncertainty associated with the events. In this sense, mutually exclusive events are very informative regarding the uncertainty associated with them.</p>
 <div id="exm-independence-two" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4.10 (Charles and Sadie Cooking Dinner)</strong></span> Suppose that Charles and Sadie always eat dinner together. It will either be the case that Charles cooks at home, that Sadie cooks at home, that the two of them order in, or that they go out to eat. If we take these to be four events, <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, and <span class="math inline">\(D\)</span>, then are any of these events independent? Mutually exclusive? Explain.</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1678,7 +1663,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Assuming, as it seems reasonable given the information in the question, that only one of the possible tasks occurs for dinner in a night, then we <em>know</em> that <span class="math display">\[P(A,B) = P(A,C) = P(A,D) = P(B,C) = P(B,D) = P(C,D) = 0.\]</span> As a result, all of the events described are mutually exclusive, and correspondingly, are <em>not</em> independent.</p>
 </div>
@@ -1691,7 +1676,7 @@ Solution
 <h2 data-number="4.5" class="anchored" data-anchor-id="contingency-tables"><span class="header-section-number">4.5</span> Contingency Tables</h2>
 <p>Through to this point we have discussed probabilities in the abstract, either through an enumeration of equally likely outcomes, or else by directly specifying the likelihood of various events. While these are useful in many regards, we are often looking for more concise manners of summarizing information of interest. One tool for accomplishing this is a contingency table.</p>
 <div id="def-contingency-table" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4.8 (Contingency Table)</strong></span> A contingency table is a tabular summary of information which summarizes the joint probabilities of two or more variables. Typically a contingency table will take one factor for the columns and a secondary factor for the rows, where each cell then represents the frequency with which observations occur in the two corresponding categories simultaneously.</p>
+<p><span class="theorem-title"><strong>Definition 4.7 (Contingency Table)</strong></span> A contingency table is a tabular summary of information which summarizes the joint probabilities of two or more variables. Typically a contingency table will take one factor for the columns and a secondary factor for the rows, where each cell then represents the frequency with which observations occur in the two corresponding categories simultaneously.</p>
 </div>
 <p>To begin, you could imagine constructing a frequency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you convert the frequencies to proportions, and these proportions can be viewed as probabilities. (See <a href="#tbl-uni-frequency" class="quarto-xref">Table&nbsp;<span>4.1</span></a>.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>) The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p>
 <div class="cell" data-tbl-colwidths="[20,40,40]">
@@ -1972,7 +1957,7 @@ Table&nbsp;4.3: Proportions of enrolment by faculty and year of study in a unive
 <p>Outside of joint and marginal probabilities, we can also find conditional probabilities. To do so, we restrict our focus to either only one row, or one column. Then, we can take the joint cell and divide by the value in the margin, which gives the conditional probability of interest. Note, this works with <em>either</em> the contingency table directly <strong>or</strong> with the propensity table. The reasoning is that the propensity table divided by the same totals in the numerator and the denominator. Suppose we take some cell, <span class="math inline">\(A\cap B\)</span>, which has <span class="math inline">\(N_{A, B}\)</span> in the contingency table. Then, <span class="math display">\[P(A\cap B) = \frac{N_{A, B}}{N} \quad\quad\text{and}\quad\quad P(B) = \frac{N_B}{N}.\]</span> If we consider then forming <span class="math inline">\(P(A|B)\)</span> we get <span class="math display">\[P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{N_{A \cap B}/\cancel{N}}{N_B/\cancel{N}} = \frac{N_{A, B}}{N_B}.\]</span> Thus, given that we know a student is in Education, then the probability that they are in Year 3 is approximately 0.2341.</p>
 <p>Note that these procedures are exactly in line with what we had seen before. The conditional probability is defined as the joint probability divided by the marginal probability. The process of computing the marginal can be seen as an application of the law of total probability. As a result, contingency tables can be a useful, tangible tool for investigating the techniques we have been discussing: they are not a substitute for direct manipulation of the mathematical objects, but they can present insight into the underlying processes where it may be hard to derive that insight otherwise.</p>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1981,7 +1966,7 @@ The Law of Total Probability: Contingency Table’s Version
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Recall that the law of total probability states that, if <span class="math inline">\(B_1,\dots,B_n\)</span> forms a partition of the sample space, then <span class="math display">\[P(A) = \sum_{i=1}^n P(A|B_i)P(B_i) = \sum_{i=1}^n P(A, B_i)\]</span>. In a contingency table it is easier to see how either of the two factors at play (either those in the rows or the columns) forms a partition of the space. Every observation has to fall in exactly one row and exactly one column. Thus, if we want to know the marginal frequency of a single trait (say represented by some row of the table), then one way to find this total is to sum up every observation in each of the corresponding columns. This is <em>precisely</em> the same process as the law of total probability. Note that, denoting each column as <span class="math inline">\(B_i\)</span>, and supposing there are <span class="math inline">\(k\)</span> total columns, then the total number in a row is taken to be <span class="math display">\[N_A = \sum_{i=1}^k N_{A, B_i},\]</span> simply as the summation of the corresponding row. By definition, <span class="math inline">\(P(A) = \frac{N_A}{N}\)</span>, and so dividing both sides by <span class="math inline">\(N\)</span> gives <span class="math display">\[P(A) = \frac{N_A}{N} = \frac{1}{N}\sum_{i=1}^k N_{A, B_i} = \sum_{i=1}^k \frac{N_{A, B_i}}{N} = \sum_{i=1}^n P(A\cap B_i).\]</span></p>
 </div>
@@ -2068,7 +2053,7 @@ The Law of Total Probability: Contingency Table’s Version
 <li>Given that the object is green, what is the probability that it is a pyramid.</li>
 </ol>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -2077,7 +2062,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
 <li><p>We start by filling in the missing cells, in order.</p>
@@ -2174,7 +2159,7 @@ Solution
 <li>Are there any events represented in the contingency table which are independent?</li>
 </ol>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -2183,7 +2168,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
 <li><p>Mutually exclusive events are codified via a <span class="math inline">\(0\)</span> frequency. We can see then that <span class="math inline">\(\text{Cube}\)</span> and <span class="math inline">\(\text{Red}\)</span> are mutually exclusive. That is, if we know that an object is red, we also know that it is not a cube. And if we know that an object is a cube, then we know that it is not red.</p></li>
@@ -2769,8 +2754,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/chapter5.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Random Variables</span>">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Variables</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../notes/chapter5.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Summarizing Statistical Experiments with Random Variables</span>">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summarizing Statistical Experiments with Random Variables</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

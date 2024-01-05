@@ -88,19 +88,6 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
-<script type="application/json" class="js-hypothesis-config">
-{
-  "theme": "classic",
-  "enableExperimentalNewNoteButton": true,
-  "showHighlights": "whenSidebarOpen"
-}
-</script>
-<script async="" src="https://hypothes.is/embed.js"></script>
-<script>
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    document.body.classList.add('hypothesis-enabled');
-  });
-</script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
   
@@ -840,19 +827,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../notes/chapter6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Named Discrete Distributtions</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../notes/chapter7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Continuous Random Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summarizing Statistical Experiments with Random Variables</span></span></a>
   </div>
 </li>
       </ul>
@@ -1262,7 +1237,7 @@ Solution
 <p>Imagine that you are interested in determining how many possible ways there are of arranging a deck of <span class="math inline">\(52\)</span> cards. You could of course arrange them in a particular order, then count each of those. That would take a tremendous amount of time, so perhaps instead of using an actual deck you just write down the combinations. Still, each combination is going to be <span class="math inline">\(52\)</span> cards long, and keeping track of that all will be a tremendous challenge. This seems like an approachable question, and yet, it illustrates how complicated (and large) these types of “counting” problems can become very quickly.</p>
 <p>Fortunately for us there are some strategies for simplifying these problems down, some of which you are likely already familiar with. Think about trying to form an outfit where you have <span class="math inline">\(4\)</span> different sweaters, <span class="math inline">\(3\)</span> pairs of pants, and <span class="math inline">\(2\)</span> options for your shoes. Suppose that any combination of these will work well. How many total outfits are there? Well, if you have already picked your sweater and pants, then there are going to be <span class="math inline">\(2\)</span> different outfits using these: one with each of the pairs of shoes. This is true for each possible sweater-pant combination, and so we can count <span class="math inline">\(2\)</span> for each one these. In other words, to get the total number of outfits we multiply the number of sweater-pant combinations by the number of shoe options. The same rationale can be applied to count the total number of sweater-pant combinations. For each sweater, there are <span class="math inline">\(3\)</span> pairs of possible pants, and so to get the total number we can take <span class="math inline">\(3\)</span> for each possible sweater, or in other words, <span class="math inline">\(3\times 4\)</span>. Taken together then we have <span class="math inline">\(4\times 3\times 2 = 24\)</span> total possible outfits.</p>
 <p>Another way of framing this is that we have to make three sequential decisions: which of the <span class="math inline">\(4\)</span> sweaters, which of the <span class="math inline">\(3\)</span> pants, and which of the <span class="math inline">\(2\)</span> shoes are to be worn? When we do this we multiply through the number of alternatives at each decision point to get the total number of combinations. This is known as the <strong>product rule for counting</strong>.</p>
-<div id="def-multiplication-rule" class="theorem definition">
+<div id="def-product-rule-count" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 3.1 (Product Rule for Counting)</strong></span> The product rule for counting states that, when there are a sequence of <span class="math inline">\(k\)</span> decisions to be made, and for each decision <span class="math inline">\(j=1,\dots,k\)</span>, there are <span class="math inline">\(n_j\)</span> options, then the total number of combinations will be <span class="math display">\[N = n_1\times n_2\times\cdots\times n_k.\]</span></p>
 </div>
 <div id="exm-counting-coffee-orders" class="theorem example">

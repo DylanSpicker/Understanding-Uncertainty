@@ -69,20 +69,36 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script type="application/json" class="js-hypothesis-config">
-{
-  "theme": "classic",
-  "enableExperimentalNewNoteButton": true,
-  "showHighlights": "whenSidebarOpen"
-}
-</script>
-<script async="" src="https://hypothes.is/embed.js"></script>
-<script>
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    document.body.classList.add('hypothesis-enabled');
-  });
-</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -165,19 +181,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./notes/chapter5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./notes/chapter6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Named Discrete Distributtions</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./notes/chapter7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Continuous Random Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summarizing Statistical Experiments with Random Variables</span></span></a>
   </div>
 </li>
       </ul>
@@ -198,9 +202,14 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
   <ul class="collapse">
-  <li><a href="#what-is-this-course" id="toc-what-is-this-course" class="nav-link" data-scroll-target="#what-is-this-course">What is this Course?</a></li>
+  <li><a href="#what-are-these-notes" id="toc-what-are-these-notes" class="nav-link" data-scroll-target="#what-are-these-notes">What are these notes?</a></li>
   <li><a href="#using-these-notes" id="toc-using-these-notes" class="nav-link" data-scroll-target="#using-these-notes">Using These Notes</a></li>
-  <li><a href="#some-mathematical-background" id="toc-some-mathematical-background" class="nav-link" data-scroll-target="#some-mathematical-background">Some Mathematical Background</a></li>
+  <li><a href="#some-mathematical-background" id="toc-some-mathematical-background" class="nav-link" data-scroll-target="#some-mathematical-background">Some Mathematical Background</a>
+  <ul class="collapse">
+  <li><a href="#logarithms-and-exponent-rules" id="toc-logarithms-and-exponent-rules" class="nav-link" data-scroll-target="#logarithms-and-exponent-rules">Logarithms and Exponent Rules</a></li>
+  <li><a href="#summation-and-product-notation" id="toc-summation-and-product-notation" class="nav-link" data-scroll-target="#summation-and-product-notation">Summation and Product Notation</a></li>
+  <li><a href="#other-important-points" id="toc-other-important-points" class="nav-link" data-scroll-target="#other-important-points">Other Important Points</a></li>
+  </ul></li>
   <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
   </ul></li>
   </ul>
@@ -243,22 +252,98 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<section id="what-is-this-course" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-this-course">What is this Course?</h2>
-<p>TODO: Write this.</p>
+<section id="what-are-these-notes" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-these-notes">What are these notes?</h2>
+<p>These notes are being written to supplement the Winter 2024 offering of STAT 1793 at the University of New Brunswick on the Saint John campus. These are intended to provide the complete set of notes required to be successful in the course, along with a series of examples. Note that, if you are a student in the offering of STAT 1793, the specific material that we cover and focus on may be a subset of these notes: we will be crafting our path through them together, as a class, and as such, not all material will be equally relevant. It is important to check the course website and to listen in lecture to ensure that you are always aware of what is being emphasized, what will be covered on the assessments, and so forth.</p>
+<p>Moreover, it is important to note that these notes are a work-in-progress. As of today (January 5, 2024), the material through to Chapter 5 has been made up-to-date. Further chapters will be added throughout term. Additionally, some of the completed chapters may be revised in an attempt to add clarity, fix mistakes or typos, and to better format or sequence the material. If at any point you have comments, questions, suggestions, or corrections to these notes, please do reach out! They are intended to be a helpful resource to ensure your success in the course, and to help your probability and statistics skills into the future.</p>
+<p>One final note is that our coverage of concepts throughout STAT 1793 reflects my personal biases and proclivities towards what is important in a first course in probability and statistics. Compared to others I likely have a larger emphasis on probability, leaving concepts more tied to statistics to a second course (e.g., STAT 2793). This is reflected both in the ordering of material (we start at Probability not at Statistics), and in the weight that each topic will be given. It is my belief that you need to be able to fluently speak the language of probability in order to study statistics, and that is where we will put our focus. However, this does mean that if you have impressions or content from another offering of the course, they may be less well-suited to the specific range of topics we will cover. The material is all the same, and if they help you learn, by all means; it is however important to emphasize that what is highlighted will likely be different.</p>
 </section>
 <section id="using-these-notes" class="level2">
 <h2 class="anchored" data-anchor-id="using-these-notes">Using These Notes</h2>
-<p>TODO: Write this.</p>
+<p>These notes are best viewed online. You can access them from anywhere at <a href="https://dylanspicker.github.io/STAT1793-course-notes/index.html">https://dylanspicker.github.io/STAT1793-course-notes/index.html</a>. Viewing online will allow you to take advantage of interactivity (such as through code blocks and solutions hiding), the search feature (visible in the left hand margin), as well as better overall formatting. There is a version of these notes in PDF format available. To download them, press the PDF icon button (<i class="bi bi-file-pdf"></i>) next to the note title in the left hand bar. The PDF notes contain all the same content, and will be updated alongside the web notes. The formatting of the PDF document may be less visually appealing compared to the web notes. Though an effort will be made to ensure that everything remains legible, and well-formatted, the aesthetics of these notes will be a lower priority than those available on the web.</p>
+<p>To successfully use these notes, I would recommend a several step procedure:</p>
+<ol type="1">
+<li>Prior to the lecture where the material will be covered, read through the sections that are to be covered. For examples, do not read the solution, and instead try to think of how the example can be solved (perhaps trying to solve it yourself).</li>
+<li>Attend lecture and be engaged. Our lectures will follow along with the course notes rather closely, including doing as a class many of the example problems. As a result, this will reemphasize what you have read.
+<ul>
+<li>Note, by reading <em>before</em> you come to class you will be seeing the material for a second time, allowing you to better process it.</li>
+<li>Additionally, this will allow you to better follow the parts that were confusing in the notes, and be more prepared to ask questions of me throughout the lecture.</li>
+</ul></li>
+<li>Return to the notes after class to ensure that everything has made sense. At this point try solving the example problems directly without referencing the solutions at all.
+<ul>
+<li>Only once you’ve gotten a solution to the problem should you check if it is correct. When checking, only look as far as any mistakes that have been made, and then try the problem again.</li>
+<li>Note: struggling with problems is a key component of learning in any mathematical discipline. It is only by struggling to understand how the pieces fit together that you will develop a proper understanding for yourself.</li>
+<li>Looking at solutions will often undermine your own understanding. It is a much different process to look at a solution and understand why it is correct, than it is to determine a solution for yourself.</li>
+</ul></li>
+<li>Ask questions, attend office hours, and send emails as is required to ensure you are fully successful in the course!</li>
+</ol>
+<p>Throughout the notes there will be references to computer code in a programming language known as R. R is the most common language used for statistics by practicing statisticians, and it is a great utility for many of the types of problems we will be considering in this course. You are not expected to be able to write R code throughout the course, however, there is plenty of material throughout the notes to ensure that you will be able to read and run R code. This will be required for solving certain problems, and will make the process of statistics far nicer to engage with. If you are using the web notes this code can all be run directly in the browser. If you are using the PDF notes, the code and output is still provided. In either case, I would suggest getting R running on your own device, if possible. It is free to <a href="https://cran.rstudio.com/">download and install</a>. I would also suggest installing <a href="https://posit.co/download/rstudio-desktop/">R Studio</a>, which is a program specifically designed for writing and running R code with a lot of nice features.</p>
 </section>
 <section id="some-mathematical-background" class="level2">
 <h2 class="anchored" data-anchor-id="some-mathematical-background">Some Mathematical Background</h2>
+<p>These notes (and this course more broadly) require high school mathematics to complete. There is no calculus specifically required. The assumption is that you will be comfortable manipulating mathematical expressions, solving basic equations, using a calculator, and so forth. The following are a handful of topics which will come up throughout the course that are assumed to be known, presented here in brief as a quick reference.</p>
+<section id="logarithms-and-exponent-rules" class="level3">
+<h3 class="anchored" data-anchor-id="logarithms-and-exponent-rules">Logarithms and Exponent Rules</h3>
+<p>Recall that if <span class="math inline">\(a^x = b\)</span>, then we can solve for <span class="math inline">\(x\)</span> through the use of logarithms. Specifically, <span class="math inline">\(x = \log_a(b)\)</span>, where we read this as “the logarithm with base <span class="math inline">\(a\)</span> of <span class="math inline">\(b\)</span>.” The expression means that “<span class="math inline">\(x\)</span> is the exponent we put on <span class="math inline">\(a\)</span> to get <span class="math inline">\(b\)</span>.” In this course<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> we use the notation <span class="math inline">\(\log(x)\)</span> to represent the <strong>natural logarithm</strong>. The natural logarithm is <span class="math inline">\(\log_e(x)\)</span>, where <span class="math inline">\(e \approx  2.71828\)</span> is Euler’s number. The <strong>exponential function</strong> is given by <span class="math inline">\(e^{x} = \exp(x)\)</span>. Which notation is used depends on the specific setting, but both are equivalent.</p>
+<p>Recall further the following exponent and log rules:<span class="math display">\[\begin{align*}
+a^b\times a^c &amp;= a^{b + c} \\
+a^b\times c^b &amp;= (ac)^b \\
+a^{-b} &amp;= \frac{1}{a^b} \\
+\left(a^{b}\right)^c &amp;= a^{bc} \\
+a^0 &amp;= 1 \\
+\log(ab) &amp;= \log(a) + \log(b) \\
+\log(a^b) &amp;= b\log(a) \\
+\log(1) &amp;= 0 \\
+\log(e) &amp;= 1.
+\end{align*}\]</span></p>
+</section>
+<section id="summation-and-product-notation" class="level3">
+<h3 class="anchored" data-anchor-id="summation-and-product-notation">Summation and Product Notation</h3>
+<p>If we wish to add up a series of numbers, <span class="math inline">\(x_1,x_2,\dots,x_n\)</span> then we can use summation notation to record this. Specifically, <span class="math display">\[x_1 + x_2 + \cdots + x_n = \sum_{i=1}^n x_i.\]</span> Here <span class="math inline">\(i\)</span> is an indexing variable just used to keep track of which number we are currently working on. Note that the following quantities will hold <span class="math display">\[\begin{align*}
+    \sum_{i=1}^n (x_i + y_i) &amp;= \sum_{i=1}^n x_i + \sum_{i=1}^n y_i \\
+    \sum_{i=1}^n (x_i - y_i) &amp;= \sum_{i=1}^n x_i - \sum_{i=1}^n y_i \\
+    \sum_{i=1}^n cx_i &amp;= c\sum_{i=1}^n x_i.
+\end{align*}\]</span></p>
+<p>We can also use a similar shorthand to discuss repeated products. That is, if we want to multiply <span class="math inline">\(x_1,x_2,\dots,x_n\)</span>, then we can write <span class="math display">\[x_1\times x_2\times\cdots\times x_n = \prod_{i=1}^n x_i.\]</span> Again, <span class="math inline">\(i\)</span> is used as an indexing variable to keep track of what value is currently being multiplied. The following results hold <span class="math display">\[\begin{align*}
+    \prod_{i=1}^n x &amp;= x^n \\
+    \prod_{i=1}^n b^{x_i} &amp;= b^{\sum_{i=1}^n x_i} \\
+    \prod_{i=1}^n cx_i &amp;= c^n\prod_{i=1}^n x_i.
+\end{align*}\]</span></p>
+</section>
+<section id="other-important-points" class="level3">
+<h3 class="anchored" data-anchor-id="other-important-points">Other Important Points</h3>
+<p>The following are some additional points that are useful to know, but which do not necessarily fit together nicely.</p>
+<ul>
+<li>For any two values <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, we get <span class="math inline">\((x + y)^2 = x^2 + 2xy + y^2\)</span>.</li>
+<li>The integers are the set of all whole numbers, {0, ,,}$. We will often denote the set of integers using <span class="math inline">\(\mathbb{Z}\)</span>.</li>
+<li>The natural numbers are the set of all counting numbers, either <span class="math inline">\(\{0,1,2,3,\dots\}\)</span> or else <span class="math inline">\(\{1,2,3,4,\cdots\}\)</span> depending on the source. We often denote the set using <span class="math inline">\(\mathbb{N}\)</span>.</li>
+<li>The real numbers are the set of all numbers that you think of when thinking of numbers. They include the integers, and any fractions, and anything that cannot be written as a fraction (like <span class="math inline">\(\pi\)</span> and <span class="math inline">\(e\)</span>) as well. We denote the real numbers as <span class="math inline">\(\mathbb{R}\)</span>.</li>
+<li>Intervals of real numbers are denoted as <span class="math inline">\((a,b)\)</span> or <span class="math inline">\([a,b]\)</span> (or a mixture, giving <span class="math inline">\([a,b)\)</span> or <span class="math inline">\((a,b]\)</span>). A round bracket means that the endpoint is <strong>not</strong> included in the set, where a square bracket means that it is. That is, a value of <span class="math inline">\(x\)</span> is in <span class="math inline">\((a,b)\)</span> if <span class="math inline">\(a &lt; x &lt; b\)</span>, where it is in <span class="math inline">\([a,b]\)</span> if <span class="math inline">\(a \leq x \leq b\)</span>.</li>
+<li>We write “<span class="math inline">\(x\)</span> is in the interval <span class="math inline">\((a,b)\)</span>” mathematically using the <span class="math inline">\(\in\)</span> symbol. Specifically, <span class="math inline">\(x \in (a,b)\)</span>.</li>
+<li>Infinity (<span class="math inline">\(\infty\)</span>) is not a number. Rather, it is a statement regarding the lack of a bound. When we say that something is infinity, or infinite, we simply mean that it is larger than any of the natural numbers. If you were to be given any number, then infinity will be larger than that.</li>
+<li><strong>Limits:</strong> note that, while limits are from calculus, they are useful for formally understanding a few concepts in class. The limit of a function, <span class="math inline">\(f(x)\)</span>, is simply the value that the function approaches as <span class="math inline">\(x\)</span> approaches a specific point. So, for instance, <span class="math inline">\(\lim_{x\to a} f(x)\)</span> is the value that <span class="math inline">\(f(x)\)</span> approaches as <span class="math inline">\(x\)</span> approaches <span class="math inline">\(a\)</span>. If <span class="math inline">\(f(a)\)</span> exists then it is simply <span class="math inline">\(f(a)\)</span>. However, <span class="math inline">\(f(a)\)</span> may not exist, at which point, we look at where the function is tending to.</li>
+<li><strong>Infinite Limits:</strong> Of specific importance to us are infinite limits. Specifically, <span class="math display">\[\lim_{x\to\infty}f(x)\]</span> captures the beahviour of the function <span class="math inline">\(f(x)\)</span> as <span class="math inline">\(x\)</span> gets larger and larger. In many cases, <span class="math inline">\(f(x)\)</span> will approach some specific value, which we assign to be the limiting value of the function.</li>
+</ul>
+</section>
 </section>
 <section id="additional-resources" class="level2">
 <h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
+<p>The following are helpful resources which may be used to supplement the material in the class. If you have any suggested resources, please feel free to send them to me, and I will include them here.</p>
+<ol type="1">
+<li><a href="https://www.openintro.org/book/os/">Open Intro Statistics</a>.</li>
+<li><a href="https://www.probabilitycourse.com/">Probability Course</a>.</li>
+<li><a href="https://bookdown.org/f_lennert/introduction-to-r/">Introduction to R</a>.</li>
+<li><a href="https://learningstatisticswithr.com/">Learning Statistics with R</a>.</li>
+</ol>
 
 
 </section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>And in most math courses beyond a certain point.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
