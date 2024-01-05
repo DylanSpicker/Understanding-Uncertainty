@@ -1,117 +1,282 @@
-## The Named Discrete Distributtions
-So far, our discussion of probability distributions and their summaries has centered on general results for arbitrary probability mass functions. The basic premise has been that, by knowing a probability mass function, you are able to understand the complete behaviour of a random quantity. Directly from this mass function we are able to derive summaries for the behaviour, for instance describing the location and variability of the random variable. In short by knowing the probability mass function (and to a lesser extent, the expected value and variance), we immediately understand how the random variable behaves. We have not, however, spent much time discussing where the probability mass functions come from.
+# The Expected Value and Distributional Summaries
+## Expectation
+Until this point in our discussions of probability we have relied upon characterizing the behaviour of a random variable via the use of probability mass functions. In some sense, a probability mass function captures all of the probabilistic behaviour of a discrete random variable. Using the mass function you are able to characterize how often, in the long-run, any particular value will be observed, and any questions associated with this. As a result, the mass function remains a critical area of focus for understanding how random quantities behave.
 
-We have, indirectly, seen one fairly general probability mass function, the one deriving from the equally likely outcomes model. This probability mass function is completely defined by the set of possible values that the random variable can take on. Suppose that we restrict our attention to the sample space being a set of $k$ integers from $a$ through to $a+k$. Note that this assumption is not actually restrictive: if you have any $k$ items you can simply label each of the items one of the numbers between $1$ and $k$ and take $a=1$. When setup in this way, this distribution is often referred to as the **discrete uniform distribution**. Typically, we will use the values for the lower bound ($a$) and the upper bound ($b=a+k$) to define *which* discrete uniform we are discussing. If we say that $X$ follows a discrete uniform distribution with parameters $a$ and $b$ we are say that $X$ is a random variable which has an equal probability of taking any of the integers from $a$ to $b$. Put different, we have that $$p_X(x) = \begin{cases} \frac{1}{b-a+1} & x \in\{a,a+1,\dots,b\}\\ 0 & \text{otherwise}.\end{cases}$$
+However, these functions need to be explored and manipulated in order for useful information to be extracted from them. They do not summarize this behaviour effectively, as they are not intended to be a summary tool, and understandably we often wish to have better numeric quantities which are able to concisely indicate components of the behaviour of a distribution. Put differently, provided with a probability mass function it is hard to immediately answer "what do we expect to happen, with this random variable?" despite the fact that this is a very obvious first question.
 
-Knowing the probability mass function of $X$, we also immediately can work out the expectation and variance for the random variable. Doing this results in $E[X] = \frac{a+b}{2}$ and $\text{var}(X) = \frac{(b-a+1)^2-1}{12}$ (see the following derivation!). This means that just by knowing that a random variable follows a discrete uniform distribution, we immediately know (or can look up) any of the properties that we have discussed up until this point. 
+To address questions related to expectations, we turn towards the statistical concept of an **expected value**. We refer to expected values as expectations, averages, and means of a distribution, interchangeably. The idea with an expected value is that we are trying to capture, with one single number, what value is expected when we make observations from the random quantity. There are many ways one might think to describe our expectations, and it is worth exploring these concepts in some detail.
 
-TODO: Include derivation.
+One way that we may think to define our expected value is by asking what value is the most probable. This is a question which can be directly answered using the probability mass function. The process for this would require looking at the function and determining which value for $x$ corresponds to the highest probability: this is the value that we are most likely to see. Sometimes this procedure is fairly straightforward, sometimes it is quite complicated. No matter the complexity of the specific situation, the underlying process is the same: what value has the highest probability of being seen, and that is the most likely one.
 
-This is a partiuclarly powerful realization. There are many real-world quantities  which we immediatley know  follow a discrete uniform distribution. For instance, rolling a die. In the case of a die roll we take $a=1$, $b=6$, and immediately understand that $E[X] = 3.5$, that $\text{var}(X) = \frac{17}{6}$, and that the probability of each value is $\frac{1}{6}$. Of course,we could do the same calculations for any die, with any sides labeled in consecutive order. 
+TODO: Example of mode
 
-TODO: Include examples of real-world discrete uniform settings.
+As intuitive as this may seem, this is not the value that will be used as the expected value generally. Instead, this quantity is referred to as the **mode**. While the mode is a useful quantity, and for some decisions will be the most pertinent summary value, there are some major issues with it as a general measure which make it less desirable. For starters, consider that our most common probability model considered until this point has been that of equally likely outcomes. Here, there is no well-defined mode (convention tends to be taking it as the set of all the most probable values). Presenting the mode is equivalent to presenting the full mass function in this setting.
 
-Despite the fact that the discrete uniform is fairly prominent in terms of real-world utility, it is also a comparatively simple distribution. However, the main point of this discussion is not actually to introduce the discrete uniform, but rather to introduce the concept of a **named distribution**. The basic premise here is that there are processes in the world which occur frequently enough, in a diverse array of settings, with the same underlying structure ot their uncertainty. If we can study one version of these general problems, then we can extract the mass function, expectation, and varaince and we are easily able to describe the probabilistic behaviour of these quantities. At that point,  understanding the uncertainty of random quantities becomes a matter of matching the processes to the correct distribution, and then applying what we know about that distribution directly. While not every process will directly correspond to a known, named distribution, we can often get very close using just a handful of these [TODO: write aside on the pareto distribution]. 
+While the case of equally likely outcomes is a fairly strong explanation for some issues with the mode, it need not be so dramatic to undermine its utility. It is possible for a distribution to have several modes which are quite distinct from one another, even if it's not all values. Moreover, it is quite common for the modal value to be not particularly likely itself. Consider a random variable that can take on a million different values. If all of the probabilities are approximately $0.000001$ then presenting the mode as the most probable value does not translate to saying that the mode is particularly probable. 
 
-For each named distribution there is  an underlying structure describing in what scenarios it will arise. For instance, for the discrete uniform, this is when there is a set of equally likely outcomes  which can be described using consecutive integers. Once matched, there will also be a probability mass function, an expected value, and a variance associated  with the distribution. Importantly, all of tehse quantities will depend on some **parameters**. In the discrete uniform we used the parameters $a$ and $b$. These parameters specify which *version* of the distribution is relevant for the underlying scenario. It is best to think of the named distributions as families of distributions, with specific iterations being dictated by the parameter values. If two  processes follow the same distribution  with different parameters they will not be identically distributed, they are simply drawn from the same family. If two processes have the same parameter values and the same underlying distribution, they are identically distributed and their probabilistic behaviour will be exactly the same. For instance, there is no probabalistic differencebetween rolling a fair, six-sided die or drawing a card at random from a set of $6$ cards labelled $1$ through $6$. There may be real-world differences which matter, but from a probabilistic  point of view, they are exacttly the same.
+TODO: include example where the mode is slightly more likely than a string of similar values.
 
-This is a useful realization  as it allows the use of simple models to understand more complex phenomenon. Perhaps the best way to demonstrate the effectiveness of these simple models is to introduce  perhaps the most basic named probability distribution: **the Bernoulli distribution**. The Bernoulli distribution  characterizes any statistical experiment with a binary outcome when these resultsare denoted $0$ and $1$. The parameter that indexes the distribution is $p$, which gives the probability of observing a $1$.
+If the mode has these shortcomings, what else might work? Another intuitive concept is to try to select the "middle" oof the distribution. One way to define the middle would be to select the value such that half of observations are beneath it, and half of observations are above it. That way, when you are told this value, you immediately know that it is equally likely to observe values on either side of this mark. This is also a particularly intuitive definition for expected value, and is important enough to be named: **the median**.
 
-Whenever we want to say that $X$ follows a particular distribution, wwe use a mathematical shorthand to do so. Specifically, we write $X \sim \text{Distribution}(\text{parameters})$ to mean ``$X$ follows the $\text{Distribution}$ with $\text{parameters}$.'' For instance, if $X$ represents the results of a fair six-sided die roll, we can write $X\sim\text{Discrete Uniform}(1,6)$. We will typically shorten this to be $X\sim\text{D.Unif}(1,6)$.
-%TODO: Move this up.
+The median is the midpoint of a distribution, and is very important for describing the behaviour of random variables. Medians are often the most helpful single value to report to indicate the typical behaviour of a distribution, and they are frequently used. When people interpret averages, in general, it is often the median that they are actually interpreting. It is very intuitive to be given a value and know that it is the middle of all the possible values for a distribution.
 
-If $X\sim\text{Bern}(p)$ (where $\text{Bern}$ is used for Bernoulli distributions) then we know that $$p_X(x) = \begin{cases} p^x(1-p)^{1-x} & x\in\{0,1\}\\ 0 & \text{otherwise}.\end{cases}$$ Further, we know that $E[X] = p$ and $\text{var}(X) = p(1-p)$. We typically call $X=1$ a ``success'' and $X=0$ a ``failure'' when discussing Bernoulli random variables. The most straightforward application of a Bernoulli random variable is the flip of a coin. Take $X=1$ if a head is shown, and $X=0$ if a tails is shown. Then $X\sim\text{Bern}(p)$.
+TODO: include examples on medians
 
-A coin flip is, by itself, not particularly interesting. However *any* statistic experiment with binary outcomes coded this way can be seen as a Bernoulli random variable. Suppose, for instance, you are interested in whether you will pass a particular course or not. There are two options, a ``success'' (passing) and a ``failure'' (failing), and the chances of this are governed by some probability $p$. Suppose you want to know whether the next flight you take will land safely, it is the same situation. Or whether a particular medical treatment will effectively treat an illness. Each of these scenarios is analyzed in exactly the same way as a coin toss: the probabilities change, but the underlying functions and mathematical objects  do not. There is no probabalistic difference  between determining whether a coin will come up heads or whether a plane will safely land.
+Despite the advantages of medians, they have their own drawbacks as well. For starters, the median can be exceptionally challenging to compute in certain settings. As a result, even when a median is appropriate, it may not be desirable if it is too challenging to determine. Beyond the difficulties in computation, medians have some properties which may be undesirable, depending on the specific use case. One concern which arises frequently is that medians are not translated to totals, which can make them challenging in certain use cases.
 
-TODO: Examples
+Suppose that you are a store and you know that your median quantity of items sold in a day is $50$ and the median cost of these items is $\$10$, you cannot simply multiply the $50$ and the $\$10$ to suggest that your median revenue in a day is $\$500$. Doing this type of unit conversion or basic arithmetic with medians can be challenging, and as a result they are not always the most useful when reporting values that are going to be interpreted as rates.
 
-Thediscrete uniform and Bernoulli are both distributions which map on to the real-world, but which are quite basic and which do not demonstrate the most meaningful applications of named distributions. These ideas become far more powerful when we begin to explore furthernamed distributions.
+TODO: Expand on the above example.
 
-### The Binomial Distribution
-A natural extension to tossing a coin once and seeing if it comes up heads or not is tossing a coin $n$ times and counting how many times it comes up heads. If we take $X$ to be the number of successes in $n$ independent and identically distributed Bernoulli trials, then we say that $X$ has a **binomial distribution**. The binomial distribution is characterized by two different parameters, the number of trials that are being performed, denoted $n$, and the probability of a success on each trial, $p$. We write $X\sim\text{Bin}(n,p)$.
+Beyond the basic manipulation medians have a feature which is simultaneously a major benefit in some settings, and a major fallback in others. Specifically, medians are less influenced by extreme values in the probability distribution. Consider two different distributions: one of them is equally likely to take any value between $1$ and $10$, where the other is equally likely to take any value between $1$ and $9$ or $1,000,000$. In both of these settings, we can take the median to be $5.5$ since half of the probability mass falls above $5.5$ and half falls below it. 
 
-TODO: Simple example for bin.
+The median, in some sense, ignores the extreme value in the probability distribution and remains stable throughout it. In certain settings, this can be very desirable. For instance, in the distribution of household incomes, the median may be an appropriate measure seeing as there are a few families who have very extreme incomes which otherwise distort the picture provided by most families. In this sense, the median's robustness to extreme values is a positive feature of it in terms of a summary measure for distributional behaviour.
 
-If we know that $X\sim\text{Bin}(n,p)$ then we get that $$p_X(x) = \begin{cases} \binom{n}{x}p^x(1-p)^{n-x} & x\in\{0,1,\dots,n\} \\ 0 &\text{otherwise}.\end{cases}$$ This is the first distribution we have seen which knowing the underlying distribution would not have immediately translated into knowing the probability mass function, which begins to illustrate why this is a useful area of study. We can work out that $E[X] = np$ and $\text{var}(X) = np(1-p)$.
+Suppose instead that you work for an insurance company and are concerned with understanding the value of insurance claims that your company will need to pay out. The distribution will look quite similar to the income distribution: most of the probability will be assigned to fairly small claims, with a small chance of a very large one. As an insurance company, if you use the median this large claim behaviour will be smoothed over, perhaps leaving you unprepared for the possibility of extremely large payouts. In this setting, the extreme values are informative and important, and as a result the median's robustness becomes a hindrance to correctly describing the behaviour. 
 
-TODO: Example with binomial probabilities.
+TODO: Another median example?
 
-Note that the binomial can be constructed by summing iid Bernoulli variables. Specifically, if $X_1,\dots,X_n\stackrel{iid}{\sim}\text{Bern}(p)$ (note, $\stackrel{iid}{\sim}$ means ``independent and identically distributed according to...'') then taking $Y = \sum_{i=1}^n X_i$ gives a binomial with $n$ and $p$ distribution. This should be intuitive from the underlying structure: if a Bernoulli comes up $1$ when we get a heads on a single flip of teh coin, then if we flip the coin $n$ times and count the number of heads this is the same as counting the number of $1$'s from each corresponding Bernoulli trial, or in other words, summing them. Once we know this construction, we can use the properties we have previously seen about independent random variables to work out the mean and variance for the distribution. 
+Between the median and the mode we have two measures which capture some sense of expected value, each with their own set of strengths and drawbacks. Neither capture what it is that is referred to as *the* expected value. For this, we need to take inspiration from the median, and consider another way that we may think to find the center of the distribution.
 
-TODO: Aside on the workout of this.
+If the median gives the middle reading along the values sequentially, we may also wish to think about trying to find the "center of gravity" of the numbers. Suppose you take a pen, or marker, or small box of chocolates, and you wish to balance this object on a finger or an arm. To do so, you do not place the item so that half of it sits on one side of the appendage and half on the other: you adjust the location so that half of the mass sits on either side of the appendage.
 
-It is important to note and remember that binomial random variables make several  key assumptions. First, we are counting the number of successes in a **fixed** number of trials. In order for something to be binomially distributed, we must know in advance how many trials there are under consideration. Second, each of these trials must be independent of one another:  the outcome on one cannot impact any of the others. Third, there must be a constant probability of success across all trials. If the probabilities are shifting overtime, then a binomial is no longer appropriate.
+Throughout our probability discussions, we have always referred to probability as mass itself. We use the probability mass function to generate our probability values. This metaphor can be extended when we try to find the center of the distribution. If we imagine placing a mass with weight equal to the probability mass functions value at each value that a random variable can take on, we may ask: where would we have to place a fulcrum to have this number line be balanced? The answer to this question serves as another possible measure of center.
 
-TODO: identify several examples for this.
+It turns out that this notion of center is the one that we are all most familiar with: the simple average. And this simple average is also the conception of expectation which gets bestowed with the name "expected value". Mathematically, the expected value is desirable for many reasons, some of which we will study in more depth later on. One of these desirable features, which stands in contrast with the median, is the comparative ease with which expected values can be computed. For a random variable, $X$, we write the expected value of $X$ as $E[X]$, and assume that $X$ takes values in $\mathcal{X}$ with a probability mass function $p_X(x)$, we get $$E[X] = \sum_{x \in \mathcal{X}} xp_X(x).$$
 
-## Geometric Random Variables
-While the binomial counted the number of successes in a fixed number of trials, we may also be interested in questions relating to how many trials would be needed to see a success. Instead of ``how many heads in $n$ flips of a coin?'' we may ask ``how many flips of a coin to get a head?'' Like the binomial, quantities related to counting the number of trials until a success are related deeply to Bernoulli trials, where once more we are envisioning a sequence of independent and identically distributed trials being performed. However, instead of knowing that we will stop after $n$ trials, here we will only stop once we see a particular result.
+TODO: Example compute simple expected value.
 
-Any random quantities following this type of procedure are said to follow a **geometric distribution**. The geometric distribution is parameterized with a single parameter, $p$, the probability of success. We write $X\sim\text{Geo}(p)$, and have that $$
-p_X(x) = \begin{cases}(1-p)^{x-1}p & x \geq 1 \\ 
-0 & \text{otherwise}.\end{cases}$$ Moreover, $E[X] = \frac{1}{p}$ and $\text{var}(X) = \frac{1-p}{p^2}$. 
+In the case of an equally likely probability model, the expected value becomes the standard average that is widely used. Suppose that there are $n$ options in the sample space, denoted $x_1,\dots,x_n$, then we can write $$E[X] = \sum_{i=1}^n x_i\frac{1}{n} = \frac{1}{n}\sum_{i=1}^nx_i.$$ When the probability models are more complex, the formula is not precisely the standard average - instead, it becomes a weighted average. 
 
-TODO: geometric calculation.
+TODO: Add basic average example.
 
-The geometric distribution differs  from other named distributions that we have considered in that the random variable can take on an infinite number of possible values. The probability that $X$ exceeds a very large threshold shrinks down to $0$, however, there is no maximum value that can be observed. Beyond that assumption, the key set of assumptions are the same as for the binomial: independent and identically distributed Bernoulli trials are run, and are stopped only after the first observed success.
+While less commonly applied than the simple average, a weighted average is familiar to most students for a crucial purpose: grade calculations. If you view the weight of each item in a course as a probability mass, and the grade you scored as the value, then your final grade in the course is exactly the expected value of this distribution. The frequency with which expected values are used make them attractive as a quick summary for the center of a distribution.
 
-In the framing we are using here, the random variable $X$ counts the total number of trials *including* the trail upon which the first  success was reached. Sometimes you may see this distribution parameterized slightly differently, taking $X$ to instead count the number of failures before the first success. To convert between the two framings we need only subtract $1$: there is no meaningful difference in the underlying behaviour.
+TODO: Include pricing calculation showing mean versus median.
 
-TODO: include several geometric examples.
+While the mean provides a useful, intuitive measure of center of the distribution, it is perhaps counter intuitive to name it the expected value. To understand the naming convention it is easiest to consider the application which has likely spurred more development of statistics and probability than any other: gambling.
 
-## Negative Binomial
-A natural way to make the geometric distribution more flexible is to not stop after the first success, but rather after a set number of successes. That is, instead of flipping a coin until we see  a head, we flip a coin until we see $r$ heads. Any random quantity which follows this general pattern is said to follow a **negative binomial distribution**. We use two parameters to describe the negative binomial distribution, $r$ the number of successes  we are looking to achieve, and $p$ the probability of a success on any given trial. We write $X\sim\text{NB}(r,p)$.
+Suppose that there is some game of chance that can pay out different amounts with different probabilities. A critical question for a gambler in deciding whether or not to play such a game is "how much can I expect to earn, if I play?" This is crucial to understanding, for instance, how much you should be willing to pay to participate, or if you are the one running the game, how much you should charge to ensure that you make a profit. 
 
-TODO: Basic example
+If you want to understand what you expect to earn, the intuitive way of accomplishing this is to weight each possible outcome by how likely it is to occur. This is exactly the expected value formula that has been provided, and so the expected value can be thought of as the expected payout of a game of chance where the outcomes are payouts corresponding to each probability. 
 
-If we know that $X\sim\text{NB}(r,p)$, then we immediately get $$p_X(x) = \begin{cases}\binom{x-1}{r-1}p^r(1-p) & x\geq r \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, we have $E[X] = \frac{r}{p}$ and $\text{var}(X) = \frac{r(1-p)}{p^2}$. Setting $r=1$, wee get the same quantities explored in the case of the geometric distribution.
+TODO: Include expected payout calculation.
 
-TODO: Include NB Examples
+This also represents the cost at which a rational actor should be willing to pay to participate. If a game of chance costs more than the expected value to play, in the long run you will lose money. If a game of chance costs less than the expected value, in the long run you will earn money. It is hard to overstate the utility of gambling in developing probability theory, and as such these types of connections are expected.
 
-Like for the geometric distribution, we have taken $x$ to represent the total number of trials considered, including the $r$ successes. (TODO: fix geometric distribution range, start at 1). There  are  alternative parameterizations which would count how many failures occur prior to the $r$th success, which can be viewed as the value we consider minus $r$.
+To interpret the expected value of a random variable, one possibility is using the intuition that we used to derive the result. Notably, the expected value is the center of mass of the distribution, where the masses correspond to probabilities. This means that it is not necessarily an actual central number over the range, but rather that it sits in the weighted middle. While this interpretation is useful in many situations, there are times where the point of balance is a less intuitive description. For these, it can sometimes be useful to frame the expected value as the long-term simple average from the distribution.
 
-TODO: Include many NB examples
+If we imagine observing many independent and identically distributed random variables, then as the number of samples tends to infinity, the expected value of $X$ and the simple average will begin to coincide with one another. That is the distance between $E[X]$ and $\frac{1}{n}\sum_{i=1}^n X_i$ will shrink to $0$. As a result, we can view the expected value as the average over repeated experiments. This interpretation coincides nicely with the description based on games of chance. Specifically, if you were to repeatedly play the same game of chance, the average payout per game will be equal to the expected value, if you play for long enough.
 
-## Hypergeometric Distributions
-One of the use cases demonstrated for the binomial distribution is drawing *with* replacement. In order for the binomial distribution to be relevant it must be the case that the probability of a success is unchanging, and correspondingly, if the process under consideration cosntitutes random draws from a population then these draws must be with replacement as  otherwise the probabilities would shift. Suppose that we are trying to draw the ace of apdes  from a standard, shuffled deck of $52$ cards. If we begin drawing cards without returning them to the deck after each draw, the probability that the next draw is the ace of spades is increasing over the draws. As a result, this type of scenario does not fit into the independent and identically distributed Bernoulli trials that we have been exploring.
+TODO: Include convergence graphic.
 
-Instead, suppose that we are drawing **without** replacement from a finite population. The population consists of two types of items: successes and failures. If we are interested in counting how many successes we seein a set number of draws, then this random quantity will follow a **hypergeometric distribution**. The hypergeometric distribution is parameterized using three different parameters: the number of  items in the population, $N$, the number of these which are considered successes, $M$, adn the total  number of items that are to be drawn without replacement, $n$. We write $X\sim\text{HG}(N,M,n)$.
+Sometimes the value of a random variable needs to be mapped through a function to give the value which is most relevant to us. Consider, for instance, a situation wherein the side lengths of boxes being manufactured by a specific supplier are random, due to incorrectly calibrated tolerances in the machines. The resulting boxes are cubes, but what is of more interest is the volume of the produced box, not the side length. If a box has side length $x$, then its volume will be $x^3$, and so we may desire some way of computing $E[X^3]$ rather than $E[X]$.
 
-TODO: Basic example
+In general, for some function $g(X)$, we may want to compute $E[g(X)]$. It is important to recognize that, generally speaking, $E[g(X)] \neq g(E[X])$. This is a common mistake, and an attractive one, but a mistake nonetheless. If we are unable to simply apply the function to the expected value, then the question of how to compute the expected value remains. Instead of applying the function to overall expected value, instead, we simply apply the function to each value in the defining relationship for the expected value. That is, $$E[g(X)] = \sum_{x\in\mathcal{X}} g(x)p_X(x).$$ This is sometimes referred to as the "law of the unconscious statistician," a name which may be aggressive enough to help remember the correct way to compute the expectation.
 
-If $X\sim\text{HG}(N,M,n)$ then $$p_X(x) = \begin{cases}\frac{\binom{N-M}{n-x}\binom{M}{x}}{\binom{N}{n}} & x\in\{\max\{0,N-M+n\},\dots,\min\{n,M\}\} \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, $E[X] = \frac{nM}{N}$ and the variance is given by $$\text{var}(X) = n\frac{M}{N}\frac{N-M}{N}\frac{N-n}{N-1}.$$
+TODO: Move the next thing up.
+Where the median demonstrated robustness against extreme values in the distribution, the mean (or expected value) does not. For instance, if we consider the distribution of incomes across a particular region, the mean will be much higher than the median, as those families with exceptionally high incomes will not be smoothed over as they were with medians. In this case, the lack of robustness for the expected value will render the mean a less representative summary for the true behaviour of the random quantity. 
 
-TODO: Bigger calculation.
+To see this concretely, consider the difference between a random variable which with equal probability takes a value between $1$ and $10$. This will have $E[X] = 5.5$. Now, if the $10$ is made to be $1,000,000$, the expected value will now be $E[X] = 100,004.5$. This is a far cry from the median which does not change from $5.5$ in either case. This lack of robustness is desirable in the event of the insurance example from the median discussion, but will be less desirable in other settings. 
 
-The hypergeometric is closely linked to the binomial distribution. If we consider the population described in the hypergeometric setup then the probability of a success on the first draw is $p=\frac{M}{N}$. Note that $E[X] = np$, exactly the same as in the binomial. However, plugging this in fro the variance we get $\text{var}(X) = np(1-p)\frac{N-n}{N-1}$. Notice that if $n=1$, this extra term is simply $1$, and for $n > 1$ it will be less than $1$. As a result, the variance of the hypergeometric is smaller than the variance of the corresponding binomial. This makes intuitive sense: in a hypergeometric, the fact that draws are without replacement means that as more draws go on the probability of observing a success increases, reducing the likelihood of long runs of no observed successes. There is a cap on the behaviour of the random quantity thanks to the finiteness of the population. Correspondingly, the multiplicative term by which the varaince shrinks, $\frac{N-n}{N-1}$ is referred  to as the **finite population correction** and it differentiates the behaviour of the hypergeometric and the binomial.
+The mean, median, and mode are the three standard measures of central tendency. They are also referred to as measures of location, and in general, are single values which describe the standard behaviour of a random quantity. Each of the three has merits as a measure, and each has drawbacks for certain settings. The question of which to use and when depends primarily on the question of interest under consideration, rather than on features of the data alone. Often, presenting more than one measure can give a better sense of the distributional behaviour that any one individual will.
 
-Note that as $N$ becomes very, very large, as long as  $n$ is  small by comparison, the finite population correction will approach $1$. in other words: drawing without replacement in a large enough sample behaves  almost exactly the same as drawing with replacement in the sample. The binomial distribution can be used to approximate hypergeometric distributions, so long as the population is very large. Again, this makes sense intuitively. If you have a deck with a million cards in it, and you are going to draw  $2$, whether or not you return the first one to the deck has very little bearing on the probabilities associated with this scenario. Generally, the binomial distribution is easier to work with, so this approximation can be useful in some settings.
+TODO: Include example of choosing measures.
 
-TODO: aside on this for sampling.
+Despite the utility of all three measures, the expected value holds a place of more central importance in probability and statistics. A lot of this has to do with further mathematical properties of the mean. Because of its central role, it is worth studying the expected value in some more depth.
+% END OF MOVING SECTION.
 
-TODO: Many examples of HG random variables.
+TODO: include example using LOTUS.
 
-## Poisson Distribution
-The hypergeometric broke from the pattern in the other distributions that have been discussed by not being represented as the sequence of several Bernoulli random trials. However, it was still characterized by a sequence of repeated trials. While many statistical experiments can be framed in this way, there are of course processes which do not fit well into this framing.
+These functions applied to random variables are often thought of as "transformations" of the random quantities. For instance, we *transformed* a side length into a volume. While the law of the unconscious statistician will apply to any transformation for a random variable, we can sometimes use shortcuts to circumvent its application. In particular, when $g(X) = aX + b$, for constant numbers $a$ and $b$, we can greatly simplify the expected value of the transformation. To see this note \begin{align*}
+E[aX + b] &= \sum_{x\in\mathcal{X}}(ax + b)p_X(x) \\
+&= \sum_{x\in\mathcal{X}}axp_X(x) + bp_X(x) \\
+&= a\sum_{x\in\mathcal{X}}xp_X(x) + b\sum_{x\in\mathcal{X}}p_X(X) \\
+&= aE[X] + b.
+\end{align*} That is, in general, we have that $E[aX + b] = aE[X] + b$. 
 
-Consider, for instance, any process where something is observed for a set period of times and events may or may not occur during this interval. Perhaps you sit on the side of the road and count the number of cars travelling by a particular intersection over the course of an hour. Each car going by is an event, but in this setting the  number of events is the random quantity itself. None of the distributions discussed until this point are suited to this type of process.
+This is particularly useful as linear transformations like $aX+b$ arise very commonly. For instance, most unit conversions are simple linear combinations. If a random quantity is measured in one unit then this result can be used to quickly convert expectations to another.
 
-When we have events which occur at a constant rate, and our interest is in the number of events which are occuring, then we can make use of the **Poisson distribution**. The Poisson distribution takes a single parameter, $\lambda$, which is the average rate of occurence of the events over the time period we are interest in. We write $X\sim\text{Poi}(\lambda)$. 
+TODO: include example of temperature or weight conversion.
 
-TODO: Basic example.
+This type of linear transformation also frequently comes up with games of chance and payouts, or with scoring more generally. For instance, suppose you are betting a certain amount on the results of a coin toss, or that you are taking a multiple choice test that gives $2$ points for a correct answer. 
 
-If $X\sim\text{Poi}(\lambda)$ then $$p_X(x) = \begin{cases} \frac{e^{-\lambda}\lambda^x}{x!} & x \geq 0 \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, $E[X]=\lambda$ and $\text{var}(X) = \lambda$. The Poisson distribution is interesting in that the mean and variance are always equal to one another.
+Measures of central tendency are important to summarize the behaviour of a random quantity. Whether using the mean, median, or mode, these measures of location describe, on average, what to expect from observations of the random quantity. However, understanding a distribution requires understanding far more than simply the measures of location. As was discussed previously, the probability mass function captures the complete probabilistic behaviour of a discrete random variable, it is only intuitive that some information would be lost with a single numeric summary.
 
-TODO: Bigger example
+TODO: Example with equivalent mean, median, and mode.
 
-While the most common applications for the Poisson distribution have to do with the occurences of events throughout time, it is also possible to view this as the occurences of events throughout space. For instance, if there is a manufcturer producing rope, then the number of defects in a set quantity of rope is likely to follow the Poisson distribution. Similarly, in a set geographic area, the number of birds of a particular species is likely to follow a Poisson distribution. For the Poisson distribution, we are typically thinking that there is a rate at which events of interest occur, and we can use the Poisson to model the total number of occurences over some specified interval.
+A key characteristic of the behaviour of a random variable which is not captured by the measures of location is the variability of the quantity. If we imagine taking repeated realizations of a random variable, the variability of the random variable captures how much movement there will be observation to observation. If a random variable has low variability, we expect that the various observations will cluster together, becoming not too distant from one another. If a random variable has high variability, we expect the observations to jump around each time.
 
-TODO: many examples for the use of Poisson.
+Just as was the case with measures of location, there are several measures of variability which may be applicable in any given setting. One fairly basic measure of the spread of a random variable is simply the range of possible values: what is the highest possible value, what is the lowest possible value, and how much distance is there between those two points? This is a fairly intuitive notion, and is particularly useful in the equal probability model over a sequence of numbers. Consider, for instance, dice. dice are typically defined by the range of values that they occupy, say $1$ to $6$, or $1$ to $20$. Once you know the values present on any die, you have a sense for how much the values can move observation to observation. 
 
-## Using Named Distributions
-While many other named, discrete distributions exist, these are likely the most common. When confronted with a problem in the real-world for which you wish to understand the uncertainty associated with it, a reasonable first step is to determine whether a named distribution is well-suited to representing the underlying phenomenon. Is it a situation with enumerated events which are equally likely? Use the discrete uniform. Is it a binary outcome? Use the Bernoulli. Are you counting the number of success in a fixed number of trials? Use the binomial. Are you running repeated trials until a (certain number of) success(es)? Use the geomtric (negative binomial). Are you sampling without replacement? Use the hyper geometric. Are you counting events over a fixed space? Use the Poisson.
+TODO: Include example for the range.
 
-Once identified, the distribution can be used in exactly the same way as any probability mass function. That is, we still require all of the probability rules, event descriptions, and techniques from before. The difference in these cases is that we immediately have access to the correct form of the probability mass function, the expected value, and the variance.
+While the range is an important measure to consider to determine the behaviour of a random variable, it is a fairly crude measurement. It may be the case that, while the extreme values are possible, they are sufficiently unlikely so as to come up very infrequently and not remain representative of the likely spread of observations. Alternative, many random variables have a theoretically infinite range. In these cases, providing the range will likely not provide much utility.
 
-An additional utility with this approach to solving probability questions is that, over time and repeated practice, you can build-up an intuition as to the behaviour of random variables following these various distributions. Probabilities in general are deeply unintuitive: it can be hard to assess, without fomrally working it out, whether an evetn is likely or unlikely, let alone how likey any event is. However, the lack of intuition from our wider experience can be negated almost entirely by building of intuition through the repeated application of these distributions. You can start to gain a sense of how binomial random variables behave, being able to determine just from inspection whether events seem plausible or not. Much of the study of probability and statistics is about building a set of tools that can overcome the flaws in our intuitive reasoning regarding uncertainty. This comes only through practice, however, this framework of named distributions provides a very solid foundation to perform such practice.
+TODO: Include example.
+
+To remedy these two issues, we can think of some techniques for modifying the range. Instead of taking the start and end points to be the lowest and highest values, we can instead consider ranges of values which remain more plausible. A common way to do this is to extend our concept of a median beyond the half-way point. The median of a random variable $X$, is the value, $m$, such that $P(X \leq m) = 0.5$. While there is good reason to care about the midpoint, we can think of generalizing this to be *any* probability.
+
+That is, we could find a number $z$, such that $P(X \leq z) = 0.1$. We could then use this value to conclude that $10\%$ of observations are below $z$, and $90\%$ of observations are above $z$. (TODO: Change this to be "probability of observation"). These values are referred to, generally, as percentiles and they are the natural extension of medians. We will typically denote the $100p$th percentile as $\zeta(p)$, which is the value $P(X \leq \zeta(p)) = p$. Thus, the median of a distribution is $\zeta(0.5)$. 
+
+TODO: Include examples
+
+We can leverage percentiles to remedy some of the issues with the range as a measure of variability. Framed in terms of percentiles, the minimum value is $\zeta(0)$, and the maximum value is $\zeta(1)$. Instead of considering the extreme endpoints, if we consider the difference between more moderate percentiles, we can overcome the major concerns outlined with the range. The most common choices would be to take $\zeta(0.25)$ and $\zeta(0.75)$; these are referred to as the first and third quartiles, respectively. They are named as, taking $\zeta(0.25)$, $\zeta(0.5)$ and $\zeta(0.75)$, the distribution is cut into quarters.
+
+TODO: Include examples.
+
+With the first and third quartiles computed, we can compute the interquartile range, which is given by $\zeta(0.75)-\zeta(0.25)$. Typically, we denote the interquartile range simply as $\text{IQR}$, and like the overall range, it gives a measure of how much spread there tends to be in the data. Unlike the range, however, we can be more certain that both the first and third quartiles are reasonable values around which repeated observations of the random variable would be observed. Specifically, there is a probability of $0.5$ that a value between the first and third quartile will be observed. The larger the $\text{IQR}$, the more spread out these moderate observations will be, and as a result, the more variable the distribution is.
+
+TODO: Write examples.
+
+Both the range and the interquartile range give a sense of the variation in the distribution irrespective of the measures of location for that distribution. Another plausible method for assessing the variability of a distribution is to assess how far we expect observations to be from the center. Intuitively, if observations of $X$ are near the center with high probability, then the distribution will be less variable than if the average distance to the center is larger. 
+
+This intuitive measure of variability is useful for capturing the behaviour of a random variable, particularly when paired with a measure of location. However, we do have to be careful: not all measures of dispersion based on this notion will be useful. Consider the most basic possibility, to consider $X - E[X]$. We might ask, for instance, what is the expected value of this quantity. If we take $E[X - E[X]]$ then note that this a linear combination in expectation since $E[X]$ is just some number. Thus, $E[X-E[X]] = E[X] - E[X] = 0$. In other words, the expected difference between a random variable and its mean is exactly $0$. We thus need to think harder about how best to turn this intuition into a useful measure of spread as the first idea will result in $0$ for all random quantities.
+
+The issue with this procedure is that some realizations are going to be below the mean, making the difference negative, and some will be above the mean, making the difference positive. Our defining relationship for the mean relied on balancing these two sets of mass. However, when discussing the variability of the random variable, we do not much care whether the observations are lower than expected or higher than expected, we simply care how much variability there is around what is expected. To remedy this, we should consider only the distance between the observation and the expectation, not the sign. That is, if $X$ is $5$ below $E[X]$ we should treat that the same as if $X$ is $5$ above $E[X]$.
+
+There are two common ways to turn value into its magnitude in mathematics generally: squaring the number and using absolute values. Both of these tactics are useful approaches to defining measures of spread, and they result in the **variance** when using the expected value of the squared deviations, and the **mean absolute deviation** when using the absolute value. While $E[|X-E[X]|]$ is perhaps the more intuitive quantity to consider, generally speaking it will not be the one that we use. 
+
+In general when we need a positive quantity in mathematics it will typically be preferable to consider the square to the absolute value. The reasons for this are plentiful, but generally squares are easier to handle than absolute values, and as a result become more natural quantities to handle. The variance is the central measure of deviation for random variables, so much so that we give it its own notation, $$\text{var}(X) = E[(X-E[X])^2].$$
+
+Note that if we take $g(X) = (X-E[X])^2$, then the variance of $X$ is the expected value of a transformation. We have seen that to compute these we apply the law of the unconscious statistician, and substitute $g(X)$ into the defining relationship for the expected value, which for the variance gives $$\text{var}(X) = \sum_{x\in\in\mathcal{X}} (x-E[X])^2p_X(x).$$ Prior to computing the variance, we must first work out the mean as the function $g(X)$ relies upon this value.
+
+TODO: Include example for calculating variance.
+
+The higher that an individual random variables variance is, the more spread we expect there to be in repeatedly realizations of that quantity. Specifically, the more spread out around the mean value the random variable will be. A random variable with a low variance will concentrate more around the mean value than one with a higher variance. One confusing part of the variance of a random variable is in trying to assess the units. Suppose that a random quantity is measured in a particular set of units - dollars, seconds, grams, or similar. In this case, our interpretations of measures of location will all be in the same units, which aids in drawing connections to the underlying phenomenon that we are trying to study. However, because the variance is squared, we cannot make the same extensions to it: variance is not measured in the regular units, but in the regular units squared. 
+
+Suppose you have a random time being measured, perhaps the reaction time for some treatment to take effect in a treated patient. Finding the mean or median will give you a result that you can read off in seconds as well. The range and interquartile range both give you the spread in seconds. However, if you work out the variance of this quantity it will be measured in seconds squared - a unit that is challenging to have much intuition about. To remedy this we will often use a transformed version of the variance, called the **standard deviation**, returning the units to be only the original scale. The standard deviation of a random variable is simply given by the square root of the variance, which is to say $$\text{SD}(X) = \sqrt{\text{var}(X)}.$$ We do not often consider computing the standard deviation directly, and so will most commonly refer to the variance when discussing the behaviour of a random variable, but it is important to be able to move seamlessly between these two measures of spread.
+
+TODO: Standard deviation.
+
+When computing the variance of a random quantity, we often use a shortcut for the formula. Consider \begin{align*}
+\text{var}(X) &= \sum_{x\in\mathcal{X}} (x-E[X])^2p_X(x) \\
+&= \sum_{x\in\mathcal{X}} (x^2 - 2xE[X] + E[X]^2)p_X(x) \\
+&=\sum_{x\in\mathcal{X}} x^2p_X(x) - 2E[X]\sum_{x\in\mathcal{X}}xp_X(x) + E[X^2]\sum_{x\in\mathcal{X}}p_X(x)\\
+&= E[X^2] - 2E[X]E[X] + E[X]^2\\
+&= E[X^2] - E[X]^2.
+\end{align*}
+
+This result gives us the identity that the variance of $X$ can be found via $E[X^2] - E[X]^2$. Generally, this is moderately more straightforward to calculate since $X^2$ is an easier transformation than $(X-E[X])^2$. This identity will come back time and time again, with a lot of versatility in the ways that it can be used. Typically, when a variance is needed to be calculated the process is to simply compute $E[X]$ and $E[X^2]$, and then apply this relationship.
+
+TODO: include variance calculation example.
+
+With expectations, we saw that $E[g(X)]$ needed to be directly computed from the definition. The same is true for variances of transformations. Specifically, $\text{var}(g(X))$ is given by $E[(g(X) - E[g(X)])^2]$ which can be simplified with the previous relationship as $E[g(X)^2] - E[g(X)]^2$. Just as with expectations, it is important to realize that $\text{var}(g(X)) \neq g(\text{var}(X))$, and so dealing with transformations requires further work.
+
+
+TODO: Transformation example.
+TODO: Move the following discussion up.
+Beyond being linear over simple transformations, summations in general behave nicely with expectations. Specifically, for any quantities separated by addition, say $g(X) + h(X)$, the expected value will be the sum of each expected value. Formally, \begin{align*}
+E[g(X) + h(X)] &= \sum_{x\in\mathcal{X}} (g(X) + h(X))p_X(x) \\
+&= \sum_{x\in\mathcal{X}} g(X)p_X(x) + h(x)p_X(x) %todo fix capitals\\
+&= \sum_{x\in\mathcal{X}} g(x)p_X(x) + \sum_{x\in\mathcal{X}} h(x)p_X(x) \\
+&= E[g(X)] + E[h(X)].
+\end{align*}
+Behaving well under linearity is one of the very nice properties of expectations. It will come in useful when dealing with a large variety of important quantities, and as we will see shortly, this linearity will also extend to multiple different random quantities.
+
+TODO: add example of linearity.
+%End section to move.
+
+With expectations, we highlighted linear transformations as a special case, with $g(X) = aX + b$. For the variance, the linear transformations are also worth distinguishing from others. To this end, we can apply the standard identity for the variance, giving \begin{align*}
+E[(aX+b)^2] &= E[a^2X^2 + 2abX + b^2] \\
+&= E[a^2X^2] + E[2abX] + E[b^2]\\
+&= a^2E[X^2] + 2abE[X] + b^2.
+\end{align*}
+
+TODO:Move upwards
+Note that part of the property of the linearity of expectation that we can immediately see if that the expected value of any constant is always that constant. If we take $a = 0$, then we see that $E[aX + b] = E[b] = b$. Thus, any time that we need to take the expected value of any constant number, we know that it is just that number.
+%End upwards movement
+
+Next, we note that $E[aX + b] = aE[X] + b$ and so \begin{align*}
+E[aX + b]^2 &= (aE[X] + b)^2 \\
+&= a^2E[X]^2 + 2abE[X] + b^2.\end{align*} Differencing these two quantities gives $$a^2E[X^2] + 2abE[X] + b^2 - a^2E[X]^2 - 2abE[X] - b^2 = a^2(E[X^2] - E[X]^2).$$ By noting that $E[X^2] - E[X]^2$, we can complete the statement that $$\text{var}(aX + b) = a^2\text{var}(X).$$
+
+Thus, when applying a linear transformation, only the multiplicative constant matters , and it transforms the variance by a squared factor. This should make some intuitive sense that the additive constant does not change anything. If we consider that variance is a measure of spread, adding a constant value to our random quantity will not make it more or less spread out, it will simply shift where the spread is located. This is not true of the mean, which measures where the center of the distribution is, which helps explain why the result identities are different.
+
+TODO: Example using this.
+
+In the same way that the linearity of expectation demonstrates that the expected value of any constant is that constant, we can use this identity to show that the variance of constant is zero. However, we can also reason to this based on our definitions so far. Suppose that we have a random variable which is constant. This seems to be an oxymoron, but it is perfectly well defined. A constant $b$ can be seen as a random variable with probability distribution $p_X(x) = 1$ if $x=b$ and $p_X(x) = 0$ otherwise. In this case, the expected value is going to be $E[X] = 1(b) = b$, and $E[X^2] = 1(b)^2 = b^2$. As a result, we see that $E[b] = b$, as previously stated, and $\text{var}(b) = E[X^2] - E[X]^2 = b^2 - b^2 = 0$. From an intuitive perspective, there is no variation around the mean of a constant: it is always the same value. As a result, when taking the variance, we know that it should be $0$. 
+
+Unlike the expectation, the variance of additive terms will not generally be the addition of the variances themselves. That is, we cannot say that $\text{var}(g(X) + h(X)) = \text{var}(g(X)) + \text{var}(h(X))$, as a general rule. Writing out the definition shows issue with this: $$E[(g(X) + h(X))^2] = E[g(X)^2] + 2E[g(X)h(X)] + E[h(X)^2].$$ The first and third terms here are nicely separated and behave well. However, the central term is not going to be easy to simplify, in general. You can view $g(X)h(X)$ as a function itself, and so $E[g(X)h(X)] \neq E[g(X)]E[h(X)],$$ in general. Instead, this will typically need to be worked out for any specific set of functions.
+
+## Conditional and Joint Expectations and Variances
+Up until this point we have considered the marginal probability distribution when exploring the measures of central tendency and spread. These help to summarize the marginal behaviour of a random quantity, capturing the distribution of, for instance, $X$ alone. When introducing distributions, we also made a point to introduce the conditional distribution as one which is particularly relevant when there is extra information. The question "what do wwe expect to happen, given that we have an additional piece of information?" is not only well-defined, but it is an incredibly common type of question to ask. To answer it, we require **conditional expectations**.
+
+TODO: Include set of questions relating to conditional expectation.
+
+In principle, a conditional expectation is no more challenging to calculate than a marginal expectation. Suppose we want to know teh expected value of $X$ assuming that we know that a second random quantity, $Y$ has taken on the value $y$. We write this as $E[X|Y=y]$, and all we do is replace $p_X(x)$ with $p_{X|Y}(x|y)$ in the defining relationship. That is $$E[X|Y=y] = \sum_{x\in\mathcal{X}}xp_{X|Y}(x|y).$$ In a sense, we can think of the conditional distribution of $X|Y=y$ as simply being a distribution itself, and then work with that no differently. The conditional variance, which we denote $\text{var}(X|Y=y)$ is also exactly the same.
+
+TODO: Include an example.
+
+Above we supposed that we knew that $Y=y$. However, sometimes we want to work with the conditional distribution more generally. That is, we want to investigate the behaviour of $X|Y$, without yet knowing what $Y$ equals. We can use the same procedure as above, however, this time we leave $Y$ unspecified. We denote this as $E[X|Y]$, and this expression will be (in general) a function of $Y$. Then, whenever a value for $Y$ is observed, we can simply specify $Y=y$, deriving the specific value. In practice, we will typically compute $E[X|Y]$ rather than $E[X|Y=y]$, since once we have $E[X|Y]$ we can easily find $E[X|Y=y]$ for *every* value of $y$.
+
+TODO: Show example.
+
+Since $E[X|Y]$ is a function of an unknown random quantity, $Y$, $E[X|Y]$ is also a random variable. It is a transformation of $Y$, and as such, it will have some distribution, some expectation, and some variance itself. This is often a confusing concept when it is first introduced, so to recap: $X$ and $Y$ are both random variables; $E[X] and $E[Y]$ are both constant, numerical values describing the distribution of $X$ and $Y$; $E[X|Y=y]$ and $E[Y|X=x]$ are each numeric constants which summarize the distribution of $X|Y=y$ and $Y|X=x$ respectively; $E[X|Y]$ and $E[Y|X]$ are functions of $Y$ and $X$, respectively, and can as such be seen as transformations of (and random quantities depending on) $Y$ and $X$ respectively.
+
+We do not often think of the distribution of $E[X|Y]$ directly, however, there is a very useful result about both its expected value and its variance, which will commonly be exploited. Specifically, if we take the expected value of $E[X|Y]$ we will find that $E[E[X|Y]] = E[X]$. Note that since $E[X|Y] = g(Y)$ for some transformation, $g$, the outer expectation is taken with respect to the distribution of $Y$. Sometimes when this may get confusing we will use notation to emphasize this fact, specifically, $E_Y[E_{X|Y}[X|Y]] = E_X[X]$. This notation is not necessary, but it can clarify when there is much going on, and is a useful technique to fallback on. \begin{align*}
+E_Y[E[X|Y]] &= \sum_{y\in\mathcal{Y}} E[X|Y]p_Y(y) \\
+&= \sum_{y\in\mathcal{Y}}\left(\sum_{x\in\mathcal{X}}xp_{X|Y}(x|Y)\right)p_Y(y) \\
+&= \sum_{y\in\mathcal{Y}}\sum_{x\in\mathcal{X}}x\frac{p_{X,Y}(x,y)}{p_Y(y)}p_Y(y)\\
+&= \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}xp_{X,Y}(x,y)\\
+&= \sum_{x\in\mathcal{X}} xp_X(x)\\
+&= E[X].\end{align*}
+
+TODO: Include example.
+
+This property, that $E[E[X|Y]] = E[X]$ is important enough that it receives its own name: **the law of total expectation**. In the same way that it is sometimes easier to first condition on $Y$ in order to compute the marginal distribution of $X$ via applications of the law of total probability, so too can it be easier to first work out conditional expectations, and then take the expected value of the resulting expression. This adds on to the so-called "conditioning arguments" that were discussed previously, allowing a technique to work out the marginal mean indirectly.
+
+TODO: Show example use case of LOTE.
+
+While the conditional expectation is used quite prominently, the conditional variance is less central to the study of random variables. As discussed, briefly, the conditional variance is given by the same variance relationship, replacing the marginal probability distribution with the conditional one (just as with expectations). Just as with expectations, $\text{var}(X|Y=y)$ is a numeric quantity given by $E[(X-E[X|Y=y])^2|Y=y]$ and $\text{var}(X|Y)$ is a random variable given by $E[(X-E[X|Y])^2|Y]$. This means that when working with the general, $\text{var}(X|Y)$, we can also consider taking expectations of the resulting transformation.
+
+TODO: Include examples.
+
+A final result relating to conditional expectations and variances connects the two concepts. This is known as **the law of total variance**. For any random variables $X$ and $Y$, we can write $$\text{var}(X) = E[\text{var}(X|Y)] + \text{var}(E[X|Y]).$$ This result can be viewed as decomposing the variance of a random quantity into two separate components, and comes up again in later statistics courses. At this point we can view this as a method for connecting the marginal distribution through the conditional variance nad expectation. 
+
+TODO: Examples of this.
+
+The final set of techniques to consider for now relate to making use of the joint distribution between $X$ and $Y$. Specifically, if we have any function of two random variables, say $g(X,Y)$ and we wish to find $E[g(X,Y)]$. This follows all of the expected derivations that we have used so far, this time replacing the marginal with the joint distribution. That is, $$E[g(X,Y)] = \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}g(x,y)p_{X,Y}(x,y).$$ For instance, if we want to consider the product of two random variables, we could use this technique to determine $E[XY]$. The variance extends in the same manner as well.
+
+TODO: Include example.
+
+This defining relationship allows us to work out the expected value of a linear combination of two random variables. That is \begin{align*}
+E[X+Y] &= \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}(x+y)p_{X,Y}(x,y) \\
+&= \sum_{x\in\mathcal{X}}x\sum_{y\in\mathcal{Y}}p_{X,Y}(x,y) + \sum_{y\in\mathcal{Y}}y\sum_{x\in\mathcal{X}}p_{X,Y}(x,y) \\
+&= \sum_{x\in\mathcal{X}}xp_X(x) + \sum_{y\in\mathcal{Y}}yp_Y(y) \\
+&= E[X] + E[Y].\end{align*}
+
+The same property does not apply with variances, at least not in general. To see this, consider that \begin{align*}
+E[(X+Y-E[X]-E[Y])^2] &= E[((X-E[X])+(Y-E[Y]))^2] \\
+&= E[(X-E[X])^2] + E[(Y-E[Y])^2] + 2E[(X-E[X])(Y-E[Y])] \\
+&= \text{var}(X) + \text{var}(Y) + 2E[(X-E[X])(Y-E[Y])].\end{align*} The term that impedes the linear relationship, $E[(X-E[X])(Y-E[Y])]$ can be computed as any joint function can be. This quantity, however, is particularly important when considering the relationship between two random variables. This is called the **covariance** and it is a measure of the relationship between $X$ and $Y$. Typically we write $E[(X-E[X])(Y-E[Y])] = \text{cov}(X,Y)$ so that $$\text{var}(X+Y) = \text{var}(X) + \text{var}(Y) + 2\text{cov}(X,Y).$$
+
+TODO: Include example.
+
+The covariance behaves similarly to the variance. We can see directly from the definition that $\text{cov}(X,X) = \text{var}(X)$. Moreover, using similar arguments to those used for the variance, we can show that $$\text{cov}(aX+b,cY+d) = ac\text{cov}(X,Y).$$ Covariances remain linear, so that $$\text{cov}(X+Y,X+Y+Z)=\text{cov}(X,X)+\text{cov}(X,Y)+\text{cov}(X,Z)+\text{cov}(Y,X)+\text{cov}(Y,Y)+\text{cov}(Y,Z).$$ These make covariances somewhat nicer to deal with than variances, and on occasion it may be easier to think of variances as covariances with themselves.
+
+TODO: Example? Maybe.
+
+It is worth considering, briefly, the ways in which conditional and joint expectations interact. Namely, if we know that $Y=y$, then the transformation $g(X,y)$ only has one random component, which is the $X$. As a result, taking $E[g(X,Y)|Y=y] = E[g(X,y)|Y=y]$. If instead we use the conditional distribution without a specific value, we still have that $Y$ is fixed within the expression, it is just fixed to an unknown quantity. That is $E[g(X,Y)|Y]$ will be a function of $Y$. We saw before that $E[E[X|Y]] = E[X]$, and the same is true in the joint case. Thus, one technique for computing the joint expectation, $g(X,Y)$ is to first compute the conditional expectation, and then compute the marginal expectation of the resulting quantity.
+
+TODO: example.
+
+## Independence in all of this
+Whenever we can assume independence of random quantities, this allows us to greatly simplify teh expressions we are dealing with. Recall that the key defining relationship with independence is that $p_{X,Y}(x,y) = p_X(x)p_Y(y)$. Suppose then that we can write $g(X,Y) = g_X(X)g_Y(Y)$. For instance, for the covariance we have $g(X,Y)=(x-E[X])(Y-E[Y])$ and so $g_X(X) = X-E[X]$ and $g_Y(Y) = Y-E[Y]$. If we want to compute $E[g(X,Y)]$ then we get \begin{align*}
+E[g(X,Y)] &= E[g_X(X)g_Y(Y)] \\
+&= \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}g_X(x)g_Y(y)p_{X,Y}(x,y) \\
+&= \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}g_X(x)g_Y(y)p_X(x)p_Y(y) \\
+&=\sum_{x\in\mathcal{X}}g_X(x)p_X(x)\sum_{y\in\mathcal{Y}}g_Y(y)p_Y(y)\\
+&= E[g_X(X)]E[g_Y(Y)].\end{align*} Thus, whenever random variables are independent, we have the ability to separate them over their expectations.
+
+TODO: example.
+
+Consider what this means, in particular, for the covariance between independent random variables. If $X\perp Y$ then \begin{align*}
+\text{cov}(X,Y) &= E[(X-E[X])(Y-E[Y])] \\
+&= E[(X-E[X])]E[(Y-E[Y])] \\
+&= (E[X]-E[X])(E[Y]-E[Y]) \\
+&= 0.\end{align*} That is to say, if $X$ and $Y$ are independent, then $\text{cov}(X,Y)=0$. As a result of this, for independent random variables $X$ and $Y$ we also must have that $\text{var}(X+Y)=\text{var}(X)+\text{var}(Y)$. It is critical to note that this relationship does not go both ways: you are able to have $\text{cov}(X,Y) = 0$ even if $X\not\perp Y$.
+
+TODO: Include example of independence.
+
+While we have primarily focused on joint and conditional probabilities with two random variables, the same procedures and ideas apply with three or more as well. The relevant joint distribution, or conditional distribution would simply need to be substituted in definitions. Often the complexity here becomes a matter of keeping track of which quantities are random, and which are not. For instance, if we have $X,Y,Z$ as random variables, then $E[X|Y,Z]$ is a random function of $Y$ and $Z$. We will still have that $E[E[X|Y,Z]] = E[X]$, however, the outer expectation is now the joint expectation with respect to $Y$ and $Z$. As a result, we can also write $E[E[X|Y,Z]|Y]$. The first expectation will be with respect to $X|Y,Z$, while the outer expectation is with respect to $Z|Y$. This becomes a useful demonstration for when making the distribution of the expectation explicit helps to clarify what is being computed. As a general rule of thumb, the innermost expectations will always have more conditioning variables than the outer ones: each time we step out, we peel back one of hte conditional variables until the outermost is either a marginal (or joint). This will help to keep things clear.

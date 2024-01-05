@@ -187,7 +187,7 @@ Fortunately for us there are some strategies for simplifying these problems down
 
 Another way of framing this is that we have to make three sequential decisions: which of the $4$ sweaters, which of the $3$ pants, and which of the $2$ shoes are to be worn? When we do this we multiply through the number of alternatives at each decision point to get the total number of combinations. This is known as the **product rule for counting**.
 
-:::{#def-multiplication-rule}
+:::{#def-product-rule-count}
 ## Product Rule for Counting
 The product rule for counting states that, when there are a sequence of $k$ decisions to be made, and for each decision $j=1,\dots,k$, there are $n_j$ options, then the total number of combinations will be $$N = n_1\times n_2\times\cdots\times n_k.$$
 :::

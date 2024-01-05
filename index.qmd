@@ -1,11 +1,77 @@
 # Preface {.unnumbered}
 
-## What is this Course?
-TODO: Write this.
+## What are these notes?
+These notes are being written to supplement the Winter 2024 offering of STAT 1793 at the University of New Brunswick on the Saint John campus. These are intended to provide the complete set of notes required to be successful in the course, along with a series of examples. Note that, if you are a student in the offering of STAT 1793, the specific material that we cover and focus on may be a subset of these notes: we will be crafting our path through them together, as a class, and as such, not all material will be equally relevant. It is important to check the course website and to listen in lecture to ensure that you are always aware of what is being emphasized, what will be covered on the assessments, and so forth.
+
+Moreover, it is important to note that these notes are a work-in-progress. As of today (January 5, 2024), the material through to Chapter 5 has been made up-to-date. Further chapters will be added throughout term. Additionally, some of the completed chapters may be revised in an attempt to add clarity, fix mistakes or typos, and to better format or sequence the material. If at any point you have comments, questions, suggestions, or corrections to these notes, please do reach out! They are intended to be a helpful resource to ensure your success in the course, and to help your probability and statistics skills into the future.
+
+One final note is that our coverage of concepts throughout STAT 1793 reflects my personal biases and proclivities towards what is important in a first course in probability and statistics. Compared to others I likely have a larger emphasis on probability, leaving concepts more tied to statistics to a second course (e.g., STAT 2793). This is reflected both in the ordering of material (we start at Probability not at Statistics), and in the weight that each topic will be given. It is my belief that you need to be able to fluently speak the language of probability in order to study statistics, and that is where we will put our focus. However, this does mean that if you have impressions or content from another offering of the course, they may be less well-suited to the specific range of topics we will cover. The material is all the same, and if they help you learn, by all means; it is however important to emphasize that what is highlighted will likely be different.
 
 ## Using These Notes 
-TODO: Write this.
+These notes are best viewed online. You can access them from anywhere at [https://dylanspicker.github.io/STAT1793-course-notes/index.html](https://dylanspicker.github.io/STAT1793-course-notes/index.html). Viewing online will allow you to take advantage of interactivity (such as through code blocks and solutions hiding), the search feature (visible in the left hand margin), as well as better overall formatting. There is a version of these notes in PDF format available. To download them, press the PDF icon button (<i class="bi bi-file-pdf"></i>) next to the note title in the left hand bar. The PDF notes contain all the same content, and will be updated alongside the web notes. The formatting of the PDF document may be less visually appealing compared to the web notes. Though an effort will be made to ensure that everything remains legible, and well-formatted, the aesthetics of these notes will be a lower priority than those available on the web.
+
+To successfully use these notes, I would recommend a several step procedure:
+
+1. Prior to the lecture where the material will be covered, read through the sections that are to be covered. For examples, do not read the solution, and instead try to think of how the example can be solved (perhaps trying to solve it yourself).
+2. Attend lecture and be engaged. Our lectures will follow along with the course notes rather closely, including doing as a class many of the example problems. As a result, this will reemphasize what you have read.
+    * Note, by reading *before* you come to class you will be seeing the material for a second time, allowing you to better process it. 
+    * Additionally, this will allow you to better follow the parts that were confusing in the notes, and be more prepared to ask questions of me throughout the lecture.
+3. Return to the notes after class to ensure that everything has made sense. At this point try solving the example problems directly without referencing the solutions at all.
+    * Only once you've gotten a solution to the problem should you check if it is correct. When checking, only look as far as any mistakes that have been made, and then try the problem again.
+    * Note: struggling with problems is a key component of learning in any mathematical discipline. It is only by struggling to understand how the pieces fit together that you will develop a proper understanding for yourself.
+    * Looking at solutions will often undermine your own understanding. It is a much different process to look at a solution and understand why it is correct, than it is to determine a solution for yourself.
+4. Ask questions, attend office hours, and send emails as is required to ensure you are fully successful in the course!
+
+Throughout the notes there will be references to computer code in a programming language known as R. R is the most common language used for statistics by practicing statisticians, and it is a great utility for many of the types of problems we will be considering in this course. You are not expected to be able to write R code throughout the course, however, there is plenty of material throughout the notes to ensure that you will be able to read and run R code. This will be required for solving certain problems, and will make the process of statistics far nicer to engage with. If you are using the web notes this code can all be run directly in the browser. If you are using the PDF notes, the code and output is still provided. In either case, I would suggest getting R running on your own device, if possible. It is free to [download and install](https://cran.rstudio.com/). I would also suggest installing [R Studio](https://posit.co/download/rstudio-desktop/), which is a program specifically designed for writing and running R code with a lot of nice features. 
 
 ## Some Mathematical Background
+These notes (and this course more broadly) require high school mathematics to complete. There is no calculus specifically required. The assumption is that you will be comfortable manipulating mathematical expressions, solving basic equations, using a calculator, and so forth. The following are a handful of topics which will come up throughout the course that are assumed to be known, presented here in brief as a quick reference.
+
+### Logarithms and Exponent Rules
+Recall that if $a^x = b$, then we can solve for $x$ through the use of logarithms. Specifically, $x = \log_a(b)$, where we read this as "the logarithm with base $a$ of $b$." The expression means that "$x$ is the exponent we put on $a$ to get $b$." In this course^[And in most math courses beyond a certain point.] we use the notation $\log(x)$ to represent the **natural logarithm**. The natural logarithm is $\log_e(x)$, where $e \approx  2.71828$ is Euler's number. The **exponential function** is given by $e^{x} = \exp(x)$. Which notation is used depends on the specific setting, but both are equivalent. 
+
+Recall further the following exponent and log rules:\begin{align*}
+a^b\times a^c &= a^{b + c} \\
+a^b\times c^b &= (ac)^b \\
+a^{-b} &= \frac{1}{a^b} \\
+\left(a^{b}\right)^c &= a^{bc} \\
+a^0 &= 1 \\
+\log(ab) &= \log(a) + \log(b) \\
+\log(a^b) &= b\log(a) \\
+\log(1) &= 0 \\
+\log(e) &= 1.
+\end{align*}
+
+### Summation and Product Notation
+If we wish to add up a series of numbers, $x_1,x_2,\dots,x_n$ then we can use summation notation to record this. Specifically, $$x_1 + x_2 + \cdots + x_n = \sum_{i=1}^n x_i.$$ Here $i$ is an indexing variable just used to keep track of which number we are currently working on. Note that the following quantities will hold \begin{align*}
+    \sum_{i=1}^n (x_i + y_i) &= \sum_{i=1}^n x_i + \sum_{i=1}^n y_i \\
+    \sum_{i=1}^n (x_i - y_i) &= \sum_{i=1}^n x_i - \sum_{i=1}^n y_i \\
+    \sum_{i=1}^n cx_i &= c\sum_{i=1}^n x_i.
+\end{align*} 
+
+We can also use a similar shorthand to discuss repeated products. That is, if we want to multiply $x_1,x_2,\dots,x_n$, then we can write $$x_1\times x_2\times\cdots\times x_n = \prod_{i=1}^n x_i.$$ Again, $i$ is used as an indexing variable to keep track of what value is currently being multiplied. The following results hold \begin{align*}
+    \prod_{i=1}^n x &= x^n \\
+    \prod_{i=1}^n b^{x_i} &= b^{\sum_{i=1}^n x_i} \\
+    \prod_{i=1}^n cx_i &= c^n\prod_{i=1}^n x_i.
+\end{align*}
+
+### Other Important Points
+The following are some additional points that are useful to know, but which do not necessarily fit together nicely.
+
+* For any two values $x$ and $y$, we get $(x + y)^2 = x^2 + 2xy + y^2$.
+* The integers are the set of all whole numbers, \{0, \pm1,\pm2,\dots\}$. We will often denote the set of integers using $\mathbb{Z}$.
+* The natural numbers are the set of all counting numbers, either $\{0,1,2,3,\dots\}$ or else $\{1,2,3,4,\cdots\}$ depending on the source. We often denote the set using $\mathbb{N}$.
+* The real numbers are the set of all numbers that you think of when thinking of numbers. They include the integers, and any fractions, and anything that cannot be written as a fraction (like $\pi$ and $e$) as well. We denote the real numbers as $\mathbb{R}$.
+* Intervals of real numbers are denoted as $(a,b)$ or $[a,b]$ (or a mixture, giving $[a,b)$ or $(a,b]$). A round bracket means that the endpoint is **not** included in the set, where a square bracket means that it is. That is, a value of $x$ is in $(a,b)$ if $a < x < b$, where it is in $[a,b]$ if $a \leq x \leq b$.
+* We write "$x$ is in the interval $(a,b)$" mathematically using the $\in$ symbol. Specifically, $x \in (a,b)$.
+* Infinity ($\infty$) is not a number. Rather, it is a statement regarding the lack of a bound. When we say that something is infinity, or infinite, we simply mean that it is larger than any of the natural numbers. If you were to be given any number, then infinity will be larger than that.
+* **Limits:** note that, while limits are from calculus, they are useful for formally understanding a few concepts in class. The limit of a function, $f(x)$, is simply the value that the function approaches as $x$ approaches a specific point. So, for instance, $\lim_{x\to a} f(x)$ is the value that $f(x)$ approaches as $x$ approaches $a$. If $f(a)$ exists then it is simply $f(a)$. However, $f(a)$ may not exist, at which point, we look at where the function is tending to. 
+* **Infinite Limits:** Of specific importance to us are infinite limits. Specifically, $$\lim_{x\to\infty}f(x)$$ captures the beahviour of the function $f(x)$ as $x$ gets larger and larger. In many cases, $f(x)$ will approach some specific value, which we assign to be the limiting value of the function.
 
 ## Additional Resources
+The following are helpful resources which may be used to supplement the material in the class. If you have any suggested resources, please feel free to send them to me, and I will include them here.
+
+1. [Open Intro Statistics](https://www.openintro.org/book/os/).
+2. [Probability Course](https://www.probabilitycourse.com/).
+3. [Introduction to R](https://bookdown.org/f_lennert/introduction-to-r/).
+4. [Learning Statistics with R](https://learningstatisticswithr.com/).

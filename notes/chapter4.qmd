@@ -27,7 +27,7 @@ The conditional probability of an event $A$ given an event $B$, is the probabili
 
 Unlike in the case of marginal probabilities, conditional probabilities allow us to *condition* on extra pieces of information. Instead of asking "what is the probability of this event", we instead ask, "given that we know this piece of information, what is the probability of this event?" Joint probabilities ask "what is the probability that both of these events occur simultaneously" which is distinct in that we do not have any additional information about the state of the world when working with joint probabilities. The subtle distinction becomes quite powerful, both in terms of manipulating and working with probabilities, but also in terms of expressing the correct events of interest for ourselves. 
 
-To make use of conditional probabilities, we will think of the process of **conditioning** on one or more events. We will talk of the probability of $A$ conditional on $B$, where $A$ and $B$ are two events of interest. Intuitively, this it the probability of $A$ happening, supposing that we know that $B$ has already happened. 
+To make use of conditional probabilities, we will think of the process of *conditioning* on one or more events. We will talk of the probability of $A$ conditional on $B$, where $A$ and $B$ are two events of interest. Intuitively, this it the probability of $A$ happening, supposing that we know that $B$ has already happened. 
 
 :::{#exm-basic-conditional-probability}
 ## Six from the Sum
@@ -149,7 +149,7 @@ While sometimes we will want to work out the conditional probability using our k
 
 To do so, we can simply rearrange the defining relationship of conditional probability, to solve for the quantities of interest. Because of the importance of this procedure, we actually give this mostly straightforward rearrangement a special name. 
 
-:::{#def-multiplication-rule}
+:::{.callout-tip icon="false"}
 ## Multiplication Rule
 The multiplication rule states that, for two events $A$ and $B$ where $P(B) > 0$, $$P(A\cap B) = P(A|B)P(B).$$ 
 :::
@@ -210,7 +210,7 @@ B_3 &= \{(\text{T},\text{H},\text{T}),  (\text{H},\text{T},\text{H})\}.
 ::::
 :::
 
-Partitions allow us to move from discussions regarding the joint probability of events to the marginal probability of an event. Suppose that we have a partition given by $B_1, B_2, \dots$. This means that our full sample space can be cut up into these various non-overlapping sets, and every single outcome belongs to exactly one of them. Now, suppose we are interested in some other event $A$. We can ask: how can $A$ occur, in terms of the events $B_1, B_2, \dots$? Since every single event in the sample space belongs to exactly one of our partitioning sets, then it **must** be the case that every single event in $A$ belongs to exactly one of our partitioning sets. This means that if we consider $A\cap B_j$, for all $j$, then every single event in $A$ must belong to exactly one of these. In other words, it must be the case that $$A = \bigcup_{j} A\cap B_j,$$ for any partition $B_1, B_2,\dots$. Moreover, every single $A\cap B_j$ is disjoint from every other $A \cap B_\ell$, whenever $\ell \neq j$. This means that we can use the axiom of additivity to give $$P(A) = P\left(\bigcup_{j} A\cap B_j\right) = \sum_{j} P(A \cap B_j).$$ In other words: the marginal probability of $A$ can be found by summing over **all** joint probabilities between $A$ and sets that form a partition. This argument gives the **law of total probability**.
+Partitions allow us to move from discussions regarding the joint probability of events to the marginal probability of an event. Suppose that we have a partition given by $B_1, B_2, \dots$. This means that our full sample space can be cut up into these various non-overlapping sets, and every single outcome belongs to exactly one of them. Now, suppose we are interested in some other event $A$. We can ask: how can $A$ occur, in terms of the events $B_1, B_2, \dots$? Since every single event in the sample space belongs to exactly one of our partitioning sets, then it **must** be the case that every single event in $A$ belongs to exactly one of our partitioning sets. This means that if we consider $A\cap B_j$, for all $j$, then every single event in $A$ must belong to exactly one of these. In other words, it must be the case that $$A = \bigcup_{j} A\cap B_j,$$ for any partition $B_1, B_2,\dots$. Moreover, every single $A\cap B_j$ is disjoint from every other $A \cap B_\ell$, whenever $\ell \neq j$. This means that we can use the axiom of additivity to give $$P(A) = P\left(\bigcup_{j} A\cap B_j\right) = \sum_{j} P(A \cap B_j).$$ In other words: the marginal probability of $A$ can be found by summing over **all** joint probabilities between $A$ and sets that form a partition. This argument gives the law of total probability.
 
 ![This graphic shows the argument that summing over the joint probabilities between an event and a partition gives the full marginal probability. Note that $B_1,\dots,B_7$ forms a partition of the space where every possible outcome is contained in exactly one of these sets. Then, if we take an arbitrary event $A$, we can divide $A$ into the components that intersect with each partitioning set, namely $A \cap B_1$, $A \cap B_2$, and so forth.](/graphics/ch4-basic-partition){#fig-basic-partition}
 

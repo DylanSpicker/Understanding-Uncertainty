@@ -21,8 +21,9 @@ book:
       - notes/chapter3.qmd
       - notes/chapter4.qmd
       - notes/chapter5.qmd
-      - notes/chapter6.qmd
-      - notes/chapter7.qmd
+      # - notes/chapter6.qmd
+      # - notes/chapter7.qmd
+      # - notes/chapter8.qmd
     - part: "Part 2: Statistics"
 
 engine: knitr
@@ -45,11 +46,11 @@ format:
     fig-pos: H
     include-in-header: macros.tex
 
-comments:
-  hypothesis: 
-    theme: classic
-    enableExperimentalNewNoteButton: true 
-    showHighlights: whenSidebarOpen
+# comments:
+#   hypothesis: 
+#     theme: classic
+#     enableExperimentalNewNoteButton: true 
+#     showHighlights: whenSidebarOpen
 
 execute:
   eval: true
