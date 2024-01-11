@@ -1,0 +1,117 @@
+## The Named Discrete Distributtions
+So far, our discussion of probability distributions and their summaries has centered on general results for arbitrary probability mass functions. The basic premise has been that, by knowing a probability mass function, you are able to understand the complete behaviour of a random quantity. Directly from this mass function we are able to derive summaries for the behaviour, for instance describing the location and variability of the random variable. In short by knowing the probability mass function (and to a lesser extent, the expected value and variance), we immediately understand how the random variable behaves. We have not, however, spent much time discussing where the probability mass functions come from.
+
+We have, indirectly, seen one fairly general probability mass function, the one deriving from the equally likely outcomes model. This probability mass function is completely defined by the set of possible values that the random variable can take on. Suppose that we restrict our attention to the sample space being a set of $k$ integers from $a$ through to $a+k$. Note that this assumption is not actually restrictive: if you have any $k$ items you can simply label each of the items one of the numbers between $1$ and $k$ and take $a=1$. When setup in this way, this distribution is often referred to as the **discrete uniform distribution**. Typically, we will use the values for the lower bound ($a$) and the upper bound ($b=a+k$) to define *which* discrete uniform we are discussing. If we say that $X$ follows a discrete uniform distribution with parameters $a$ and $b$ we are say that $X$ is a random variable which has an equal probability of taking any of the integers from $a$ to $b$. Put different, we have that $$p_X(x) = \begin{cases} \frac{1}{b-a+1} & x \in\{a,a+1,\dots,b\}\\ 0 & \text{otherwise}.\end{cases}$$
+
+Knowing the probability mass function of $X$, we also immediately can work out the expectation and variance for the random variable. Doing this results in $E[X] = \frac{a+b}{2}$ and $\text{var}(X) = \frac{(b-a+1)^2-1}{12}$ (see the following derivation!). This means that just by knowing that a random variable follows a discrete uniform distribution, we immediately know (or can look up) any of the properties that we have discussed up until this point. 
+
+TODO: Include derivation.
+
+This is a partiuclarly powerful realization. There are many real-world quantities  which we immediatley know  follow a discrete uniform distribution. For instance, rolling a die. In the case of a die roll we take $a=1$, $b=6$, and immediately understand that $E[X] = 3.5$, that $\text{var}(X) = \frac{17}{6}$, and that the probability of each value is $\frac{1}{6}$. Of course,we could do the same calculations for any die, with any sides labeled in consecutive order. 
+
+TODO: Include examples of real-world discrete uniform settings.
+
+Despite the fact that the discrete uniform is fairly prominent in terms of real-world utility, it is also a comparatively simple distribution. However, the main point of this discussion is not actually to introduce the discrete uniform, but rather to introduce the concept of a **named distribution**. The basic premise here is that there are processes in the world which occur frequently enough, in a diverse array of settings, with the same underlying structure ot their uncertainty. If we can study one version of these general problems, then we can extract the mass function, expectation, and varaince and we are easily able to describe the probabilistic behaviour of these quantities. At that point,  understanding the uncertainty of random quantities becomes a matter of matching the processes to the correct distribution, and then applying what we know about that distribution directly. While not every process will directly correspond to a known, named distribution, we can often get very close using just a handful of these [TODO: write aside on the pareto distribution]. 
+
+For each named distribution there is  an underlying structure describing in what scenarios it will arise. For instance, for the discrete uniform, this is when there is a set of equally likely outcomes  which can be described using consecutive integers. Once matched, there will also be a probability mass function, an expected value, and a variance associated  with the distribution. Importantly, all of tehse quantities will depend on some **parameters**. In the discrete uniform we used the parameters $a$ and $b$. These parameters specify which *version* of the distribution is relevant for the underlying scenario. It is best to think of the named distributions as families of distributions, with specific iterations being dictated by the parameter values. If two  processes follow the same distribution  with different parameters they will not be identically distributed, they are simply drawn from the same family. If two processes have the same parameter values and the same underlying distribution, they are identically distributed and their probabilistic behaviour will be exactly the same. For instance, there is no probabalistic differencebetween rolling a fair, six-sided die or drawing a card at random from a set of $6$ cards labelled $1$ through $6$. There may be real-world differences which matter, but from a probabilistic  point of view, they are exacttly the same.
+
+This is a useful realization  as it allows the use of simple models to understand more complex phenomenon. Perhaps the best way to demonstrate the effectiveness of these simple models is to introduce  perhaps the most basic named probability distribution: **the Bernoulli distribution**. The Bernoulli distribution  characterizes any statistical experiment with a binary outcome when these resultsare denoted $0$ and $1$. The parameter that indexes the distribution is $p$, which gives the probability of observing a $1$.
+
+Whenever we want to say that $X$ follows a particular distribution, wwe use a mathematical shorthand to do so. Specifically, we write $X \sim \text{Distribution}(\text{parameters})$ to mean ``$X$ follows the $\text{Distribution}$ with $\text{parameters}$.'' For instance, if $X$ represents the results of a fair six-sided die roll, we can write $X\sim\text{Discrete Uniform}(1,6)$. We will typically shorten this to be $X\sim\text{D.Unif}(1,6)$.
+%TODO: Move this up.
+
+If $X\sim\text{Bern}(p)$ (where $\text{Bern}$ is used for Bernoulli distributions) then we know that $$p_X(x) = \begin{cases} p^x(1-p)^{1-x} & x\in\{0,1\}\\ 0 & \text{otherwise}.\end{cases}$$ Further, we know that $E[X] = p$ and $\text{var}(X) = p(1-p)$. We typically call $X=1$ a ``success'' and $X=0$ a ``failure'' when discussing Bernoulli random variables. The most straightforward application of a Bernoulli random variable is the flip of a coin. Take $X=1$ if a head is shown, and $X=0$ if a tails is shown. Then $X\sim\text{Bern}(p)$.
+
+A coin flip is, by itself, not particularly interesting. However *any* statistic experiment with binary outcomes coded this way can be seen as a Bernoulli random variable. Suppose, for instance, you are interested in whether you will pass a particular course or not. There are two options, a ``success'' (passing) and a ``failure'' (failing), and the chances of this are governed by some probability $p$. Suppose you want to know whether the next flight you take will land safely, it is the same situation. Or whether a particular medical treatment will effectively treat an illness. Each of these scenarios is analyzed in exactly the same way as a coin toss: the probabilities change, but the underlying functions and mathematical objects  do not. There is no probabalistic difference  between determining whether a coin will come up heads or whether a plane will safely land.
+
+TODO: Examples
+
+Thediscrete uniform and Bernoulli are both distributions which map on to the real-world, but which are quite basic and which do not demonstrate the most meaningful applications of named distributions. These ideas become far more powerful when we begin to explore furthernamed distributions.
+
+### The Binomial Distribution
+A natural extension to tossing a coin once and seeing if it comes up heads or not is tossing a coin $n$ times and counting how many times it comes up heads. If we take $X$ to be the number of successes in $n$ independent and identically distributed Bernoulli trials, then we say that $X$ has a **binomial distribution**. The binomial distribution is characterized by two different parameters, the number of trials that are being performed, denoted $n$, and the probability of a success on each trial, $p$. We write $X\sim\text{Bin}(n,p)$.
+
+TODO: Simple example for bin.
+
+If we know that $X\sim\text{Bin}(n,p)$ then we get that $$p_X(x) = \begin{cases} \binom{n}{x}p^x(1-p)^{n-x} & x\in\{0,1,\dots,n\} \\ 0 &\text{otherwise}.\end{cases}$$ This is the first distribution we have seen which knowing the underlying distribution would not have immediately translated into knowing the probability mass function, which begins to illustrate why this is a useful area of study. We can work out that $E[X] = np$ and $\text{var}(X) = np(1-p)$.
+
+TODO: Example with binomial probabilities.
+
+Note that the binomial can be constructed by summing iid Bernoulli variables. Specifically, if $X_1,\dots,X_n\stackrel{iid}{\sim}\text{Bern}(p)$ (note, $\stackrel{iid}{\sim}$ means ``independent and identically distributed according to...'') then taking $Y = \sum_{i=1}^n X_i$ gives a binomial with $n$ and $p$ distribution. This should be intuitive from the underlying structure: if a Bernoulli comes up $1$ when we get a heads on a single flip of teh coin, then if we flip the coin $n$ times and count the number of heads this is the same as counting the number of $1$'s from each corresponding Bernoulli trial, or in other words, summing them. Once we know this construction, we can use the properties we have previously seen about independent random variables to work out the mean and variance for the distribution. 
+
+TODO: Aside on the workout of this.
+
+It is important to note and remember that binomial random variables make several  key assumptions. First, we are counting the number of successes in a **fixed** number of trials. In order for something to be binomially distributed, we must know in advance how many trials there are under consideration. Second, each of these trials must be independent of one another:  the outcome on one cannot impact any of the others. Third, there must be a constant probability of success across all trials. If the probabilities are shifting overtime, then a binomial is no longer appropriate.
+
+TODO: identify several examples for this.
+
+## Geometric Random Variables
+While the binomial counted the number of successes in a fixed number of trials, we may also be interested in questions relating to how many trials would be needed to see a success. Instead of ``how many heads in $n$ flips of a coin?'' we may ask ``how many flips of a coin to get a head?'' Like the binomial, quantities related to counting the number of trials until a success are related deeply to Bernoulli trials, where once more we are envisioning a sequence of independent and identically distributed trials being performed. However, instead of knowing that we will stop after $n$ trials, here we will only stop once we see a particular result.
+
+Any random quantities following this type of procedure are said to follow a **geometric distribution**. The geometric distribution is parameterized with a single parameter, $p$, the probability of success. We write $X\sim\text{Geo}(p)$, and have that $$
+p_X(x) = \begin{cases}(1-p)^{x-1}p & x \geq 1 \\ 
+0 & \text{otherwise}.\end{cases}$$ Moreover, $E[X] = \frac{1}{p}$ and $\text{var}(X) = \frac{1-p}{p^2}$. 
+
+TODO: geometric calculation.
+
+The geometric distribution differs  from other named distributions that we have considered in that the random variable can take on an infinite number of possible values. The probability that $X$ exceeds a very large threshold shrinks down to $0$, however, there is no maximum value that can be observed. Beyond that assumption, the key set of assumptions are the same as for the binomial: independent and identically distributed Bernoulli trials are run, and are stopped only after the first observed success.
+
+In the framing we are using here, the random variable $X$ counts the total number of trials *including* the trail upon which the first  success was reached. Sometimes you may see this distribution parameterized slightly differently, taking $X$ to instead count the number of failures before the first success. To convert between the two framings we need only subtract $1$: there is no meaningful difference in the underlying behaviour.
+
+TODO: include several geometric examples.
+
+## Negative Binomial
+A natural way to make the geometric distribution more flexible is to not stop after the first success, but rather after a set number of successes. That is, instead of flipping a coin until we see  a head, we flip a coin until we see $r$ heads. Any random quantity which follows this general pattern is said to follow a **negative binomial distribution**. We use two parameters to describe the negative binomial distribution, $r$ the number of successes  we are looking to achieve, and $p$ the probability of a success on any given trial. We write $X\sim\text{NB}(r,p)$.
+
+TODO: Basic example
+
+If we know that $X\sim\text{NB}(r,p)$, then we immediately get $$p_X(x) = \begin{cases}\binom{x-1}{r-1}p^r(1-p) & x\geq r \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, we have $E[X] = \frac{r}{p}$ and $\text{var}(X) = \frac{r(1-p)}{p^2}$. Setting $r=1$, wee get the same quantities explored in the case of the geometric distribution.
+
+TODO: Include NB Examples
+
+Like for the geometric distribution, we have taken $x$ to represent the total number of trials considered, including the $r$ successes. (TODO: fix geometric distribution range, start at 1). There  are  alternative parameterizations which would count how many failures occur prior to the $r$th success, which can be viewed as the value we consider minus $r$.
+
+TODO: Include many NB examples
+
+## Hypergeometric Distributions
+One of the use cases demonstrated for the binomial distribution is drawing *with* replacement. In order for the binomial distribution to be relevant it must be the case that the probability of a success is unchanging, and correspondingly, if the process under consideration cosntitutes random draws from a population then these draws must be with replacement as  otherwise the probabilities would shift. Suppose that we are trying to draw the ace of apdes  from a standard, shuffled deck of $52$ cards. If we begin drawing cards without returning them to the deck after each draw, the probability that the next draw is the ace of spades is increasing over the draws. As a result, this type of scenario does not fit into the independent and identically distributed Bernoulli trials that we have been exploring.
+
+Instead, suppose that we are drawing **without** replacement from a finite population. The population consists of two types of items: successes and failures. If we are interested in counting how many successes we seein a set number of draws, then this random quantity will follow a **hypergeometric distribution**. The hypergeometric distribution is parameterized using three different parameters: the number of  items in the population, $N$, the number of these which are considered successes, $M$, adn the total  number of items that are to be drawn without replacement, $n$. We write $X\sim\text{HG}(N,M,n)$.
+
+TODO: Basic example
+
+If $X\sim\text{HG}(N,M,n)$ then $$p_X(x) = \begin{cases}\frac{\binom{N-M}{n-x}\binom{M}{x}}{\binom{N}{n}} & x\in\{\max\{0,N-M+n\},\dots,\min\{n,M\}\} \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, $E[X] = \frac{nM}{N}$ and the variance is given by $$\text{var}(X) = n\frac{M}{N}\frac{N-M}{N}\frac{N-n}{N-1}.$$
+
+TODO: Bigger calculation.
+
+The hypergeometric is closely linked to the binomial distribution. If we consider the population described in the hypergeometric setup then the probability of a success on the first draw is $p=\frac{M}{N}$. Note that $E[X] = np$, exactly the same as in the binomial. However, plugging this in fro the variance we get $\text{var}(X) = np(1-p)\frac{N-n}{N-1}$. Notice that if $n=1$, this extra term is simply $1$, and for $n > 1$ it will be less than $1$. As a result, the variance of the hypergeometric is smaller than the variance of the corresponding binomial. This makes intuitive sense: in a hypergeometric, the fact that draws are without replacement means that as more draws go on the probability of observing a success increases, reducing the likelihood of long runs of no observed successes. There is a cap on the behaviour of the random quantity thanks to the finiteness of the population. Correspondingly, the multiplicative term by which the varaince shrinks, $\frac{N-n}{N-1}$ is referred  to as the **finite population correction** and it differentiates the behaviour of the hypergeometric and the binomial.
+
+Note that as $N$ becomes very, very large, as long as  $n$ is  small by comparison, the finite population correction will approach $1$. in other words: drawing without replacement in a large enough sample behaves  almost exactly the same as drawing with replacement in the sample. The binomial distribution can be used to approximate hypergeometric distributions, so long as the population is very large. Again, this makes sense intuitively. If you have a deck with a million cards in it, and you are going to draw  $2$, whether or not you return the first one to the deck has very little bearing on the probabilities associated with this scenario. Generally, the binomial distribution is easier to work with, so this approximation can be useful in some settings.
+
+TODO: aside on this for sampling.
+
+TODO: Many examples of HG random variables.
+
+## Poisson Distribution
+The hypergeometric broke from the pattern in the other distributions that have been discussed by not being represented as the sequence of several Bernoulli random trials. However, it was still characterized by a sequence of repeated trials. While many statistical experiments can be framed in this way, there are of course processes which do not fit well into this framing.
+
+Consider, for instance, any process where something is observed for a set period of times and events may or may not occur during this interval. Perhaps you sit on the side of the road and count the number of cars travelling by a particular intersection over the course of an hour. Each car going by is an event, but in this setting the  number of events is the random quantity itself. None of the distributions discussed until this point are suited to this type of process.
+
+When we have events which occur at a constant rate, and our interest is in the number of events which are occuring, then we can make use of the **Poisson distribution**. The Poisson distribution takes a single parameter, $\lambda$, which is the average rate of occurence of the events over the time period we are interest in. We write $X\sim\text{Poi}(\lambda)$. 
+
+TODO: Basic example.
+
+If $X\sim\text{Poi}(\lambda)$ then $$p_X(x) = \begin{cases} \frac{e^{-\lambda}\lambda^x}{x!} & x \geq 0 \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, $E[X]=\lambda$ and $\text{var}(X) = \lambda$. The Poisson distribution is interesting in that the mean and variance are always equal to one another.
+
+TODO: Bigger example
+
+While the most common applications for the Poisson distribution have to do with the occurences of events throughout time, it is also possible to view this as the occurences of events throughout space. For instance, if there is a manufcturer producing rope, then the number of defects in a set quantity of rope is likely to follow the Poisson distribution. Similarly, in a set geographic area, the number of birds of a particular species is likely to follow a Poisson distribution. For the Poisson distribution, we are typically thinking that there is a rate at which events of interest occur, and we can use the Poisson to model the total number of occurences over some specified interval.
+
+TODO: many examples for the use of Poisson.
+
+## Using Named Distributions
+While many other named, discrete distributions exist, these are likely the most common. When confronted with a problem in the real-world for which you wish to understand the uncertainty associated with it, a reasonable first step is to determine whether a named distribution is well-suited to representing the underlying phenomenon. Is it a situation with enumerated events which are equally likely? Use the discrete uniform. Is it a binary outcome? Use the Bernoulli. Are you counting the number of success in a fixed number of trials? Use the binomial. Are you running repeated trials until a (certain number of) success(es)? Use the geomtric (negative binomial). Are you sampling without replacement? Use the hyper geometric. Are you counting events over a fixed space? Use the Poisson.
+
+Once identified, the distribution can be used in exactly the same way as any probability mass function. That is, we still require all of the probability rules, event descriptions, and techniques from before. The difference in these cases is that we immediately have access to the correct form of the probability mass function, the expected value, and the variance.
+
+An additional utility with this approach to solving probability questions is that, over time and repeated practice, you can build-up an intuition as to the behaviour of random variables following these various distributions. Probabilities in general are deeply unintuitive: it can be hard to assess, without fomrally working it out, whether an evetn is likely or unlikely, let alone how likey any event is. However, the lack of intuition from our wider experience can be negated almost entirely by building of intuition through the repeated application of these distributions. You can start to gain a sense of how binomial random variables behave, being able to determine just from inspection whether events seem plausible or not. Much of the study of probability and statistics is about building a set of tools that can overcome the flaws in our intuitive reasoning regarding uncertainty. This comes only through practice, however, this framework of named distributions provides a very solid foundation to perform such practice.

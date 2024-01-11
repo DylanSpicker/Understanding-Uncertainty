@@ -164,7 +164,7 @@ e. $$E_1 \cup E_2 \cup E_3 = \{(\text{H}, \text{H}, \text{H}), (\text{T}, \text{
 
 :::{#def-disjoint-events}
 ## Disjoint Events
-To events, $E_1$ and $E_2$ are said to be disjoint whenever their intersection is the null event. That is, if $E_1 \cap E_2 = \emptyset$ then $E_1$ and $E_2$ are disjoint events.
+Two events, $E_1$ and $E_2$ are said to be disjoint whenever their intersection is the null event. That is, if $E_1 \cap E_2 = \emptyset$ then $E_1$ and $E_2$ are disjoint events.
 :::
 
 These concepts allow us to more compactly express sets of interest, and in particular, will be quite useful when it comes to assigning probability. The more times you work with the set operations, the more familiar they will become, and as a result, practice is always useful. Considering rolling a 6-sided die, and take $A$ to be the event that a $6$ is rolled, $B$ to be the event that the roll was at least $5$, $C$ to be the event that the roll was less than $4$, and $D$ to be the event that the roll was odd.
