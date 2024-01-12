@@ -738,7 +738,7 @@ c. What is the probability it is a low quality bin?
 :::{#exr-4.4}
 Consider the following argument from Lewis Carroll, which proves mathematically that no urn can have two balls of the same colour in it.
 
-> Suppose that there are balls which are either black, $B$, or white, $W$, and two of unknown colours are contained in an urn with equal likelihood. That is, $$P(BB)=P(BW)=P(WB)=P(WW)=\frac{1}{4}.$$ Now, consider adding a black ball to the urn so that \[P(BBB)=P(BWB)=P(WBB)=P(WWB)=\frac{1}{4}.\] Consider then selecting a ball at random. The chance that this ball is black is $$P(B) &= \frac{2}{3}.$$ Thus, there is a $2/3$ chance that the ball we select is black, and as a result, there must be $2$ black balls and $1$ white ball, and so we could not have had two black balls to start! 
+> Suppose that there are balls which are either black, $B$, or white, $W$, and two of unknown colours are contained in an urn with equal likelihood. That is, $$P(BB)=P(BW)=P(WB)=P(WW)=\frac{1}{4}.$$ Now, consider adding a black ball to the urn so that $$P(BBB)=P(BWB)=P(WBB)=P(WWB)=\frac{1}{4}.$$ Consider then selecting a ball at random. The chance that this ball is black is $$P(B) = \frac{2}{3}.$$ Thus, there is a $2/3$ chance that the ball we select is black, and as a result, there must be $2$ black balls and $1$ white ball, and so we could not have had two black balls to start! 
 
 a. Show that the probability of drawing a black ball in the described setup is indeed $2/3$.
 b. Is the logic sound? Why?
