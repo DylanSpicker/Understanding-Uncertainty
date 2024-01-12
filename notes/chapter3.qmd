@@ -399,7 +399,7 @@ e. From (d) exactly $40$ of the straights and $40$ of the flushes are also strai
 ::::
 :::
 
-## Exercises  {.unnumbered}
+## Exercises {.unnumbered}
 :::{#exr-3.1}
 The probability that a smartphone breaks during the first year of use is $0.19$. What is the probability that it does not break during the first year?
 :::
