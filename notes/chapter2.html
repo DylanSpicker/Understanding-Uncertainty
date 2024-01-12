@@ -838,6 +838,7 @@ window.Quarto = {
   <li><a href="#using-r-to-represent-sample-spaces-and-events-and-performing-set-operations" id="toc-using-r-to-represent-sample-spaces-and-events-and-performing-set-operations" class="nav-link" data-scroll-target="#using-r-to-represent-sample-spaces-and-events-and-performing-set-operations"><span class="header-section-number">2.2.1</span> Using R To Represent Sample Spaces and Events and Performing Set Operations</a></li>
   </ul></li>
   <li><a href="#venn-diagrams" id="toc-venn-diagrams" class="nav-link" data-scroll-target="#venn-diagrams"><span class="header-section-number">2.3</span> Venn Diagrams</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul>
 </nav>
     </div>
@@ -1355,6 +1356,74 @@ Solution
 </div>
 </div>
 <p>Sample spaces, events, and the manipulation of these quantities forms a critical component of understanding probability models. In particular, they describe the complete set of occurrences in a statistical experiment that we could be interested in assigning probability values to. To formalize a probability model, however, we also need some rule for assigning probability values.</p>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-2.1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2.1</strong></span> For each of the following experiments, describe the relevant sample space and identify one possible event of interest.</p>
+<ol type="a">
+<li>The quality control inspection of smartphone screens from a manufacturing process.</li>
+<li>Monitoring the ongoing structural integrity of a newly built bridge.</li>
+<li>A clinical trial studying the effectiveness of a new drug.</li>
+<li>Epidemiological monitoring of a disease outbreak.</li>
+<li>Dealing a hand of black jack.</li>
+<li>Observing the launch conditions for a rocket launch.</li>
+<li>Debugging in software development.</li>
+<li>Playing the lottery.</li>
+</ol>
+</div>
+<div id="exr-2.2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2.2</strong></span> A card is drawn at random from an ordinary deck of <span class="math inline">\(52\)</span> playing cards. Let <span class="math inline">\(A\)</span> be the event that a king is drawn, and <span class="math inline">\(B\)</span> the event that a club is drawn. In words, describe the following events.</p>
+<ol type="a">
+<li><span class="math inline">\(A\cup B\)</span>;</li>
+<li><span class="math inline">\(A \cap B\)</span>;</li>
+<li><span class="math inline">\(A\cup B^C\)</span>;</li>
+<li><span class="math inline">\(A^C\cup B^C\)</span>;</li>
+<li><span class="math inline">\((A\cap B)\cup(A\cap B^C)\)</span>.</li>
+</ol>
+</div>
+<div id="exr-2.3" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2.3</strong></span> Suppose that <span class="math inline">\(\mathcal{S} = \{\phi, \lambda, \Delta, \mu\}\)</span>. List all possible events from the corresponding experiment.</p>
+</div>
+<div id="exr-2.4" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2.4</strong></span> Suppose an experiment is run which generates realizations from positive integers. Take <span class="math inline">\(A\)</span> to be the event <span class="math inline">\(\{1, 5, 31, 56, 101\}\)</span>, <span class="math inline">\(B = \{22, 56, 5, 103, 87\}\)</span>, <span class="math inline">\(C = \{41, 13, 7, 101, 48\}\)</span>, and <span class="math inline">\(D\)</span> to be the event that the number is odd. Identify (write down or describe) each of the following events.</p>
+<ol type="a">
+<li><span class="math inline">\(D^C\)</span></li>
+<li><span class="math inline">\(A\cap B\)</span></li>
+<li><span class="math inline">\(C \cup A\)</span></li>
+<li><span class="math inline">\(C \cap D\)</span></li>
+<li><span class="math inline">\((A\cup B)\cup (C\cup D)\)</span></li>
+<li><span class="math inline">\(A\cap D^C\)</span></li>
+</ol>
+</div>
+<div id="exr-2.5" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2.5</strong></span> Suppose that a <span class="math inline">\(20\)</span> sided die is rolled. The events of interest are: <span class="math inline">\(A\)</span> the outcome is a multiple of <span class="math inline">\(4\)</span>, and <span class="math inline">\(B\)</span> the outcome is a multiple of <span class="math inline">\(5\)</span>.</p>
+<ol type="a">
+<li>Draw a Venn Diagram representing the sample space and events.</li>
+<li>Identify the event <span class="math inline">\(A \cup B\)</span>. What does this correspond to in words?</li>
+<li>Identify the event <span class="math inline">\(A \cap B^C\)</span>. What does this correspond to in words?</li>
+<li>How would you denote the event ``neither a multiple of <span class="math inline">\(4\)</span> nor <span class="math inline">\(5\)</span>.’’ using this notation?</li>
+</ol>
+</div>
+<div id="exr-2.6" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2.6</strong></span> Suppose that two indistinguishable coins are flipped. The events of interest are: <span class="math inline">\(A\)</span> exactly two heads are seen, and <span class="math inline">\(B\)</span> at least one head is seen.</p>
+<ol type="a">
+<li>Draw a Venn Diagram representing the sample space and events.</li>
+<li>Describe every possible outcome with respect to the identified events.</li>
+<li>Give an event, in terms of the number of heads observed, which is equivalent to the sample space.</li>
+</ol>
+</div>
+<div id="exr-2.7" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2.7</strong></span> A cinema has <span class="math inline">\(12\)</span> screens, numbered <span class="math inline">\(1\)</span> through <span class="math inline">\(12\)</span>. Before opening, an employee checks to ensure that the projectors are correctly calibrated.</p>
+<p>Let <span class="math inline">\(A\)</span> be the event that all the screens are correctly calibrated, <span class="math inline">\(B\)</span> be the event that the third screen is not correctly calibrated, <span class="math inline">\(C\)</span> be the event that exactly one bolt is not correctly calibrated, and <span class="math inline">\(D\)</span> be the event that <span class="math inline">\(5\)</span> and <span class="math inline">\(8\)</span> are correctly calibrated.</p>
+<p>Which of the following pairs of events are disjoint?</p>
+<ol type="a">
+<li><span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</li>
+<li><span class="math inline">\(B\)</span> and <span class="math inline">\(D\)</span>.</li>
+<li><span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span>.</li>
+<li><span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>.</li>
+</ol>
+</div>
 
 
 </section>
