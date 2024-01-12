@@ -274,3 +274,74 @@ The sample space contains the eight possible options. Only $(\text{T}, \text{T},
 :::
 
 Sample spaces, events, and the manipulation of these quantities forms a critical component of understanding probability models. In particular, they describe the complete set of occurrences in a statistical experiment that we could be interested in assigning probability values to. To formalize a probability model, however, we also need some rule for assigning probability values. 
+
+## Exercises{.unnumbered}
+
+:::{#exr-2.1}
+For each of the following experiments, describe the relevant sample space and identify one possible event of interest.
+
+a. The quality control inspection of smartphone screens from a manufacturing process.
+a. Monitoring the ongoing structural integrity of a newly built bridge.
+a. A clinical trial studying the effectiveness of a new drug.
+a. Epidemiological monitoring of a disease outbreak.
+a. Dealing a hand of black jack.
+a. Observing the launch conditions for a rocket launch.
+a. Debugging in software development.
+a. Playing the lottery.
+:::
+
+
+:::{#exr-2.2}
+A card is drawn at random from an ordinary deck of $52$ playing cards. Let $A$ be the event that a king is drawn, and $B$ the event that a club is drawn. In words, describe the following events.
+
+a. $A\cup B$;
+a. $A \cap B$;
+a. $A\cup B^C$;
+a. $A^C\cup B^C$;
+a. $(A\cap B)\cup(A\cap B^C)$.
+:::
+
+:::{#exr-2.3}
+Suppose that $\mathcal{S} = \{\phi, \lambda, \Delta, \mu\}$. List all possible events from the corresponding experiment.
+:::
+
+:::{#exr-2.4}
+Suppose an experiment is run which generates realizations from positive integers.  Take $A$ to be the event $\{1, 5, 31, 56, 101\}$, $B = \{22, 56, 5, 103, 87\}$, $C = \{41, 13, 7, 101, 48\}$, and $D$ to be the event that the number is odd. Identify (write down or describe) each of the following events.
+
+a. $D^C$
+a. $A\cap B$
+a. $C \cup A$
+a. $C \cap D$
+a. $(A\cup B)\cup (C\cup D)$
+a. $A\cap D^C$
+:::
+
+:::{#exr-2.5}
+Suppose that a $20$ sided die is rolled. The events of interest are: $A$ the outcome is a multiple of $4$, and $B$ the outcome is a multiple of $5$. 
+
+a. Draw a Venn Diagram representing the sample space and events.
+a. Identify the event $A \cup B$. What does this correspond to in words?
+a. Identify the event $A \cap B^C$. What does this correspond to in words?
+a. How would you denote the event ``neither a multiple of $4$ nor $5$.'' using this notation?
+:::
+
+:::{#exr-2.6}
+Suppose that two indistinguishable coins are flipped. The events of interest are: $A$ exactly two heads are seen, and $B$ at least one head is seen.
+
+a. Draw a Venn Diagram representing the sample space and events.
+a. Describe every possible outcome with respect to the identified events.
+a. Give an event, in terms of the number of heads observed, which is equivalent to the sample space.
+:::
+
+:::{#exr-2.7}
+A cinema has $12$ screens, numbered $1$ through $12$. Before opening, an employee checks to ensure that the projectors are correctly calibrated. 
+
+Let $A$ be the event that all the screens are correctly calibrated, $B$ be the event that the third screen is not correctly calibrated, $C$ be the event that exactly one bolt is not correctly calibrated, and $D$ be the event that $5$ and $8$ are correctly calibrated.
+
+Which of the following pairs of events are disjoint?
+
+a. $A$ and $B$.
+a. $B$ and $D$. 
+a. $C$ and $D$.
+a. $B$ and $C$.
+:::

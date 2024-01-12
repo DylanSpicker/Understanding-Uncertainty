@@ -712,3 +712,121 @@ charles_p_table <- prop.table(charles_c_table)
 charles_p_table
 ```
 :::
+
+## Exercises{.unnumbered}
+:::{#exr-4.1}
+Four cards are dealt, in order, from a standard pack of $52$ cards.
+
+a. What is the probability that all four are spades?
+a. What is the probability that two or fewer are spades?
+a. What is the probability that all four are spades, given that the first two are spades?
+a. What is the probability that spades and hearts alternate?
+:::
+
+:::{#exr-4.2}
+Two cards are dealt from a deck of $52$ cards. Find the probability that the second card dealt is a heart.
+:::
+
+:::{#exr-4.3}
+A manufacturer of computer chips bins their manufactured chips based on the quality. Their production line ends up producing $1$ high quality chip for every $2$ medium quality chips and $2$ low quality chips. That is, the proportions of high-to-medium-to-low remains $1:2:2$. For each quality level of chip, the probability that it is of unacceptable standard is $0$, $0.1$, and $0.2$ respectively. Suppose a bin of chips is selected at random, two chips are tested, and found to be satisfactory.
+
+a. What is the probability it is a high quality bin?
+b. What is the probability it is a medium quality bin?
+c. What is the probability it is a low quality bin?
+:::
+
+:::{#exr-4.4}
+Consider the following argument from Lewis Carroll, which proves mathematically that no urn can have two balls of the same colour in it.
+
+> Suppose that there are balls which are either black, $B$, or white, $W$, and two of unknown colours are contained in an urn with equal likelihood. That is, $$P(BB)=P(BW)=P(WB)=P(WW)=\frac{1}{4}.$$ Now, consider adding a black ball to the urn so that \[P(BBB)=P(BWB)=P(WBB)=P(WWB)=\frac{1}{4}.\] Consider then selecting a ball at random. The chance that this ball is black is $$P(B) &= \frac{2}{3}.$$ Thus, there is a $2/3$ chance that the ball we select is black, and as a result, there must be $2$ black balls and $1$ white ball, and so we could not have had two black balls to start! 
+
+a. Show that the probability of drawing a black ball in the described setup is indeed $2/3$.
+b. Is the logic sound? Why?
+:::
+
+:::{#exr-4.5}
+Of people in a certain city who bought a new vehicle in the past year, $12\%$ of them bought an electric vehicle and $5\%$ of them bought an electric truck. Given that a person bought an electric vehicle, what is the probability that it was a truck?
+:::
+
+:::{#exr-4.6}
+Mo and Fran each roll a die. The person who rolls the highest number wins; if they roll the same number, they both lose. 
+
+a. What is the probability that Fran wins?
+a. If Mo rolls a $3$, what is the probability that Mo wins?
+a. If Mo rolls a $3$, what is the probability that Fran wins?
+a. If Mo wins, what is the probability that Fran rolled a $3$?
+a. If Mo wins, what is the probability that Mo rolled a $3$?
+:::
+
+:::{#exr-4.7}
+A geneticist is studying two genes. Each gene can be either dominant or recessive. A sample of $100$ individuals has $56$ individuals with both genes dominant, $6$ individuals with both genes recessive, $24$ individuals with only gene one dominant, and the remaining $14$ with only gene two dominant. 
+
+a. What is the probability that a randomly sampled individual has dominant gene one?
+a. What is the probability that a randomly sampled individual has dominant gene two? 
+a. Given that gene one is dominant, what is the probability that gene two is dominant?
+a. These genes are said to be in linkage equilibrium if the event that gene one is dominant is independent of the event that gene two is dominant. Are these genes in linkage equilibrium?
+:::
+
+:::{#exr-4.8}
+A lot of $10$ components contains $3$ that are defective. Two components are drawn at random and tested. Let $A$ be the event that the first component drawn is defective, and let $B$ be the event that the second component drawn is defective.
+
+a. What is $P(A)$?
+a. What is $P(B|A)$?
+a. What is $P(A \cap B)$?
+a. What is $P(A^C \cap B)$?
+a. What is $P(B)$?
+a. Are $A$ and $B$ independent?
+:::
+
+:::{#exr-4.9}
+A lot containing $1000$ components contains $300$ that are defective. Two components are drawn at random and tested. Let $A$ be the event that the first component drawn is defective, and let $B$ be the event that the second component drawn is defective.
+
+a. What is $P(A)$?
+a. What is $P(B|A)$?
+a. What is $P(A \cap B)$?
+a. What is $P(A^C \cap B)$?
+a. What is $P(B)$?
+a. Is it reasonable to treat $A$ and $B$ as though they are independent?
+:::
+
+:::{#exr-4.10}
+A certain delivery service offers both express and standard delivery. Seventy-five percent of parcels are sent by standard delivery, and the rest are sent by express. Of those sent standard, $80\%$ arrive the next day, and of those sent express, $95\%$ arrive the next day. A record of a parcel delivery is chosen at random from the company's files. 
+
+a. What is the probability that the parcel was shipped express and arrived the next day?
+a. What is the probability that it arrived the next day?
+a. Given the package arrived the next day, what is the probability that it was sent express?
+:::
+
+:::{#exr-4.11}
+A quality control program at a food production facility involves inspecting finished product for safety. The proportion of items that actually are unsafe is $0.0002$. If an item is found to be unsafe, the probability is $0.995$ that it will fail the inspection. If an item is safe, the probability is $0.99$ that it will pass the inspection. 
+
+a. If an item fails the inspection, what is the probability that it is unsafe?
+a. Which of the following is more correct interpretation to the previous answer: 
+    i. Most items that fail inspection are safe.
+    ii. Most items that pass inspection are unsafe.
+a. If an item passes inspection, what is the probability that it is safe?
+a. Which of the following is the more correct interpretation to the previous answer:
+    i. Most items that fail inspection are unsafe.
+    ii. Most items that pass inspection are safe.
+a. Explain why a small probability in part (a) is not a problem, so long as the probability in part (c) is large.
+:::
+
+:::{#exr-4.12}
+A patient goes to see a doctor. The doctor performs a test with $99$ percent reliability--that is, $99$ percent of people who are sick test positive and $99$ percent of the healthy people test negative. The doctor knows that only $1$ in $10000$ people in the country are sick. If the patient tests positive, what are the chances the patient is sick?
+:::
+
+:::{#exr-4.13}
+Let $A$ and $B$ be events with $P(A) = 0.8$ and $P(A \cap B) = 0.2$. For what value of $P(B)$ will $A$ and $B$ be independent?
+:::
+
+:::{#exr-4.14}
+Let $A$ and $B$ be events with $P(A) = 0.5$ and $P(A \cap B^C) = 0.4$. For what value of $P(B)$ will $A$ and $B$ be independent?
+:::
+
+:::{#exr-4.15}
+Prove that if $A\perp B$ then $A\perp B^C$, $A^C \perp B$ and $A^C \perp B^C$.
+:::
+
+:::{#exr-4.16}
+Show that if $A\perp B$ then $P(A|B) = P(A)$ and $P(B|A) = P(B)$.
+:::

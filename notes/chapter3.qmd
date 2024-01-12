@@ -399,4 +399,134 @@ e. From (d) exactly $40$ of the straights and $40$ of the flushes are also strai
 ::::
 :::
 
+## Exercises  {.unnumbered}
+:::{#exr-3.1}
+The probability that a smartphone breaks during the first year of use is $0.19$. What is the probability that it does not break during the first year?
+:::
+
+:::{#exr-3.2}
+Assuming that $A$ and $B$ are disjoint, which of the following statements are always true.
+
+a. $P(A\cup B) = 0$.
+a. $P(A \cap B) = 0$.
+a. $P(A \cup B) = P(A \cap B)$.
+a. $P(A \cup B) = P(A) + P(B)$.
+:::
+
+:::{#exr-3.3}
+A ball is drawn at random from a box containing $6$ red balls, $4$ white balls, and $5$ blue balls. Determine the probabilities associated with the following events.
+
+a. The ball is red.
+a. The ball is white.
+a. The ball is blue.
+a. The ball is not red.
+a. The ball is red or white.
+:::
+
+:::{#exr-3.4}
+A survey of high schoolers were asked about where they most prefer to spend their time when they are at home. The results were:
+
+* Bedroom: $0.37$;
+* Living Room: $0.26$;
+* Den: $0.22$;
+* Basement: $0.12$;
+* Kitchen: $0.02$;
+* Bathroom: $0.01$.
+
+a. What is the probability that a student prefers being in their living room or den?
+b. What is the probability that a student does not prefer being in their bedroom?
+:::
+
+:::{#exr-3.5}
+Let $S$ be the event that a randomly selected college student has taken any statistics course, and $C$ be the event that a randomly selected college student has taken any chemistry course. Suppose $P(S) = 0.5$, $P(C) = 0.15$, and $P(S\cap C) = 0.12$. 
+
+a. Find the probability that the student has taken either a statistics or chemistry course.
+a. Find the probability that a student has taken neither chemistry nor statistics.
+a. Find the probability that a student has taken statistics but not chemistry.
+:::
+
+:::{#exr-3.6}
+Let $M$ be the event that a student passes their math exam, and let $H$ be the event that a student passes their history exam. Suppose that $P(M) = 0.85$, $P(H) = 0.95$, and $P(V\cup W) = 0.99$. 
+
+a. Find the probability that the student passes both math and history.
+a. Find the probability that the student passes neither math, nor history.
+a. Find the probability that the student passes math, but not history.
+:::
+
+:::{#exr-3.7}
+A medical clinic screening for a particular disease classifies its patients into three health risk categories: low risk, moderate risk, and high risk. Suppose that $70\%$ of the patients are categorized low risk, $20\%$ are categorized as moderate risk, and $10\%$ are categorized as high risk. Suppose a patient is randomly selected.
+
+a. What is the probability that the patient is categorized as low risk?
+b. What is the probability that the patient is not categorized high risk?
+:::
+
+:::{#exr-3.8}
+Two different designs are being considered for a particular mechanical system. For each, determine the probability that the system continues to function.
+
+a. The system contains two components, $A$ and $B$. The system will continue to function so long as either $A$ or $B$ functions. The probability that $A$ functions is $0.95$, the probability that $B$ functions is $0.90$, and the probability that the both function is $0.88$.
+b. The system contains two components, $A$ and $B$. The system will continue to function only if both $A$ and $B$ function. The probability that $A$ functions is $0.98$, the probability that $B$ functions is $0.95$, and the probability that at least one is functioning is $0.99$.
+:::
+
+:::{#exr-3.9}
+A hotel chain is concerned about the cleanliness of their rooms, so they send two inspectors to check on this. Inspector A visually inspects $1000$ rooms and found $37$ of them to be inadequately cleaned. Inspector B visually inspects the same rooms found $43$ of them to be lacking sufficient cleanliness. A total of $948$ rooms were found to be clean by both inspectors.
+
+a. Find the probability that a randomly selected room has an issue that was found by at least one of the two inspectors.
+a. Find the probability that a randomly selected room has an issue that was found by both inspectors.
+a. Find the probability that a randomly selected room has an issue that was found by inspector $A$ but not by inspector $B$.
+:::
+
+:::{#exr-3.10}
+Let $A$ and $B$ be events with probabilities $P(A) = \frac{3}{4}$ and $P(B) = \frac{1}{3}$. Show that $$\frac{1}{12}\leq P(A\cap B)\leq\frac{1}{3}.$$
+:::
+
+:::{#exr-3.11}
+Find the probability of a $4$ turning up at least once in two tosses of a fair die.
+:::
+
+:::{#exr-3.12}
+It is required to place $5$ hardcovers and $4$ paperbacks onto a bookshelf, so that each of the paperbacks are between two hardcovers. How many ways can this be done?
+:::
+
+:::{#exr-3.13}
+A committee of eight people must choose a president, a vice-president, and a secretary. In how many ways can this be done?
+:::
+
+:::{#exr-3.14}
+a. One drawer in a dresser contains $8$ blue socks and $6$ white socks. Another drawer contains $4$ blue socks and $2$ white socks. One sock is chosen from each drawer. What is the probability that they match?
+b. A third drawer contains $6$ red socks, $4$ green socks, and $2$ black socks. Two socks are selected at random. What is the probability that they match.
+:::
+
+:::{#exr-3.15}
+A company has hired $15$ new employees, and must assign $6$ to the day shift, $5$ to the graveyard shift, and $4$ to the night shift. In how many different ways can the shifts be made?
+:::
+
+:::{#exr-3.16}
+A group of $10$ people have gotten together to play basketball. They will begin by dividing themselves into two teams of $5$ players each. One team will wear red and the other blue. How many ways can this be done?
+:::
+
+:::{#exr-3.17}
+A factory produces a total of $15,000$ candies a day, of which $3\%$ are defective. Find the probability that, out of $500$ candies chosen at random on a single day, $12$ are defective.
+:::
+
+
+:::{#exr-3.18}
+A shelf has $6$ mathematics books and $4$ physics books. If these were randomly ordered, what is the probability that $3$ particular mathematics books will be together.
+:::
+
+:::{#exr-3.19}
+Suppose that car license plates consist of three letters followed by three numbers.
+    
+a. How many different license plates can be made?
+a. How many different license plates can be made in which no letter or number appears more than once?
+a. A license plate is chosen at random. What is the probability that no letter or number appears more than once?
+:::
+
+:::{#exr-3.20}
+A game has individuals forming random "words" (strings of letters, whether they have a meaning or not). On a particular turn, one player must form a word which has $3$ different vowels, and $4$ different consonants, where there are $7$ total consonants and $5$ total vowels to choose from. How many possibilities are there for a valid word?
+:::
+
+:::{#exr-3.21}
+Six pairs of socks come in sets: there are two pairs of red socks, two pairs of white socks, and two pairs with stripes on them. If the socks are placed randomly into pairs, find the probability that no sock ends up in a pair with the same pattern.
+:::
+
 ### References  {.unnumbered}
