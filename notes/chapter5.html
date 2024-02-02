@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.533">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -215,6 +215,7 @@ window.Quarto = {
   <li><a href="#conditional-probability-distributions" id="toc-conditional-probability-distributions" class="nav-link" data-scroll-target="#conditional-probability-distributions"><span class="header-section-number">5.5</span> Conditional Probability Distributions</a></li>
   <li><a href="#manipulating-probabilities-with-random-variables" id="toc-manipulating-probabilities-with-random-variables" class="nav-link" data-scroll-target="#manipulating-probabilities-with-random-variables"><span class="header-section-number">5.6</span> Manipulating Probabilities with Random Variables</a></li>
   <li><a href="#independent-and-identically-distributed-a-framework-for-interpretation" id="toc-independent-and-identically-distributed-a-framework-for-interpretation" class="nav-link" data-scroll-target="#independent-and-identically-distributed-a-framework-for-interpretation"><span class="header-section-number">5.7</span> Independent and Identically Distributed: A Framework for Interpretation</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul>
 </nav>
     </div>
@@ -843,7 +844,7 @@ Marginalization
 Figure&nbsp;5.1: This graphic shows the partitioning of the sample space using a random variable. It is entirely analogous to <a href="chapter4.html#fig-basic-partition" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, where in place of many different events, we partition over the set of values for <span class="math inline">\(Y\)</span>. Here, <span class="math inline">\(\mathcal{Y} = \{1,2,3,4,5,6,7\}\)</span>.
 </figcaption>
 <div aria-describedby="fig-basic-partition-rv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch5-basic-partition.svg" class="img-fluid figure-img">
+<img src="../graphics/ch5-basic-partition.svg" class="img-fluid figure-img">
 </div>
 </figure>
 </div>
@@ -936,6 +937,163 @@ p_{X_1,X_2,\dots,X_y}(x_1,\dots,x_y) &amp;= \prod_{i=1}^y \binom{10}{x_i}(0.25)^
 <p>This type of statement is always the flavour of interpretation statements that are made with respect to probability and statistics. It is always be the case that, in order to understand what is meant by a statement of probability, we consider the repetition of some statistical experiment over and over again. When we were discussing sample spaces and experiments directly, we talked about repeating the experiment over and over again. When we begin to work with random variables instead, it becomes more natural to think about the replication procedures coming through the use of independent and identically distributed random variables.</p>
 <p>As your study of probability progresses, you will begin to work with random quantities in a strictly theoretical sense. In introductory level problems, we are often holding in mind very concrete examples to illustrate the procedures and concepts. In this setting it is easy enough to hold in mind the experiment of interest: for instance, we may have a random variable representing the result of a coin toss, and you can envision repeatedly tossing a coin. As the concepts become less concrete, more abstract, and harder to draw direct parallels to tangible scenarios, it becomes more and more important to rely on the interpretations rooted in a series of independent and identically distributed random variables.</p>
 <p>A large component of statistics as an area of study is making explicit the assumptions we are working with, and doing our best to ensure that these are reasonable. By interpreting probability mass functions as the proportion of independent and identically distributed random variables that take on a particular value when we repeatedly take realizations of these random variables, this philosophy is made clear and explicit.</p>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-5.1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.1</strong></span> Suppose that you sit in the library, observing the front desk until a patron takes out books. Describe at least <span class="math inline">\(5\)</span> different random variables that could correspond to this experiment.</p>
+</div>
+<div id="exr-5.2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.2</strong></span> Consider the data collection that goes on at a weather station. Describe as many different random variables as you can think of corresponding to this experiment.</p>
+</div>
+<div id="exr-5.3" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.3</strong></span> For each of the following random variables, identify whether they are discrete or continuous.</p>
+<ol type="a">
+<li>In a survey, the number of siblings each participant has is recorded.</li>
+<li>A thermometer measures temperature in degrees Celsius.</li>
+<li>The number of cars passing through a toll booth in an hour.</li>
+<li>In a casino game, the amount of money won or lost on a single bet.</li>
+<li>The weight of apples harvested from an orchard.</li>
+<li>In a classroom, the number of students who own a laptop.</li>
+<li>The time it takes for a light bulb to burn out.</li>
+<li>When flipping a coin, the number of heads obtained in <span class="math inline">\(10\)</span> flips.</li>
+<li>The height of students in a class.</li>
+<li>The number of emails received per day.</li>
+<li>In a factory, the number of defective products in a batch.</li>
+<li>The distance traveled by a car in a specific time interval.</li>
+<li>When selecting a card from a standard deck, the card’s face value.</li>
+<li>The age at which individuals first learn to ride a bicycle.</li>
+<li>The number of customers entering a store in one hour.</li>
+<li>In a soccer match, the time it takes for the first goal to be scored.</li>
+<li>The number of books a person reads in a month.</li>
+<li>When rolling two dice, the sum of the numbers rolled.</li>
+<li>The number of text messages sent in a day.</li>
+<li>The volume of water in a reservoir.</li>
+</ol>
+</div>
+<div id="exr-5.4" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.4</strong></span> Suppose that a probability mass function is given by <span class="math display">\[p(x) = \begin{cases}
+    k(7x + 3) &amp; x = 0, 1, 2, 3\\
+    0 &amp; \text{otherwise}
+\end{cases}.\]</span> Find the value of <span class="math inline">\(k\)</span>.</p>
+</div>
+<div id="exr-5.5" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.5</strong></span> Consider a probability mass function given by <span class="math display">\[p(x) = \begin{cases}
+    z &amp; x = 1 \\
+    \frac{1}{x^2} &amp; x = 2, 3, 4, 5, 6, 7, 8, 9, 10 \\
+    0 &amp; \text{otherwise}
+\end{cases}.\]</span></p>
+<ol type="a">
+<li>Find <span class="math inline">\(z\)</span>.</li>
+<li>What is the probability that <span class="math inline">\(X\)</span> is an even number?</li>
+</ol>
+</div>
+<div id="exr-5.6" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.6</strong></span> Consider the probability mass function, defined for all non-negative integers, given by <span class="math display">\[p(x) = \frac{2^xe^{-2}}{x!}.\]</span></p>
+<ol type="a">
+<li>What is <span class="math inline">\(P(X = 0)\)</span>?</li>
+<li>What is <span class="math inline">\(P(X = 5)\)</span>?</li>
+<li>What is <span class="math inline">\(P(X \geq 2)\)</span>?</li>
+</ol>
+</div>
+<div id="exr-5.7" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.7</strong></span> For each of the following, indicate and explain whether the following properties could belong to a valid probability mass function.</p>
+<ol type="a">
+<li><span class="math inline">\(p(x) &lt; 0\)</span> for some <span class="math inline">\(x \in \mathbb{Z}\)</span>.</li>
+<li><span class="math inline">\(p(x) &gt; 1\)</span> for some <span class="math inline">\(x \in\mathbb{Z}\)</span>.</li>
+<li><span class="math inline">\(p(x) &gt; \frac{\pi}{\ell}\)</span> for all elements of an <span class="math inline">\(\ell\)</span> element set.</li>
+<li><span class="math inline">\(p(-|x|) &gt; 0\)</span> for all <span class="math inline">\(x\in\mathbb{Z}\)</span>.</li>
+</ol>
+</div>
+<div id="exr-5.8" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.8</strong></span> Suppose that, for some fixed integer, <span class="math inline">\(y\)</span>, you define the mathematical function <span class="math inline">\(p(x) = \delta_y = I(x = y)\)</span>. That is, it takes a value of <span class="math inline">\(1\)</span> if <span class="math inline">\(x = y\)</span> and <span class="math inline">\(0\)</span> otherwise. Is this a valid probability mass function? Why?</p>
+</div>
+<div id="exr-5.9" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.9</strong></span> Consider the joint probability mass function of two random variables, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, given by <span class="math display">\[P(X=x, Y=y) = \frac{1}{150}(x + y), 1\leq x, y\leq 5.\]</span></p>
+<ol type="a">
+<li>Show that this is a valid joint probability mass function.</li>
+<li>What is <span class="math inline">\(P(X = 2, Y = 3)\)</span>?</li>
+<li>What is the <span class="math inline">\(P(X = 4)\)</span>?</li>
+<li>What is the marginal probability mass function of <span class="math inline">\(Y\)</span>?</li>
+<li>Are <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> independent? Explain.</li>
+<li>What is the conditional probability mass function of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y\)</span>?</li>
+<li>What is the conditional probability mass function of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span>?</li>
+</ol>
+</div>
+<div id="exr-5.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.10</strong></span> Consider the joint probability mass function of two random variables, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, given by <span class="math display">\[P(X=x, Y=y) = \frac{1}{12}(y - x)^2, 1\leq x, y\leq 3.\]</span></p>
+<ol type="a">
+<li>Show that this is a valid joint probability mass function.</li>
+<li>What is <span class="math inline">\(P(X = 1, Y = 2)\)</span>?</li>
+<li>What is the <span class="math inline">\(P(X = 2)\)</span>?</li>
+<li>What is the marginal probability mass function of <span class="math inline">\(Y\)</span>?</li>
+<li>Are <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> independent? Explain.</li>
+<li>What is the conditional probability mass function of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y\)</span>?</li>
+<li>What is the conditional probability mass function of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span>?</li>
+</ol>
+</div>
+<div id="exr-5.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.11</strong></span> Consider the following joint probability mass function represented as a contingency table:</p>
+<p><span class="math display">\[
+\begin{array}{c|ccc}
+    &amp; Y = 1 &amp; Y = 2 &amp; Y = 3 \\
+\hline
+X = 1 &amp; 0.1 &amp; 0.2 &amp; 0.3 \\
+X = 2 &amp; 0.2 &amp; 0.1 &amp; 0.1 \\
+\end{array}
+\]</span></p>
+<ol type="a">
+<li>What is the probability that <span class="math inline">\(X = 1\)</span> and <span class="math inline">\(Y = 2\)</span>?</li>
+<li>Calculate <span class="math inline">\(P(X = 2)\)</span>.</li>
+<li>Find the marginal probability mass function of <span class="math inline">\(Y\)</span>.</li>
+<li>Are <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> independent? Justify your answer.</li>
+<li>What is <span class="math inline">\(P(Y=1|X=2)\)</span>?</li>
+<li>What is <span class="math inline">\(P(X = 2| Y = 2)\)</span>?</li>
+</ol>
+</div>
+<div id="exr-5.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.12</strong></span> Suppose that a particular disease is associated with two common types of genetic mutations, say type <span class="math inline">\(A\)</span> and type <span class="math inline">\(B\)</span>. Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> correspond to the random variables which count the locations at which each type of mutation has occurred. In order for a type <span class="math inline">\(B\)</span> mutation to occur, a type <span class="math inline">\(A\)</span> must have also occurred at the same location, and so we can say that <span class="math display">\[P(B=b|A=a) = \binom{a}{b}(0.25)^b(0.75)^{a-b}, \quad b\in\{0,1,2,\dots, a\}.\]</span> Moreover, suppose that <span class="math display">\[P(A=a) = \frac{10-a}{45} \quad a\in\{0,1,2,3,4,5\}.\]</span></p>
+<ol type="a">
+<li>What is the joint probability mass function of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>?</li>
+<li>What is the marginal probability mass function of <span class="math inline">\(B\)</span>?</li>
+<li>What is the conditional probability mass function of <span class="math inline">\(A\)</span> given <span class="math inline">\(B\)</span>?</li>
+<li>Is <span class="math inline">\(B\)</span> independent of <span class="math inline">\(A\)</span>? Explain.</li>
+<li>Is <span class="math inline">\(A\)</span> independent of <span class="math inline">\(B\)</span>? Explain.</li>
+<li>Suppose that you are at a substantially increased risk of the disease if the total, <span class="math inline">\(A+B \geq 8\)</span>. What is the probability that an individual is at an increased risk?</li>
+</ol>
+</div>
+<div id="exr-5.13" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.13</strong></span> Suppose a factory produces two types of products: Widgets and Gadgets. Let <span class="math inline">\(W\)</span> and <span class="math inline">\(G\)</span> represent the random variables denoting the number of units produced for each type, in a particular hour. Suppose that the following is observed as the joint probability mass function <span class="math display">\[P(W=w, G=g) = \frac{1}{80}, \quad w \in \{1,2,3,\dots,8\}, g \in \{1,2,3,\dots,10\}.\]</span></p>
+<ol type="a">
+<li>What is the marginal probability mass function, <span class="math inline">\(P(W)\)</span>?</li>
+<li>What is the marginal probability mass function, <span class="math inline">\(P(G)\)</span>?</li>
+<li>Is <span class="math inline">\(W\perp G\)</span>?</li>
+<li>Let <span class="math inline">\(T = W + G\)</span>. What is the probability mass function of <span class="math inline">\(T\)</span>?</li>
+<li>What is the conditional probability mass function, <span class="math inline">\(P(W|T)\)</span>?</li>
+<li>What is the conditional probability mass function, <span class="math inline">\(P(G|T)\)</span>?</li>
+<li>What is the conditional probability mass function, <span class="math inline">\(P(T|G)\)</span>?</li>
+<li>What is the conditional probability mass function, <span class="math inline">\(P(T|W)\)</span>?</li>
+</ol>
+</div>
+<div id="exr-5.14" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.14</strong></span> &nbsp;</p>
+<ol type="a">
+<li>List an example of a real-world scenario where a set of random variables is likely to be iid. Explain.</li>
+<li>List an example of a real-world scenario where a set of random variables is likely to be identically distributed, but not independent. Explain.</li>
+<li>List an example of a real-world scenario where a set of random variables is likely to be independent, but not identically distributed. Explain.</li>
+</ol>
+</div>
+<div id="exr-5.15" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.15</strong></span> Suppose that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are iid, with <span class="math inline">\(p_X(x)\)</span> and <span class="math inline">\(p_Y(y)\)</span>. If <span class="math inline">\(Y\)</span> takes on a specific value, <span class="math inline">\(y'\)</span>, with <span class="math inline">\(p_Y(y') = 0.25\)</span>, what is the probability that <span class="math inline">\(X\)</span> takes on the same value? Explain.</p>
+</div>
+<div id="exr-5.16" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.16</strong></span> Suppose that <span class="math inline">\(X_1,\dots,X_n\)</span> are iid with a probability mass function, <span class="math inline">\(p_X(x)\)</span>.</p>
+<ol type="a">
+<li>What is the joint probability mass function of <span class="math inline">\((X_1,\dots,X_n)\)</span>?</li>
+<li>What is the conditional probability mass function, <span class="math inline">\(P(X_1 = x | X_2 = y)\)</span>?</li>
+<li>What is the probability mass function of <span class="math inline">\(X_1\)</span> conditional on <span class="math inline">\(\sum_{i=2}^n X_i\)</span>?</li>
+</ol>
+</div>
 
 
 </section>
@@ -1122,7 +1280,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

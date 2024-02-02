@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.533">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -1171,7 +1171,7 @@ Solution
 <p><span class="theorem-title"><strong>Definition 2.7 (Intersection)</strong></span> The intersection captures the use of “and” in reference to two or more sets. Formally, the intersection of two sets, <span class="math inline">\(A\)</span>, and <span class="math inline">\(B\)</span>, is the set that contains all elements that belong to both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. We write <span class="math inline">\(A \cap B\)</span>, and say “<span class="math inline">\(A\)</span> intersect <span class="math inline">\(B\)</span>.” When we wish to take the union of many sets, <span class="math inline">\(A_1,A_2,\dots,A_n\)</span>, we write <span class="math display">\[\bigcap_{i=1}^n A_i.\]</span></p>
 </div>
 <div id="def-complement" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.8 (Complement)</strong></span> The complement makes formal the concept of “not.” The complement of a set to be the set of all elements which occur in the sample space but are not in the given set. We write this as <span class="math inline">\(A^C\)</span> and say “<span class="math inline">\(A\)</span> complement.” When dealing with a sample space, <span class="math inline">\(\mathcal{S}\)</span>, the complement of <span class="math inline">\(A\)</span> is the set of all elements in <span class="math inline">\(\mathcal{S}\)</span> that are not in <span class="math inline">\(A\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 2.8 (Complement)</strong></span> The complement makes formal the concept of “not.” The complement of a set is the set of all elements which occur in the sample space but are not in the given set. We write this as <span class="math inline">\(A^C\)</span> and say “<span class="math inline">\(A\)</span> complement.” When dealing with a sample space, <span class="math inline">\(\mathcal{S}\)</span>, the complement of <span class="math inline">\(A\)</span> is the set of all elements in <span class="math inline">\(\mathcal{S}\)</span> that are not in <span class="math inline">\(A\)</span>.</p>
 </div>
 <div id="exm-basic-set-operations" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.7 (Basic Set Operations)</strong></span> For the game being played by Charles and Sadie, take <span class="math inline">\(E_1 = \{(\text{H}, \text{H}, \text{H})\}\)</span>, <span class="math inline">\(E_2 = \{(\text{H}, \text{H}, \text{H}), (\text{T}, \text{H}, \text{H}), (\text{H}, \text{T}, \text{H})\}\)</span>, and <span class="math inline">\(E_3 = \{(\text{H}, \text{H}, \text{T})\}\)</span>. Express the following events.</p>
@@ -1212,7 +1212,7 @@ Solution
 <p>These concepts allow us to more compactly express sets of interest, and in particular, will be quite useful when it comes to assigning probability. The more times you work with the set operations, the more familiar they will become, and as a result, practice is always useful. Considering rolling a 6-sided die, and take <span class="math inline">\(A\)</span> to be the event that a <span class="math inline">\(6\)</span> is rolled, <span class="math inline">\(B\)</span> to be the event that the roll was at least <span class="math inline">\(5\)</span>, <span class="math inline">\(C\)</span> to be the event that the roll was less than <span class="math inline">\(4\)</span>, and <span class="math inline">\(D\)</span> to be the event that the roll was odd.</p>
 <ul>
 <li>If we consider <span class="math inline">\(D^C\)</span> this is the event that the roll was even;</li>
-<li><span class="math inline">\(A \cup C\)</span> is the event that a <span class="math inline">\(6\)</span> was rolled or that a number less than 44$ was rolled, which is to say anything other than a <span class="math inline">\(4\)</span> or a <span class="math inline">\(5\)</span>;</li>
+<li><span class="math inline">\(A \cup C\)</span> is the event that a <span class="math inline">\(6\)</span> was rolled or that a number less than <span class="math inline">\(4\)</span> was rolled, which is to say anything other than a <span class="math inline">\(4\)</span> or a <span class="math inline">\(5\)</span>;</li>
 <li>If we take <span class="math inline">\(A \cup B\)</span> then this will be the same as <span class="math inline">\(B\)</span>, and <span class="math inline">\(A\cap B\)</span> will be <span class="math inline">\(A\)</span>.</li>
 <li>If we take the event <span class="math inline">\(A\cap C\)</span>, notice that no outcomes satisfy both conditions, and so <span class="math inline">\(A \cap C = \emptyset\)</span>.</li>
 <li>We can also join together multiple operations. <span class="math inline">\(D^C \cap C\)</span> gives us even numbers than less than <span class="math inline">\(4\)</span>, which is to say the outcome <span class="math inline">\(2\)</span>.</li>
@@ -1299,7 +1299,7 @@ setdiff(x = sample_space, y = union(E2, E3)) `,
 Figure&nbsp;2.1: A basic Venn diagram, representing the sample space and two different events. In practice, the sample space would have the possible outcomes written into the rectangle, and the circled events would end up containing the relevant outcomes for those events.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch2-venn-diagram-basic.svg" class="img-fluid figure-img">
+<img src="../graphics/ch2-venn-diagram-basic.svg" class="img-fluid figure-img">
 </div>
 </figure>
 </div>
@@ -1310,7 +1310,7 @@ Figure&nbsp;2.1: A basic Venn diagram, representing the sample space and two dif
 Figure&nbsp;2.2: <strong>Union:</strong> The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-union-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch2-venn-diagram-union.svg" class="img-fluid figure-img">
+<img src="../graphics/ch2-venn-diagram-union.svg" class="img-fluid figure-img">
 </div>
 </figure>
 </div>
@@ -1320,7 +1320,7 @@ Figure&nbsp;2.2: <strong>Union:</strong> The union of events A and B is shaded h
 Figure&nbsp;2.3: <strong>Intersection:</strong> The intersection of events A and B is shaded here in red. The intersection of two sets is all of the content shared by both sets, given by the overlapping area of the two circles.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-intersection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch2-venn-diagram-intersection.svg" class="img-fluid figure-img">
+<img src="../graphics/ch2-venn-diagram-intersection.svg" class="img-fluid figure-img">
 </div>
 </figure>
 </div>
@@ -1330,7 +1330,7 @@ Figure&nbsp;2.3: <strong>Intersection:</strong> The intersection of events A and
 Figure&nbsp;2.4: <strong>Complement:</strong> The complement of event A is shaded here in red. The complement of a sets is all of area inside of the sample space, not inside of the set. Here we show the complement of Event A, though Event B would be similar.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-complement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch2-venn-diagram-complement.svg" class="img-fluid figure-img">
+<img src="../graphics/ch2-venn-diagram-complement.svg" class="img-fluid figure-img">
 </div>
 </figure>
 </div>
@@ -1350,7 +1350,7 @@ Solution
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The sample space contains the eight possible options. Only <span class="math inline">\((\text{T}, \text{T}, \text{T})\)</span> does not belong to at least one of the events. Both events share <span class="math inline">\((\text{H},\text{H},\text{T})\)</span>, <span class="math inline">\((\text{H},\text{T},\text{H})\)</span>, and <span class="math inline">\((\text{T},\text{H},\text{H})\)</span>.</p>
-<p><img src="..\graphics/ch2-venn-diagram-example.svg" class="img-fluid"></p>
+<p><img src="../graphics/ch2-venn-diagram-example.svg" class="img-fluid"></p>
 </div>
 </div>
 </div>
@@ -1604,7 +1604,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

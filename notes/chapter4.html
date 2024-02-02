@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.533">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -1403,7 +1403,7 @@ B_3 &amp;= \{(\text{T},\text{H},\text{T}),  (\text{H},\text{T},\text{H})\}.
 Figure&nbsp;4.1: This graphic shows the argument that summing over the joint probabilities between an event and a partition gives the full marginal probability. Note that <span class="math inline">\(B_1,\dots,B_7\)</span> forms a partition of the space where every possible outcome is contained in exactly one of these sets. Then, if we take an arbitrary event <span class="math inline">\(A\)</span>, we can divide <span class="math inline">\(A\)</span> into the components that intersect with each partitioning set, namely <span class="math inline">\(A \cap B_1\)</span>, <span class="math inline">\(A \cap B_2\)</span>, and so forth.
 </figcaption>
 <div aria-describedby="fig-basic-partition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch4-basic-partition.svg" class="img-fluid figure-img">
+<img src="../graphics/ch4-basic-partition.svg" class="img-fluid figure-img">
 </div>
 </figure>
 </div>
@@ -2610,7 +2610,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

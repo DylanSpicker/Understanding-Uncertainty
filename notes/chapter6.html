@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.533">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -447,7 +447,7 @@ Cost for a Game of Chance
 <p>If we imagine observing many independent and identically distributed random variables, then as the number of samples tends to infinity, the expected value of <span class="math inline">\(X\)</span> and the simple average will begin to coincide with one another. That is the distance between <span class="math inline">\(E[X]\)</span> and <span class="math inline">\(\frac{1}{n}\sum_{i=1}^n X_i\)</span> will shrink to <span class="math inline">\(0\)</span>. As a result, we can view the expected value as the average over repeated experiments. This interpretation coincides nicely with the description based on games of chance. Specifically, if you were to repeatedly play the same game of chance, the average payout per game will be equal to the expected value, if you play for long enough.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-plot" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
+<div id="fig-plot" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6.1: This plot produces 50000 realizations of the random variable described in <a href="#exm-expected-value-one" class="quarto-xref">Example&nbsp;<span>6.5</span></a>. As computed in the example, the expected value is 2.6. As many repeated observations are averaged, the empirical average converges to this computed value.
@@ -817,7 +817,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
