@@ -136,7 +136,7 @@ The intersection captures the use of "and" in reference to two or more sets. For
 
 :::{#def-complement}
 ## Complement
-The complement makes formal the concept of "not." The complement of a set to be the set of all elements which occur in the sample space but are not in the given set. We write this as $A^C$ and say "$A$ complement." When dealing with a sample space, $\mathcal{S}$, the complement of $A$ is the set of all elements in $\mathcal{S}$ that are not in $A$.
+The complement makes formal the concept of "not." The complement of a set is the set of all elements which occur in the sample space but are not in the given set. We write this as $A^C$ and say "$A$ complement." When dealing with a sample space, $\mathcal{S}$, the complement of $A$ is the set of all elements in $\mathcal{S}$ that are not in $A$.
 :::
 
 :::{#exm-basic-set-operations}
@@ -170,7 +170,7 @@ Two events, $E_1$ and $E_2$ are said to be disjoint whenever their intersection 
 These concepts allow us to more compactly express sets of interest, and in particular, will be quite useful when it comes to assigning probability. The more times you work with the set operations, the more familiar they will become, and as a result, practice is always useful. Considering rolling a 6-sided die, and take $A$ to be the event that a $6$ is rolled, $B$ to be the event that the roll was at least $5$, $C$ to be the event that the roll was less than $4$, and $D$ to be the event that the roll was odd.
 
 * If we consider $D^C$ this is the event that the roll was even; 
-* $A \cup C$ is the event that a $6$ was rolled or that a number less than 44$ was rolled, which is to say anything other than a $4$ or a $5$; 
+* $A \cup C$ is the event that a $6$ was rolled or that a number less than $4$ was rolled, which is to say anything other than a $4$ or a $5$; 
 * If we take  $A \cup B$ then this will be the same as $B$, and $A\cap B$ will be $A$. 
 * If we take the event $A\cap C$, notice that no outcomes satisfy both conditions, and so $A \cap C = \emptyset$. 
 * We can also join together multiple operations. $D^C \cap C$ gives us even numbers than less than $4$, which is to say the outcome $2$. 

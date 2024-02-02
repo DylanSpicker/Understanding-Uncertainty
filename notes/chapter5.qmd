@@ -537,3 +537,164 @@ This type of statement is always the flavour of interpretation statements that a
 As your study of probability progresses, you will begin to work with random quantities in a strictly theoretical sense. In introductory level problems, we are often holding in mind very concrete examples to illustrate the procedures and concepts. In this setting it is easy enough to hold in mind the experiment of interest: for instance, we may have a random variable representing the result of a coin toss, and you can envision repeatedly tossing a coin. As the concepts become less concrete, more abstract, and harder to draw direct parallels to tangible scenarios, it becomes more and more important to rely on the interpretations rooted in a series of independent and identically distributed random variables. 
 
 A large component of statistics as an area of study is making explicit the assumptions we are working with, and doing our best to ensure that these are reasonable. By interpreting probability mass functions as the proportion of independent and identically distributed random variables that take on a particular value when we repeatedly take realizations of these random variables, this philosophy is made clear and explicit.
+
+## Exercises{.unnumbered}
+
+:::{#exr-5.1}
+Suppose that you sit in the library, observing the front desk until a patron takes out books. Describe at least $5$ different random variables that could correspond to this experiment.
+:::
+
+:::{#exr-5.2}
+Consider the data collection that goes on at a weather station. Describe as many different random variables as you can think of corresponding to this experiment.
+:::
+
+:::{#exr-5.3}
+For each of the following random variables, identify whether they are discrete or continuous.
+
+a. In a survey, the number of siblings each participant has is recorded.
+a. A thermometer measures temperature in degrees Celsius.
+a. The number of cars passing through a toll booth in an hour.
+a. In a casino game, the amount of money won or lost on a single bet.
+a. The weight of apples harvested from an orchard.
+a. In a classroom, the number of students who own a laptop.
+a. The time it takes for a light bulb to burn out.
+a. When flipping a coin, the number of heads obtained in $10$ flips.
+a. The height of students in a class. 
+a. The number of emails received per day.
+a. In a factory, the number of defective products in a batch.
+a. The distance traveled by a car in a specific time interval.
+a. When selecting a card from a standard deck, the card's face value.
+a. The age at which individuals first learn to ride a bicycle.
+a. The number of customers entering a store in one hour.
+a. In a soccer match, the time it takes for the first goal to be scored.
+a. The number of books a person reads in a month.
+a. When rolling two dice, the sum of the numbers rolled.
+a. The number of text messages sent in a day.
+a. The volume of water in a reservoir.
+:::
+
+:::{#exr-5.4}
+Suppose that a probability mass function is given by $$p(x) = \begin{cases}
+    k(7x + 3) & x = 0, 1, 2, 3\\
+    0 & \text{otherwise}
+\end{cases}.$$ Find the value of $k$. 
+:::
+
+:::{#exr-5.5}
+Consider a probability mass function given by $$p(x) = \begin{cases}
+    z & x = 1 \\
+    \frac{1}{x^2} & x = 2, 3, 4, 5, 6, 7, 8, 9, 10 \\
+    0 & \text{otherwise}
+\end{cases}.$$
+
+a. Find $z$.
+a. What is the probability that $X$ is an even number?
+:::
+
+:::{#exr-5.6}
+Consider the probability mass function, defined for all non-negative integers, given by $$p(x) = \frac{2^xe^{-2}}{x!}.$$
+
+a. What is $P(X = 0)$?
+a. What is $P(X = 5)$?
+a. What is $P(X \geq 2)$?
+:::
+
+:::{#exr-5.7}
+For each of the following, indicate and explain whether the following properties could belong to a valid probability mass function.
+
+a. $p(x) < 0$ for some $x \in \mathbb{Z}$.
+a. $p(x) > 1$ for some $x \in\mathbb{Z}$.
+a. $p(x) > \frac{\pi}{\ell}$ for all elements of an $\ell$ element set.
+a. $p(-|x|) > 0$ for all $x\in\mathbb{Z}$.
+:::
+
+:::{#exr-5.8}
+Suppose that, for some fixed integer, $y$, you define the mathematical function $p(x) = \delta_y = I(x = y)$. That is, it takes a value of $1$ if $x = y$ and $0$ otherwise. Is this a valid probability mass function? Why?
+:::
+
+::: {#exr-5.9}
+Consider the joint probability mass function of two random variables, $X$ and $Y$, given by $$P(X=x, Y=y) = \frac{1}{150}(x + y), 1\leq x, y\leq 5.$$
+
+a. Show that this is a valid joint probability mass function. 
+b. What is $P(X = 2, Y = 3)$?
+c. What is the $P(X = 4)$?
+d. What is the marginal probability mass function of $Y$?
+d. Are $X$ and $Y$ independent? Explain.
+e. What is the conditional probability mass function of $X$ given $Y$?
+f. What is the conditional probability mass function of $Y$ given $X$?
+:::
+
+::: {#exr-5.10}
+Consider the joint probability mass function of two random variables, $X$ and $Y$, given by $$P(X=x, Y=y) = \frac{1}{12}(y - x)^2, 1\leq x, y\leq 3.$$
+
+a. Show that this is a valid joint probability mass function. 
+b. What is $P(X = 1, Y = 2)$?
+c. What is the $P(X = 2)$?
+d. What is the marginal probability mass function of $Y$?
+d. Are $X$ and $Y$ independent? Explain.
+e. What is the conditional probability mass function of $X$ given $Y$?
+f. What is the conditional probability mass function of $Y$ given $X$?
+:::
+
+::: {#exr-5.11}
+Consider the following joint probability mass function represented as a contingency table:
+
+$$
+\begin{array}{c|ccc}
+    & Y = 1 & Y = 2 & Y = 3 \\
+\hline
+X = 1 & 0.1 & 0.2 & 0.3 \\
+X = 2 & 0.2 & 0.1 & 0.1 \\
+\end{array}
+$$
+
+a. What is the probability that $X = 1$ and $Y = 2$?
+b. Calculate $P(X = 2)$.
+c. Find the marginal probability mass function of $Y$.
+d. Are $X$ and $Y$ independent? Justify your answer.
+e. What is $P(Y=1|X=2)$?
+f. What is $P(X = 2| Y = 2)$?
+:::
+
+::: {#exr-5.12}
+Suppose that a particular disease is associated with two common types of genetic mutations, say type $A$ and type $B$. Let $A$ and $B$ correspond to the random variables which count the locations at which each type of mutation has occurred. In order for a type $B$ mutation to occur, a type $A$ must have also occurred at the same location, and so we can say that $$P(B=b|A=a) = \binom{a}{b}(0.25)^b(0.75)^{a-b}, \quad b\in\{0,1,2,\dots, a\}.$$ Moreover, suppose that $$P(A=a) = \frac{10-a}{45} \quad a\in\{0,1,2,3,4,5\}.$$
+
+a. What is the joint probability mass function of $A$ and $B$?
+b. What is the marginal probability mass function of $B$?
+c. What is the conditional probability mass function of $A$ given $B$?
+d. Is $B$ independent of $A$? Explain.
+e. Is $A$ independent of $B$? Explain.
+f. Suppose that you are at a substantially increased risk of the disease if the total, $A+B \geq 8$. What is the probability that an individual is at an increased risk?
+:::
+
+::: {#exr-5.13}
+Suppose a factory produces two types of products: Widgets and Gadgets. Let $W$ and $G$ represent the random variables denoting the number of units produced for each type, in a particular hour. Suppose that the following is observed as the joint probability mass function $$P(W=w, G=g) = \frac{1}{80}, \quad w \in \{1,2,3,\dots,8\}, g \in \{1,2,3,\dots,10\}.$$
+
+a. What is the marginal probability mass function, $P(W)$?
+b. What is the marginal probability mass function, $P(G)$?
+c. Is $W\perp G$?
+d. Let $T = W + G$. What is the probability mass function of $T$?
+e. What is the conditional probability mass function, $P(W|T)$?
+f. What is the conditional probability mass function, $P(G|T)$?
+g. What is the conditional probability mass function, $P(T|G)$?
+h. What is the conditional probability mass function, $P(T|W)$?
+:::
+
+
+::: {#exr-5.14}
+a. List an example of a real-world scenario where a set of random variables is likely to be iid. Explain.
+b. List an example of a real-world scenario where a set of random variables is likely to be identically distributed, but not independent. Explain.
+c. List an example of a real-world scenario where a set of random variables is likely to be independent, but not identically distributed. Explain.
+:::
+
+::: {#exr-5.15}
+Suppose that $X$ and $Y$ are iid, with $p_X(x)$ and $p_Y(y)$. If $Y$ takes on a specific value, $y'$, with $p_Y(y') = 0.25$, what is the probability that $X$ takes on the same value? Explain.
+:::
+
+::: {#exr-5.16}
+Suppose that $X_1,\dots,X_n$ are iid with a probability mass function, $p_X(x)$.
+
+a. What is the joint probability mass function of $(X_1,\dots,X_n)$?
+b. What is the conditional probability mass function, $P(X_1 = x | X_2 = y)$?
+c. What is the probability mass function of $X_1$ conditional on $\sum_{i=2}^n X_i$?
+:::
