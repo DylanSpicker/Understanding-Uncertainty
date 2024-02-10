@@ -446,7 +446,7 @@ a. Find the probability that a student has taken statistics but not chemistry.
 :::
 
 :::{#exr-3.6}
-Let $M$ be the event that a student passes their math exam, and let $H$ be the event that a student passes their history exam. Suppose that $P(M) = 0.85$, $P(H) = 0.95$, and $P(V\cup W) = 0.99$. 
+Let $M$ be the event that a student passes their math exam, and let $H$ be the event that a student passes their history exam. Suppose that $P(M) = 0.85$, $P(H) = 0.95$, and $P(M\cup H) = 0.99$. 
 
 a. Find the probability that the student passes both math and history.
 a. Find the probability that the student passes neither math, nor history.
