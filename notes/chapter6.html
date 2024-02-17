@@ -195,6 +195,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Expectations and Variances with Multiple Random Variables</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Named Discrete Distributions</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -517,7 +523,7 @@ Solution
 <h2 data-number="6.4" class="anchored" data-anchor-id="expected-values-of-functions-of-random-variables"><span class="header-section-number">6.4</span> Expected Values of Functions of Random Variables</h2>
 <p>Sometimes the value of a random variable needs to be mapped through a function to give the value which is most relevant to us. Consider, for instance, a situation wherein the side lengths of boxes being manufactured by a specific supplier are random, due to incorrectly calibrated tolerances in the machines. The resulting boxes are perfect cubes. Suppose we are interested in the volume of the produced box not the side length. If a box has side length <span class="math inline">\(x\)</span>, then its volume will be <span class="math inline">\(x^3\)</span>, and so we may desire some way of computing <span class="math inline">\(E[X^3]\)</span> rather than <span class="math inline">\(E[X]\)</span>.</p>
 <p>Generally, for a function <span class="math inline">\(g(X)\)</span>, we may want to compute <span class="math inline">\(E[g(X)]\)</span>. It is important to recognize that <span class="math inline">\(E[g(X)] \neq g(E[X])\)</span>. This is a common mistake.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> If we are unable to apply the function to the expected value, then the question of how to compute the expected value remains. Instead of applying the function to overall expected value, instead, we apply the function to <em>each</em> value in the defining relationship for the expected value. That is, <span class="math display">\[E[g(X)] = \sum_{x\in\mathcal{X}} g(x)p_X(x).\]</span> This is sometimes referred to as the “law of the unconscious statistician,” a name which may be aggressive enough to help remember the correct way to compute the expectation.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>

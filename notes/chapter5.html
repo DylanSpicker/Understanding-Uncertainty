@@ -195,6 +195,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Expectations and Variances with Multiple Random Variables</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Named Discrete Distributions</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -398,7 +404,7 @@ Solution
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>One choice of <span class="math inline">\(X\)</span> is to allow <span class="math inline">\(X\)</span> to coin the number of heads that show on three tosses of the coin. In this case we have <span class="math inline">\(\mathcal{X} = \{0,1,2,3\}\)</span>. If <span class="math inline">\(x = 0\)</span> or <span class="math inline">\(x = 3\)</span> is observed then Garth pays. If <span class="math inline">\(x = 2\)</span> is observed then Charles pays. Finally, if <span class="math inline">\(x = 1\)</span> is observed, Sadie pays. Thus writing down the probability mass function for <span class="math inline">\(X\)</span> also provides an easy way for computing the probability of each player having to pay.</p>
+<p>One choice of <span class="math inline">\(X\)</span> is to allow <span class="math inline">\(X\)</span> to be the number of heads that show on three tosses of the coin. In this case we have <span class="math inline">\(\mathcal{X} = \{0,1,2,3\}\)</span>. If <span class="math inline">\(x = 0\)</span> or <span class="math inline">\(x = 3\)</span> is observed then Garth pays. If <span class="math inline">\(x = 2\)</span> is observed then Charles pays. Finally, if <span class="math inline">\(x = 1\)</span> is observed, Sadie pays. Thus writing down the probability mass function for <span class="math inline">\(X\)</span> also provides an easy way for computing the probability of each player having to pay.</p>
 <p>In order for <span class="math inline">\(X = 0\)</span>, we must have all tails come up. There are <span class="math inline">\(2^3 = 8\)</span> total possible sequences of <span class="math inline">\(3\)</span> coin tosses, and only <span class="math inline">\(1\)</span> of these results in <span class="math inline">\(X = 0\)</span>, therefore <span class="math inline">\(P(X = 0) = p(0) = \frac{1}{8}\)</span>. The same logic applies to <span class="math inline">\(X = 3\)</span> where we need to toss all heads. There are several techniques for finding <span class="math inline">\(p(1)\)</span> and <span class="math inline">\(p(2)\)</span>.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> The most direct way is to recognize that there are exactly <span class="math inline">\(3\)</span> ways of observing <span class="math inline">\(1\)</span> head (it can be in the first, second, or third toss). Thus, <span class="math inline">\(p(1) = \frac{3}{8}\)</span>. For <span class="math inline">\(p(2)\)</span>, the same logic applies except we ask “where is the one tail?” to give <span class="math inline">\(p(2) = \frac{3}{8}\)</span>. Then, taken together, this results in <span class="math display">\[p(x) = \begin{cases}
 \frac{1}{8} &amp; x \in \{0, 3\} \\
 \frac{3}{8} &amp; x \in \{1, 2\} \\
