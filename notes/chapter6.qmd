@@ -231,7 +231,7 @@ Sometimes the value of a random variable needs to be mapped through a function t
 
 Generally, for a function $g(X)$, we may want to compute $E[g(X)]$. It is important to recognize that $E[g(X)] \neq g(E[X])$. This is a common mistake.^[and an attractive one, but a mistake nonetheless.] If we are unable to apply the function to the expected value, then the question of how to compute the expected value remains. Instead of applying the function to overall expected value, instead, we apply the function to *each* value in the defining relationship for the expected value. That is, $$E[g(X)] = \sum_{x\in\mathcal{X}} g(x)p_X(x).$$ This is sometimes referred to as the "law of the unconscious statistician," a name which may be aggressive enough to help remember the correct way to compute the expectation.^[Some statisticians dislike this name. I find it to be rather cute.]
 
-:::{.callout-note icon="false"}
+:::{.callout-tip icon="false"}
 ## The Law of the Unconscious Statistician
 The law of the unconscious statistician (LOTUS) states that, for a random variable $X$, if we wish to find $E[g(X)]$, then we compute $$E[g(X)] = \sum_{x\in\mathcal{X}} g(x)p_X(x).$$
 :::

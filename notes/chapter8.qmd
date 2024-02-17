@@ -1,117 +1,638 @@
-## The Named Discrete Distributions
-So far, our discussion of probability distributions and their summaries has centered on general results for arbitrary probability mass functions. The basic premise has been that, by knowing a probability mass function, you are able to understand the complete behaviour of a random quantity. Directly from this mass function we are able to derive summaries for the behaviour, for instance describing the location and variability of the random variable. In short by knowing the probability mass function (and to a lesser extent, the expected value and variance), we immediately understand how the random variable behaves. We have not, however, spent much time discussing where the probability mass functions come from.
+# The Named Discrete Distributions
 
-We have, indirectly, seen one fairly general probability mass function, the one deriving from the equally likely outcomes model. This probability mass function is completely defined by the set of possible values that the random variable can take on. Suppose that we restrict our attention to the sample space being a set of $k$ integers from $a$ through to $a+k$. Note that this assumption is not actually restrictive: if you have any $k$ items you can simply label each of the items one of the numbers between $1$ and $k$ and take $a=1$. When setup in this way, this distribution is often referred to as the **discrete uniform distribution**. Typically, we will use the values for the lower bound ($a$) and the upper bound ($b=a+k$) to define *which* discrete uniform we are discussing. If we say that $X$ follows a discrete uniform distribution with parameters $a$ and $b$ we are say that $X$ is a random variable which has an equal probability of taking any of the integers from $a$ to $b$. Put different, we have that $$p_X(x) = \begin{cases} \frac{1}{b-a+1} & x \in\{a,a+1,\dots,b\}\\ 0 & \text{otherwise}.\end{cases}$$
+## General Named Distributions and the Discrete Uniform
+So far, our discussion of probability distributions and their summaries has centered on general results for arbitrary probability mass functions. The basic premise has been that, by knowing a probability mass function, you are able to understand the complete behaviour of a random quantity. Directly from this mass function we are able to derive summaries for the behaviour, for instance describing the location and variability of the random variable. In short by knowing the probability mass function^[... and to a lesser extent, the expected value and variance.] we immediately understand how the random variable behaves. We have not, however, spent much time discussing where the probability mass functions actually *come* from.
 
-Knowing the probability mass function of $X$, we also immediately can work out the expectation and variance for the random variable. Doing this results in $E[X] = \frac{a+b}{2}$ and $\text{var}(X) = \frac{(b-a+1)^2-1}{12}$ (see the following derivation!). This means that just by knowing that a random variable follows a discrete uniform distribution, we immediately know (or can look up) any of the properties that we have discussed up until this point. 
+We have seen one fairly general probability mass function, the one deriving from the equally likely outcomes model. This probability mass function is completely defined by the set of possible values that the random variable can take on. Suppose that we restrict our attention to the sample space being a set of $k$ integers from $a$ through to $a+k$.^[Note that this assumption is not actually restrictive: if you have any $k$ items you can simply label each of the items one of the numbers between $1$ and $k$ and take $a=1$.] When setup in this way, this distribution is often referred to as the **discrete uniform distribution**. Typically, we will use the values for the lower bound ($a$) and the upper bound ($b=a+k$) to define *which* discrete uniform we are discussing. If we say that $X$ follows a discrete uniform distribution with parameters $a$ and $b$ we are say that $X$ is a random variable which has an equal probability of taking any of the integers from $a$ to $b$. Put differently, we have that $$p_X(x) = \begin{cases} \frac{1}{b-a+1} & x \in\{a,a+1,\dots,b\}\\ 0 & \text{otherwise}.\end{cases}$$
 
-TODO: Include derivation.
+Whenever we want to say that $X$ follows a particular distribution, wwe use a mathematical shorthand to do so. Specifically, we write $X \sim \text{Distribution}(\text{parameters})$ to mean "$X$ follows the $\text{Distribution}$ with $\text{parameters}$." For instance, if $X$ represents the results of a fair six-sided die roll, we can write $X\sim\text{Discrete Uniform}(1,6)$. We will typically shorten this to something like $X\sim\text{D.Unif}(1,6)$. Knowing the probability mass function of $X$, we also immediately can work out the expectation and variance for the random variable. Doing this results in $E[X] = \frac{a+b}{2}$ and $\text{var}(X) = \frac{(b-a+1)^2-1}{12}$. This means that simply by knowing that a random variable follows a discrete uniform distribution we also immediately know^[Or, if we forget, can lookup.] any of the properties that we have discussed up until this point. 
 
-This is a partiuclarly powerful realization. There are many real-world quantities  which we immediatley know  follow a discrete uniform distribution. For instance, rolling a die. In the case of a die roll we take $a=1$, $b=6$, and immediately understand that $E[X] = 3.5$, that $\text{var}(X) = \frac{17}{6}$, and that the probability of each value is $\frac{1}{6}$. Of course,we could do the same calculations for any die, with any sides labeled in consecutive order. 
+:::{.callout-warning icon="false" collapse="true"}
+## Mean and Variance of Discrete Uniform 
 
-TODO: Include examples of real-world discrete uniform settings.
+Recall that $E[X]$ is given by $$E[X] = \sum_{x\in\mathcal{X}} xp_X(x).$$ Thus, if we take $X$ to be from the discrete uniform then \begin{align*}
+E[X] &= \sum_{x=a}^b x\frac{1}{b-a+1} \\
+&= \frac{1}{b-a+1}\sum_{x=a}^b x \\
+&= \frac{1}{b-a+1}\times\frac{1}{2}(b-a+1)(a+b) \\
+&= \frac{a+b}{2}.
+\end{align*} For the variance, we can take the same derivation as above, this time solving $E[X^2]$. For this we get \begin{align*}
+E[X^2] &= \sum_{x=a}^b x^2\frac{1}{b-a+1} \\
+&= \frac{1}{b-a+1}\sum_{x=a}^b x^2 \\
+&= \frac{1}{b-a+1}\times\frac{1}{6}(b-a+1)(2a^2 + 2ab - a + 2b^2 + b) \\
+&= \frac{2a^2 + 2ab - a + 2b^2 + b}{6}.
+\end{align*} Then, \begin{align*}
+\text{var}(X) &= E[X^2] - E[X]^2 \\
+&= \frac{2a^2 + 2ab - a + 2b^2 + b}{6} - \left(\frac{a+b}{2}\right)^2 \\
+&= \frac{8a^2 + 8ab - 4a + 8b^2 + 4b - 6a^2 - 12ab - 6b^2}{24} \\
+&= \frac{2a^2 - 4ab - 4a + 4b + 2b^2}{24} \\
+&= \frac{a^2 - 2ab - 2a + 2b + b^2}{12} \\
+&= \frac{a^2 - 2ab - 2a + 2b + b^2 + 1 - 1}{12} \\
+&= \frac{(b-a+1)^2 - 1}{12}.
+\end{align*}
+:::
 
-Despite the fact that the discrete uniform is fairly prominent in terms of real-world utility, it is also a comparatively simple distribution. However, the main point of this discussion is not actually to introduce the discrete uniform, but rather to introduce the concept of a **named distribution**. The basic premise here is that there are processes in the world which occur frequently enough, in a diverse array of settings, with the same underlying structure ot their uncertainty. If we can study one version of these general problems, then we can extract the mass function, expectation, and varaince and we are easily able to describe the probabilistic behaviour of these quantities. At that point,  understanding the uncertainty of random quantities becomes a matter of matching the processes to the correct distribution, and then applying what we know about that distribution directly. While not every process will directly correspond to a known, named distribution, we can often get very close using just a handful of these [TODO: write aside on the pareto distribution]. 
+This realization is particularly powerful. There are many real-world quantities which, through inspection, must follow a discrete uniform distribution. For instance, consider rolling a die. In the case of a die roll we take $a=1$, $b=6$, and immediately understand that $E[X] = 3.5$, that $\text{var}(X) = \frac{17}{6}$, and that the probability of each value is $\frac{1}{6}$. We could do the same calculations for any die with any sides labeled in consecutive order. 
 
-For each named distribution there is  an underlying structure describing in what scenarios it will arise. For instance, for the discrete uniform, this is when there is a set of equally likely outcomes  which can be described using consecutive integers. Once matched, there will also be a probability mass function, an expected value, and a variance associated  with the distribution. Importantly, all of tehse quantities will depend on some **parameters**. In the discrete uniform we used the parameters $a$ and $b$. These parameters specify which *version* of the distribution is relevant for the underlying scenario. It is best to think of the named distributions as families of distributions, with specific iterations being dictated by the parameter values. If two  processes follow the same distribution  with different parameters they will not be identically distributed, they are simply drawn from the same family. If two processes have the same parameter values and the same underlying distribution, they are identically distributed and their probabilistic behaviour will be exactly the same. For instance, there is no probabalistic differencebetween rolling a fair, six-sided die or drawing a card at random from a set of $6$ cards labelled $1$ through $6$. There may be real-world differences which matter, but from a probabilistic  point of view, they are exacttly the same.
+:::{#exm-discrete-uniform}
+## Charles and Sadie find Discrete Uniform Quantities
 
-This is a useful realization  as it allows the use of simple models to understand more complex phenomenon. Perhaps the best way to demonstrate the effectiveness of these simple models is to introduce  perhaps the most basic named probability distribution: **the Bernoulli distribution**. The Bernoulli distribution  characterizes any statistical experiment with a binary outcome when these resultsare denoted $0$ and $1$. The parameter that indexes the distribution is $p$, which gives the probability of observing a $1$.
+As Charles and Sadie begin to learn about named distributions, they decide that it is worthwhile to try to find examples of the named distributions around them. To do so, they start discussing a number of possibilities, each of them trying to describe whether and how different quantities obey the distribution. 
 
-Whenever we want to say that $X$ follows a particular distribution, wwe use a mathematical shorthand to do so. Specifically, we write $X \sim \text{Distribution}(\text{parameters})$ to mean ``$X$ follows the $\text{Distribution}$ with $\text{parameters}$.'' For instance, if $X$ represents the results of a fair six-sided die roll, we can write $X\sim\text{Discrete Uniform}(1,6)$. We will typically shorten this to be $X\sim\text{D.Unif}(1,6)$.
-%TODO: Move this up.
+For each of the following, help Charles and Sadie provide a justification of why a discrete uniform would (or would not be) appropriate, including a description of the parameters. 
 
-If $X\sim\text{Bern}(p)$ (where $\text{Bern}$ is used for Bernoulli distributions) then we know that $$p_X(x) = \begin{cases} p^x(1-p)^{1-x} & x\in\{0,1\}\\ 0 & \text{otherwise}.\end{cases}$$ Further, we know that $E[X] = p$ and $\text{var}(X) = p(1-p)$. We typically call $X=1$ a ``success'' and $X=0$ a ``failure'' when discussing Bernoulli random variables. The most straightforward application of a Bernoulli random variable is the flip of a coin. Take $X=1$ if a head is shown, and $X=0$ if a tails is shown. Then $X\sim\text{Bern}(p)$.
+a. At a recent hockey game, Charles and Sadie were spectators and the 50-50 raffle was selected by choosing the seat number between $1$ and $4000$. 
+b. Charles' sibling is having a child, and Charles has been thinking about what day of the week the child is going to be born on.
+c. Sadie enjoys playing the birthday-guessing-game when in public, wherein Sadie attempts to guess what day of the year random patrons of the coffee shop were born on.
+d. In their free time, Charles and Sadie enjoy playing role-playing games. These games often necessitate the rolling of dice, from the standard six-sided ones, through to large twenty-sided dice, or smaller three-sided ones.
+e. Charles' struggles to wake up in the mornings and as a result uses an alarm that plays a random song on a streaming music service. The song is selected from Charles' library at random, keeping each morning exciting! 
 
-A coin flip is, by itself, not particularly interesting. However *any* statistic experiment with binary outcomes coded this way can be seen as a Bernoulli random variable. Suppose, for instance, you are interested in whether you will pass a particular course or not. There are two options, a ``success'' (passing) and a ``failure'' (failing), and the chances of this are governed by some probability $p$. Suppose you want to know whether the next flight you take will land safely, it is the same situation. Or whether a particular medical treatment will effectively treat an illness. Each of these scenarios is analyzed in exactly the same way as a coin toss: the probabilities change, but the underlying functions and mathematical objects  do not. There is no probabalistic difference  between determining whether a coin will come up heads or whether a plane will safely land.
+::::{.callout .solution collapse='true'}
+## Solution
 
-TODO: Examples
+a. The winning seat can be treated as a random variable, $X$, which is distributed according to $\text{D.Unif}(1, 4000)$. The mean and variance are not particularly meaningful in this setting, however, each individual will have a constant probability of winning.
+b. If the days of the week are labelled $1$ through $7$ (say, Sunday through Saturday), then it is reasonable to suspect that $Y$ representing the numerically-encoded day of the week will follow approximately a $\text{D. Unif}(1,7)$. It may be arguable that some days are less likely than others to be born on (empirically, Sundays appear to have about $0.12$ which is less than $1$ in $7$), however, it is probably a reasonably close approximation.
+c. Here we can either view Sadie's guess *or* the true birthday as the random quantity. If Sadie truly guesses at random then it is likely this will follow a $\text{D. Unif}(1, 365)$, being well-represented by the discrete uniform. For one's true birthdays, if we are willing to ignore seasonal birth effects and leap years, then it is reasonable to assume that it too will be $\text{D. Unif}(1,365)$, however, these are both effects that do truly exist and would slightly alter from the uniform probabilities.
+d. Each roll of the die gives a discrete uniform based on the number of sides that it has. For any $d$ sided die, we can represent it via a $\text{D. Unif}(1,d)$. In these types of games, the mean and variance are more pertinent than in most of the other examples we have discussed. Importantly, if we roll multiple dice and take a sum (or a maximum, minimum, etc.) these no longer will be described by the uniform distribution.
+e. If Charles were to enumerate the songs on the streaming service with $1$ to $n$, then the played song may follow a $\text{D. Unif}(1, n)$ distribution.^[Interestingly, shuffle algorithms employed by streaming companies typically deviate far from the discrete uniform distribution. When Apple introduced shuffle to the iPod it originally had the next song be chosen as a discrete uniform over the as-yet unplayed songs. However, people found that this did not suitably feel *random* as maybe you would hear the same artist a few times in a row; they moved a way from an equally-likely model of selection to have people *feel* like it was more random.]
+::::
+:::
 
-Thediscrete uniform and Bernoulli are both distributions which map on to the real-world, but which are quite basic and which do not demonstrate the most meaningful applications of named distributions. These ideas become far more powerful when we begin to explore furthernamed distributions.
+While the discrete uniform can be useful for real-world applications, it is also a comparatively simple distribution. The main point of this discussion is not actually to introduce the discrete uniform, but rather to introduce the concept of a **named distribution**. There are processes in the world which occur frequently enough, in a wide array of settings, with the same underlying structure for their uncertainty. If we study one version of these general processes we can derive the mass function, expectation, and variance for them. Then, we are easily able to describe the probabilistic behaviour of other quantities following a similar process. At that point, understanding the uncertainty of random quantities becomes a matter of matching the processes to the correct distribution, and then applying what we know about that distribution directly. While not every process will directly correspond to a known, named distribution, we can often get very close using just a handful of these.^[Somewhat interestingly, this phenomenon of getting far with a small amount of effort comes up in a large number of contexts. Often referred to as the **80-20 rule** the idea is that $80\%$ of results can be achieved via $20\%$ of efforts. So, for instance, approximately $80\%$ of processes in the world can be described by $20\%$ of probability distributions. This phenomenon is, itself, represented by a named distribution: the **Pareto distribution**. This, for me, is beautifully ironic.] 
 
-### The Binomial Distribution
-A natural extension to tossing a coin once and seeing if it comes up heads or not is tossing a coin $n$ times and counting how many times it comes up heads. If we take $X$ to be the number of successes in $n$ independent and identically distributed Bernoulli trials, then we say that $X$ has a **binomial distribution**. The binomial distribution is characterized by two different parameters, the number of trials that are being performed, denoted $n$, and the probability of a success on each trial, $p$. We write $X\sim\text{Bin}(n,p)$.
+For each named distribution there is an underlying structure describing the scenarios in which it arises. For instance, for the discrete uniform, this is when there is a set of equally likely outcomes which can be described using consecutive integers. Once matched, there will is a probability mass function, an expected value, and a variance associated with the distribution. Importantly, all of these quantities will depend on some **parameters**. In the discrete uniform we used the parameters $a$ and $b$. These parameters specify which *version* of the distribution is relevant for the underlying scenario. 
 
-TODO: Simple example for bin.
+It is best to think of the named distributions as families of distributions, with specific iterations being dictated by the parameter values. If two processes follow the same distribution with different parameters they will not be identically distributed, they are simply drawn from the same family. If two processes have the same parameter values and the same underlying distribution, they are identically distributed and their probabilistic behaviour will be exactly the same. For instance, there is no probabilistic difference between rolling a fair, six-sided die or drawing a card at random from a set of $6$ cards labelled $1$ through $6$. There may be real-world differences which matter, but from a probabilistic point of view, they are exactly the same. This is a useful realization as it allows the use of simple models to understand more complex phenomenon. 
 
-If we know that $X\sim\text{Bin}(n,p)$ then we get that $$p_X(x) = \begin{cases} \binom{n}{x}p^x(1-p)^{n-x} & x\in\{0,1,\dots,n\} \\ 0 &\text{otherwise}.\end{cases}$$ This is the first distribution we have seen which knowing the underlying distribution would not have immediately translated into knowing the probability mass function, which begins to illustrate why this is a useful area of study. We can work out that $E[X] = np$ and $\text{var}(X) = np(1-p)$.
+## The Bernoulli Distribution
+Perhaps the best way to demonstrate the effectiveness of these simple models is to introduce one of the most basic named probability distribution, **the Bernoulli distribution**.^[The Bernoulli distribution is named after Jacob Bernoulli. The Bernoulli family was an incredibly prominent family of mathematicians from Switzerland, with their hands all over much of mathematics.] The Bernoulli distribution characterizes any statistical experiment with a *binary outcome* when these results are denoted $0$ and $1$. The parameter that indexes the distribution is $p$, which gives the probability of observing a $1$. The most straightforward application of a Bernoulli random variable is the flip of a coin. Take $X=1$ if a head is shown, and $X=0$ if a tails is shown. Then $X\sim\text{Bern}(p)$^[We use $\text{Bern}$ is used for Bernoulli distributions], with $p=0.5$. If $X\sim\text{Bern}(p)$ then we know that $$p_X(x) = \begin{cases} p^x(1-p)^{1-x} & x\in\{0,1\}\\ 0 & \text{otherwise}.\end{cases}$$ Further, we can show that that $E[X] = p$ and $\text{var}(X) = p(1-p)$. We typically call $X=1$ a "success" and $X=0$ a "failure" when discussing Bernoulli random variables. 
 
-TODO: Example with binomial probabilities.
+A coin flip is, by itself, not particularly interesting. However *any* statistical experiment with binary outcomes coded this way can be seen as a Bernoulli random variable. Suppose, for instance, you are interested in whether you will pass a particular course or not. There are two options, a "success" (passing) and a "failure" (failing), and the chances of this are governed by some probability $p$. Alternatively, suppose you want to know whether the next flight you take will land safely, or whether a particular medical treatment will effectively treat an illness. These are the same situations. Each of these scenarios is analyzed in exactly the same way as a coin toss: the probabilities change, but the underlying functions and mathematical objects do not. There is no probabilistic difference between determining whether a coin will come up heads or whether a plane will safely land.
 
-Note that the binomial can be constructed by summing iid Bernoulli variables. Specifically, if $X_1,\dots,X_n\stackrel{iid}{\sim}\text{Bern}(p)$ (note, $\stackrel{iid}{\sim}$ means ``independent and identically distributed according to...'') then taking $Y = \sum_{i=1}^n X_i$ gives a binomial with $n$ and $p$ distribution. This should be intuitive from the underlying structure: if a Bernoulli comes up $1$ when we get a heads on a single flip of teh coin, then if we flip the coin $n$ times and count the number of heads this is the same as counting the number of $1$'s from each corresponding Bernoulli trial, or in other words, summing them. Once we know this construction, we can use the properties we have previously seen about independent random variables to work out the mean and variance for the distribution. 
+:::{#exm-bernoulli}
+## Charles and Sadie find Bernoulli Quantities
 
-TODO: Aside on the workout of this.
+In their ongoing quest to best understand the named distributions, Charles ans Sadie continue their discussions of various quantities, and how they may fit a Bernoulli distribution.
 
-It is important to note and remember that binomial random variables make several  key assumptions. First, we are counting the number of successes in a **fixed** number of trials. In order for something to be binomially distributed, we must know in advance how many trials there are under consideration. Second, each of these trials must be independent of one another:  the outcome on one cannot impact any of the others. Third, there must be a constant probability of success across all trials. If the probabilities are shifting overtime, then a binomial is no longer appropriate.
+For each of the following, help Charles and Sadie provide a justification of why a Bernoulli distribution would (or would not be) appropriate, including a description of the parameter. 
 
-TODO: identify several examples for this.
+a. Charles and Sadie think about entering their favourite coffee shop, and seeing whether or not there is seating available for them. 
+b. Charles thinks about the games that they have played deciding on who would have to pay, based on the outcomes of a few coin tosses.
+c. Sadie is going on a trip shortly, and wonders whether or not the plane will be running on schedule.
+d. Charles and Sadie are big sports fans, and want to know whether the local team will win the upcoming match.
+e. Sadie wants to take out a book from the library, but is not sure whether it is available.
 
-## Geometric Random Variables
-While the binomial counted the number of successes in a fixed number of trials, we may also be interested in questions relating to how many trials would be needed to see a success. Instead of ``how many heads in $n$ flips of a coin?'' we may ask ``how many flips of a coin to get a head?'' Like the binomial, quantities related to counting the number of trials until a success are related deeply to Bernoulli trials, where once more we are envisioning a sequence of independent and identically distributed trials being performed. However, instead of knowing that we will stop after $n$ trials, here we will only stop once we see a particular result.
+::::{.callout .solution collapse='true'}
+## Solution
 
-Any random quantities following this type of procedure are said to follow a **geometric distribution**. The geometric distribution is parameterized with a single parameter, $p$, the probability of success. We write $X\sim\text{Geo}(p)$, and have that $$
-p_X(x) = \begin{cases}(1-p)^{x-1}p & x \geq 1 \\ 
-0 & \text{otherwise}.\end{cases}$$ Moreover, $E[X] = \frac{1}{p}$ and $\text{var}(X) = \frac{1-p}{p^2}$. 
+a. In this case we can treat $X=1$ as there being seating available ("success") and $X=0$ as there not being seating available. The parameter, $p$ would be given by the probability that there is seating available, which is likely not a known probability directly.
+b. In this case we can treat $X=1$ as Sadie having to pay, with $X=0$ as Charles having to pay. The parameter $p$ corresponds to the probability that Sadie pays, which in most of the original examples would have $p=0.5$.
+c. In this case we can treat $X=1$ as the plane being on time, and $X=0$ as it being late. The parameter $p$ would correspond to the probability that the plane is late.
+d. In this case we can treat $X=1$ as the team winning the game, and $X=0$ as them losing. The parameter $p$ would correspond to the probability that they win.
+e. In this case we can treat $X=1$ as the book being available, and $X=0$ as it being not available. The parameter $p$ would correspond to the probability that it is available.
 
-TODO: geometric calculation.
+::::
+:::
 
-The geometric distribution differs  from other named distributions that we have considered in that the random variable can take on an infinite number of possible values. The probability that $X$ exceeds a very large threshold shrinks down to $0$, however, there is no maximum value that can be observed. Beyond that assumption, the key set of assumptions are the same as for the binomial: independent and identically distributed Bernoulli trials are run, and are stopped only after the first observed success.
+## The Binomial Distribution
+A natural extension to tossing a coin once and seeing if it comes up heads or not is tossing a coin $n$ times and counting how many times it comes up heads. If we take $X$ to be the number of "successes" in $n$ independent and identically distributed Bernoulli trials, then we say that $X$ has a **binomial distribution**. The binomial distribution is characterized by two different parameters, the number of trials that are being performed, denoted $n$, and the probability of a success on each trial, $p$. We write $X\sim\text{Bin}(n,p)$.
 
-In the framing we are using here, the random variable $X$ counts the total number of trials *including* the trail upon which the first  success was reached. Sometimes you may see this distribution parameterized slightly differently, taking $X$ to instead count the number of failures before the first success. To convert between the two framings we need only subtract $1$: there is no meaningful difference in the underlying behaviour.
+:::{#exm-binomial}
+## Missing All the Good Games
+Charles and Sadie often will attend hockey games together for their local team. In order to keep their costs down, they try not to go to every single game. Instead, each time a game comes around that they can both attend, they roll a die. If it is a $3$ or higher, they go, otherwise they stay home. One season they are looking back over the $30$ games, and seeing which they attended and which they did not. The team won $19$ of the games, and lost the other $11$. However, of the $18$ games that Charles and Sadie attended that season, they saw all $11$ losses and only $7$ of the wins! They cannot help but feel like they got very unlucky. 
 
-TODO: include several geometric examples.
+a. How many wins should Charles and Sadie have expected to see?
+b. What is the variance in the number of wins that they could have expected?
+c. What is the probability that, for a season record of $19$ wins and $11$ losses, they would have been present for $7$ or fewer wins?
 
-## Negative Binomial
-A natural way to make the geometric distribution more flexible is to not stop after the first success, but rather after a set number of successes. That is, instead of flipping a coin until we see  a head, we flip a coin until we see $r$ heads. Any random quantity which follows this general pattern is said to follow a **negative binomial distribution**. We use two parameters to describe the negative binomial distribution, $r$ the number of successes  we are looking to achieve, and $p$ the probability of a success on any given trial. We write $X\sim\text{NB}(r,p)$.
+::::{.callout .solution collapse='true'}
+## Solution
 
-TODO: Basic example
+Suppose that we take $X$ to represent the number of winning games that Sadie and Charles are present for. In this case, looking back on the season, we know that $X$ is going to be binomial with $n=19$ and $p = \dfrac{2}{3}$, since they go if a $3$ or greater is rolled on the die. Thus, we can take $X \sim \text{Bin}(19, \dfrac{2}{3})$. 
 
-If we know that $X\sim\text{NB}(r,p)$, then we immediately get $$p_X(x) = \begin{cases}\binom{x-1}{r-1}p^r(1-p) & x\geq r \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, we have $E[X] = \frac{r}{p}$ and $\text{var}(X) = \frac{r(1-p)}{p^2}$. Setting $r=1$, wee get the same quantities explored in the case of the geometric distribution.
+a. $E[X] = np = \dfrac{2}{3}(19) = 12.666$. Thus they should have expected to see around $12$ or $13$ wins.
+b. $\text{var}(X) = np(1-p) = 4.222$.
+c. We want $P(X \leq 7)$. For this we get \begin{align*}
+P(X \leq 7) &= \sum_{x=0}^7 p_X(x) \\
+&= \sum_{x=0}^7 \binom{19}{x}\left(\frac{2}{3}\right)^x\left(\frac{1}{3}\right)^{19-x} \\
+&= \frac{2876233}{387420489} \\
+&\approx 0.0074.
+\end{align*} This leaves them very unlucky. 
+::::
+:::
 
-TODO: Include NB Examples
+If we know that $X\sim\text{Bin}(n,p)$ then we also know that $$p_X(x) = \begin{cases} \binom{n}{x}p^x(1-p)^{n-x} & x\in\{0,1,\dots,n\} \\ 0 &\text{otherwise}.\end{cases}$$ This is the first distribution we have seen which knowing the underlying distribution would not have immediately translated into knowing the probability mass function, which begins to illustrate why this is a useful area of study. We can work out that $E[X] = np$ and $\text{var}(X) = np(1-p)$.
 
-Like for the geometric distribution, we have taken $x$ to represent the total number of trials considered, including the $r$ successes. (TODO: fix geometric distribution range, start at 1). There  are  alternative parameterizations which would count how many failures occur prior to the $r$th success, which can be viewed as the value we consider minus $r$.
+:::{#exm-binomial-list}
+## Charles and Sadie find Binomial Quantities
 
-TODO: Include many NB examples
+The adventures in understanding named distributions continue, this time Charles ans Sadie wonder where they may find Binomial distributions.
 
-## Hypergeometric Distributions
-One of the use cases demonstrated for the binomial distribution is drawing *with* replacement. In order for the binomial distribution to be relevant it must be the case that the probability of a success is unchanging, and correspondingly, if the process under consideration cosntitutes random draws from a population then these draws must be with replacement as  otherwise the probabilities would shift. Suppose that we are trying to draw the ace of apdes  from a standard, shuffled deck of $52$ cards. If we begin drawing cards without returning them to the deck after each draw, the probability that the next draw is the ace of spades is increasing over the draws. As a result, this type of scenario does not fit into the independent and identically distributed Bernoulli trials that we have been exploring.
+For each of the following, help Charles and Sadie provide a justification of why a Binomial distribution would (or would not be) appropriate, including a description of the parameters. 
 
-Instead, suppose that we are drawing **without** replacement from a finite population. The population consists of two types of items: successes and failures. If we are interested in counting how many successes we seein a set number of draws, then this random quantity will follow a **hypergeometric distribution**. The hypergeometric distribution is parameterized using three different parameters: the number of  items in the population, $N$, the number of these which are considered successes, $M$, adn the total  number of items that are to be drawn without replacement, $n$. We write $X\sim\text{HG}(N,M,n)$.
+a. Charles rolls ten, six-sided dice, counting up the number of them which show a $1$. 
+b. Charles and Sadie reflect on the record of who has paid during their past $20$ visits to the coffee shop.
+c. Sadie starts playing on a baseball league that uses a pitching machine, and wants to know, without practicing, how many hits occur in the first $20$ *at bats*. 
+d. Charles and Sadie distribute flyers for an upcoming concert that their folk-punk band is putting on. They hand out $50$ flyers and are wondering how many people will show.
+e. Charles and Sadie form a pub trivia team with some friends. One day, their friend who specializes in history is gone one day, and $5$ multiple choice history questions come up. They want to know what their score will be randomly guessing on those questions.
 
-TODO: Basic example
+::::{.callout .solution collapse='true'}
+## Solution
 
-If $X\sim\text{HG}(N,M,n)$ then $$p_X(x) = \begin{cases}\frac{\binom{N-M}{n-x}\binom{M}{x}}{\binom{N}{n}} & x\in\{\max\{0,N-M+n\},\dots,\min\{n,M\}\} \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, $E[X] = \frac{nM}{N}$ and the variance is given by $$\text{var}(X) = n\frac{M}{N}\frac{N-M}{N}\frac{N-n}{N-1}.$$
+a. The number of dice showing a $1$ is represented by a $\text{Bin}(10, \dfrac{1}{6})$ distribution. Each die has an equal chance of showing a $1$, independently from all other rolls, and each roll will definitely be either a $1$ or not a $1$. 
+b. We can take $X$ to represent the number of times that Charles has paid. This will be given by a $\text{Bin}(20, 0.5)$ distribution. Each time both are equally likely to pay, independent of all other times, and one of them will always pay.
+c. We can take $X$ to be the number of hits, and then claim that this will follow a $\text{Bin}(20, p)$ distribution, where $p$ is the probability that Sadie makes a hit. The caveats that the pitching machine is used and that Sadie does not practice are important since if different pitches were used, or different skill levels emerged as time progresses, then it may not satisfy the conditions of a binomial distribution.
+d. Here we can take $X$, the number who attend the show, as a $\text{Bin}(50,p)$, where $p$ is the probability that any individual who saw the flyer attends the show. In order for this to hold we need to assume that all individuals choose to attend or not individually, without influence from anyone else, and that the probability is constant across different people. 
+e. Suppose that there are $4$ multiple choice options, then the number they answer correctly will follow a $\text{Bin}(5,0.25)$ distribution. Assuming that their guesses are independent across the different questions, and that they do not have a better sense for some questions than others. 
+::::
+:::
 
-TODO: Bigger calculation.
+Note that the binomial distribution can be constructed by summing independent and identically distributed Bernoulli variables. Specifically, if $X_1,\dots,X_n\stackrel{iid}{\sim}\text{Bern}(p)$^[Note, $\stackrel{iid}{\sim}$ means "independent and identically distributed according to..."] then taking $$Y = \sum_{i=1}^n X_i$$ gives a binomial distribution, with $n$ and $p$. To understand this intuitively, note that if a Bernoulli comes up $1$ when we get a heads on a single flip of the coin, then if we flip the coin $n$ times and count the number of heads this is the same as counting the number of $1$s from each corresponding Bernoulli trial. Once we know this construction, we can use the properties we have previously seen about independent random variables to work out the mean and variance for the distribution. 
 
-The hypergeometric is closely linked to the binomial distribution. If we consider the population described in the hypergeometric setup then the probability of a success on the first draw is $p=\frac{M}{N}$. Note that $E[X] = np$, exactly the same as in the binomial. However, plugging this in fro the variance we get $\text{var}(X) = np(1-p)\frac{N-n}{N-1}$. Notice that if $n=1$, this extra term is simply $1$, and for $n > 1$ it will be less than $1$. As a result, the variance of the hypergeometric is smaller than the variance of the corresponding binomial. This makes intuitive sense: in a hypergeometric, the fact that draws are without replacement means that as more draws go on the probability of observing a success increases, reducing the likelihood of long runs of no observed successes. There is a cap on the behaviour of the random quantity thanks to the finiteness of the population. Correspondingly, the multiplicative term by which the varaince shrinks, $\frac{N-n}{N-1}$ is referred  to as the **finite population correction** and it differentiates the behaviour of the hypergeometric and the binomial.
+:::{.callout-warning icon="false" collapse="true"}
+## Construction of Binomial Random Variables
 
-Note that as $N$ becomes very, very large, as long as  $n$ is  small by comparison, the finite population correction will approach $1$. in other words: drawing without replacement in a large enough sample behaves  almost exactly the same as drawing with replacement in the sample. The binomial distribution can be used to approximate hypergeometric distributions, so long as the population is very large. Again, this makes sense intuitively. If you have a deck with a million cards in it, and you are going to draw  $2$, whether or not you return the first one to the deck has very little bearing on the probabilities associated with this scenario. Generally, the binomial distribution is easier to work with, so this approximation can be useful in some settings.
+Suppose that we take $X_1,\dots,X_n \stackrel{iid}{\sim} \text{Bern}(p)$. Then, if we define $$Y = \sum_{i=1}^n X_i$$ we can work out $E[Y]$ and $\text{var}(Y)$ directly. First, $$E[Y] = E\left[\sum_{i=1}^n X_i\right] = \sum_{i=1}^n E[X_i] = nE[X_i] = np.$$ Moreover, owing to independence we get $$\text{var}(Y) = \text{var}(\sum_{i=1}^n X_i) = \sum_{i=1}^n \text{var}(X_i) = np(1-p).$$ These are the same as what was listed for the binomial directly. We are also able to derive the probability mass function of the binomial using this construction. 
 
-TODO: aside on this for sampling.
+If we note that $P(X_1 = x) = p^{x}(1-p)^{1-x}$, then be independence we cna write the joint probability mass function as the product of these, which gives: \begin{multline*}P(X_1=x_1, X_2 = x_2, \dots, X_k = x_k) = p^{x_1}(1-p)^{1-x_1}p^{x_2}(1-p)^{1-x_2}\cdots p^{x_n}(1-p)^{1-x_n} \\ = p^{\sum_{i=1}^n x_i}(1-p)^{n-\sum_{i=1}^n x_i} = p^{y}(1-p)^{n-y}.\end{multline*} Consider how we could have $Y = k$, for some $k\in\{0,\dots,n\}$. In order for this to be the case we would require exactly $k$ of the $n$ Bernoulli random variables to be $1$ and the other $n-k$ to be $0$. So, for instance, we may have $\{X_1 = 1, X_2 = 1, \dots, X_k = 1, X_{k+1} = 0, \dots, X_n = 0\}$. If we consider choosing which of the $n$ trials should be $1$, we know that there will be $\binom{n}{k}$ of these, and so that gives the number of disjoint combinations that satisfy $Y=k$. Combining this with the joint probability mass function we worked out gives $$P(Y=y) = \binom{n}{k}p^k(1-p)^{n-k},$$ as required.
+:::
 
-TODO: Many examples of HG random variables.
+It is important to note that, to get the binomial distribution, we have made several key assumptions. First, we are counting the number of successes in a **fixed** number of trials. In order for something to be binomially distributed, we must know in advance how many trials there are under consideration. Second, each of these trials must be independent of one another. The outcome on one cannot impact any of the others. Third, there must be a constant probability of success across all trials. If the probabilities are shifting overtime, then a binomial is no longer appropriate.
 
-## Poisson Distribution
-The hypergeometric broke from the pattern in the other distributions that have been discussed by not being represented as the sequence of several Bernoulli random trials. However, it was still characterized by a sequence of repeated trials. While many statistical experiments can be framed in this way, there are of course processes which do not fit well into this framing.
+:::{#exm-binomial-assumption-violations}
+## Charles' and Sadie's Binomial Mistakes
 
-Consider, for instance, any process where something is observed for a set period of times and events may or may not occur during this interval. Perhaps you sit on the side of the road and count the number of cars travelling by a particular intersection over the course of an hour. Each car going by is an event, but in this setting the  number of events is the random quantity itself. None of the distributions discussed until this point are suited to this type of process.
+In trying to learn about the binomial distribution, Charles and Sadie identified several candidates for quantities which did not satisfy a binomial distribution. For each of the following, help Charles and Sadie understand why a Binomial distribution would not be appropriate.
 
-When we have events which occur at a constant rate, and our interest is in the number of events which are occuring, then we can make use of the **Poisson distribution**. The Poisson distribution takes a single parameter, $\lambda$, which is the average rate of occurence of the events over the time period we are interest in. We write $X\sim\text{Poi}(\lambda)$. 
+a. Charles rolls ten dice, of various different sizes, counting up the number of them which show a $1$. 
+b. Charles and Sadie are considering the weather for the next week, thinking about how many days there will be rain.
+c. Charles and Sadie consider handing out flyers for their band's concert, and give $10$ flyers to a group of $10$ friends walking by.
+d. Sadie is considering a particular major league baseball player, considering the number of hits in a set number of *at bats*.
+e. Charles and Sadie are playing a game where they roll a die, then flip a coin the number of times that is shown on the die, counting up the total number of heads.
 
-TODO: Basic example.
+::::{.callout .solution collapse='true'}
+## Solution
 
-If $X\sim\text{Poi}(\lambda)$ then $$p_X(x) = \begin{cases} \frac{e^{-\lambda}\lambda^x}{x!} & x \geq 0 \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, $E[X]=\lambda$ and $\text{var}(X) = \lambda$. The Poisson distribution is interesting in that the mean and variance are always equal to one another.
+a. The issue in this case is that, if the dice have different numbers of sides, the probability that they show a $1$ will not be constant. As a result, there is no value of $p$ that gives the probability of success on each trial.
+b. The issue in this case is two-fold. First, it is unlikely that there is going to be a constant probability of rain. Even if there is, or we treat it as though it will be, it is unlikely that one day is independent of the next, all the time. That is to say, today's weather likely impacts tomorrows, removing independence.
+c. In this case, it is unlikely that the group of $10$ friends will independently decide to go or not. Likely if one goes, many will, and vice versa. 
+d. The issue here is that batters will bat against different pitches, which changes the probability of a hit. That is, some pitchers are less talented, and thus there is a higher probability of getting a hit against them.
+e. The issue here is that there is not a set number of trials. Instead, the number of trials is random and dependent on the outcome of a previous statistical experiment.
 
-TODO: Bigger example
+::::
+:::
 
-While the most common applications for the Poisson distribution have to do with the occurences of events throughout time, it is also possible to view this as the occurences of events throughout space. For instance, if there is a manufcturer producing rope, then the number of defects in a set quantity of rope is likely to follow the Poisson distribution. Similarly, in a set geographic area, the number of birds of a particular species is likely to follow a Poisson distribution. For the Poisson distribution, we are typically thinking that there is a rate at which events of interest occur, and we can use the Poisson to model the total number of occurences over some specified interval.
+## The Geometric Distribution
+The binomial counted the number of successes in a fixed number of trials. We may be interested in a related question, namely "how many trials would be needed to see a success?" Instead of "how many heads in $n$ flips of a coin?" we may ask "how many flips of a coin to get a head?" Much like the binomial, these quantities will be intimately tied to the Bernoulli distribution. Once more we are envisioning a sequence of independent and identically distributed trials being performed. However, instead of knowing that we will stop after $n$ trials have been conducted, here we will only stop once we see a particular result. Any random quantities following this process are said to follow a **geometric distribution**. The geometric distribution is parameterized with a single parameter, $p$, the probability of success. We write $X\sim\text{Geo}(p)$, and have that $$p_X(x) = \begin{cases}(1-p)^{x-1}p & x \geq 1 \\  0 & \text{otherwise}.\end{cases}$$ If $X\sim\text{Geo}(p)$, then $E[X] = \frac{1}{p}$ and $\text{var}(X) = \frac{1-p}{p^2}$. 
 
-TODO: many examples for the use of Poisson.
+:::{#exm-geometric}
+## Charles Plays Darts
+
+Sadie is a very accomplished darts player. Charles is not. Despite Sadie's best efforts, when Charles plays darts it is essentially randomly choosing an area on the dartboard. In one friendly game, Charles decides to only aim at the highest scoring region of the board - the triple twenty. This region occupies about $0.9\%$ of the total area, and the two friends play with a rule where if Charles misses entirely, another dart is thrown. Charles is curious as to how many darts are going to be needed to be thrown until a triple twenty is hit.
+
+a. Find the expected number of darts required.
+b. Find the variance in the total number of darts required.
+c. What is the probability that it takes **more** than $5$ total throws to get a triple twenty?
+
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+This is a geometric distribution with $p=0.009$. Let $X \sim \text{Geo}(p)$ represent the number of darts that Charles sees. 
+
+a. The expected number of darts required, $E[X]$ is given by $1/p$, which is $\dfrac{1}{0.009} = 111.\dot1$. 
+b. The variance of the expected number of darts, $\text{var}(X)$ is given by $\frac{1-p}{p^2} = 12234.5679$.
+c. To find $P(X \geq 5)$ it is simpler to work with $P(X < 5) = P(X=1) + P(X=2) + P(X = 3) + P(X=4)$. Then we take \begin{align*}
+    P(X \geq 5) &= 1 - P(X < 5) \\
+    &= 1 - (P(X=1) + P(X=2) + P(X = 3) + P(X=4))\\
+    &= 1 - (0.009)(1-0.009)^{1-1} - (0.009)(1-0.009)^{2-1} \\
+    &\quad - (0.009)(1-0.009)^{3-1} - (0.009)(1-0.009)^{4-1} \\
+    &= 1 - (0.009)[1 + 0.991 + 0.991^2 + 0.991^3] \\
+    &= 0.964483...
+\end{align*} Thus, with more than $96\%$ probability, Charles will take $X$ or more dart throws to hit the triple twenty.
+::::
+:::
+
+The geometric distribution differs from other named distributions that we have considered in that the random variable can take on an infinite number of possible values. The probability that $X$ exceeds a very large threshold shrinks to $0$, however, there is no maximum value that can be observed. To form the geometric random variable we assume that we are performing independent and identically distributed Bernoulli trials, and that we stop only after the first observed success.^[In the framing we are using here, the random variable $X$ counts the total number of trials *including* the trail upon which the first success was reached. Sometimes you may see this distribution parameterized slightly differently, taking $X$ to instead count the number of failures before the first success. To convert between the two framings we need only subtract $1$. There is no meaningful difference in the underlying behaviour.]
+
+:::{#exm-geometric-examples}
+## Charles and Sadie find Geometric Quantities
+
+Still working through their distributional knowledge, Charles and Sadie are now hoping to identify geometric quantities. 
+
+For each of the following, help Charles and Sadie provide a justification of why a Geometric distribution would (or would not be) appropriate, including a description of the parameter. 
+
+a. Charles continues to roll a six-sided die until a $6$ is gotten. 
+b. Sadie has paid for coffee for the last several times, they are both wondering how many more times until Charles will have to pay.
+c. Charles is considering a new job which would require a whole lot of plane travel, and so Charles begins to wonder how many flights will run on time before the first delay.
+d. Sadie, in a round of guess-their-birthday, starts to count the number of guesses it takes until someone's birthday is guessed correctly.
+e. Charles and Sadie very much enjoy a particular brand of vegan peach yogurt, but it is hard to find. They want to consider how many stores they need to visit before they find it in stock.
+
+::::{.callout .solution collapse='true'}
+## Solution
+a. This will be $\text{Geo}(\dfrac{1}{6})$, as the trials are all independent and identically distributed, and the rolling stops at the first success.
+b. If we define "Charles has to pay" as a success, then the number of visits to the coffee shop, starting today, until Charles pays will be $\text{Geo}(\dfrac{1}{2})$. Each trial is independent and identically distributed, and we stop counting when Charles pays.
+c. In order for this to follow a geometric distribution we would require that each plane is equally likely to be delayed, and that there is no influence from one plane to another. If so, we take $p$ to be the probability that a plane is delayed, and then $X$ is the number of flights up-to and including the first delayed flight, and $X\sim\text{Geo}(p)$.
+d. Assuming that Sadie makes guesses independently of one another, each with a probability of $\dfrac{1}{365}$ of being correct, then this will be $X\sim\text{Geo}(\dfrac{1}{365})$.
+e. If each store stocks with probability, $p$, then the total number of stores until they purchase will be $\text{Geo}(p)$. However, this will assume that each store is out-of-stock independently of each other store, and this seems unlikely to be the case supposing (for instance) a common supplier.
+::::
+:::
+
+## The Negative Binomial Distribution
+A natural way to make the geometric distribution more flexible is to not stop after the first success, but rather after a set number of successes. That is, instead of flipping a coin until we see a head, we flip a coin until we see $r$ heads. Any random quantity which follows this general pattern is said to follow a **negative binomial distribution**. We use two parameters to describe the negative binomial distribution, $r$ the number of successes we are looking to achieve, and $p$ the probability of a success on any given trial. We write $X\sim\text{NB}(r,p)$. If we know that $X\sim\text{NB}(r,p)$, then we immediately get $$p_X(x) = \begin{cases}\binom{x-1}{r-1}p^r(1-p)^{x-r} & x\geq r \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, we have $E[X] = \frac{r}{p}$ and $\text{var}(X) = \frac{r(1-p)}{p^2}$. Setting $r=1$, we get the same quantities explored in the case of the geometric distribution. That is, if $X \sim \text{NB}(1,p)$ then we can also say that $X \sim \text{Geo}(p)$.^[Like with the geometric distribution, we have taken $X$ to represent the total number of trials considered, including the $r$ successes. There are alternative parameterizations which would count how many *failures* occur prior to the $r$th success, which can be viewed as the value we consider minus $r$.]
+
+:::{#exm-negative-binomial}
+## Charles and Sadie Try to Balance the Dart Game
+Charles and Sadie have been continuing to play darts quite often together, and though Charles is improving, Sadie's expertise still makes it an unfair game. As a result, they consider playing alternative versions of the game in which Sadie is at a disadvantage in order to make things more *fair*. Charles has improved so that $20\%$ of the time, the aimed for area of the dart board is hit. Sadie, on the other hand, hits with $60\%$ accuracy. Suppose that they are considering a game where Charles has to hit a spot $3$ times, and then Sadie has to hit the same spot $r$ times. They are trying to figure out $r$ to make the game fair.
+
+a. How many tosses will it take, on average, for Charles to hit the area on the target $3$ times?
+b. What should Charles and Sadie make $r$, if they want it to take Sadie the same number of tosses on average as Charles?
+c. If they set $r$ as in (b), who has a higher variance in the number of tosses it takes?
+d. What is the probability that Charles wins before Sadie has a chance to win?
+e. What is the probability that Sadie wins on the first available turn?
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+Let $X$ be the number of tosses it takes for Charles and $Y$ to be the number of tosses it takes for Sadie. We have that $X \sim \text{NB}(3, 0.2)$, while $Y\sim\text{NB}(r, 0.6)$. 
+
+a. We know that $E[X] = \dfrac{3}{0.2} = 15$. 
+b. We have that $E[Y] = \dfrac{r}{0.6}$. Setting this equal to $15$ gives $$\frac{r}{0.6} = 15 \implies r = 15(0.6) = 9.$$ Thus, they should set $r = 9$. 
+c. We have that $\text{var}(X) = \dfrac{3(0.8)}{0.2^2} = 60$ while $\text{var}(Y) = \dfrac{9(0.4)}{0.6^2} = 10$. Thus, Charles has a far greater variance in the total number of tosses than Sadie.
+d. In order for Charles to win before Sadie has a chance, this would require $X < 9$. Thus, \begin{align*}
+P(X < 9) &= \sum_{x=3}^8 p_X(x) \\
+&= \sum_{x=3}^8 \binom{x-1}{2}(0.2)^3(0.8)^{x-3} \\
+&= \left(\frac{0.2}{0.8}\right)^3\left[\binom{2}{2} + \binom{3}{2}(0.8) + \binom{4}{2}(0.8)^2 + \binom{5}{2}(0.8)^3 \right.\\
+&\quad\left.+ \binom{6}{2}(0.8)^4 + \binom{7}{2}(0.8)^5\right] \\
+&= \frac{79329}{390625} \approx 0.203.
+\end{align*} Thus, approximately $20\%$ of the time Charles will win before Sadie even can.
+e. The probability that Sadie wins on the first turn is $P(Y = 9)$. We get $$p_Y(9) = \binom{8}{8}(0.6)^9(0.4)^{9-9} = \frac{19683}{1953125} = 0.010078.$$ Thus it is only around a $1\%$ chance that Sadie wins on turn $9$, the earliest possible turn for it.
+::::
+:::
+
+:::{#exm-negative-binomial-list}
+## Charles and Sadie find Negative Binomial Quantities
+
+Having mastered many different distributions, Charles and Sadie fix their attention of finding the negative binomial quantities in the world around them.
+
+For each of the following, help Charles and Sadie provide a justification of why a negative binomial distribution would (or would not be) appropriate, including a description of the parameters. 
+
+a. Charles continues to roll a six-sided die until there have been a total of six $6$s seen. 
+b. Charles sets aside $\$100$ for coffee purchases in a different account. If Charles and Sadie's order comes to $\$6.25$ per trip, how many trips until the account needs to be restocked.
+c. Sadie decided that poker is very fun to play after the first time getting a royal flush.^[Note, a royal flush is the set of cards $10$ through ace of a single suit. This is the most rare poker hand in a standard game, occurring in only $4$ ways of the $\binom{52}{5}$ total possible hands.] Sadie is very interested how many more hands of poker are likely to be needed until this feeling comes around a few more times.
+d. Charles is continuing to crochet. Charles wants to know how many granny squares are needed to be made until there are enough squares without any errors to give as holiday gifts this year. 
+e. Sadie and Charles need to sell a total of ten chocolate bars for their fundraiser. They want to know how many houses they will need to visit in order to achieve this.
+
+::::{.callout .solution collapse='true'}
+## Solution
+a. Each trial here is independent, identically distributed with a constant probability. Charles stops after $6$ successes, and as a result the negative binomial is satisfied. $X$ will follows a $\text{NB}(6, \dfrac{1}{6})$ distribution.
+b. Note that at $\$6.25$ per order, $\$100$ buys $16$ orders. As a result, this process will end after $16$ "successes", which is to say, times when Charles has to pay. We know from past examples that the probability Charles pays is $0.5$, independent of all other cases, and as a result this will follow a $\text{NB}(16, 0.5)$ distribution.
+c. The probability of getting a royal flush is constant in poker hands^[Depending on the type of poker being played, but it is close enough to warrant the assumption likely.] Moreover, Sadie is interested in a set number of royal flushes being achieved (a few more maybe means $3$ or so), and as a result, this falls into the category of negative binomial with $r$ set to the number Sadie wants to see, and $p$ being the probability of seeing a royal flush, which is approximately $\dfrac{4}{\binom{52}{5}}$, depending on the type of poker being played.
+d. Assuming that there are a set number of holiday gifts that Charles wants to give, then we can take this to be $r$ from the negative binomial distribution. Assuming that Charles' odds of making a mistake on any granny square are constant at $p$, then we can take the probability of success as $1-p$. Under these assumptions, and assuming the squares are all independent of one another, then this will be $\text{NB}(r, 1-p)$.
+e. If we assume that each house, independently, buys chocolate bars with a constant probability, $p$, then this will follow a $\text{NB}(10, p)$ distribution.
+::::
+:::
+
+## The Hypergeometric Distribution
+One of the use cases demonstrated for the binomial distribution is drawing *with* replacement. In order for the binomial distribution to be relevant it must be the case that the probability of a success is unchanging, and correspondingly, if the process under consideration is random draws from a population then these draws must be with replacement. Otherwise the probabilities would shift.^[Note, if the population size is large enough drawing with or without replacement is essentially the same thing. Sometimes, in sufficiently large populations, we do not differentiate between draws with and without replacement.] Suppose that we are wish to draw the ace of spades from a standard, shuffled deck of $52$ cards. If we begin drawing cards without returning them to the deck after each draw, the probability that the next draw is the ace of spades is increasing over the draws. At first, the probability is $\dfrac{1}{52}$. If the first card is not the ace of spades, then the next draw it will be $\dfrac{1}{51}$. This continues until eventually the probability will grow to be $1$. As a result, this type of scenario does not fit into the independent and identically distributed Bernoulli trials that we have been exploring.
+
+We require a different setup to model drawing **without** replacement from a finite population. Suppose that our population consists of two types of items, "successes" and "failures". If we are interested in counting how many successes we see in a set number of draws, then this random quantity will follow a **hypergeometric distribution**. The hypergeometric distribution is parameterized using three different parameters: the number of items in the population, $N$, the number of these which are considered successes, $M$, and the total number of items that are to be drawn without replacement, $n$. We write $X\sim\text{HG}(N,M,n)$. If $X\sim\text{HG}(N,M,n)$ then $$p_X(x) = \begin{cases}\frac{\binom{N-M}{n-x}\binom{M}{x}}{\binom{N}{n}} & x\in\{\max\{0,N-M+n\},\dots,\min\{n,M\}\} \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, $E[X] = \frac{nM}{N}$ and the variance is given by $$\text{var}(X) = n\frac{M}{N}\frac{N-M}{N}\frac{N-n}{N-1}.$$
+
+:::{#exm-hyper-geometric}
+## Charles Sock Drawer
+
+Charles firmly believes that socks should not be sold in pairs.^[What happens if you lose on sock? Why must you replace both of them? You can wear either sock on either foot. It really seems to be unnecessary that you cannot buy one at a time.] As a result, Charles has decided to keep socks unpaired, free floating in the drawers. In Charles' sock drawer there are $13$ individual white socks, $8$ individual black socks, and $9$ individual red socks. One day, Charles is trying to wear matching socks because of a fancy dinner party, however, it is dark when the socks are being selected.
+
+a. If Charles takes two socks from the drawer, what is the probability that there is a matching pair of white socks?
+b. If Charles takes two socks from the drawer, what is the probability that there is a matching pair of **any** colour?
+c. If Charles takes $5$ socks, how many of them are expected to be red? What is the variance of the number of red socks?
+d. How many socks should Charles take out in order to expect to receive at least $2$ black socks?
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+We can view this as a hypergeometric distribution, where the specific parameters depend on what we are defining as a success. There will always be $N=30$, and $n$ will correspond to the number of socks that are drawn.
+
+a. Here there are $M=13$ successes, $N=30$, and $n=2$. We wish to know $p_X(2)$, and so we find $$p_X(2) = \frac{\binom{N-M}{n-x}\binom{M}{x}}{\binom{N}{n}} = \frac{\binom{30-13}{0}\binom{13}{2}}{\binom{30}{2}} = \frac{26}{145} \approx 0.1793.$$
+b. We can say that $P(\text{Pair}) = P(\text{Pair of White}) + P(\text{Pair of Red}) + P(\text{Pair of Black})$. We found $P(\text{Pair of White})$ in (a), and the remaining terms will be similar, changing $M=9$ for the red socks, and $M=8$ for the black socks. Thus, \begin{align*}
+    P(\text{Pair of Red}) &= \frac{\binom{30-9}{0}\binom{9}{2}}{\binom{30}{2}} \\
+    &= \frac{12}{145} \\
+    P(\text{Pair of Black}) &= \frac{\binom{30-8}{0}\binom{8}{2}}{\binom{30}{2}} \\
+    &= \frac{28}{435} \\
+    P(\text{Pair}) &= \frac{26}{145} + \frac{12}{145} + \frac{28}{435} \\
+    &= \frac{142}{435} \\
+    &= 0.3264.
+\end{align*} Thus, there is approximately a $33\%$ chance that Charles draws a pair of socks. 
+c. Here we have $M=9$ and $n=5$. Thus, we find $$E[X] = \frac{(5)(9)}{30} = 1.5,$$ and so $1.5$ red socks are to be expected.^[Now, $1.5$ socks can never be observed. As a result, you may say that Charles expects to see either $1$ or $2$ red socks, though, recall our way of interpreting the expected value.] For the variance, we get $$\text{var}(X) = 5\cdot\frac{9}{30}\cdot\frac{30-9}{30}\cdot\frac{30-5}{30-1} = \frac{105}{116} \approx 0.905.$$
+d. In this case we want $M=8$. In order to have $E[X] \geq 2$ we require $$\frac{n(8)}{30} \geq 2 \implies n \geq \frac{2(30)}{8} = 7.5,$$ and so Charles should draw at least $8$ socks in order to expect to have at least $2$ black socks in the set of drawn ones.
+::::
+:::
+
+:::{.callout-note icon="false"}
+## The Hypergeometric Distribution, Binomial Distribution, and Survey Sampling
+The hypergeometric is closely linked to the binomial distribution. If we consider the population described in the hypergeometric setup then the probability of a success on the first draw is $p=\frac{M}{N}$. Note that $E[X] = np$, exactly the same as in the binomial. However, plugging this in for the variance we get $\text{var}(X) = np(1-p)\frac{N-n}{N-1}$. Notice that if $n=1$, this extra term is simply $1$, and for $n > 1$ it will be less than $1$. As a result, the variance of the hypergeometric is smaller than the variance of the corresponding binomial. This makes intuitive sense. In the hypergeometric setup, the fact that draws are without replacement means that as more draws go on the probability of observing a success increases, reducing the likelihood of long runs of no observed successes. There is a cap on the behaviour of the random quantity thanks to the finiteness of the population. Correspondingly, the multiplicative term by which the variance shrinks, $\frac{N-n}{N-1}$ is referred to as the **finite population correction**. This factor differentiates the behaviour of the hypergeometric and the binomial.
+
+Note that as $N$ becomes very, very large, as long as $n$ is small by comparison, the finite population correction will approach $1$. In other words, drawing without replacement in a large enough sample behaves almost exactly the same as drawing with replacement in the same sample. The binomial distribution can be used to approximate the hypergeometric distribution, so long as the population is very large. Again, this makes sense intuitively. If you have a deck with a million cards in it, and you are going to draw $2$, whether or not you return the first one to the deck has very little bearing on the probabilities associated with this scenario. Generally, the binomial distribution is easier to work with, so this approximation can be useful in some settings.
+
+These types of considerations are deeply important in the field of **survey sampling**. In survey sampling, researchers select individuals from a population of interest, and have them respond to questions, or collect information on the respondents. You can think of, for instance, surveys that the university sends out or Canada-wide surveys trying to gauge sentiment on various policies. Generally in a survey you are going to be sampling *without* replacement: you will not include the same person in your sample more than once. However, it may also be the case that you are taking a fairly small sample (say $n=1000$) from a very large population (say $N=40000000$), at which point the finite population correction factor equals $0.999975$. This may as well be $1$ and you can simplify matters by using binomial probabilities.
+:::
+
+:::{#exm-hyper-geometric-list}
+## Charles and Sadie find Hypergeometric Quantities
+
+Charles and Sadie have almost made it through the set of distributions that they want to learn, now moving on to the hypergeometric. 
+
+For each of the following, help Charles and Sadie provide a justification of why a hypergeometric distribution would (or would not be) appropriate, including a description of the parameters. 
+
+a. When streaming music, Charles will often shuffle the entire library. While listening through, Charles keeps tracks of the number of songs that come on which are favourites.
+b. Sadie is considering the number of spades that are likely to show up in different poker hands, from different versions of the game where hands may not be $5$ cards.
+c. Charles and Sadie run a book club with some of their closest friends. Before each meeting, they take an anonymous vote as to whether the book was enjoyed or not, so that they know the total number of individuals who actually enjoyed the reading. If they know how many people will show up to a meeting, they are interested in how many of those people will have enjoyed the book.
+d. Sadie learns of black swans, and wants to understand how many are likely to be seen if Sadie starts to view swans at a swan sanctuary.
+e. Charles and Sadie are invited to partake in a survey. The survey is concerned with the number of people living in their town who support investments into transit infrastructure. 
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. This will be hypergeometric assuming that the shuffle algorithm does not play the same songs multiple times in a session. Here $N$ is the total number of songs in the library, $M$ is the number of songs which Charles considers to be favourites, and $n$ is the number that Charles decides to listen to.
+b. Assuming that the carts are dealt without replacement this will be hypergeometric. There are $N=52$ total cards, $M=13$ spades, and then $n$ will correspond to the size of the hand (such as $5$ or $3$ or $8$).
+c. This will be hypergeometric, assuming that there is actually random attendance at the meetings. Here, $M$ will correspond to the number of individuals who enjoyed the book, $N$ is the total size of the book club, and $n$ is the number of people who can attend any given meeting.
+d. In order for this to be hypergeometric, we would need to assume that Sadie is able to tell apart the different swans, so as to not count them more than once. In this case, $M$ is the total number of black swans at the sanctuary, $N$ is the total number of swans at the sanctuary, and $n$ is the number of swans that Sadie looks at.
+e. This will typically be a hypergeometric, as most surveys are without replacement. Here, $N$ is the size of the possible population of individuals being surveyed, $n$ is the size of the survey, and $M$ is the number of people in the town who support investments into transit infrastructure.
+
+::::
+:::
+
+## The Poisson Distribution
+The hypergeometric strayed from the pattern of the previously introduced distributions by not being represented as a sequence of Bernoulli trials. However, it was still characterized by a sequence of repeated trials. While many statistical experiments can be framed in this way, there are of course processes which are not described by repeated trials. Consider, for instance, any process where something is observed for a set period of times and events may or may not occur during this interval. Perhaps you sit on the side of the road and count the number of cars traveling by a particular intersection over the course of an hour. Each car going by is an event, but in this setting, the number of events is the random quantity itself. None of the distributions discussed until this point are suited to this type of process.
+
+When we have events which occur at a constant rate, and our interest is in the number of events which occur, then we can make use of the **Poisson distribution**.^[The Poisson distribution gets it name from the French mathematician, Siméon Poisson, rather than from the french word for *fish*. Though, I suppose it is likely that the surname came from the french word for fish, so in a roundabout way, the distribution is sort of the *Fish Distribution*.] The Poisson distribution takes a single parameter, $\lambda$, which is the average rate of occurrence of the events over the time period we are interested in. We write $X\sim\text{Poi}(\lambda)$. If $X\sim\text{Poi}(\lambda)$ then $$p_X(x) = \begin{cases} \frac{e^{-\lambda}\lambda^x}{x!} & x \geq 0 \\ 0 &\text{otherwise}.\end{cases}$$ Moreover, $E[X]=\lambda$ and $\text{var}(X) = \lambda$.^[The Poisson distribution is interesting in that the mean and variance are always equal to one another.]
+
+:::{#exm-poi-dist}
+## Charles' Novella Mistakes
+
+Charles has decided to write a short novella. Hard at work, the novella turns out to be $105$ pages, at the time of completion. Charles sends a copy off to the printer excited to share it with Sadie. After printing, Charles realizes that the spellcheck on the program indicates that there is a total of $215$ errors. Mortified that these were not corrected before handing it over to Sadie, Charles starts to work out just how bad the situation is likely to be.
+
+a. What is the average number of mistakes per page of the novella?
+b. What is the variance for the number of mistakes per page in the novella?
+c. What is the probability that there were no mistakes on the first page?
+d. What is the probability that there were five or more mistakes on the first page?
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. On average there will be $\dfrac{215}{105} = \dfrac{43}{21}$ errors per page. We can take the distribution to be $\text{Poi}(\dfrac{43}{21})$.
+b. The variance for a Poisson distribution is given by $\lambda$. Thus, it will be $\dfrac{215}{105} = \dfrac{43}{21}$.
+c. Here we want $p_X(0)$. This is given by $$p_X(0) = \frac{e^{-43/21}(43/21)^0}{0!} = e^{-43/21} \approx 0.129.$$ Thus, there is about a $13\%$ chance that there are no errors on the first page.
+d. Here we want $P(X \geq 5) = 1 - P(X < 5) = 1 - (p_X(0) + p_X(1) + p_X(2) + p_X(3) + p_X(4))$. Solving this directly gives \begin{align*}
+    P(X \geq 5) = 1 - P(X < 5) &= 1 - \sum_{x=0}^4 p_X(x) \\
+    &= 1 - \sum_{x=0}^4 \frac{e^{-43/21}(43/21)^x}{x!} \\
+    &\approx 0.0571.
+\end{align*} Thus, there is just over a $5\%$ chance of there being $5$ or more errors on the first page.
+
+::::
+:::
+
+While the most common applications for the Poisson distribution have to do with the occurrences of events throughout time, it is also possible to view this as the occurrences of events throughout space. For instance, if there is a manufacturer producing rope, then the number of defects in a set length of rope is likely to follow the Poisson distribution. Similarly, in a set geographic area, the number of birds of a particular species is likely to follow a Poisson distribution. For the Poisson distribution, we are typically thinking that there is a rate at which events of interest occur, and we can use the Poisson distribution to model the total number of occurrences over some specified interval.
+
+:::{#exm-poi-dist-list}
+## Charles and Sadie find Poisson Quantities
+
+As the last named discrete distribution, Charles and Sadie are excitedly exploring quantities around them which may be explained by the Poisson distribution.
+
+For each of the following, help Charles and Sadie provide a justification of why a Poisson distribution would (or would not be) appropriate, including a description of the parameter. 
+
+a. Charles got a small injury which required a trip to the emergency room. While there, Charles begins to count the number of people that arrive over the course of the next hour.
+b. Sadie, while out exploring birds, decides to count the number of cardinals in a particular good viewing spot which is about $100m^2$ in size.
+c. Charles, while crocheting, realizes that sometimes the yarn in use has defects itself. Charles begins to think about the number of defects in $200$ yards of yarn.
+d. Charles and Sadie are sitting at a public park overlooking the water. They start to count the number of boats that pass by over the course of the two hours they sit there.
+e. Sadie starts a blog sharing recipes for baking vegan breads, and begins to consider the number of visitors that show up to the site each day.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. Taking $X$ to represent the number of individuals arriving to the emergency room in the next hour, this will reasonably follow a Poisson distribution. The parameter $\lambda$ would represent the number of individuals who arrive per hour, on average. It is counting arrivals per hour.
+b. If Sadie has a sense of the number of cardinals on average per $100m^2$ area, then a Poisson will be appropriate, supposing that the birds are fairly uniformly spread out. The parameter $\lambda$ would be the average number of birds in that size of region. It is counting occurrences per area.
+c. If Charles knows the average number of defects per $200$ yards of yarn, then this value can be taken to be $\lambda$. Supposing that the defects occur uniformly, without dependence (e.g., one defect makes more likely around it) then a Poisson distribution is appropriate. It is counting defects per length of yarn.
+d. We would take $\lambda$ to represent the average number of boats in a two hour period passing by the location that they are sitting. Supposing that these happen independently, at roughly uniform rates, then a Poisson is likely appropriate. This would be counting arrivals per (two) hour(s).
+e. If Sadie gets a measure of the average number of visitors per day to the website, then setting this to be $\lambda$ gives a reasonable representation of traffic patterns. We would likely want to assume that the arrivals are not more on some days (for instance, the weekends) than others, but under these assumptions having $X \sim \text{Poi}(\lambda)$ is likely reasonable.
+::::
+:::
 
 ## Using Named Distributions
-While many other named, discrete distributions exist, these are likely the most common. When confronted with a problem in the real-world for which you wish to understand the uncertainty associated with it, a reasonable first step is to determine whether a named distribution is well-suited to representing the underlying phenomenon. Is it a situation with enumerated events which are equally likely? Use the discrete uniform. Is it a binary outcome? Use the Bernoulli. Are you counting the number of success in a fixed number of trials? Use the binomial. Are you running repeated trials until a (certain number of) success(es)? Use the geomtric (negative binomial). Are you sampling without replacement? Use the hyper geometric. Are you counting events over a fixed space? Use the Poisson.
+While many other named, discrete distributions exist, these are the most common. When confronted with a problem in the real-world for which you wish to understand the uncertainty associated with it, a reasonable first step is to determine whether a named distribution is well-suited to representing the underlying phenomenon. Is it a situation with enumerated events which are equally likely? Use the discrete uniform. Is it a binary outcome? Use the Bernoulli. Are you counting the number of success in a fixed number of trials? Use the binomial. Are you running repeated trials until a (certain number of) success(es)? Use the geometric (or negative binomial). Are you sampling without replacement? Use the hypergeometric. Are you counting events over a fixed space? Use the Poisson.
 
-Once identified, the distribution can be used in exactly the same way as any probability mass function. That is, we still require all of the probability rules, event descriptions, and techniques from before. The difference in these cases is that we immediately have access to the correct form of the probability mass function, the expected value, and the variance.
+Once identified, the distribution can be used in exactly the same way as any probability mass function. That is, we still require all the probability rules, event descriptions, and techniques from before. The difference in these cases is that we immediately have access to the correct form of the probability mass function, the expected value, and the variance.
 
-An additional utility with this approach to solving probability questions is that, over time and repeated practice, you can build-up an intuition as to the behaviour of random variables following these various distributions. Probabilities in general are deeply unintuitive: it can be hard to assess, without fomrally working it out, whether an evetn is likely or unlikely, let alone how likey any event is. However, the lack of intuition from our wider experience can be negated almost entirely by building of intuition through the repeated application of these distributions. You can start to gain a sense of how binomial random variables behave, being able to determine just from inspection whether events seem plausible or not. Much of the study of probability and statistics is about building a set of tools that can overcome the flaws in our intuitive reasoning regarding uncertainty. This comes only through practice, however, this framework of named distributions provides a very solid foundation to perform such practice.
+An additional utility with this approach to solving probability questions is that, over time and repeated practice, you can build an intuition as to the behaviour of random variables following these various distributions. Probabilities in general can be deeply unintuitive. It can be hard to assess, without formally working it out, whether an event is likely or unlikely, let alone how likely an event is. However, the lack of intuition from our wider experience can be negated almost entirely by building of intuition through the repeated application of these distributions. You can start to gain a sense of how binomial random variables behave, being able to determine just from inspection whether events seem plausible or not. Much of the study of probability and statistics is about building a set of tools that can overcome the flaws in our intuitive reasoning regarding uncertainty. This comes only through practice, however, this framework of named distributions provides a very solid foundation to perform such practice.
+
+### Named Distributions in R
+In R all of the named distributions that we have discussed, and in fact, many that we have not discussed, are implemented to make calculations easier. In particular, there are R functions which evaluate the probability mass function for the various distributions. Alongside these, there are also functions which calculate what we refer to as the *cumulative probability*^[More on this in the coming chapter.], which is to say the $P(X\leq k)$ for some value $k$. These functions generally are called `d{distname}`, where `{distname}` is the name of the relevant distribution. For instance, `dbinom` for the binomial, `dpoi` for the Poisson, and so forth. These will evaluate the probability mass function at the relevant values. In order to evaluate the cumulative probability at the specified values you would call `p{distname}`. These functions take in a parameter for the value to evaluate at, and then parameters that correspond to the various parameters from the distributions themselves. 
+
+
+::: {.content-visible when-format='pdf'}
+```{r}
+#| collapse: true
+
+# Binomial Distribution
+dbinom(3, size = 10, p = 0.5)     # P(X = 3) if X~Bin(10, 0.5)
+pbinom(3, size = 10, p = 0.5)     # P(X <= 3)
+
+# Geometric Distribution
+dgeom(10, prob = 0.1)             # P(X=10) if X~Geo(0.1)
+pgeom(10, prob = 0.1)             # P(X<=10)
+
+# Negative Binomial
+dnbinom(6, size = 3, prob = 0.2)  # P(X=6) if X~NB(6, 0.2)
+pnbinom(6, size = 3, prob = 0.2)  # P(X<=6)
+
+# Hypergeometric
+# In this case, X ~ HG(N=n+m, M = m, n = k)
+dhyper(2, m = 6, n = 9, k = 4)    # P(X=2) X ~ HG(15, 6, 4)
+phyper(2, m = 6, n = 9, k = 4)    # P(X<=2)
+
+# Poisson
+dpois(5, lambda = 4)              # P(X=5) X ~ Poi(4)
+ppois(5, lambda = 4)              # P(X<=5)
+
+```
+:::
+::: {.content-visible when-format='html'}
+```{webr-r}
+# Binomial Distribution
+dbinom(3, size = 10, p = 0.5)     # P(X = 3) if X~Bin(10, 0.5)
+pbinom(3, size = 10, p = 0.5)     # P(X <= 3)
+
+# Geometric Distribution
+dgeom(10, prob = 0.1)             # P(X=10) if X~Geo(0.1)
+pgeom(10, prob = 0.1)             # P(X<=10)
+
+# Negative Binomial
+dnbinom(6, size = 3, prob = 0.2)  # P(X=6) if X~NB(6, 0.2)
+pnbinom(6, size = 3, prob = 0.2)  # P(X<=6)
+
+# Hypergeometric
+# In this case, X ~ HG(N=n+m, M = m, n = k)
+dhyper(2, m = 6, n = 9, k = 4)    # P(X=2) X ~ HG(15, 6, 4)
+phyper(2, m = 6, n = 9, k = 4)    # P(X<=2)
+
+# Poisson
+dpois(5, lambda = 4)              # P(X=5) X ~ Poi(4)
+ppois(5, lambda = 4)              # P(X<=5)
+
+```
+:::
+
+Note that we have seen the `sample` function before, which is an implementation of the discrete uniform. To implement the Bernoulli, we can use the binomial distribution with $n=1$. It is a worthwhile exercise to see if you can use R to start answering the questions from this chapter, numerically. This is the first prominent use case for R programming which can save a tremendous amount of time, and is likely the first use case that becomes directly relevant to the course material.
+
+## Exercises{.unnumbered}
+
+:::{#exr-8.1}
+For each of the following scenarios, describe which distribution the indicated random variable most closely resembles, and why.
+
+a. In a manufacturing process, you're interested in the number of trials required to produce the first defective item.
+a. A hospital wants to study the number of patients arriving at the emergency room in a fixed time interval, where the arrival rate is low and the events are rare.
+a. A quality control team inspects a batch of items and classifies each batch as either defective or non-defective.
+a. In a survey, you want to determine the number of people who prefer online shopping over in-store shopping.
+a. Researchers are studying a group of patients with a very rare disease. They wish to know whether a particular gene mutation is associated with the disease or not. They sample members of the population who have the disease to further study.
+a.  An online streaming platform wants to model the number of times a specific video is watched in an hour, given a known average view rate.
+a. A baseball player wants is interested in the number of home runs they hit in a game, where the probability of hitting a home run is the same for each at-bat.
+a. A call center manager wants to model the number of calls received per minute during a quiet period of the day.
+a. In a network setup, multiple backup routers are used, and the network remains functional as long as a certain number of them are operational. A network engineer is interested in how many backup routers are needed to ensure network reliability under various failure scenarios.
+:::
+
+:::{#exr-8.2}
+Show that if $X\sim\text{Bern}(p)$ then $E[X] = p$ and $\text{var}(X) = p(1-p)$.
+:::
+
+:::{#exr-8.3}
+Show that if $X_1,\dots,X_r\stackrel{iid}{\sim}\text{Geo}(p)$ and $Y=\sum_{i=1}^r X_i$, then $Y$ follows a negative binomial distribution. Find the mean and variance of this distribution, and indicate which negative binomial distribution it is.
+:::
+
+:::{#exr-8.4}
+Suppose that $X$ follows a Binomial distribution with $8$ trials and probability of success $0.4$. Find: 
+
+a. $P(X=2)$.
+a. $P(X = 4)$.
+a. $P(X < 2)$.
+a. $P(X > 6)$.
+a. $E[X]$.
+a. $\text{var}(X)$.   
+:::
+
+:::{#exr-8.5}
+If $20\%$ of bolts produced by a machine are defective, determine the probability that out of $4$ bolts chosen at random:
+
+
+a. $1$ is defective.
+a. $0$ are defective.
+a. fewer than $2$ bolts are defective.
+:::
+
+:::{#exr-8.6}
+Of all the weld failures in a certain assembly, $85\%$ of them occur in the weld metal itself, and the remaining $15\%$ occur in the base metal. A sample of $20$ weld failures is examined. 
+
+a. What is the probability that exactly five of them are base metal failures?
+a. What is the probability that fewer than four of them are base metal failures?
+a. What is the probability that none of them are base metal failures?
+:::
+
+:::{#exr-8.7}
+Celeste and Dana are playing squash, and Dana is determined to win at least two games. Unfortunately, his chance of winning any one game is only $\frac{1}{4}$, and this chance remains constant however many games he plays against Celeste. The players agree to play $5$ games and, if Dana has won at least two by then, play ceases. Otherwise, Dana persuades Celeste to play a further $5$ games with him. What is the probability that
+a. only $5$ games are played, and Dana wins at least two of them;
+a. that $10$ games are played, and Dana wins at least two of them.
+:::
+
+:::{#exr-8.8}
+A machine produces bolts, and for each bolt there is a probability $p$ of it being defective, where results for different bolts are assumed independent. A large batch of the machine's production is inspected by a customer in order to determine whether the batch should be purchased. In the inspection, $10$ bolts are selected at random and examined: if none is defective the batch is accepted, and if three or more is defective, the batch is rejected. If only $1$ or $2$ are defective, a further batch of $10$ is selected. If in total between the two batches three or more are defective, the batch is rejected.
+
+a. What is the probability that a decision is made at the first stage?
+a. What is the probability that the batch is accepted if $p=0.15$. 
+
+:::
+
+:::{#exr-8.9}
+Find the probability of getting a total of $7$ at least once in three tosses of a pair of fair dice.
+:::
+
+:::{#exr-8.10}
+Twenty air-conditioning units have been brought in for service. Twelve of the units have broken compressors and the other eight have broken fans. If seven of these units are randomly selected for repair, what is probability that exactly three have broken fans?
+:::
+
+:::{#exr-8.11}
+The probability that a computer running a certain operating system crashes on any given day is $0.1$. 
+
+a. Find the probability that the computer crashes for the first time on the twelfth day. 
+a. Find the probability that the third crash comes on day $30$.
+:::
+
+:::{#exr-8.12}
+There are $30$ restaurants in a particular town. If you assume that $4$ of them have health code violations, and a health inspector is going to visit $10$ of them at random, what is the probability that: 
+
+a. Exactly two of the restaurants visited will have violations.
+a. None of the restaurants visited will have violations?
+:::
+
+:::{#exr-8.13}
+A traffic light at a certain intersection is green $0.5$ of the time, yellow $0.1$ of the time, and red the remainder of the time. A car approaches the intersection once per day, at a random time. Suppose that $X$ represents the number of days until the car reaches three red lights. 
+
+a. Find $P(X = 7)$.
+a. What is $E[X]$.
+a. Suppose that the car only drives on weekdays, and the first day under consideration is a Saturday. What is $P(X \leq 18)$?
+:::
+
+:::{#exr-8.14}
+A computer program has a bug that causes it to fail in one out of every thousand runs, on average. In order to find the bug the program is run, independently, until it has failed $5$ times. 
+
+a. How many times will the program need to run, on average?
+a. If it takes $30$ seconds to run the program, what is the standard deviation for the amount of time that this debugging will take?
+:::
+
+:::{#exr-8.15}
+Ten items are to be sampled from a lot of $60$. If more than one is defective, the lot will be rejected. What is the probability that the lot will be rejected if: 
+
+a. there are $5$ defective items.
+a. there are $10$ defective items.
+a. there are $20$ defective items.
+:::
+
+:::{#exr-8.16}
+Suppose that $X$ is a Poisson random variable with rate $4$. Find 
+
+a. $P(X=1)$
+a. $P(X=0)$
+a. $P(X < 2)$
+a. $P(X > 1)$
+a. $E[X]$
+a. $\text{var}(X)$.
+:::
+
+:::{#exr-8.17}
+The number of flaws in a given area of aluminum foil happen uniformly at a rate of $3$ per square metre. If $X$ represents the number of flaws in a $1m^2$ random sample of foil, what is 
+
+a. $P(X=5)$.
+a. $P(X = 0)$.
+a. $P(X < 2)$.
+a. $P(X > 1)$.
+:::
+
+:::{#exr-8.18}
+Negative reactions from a particular injection occur at a rate of $1$ per $1000$ people in the population. Suppose that $2000$ people receive the injection.
+
+a. What is the probability that exactly $3$ individuals have a negative reaction?
+a. What is the probability that more than $2$ individuals have a negative reaction?
+:::
+
+:::{#exr-8.19}
+A telephone exchange receives, on average, $5$ calls per minute. Find the probability that 
+
+a. in a $1$ minute period, no calls are received.
+a. in a $2$ minute period, fewer than $4$ calls are received.
+a. in $5$ separate $1$ minute periods there are exactly four in which $2$ or more calls are received. 
+:::
+
+:::{#exr-8.20}
+The number of defective components produced in a process follows a Poisson distribution with a mean of $20$. Every defective item has a probability of $0.6$ of being repaired, independently of all others. 
+
+a. Find the probability that exactly $15$ defective components are produced.
+a. Given that exactly $15$ defective components are produced, find the probability that exactly $10$ can be repaired.
+a. If $N$ is the number of components produced, and $X$ is the number which are repairable, then given the value of $N$, what is the pmf of $X$?
+:::
