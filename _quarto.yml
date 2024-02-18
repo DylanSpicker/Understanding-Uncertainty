@@ -24,7 +24,7 @@ book:
       - notes/chapter6.qmd
       - notes/chapter7.qmd
       - notes/chapter8.qmd
-      # - notes/chapter9.qmd
+      - notes/chapter9.qmd
     - part: "Part 2: Statistics"
       # chapters:
       # - notes/chapter10.qmd

@@ -427,7 +427,6 @@ An additional utility with this approach to solving probability questions is tha
 ### Named Distributions in R
 In R all of the named distributions that we have discussed, and in fact, many that we have not discussed, are implemented to make calculations easier. In particular, there are R functions which evaluate the probability mass function for the various distributions. Alongside these, there are also functions which calculate what we refer to as the *cumulative probability*^[More on this in the coming chapter.], which is to say the $P(X\leq k)$ for some value $k$. These functions generally are called `d{distname}`, where `{distname}` is the name of the relevant distribution. For instance, `dbinom` for the binomial, `dpoi` for the Poisson, and so forth. These will evaluate the probability mass function at the relevant values. In order to evaluate the cumulative probability at the specified values you would call `p{distname}`. These functions take in a parameter for the value to evaluate at, and then parameters that correspond to the various parameters from the distributions themselves. 
 
-
 ::: {.content-visible when-format='pdf'}
 ```{r}
 #| collapse: true
