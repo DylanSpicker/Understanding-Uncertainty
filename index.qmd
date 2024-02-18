@@ -59,7 +59,7 @@ We can also use a similar shorthand to discuss repeated products. That is, if we
 The following are some additional points that are useful to know, but which do not necessarily fit together nicely.
 
 * For any two values $x$ and $y$, we get $(x + y)^2 = x^2 + 2xy + y^2$.
-* The integers are the set of all whole numbers, \{0, \pm1,\pm2,\dots\}$. We will often denote the set of integers using $\mathbb{Z}$.
+* The integers are the set of all whole numbers, $\{0, \pm1,\pm2,\dots\}$. We will often denote the set of integers using $\mathbb{Z}$.
 * The natural numbers are the set of all counting numbers, either $\{0,1,2,3,\dots\}$ or else $\{1,2,3,4,\cdots\}$ depending on the source. We often denote the set using $\mathbb{N}$.
 * The real numbers are the set of all numbers that you think of when thinking of numbers. They include the integers, and any fractions, and anything that cannot be written as a fraction (like $\pi$ and $e$) as well. We denote the real numbers as $\mathbb{R}$.
 * Intervals of real numbers are denoted as $(a,b)$ or $[a,b]$ (or a mixture, giving $[a,b)$ or $(a,b]$). A round bracket means that the endpoint is **not** included in the set, where a square bracket means that it is. That is, a value of $x$ is in $(a,b)$ if $a < x < b$, where it is in $[a,b]$ if $a \leq x \leq b$.
