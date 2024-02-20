@@ -436,7 +436,7 @@ p_Y(y) = \begin{cases}
 \end{cases}
 $$
 
-Using this probability mass function, find $\zeta(0.25)$, $\zeta(0.5)$, $\zeta(0.75)$, and $\zeta(0.95)$. What do each of these values mean?
+Using this probability mass function, find $\zeta(0.25)$, $\zeta(0.5)$, $\zeta(0.75)$, and $\zeta(0.99)$. What do each of these values mean?
 
 ::::{.callout .solution collapse='true'}
 ## Solution
