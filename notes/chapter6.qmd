@@ -421,18 +421,18 @@ The $100p$th percentile (e.g., $70$th percentile for $p=0.7$, or $20$th percenti
 Charles and Sadie remained somewhat disappointed by their lack of ability to accurately capture the behaviour of a random variable using the range. To this end, they spend a lot more time at the ice cream parlor, and come up with, what they believe, is the correct probability mass function for how many flavours customers order, in total. 
 $$
 p_Y(y) = \begin{cases} 
-0.25 & y = 1 \\
-0.25 & y = 2 \\
-0.1 & y = 3 \\
-0.05 & y = 4 \\
-0.05 & y = 5 \\
-0.05 & y = 6 \\
-0.15 & y = 7 \\
-0.05 & y = 8 \\
-0.04 & y = 9 \\
-0.005 & y = 10 \\ 
-0.005 & y = 50 \\
-0 & \text{otherwise}
+    0.25 & y = 1 \\
+    0.25 & y = 2 \\
+    0.1 & y = 3 \\
+    0.05 & y = 4 \\
+    0.05 & y = 5 \\
+    0.05 & y = 6 \\
+    0.15 & y = 7 \\
+    0.05 & y = 8 \\
+    0.04 & y = 9 \\
+    0.005 & y = 10 \\ 
+    0.005 & y = 50 \\
+    0 & \text{otherwise}
 \end{cases}
 $$
 
