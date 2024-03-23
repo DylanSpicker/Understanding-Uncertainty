@@ -88,10 +88,10 @@ While Charles came to understand the expected number of mistakes being made give
 ## Solution
 Here we can apply the law of total expectation. We have that $E[Y] = E[E[Y|X]] = E\left[\frac{3X}{10}\right] = \frac{3}{10}E[X]$. Thus, we need to work out $E[X]$, which can be done via the probability mass function of $X$. Specifically, \begin{align*}
 E[X] &= \sum_{x=1}^{10} x\frac{44800}{854769} \frac{3^x}{x!} \\
-&= frac{44800}{854769} \sum_{x=1}^{10} \frac{3^x}{(x-1)!} \\
-&= frac{44800}{854769}\times\frac{67413}{1120} \\
+&= \frac{44800}{854769} \sum_{x=1}^{10} \frac{3^x}{(x-1)!} \\
+&= \frac{44800}{854769}\times\frac{67413}{1120} \\
 &= \frac{898840}{284923} \approx 3.155. 
-\end{align*} Thus, in total, the expected value of $Y$ will be $$\frac{3}{10}\times\frac{898840}{284923} = \frac{269652}{284923} \approx 0.946$$.
+\end{align*} Thus, in total, the expected value of $Y$ will be $$\frac{3}{10}\times\frac{898840}{284923} = \frac{269652}{284923} \approx 0.946.$$
 ::::
 :::
 

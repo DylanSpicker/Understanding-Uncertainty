@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>STAT 1793: Course Notes - 9&nbsp; Continuous Random Variables</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../notes/chapter10.html" rel="next">
+<link href="../notes/chapter8.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">.monaco-editor pre {
+  background-color: unset !important;
+}
+
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-button-run {
+  background-color: #EEEEEE;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; /* Extra styling for consistency */
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration: none;
+  /* vertical-align: middle; */ /* Prevents a space from appearing between the code cell and button */
+  -webkit-user-select: none;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button-run:hover {
+  color: #000;
+  background-color: #e3e6ea;
+  border-color: #e1e5e9;
+}
+
+.qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+  pointer-events: none;
+  opacity: .65
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+</style>
+<script type="module">// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Determine if we need to install R packages
+var installRPackagesList = [''];
+// Check to see if we have an empty array, if we do set to skip the installation.
+var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+var autoloadRPackages = true;
+
+// Display a startup message?
+var showStartupMessage = true;
+var showHeaderMessage = false;
+if (showStartupMessage) {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  var startupMessageWebR = document.createElement("p");
+  startupMessageWebR.innerText = "🟡 Loading...";
+  startupMessageWebR.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  startupMessageWebR.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(startupMessageWebR);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML) {
+    // Append to the existing "title-block-header" element
+    headerHTML.appendChild(quartoTitleMeta);
+  } else if (headerRevealJS) {
+    // If using RevealJS, add to the "title-slide" div
+    headerRevealJS.appendChild(firstInnerDiv);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+// Retrieve the webr.mjs
+import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.2/webr.mjs";
+
+// Populate WebR options with defaults or new values based on 
+// webr meta
+globalThis.webR = new WebR({
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": ChannelType.Automatic
+});
+
+// Initialization WebR
+await webR.init();
+
+// Setup a shelter
+globalThis.webRCodeShelter = await new webR.Shelter();
+
+// Setup a pager to allow processing help documentation 
+await webR.evalRVoid('webr::pager_install()'); 
+
+// Function to set the button text
+function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message
+function qwebrUpdateStatusHeader(message) {
+  startupMessageWebR.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await globalThis.webR.installPackages([packageName]);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await globalThis.webR.evalRVoid(`library(${packageName});`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+    
+    // Display the update
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await globalThis.webR.flush();
+  }
+}
+
+
+// Check to see if any packages need to be installed
+if (setupRPackages) {
+  // Obtain only a unique list of packages
+  const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+  // Install R packages one at a time (either silently or with a status update)
+  await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+  if(autoloadRPackages) {
+    // Load R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+  }
+}
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+// Release document status as ready
+if (showStartupMessage) {
+  startupMessageWebR.innerText = "🟢 Ready!"
+}
+
+qwebrSetInteractiveButtonState(
+  `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+  true
+);
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};</script>
+<script type="module">// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+    Interactive: 'interactive',
+    Setup: 'setup',
+    Output: 'output',
+});
+
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await webR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await webR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // ---- 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid(`webr::canvas(width=${options["fig-width"]}, height=${options["fig-height"]})`);
+
+    const result = await webRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    try {
+
+        // Stop creating images
+        await webR.evalRVoid("dev.off()");
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${qwebrEscapeHTMLCharacters(evt.data)}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await webR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * options["fig-width"]);
+                canvas.setAttribute("height", 2 * options["fig-height"]);
+                canvas.style.width = "700px";
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            elements.outputGraphDiv.appendChild(canvas);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        webRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    evalType = EvalTypes.Interactive,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { "fig-width": 504, "fig-height": 360 };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+</script>
+<script type="module">// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (insertElement,
+  qwebrCounter, 
+  evalType = EvalTypes.Interactive,
+  options = {}) {
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive: 
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter);
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter);
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter);
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  insertElement.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-interactive-area';
+
+  // Create button element
+  var button = document.createElement('button');
+  button.className = 'btn btn-default qwebr-button-run';
+  button.disabled = true;
+  button.type = 'button';
+  button.id = 'qwebr-button-run-' + qwebrCounter;
+  button.textContent = '🟡 Loading webR...';
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(button);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-area';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-setup-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-setup-area';
+
+  return mainDiv;
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter9.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Continuous Random Variables</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">STAT 1793: Course Notes</a> 
+        <div class="sidebar-tools-main">
+    <a href="../STAT-1793--Course-Notes.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Part 1: Probability</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Probability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Mathematical Foundations of Statistical Experiments</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Core Concepts of Probability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilities with More than One Event</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summarizing Statistical Experiments with Random Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Expected Value, Location Summaries, and Measures of Variability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Expectations and Variances with Multiple Random Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Named Discrete Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter9.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Continuous Random Variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Part 2: Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to Statistics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#continuous-versus-discrete" id="toc-continuous-versus-discrete" class="nav-link active" data-scroll-target="#continuous-versus-discrete"><span class="header-section-number">9.1</span> Continuous Versus Discrete</a></li>
+  <li><a href="#cumulative-distribution-functions" id="toc-cumulative-distribution-functions" class="nav-link" data-scroll-target="#cumulative-distribution-functions"><span class="header-section-number">9.2</span> Cumulative Distribution Functions</a></li>
+  <li><a href="#the-probability-density-function" id="toc-the-probability-density-function" class="nav-link" data-scroll-target="#the-probability-density-function"><span class="header-section-number">9.3</span> The Probability Density Function</a></li>
+  <li><a href="#using-continuous-distributions" id="toc-using-continuous-distributions" class="nav-link" data-scroll-target="#using-continuous-distributions"><span class="header-section-number">9.4</span> Using Continuous Distributions</a></li>
+  <li><a href="#the-uniform-distribution" id="toc-the-uniform-distribution" class="nav-link" data-scroll-target="#the-uniform-distribution"><span class="header-section-number">9.5</span> The Uniform Distribution</a></li>
+  <li><a href="#the-normal-distribution" id="toc-the-normal-distribution" class="nav-link" data-scroll-target="#the-normal-distribution"><span class="header-section-number">9.6</span> The Normal Distribution</a>
+  <ul class="collapse">
+  <li><a href="#the-specification-of-the-distribution" id="toc-the-specification-of-the-distribution" class="nav-link" data-scroll-target="#the-specification-of-the-distribution"><span class="header-section-number">9.6.1</span> The Specification of the Distribution</a></li>
+  <li><a href="#the-standard-normal-distribution" id="toc-the-standard-normal-distribution" class="nav-link" data-scroll-target="#the-standard-normal-distribution"><span class="header-section-number">9.6.2</span> The Standard Normal Distribution</a></li>
+  <li><a href="#sec-r-normal" id="toc-sec-r-normal" class="nav-link" data-scroll-target="#sec-r-normal"><span class="header-section-number">9.6.3</span> Normal Probability Calculations in R</a></li>
+  <li><a href="#the-empirical-rule-and-chebyshevs-inequality" id="toc-the-empirical-rule-and-chebyshevs-inequality" class="nav-link" data-scroll-target="#the-empirical-rule-and-chebyshevs-inequality"><span class="header-section-number">9.6.4</span> The Empirical Rule and Chebyshev’s Inequality</a></li>
+  </ul></li>
+  <li><a href="#closure-of-the-normal-distribution" id="toc-closure-of-the-normal-distribution" class="nav-link" data-scroll-target="#closure-of-the-normal-distribution"><span class="header-section-number">9.7</span> Closure of the Normal Distribution</a></li>
+  <li><a href="#approximations-using-the-normal-distribution" id="toc-approximations-using-the-normal-distribution" class="nav-link" data-scroll-target="#approximations-using-the-normal-distribution"><span class="header-section-number">9.8</span> Approximations Using the Normal Distribution</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
+<script type="module">// Global dictionary to store Monaco Editor instances
+const qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (
+    initialCode, 
+    qwebrCounter) {
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value
+    editor.__qwebrinitialCode = initialCode;
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter,
+            EvalTypes.Interactive);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, EvalTypes.Interactive);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, EvalTypes.Interactive);
+  };
+
+}</script>
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter9.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Continuous Random Variables</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-continuous-rv" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Continuous Random Variables</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Our discussions of probability distributions and their summaries have focused entirely on discrete random variables. To recap, a discrete random variable is any random numeric quantity that can take on a countable number of values. Discrete random variables are defined in contrast to continuous random variables, which take on values over the span of intervals in uncountably large sets. Suppose that <span class="math inline">\(X\)</span> can take any real number between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>. There is no way to enumerate the set of possible values for this random quantity, and so it must not be discrete.</p>
+<p>Many quantities of interest are better treated as a continuous quantity rather than a discrete one even when this is not technically correct. For instance, time measured in seconds is often best thought of as continuous, even though any stop watch used to grab these measurements will have some limit to the precision with which they can measure. Similarly, lengths and heights will often be better treated as continuous quantities, even though any measuring device will necessarily have some minimal threshold after which it cannot discern distances. Thus, deciding whether a quantity is continuous or discrete is sometimes a judgment call. In general discrete quantities are harder to work with when the set of possibilities is very large. In these cases, not much is lost by treating the random variables as though they were continuous. This distinction is another area which requires the active development of intuition, but once present, the distinctions become second nature.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<section id="continuous-versus-discrete" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="continuous-versus-discrete"><span class="header-section-number">9.1</span> Continuous Versus Discrete</h2>
+<p>Distinguishing whether a random quantity is continuous or discrete is crucial as, broadly speaking, the two types of quantities are treated differently. The same underlying ideas are present, but the distinctions between the two settings require some careful thought. The use of continuous random variables necessitates an understanding of introductory calculus. These course notes are designed to be understood without any experience in calculus, and as a result, we will not spend much time focusing on continuous random variables. However, continuous random variables are <em>the</em> dominant type of random variables outside of introductory courses. As a result, understanding the distinctions, and becoming familiar with how they are to be manipulated is an important skill.</p>
+<p>The key difference between discrete and continuous random variables is that, for discrete random variables the behaviour is governed by assessing <span class="math inline">\(P(X=x)\)</span> for all possible values of <span class="math inline">\(x\)</span>, while for continuous random variables <span class="math inline">\(P(X=x)=0\)</span> for <strong>every</strong> value of <span class="math inline">\(x\)</span>. This is likely a surprising statement, and as such it is worth reiterating. With discrete random variables we discussed how all of the probabilistic behaviour is governed by the probability mass function. This is defined as <span class="math inline">\(p_X(x) = P(X=x)\)</span>. If <span class="math inline">\(X\)</span> is a continuous random variable, we must have <span class="math inline">\(P(X=x) = 0\)</span>. Correspondingly, continuous random variables do not have probability mass functions, and to understand the behaviour of these random variables we must us other quantities.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Singleton Probabilities with Continuous Random Variables
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While the fact that <span class="math inline">\(P(X=x) = 0\)</span> may seem unintuitive at first glance, it is worth exploring this even further. The nature of a continuous random variable is such that there is no possible way to enumerate all of the values that are possible to be realized by the random quantity. Suppose that we take a set of countably many possible observations and gave each of these a probability of greater than <span class="math inline">\(0\)</span> of occurring. Even if we take an infinite number of them, there will still be an uncountably infinite number of events in the sample space that we have not accounted for. We know that the total probability of the sample space must be <span class="math inline">\(1\)</span>, and so we must have the total probability of the first set of events being less than <span class="math inline">\(1\)</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>Now suppose we take another set of countably many events, again giving each of them a positive probability. Once more the sum of all of these probabilities must be less than <span class="math inline">\(1\)</span>, and specifically, the sum of both sets must also be less than <span class="math inline">\(1\)</span>. Even after these two sets, there are still uncountably infinite events to go and so we continue this process. Because we always need the total probability to be <span class="math inline">\(1\)</span> once all events have been accounted for, and because we will always have uncountably infinite events remaining to account for, we can <strong>never</strong> have a positive probability assigned to each event in a set of events. Even if we made the probability of each of these sets very, very small<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> after some fixed number of countable events the probabilities would be greater than <span class="math inline">\(1\)</span>, which cannot happen. As such, each event itself must have <span class="math inline">\(0\)</span> probability.</p>
+<p>An alternative technique for understanding this intuition is to think about how unlikely it really would be to observe any specific value. Suppose that <span class="math inline">\(X\)</span> takes values on the interval <span class="math inline">\([0,1]\)</span>. Recall that, when we defined probabilities, we discussed them as being the long run proportion of time that an event occurs. Take some event, say <span class="math inline">\(X=0.5\)</span>. Suppose that we took repeated measurements of <span class="math inline">\(X\)</span> which are independent and identically distributed. Now suppose that at some point we exactly do observe <span class="math inline">\(X=0.5\)</span>. Should we expect that this will ever happen again? The next time we get near <span class="math inline">\(0.5\)</span>, might we instead observe <span class="math inline">\(0.51\)</span> or <span class="math inline">\(0.49\)</span> or <span class="math inline">\(0.5000000000000000001\)</span> or any of the other uncountably infinite values in the very near vicinity of <span class="math inline">\(0.5\)</span>? Each time that we make an observation the denominator of our proportion is growing, but if every value between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> is truly possible, as time goes on the number of times that <span class="math inline">\(X=0.5\)</span> must stay much, much smaller than the total number of trials. If we continue this off to infinity, in the limit, the probability must become <span class="math inline">\(0\)</span>.</p>
+<p>This conclusion leads to a few different points. First, impossibility is not the same as probability <span class="math inline">\(0\)</span>. Impossible events do have probability <span class="math inline">\(0\)</span>, but possible events may also have probability <span class="math inline">\(0\)</span>. Events which are outside of the sample space are impossible. Events inside the sample space, even probability zero events, remain possible. Second, we require alternative mathematical tools for discussing the probability of events in a continuous setting. Ideally this would be analogous to a probability mass function, but would somehow function in the case of continuity.</p>
+</div>
+</div>
+</section>
+<section id="cumulative-distribution-functions" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="cumulative-distribution-functions"><span class="header-section-number">9.2</span> Cumulative Distribution Functions</h2>
+<p>To begin building to the continuous analogue of the probability mass function, we will start by focusing on events that are easier to define in the continuous case. Suppose that <span class="math inline">\(X\)</span> is defined on some continuous interval. Instead of thinking of events relating to <span class="math inline">\(X=x\)</span>, we instead turn our focus to events of the form <span class="math inline">\(X \in (a,b)\)</span> for some interval defined by the endpoints <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>. Now note that, relying only on our knowledge of probabilities relating to generic events, we can rewrite <span class="math inline">\(P(X\in(a,b))\)</span> slightly. Specifically, <span class="math display">\[\begin{align*}
+P(X\in(a,b)) &amp;= 1 - P(X\not\in(a,b))\\
+&amp;= 1 - P(\{X &lt; a\}\cup\{X &gt; b\}) \\
+&amp;= 1 - \left(P(X &lt; a) + P(X &gt; b)\right)\\
+&amp;= 1 - P(X &gt; b) - P(X &lt; a)\\
+&amp;= P(X &lt; b) - P(X &lt; a).\end{align*}\]</span></p>
+<div id="fig-number-line" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-number-line-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: A number line showcasing the interval <span class="math inline">\((a,b)\)</span> and demonstrating how you can take everything less than <span class="math inline">\(b\)</span> and remove all that is less than <span class="math inline">\(a\)</span> to be left with only <span class="math inline">\((a,b)\)</span>.
+</figcaption>
+<div aria-describedby="fig-number-line-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="..\graphics/ch9-difference-in-numbers.png" class="img-fluid figure-img">
+</div>
+</figure>
+</div>
+<p>In words we know that the probability that <span class="math inline">\(X\)</span> falls into any particular interval is given by the probability that it is less than the upper bound of the interval minus the probability that it is less than the lower bound of the interval. Notice that <span class="math inline">\(X &lt; a\)</span> is an event, and if we knew how to assign probabilities to <span class="math inline">\(X&lt;a\)</span> for arbitrary <span class="math inline">\(a\)</span>, then we could assign probabilities to any interval. Also note that, even in the continuous case, it make sense to talk of <span class="math inline">\(P(X &lt; a)\)</span> for some value <span class="math inline">\(a\)</span>. These intervals will contain an uncountably infinite number of events, and as such, can certainly occur with greater than <span class="math inline">\(0\)</span> probability.</p>
+<p>Consider an example with <span class="math inline">\(X\)</span> defined on <span class="math inline">\([0,1]\)</span>. In this case we know that <span class="math inline">\(P(X&lt;1)=1\)</span>. Note that we could have written <span class="math inline">\(P(X \leq 1) = 1\)</span>, which may have been more obviously true. However, <span class="math inline">\(P(X\leq 1) = P(\{X&lt;1\}\cup\{X=1\}) = P(X&lt;1) + P(X=1)\)</span> and we know that <span class="math inline">\(P(X=1)=0\)</span>. In the continuous case we do not need to worry whether we use <span class="math inline">\(X\leq a\)</span> or <span class="math inline">\(X &lt; a\)</span>, and we will interchange them throughout.</p>
+<div id="exm-charles-and-sadie-bus-times" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.1 (Charles and Sadie Wait for the Bus)</strong></span> Charles and Sadie are visiting a large city and are getting around via public transit while there. They are not quite familiar with the bus schedules yet, but they know that the bus they are waiting for will show up sometime in the next <span class="math inline">\(15\)</span> minutes. They realize that this is a continuous random quantity, and decide to pass the time by trying to reason about how long they will be waiting for the bus to arrive. To do so, they make the assumption that the bus is equally likely to show at any point during this interval.</p>
+<ol type="a">
+<li>What is the probability that Charles and Sadie wait <span class="math inline">\(15\)</span> or fewer minutes for the bus?</li>
+<li>What is the probability that Charles and Sadie wait <span class="math inline">\(5\)</span> or fewer minutes for the bus?</li>
+<li>What is the probability that Charles and Sadie wait exactly <span class="math inline">\(7\)</span> minutes for the bus?</li>
+<li>What is the probability that Charles and Sadie wait between <span class="math inline">\(8\)</span> and <span class="math inline">\(12\)</span> minutes for the bus?</li>
+<li>What is the probability that Charles and Sadie have to wait longer than <span class="math inline">\(13\)</span> minutes for the bus?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(X\)</span> represent the amount of time that they wait for the bus.</p>
+<ol type="a">
+<li>If we trust their judgment, then they have claimed that they will wait between <span class="math inline">\(0\)</span> and <span class="math inline">\(15\)</span> minutes for the bus. As a result, <span class="math inline">\(P(X \leq 15) = 1\)</span>.</li>
+<li>Here we can reason that if any time is equally likely for the bus to arrive, then the first <span class="math inline">\(5\)</span> minutes must be as likely as the second interval of <span class="math inline">\(5\)</span> minutes or the third. That is, in the first <span class="math inline">\(5\)</span> minutes there is a total of <span class="math inline">\(\dfrac{5}{15} = \dfrac{1}{3}\)</span> of the possible arrival times taken up, and so we must conclude that <span class="math inline">\(P(X \leq 5) = \dfrac{1}{3}\)</span>.</li>
+<li>This would be <span class="math inline">\(P(X = 7)\)</span>. <span class="math inline">\(X\)</span> is a continuous quantity, and so <span class="math inline">\(P(X = 7) = 0\)</span>.</li>
+<li>We can reason through this in two different ways. First, we can use the property discussed above that <span class="math inline">\(P(X \in (8, 12)) = P(X \leq 12) - P(X\leq 8)\)</span>, and then use the same procedure as in (b). That gives <span class="math display">\[P(X \in (8, 12)) = \dfrac{12}{15} - \dfrac{8}{15} = \dfrac{4}{15}.\]</span> Alternatively, because each interval of the same length must be equally likely, we can reason that this is just a length <span class="math inline">\(4\)</span> interval. Thus, it must have the same likelihood as any other length <span class="math inline">\(4\)</span> interval, given by <span class="math inline">\(\dfrac{4}{15}\)</span>.</li>
+<li>Note that, longer than <span class="math inline">\(13\)</span> is the complement to less than <span class="math inline">\(13\)</span>. Thus, <span class="math display">\[P(X \geq 13) = 1 - P(X \leq 13) = 1 - \dfrac{13}{15} = \dfrac{2}{15}.\]</span></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>The centrality of events of the form <span class="math inline">\(X \leq a\)</span> prompts the definition of a mathematical function which we call the <strong>cumulative distribution function</strong>.</p>
+<div id="def-cdf" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.1 (Cumulative Distribution Function)</strong></span> The cumulative distribution function of a random variable <span class="math inline">\(X\)</span>, typically denoted as <span class="math inline">\(F(x)\)</span> or <span class="math inline">\(F_X(x)\)</span>, is defined as the function that gives the probability that the random variable is less than or equal to some threshold. That is, <span class="math inline">\(F_X(x) = P(X \leq x)\)</span>. We may also refer to the cumulative distribution function simply as the <strong>distribution function</strong>.</p>
+</div>
+<p>Once we have defined the distribution function for a random variable, using the above derivation we are able to determine the probability associated with any events based on intervals. It is worth noting that the cumulative distribution function can also be defined for discrete random variables. In the case of a discrete random variable, we would have <span class="math display">\[F_X(x) = \sum_{k \in\mathcal{X}; k \leq x} p_X(k).\]</span> Since it is simply the summation of the probability mass function it tends to be a less useful quantity.</p>
+<p>Suppose that, for a random variable <span class="math inline">\(X\)</span>, we know the cumulative distribution function. This knowledge permits the computation of <em>any</em> probability associated with the random variable. Consider some event defined in terms of <span class="math inline">\(X\)</span> which we may wish to determine the probability of. We know that events are subsets of the sample space. Every one of these events can be written using our basic set operations (unions, intersections, and complements) applied to intervals of the form <span class="math inline">\((a,b)\)</span> and sets of the form <span class="math inline">\(\{x\}\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> The axioms of probability allow us to compute probabilities across the set operations. Further, our knowledge of the cumulative distribution function, the conversion of <span class="math inline">\(P(X \in (a,b))\)</span> into <span class="math inline">\(F_X(b) - F_X(a)\)</span>, and the fact that <span class="math inline">\(P(X=x) = 0\)</span> for all <span class="math inline">\(x\)</span> gives all of the results we need to derive probabilities for these events.</p>
+<div id="exm-lightbulb-cdf" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.2 (Charles and Sadie’s Light Bulbs)</strong></span> Charles and Sadie decide that they need to replace some light bulbs. In their research online, a particular manufacturer of light bulbs, <em>Bayesian Brights</em>, lists the cumulative distribution function for the lifetime of their bulbs, in hours. The model Charles and Sadie are considering is said to have a lifetime (in hours) governed by <span class="math display">\[F_X(x) = 1 - \exp\left(-\frac{x}{10000}\right).\]</span></p>
+<ol type="a">
+<li>What is the probability that a purchased lightbulb lasts for less than <span class="math inline">\(5000\)</span> hours?</li>
+<li>What is the probability that a purchased lightbulb lasts for between <span class="math inline">\(7500\)</span> and <span class="math inline">\(12000\)</span> hours?</li>
+<li>What is the probability that a purchased lightbulb lasts for more than <span class="math inline">\(8000\)</span> hours?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Using the given cumulative distribution function this can be calculated as <span class="math display">\[P(X \leq 5000) = F(5000) = 1 - \exp\left(-\frac{5000}{10000}\right) = 1 - e^{-1/2} \approx 0.39346934.\]</span></li>
+<li>Here we get <span class="math display">\[\begin{multline*}P(X \in (7500,12000)) = P(X \leq 12000) - P(X\leq 7500) = F(12000) - F(7500) \\
+= \exp\left(-0.75\right) - \exp\left(-1.2\right) \approx 0.171172341.\end{multline*}\]</span></li>
+<li>We can convert this to be the complement event so that it is expressible in terms of the cumulative distribution function. That is, <span class="math inline">\(P(X \geq 8000) = 1 - P(X \leq 8000)\)</span>, and so <span class="math display">\[P(X \geq 8000) = 1 - F(8000) = 1 - (1 - e^{-0.8}) = e^{-0.8} \approx 0.449328964.\]</span></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-probability-density-function" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="the-probability-density-function"><span class="header-section-number">9.3</span> The Probability Density Function</h2>
+<p>The distribution function will be the core object used to discuss the probabilistic behaviour of a continuous random variable. All of the behaviour of these random quantities will be described by the distribution function, and as such we will take the distribution function as a function which defines the distribution of a continuous random quantity. This is all that we need in order to analyze these random variables, however, it may be a little unsatisfying in contrast with the discrete case.</p>
+<p>We had set out to find a quantity that paralleled the probability mass function. Instead, we concluded that the cumulative distribution function can be made to play the same role in terms of describing the behaviour of the random quantity. Still, it may be of interest for us to have a function which takes into account the <em>relative likelihood</em> of being near some value. Suppose, for instance, that for a random variable defined on <span class="math inline">\([0,1]\)</span> we wanted to know how likely it was to be in the vicinity of <span class="math inline">\(X=0.5\)</span>. We could take a small number, say <span class="math inline">\(\delta = 0.01\)</span> and calculate <span class="math display">\[P(X\in(0.5-\delta,0.5+\delta)) = F(0.5+\delta)-F(0.5-\delta).\]</span> This is perfectly well defined based on our discussions to this point. Now, suppose that <span class="math inline">\(\delta\)</span> is small enough so that it is reasonable to assume that this probability is fairly evenly distributed throughout the interval. Then, if we wanted to assign a likelihood to each value, we could divide this total probability by the length of the interval, <span class="math inline">\(2\delta\)</span>. As a result, in this case, the probability that <span class="math inline">\(X\)</span> is nearly <span class="math inline">\(0.5\)</span> will be approximately given by the expression <span class="math display">\[\dfrac{F(0.5+\delta)-F(0.5-\delta)}{2\delta}.\]</span></p>
+<p>We had taken <span class="math inline">\(\delta=0.01\)</span>, but the same process could be applied for smaller and smaller <span class="math inline">\(\delta\)</span>, say <span class="math inline">\(0.001\)</span> or <span class="math inline">\(0.0001\)</span>. Intuitively, as the size of this interval shrinks more and more we are getting a better and better estimate for the likelihood that the random variable is in the immediate vicinity of <span class="math inline">\(0.5\)</span>. Moreover, as <span class="math inline">\(\delta\)</span> gets smaller and smaller our assumption of a uniform probability over the interval becomes more and more reasonable. Unfortunately, we cannot set <span class="math inline">\(\delta=0\)</span>, exactly. We can ask what happens <em>in the limit</em> as <span class="math inline">\(\delta\)</span> continues to get smaller and smaller. This question is in the purview of calculus, and can in fact be answered. While working out the answer is beyond the scope of the course, we will provide the result anyway.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> The resulting function is called the <strong>probability density function</strong>, and is related to the cumulative distribution function through derivatives (and integrals).</p>
+<div id="def-probability-density-function" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.2 (Probability Density Function)</strong></span> A random variable <span class="math inline">\(X\)</span>, with cumulative distribution function <span class="math inline">\(F(x)\)</span>, is further characterized by its probability density function, denoted <span class="math inline">\(f(x)\)</span>. The density function describes the relative likelihood of a random variable taking on values in a particular interval, and mirrors the behaviour of the probability mass function in the discrete case. Formally, the probability density function is equal to the derivative of the cumulative distribution function.</p>
+</div>
+<p>Roughly speaking, the density function evaluates how likely it is for a continuous quantity to be in a small neighbourhood of the given value. Critically, <strong>probability density functions do not give probabilities directly</strong>. In fact, probability density functions may give values that are greater than <span class="math inline">\(1\)</span>!<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> Still, if we see the shape of the probability density function, we can state how likely it is to make observations near the results of interest. We will often graph the density functions. The high points of the graph indicate regions with more probability than the regions of the graph which are lower. Again, the specific probability of any event <span class="math inline">\(X=x\)</span> will always be <span class="math inline">\(0\)</span>, but some events fall in neighbourhoods which are more likely to observe than others.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<div id="exm-bus-trips-two" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.3 (The Types of Busses in the City)</strong></span> After returning from their trip to the big city, Charles and Sadie are talking to their friend Garth, with a lot more experience in the matter. Garth explains that there are actually several different types of busses, with different arrival schedules over the <span class="math inline">\(15\)</span> minute interval. Knowing that Charles and Sadie have started to learn about probability density functions, Garth draws out the following sketch, giving the probability density function for three different busses.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chapter9_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li>Which of the three buses is most likely to show up around the <span class="math inline">\(1\)</span> minute mark?</li>
+<li>Which of the three buses is most likely to show up around the <span class="math inline">\(6\)</span> minute mark?</li>
+<li>Which of the three buses is most likely to show up around the <span class="math inline">\(14\)</span> minute mark?</li>
+<li>Which bus is most likely to show up at <span class="math inline">\(10\)</span> minutes exactly?</li>
+<li>During which intervals would each of the buses be more likely than the other two to arrive?</li>
+<li>Describe the behaviour of each of the three buses.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>At <span class="math inline">\(x = 1\)</span>, the black density is higher than the red density which is higher than the blue density. This gives the relative ranking that arrivals around <span class="math inline">\(1\)</span> minute or more likely for the black bus than red or blue.</li>
+<li>At <span class="math inline">\(x = 6\)</span>, the blue density is higher than the red or black densities, which are roughly the same, and as such, it is the most likely bus to arrive in the vicinity of <span class="math inline">\(6\)</span> minutes.</li>
+<li>At <span class="math inline">\(14\)</span>, the red density is higher than the black density which is higher than the blue. This gives the relative ordering of likelihood of arrivals.</li>
+<li>All buses have probability <span class="math inline">\(0\)</span> of arriving at <span class="math inline">\(10\)</span> minutes exactly since these are the densities for continuous random variables.</li>
+<li>The black bus is most likely to arrive for times up until around <span class="math inline">\(4\)</span> minutes, where the blue bus is then the most likely to arrive until around <span class="math inline">\(11\)</span> minutes, where the red bus is most likely to arrive until the <span class="math inline">\(15\)</span> minute mark.</li>
+<li>The red bus has an equal probability of arriving across the full interval. The black bus is more likely to arrive near the start of the interval, slowly decaying in likelihood as time goes on, while remaining fairly likely at the <span class="math inline">\(15\)</span> minute mark. The blue bus is very unlikely to take a very short period of time, or a very long period of time, and far more likely to sit in the middle of the possible interval.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="using-continuous-distributions" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="using-continuous-distributions"><span class="header-section-number">9.4</span> Using Continuous Distributions</h2>
+<p>With the exception of the previously indicated differences, continuous and discrete random variables are treated similarly. The tools to analyze them differ<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, but the fundamentals remain the same. It is possible to compute expected values, medians, and modes, with roughly the same interpretations. It is possible to describe the range, interquartile range, and variance, with similar interpretations. The axioms of probability still underpin the manipulation and analysis of these random variables. The distinction is merely that in, place of elementary mathematics to complete the calculations, calculus is required.</p>
+<p>Just as with discrete distributions, there are named continuous distributions. These are typically governed by either a density function or cumulative distribution function, alongside the expected value and variance. Just like the named discrete distributions, by matching the underlying scenario to the correct process we are able to avoid a lot of work in understanding the behaviour of the random quantities. Now, because calculus is not assumed knowledge, we will not work too widely with continuous random variables. We will introduce only two named continuous distributions: the uniform distribution<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> and the normal distribution.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+</section>
+<section id="the-uniform-distribution" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="the-uniform-distribution"><span class="header-section-number">9.5</span> The Uniform Distribution</h2>
+<p>The uniform distribution<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> is parameterized over an interval specified as <span class="math inline">\((a,b)\)</span>. On this interval, equal probability density is given to every event, which is to say that the density function is constant. Specifically, if <span class="math inline">\(X\sim\text{Unif}(a,b)\)</span> then <span class="math display">\[f(x) = \begin{cases}\frac{1}{b-a} &amp; x \in (a,b) \\ 0 &amp; \text{otherwise}.\end{cases}\]</span> From the density function we can find that <span class="math display">\[F(x) = \frac{x - a}{b - a}\]</span> for <span class="math inline">\(x \in (a,b)\)</span>, with <span class="math inline">\(F(x) = 0\)</span> for <span class="math inline">\(x &lt; a\)</span> and <span class="math inline">\(F(x) = 1\)</span> for <span class="math inline">\(x &gt; b\)</span>. Moreover, we have <span class="math inline">\(E[X] = \frac{a+b}{2}\)</span> and <span class="math inline">\(\text{var}(X) = \frac{(b-a)^2}{12}\)</span>.</p>
+<div id="exm-charles-and-sadie-bus-times-expected" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.4 (Characterizing the Wait Time)</strong></span> Still considering the wait time for buses in the city, Sadie points out that the bus they were waiting for follows a <span class="math inline">\(\text{Unif}(0,15)\)</span> distribution. They can use their newfound wisdom to make deeper conclusions about the process!<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+<ol type="a">
+<li>How long should they expect to wait for the bus?</li>
+<li>What is the variance for the amount of time that they will be waiting?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Here, we know that <span class="math inline">\(X\sim\text{Unif}(0,15)\)</span>.</p>
+<ol type="a">
+<li><span class="math inline">\(E[X]\)</span> is <span class="math inline">\(\dfrac{a+b}{2} = \dfrac{0+15}{2} = 7.5\)</span>, so they should expect to wait <span class="math inline">\(7.5\)</span> minutes.</li>
+<li>The variance is <span class="math inline">\(\text{var}(X) = \dfrac{(15 - 0)^2}{12} = 18.75\)</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>The uniform distribution is analogous to the discrete uniform. Any time there is an interval of possible outcomes which are all equally likely, the uniform distribution is the distribution to use. Compared with other distributions it is also fairly straightforward to work with, which makes it a useful demonstration of the concepts relating the continuous probability calculations.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
+</section>
+<section id="the-normal-distribution" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="the-normal-distribution"><span class="header-section-number">9.6</span> The Normal Distribution</h2>
+<p>The normal distribution, also sometimes referred to as the Gaussian distribution, is a named continuous distribution function defined on the complete real line. The distribution is far and away the most prominently used distribution in all of probability and statistics. In fact, most people have heard of normal distributions even if they are not aware of this fact. Any time that there is a discussion of a bell curve, for instance, this is in reference to the normal distribution. Normally distributed quantities arise all over the place from measurements of heights, grades, or reaction times through to levels of job satisfaction, reading ability, or blood pressure. There is a tremendous number of normally distributed phenomena naturally occurring in the world, which renders the normal distribution deeply important across a wide range of domains.</p>
+<p>Perhaps more important than the places where the normal distribution arises in nature are the places where it arises mathematically. At the end of this course we will see a result, <em>the central limit theorem</em>, which is one of the core results in all of statistics. Much of the statistical theory that drives scientific inquiry sits atop the central limit theorem. And at the core of the central limit theorem is the normal distribution. It is virtually impossible to overstate the importance of the normal distribution, and as a result, it is worthy of investigation.</p>
+<section id="the-specification-of-the-distribution" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="the-specification-of-the-distribution"><span class="header-section-number">9.6.1</span> The Specification of the Distribution</h3>
+<p>A normal distribution is parameterized by two parameters: the mean, <span class="math inline">\(\mu\)</span>, and the variance <span class="math inline">\(\sigma^2\)</span>. We write <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>. These parameters directly correspond to the relevant quantities such that <span class="math inline">\(E[X] = \mu\)</span> and <span class="math inline">\(\text{var}(X) = \sigma^2\)</span>. The density function is given by <span class="math display">\[f(x) = \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).\]</span> This can be quite unwieldy to work with, however, when it is plotted we see that the normal distribution takes on a bell curve which is centered at <span class="math inline">\(\mu\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-normal-density" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-normal-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red and blue), and mean 5 (black). The red density has variance 1, the blue density has variance 4, and the black density has variance 0.25.
+</figcaption>
+<div aria-describedby="fig-normal-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter9_files/figure-html/fig-normal-density-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-standard-normal-distribution" class="level3" data-number="9.6.2">
+<h3 data-number="9.6.2" class="anchored" data-anchor-id="the-standard-normal-distribution"><span class="header-section-number">9.6.2</span> The Standard Normal Distribution</h3>
+<p>Normally distributed random variables are particularly well-behaved. One way in which this is true is that if you multiply a normally distributed random variable by a constant, it will remain normally distributed, and if you add a constant to a normally distributed random variable, it will remain normally distributed. Consider, for <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>, taking the <span class="math inline">\(X - \mu\)</span>. From our discussions of expected values we know that <span class="math inline">\(E[X-\mu] = E[X]-\mu = 0\)</span>. Furthermore, adding or subtracting a constant will not change the variance. Thus, <span class="math inline">\(X-\mu\sim N(0,\sigma^2)\)</span>.</p>
+<p>Now, consider dividing this by <span class="math inline">\(\sigma\)</span>, or equivalently, multiply by <span class="math inline">\(\dfrac{1}{\sigma}\)</span>. The expected value of the new quantity will be <span class="math inline">\(\dfrac{1}{\sigma}\times 0 = 0\)</span>, and, from our discussions regarding the variance of linear transformations, the variance of the new quantity will be <span class="math inline">\(\frac{1}{\sigma^2}\times\sigma^2 = 1\)</span>. Taken together then, if <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>, <span class="math display">\[Z = \frac{X - \mu}{\sigma} \sim N(0,1).\]</span> This holds true for <em>any</em> normal distribution with <em>any</em> mean or variance values. This straightforward transformation allows us to discuss normal distributions in terms of <span class="math inline">\(N(0,1)\)</span>. We call this the <strong>standard normal distribution</strong>, and will typically use <span class="math inline">\(Z\)</span> to denote a random variable from the standard normal distribution.</p>
+<div id="def-standard-normal" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.3 (Standard Normal Distribution)</strong></span> The standard normal distribution is the version of the normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(1\)</span>. We say that <span class="math inline">\(Z\)</span> follows a standard normal, and write <span class="math inline">\(Z\sim N(0,1)\)</span>, if the density of <span class="math inline">\(Z\)</span> is given by <span class="math display">\[f_Z(z) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{z^2}{2}\right).\]</span> We denote the density of <span class="math inline">\(Z\)</span> as <span class="math inline">\(\varphi(z)\)</span>, and the cumulative distribution function of <span class="math inline">\(Z\)</span> as <span class="math inline">\(\Phi(z)\)</span>. The cumulative distribution function, <span class="math inline">\(\Phi(z)\)</span>, does not have a nice form to be written down, however, it is a commonly applied enough function that many computing languages have implemented it, including of course R.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p>
+</div>
+<p>The utility in this process of converting normally distributed random variables to be standard normal random variables, a process known as <strong>standardization</strong>, is demonstrated by realizing that events can be converted using the same transformations. Specifically, suppose we have <span class="math inline">\(X \sim N(\mu,\sigma^2)\)</span>, and we want to find <span class="math inline">\(P(X \leq x)\)</span>. Note that, <span class="math inline">\(X \leq x\)</span> must also mean that <span class="math display">\[\frac{X-\mu}{\sigma} \leq \frac{x - \mu}{\sigma},\]</span> through an application of the same transformation to both sides. But we <em>know</em> that the left hand side of this inequality is exactly <span class="math inline">\(Z\)</span>, a standard normal random variable with cumulative distribution function <span class="math inline">\(\Phi(z)\)</span>. Thus, <span class="math display">\[P(X \leq x) = P\left(Z \leq \frac{x - \mu}{\sigma}\right) = \Phi\left(\frac{x-\mu}{\sigma}\right).\]</span> Using this trick of standardization any normal probability can be converted into a probability regarding the standard normal.</p>
+<div id="exm-standardization-example" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.5 (Charles and Sadie Explore House Plants)</strong></span> Charles and Sadie learn that the heights of fully grown house plants are often normally distributed. They are exploring which plants will work best in their new apartment, but are finding it difficult to reason about them in comparison to one another. Some plants end up being taller on average with a lot more variability, while others may be shorter but far more certain. Sadie realizes that the cumulative distribution function of a standard normal, <span class="math inline">\(\Phi(z)\)</span>, can be evaluated using their smart phones. As a result, they get to work expressing different probabilities in terms of <span class="math inline">\(\Phi(z)\)</span>.</p>
+<p>They are comparing four different plant species. These species have heights according to the following random variables.</p>
+<ol type="i">
+<li>Plant <span class="math inline">\(A\)</span> has height <span class="math inline">\(X\)</span>, which follows a normal distribution with mean <span class="math inline">\(90\)</span> and variance <span class="math inline">\(100\)</span>.</li>
+<li>Plant <span class="math inline">\(B\)</span> has height <span class="math inline">\(Y\)</span>, which follows a <span class="math inline">\(N(110, 400)\)</span> distribution.</li>
+<li>Plant <span class="math inline">\(C\)</span> has height <span class="math inline">\(V\)</span>, which follows a normal distribution centered on <span class="math inline">\(70\)</span> with standard deviation <span class="math inline">\(7\)</span>.</li>
+<li>Plant <span class="math inline">\(D\)</span> has height <span class="math inline">\(W\)</span>, which follows a normal distribution with <span class="math inline">\(\mu=85\)</span> and <span class="math inline">\(\sigma^2 = 81\)</span>.</li>
+</ol>
+<p>Express each of the following probabilities in terms of <span class="math inline">\(\Phi(z)\)</span>, the cumulative distribution function of a standard normal random variable.</p>
+<ol type="a">
+<li>One spot the plants cannot be too tall. What is the probability that they can fit plant <span class="math inline">\(A\)</span> into a spot which cannot accommodate plants taller than <span class="math inline">\(80\)</span>cm?</li>
+<li>A second spot would be strange to have too short of a plant in. If they require the plant to be at least <span class="math inline">\(125\)</span>cm, what is the probability they can use plant <span class="math inline">\(B\)</span>?</li>
+<li>A third spot can accommodate plants that are either under <span class="math inline">\(60\)</span>cm if they use a stand, or else over <span class="math inline">\(90\)</span>cm. How likely is it that plant <span class="math inline">\(C\)</span> will work in this spot?</li>
+<li>A fourth spot requires a plant that is somewhere between <span class="math inline">\(80\)</span>cm and <span class="math inline">\(90\)</span>cm. What is the probability that plant <span class="math inline">\(D\)</span> will work?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Here we wish to standard a <span class="math inline">\(N(90, 100)\)</span> random variable. To do this we note that <span class="math display">\[\frac{X-90}{\sqrt{100}} = \frac{X - 90}{10} \sim N(0,1).\]</span> Thus, taking <span class="math inline">\(Z \sim N(0,1)\)</span>, we know that <span class="math display">\[P(X \leq 80) = P\left(\frac{X - 90}{10} \leq \frac{80 - 90}{10}\right) = P(Z \leq -1) = \Phi(-1).\]</span></li>
+<li>Here we wish to standard a <span class="math inline">\(N(110, 400)\)</span> random variable. To do this we note that <span class="math display">\[\frac{Y-110}{\sqrt{400}} = \frac{Y - 110}{20} \sim N(0,1).\]</span> Thus, taking <span class="math inline">\(Z \sim N(0,1)\)</span>, we know that <span class="math display">\[P(Y \geq 125) = P\left(\frac{Y - 110}{20} \geq \frac{125 - 110}{20}\right) = P(Z \geq \frac{3}{4}) = 1 - \Phi(0.75).\]</span></li>
+<li>Here we wish to standard a <span class="math inline">\(N(70, 49)\)</span> random variable. To do this we note that <span class="math display">\[\frac{V-70}{7} \sim N(0,1).\]</span> Thus, taking <span class="math inline">\(Z \sim N(0,1)\)</span>, we know that <span class="math display">\[P(V \leq 60) = P\left(\frac{V - 70}{7} \leq \frac{60 - 70}{7}\right) = P(Z \leq -\frac{10}{7}) = \Phi(-\frac{10}{7}).\]</span> Moreover, we know that <span class="math display">\[P(V \geq 90) = P\left(\frac{V - 70}{7} \geq \frac{90 - 70}{7}\right) = P(Z \geq \frac{20}{7}) = 1 - \Phi(\frac{20}{7}).\]</span> Thus, the probability this will be acceptable will be <span class="math inline">\(1 - \Phi(\frac{20}{7}) + \Phi(-\frac{10}{7})\)</span>.</li>
+<li>Here we wish to standard a <span class="math inline">\(N(85, 81)\)</span> random variable. To do this we note that <span class="math display">\[\frac{W-85}{\sqrt{81}} = \frac{W - 85}{9} \sim N(0,1).\]</span> Thus, taking <span class="math inline">\(Z \sim N(0,1)\)</span>, we know that <span class="math display">\[\begin{multline*}P(80 \leq W \leq 90) = P\left(\frac{80 - 85}{9} \leq \frac{W - 85}{9} \leq \frac{90 - 85}{9}\right) \\ = P(Z \leq \frac{5}{9}) - P(Z \leq -\frac{5}{9}) = \Phi(\frac{5}{9}) - \Phi(-\frac{5}{9}).\end{multline*}\]</span></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>As a result, combining our knowledge of continuous random variables, with the process of standardization we are able to calculate normal probabilities for any events relating to normally distributed random quantities. Moreover, since the shape of the normal distribution is so predictable, it is often easy to draw out the density function, and indicate on this graphic the probabilities of interest, which in turn helps with the required probability calculations. Calculating probabilities from normal distributions remains a central component of working with statistics and probabilities beyond this course. Developing the skills and intuition at this point, through repeated practice is a key step in successfully navigating statistics here and beyond.</p>
+<p>When you have access to a computer, and your interest is in calculating a normal probability, as described above, there is not typically a need for standardization. However, it remains an important skill for several reasons. First, by always working with the same normal distribution, you will develop a much more refined intuition for the likelihoods of different events. It goes beyond working with the same family of distributions, you get very used to working with exactly the same distribution. Second, you will likely become quite familiar with certain key <strong>critical values</strong> of the standard normal distribution. These values arise frequently, and allow you to quickly approximate the likelihood of different events. Finally, as we begin to move away from studying probability and into studying statistics, the standard normal will feature prominently there.</p>
+</section>
+<section id="sec-r-normal" class="level3" data-number="9.6.3">
+<h3 data-number="9.6.3" class="anchored" data-anchor-id="sec-r-normal"><span class="header-section-number">9.6.3</span> Normal Probability Calculations in R</h3>
+<p>Just as with the named discrete distributions, R provides functions for calculating probabilities related to normal random variables. The relevant functions are the <code>dnorm</code> and <code>pnorm</code> function, for the density function and the cumulative distribution function, respectively. These functions can take arguments for the mean and standard deviation<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> of the normal. If not provided, it will default to the standard normal.</p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# N(0, 1)
+dnorm(0.25) # f(0.25)
+pnorm(0.25) # P(X <= 0.25)
+
+# N(5, 4)
+dnorm(4.9, mean = 5, sd = sqrt(4)) # f(4.9)
+pnorm(4.9, mean = 5, sd = sqrt(4)) # P(X <= 4.9)
+
+# N(0, 1) - Explicitly
+dnorm(1, mean = 0, sd = 1) # f(1)
+pnorm(1, mean = 0, sd = 1) # P(X <= 1)`, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="the-empirical-rule-and-chebyshevs-inequality" class="level3" data-number="9.6.4">
+<h3 data-number="9.6.4" class="anchored" data-anchor-id="the-empirical-rule-and-chebyshevs-inequality"><span class="header-section-number">9.6.4</span> The Empirical Rule and Chebyshev’s Inequality</h3>
+<p>Another way in which the normal distribution is well behaved is summarized in the <strong>emprical rule</strong>. The shape of the distribution is such that, no matter the specific mean or variance, all members of the family remain quite similar. This enables the derivation of an easy, approximate result, to help intuitively gauge the probabilities of normal events.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Empirical Rule
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The empirical rule is a mathematical result regarding the probability of a normally distributed random variable. If <span class="math inline">\(X\)</span> has a normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>, then:</p>
+<ol type="1">
+<li>The probability of observing a value within <span class="math inline">\(\sigma\)</span> of the mean is approximately <span class="math inline">\(0.68\)</span>;</li>
+<li>The probability of observing a value within <span class="math inline">\(2\sigma\)</span> of the mean is approximately <span class="math inline">\(0.95\)</span>; and</li>
+<li>The probability of observing a value within <span class="math inline">\(3\sigma\)</span> of the mean is approximately <span class="math inline">\(0.997\)</span>.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chapter9_files/figure-html/empirical_rule-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>In words, the empirical states that almost all of the observations from a normal distribution will fall in the interval <span class="math inline">\(\mu\pm3\sigma\)</span>. In mathematical terms, the empirical rule is summarized as <span class="math display">\[\begin{align*}
+    P(\mu-\sigma\leq X \leq \mu + \sigma) &amp;\approx 0.68 \\
+    P(\mu - 2\sigma \leq X \leq \mu + 2\sigma) &amp;\approx 0.95 \\
+    P(\mu - 3\sigma \leq X \leq \mu + 3\sigma) &amp;\approx 0.997.
+\end{align*}\]</span> With the standard normal we can replace <span class="math inline">\(\mu\)</span> with <span class="math inline">\(0\)</span>, and <span class="math inline">\(\sigma\)</span> with <span class="math inline">\(1\)</span> to get a version which is slightly more concise to state. It is then possible to combine these different intervals by recognizing the symmetry in the normal distribution. That is, <span class="math inline">\(P(\mu \leq X \leq \mu + \sigma) \approx \dfrac{0.68}{2} = 0.34\)</span>.</p>
+<div id="exm-empirical-rule-calc" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.6 (Charles and Sadie Can Never Have Enough House Plants)</strong></span> Their standardization efforts paid off, and Charles and Sadie found some plants that should fit the spaces that they need once they’ve grown up. Because of how well the plants worked out, they wanted to buy some more. They end up back at the store, and they know that they need to get a plant that will grow to be between <span class="math inline">\(70\)</span>cm and <span class="math inline">\(106\)</span>cm. They have several options for plants again:</p>
+<ol type="i">
+<li>A plant with heights <span class="math inline">\(X\)</span> according to <span class="math inline">\(N(88, 36)\)</span>.</li>
+<li>A plant with heights <span class="math inline">\(Y\)</span> according to <span class="math inline">\(N(124, 324)\)</span>.</li>
+<li>A plant with heights <span class="math inline">\(W\)</span> according to <span class="math inline">\(N(82, 144)\)</span>.</li>
+</ol>
+<p>Unfortunately, Charles and Sadie forget their phones at home and so they cannot make direct calculations using <span class="math inline">\(\Phi(z)\)</span>. Can you help them, without using a normal probability calculator, determine which plant has the highest probability of being acceptable?</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Without access to <span class="math inline">\(\Phi(z)\)</span> we can instead make use of the empirical rule. Consider that for <span class="math inline">\(X\)</span> we have <span class="math inline">\(\mu_X = 88\)</span> and <span class="math inline">\(\sigma = \sqrt{36} = 6\)</span>.</p>
+<ol type="1">
+<li>If we take the interval <span class="math inline">\([70, 106]\)</span> then we can consider the terms <span class="math display">\[\frac{70-88}{6} = \frac{-18}{6} = -3 \quad\text{and}\quad \frac{106-88}{6} = 3.\]</span> Thus, <span class="math inline">\(P(70 \leq X \leq 106) = P(\mu_X - 3\sigma_X \leq X \leq \mu_X + 3\sigma_X)\)</span>. Using the empirical rule we know that this probability is approximately <span class="math inline">\(0.997\)</span>.</li>
+<li>We can approach the same tactics for <span class="math inline">\(Y\)</span>. This time, we get <span class="math display">\[\frac{70-124}{\sqrt{324}} = -3 \quad\text{and}\quad \frac{106-124}{18} = -1\]</span>. Thus, <span class="math inline">\(P(70 \leq Y \leq 106) = P(\mu_Y - 3\sigma_Y \leq Y \leq \mu_Y - \sigma_Y)\)</span>. Note that from <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\mu-3\sigma\)</span>, according the empirical rule, there is <span class="math inline">\(\dfrac{0.997}{2} = 0.4985\)</span> probability. Similarly, according to the empirical rule there is <span class="math inline">\(\dfrac{0.68}{2} = 0.34\)</span> probability of being between <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\mu-\sigma\)</span>. Thus, if we take <span class="math inline">\(0.4985 - 0.34 = 0.1585\)</span>, this gives the probability of being between <span class="math inline">\(\mu-3\sigma\)</span> and <span class="math inline">\(\mu-\sigma\)</span>, as required.</li>
+<li>As above, <span class="math display">\[\frac{70-82}{\sqrt{144}} = -1 \quad\text{and}\quad \frac{106-82}{12} = 2\]</span>. As a result, <span class="math inline">\(P(70 \leq W \leq 106) = P(\mu_W - \sigma_W \leq W \leq \mu_W + 2\sigma_W)\)</span>. Note that as in (2) there is <span class="math inline">\(0.34\)</span> probability of being between <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\mu-\sigma\)</span>. To be between <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\mu + 2\sigma\)</span> there will be probability <span class="math inline">\(\dfrac{0.95}{2} = 0.475\)</span>. As a result, the total probability here will be <span class="math inline">\(0.34 + 0.475 = 0.815\)</span>.</li>
+</ol>
+<p>As a result, the first plant has a <span class="math inline">\(0.997\)</span> chance to fit, the second a <span class="math inline">\(0.1585\)</span>, and the third a <span class="math inline">\(0.815\)</span> (approximately).</p>
+</div>
+</div>
+</div>
+</div>
+<p>The empirical rule is not exact, and when computing probabilities with access to statistical software it is likely of limited direct utility. However, it is another tool to leverage to continue refining your intuition for the behaviour of random quantities. It is also a good “check” to have, giving an immediate sense of the likelihood of different events. If you compute an answer which seems to contradict the empirical rule, take a second look. If you have someone tell you that they have observed events which are out of line with the empirical rule, be skeptical.</p>
+<p>The empirical rule is a useful result to aid in building intuition regarding the normal distribution. However, when quantities are not normally distributed, it does not apply. A related, though somewhat weaker result is Chebyshev’s Inequality. This will hold for <em>any</em> distribution, and can be seen as a useful extension to the empirical rule.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chebyshev’s Inequality
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Chebyshev’s Inequality provides probabilistic bounds on the likelihood of deviating from the mean for any random variable. In words, there is a probability of <span class="math inline">\(0.75\)</span> or more of observing an observation within two standard deviations, and a probability of at least <span class="math inline">\(0.8889\)</span> of observing a value within three standard deviations of the mean. Formally, for any <span class="math inline">\(k &gt; 0\)</span>, <span class="math display">\[P(\mu - k\sigma \leq X \leq \mu + k\sigma) \geq 1 - \frac{1}{k^2}.\]</span></p>
+</div>
+</div>
+<p>Here <span class="math inline">\(k\)</span> can be any real number which is greater than <span class="math inline">\(0\)</span>. If <span class="math inline">\(k\leq 1\)</span>, this result is uninteresting since the bound simply is <span class="math inline">\(0\)</span>. However, taking <span class="math inline">\(k=2\)</span> gives the <span class="math inline">\(0.75\)</span> lower bound outlined above, which is a more useful result. Additionally, there is no requirement for <span class="math inline">\(k\)</span> to be an integer here, and so, for instance, the probability of observing a value within <span class="math inline">\(\mu\pm\sqrt{2}\sigma\)</span> is at least <span class="math inline">\(0.5\)</span>, for all distributions.</p>
+<div id="exm-chebyshevs-ineqaulity" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.7 (Fitting in the Strange Plants)</strong></span> Charles and Sadie selected a plant to fit in the spot requiring one between <span class="math inline">\(70\)</span> and <span class="math inline">\(106\)</span>cm. However, as they are checking out at the store they see a plant that they like much better. They are conflicted since they do not know whether this plant will satisfy normality assumptions in its height. The worker tells them that on average the plant grows to be <span class="math inline">\(88\)</span>cm, and figures that the variance will be approximately <span class="math inline">\(51.84\)</span>. Charles and Sadie want to be at least <span class="math inline">\(90\%\)</span> certain that the plant will fit. If they are, they will buy it!</p>
+<ol type="a">
+<li>If they assume that the plants heights are normally distributed, should they buy the plant?</li>
+<li>If they do not assume that the plants heights are normally distributed, should they buy the plant?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Note that in this case, we have a mean of <span class="math inline">\(88\)</span> and a standard deviation of <span class="math inline">\(7.2\)</span>. As a result, we have that <span class="math inline">\(70\)</span> is <span class="math inline">\(\mu - 2.5\sigma\)</span> and <span class="math inline">\(106\)</span> is <span class="math inline">\(\mu + 2.5\sigma\)</span>. The empirical rule does not tell us directly how to address probabilities in this case, however, we know that <span class="math display">\[P(X \in [\mu-2\sigma, \mu+2\sigma]) \leq P(X \in [\mu - 2.5\sigma, \mu+2.5\sigma]) \leq P(X \in [\mu-3\sigma,\mu+3\sigma]).\]</span> According to the empirical rule then we can say that, if this plant follows a normal distribution, the probability it is accessible will be between <span class="math inline">\(0.95\)</span> and <span class="math inline">\(0.997\)</span>. If the normal distribution is a reasonable assumption, then they should buy the plant.</li>
+<li>If the distribution is non-normal, then we can instead apply Chebyshev’s inequality. Here we have <span class="math inline">\(k=2.5\)</span>, as solved for in (a). As a result, <span class="math display">\[P(\mu - 2.5\sigma \leq X \leq \mu + 2.5\sigma) \geq 1 - \frac{1}{(2.5)^2} = 0.84.\]</span> As a result, if they want to be <span class="math inline">\(90\%\)</span> certain, without knowing more about the distribution they should <em>not</em> purchase the plant.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="closure-of-the-normal-distribution" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="closure-of-the-normal-distribution"><span class="header-section-number">9.7</span> Closure of the Normal Distribution</h2>
+<p>We have seen a certain type of <em>closure property</em> for the normal distribution when we discussed standardization. That is, adding and multiplying by constants does not change the distribution when working with normally distributed quantities. This is an interesting property which does not hold for most distributions, and makes normally distributed random variables quite nice to work with. The normal distribution has an additional type of closure property which is frequently used.</p>
+<p>Suppose that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, with <span class="math inline">\(X\sim N(\mu_X, \sigma_X^2)\)</span>, and <span class="math inline">\(Y\sim N(\mu_Y, \sigma_Y^2)\)</span>. In this setting, <span class="math display">\[X+Y\sim N(\mu_X+\mu_Y, \sigma_X^2 + \sigma_Y^2).\]</span> That is to say, the addition of two independent normally distributed random variables will also be normally distributed. This extends beyond two in the natural way, simply by applying and reapplying the rule (as many times as is required).</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Closure of the Normal Distribution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(X_1, \dots, X_n\)</span> are all independent, with each <span class="math inline">\(X_i \sim N(\mu_i, \sigma_i^2)\)</span>. Then the summation <span class="math display">\[\sum_{i=1}^n X_i \sim N(\mu, \sigma^2),\]</span> where <span class="math inline">\(\mu = \sum_{i=1}^n \mu_i\)</span> and <span class="math inline">\(\sigma^2 = \sum_{i=1}^n \sigma_i^2\)</span>. Notably, if <span class="math inline">\(X_1,\dots,X_n \stackrel{iid}{\sim} N(\mu,\sigma^2)\)</span>, then the summation will be <span class="math inline">\(N(n\mu, n\sigma^2)\)</span>.</p>
+</div>
+</div>
+<p>If instead of considering the summation, we consider the average of <span class="math inline">\(n\)</span> independent and identically distributed <span class="math inline">\(N(\mu,\sigma^2)\)</span> variables, then <span class="math display">\[\frac{1}{n}\sum_{i=1}^n X_i \sim N(\mu, \frac{\sigma^2}{n}).\]</span> This follows from an application of our standard expectation and variance transformation rules. This type of result is central to the practice of statistics, and this closure under addition further aids in the utility of the normal distribution.</p>
+</section>
+<section id="approximations-using-the-normal-distribution" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="approximations-using-the-normal-distribution"><span class="header-section-number">9.8</span> Approximations Using the Normal Distribution</h2>
+<p>A final utility to the normal distribution is in its ability to approximate other distributions. While several of these approximations exist, we will focus on the normal approximation to the binomial as an illustrative example. Historically, these approximations were critical for computing probabilities by hand in a timely fashion. Owing to the widespread use of statistical software, these use cases are more and more limited. However, there are two major advantages to learning these approximations. First, with an approximation it becomes easier to leverage the intuition you will build regarding the normal distribution in order to better understand the behaviour of other random quantities. Second, the normal approximation has the same <em>flavour</em> as many results in statistics, and so it presents an additional path to familiarity with these types of findings.</p>
+<p>Suppose that <span class="math inline">\(X\sim\text{Bin}(n,p)\)</span>. Through knowledge of the binomial distribution, we know that <span class="math inline">\(E[X] = np\)</span> and <span class="math inline">\(\text{var}(X) = np(1-p)\)</span>. If <span class="math inline">\(n\)</span> is sufficiently large then it is possible to approximate a binomial distribution using a normal distribution with the corresponding mean and variance. That is, for <span class="math inline">\(n\)</span> large enough, we can take <span class="math inline">\(X\sim\text{Bin}(n,p)\)</span> to have approximately the same distribution as <span class="math display">\[W\sim N(np, np(1-p)).\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-normal-approximation" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-normal-approximation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: A plot showing the probability mass function of a <span class="math inline">\(\text{Bin}(100, 0.25)\)</span> distribution, with a <span class="math inline">\(N(25, 18.75)\)</span> density overlaid, demonstrating the utility of the approximation.
+</figcaption>
+<div aria-describedby="fig-normal-approximation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter9_files/figure-html/fig-normal-approximation-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>One consideration that we need to make when applying this approximation has to do with the fact that the normal distribution is continuous while the binomial distribution is discrete. As a result, the normal distribution can take on any value on the real line, where the binomial is limited to the integers. A question that we must answer is what to do with the non-integer valued numbers. The natural solution is to rely on rounding. That is, for any value between <span class="math inline">\([1.5, 2.5)\)</span> we would round to the nearest integer, which is <span class="math inline">\(2\)</span>.</p>
+<div id="def-continuity-correction" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.4 (Continuity Correction)</strong></span> The continuity correction is a technique for adjusting the probabilities computed using a continuous approximation to a discrete random variable. The correction relies on rounding non-integer values, which may be observed with regards to the continuous random variable, to the corresponding integer values for the discrete random variable that is being approximated.</p>
+</div>
+<p>This natural solution is in fact a fairly useful technique, and it is the one that we will make use of in the normal approximation. While rounding is quite natural, the process for leveraging this idea in probability approximation is somewhat backwards. That is, we typically will need to go from probabilities relating to <span class="math inline">\(X\)</span> and transform those into probabilities relating to <span class="math inline">\(W\)</span>. So, for instance, if we wish to know <span class="math inline">\(P(X \leq 2)\)</span>, then we need to be able to make this a statement regarding the random variable <span class="math inline">\(W\)</span>. In order to do this we need to ask “what is the largest value for <span class="math inline">\(W\)</span> that would get rounded to <span class="math inline">\(2\)</span>?” The answer is <span class="math inline">\(2.5\)</span> and so <span class="math inline">\(P(X \leq 2) \approx P(W \leq 2.5)\)</span>.</p>
+<p>A similar adjustment would be required if we instead wanted <span class="math inline">\(P(X \geq 5)\)</span>. Here we would ask “what is the smallest value for <span class="math inline">\(W\)</span> which would get rounded to <span class="math inline">\(5\)</span>?” and note that the answer is <span class="math inline">\(4.5\)</span>. Thus, <span class="math inline">\(P(X \geq 5) \approx P(W \geq 4.5)\)</span>. Once we have expressed the probability of interest in terms of the normal random variable, we can use the standard techniques previously outlined to compute the relevant probabilities. It is very important to note that these two results are of the form <span class="math inline">\(X \geq x\)</span> and <span class="math inline">\(X \leq x'\)</span>. If we instead had considered <span class="math inline">\(X &gt; x\)</span> or <span class="math inline">\(X &lt; x'\)</span>, we would need to take an additional step.</p>
+<p>For continuous random variables whether <span class="math inline">\(X \geq x\)</span> or <span class="math inline">\(X &gt; x\)</span> is considered makes no difference. However, for discrete random variables this is not the case. As a result we should first convert the event the an equivalent event which contains the equality sign within the inequality, and then apply the continuity correction. That is, if we want <span class="math inline">\(P(X &gt; 3)\)</span> first note that for <span class="math inline">\(X &gt; 3\)</span> to hold, we could equivalently write this as <span class="math inline">\(X \geq 4\)</span>. Alternatively, if the event of interest is <span class="math inline">\(X &lt; 8\)</span>, this is the same as <span class="math inline">\(X \leq 7\)</span>.</p>
+<div id="exm-normal-approximation" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.8 (Charles and Sadie Payouts over a Year)</strong></span> Charles and Sadie are back sitting at the coffee shop, reflecting on all of the probability that they have learned since their games began. They realize that each time they play the game to see who will pay, that is a Bernoulli trial with <span class="math inline">\(0.5\)</span> probability. As a result, over the course of the year, if they go <span class="math inline">\(200\)</span> times to get coffee, the number of times each of them will have to pay is governed by a <span class="math inline">\(\text{Bin}(200, 0.5)\)</span> random variable. Charles realizes that this is infeasible to work with a binomial distribution, and so seeks another way.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> Sadie suggest that they could use the normal approximation to the binomial.</p>
+<ol type="a">
+<li>What is the approximate probability that Charles pays more than <span class="math inline">\(115\)</span> times in a year, expressed in terms of <span class="math inline">\(\Phi\)</span>.</li>
+<li>What is the approximate probability that Sadie will pay between <span class="math inline">\(86\)</span> and <span class="math inline">\(107\)</span> times? Explain how this can be approximated numerically.</li>
+<li>Give an upper and lower bound that both Charles and Sadie can be <span class="math inline">\(95\%\)</span> sure they will pay between (that is, two numbers such that the probability they pay at least the lower and at most the upper bound is <span class="math inline">\(0.95\)</span>).</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For these questions we will take <span class="math inline">\(X \sim \text{Bin}(200, 0.5)\)</span>, and therefore, <span class="math inline">\(X \dot\sim W \sim N(100, 50)\)</span>. Thus, to calculate these probabilities, we can use normal approximations, making sure to apply the continuity corrections.</p>
+<ol type="a">
+<li>We want <span class="math inline">\(P(X &gt; 115)\)</span>. This is the same as asking <span class="math inline">\(P(X \geq 116)\)</span>, and with the continuity correction, <span class="math inline">\(P(X \geq 116) \approx P(W \geq 115.5)\)</span>. Thus, we take <span class="math display">\[P(W \geq 115.5) = P\left(Z \geq \frac{115.5 - 100}{\sqrt{50}}\right) = 1 - \Phi\left(2.192\right).\]</span> This could be worked out using a normal probability calculator.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a></li>
+<li>We want <span class="math display">\[P(86 &lt; X &lt; 107) = P(87 \leq X \leq 106 \approx P(87.5 \leq W \leq 106.5).\]</span> Note that if we consider <span class="math display">\[\frac{106.5 - 100}{\sqrt{50}} = 0.919 \quad\text{and}\quad \frac{87.5 - 100}{\sqrt{50}} = -1.838.\]</span> If we wanted to get a rough approximation of this, we could say that, from the empirical rule, the probability that <span class="math display">\[\begin{multline*}P(\mu_W - 1.838\sigma_W \leq W \leq \mu_W + 0.919\sigma_W) \leq P(\mu_W - 2\sigma_W \leq W \leq \mu_W + \sigma_W) \\
+= \frac{0.68}{2} + \frac{0.95}{2} = 0.815.\end{multline*}\]</span> Note that this gives an upper bound on the probability. We could also get a lower bound on the probability by moving in the other directions, <span class="math display">\[P(\mu_W - 1.838\sigma_W \leq W \leq \mu_W + 0.919\sigma_W) \leq P(\mu_W - 2\sigma_W \leq W \leq \mu_W) = \frac{0.95}{2} = 0.475.\]</span> This gives a fairly wide range, but we can be relatively confident it will be a lot closer to <span class="math inline">\(0.815\)</span> than to <span class="math inline">\(0.475\)</span>, since the values are a lot close to <span class="math inline">\(-2\)</span> and <span class="math inline">\(1\)</span> than <span class="math inline">\(-1\)</span> and <span class="math inline">\(0\)</span>.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a></li>
+<li>Note that, if we use a normal approximation and the empirical rule, we know that there is approximately a <span class="math inline">\(0.95\)</span> probability that a random variable falls within <span class="math inline">\(2\sigma\)</span> of the mean. The mean of <span class="math inline">\(W\)</span> is <span class="math inline">\(100\)</span> and <span class="math inline">\(\sigma = \sqrt{50}\)</span>, so we can take the interval <span class="math inline">\([85.8578, 114.1421]\)</span>. Note that if we widen this slightly the probability will increase slightly, so that the probability <span class="math inline">\(W \in [85.5, 114.5]\)</span> must be greater than <span class="math inline">\(0.95\)</span>. The quantity <span class="math inline">\(P(85.5 \leq W \leq 114.5)\)</span> corresponds to <span class="math inline">\(P(86 \leq X \leq 114)\)</span>, and so we can say that Charles and Sadie can each be roughly <span class="math inline">\(95\%\)</span> confident that they will need to pay between <span class="math inline">\(86\)</span> and <span class="math inline">\(114\)</span> times.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>When it is not necessary, it rarely makes sense to use an approximation. There will be cases where the approximation is directly useful, and in those moments it is great to be able to use it. This example of using the normal distribution to approximate a discrete random variable serves as a nice bridge from the study of probability to the study of statistics. In statistics we take a different view of the types of problems we have been considering to date, and we require the tools of probability that have been brought forth. As a result, a deep comfort with manipulating probability expressions is required to build a strong foundation while studying statistics.</p>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-9.1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.1</strong></span> A boy is trying to climb a slippery pole and finds that he can climb to a height of at least <span class="math inline">\(1.850\)</span> m once in <span class="math inline">\(5\)</span> attempts, and to a height of at least <span class="math inline">\(1.700\)</span> m nine times out of ten. Assuming that the heights he reaches form a normal distribution:</p>
+<ol type="a">
+<li>What is the mean and standard deviation of the distribution?</li>
+<li>If he climbs the pole <span class="math inline">\(1000\)</span> times, what height can he expect to exceed once? Express your answer in terms of <span class="math inline">\(\Phi(z)\)</span>.</li>
+</ol>
+</div>
+<div id="exr-9.2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.2</strong></span> A machine produces widgets of which an average of <span class="math inline">\(10\%\)</span> are defective.</p>
+<ol type="a">
+<li>Find an approximate value for the probability that a random sample of <span class="math inline">\(500\)</span> of these articles contains more than <span class="math inline">\(25\)</span> which are defective.</li>
+<li>What, approximately, is the probability that the sample contains fewer than <span class="math inline">\(60\)</span> defectives?</li>
+</ol>
+</div>
+<div id="exr-9.3" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.3</strong></span> The mean inside diameter of a sample of <span class="math inline">\(200\)</span> washers produced by a machine is <span class="math inline">\(0.502\)</span> inches with a standard deviation of <span class="math inline">\(0.005\)</span> inches. The purpose for which these washers are intended allows for a maximum tolerance in the diameter of <span class="math inline">\(0.496\)</span> to <span class="math inline">\(0.508\)</span>. If we assume that the washer diameters are normally distributed, what is the probability that a washer is defective?</p>
+</div>
+<div id="exr-9.4" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.4</strong></span> The wingspans of the females of a certain species of bird of prey form a normal distribution with mean <span class="math inline">\(168.75\)</span>cm and a standard deviation of <span class="math inline">\(6.5\)</span>cm. The wingspans of males of the species are normally distributed with mean <span class="math inline">\(162.5\)</span> and standard deviation of <span class="math inline">\(6\)</span>. What is the probability if, with a male and female selected at random, the male has the longer wingspan?</p>
+</div>
+<div id="exr-9.5" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.5</strong></span> &nbsp;</p>
+<ol type="a">
+<li>Find the probability of getting between <span class="math inline">\(3\)</span> and <span class="math inline">\(6\)</span> heads inclusive in <span class="math inline">\(10\)</span> tosses of a fair coin.</li>
+<li>Approximate the same probability using the normal approximation. How close is the approximation?</li>
+</ol>
+</div>
+<div id="exr-9.6" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.6</strong></span> Suppose that the cumulative distribution function of <span class="math inline">\(T\)</span> is <span class="math display">\[f(t) = 1 - e^{-0.45t}.\]</span></p>
+<ol type="a">
+<li>Find <span class="math inline">\(P(T &gt; 3)\)</span>.</li>
+<li>Find the median of <span class="math inline">\(T\)</span>.</li>
+</ol>
+</div>
+<div id="exr-9.7" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.7</strong></span> Suppose that for a random variable, <span class="math inline">\(X\)</span>, <span class="math display">\[F(x) = \frac{x(x^2 + 9x + 27)}{(x+3)^3}.\]</span></p>
+<ol type="a">
+<li>What is the probability <span class="math inline">\(X\)</span> falls between <span class="math inline">\(1\)</span> and <span class="math inline">\(3\)</span>?</li>
+<li>What is the median of <span class="math inline">\(X\)</span>?</li>
+<li>What is <span class="math inline">\(\zeta(0.3)\)</span> for <span class="math inline">\(X\)</span>?</li>
+</ol>
+</div>
+<div id="exr-9.8" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.8</strong></span> Resistors labeled <span class="math inline">\(100\Omega\)</span> have true resistances that uniformly fall between <span class="math inline">\(80\Omega\)</span> and <span class="math inline">\(120\Omega\)</span>. Let <span class="math inline">\(X\)</span> be the mass of a randomly chosen resistor.</p>
+<ol type="a">
+<li>What is the probability that a resistor has resistance equal to <span class="math inline">\(90\Omega\)</span>.</li>
+<li>What proportion of resistors have resistance less than <span class="math inline">\(90\Omega\)</span>?</li>
+<li>Find the mean resistance.</li>
+<li>Find the variance of the resistances.</li>
+<li>Find the probability that the resistance is less than <span class="math inline">\(k\Omega\)</span>, for arbitrary <span class="math inline">\(k\)</span>.</li>
+<li>Find the median resistance.</li>
+</ol>
+</div>
+<div id="exr-9.9" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.9</strong></span> Suppose that a random variable <span class="math inline">\(X\)</span> is defined on <span class="math inline">\([1,\infty)\)</span>. We know that <span class="math inline">\(E[X] = 5\)</span> and <span class="math inline">\(\text{var}(X) = 3\)</span>.</p>
+<ol type="a">
+<li>Give a bound on <span class="math inline">\(P(X \geq 10)\)</span>.</li>
+<li>Find a value, <span class="math inline">\(a\)</span>, such that $P(X a).</li>
+</ol>
+</div>
+<div id="exr-9.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.10</strong></span> Suppose that <span class="math inline">\(X\)</span> is drawn from a <span class="math inline">\(\text{Unif}(-8,2)\)</span> distribution.</p>
+<ol type="a">
+<li>What is <span class="math inline">\(P(-6 \leq X \leq 0)\)</span>?</li>
+<li>Approximate this probability using Chebyshev’s Inequality. How close are the two results?</li>
+</ol>
+</div>
+<div id="exr-9.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.11</strong></span> Suppose that lifespans of tortoises are normally distributed with a mean of <span class="math inline">\(100\)</span> and variance of <span class="math inline">\(81\)</span>.</p>
+<ol type="a">
+<li>What is the probability that a tortoise lives between <span class="math inline">\(91\)</span> and <span class="math inline">\(118\)</span> years?</li>
+<li>What is the probability that a tortoise lives less than <span class="math inline">\(100\)</span> years?</li>
+<li>What is the probability that a tortoise lives less than <span class="math inline">\(127\)</span> years?</li>
+<li>What is the probability that a tortoise lives longer than <span class="math inline">\(109\)</span> years?</li>
+</ol>
+</div>
+<div id="exr-9.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.12</strong></span> The heights of students in a class follow a normal distribution with a mean of 65 inches and a standard deviation of 4 inches.</p>
+<ol type="a">
+<li>Express the probability that a students is between 57 and 73 inches tall in terms of <span class="math inline">\(\Phi(z)\)</span>.</li>
+<li>Estimate the probability from (a).</li>
+</ol>
+</div>
+<div id="exr-9.13" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.13</strong></span> A factory produces light bulbs with a mean lifespan of 1000 hours and a standard deviation of 50 hours. Suppose the lifespan of the bulbs follows a normal distribution.</p>
+<ol type="a">
+<li>What percentage of bulbs can be expected to last between <span class="math inline">\(950\)</span> and <span class="math inline">\(1100\)</span> hours? Express the probability in terms of <span class="math inline">\(\Phi(z)\)</span>.</li>
+<li>Estimate the probability from (a).</li>
+</ol>
+</div>
+<div id="exr-9.14" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.14</strong></span> A farmer grows apples with a mean weight of 150 grams and a standard deviation of 20 grams. Suppose the weights follow a normal distribution.</p>
+<ol type="a">
+<li>What percentage of apples weigh between <span class="math inline">\(110\)</span> and <span class="math inline">\(130\)</span> grams? Express the probability in terms of <span class="math inline">\(\Phi(z)\)</span>.</li>
+<li>Estimate the probability from (a).</li>
+</ol>
+</div>
+<div id="exr-9.15" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.15</strong></span> A survey indicates that the average monthly income for employees in a company is $3000 with a standard deviation of $500. Suppose the incomes follow a normal distribution.</p>
+<ol type="a">
+<li>What percentage of employees earn between $3000 and $3500 per month? Express the probability in terms of <span class="math inline">\(\Phi(z)\)</span>.</li>
+<li>Estimate the probability from (a).</li>
+</ol>
+</div>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Recall <a href="#exm-discrete-vs-continuous-rv" class="quarto-xref">Example&nbsp;<span class="quarto-unresolved-ref">exm-discrete-vs-continuous-rv</span></a> for practice in this.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>If it summed to <span class="math inline">\(1\)</span> then this would not be a continuous random variable, since there would only be a countable number of possible events.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Like, <span class="math inline">\(1\)</span> in a million, or <span class="math inline">\(1\)</span> in a billion, or <span class="math inline">\(1\)</span> in the number of atoms in the universe.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>These are called singletons. We addressed these in terms of probability assignment using the language of singletons above. As a general rule, when working with continuous quantities, we simply ignore all of the singletons.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>If you have taken calculus, you may recognize this process as feeling related to the first principle definition of a derivative. While it is often described in a slightly different way, this feeling of connection is intentional.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>This is not a rare occurrence either. For instance, if we consider a random variable that will take on values in the interval <span class="math inline">\([0,0.5]\)</span> with equal likelihood, the probability density function in this case will be <span class="math inline">\(f(x) = 2\)</span>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Think about the fact that, while we may think of human adult heights as a continuous quantity, it is far more likely to observe a height around <span class="math inline">\(5\)</span> feet <span class="math inline">\(6\)</span> inches than around <span class="math inline">\(9\)</span> feet <span class="math inline">\(2\)</span> inches.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>In the continuous case we cannot sum over the sample space, and so we must use techniques from calculus to mirror this process, for instance.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Which we have actually already seen.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>Which is far and away the most important distribution (discrete or continuous) in all of probability and statistics.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Sometimes called the continuous uniform distribution to distinguish it from its discrete counterpart.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>In <a href="#exm-charles-and-sadie-bus-times" class="quarto-xref">Example&nbsp;<span class="quarto-unresolved-ref">exm-charles-and-sadie-bus-times</span></a> we implicitly used the cumulative distribution function of the uniform. It is worth revisiting these probabilities <em>knowing</em> that this is the case.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>For instance, in <a href="#exm-geometric" class="quarto-xref">Example&nbsp;<span class="quarto-unresolved-ref">exm-geometric</span></a>, we implicitly used a continuous uniform distribution to give the probability that Charles hits the dartboard. This type of reasoning is very prevalent.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>See <a href="#sec-r-normal" class="quarto-xref"><span class="quarto-unresolved-ref">sec-r-normal</span></a> for more details on this.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>Recall, the standard deviation is the square root of the variance.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Note that, for instance, <span class="math inline">\(\binom{200}{75} = 168849997346404286704489530268603459022868706883102845056\)</span>. This is <span class="math inline">\(168\)</span> septendecillion. This is <span class="math inline">\(3.2\)</span> million times more than the number of possible arrangements of a chess board. This is a silly large number.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>Doing so results in 0.0141898. Note, if we had used a binomial probability calculator instead, we would have gotten 0.0140627.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>In fact, the actual probability here is 0.7824647.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>The actual binomial probabilities here are 0.9519985, while the normal approximation is 0.959695.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          trigger: 'click',
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          positionFixed: true,
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../notes/chapter8.html" class="pagination-link  aria-label=" &lt;span="" named="" discrete="" distributions&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Named Discrete Distributions</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../notes/chapter10.html" class="pagination-link" aria-label="<span class='chapter-number'>10</span>&nbsp; <span class='chapter-title'>Introduction to Statistics</span>">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to Statistics</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

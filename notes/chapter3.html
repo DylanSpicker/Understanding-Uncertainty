@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>STAT 1793: Course Notes - 3&nbsp; The Core Concepts of Probability</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../notes/chapter4.html" rel="next">
+<link href="../notes/chapter2.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">.monaco-editor pre {
+  background-color: unset !important;
+}
+
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-button-run {
+  background-color: #EEEEEE;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; /* Extra styling for consistency */
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration: none;
+  /* vertical-align: middle; */ /* Prevents a space from appearing between the code cell and button */
+  -webkit-user-select: none;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button-run:hover {
+  color: #000;
+  background-color: #e3e6ea;
+  border-color: #e1e5e9;
+}
+
+.qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+  pointer-events: none;
+  opacity: .65
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+</style>
+<script type="module">// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Determine if we need to install R packages
+var installRPackagesList = [''];
+// Check to see if we have an empty array, if we do set to skip the installation.
+var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+var autoloadRPackages = true;
+
+// Display a startup message?
+var showStartupMessage = true;
+var showHeaderMessage = false;
+if (showStartupMessage) {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  var startupMessageWebR = document.createElement("p");
+  startupMessageWebR.innerText = "🟡 Loading...";
+  startupMessageWebR.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  startupMessageWebR.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(startupMessageWebR);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML) {
+    // Append to the existing "title-block-header" element
+    headerHTML.appendChild(quartoTitleMeta);
+  } else if (headerRevealJS) {
+    // If using RevealJS, add to the "title-slide" div
+    headerRevealJS.appendChild(firstInnerDiv);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+// Retrieve the webr.mjs
+import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.2/webr.mjs";
+
+// Populate WebR options with defaults or new values based on 
+// webr meta
+globalThis.webR = new WebR({
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": ChannelType.Automatic
+});
+
+// Initialization WebR
+await webR.init();
+
+// Setup a shelter
+globalThis.webRCodeShelter = await new webR.Shelter();
+
+// Setup a pager to allow processing help documentation 
+await webR.evalRVoid('webr::pager_install()'); 
+
+// Function to set the button text
+function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message
+function qwebrUpdateStatusHeader(message) {
+  startupMessageWebR.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await globalThis.webR.installPackages([packageName]);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await globalThis.webR.evalRVoid(`library(${packageName});`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+    
+    // Display the update
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await globalThis.webR.flush();
+  }
+}
+
+
+// Check to see if any packages need to be installed
+if (setupRPackages) {
+  // Obtain only a unique list of packages
+  const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+  // Install R packages one at a time (either silently or with a status update)
+  await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+  if(autoloadRPackages) {
+    // Load R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+  }
+}
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+// Release document status as ready
+if (showStartupMessage) {
+  startupMessageWebR.innerText = "🟢 Ready!"
+}
+
+qwebrSetInteractiveButtonState(
+  `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+  true
+);
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};</script>
+<script type="module">// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+    Interactive: 'interactive',
+    Setup: 'setup',
+    Output: 'output',
+});
+
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await webR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await webR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // ---- 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid(`webr::canvas(width=${options["fig-width"]}, height=${options["fig-height"]})`);
+
+    const result = await webRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    try {
+
+        // Stop creating images
+        await webR.evalRVoid("dev.off()");
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${qwebrEscapeHTMLCharacters(evt.data)}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await webR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * options["fig-width"]);
+                canvas.setAttribute("height", 2 * options["fig-height"]);
+                canvas.style.width = "700px";
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            elements.outputGraphDiv.appendChild(canvas);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        webRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    evalType = EvalTypes.Interactive,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { "fig-width": 504, "fig-height": 360 };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+</script>
+<script type="module">// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (insertElement,
+  qwebrCounter, 
+  evalType = EvalTypes.Interactive,
+  options = {}) {
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive: 
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter);
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter);
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter);
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  insertElement.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-interactive-area';
+
+  // Create button element
+  var button = document.createElement('button');
+  button.className = 'btn btn-default qwebr-button-run';
+  button.disabled = true;
+  button.type = 'button';
+  button.id = 'qwebr-button-run-' + qwebrCounter;
+  button.textContent = '🟡 Loading webR...';
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(button);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-area';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-setup-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-setup-area';
+
+  return mainDiv;
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter3.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Core Concepts of Probability</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">STAT 1793: Course Notes</a> 
+        <div class="sidebar-tools-main">
+    <a href="../STAT-1793--Course-Notes.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Part 1: Probability</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Probability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Mathematical Foundations of Statistical Experiments</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Core Concepts of Probability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilities with More than One Event</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summarizing Statistical Experiments with Random Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Expected Value, Location Summaries, and Measures of Variability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Expectations and Variances with Multiple Random Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Named Discrete Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Continuous Random Variables</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Part 2: Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to Statistics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#assigning-probabilities-and-the-equally-likely-outcome-model" id="toc-assigning-probabilities-and-the-equally-likely-outcome-model" class="nav-link active" data-scroll-target="#assigning-probabilities-and-the-equally-likely-outcome-model"><span class="header-section-number">3.1</span> Assigning Probabilities (and The Equally Likely Outcome Model)</a>
+  <ul class="collapse">
+  <li><a href="#using-r-for-the-equally-likely-probability-model" id="toc-using-r-for-the-equally-likely-probability-model" class="nav-link" data-scroll-target="#using-r-for-the-equally-likely-probability-model"><span class="header-section-number">3.1.1</span> Using R for the Equally Likely Probability Model</a></li>
+  </ul></li>
+  <li><a href="#the-axioms-of-probability" id="toc-the-axioms-of-probability" class="nav-link" data-scroll-target="#the-axioms-of-probability"><span class="header-section-number">3.2</span> The Axioms of Probability</a></li>
+  <li><a href="#secondary-properties-of-probabilities" id="toc-secondary-properties-of-probabilities" class="nav-link" data-scroll-target="#secondary-properties-of-probabilities"><span class="header-section-number">3.3</span> Secondary Properties of Probabilities</a></li>
+  <li><a href="#combinatorics" id="toc-combinatorics" class="nav-link" data-scroll-target="#combinatorics"><span class="header-section-number">3.4</span> Combinatorics</a>
+  <ul class="collapse">
+  <li><a href="#the-product-rule" id="toc-the-product-rule" class="nav-link" data-scroll-target="#the-product-rule"><span class="header-section-number">3.4.1</span> The Product Rule</a></li>
+  <li><a href="#tree-diagrams" id="toc-tree-diagrams" class="nav-link" data-scroll-target="#tree-diagrams"><span class="header-section-number">3.4.2</span> Tree Diagrams</a></li>
+  <li><a href="#the-factorial" id="toc-the-factorial" class="nav-link" data-scroll-target="#the-factorial"><span class="header-section-number">3.4.3</span> The Factorial</a></li>
+  <li><a href="#permutations-and-combinations" id="toc-permutations-and-combinations" class="nav-link" data-scroll-target="#permutations-and-combinations"><span class="header-section-number">3.4.4</span> Permutations and Combinations</a></li>
+  <li><a href="#less-common-counting-techniques" id="toc-less-common-counting-techniques" class="nav-link" data-scroll-target="#less-common-counting-techniques"><span class="header-section-number">3.4.5</span> Less Common Counting Techniques</a></li>
+  </ul></li>
+  <li><a href="#from-combinatorics-to-probability" id="toc-from-combinatorics-to-probability" class="nav-link" data-scroll-target="#from-combinatorics-to-probability"><span class="header-section-number">3.5</span> From Combinatorics to Probability</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
+<script type="module">// Global dictionary to store Monaco Editor instances
+const qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (
+    initialCode, 
+    qwebrCounter) {
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value
+    editor.__qwebrinitialCode = initialCode;
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter,
+            EvalTypes.Interactive);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, EvalTypes.Interactive);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, EvalTypes.Interactive);
+  };
+
+}</script>
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter3.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Core Concepts of Probability</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Core Concepts of Probability</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="assigning-probabilities-and-the-equally-likely-outcome-model" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="assigning-probabilities-and-the-equally-likely-outcome-model"><span class="header-section-number">3.1</span> Assigning Probabilities (and The Equally Likely Outcome Model)</h2>
+<p>There are a plethora of ways to assign probabilities to different events. At the most basic level any rule that maps from the space of possible events to real numbers between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> can be used as rules for probability assignment. That is, probability assignment is simply a set of rules which says “for this event assign this probability.”</p>
+<div id="exm-coin-toss" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.1 (Coin Toss Probabilities)</strong></span> Suppose that the fair coin used by Charles and Sadie is tossed one time. Write down the probability assignments relating to this experiment.</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In this case we have <span class="math inline">\(\mathcal{S} = \{\text{H},\text{T}\}\)</span>. Thus, the possible events for which we need to assign probabilities are <span class="math inline">\(\emptyset\)</span>, <span class="math inline">\(\{\text{H}\}\)</span>, <span class="math inline">\(\{\text{T}\}\)</span>, and <span class="math inline">\(\{\text{H},\text{T}\} = \mathcal{S}\)</span>. For any probability model we have <span class="math inline">\(P(\emptyset) = 0\)</span> and <span class="math inline">\(P(\mathcal{S}) = 1\)</span>. When we say that a coin is “fair” we are saying that <span class="math inline">\(P(\text{T}) = P(\text{H})\)</span>, and since these are the only two possible outcomes in the sample space, we must have that they each have probability <span class="math inline">\(0.5\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<p>Not every assignment of probability values is going to be valid. Suppose, for instance, that we have a six-sided die, each side labelled with a number from one to six. If I told you that there was a probability of <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(1\)</span>, <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(2\)</span>, <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(3\)</span>, <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(4\)</span>, <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(5\)</span>, and <span class="math inline">\(0.5\)</span> that it comes up <span class="math inline">\(6\)</span>, you would probably call me a liar.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> If, as we have previously seen, probabilities represent the long run proportion of time that a particular event is observed, we cannot have <span class="math inline">\(6\)</span> different outcomes each occurring in half of all cases.</p>
+<p>Beyond the requirements that we impose on what constitutes a “valid” probability rule, we have another concern: scalability. It is perfectly acceptable to indicate that in an experiment with <span class="math inline">\(3\)</span> outcomes, the first has a probability of <span class="math inline">\(0.25\)</span>, the second of <span class="math inline">\(0.3\)</span>, and the third of <span class="math inline">\(0.45\)</span>. What if the experiment has <span class="math inline">\(100\)</span> possible outcomes? Or <span class="math inline">\(1000\)</span>? It quickly becomes apparent that enumerating the probabilities of each event in the sample space is an efficient way of assigning probabilities in practice. A core focus of our study of probability will be finding techniques that allow us to efficiently encode probability information into manageable objects. Once we have done this we will be in a position where we can manipulate these (comparatively) simple mathematical quantities in order to make statements and conclusions about any of the events of interest, even if they have never been explicitly outlined as having an assigned probability.</p>
+<p>While we will consider myriad methods for accomplishing these goals throughout our study of probability, we begin with a very useful model which simplifies probability assignment, without any added complexity, and creates a solid foundation for us to explore the properties of probability models. We start by considering <strong>equally likely outcomes.</strong> As the name suggests, the probability model considering equally likely outcomes assigns an equal probability to every possible outcome of the experiment. This is a probability model that we are already distinctly familiar with: flipping a coin, rolling a die, or drawing a card are all examples of experiments which rely on the equally likely outcomes framework.</p>
+<div class="proof remark">
+<p><span class="proof-title"><em>Remark</em> (Statisticians and Urn Models). </span>In statistics and probability courses and books you will often have instructors or authors using fairly simple models to illustrate probability concepts. There will often be questions relating to coin tosses, and dice, and decks of cards, and everyone’s favourite: urns. It will very frequently be the case that a statistics question will state that there is an urn with some combination of coloured balls within it, from which you will be selecting some number either with or without replacement. The frequency of these types of examples and questions often feels disconnected from the refrain that “uncertainty is all around us” and that “statistics is relevant to every aspect of our world!”<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Why is it that we seldom see questions or examples that are directly tied to these wide spread applications of the lessons and techniques being taught?</p>
+<p>In part these simple experiments are cleaner to handle than “real world” situations. We can easily assume that a die is fair and that takes care of any unsuspecting wrinkles that will necessarily come along with the “real world”. This is not dissimilar to working under the assumption of frictionless surfaces in introductory physics, or assuming that human beings are rational in economics. Another key point is that most of us have deep familiarity with dice, and coins, and cards.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The same is not going to be true of stories that are derived from different use cases in the real world. A final important point, and this will be something we see in depth in the coming chapters, is that from a statistical point of view: there is no difference. Once we have the tools to work with these quantities, we have the tools to work with any of the quantities. This actually distinguishes the use of these types of examples in statistics and probability from those for other subjects: at no point is anything that we are learning incorrect, or overly simple - we are just focusing on the raw probabilistic nature of the phenomenon. As a result, we will continue to see these simple models in these notes. I would encourage you, whenever possible, to hold a topic in mind that matters more to you and start trying to draw the parallels between rolling dice, and whatever it is that you may care about.</p>
+<p>Why urns, specifically? Well, whether it be coin flipping or dice rolling or card selection, we can model this equivalently using an urn (with <span class="math inline">\(2\)</span>, <span class="math inline">\(6\)</span>, and <span class="math inline">\(52\)</span> items, respectively). The urn becomes more flexible to <em>exactly</em> dictate what the probability of any selection will be, which is a useful way of moving from equally likely models (each ball is equally likely to be selected) to arbitrary models (we can have however many identical balls in the urn as we would like).</p>
+</div>
+<p>If we have an experiment with a sample space <span class="math inline">\(\mathcal{S}\)</span> which has <span class="math inline">\(|\mathcal{S}| = k\)</span> total elements<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, then each element of the sample space occurs with probability <span class="math inline">\(\frac{1}{k}\)</span>. In the case of the coin toss example, <span class="math inline">\(\mathcal{S} = \{\text{H}, \text{T}\}\)</span>, and so <span class="math inline">\(k=2\)</span> and each outcome occurs with probability <span class="math inline">\(\frac{1}{2}\)</span>. In the case of drawing a card at random, there are <span class="math inline">\(52\)</span> different outcomes, and so <span class="math inline">\(k=52\)</span>, and the probability of drawing any particular card is <span class="math inline">\(\frac{1}{52}\)</span>.</p>
+<p>It is critically important to recognize that the equal probability model assigns equal likelihood to the possible outcomes of an experiment, not the possible events of interest. It will not be the case that all events have the same probability. To make this concrete, consider the events <span class="math inline">\(A\)</span> “the ace of spades is drawn” and <span class="math inline">\(B\)</span> “any spade is drawn”. It is clear that <span class="math inline">\(B\)</span> happens more frequently than <span class="math inline">\(A\)</span>, even though we have said that this is an experiment with equally likely outcomes. Remember: an outcome is an observation from a single experimental run, an event is any collection of these possible outcomes.</p>
+<p>A core goal is then bridging the gap between the probability of an outcome<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and the probability of an event. In order to do so, we will next consider the rules of probability, introducing properties that are required for valid probability assignments, and the techniques for manipulating probabilities to calculate the probabilities of quantities of interest.</p>
+<section id="using-r-for-the-equally-likely-probability-model" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="using-r-for-the-equally-likely-probability-model"><span class="header-section-number">3.1.1</span> Using R for the Equally Likely Probability Model</h3>
+<p>In the previous chapter we saw how we can codify sample spaces and events using vectors in R. In the introduction we actually saw how can sample from a sample space using the equally likely outcome framework. Specifically, an application of the <code>sample</code> function will draw a set number of values from a sample space, giving each value an equal probability to be drawn.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# Define the Sample Space of Rolling a 20 Sided Die
+sample_space <- 1:20
+
+# Recall that whenever we wish to perform an experiment in R with
+# randomness, we should call set.seed
+set.seed(31415)
+
+# The sample function takes three main parameters:
+#   x: the sample space
+#   size: the number of items to draw
+#   replace: a boolean representing whether the draws should be
+#            with replacement or not.
+one_roll <- sample(x = sample_space, size = 1)
+ten_rolls_with_replacement <- sample(x = sample_space, size = 10, replace = TRUE)
+ten_rolls_without_replacement <- sample(x = sample_space, size = 10, replace = FALSE)
+
+one_roll
+ten_rolls_with_replacement
+ten_rolls_without_replacement`, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+</section>
+<section id="the-axioms-of-probability" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="the-axioms-of-probability"><span class="header-section-number">3.2</span> The Axioms of Probability</h2>
+<p>We have previously seen that not every probability assignment can be valid. For instance, assigning <span class="math inline">\(0.5\)</span> probability to each outcome on a die leads to a nonsensical scenario. With just a little imagination, we can conjure equally nonsensical scenarios in other ways. For instance, it would make very little sense to discuss the probability of an event being a negative value. What would it mean for an event to occur in a negative proportion of experimental runs? Alternatively, we can consider two events that are nested in one another: say event <span class="math inline">\(A\)</span> is that we draw the ace of spades, and event <span class="math inline">\(B\)</span> is that we draw any spade. Every single time that <span class="math inline">\(A\)</span> happens, we know that <span class="math inline">\(B\)</span> also happens. But there are ways that <span class="math inline">\(B\)</span> can occur where <span class="math inline">\(A\)</span> does not.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> If I told you the probability of <span class="math inline">\(A\)</span> was <span class="math inline">\(0.5\)</span> and the probability of <span class="math inline">\(B\)</span> was <span class="math inline">\(0.2\)</span>, this would violate our base instincts. How can it be more likely to draw the ace of spades than it would be to draw any spade at all?<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>Often in mathematics when we have an intuitive set of rules<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> that particular quantities must obey, we work to add formality through defining properties of these concepts. To this end, we can define the key properties that probabilities must obey in order to be well-defined, valid probabilities. With three fairly basic properties, we can completely specify what must be true in order for a set of probabilities to be “valid”, and to in turn match with our intuitions.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Axioms of Probability
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Unitary:</strong> Every valid set of probabilities must assign a probability of <span class="math inline">\(1\)</span> to the full sample space. That is, <span class="math inline">\(P(\mathcal{S}) = 1\)</span>. This is an intuitive requirement as every time the experiment is run we observe an outcome in the sample space. As a result, in every experimental run the event <span class="math inline">\(\mathcal{S}\)</span> occurs.</li>
+<li><strong>Non-negative:</strong> We require that every probability is non-negative. We can have probabilities of <span class="math inline">\(0\)</span>, but we can never have a probability less than zero. Again, this is sensible<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> but is important to include in our formalization. Specifically, for every event <span class="math inline">\(E\)</span>, we must have <span class="math inline">\(P(E) \geq 0\)</span>.</li>
+<li><strong>Additivity:</strong> the final property requires slightly more parsing on first pass. Suppose that we define a sequence of events, <span class="math inline">\(E_1, E_2, E_3, \dots\)</span> such that no two events have any overlap. That is, <span class="math inline">\(E_j \cap E_\ell = \emptyset\)</span> for all <span class="math inline">\(\ell\neq j\)</span>. Then, the final property we require for probabilities is that <span class="math display">\[P\left(\bigcup_i E_i\right) = \sum_i P(E_i).\]</span> That is, the probability of the union of disjoint events is the summation of the probability of these events.</li>
+</ol>
+</div>
+</div>
+<p>It is worth dwelling slightly on axiom 3. Consider the case of drawing a card at random from a deck of <span class="math inline">\(52\)</span> cards. Using the equally likely outcome model for probability we know that the probability that any card is drawn is given by <span class="math inline">\(\frac{1}{52}\)</span>. If I were to ask “what is the probability you draw that ace of spades?” under this model you can respond, immediately, with <span class="math inline">\(\frac{1}{52}\)</span>. Now, if I were to ask “what is the probability that you draw the ace of spades or the two of spades?” then intuitively you likely figure that this will be <span class="math inline">\(\frac{2}{52}\)</span>. Note that the event <span class="math inline">\(E_1\)</span>, “draw the ace of spades” and the event <span class="math inline">\(E_2\)</span> “draw the two of spades”, are disjoint events. Moreover, recall that the union is the “or” and so <span class="math inline">\(E_1\cup E_2\)</span> is the same as <span class="math inline">\(E_1\)</span> or <span class="math inline">\(E_2\)</span>. Taken together then, <span class="math display">\[P(E_1\cup E_2) = P(E_1) + P(E_2).\]</span> The axiom of additivity simply extends this intuition to an arbitrary number of events.</p>
+<div id="exm-additivity" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.2 (Basic Additivity)</strong></span> Still unsure of how best to go about using cards to replace their coin game, Charles and Sadie are considering various different events and trying to understand their probabilistic behaviour. They take <span class="math inline">\(S\)</span>, <span class="math inline">\(C\)</span>, <span class="math inline">\(H\)</span>, and <span class="math inline">\(D\)</span> to be the events that a spade, club, heart, or diamond are drawn from a standard deck of cards, respectively. Further, they take <span class="math inline">\(C_j\)</span> to be the event that a card with denomination <span class="math inline">\(j\)</span> is drawn (<span class="math inline">\(j\)</span> ranging from ace with <span class="math inline">\(1\)</span> through King with <span class="math inline">\(13\)</span>). If they consider the union of any two (or more) of these events when can they leverage properties of additivity? When can’t they?</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In order to use the properties of additivity it is required that the two events are disjoint. Note that taking any two (or more) of <span class="math inline">\(S\)</span>, <span class="math inline">\(C\)</span>, <span class="math inline">\(H\)</span>, and <span class="math inline">\(D\)</span> will lead to disjoint events. There is no way to draw a card which has two suits on it at once. Similarly, taking any two (or more) of <span class="math inline">\(C_j\)</span> will lead to disjoint events. However, mixing any of the suited events (<span class="math inline">\(S\)</span>, <span class="math inline">\(C\)</span>, <span class="math inline">\(H\)</span>, and <span class="math inline">\(D\)</span>) with any <span class="math inline">\(C_j\)</span> will not be disjoint.</p>
+<p>Consider <span class="math inline">\(S\cap C_1\)</span>. The ace of spades is in <span class="math inline">\(S\)</span> since it is a spade and it is in <span class="math inline">\(C_1\)</span> since it is an ace. As a result, <span class="math inline">\(S\cap C_1 = \{\text{Ace of Spades}\}\)</span>. Because of this we are not able to say that <span class="math inline">\(P(A \cup C_1) = P(A) + P(C_1)\)</span>. However, we can say that <span class="math display">\[P(S\cup C\cup H\cup D) = P(S) + P(C) + P(H) + P(D),\]</span> and could do the same with any subset of these sets. Similarly, we can take <span class="math display">\[P\left(\bigcup_{j=1}^{13} C_j\right) = \sum_{j=1}^{13} P(C_j),\]</span> or any of the subsets there.</p>
+</div>
+</div>
+</div>
+</div>
+<p>These three axioms fully define valid probabilities. Any mechanism that assigns probability values to events which conforms to these rules will assign valid probabilities. While it may seem counterintuitive that such basic rules fully define our notion of a probability, these rules readily give rise to many other properties that are indispensible when working with probabilities.</p>
+</section>
+<section id="secondary-properties-of-probabilities" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="secondary-properties-of-probabilities"><span class="header-section-number">3.3</span> Secondary Properties of Probabilities</h2>
+<p>Using the previously indicated axioms of probability we are able to derive many useful <strong>secondary properties</strong>. These properties will frequently be used to actually compute different probabilities, and are helpful to become familiar with. All of the following properties follow directly from the axioms, though, some are more clear than others. For the following we take <span class="math inline">\(E\)</span> and <span class="math inline">\(E_1,E_2,E_3,\dots\)</span> to be arbitrary events on some well defined sample space.</p>
+<ol type="1">
+<li><span class="math inline">\(P(E^C) = 1-P(E)\)</span>, and equivalently, <span class="math inline">\(P(E) = 1 - P(E^C)\)</span>.</li>
+<li><span class="math inline">\(P(\emptyset) = 0\)</span>.</li>
+<li><span class="math inline">\(P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1\cap E_2)\)</span>.</li>
+<li><span class="math display">\[\begin{multline*}P(E_1 \cup E_2 \cup E_3) = P(E_1) + P(E_2) + P(E_3) - P(E_1\cap E_2) - P(E_1 \cap E_3) \\ - P(E_2 \cap E_3) + P(E_1 \cap E_2 \cap E_3).\end{multline*}\]</span></li>
+<li>If <span class="math inline">\(E_1 \subset E_2\)</span> then <span class="math inline">\(P(E_1) \leq P(E_2)\)</span>.</li>
+</ol>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proofs of the Secondary Properties of Probability
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>It may be instructive to see how these properties are derived. Doing so generates added familiarity with manipulating probability expressions and helps to encourage deeper understanding.</p>
+<ol type="1">
+<li><p>Note that, for any event <span class="math inline">\(E\)</span>, by definition we have <span class="math inline">\(E \cup E^C = \mathcal{S}\)</span> and <span class="math inline">\(E \cap E^C = \emptyset\)</span>. As a result, we can apply <strong>additivity</strong> to the sets <span class="math inline">\(E\)</span> and <span class="math inline">\(E^C\)</span> giving <span class="math inline">\(P(E \cup E^C) = P(E) + P(E^C)\)</span>. However, since <span class="math inline">\(E\cup E^C = \mathcal{S}\)</span>, then we know that <span class="math inline">\(P(E \cup E^C) = P(\mathcal{S}) = 1\)</span> by the <strong>unitary</strong> property. Taken together this tells us that <span class="math inline">\(1 = P(E) + P(E^C)\)</span>, and rearranging gives <span class="math inline">\(P(E^C) = 1 - P(E)\)</span>, or <span class="math inline">\(P(E) = 1 - P(E^C)\)</span>, as required.</p></li>
+<li><p>We know that <span class="math inline">\(\mathcal{S}^C = \emptyset\)</span>. Using secondary property (1), <span class="math inline">\(P(E) = 1 - P(E^C)\)</span>. Taking <span class="math inline">\(E = \emptyset\)</span> gives <span class="math inline">\(P(\emptyset) = 1 - P(\mathcal{S}) = 1 - 1 = 0\)</span>, by the <strong>unitary</strong> property.</p></li>
+<li><p>Here note that <span class="math inline">\(E_1 \cup E_2\)</span> can be written as <span class="math inline">\(E_1 \cup E_2'\)</span> where <span class="math inline">\(E_2' = E_2\cap E_1^C\)</span>. That is, <span class="math inline">\(E_2'\)</span> contains the outcomes from <span class="math inline">\(E_2\)</span> which were not shared by <span class="math inline">\(E_1\)</span>. Then <span class="math inline">\(E_1 \cap E_2' = \emptyset\)</span> so we can write <span class="math inline">\(P(E_1 \cup E_2) = P(E_1 \cup E_2') = P(E_1) + P(E_2')\)</span>, by <strong>additivity</strong>. Now, if we define <span class="math inline">\(E_2^* = E_2\cap E_1\)</span> then <span class="math inline">\(E_2 = E_2' \cup E_2^*\)</span>, and <span class="math inline">\(E_2'\cap E_2^* = \emptyset\)</span>. Thus, <span class="math inline">\(P(E_2) = P(E_2'\cup E_2^*) = P(E_2') + P(E_2^*)\)</span>. Rearranging this gives <span class="math inline">\(P(E_2') = P(E_2) - P(E_2^*)\)</span>, and we know that <span class="math inline">\(P(E_2^*) = P(E_1 \cap E_2)\)</span>. Thus, plugging into what we found before we get <span class="math display">\[P(E_1 \cup E_2) = P(E_1) + P(E_2') = P(E_1) + P(E_2) - P(E_1 \cap E_2).\]</span></p></li>
+<li><p>This follows exactly from the argument for (3). To see, first consider <span class="math inline">\(E_2 \cup E_3\)</span> to be an event itself, say <span class="math inline">\(E_4\)</span>. Then we can apply the above result to <span class="math inline">\(E_1 \cup E_4\)</span>. And then we need only repeat the process for the remaining terms.</p></li>
+<li><p>We can rewrite <span class="math inline">\(E_2\)</span> as <span class="math inline">\(E_1 \cup (E_2 \cap E_1^C)\)</span>. These two sets are disjoint, since the one is <span class="math inline">\(E_1\)</span> and the other must contain only elements in <span class="math inline">\(E_1^C\)</span>. Then, <span class="math inline">\(P(E_2) = P(E_1) + P(E_2 \cap E_1^C)\)</span> by <strong>additivity</strong>. Then, through the <strong>non-negative</strong> property we know that <span class="math inline">\(P(E_2 \cap E_1^C) \geq 0\)</span>, and so rearranging we have <span class="math inline">\(P(E_1) = P(E_2) - P(E_2\cap E_1^C) \leq P(E_2)\)</span>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p>These properties are immensely useful when computing probabilities. In fact, these secondary properties will be used with more frequency than the basic axioms when manipulating probabilities in practice. It is worth building comfort with these properties, early and often, as they will assist in manipulating all probability expressions in the future.</p>
+<p>While these properties hold in general for all probability models, it is instructive to focus on the equal probability model to begin building familiarity with probability. These properties allow us to take events – whether compound or simple – and combine, rewrite, and manipulate expressions to assist in the handling of the computations. Eventually, however, we require the ability to assign numerical values to these probabilities.</p>
+<p>Consider a simple event, <span class="math inline">\(A\)</span>. Recall that a simple event is defined as a possible outcome of an experiment, and so in this case, <span class="math inline">\(A\)</span> corresponds directly to an event that may be observed. If our sample space is <span class="math inline">\(k\)</span> elements large, then <span class="math inline">\(P(A) = \frac{1}{k}\)</span> in this framework. For instance, if <span class="math inline">\(A\)</span> is the event that a two is rolled on a six-sided fair die, then <span class="math inline">\(P(A) = \frac{1}{6}\)</span>.</p>
+<p>Now, suppose that a compound event is defined, <span class="math inline">\(B\)</span>. By definition, a compound event can be expressed as a set of possible outcomes from the experiment. Suppose that we enumerate these possible events as <span class="math inline">\(b_1, b_2, \dots, b_\ell\)</span>. Then we know that <span class="math inline">\(B\)</span> occurs if any of <span class="math inline">\(b_1,b_2,\dots,b_\ell\)</span> occur. Each <span class="math inline">\(b_j\)</span> are elements of the sample space and correspond to possible outcomes of the experiment. As a result, we know that <span class="math inline">\(P(b_j) = \frac{1}{k}\)</span>, based on the equal probability assumption. Now, if we take any two distinct events, say <span class="math inline">\(b_i\)</span> and <span class="math inline">\(b_j\)</span>, we know that they must be disjoint: <span class="math inline">\(b_i \cap b_j = \emptyset\)</span>. This is because in an experiment run only one outcome can occur. Moreover, we can say that <span class="math inline">\(B = b_1 \cup b_2 \cup\cdots\cup b_\ell\)</span>.</p>
+<p>Using the axioms of probability outlined above we therefore know that <span class="math inline">\(P(B) = \sum_{j=1}^\ell P(b_j) = \sum_{j=1}^\ell \frac{1}{k} = \frac{\ell}{k}\)</span>. This holds in general for any compound event in this setting. If we take <span class="math inline">\(B\)</span> to be the event that an even number is rolled on a six-sided die, then we would have <span class="math inline">\(b_1\)</span> is the event that a two is rolled, <span class="math inline">\(b_2\)</span> is the event that a four is rolled, and <span class="math inline">\(b_3\)</span> is the event that a six is rolled. There are three such events, and so the probability that an even number is rolled must be <span class="math inline">\(\frac{3}{6} = 0.5\)</span>, which matches our intuition.</p>
+<p>If we consider what this process is doing at its core, we can reframe the calculation as counting up the number of ways that event can happen and dividing by the total number of events. In our previous discussion, there were <span class="math inline">\(\ell\)</span> ways of <span class="math inline">\(B\)</span> occurring, a total of <span class="math inline">\(k\)</span> outcomes, and so the probability becomes <span class="math inline">\(\frac{\ell}{k}\)</span>. In the equal probability model, this will always be the case. The probability of any event <span class="math inline">\(A\)</span> occurring is given by <span class="math display">\[P(A) = \frac{N_A}{k},\]</span> where <span class="math inline">\(N_A\)</span> is the number of unique ways that <span class="math inline">\(A\)</span> can occur. In other words, <span class="math inline">\(N_A\)</span> is the size of the set <span class="math inline">\(A\)</span>, <span class="math inline">\(|A|\)</span>.</p>
+<p>As a result of this, computing probabilities largely relies on the counting of possible outcomes corresponding to different events. If we can determine <span class="math inline">\(N_A = |A|\)</span>, and the count of the total number of occurrences, <span class="math inline">\(k\)</span>, then we can determine the probability of <span class="math inline">\(A\)</span>. This study of counting is known as <strong>combinatorics</strong>, and it is where we will turn our attention next.</p>
+<div id="exm-complement-trick" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.3 (Unmatched Six-Sided Dice)</strong></span> Charles and Sadie, not all together content with the progress through decks of cards, are considering games with dice. Suppose that they have two, fair, six-sided dice. They are interested in the probability that the two dice show different numbers when they are rolled. What is this probability?</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Here, the key is to realize that the probability is easier to solve when considering the complement rather than the event itself. Notably, rolling two, fair, six-sided dice gives a total of <span class="math inline">\(36\)</span> possible outcomes. Of these, exactly <span class="math inline">\(6\)</span> have equal numbers showing on both dice. Thus, the probability that the two dice show the <strong>same</strong> number is going to be <span class="math inline">\(\frac{6}{36} = \frac{1}{6}\)</span>. Then, using the fact that <span class="math inline">\(P(E) = 1 - P(E^C)\)</span>, and that taking <span class="math inline">\(E\)</span> to refer to the event where the two dice show different numbers, then <span class="math inline">\(E^C\)</span> refers to the event that the two dice show the <em>same</em> number. As a result, the probability that we want is <span class="math inline">\(P(E) = 1 - \frac{1}{6} = \frac{5}{6}\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="exm-complement-trick-two" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.4 (Unmatched Arbitrary Dice)</strong></span> Charles and Sadie, working from their intrigue about dice, have decided that instead of using two six-sided dice, they wish to take two dice of possibly different sizes. Suppose that the first die has <span class="math inline">\(d_1\)</span> sides and the second has <span class="math inline">\(d_2\)</span> sides, and that both dice are otherwise fair. They are interested in the probability that the two dice show different numbers when they are rolled. What is this probability?</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This problem is conceptually no different from <a href="#exm-complement-trick" class="quarto-xref">Example&nbsp;<span class="quarto-unresolved-ref">exm-complement-trick</span></a>. There will be a total of <span class="math inline">\(d_1\times d_2\)</span> possible combinations of the two dice to be rolled.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> Of these, the dice will match in <span class="math inline">\(\min\{d_1, d_2\}\)</span> events.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> Then, with the same complement trick discussed above, we get <span class="math display">\[P(E) = 1 - P(E^C) = 1 - \frac{\min\{d_1,d_2\}}{d_1\times d_2}.\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="combinatorics" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="combinatorics"><span class="header-section-number">3.4</span> Combinatorics</h2>
+<section id="the-product-rule" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="the-product-rule"><span class="header-section-number">3.4.1</span> The Product Rule</h3>
+<p>Fundamentally, counting is a matter of assessing the size of a collection of items. Sometimes, this is very straightforward. If you want to count the number of students in a classroom, you start at <span class="math inline">\(1\)</span> and enumerate upwards through the integers. To count the number of days until the next Holiday, you do the same thing. If you really need to sleep, perhaps you will count imaginary sleep until you drift off. There is not much to this type of counting, and it is certainly deeply familiar to you all. However, it is also quite limited in its utility.</p>
+<p>Imagine that you are interested in determining how many possible ways there are of arranging a deck of <span class="math inline">\(52\)</span> cards. You could of course arrange them in a particular order, then count each of those. That would take a tremendous amount of time, so perhaps instead of using an actual deck you just write down the combinations. Still, each combination is going to be <span class="math inline">\(52\)</span> cards long, and keeping track of that all will be a tremendous challenge. This seems like an approachable question, and yet, it illustrates how complicated (and large) these types of “counting” problems can become very quickly.</p>
+<p>Fortunately for us there are some strategies for simplifying these problems down, some of which you are likely already familiar with. Think about trying to form an outfit where you have <span class="math inline">\(4\)</span> different sweaters, <span class="math inline">\(3\)</span> pairs of pants, and <span class="math inline">\(2\)</span> options for your shoes. Suppose that any combination of these will work well. How many total outfits are there? Well, if you have already picked your sweater and pants, then there are going to be <span class="math inline">\(2\)</span> different outfits using these: one with each of the pairs of shoes. This is true for each possible sweater-pant combination, and so we can count <span class="math inline">\(2\)</span> for each one these. In other words, to get the total number of outfits we multiply the number of sweater-pant combinations by the number of shoe options. The same rationale can be applied to count the total number of sweater-pant combinations. For each sweater, there are <span class="math inline">\(3\)</span> pairs of possible pants, and so to get the total number we can take <span class="math inline">\(3\)</span> for each possible sweater, or in other words, <span class="math inline">\(3\times 4\)</span>. Taken together then we have <span class="math inline">\(4\times 3\times 2 = 24\)</span> total possible outfits.</p>
+<p>Another way of framing this is that we have to make three sequential decisions: which of the <span class="math inline">\(4\)</span> sweaters, which of the <span class="math inline">\(3\)</span> pants, and which of the <span class="math inline">\(2\)</span> shoes are to be worn? When we do this we multiply through the number of alternatives at each decision point to get the total number of combinations. This is known as the <strong>product rule for counting</strong>.</p>
+<div id="def-product-rule-count" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.1 (Product Rule for Counting)</strong></span> The product rule for counting states that, when there are a sequence of <span class="math inline">\(k\)</span> decisions to be made, and for each decision <span class="math inline">\(j=1,\dots,k\)</span>, there are <span class="math inline">\(n_j\)</span> options, then the total number of combinations will be <span class="math display">\[N = n_1\times n_2\times\cdots\times n_k.\]</span></p>
+</div>
+<div id="exm-counting-coffee-orders" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.5 (Counting Coffee Orders)</strong></span> When Charles and Sadie are out for coffee, Sadie enjoys ordering the same thing each time: a black coffee and vegan chocolate chip cookie. Charles, on the other hand, has decided to work through the entire menu of the local coffee shop, each day ordering a drink, with one add-in, and a snack. If there are <span class="math inline">\(10\)</span> different drinks, <span class="math inline">\(8\)</span> possible add-ins, and <span class="math inline">\(12\)</span> different snacks, how many trips to the coffee shop will it take until Charles has tried it all?</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This necessitates an application of the product rule for counting. Specifically, we can view this as three sequential decisions, where the first decision is which drink (with <span class="math inline">\(n_1 = 10\)</span>), the second decision is which add-in (with <span class="math inline">\(n_2 = 8\)</span>), and the third decision is which snack (with <span class="math inline">\(n_3 = 12\)</span>). Taking the product gives the total number of combinations as <span class="math inline">\(10\times 8\times 12 = 960\)</span>. As a result, it will take <span class="math inline">\(960\)</span> visits (assuming that nothing on the menu changes!) to try all combinations.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="exm-rolling-sequence-of-dice" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.6 (Sequence of Dice Rolls)</strong></span> Charles and Sadie have been enjoying playing with dice, but they lost one of the two they had. As a result, they are trying to come up with games revolving around rolling a single die. They decide to try a game called “six is lava”, where they roll a single six-sided die <span class="math inline">\(10\)</span> times in a row. If they get <span class="math inline">\(1\)</span> or more sixes, they lose the game. They are not sure if <span class="math inline">\(10\)</span> is the correct number of rolls to use. What is the probability that they lose on any given set of <span class="math inline">\(10\)</span> rolls of the die in this game?</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Once again this is a scenario where using the complement simplifies the problem. If we asked “what is the probability that no 6’s are rolled, on <span class="math inline">\(10\)</span> rolls of the die” then we can count the number of possibilities through an application of the product rule. In particular, there are going to be <span class="math inline">\(5\)</span> options which are not <span class="math inline">\(6\)</span> at each possible step. We can view this as have <span class="math inline">\(n_1 = n_2 = \cdots = n_{10} = 5\)</span>. Thus, the total number of ways of rolling <strong>no</strong> sixes is <span class="math inline">\(5\times5\times5\times\cdots\times5 = 5^{10}\)</span>.</p>
+<p>Essentially the same process can be used to count the total number of possible rolls, replacing <span class="math inline">\(5\)</span> with <span class="math inline">\(6\)</span> to get the denominator. This means that there are <span class="math inline">\(6^{10}\)</span> total sequences of <span class="math inline">\(10\)</span> rolls, and <span class="math inline">\(5^{10}\)</span> which contain no sixes. As a result, taking <span class="math inline">\(E\)</span> to represent the probability that we observe no sixes on <span class="math inline">\(10\)</span> rolls of the die, we would get <span class="math display">\[P(E) = \frac{5^{10}}{6^{10}}.\]</span> The question asks for <span class="math inline">\(E^C\)</span> and so we take <span class="math display">\[P(E^C) = 1 - P(E) = 1 - \left(\frac{5}{6}\right)^{10}.\]</span> This is approximately 0.8385.</p>
+<p>Note that if instead of <span class="math inline">\(10\)</span> flips they had <span class="math inline">\(n\)</span> flips, the probability would be <span class="math inline">\(1 - \left(5/6\right)^n\)</span>. We can plot this over various values of <span class="math inline">\(n\)</span>, to see how the number of flips impacts this probability. The probability of <span class="math inline">\(0.5\)</span> is marked and we can see that taking <span class="math inline">\(4\)</span> tosses gives an ever so slightly greater than <span class="math inline">\(0.5\)</span> probability of losing (0.5177).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chapter3_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="tree-diagrams" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="tree-diagrams"><span class="header-section-number">3.4.2</span> Tree Diagrams</h3>
+<p>Sometimes it is helpful to express counting rules graphically. To do so we rely on tree diagrams.</p>
+<div id="def-tree-diagram" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.2 (Tree Diagram)</strong></span> A tree diagram is a graphical representation for the product rule of counting. Specifically, a tree diagram puts each of the decisions in sequence, and draws a branch for each separate option, starting from the branches drawn at the previous decision step.</p>
+</div>
+<p>To draw a tree diagram, you start with the first choice, drawing one branch for each of the <span class="math inline">\(n_1\)</span> alternatives, labelling each. Then, at the second choice, you do the same process at the end of each of the branches you drew for choice <span class="math inline">\(1\)</span>, this time drawing <span class="math inline">\(n_2\)</span> branches there (so you will have just drawn <span class="math inline">\(n_1\times n_2\)</span> branches). Then for each of those you draw the <span class="math inline">\(n_3\)</span> further branches, and so on and so forth until the end.</p>
+<p>If you want to know the total number of choices, you simply count the end points at the very end of the diagram. Each branch corresponds to a single option. To determine which combination of choices it corresponds to, you simply read off the branch labels at each branch you take. If you want to know how many possible combinations come with certain options selected, you can look at only those branches which are downstream from the choices that you care about.</p>
+<div id="fig-tree-diagram-general" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-tree-diagram-general-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: A generic tree diagram. Here the first choice has three different options and the second choice has two. We can see the six total combinations, labelled on the right of the diagram, and can trace the choices required to get there.
+</figcaption>
+<div aria-describedby="fig-tree-diagram-general-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="..\graphics/ch3-tree-diagram-generic.svg" class="img-fluid figure-img">
+</div>
+</figure>
+</div>
+<p>While tree diagrams can be quite useful for visualizing a problem, they often grow to be overly complex. As a result, we need to fall back on the numerical representation afforded to us through the product rule for counting. Counting problems, in general, can very quickly become tremendously large and complex. For this reason, we have several tools to assist us in reducing this complexity based on common types of problems that we would like to count.</p>
+</section>
+<section id="the-factorial" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="the-factorial"><span class="header-section-number">3.4.3</span> The Factorial</h3>
+<p>The first useful tool for simplifying these problems is the <strong>factorial</strong>. The factorial of an integer, denoted by <span class="math inline">\(x!\)</span> is given by the product of all integers from <span class="math inline">\(x\)</span> to <span class="math inline">\(1\)</span>.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> That is, <span class="math display">\[x! = x(x-1)(x-2)\cdots(2)(1).\]</span> If we consider the product rule for counting then note that if <span class="math inline">\(n_1=1\)</span>, <span class="math inline">\(n_2=2\)</span>, … , <span class="math inline">\(n_k = k\)</span>, then the total number of options is <span class="math inline">\(k\times(k-1)\times\cdots\times 1 = k!\)</span>. The most common reason that this comes up is when we want to order a collection of items. Suppose that you have <span class="math inline">\(10\)</span> books that you want to place on a shelf. You can view this as making <span class="math inline">\(10\)</span> sequential decisions: what book goes first, second, third, and so on. There are <span class="math inline">\(10\)</span> options for the first book, then <span class="math inline">\(9\)</span> for the second (any except for the first one), and then <span class="math inline">\(8\)</span> for the third (any except for the first <span class="math inline">\(2\)</span>). This continues down to the last book, and so we conclude that there are <span class="math inline">\(10\times9\times8\times\cdots\times1 = 10!\)</span> ways of arranging these books.</p>
+<div id="exm-factorial" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.7 (Seating in a (Full) Coffee Shop)</strong></span> One day Charles and Sadie walk into the coffee shop and find that it is completely full. There are ten seats and ten people sitting in them. They are disappointed that they do not have room to sit themselves, however, they are never ones to pass up an interesting probability question.</p>
+<ol type="a">
+<li>How many different ways could these ten people have sat in these ten seats?</li>
+<li>If there are ten drinks that have been made, and one is to be passed out to each seat, how many different ways can these ten people sit in these ten seats, with each of these ten drinks?</li>
+<li>Alongside the ten drinks, there are ten snacks to be served up as well. How many different ways can these ten people sit in these ten seats, with each of these ten drinks, and each of these ten snacks?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Here, we can think about lining up the ten seats in a row, each number <span class="math inline">\(1\)</span> through <span class="math inline">\(10\)</span>. Then, we want to place one patron into each of the seats. This is no different from ordering <span class="math inline">\(10\)</span> books, and so the total is <span class="math inline">\(10!\)</span> which is <span class="math inline">\(3,628,800\)</span>.</p></li>
+<li><p>Note that we still have to make the seat choices from part (a), so there are <span class="math inline">\(10!\)</span> ways of getting the <span class="math inline">\(10\)</span> people sat in the <span class="math inline">\(10\)</span> chairs. Once there, we can think of handing out the drinks to each of the numbered combinations of person-chair. This is no different from passing out the people as well, giving <span class="math inline">\(10!\)</span> ways of doing this. We use the product rule to combine these two choices, with <span class="math inline">\(10!\times 10!\)</span> total combinations of people-chair-drink. This is <span class="math inline">\(13,168,189,440,000\)</span>.</p></li>
+<li><p>Extending the same logic before, there are <span class="math inline">\(10!\times 10!\)</span> ways of getting each person sat in a chair with a drink. Then, there will be an additional <span class="math inline">\(10!\)</span> ways of passing out the snacks to these people. Taken together this gives <span class="math inline">\(10!\times 10!\times 10!\)</span> which is <span class="math inline">\(47,784,725,839,872,000,000\)</span>.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="proof remark">
+<p><span class="proof-title"><em>Remark</em> (0!). </span>Depending on how factorials are thought of, some trouble can come up around a quantity like <span class="math inline">\(0!\)</span>. On one hand, if we view factorials as multiplying each number between <span class="math inline">\(n\)</span> and <span class="math inline">\(1\)</span> together then <span class="math inline">\(0! = 0\times 1\)</span> and we get <span class="math inline">\(0! = 0\)</span>. On the other hand, if we view factorials as counting the number of ways which we can order a set of <span class="math inline">\(n\)</span> items, then <span class="math inline">\(0!\)</span> is the number of ways we can order <span class="math inline">\(0\)</span> items, which is <span class="math inline">\(1\)</span>.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> So, which is it?</p>
+<p>We take <span class="math inline">\(0!\)</span> to be equal to <span class="math inline">\(1\)</span>. The ordering argument is perhaps the most convincing. However, if you are algebraically minded you may wonder how we get around the tricky issue of using our algebraic definition. The key insight is to not define <span class="math inline">\(n!\)</span> as the product of the numbers from <span class="math inline">\(n\)</span> to <span class="math inline">\(1\)</span>, but rather, to define <span class="math display">\[(n-1)! = \frac{n!}{n},\]</span> and specify that <span class="math inline">\(1! = 1\)</span>. Then in this case we get all of the usual requirements for how we have discussed factorials, but we also get that <span class="math inline">\(0! = \frac{(0+1)!}{(0+1)} = 1\)</span>. As a result, we will take <span class="math inline">\(0! = 1\)</span>.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a></p>
+</div>
+</section>
+<section id="permutations-and-combinations" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="permutations-and-combinations"><span class="header-section-number">3.4.4</span> Permutations and Combinations</h3>
+<p>Sometimes, we want to order items from a collection, but we want to only take a subset of these times. That is, suppose that you have <span class="math inline">\(20\)</span> books, only <span class="math inline">\(9\)</span> of them will fit on the self, and you want to know “how many ways can you put <span class="math inline">\(10\)</span> books on the shelf, in order, from your collection of <span class="math inline">\(20\)</span>?” Using the product rule of counting for this directly, we recognize that there are <span class="math inline">\(20\)</span> options for the first, then <span class="math inline">\(19\)</span>, then <span class="math inline">\(18\)</span>, and so on until there are <span class="math inline">\(12\)</span> choices for the <span class="math inline">\(10\)</span>th book to place. We can write this out in a seemingly strange way. <span class="math display">\[\begin{align*}
+  &amp;\ \frac{(20)(19)(18)(17)(16)(15)(14)(13)(12)(11)(10)(9)(8)(7)(6)(5)(4)(3)(2)(1)}{(11)(10)(9)(8)(7)(6)(5)(4)(3)(2)(1)} \\
+  &amp;= \frac{(20)(19)(18)(17)(16)(15)(14)(13)(12)\cancel{(11)}\cancel{(10)}\cancel{(9)}\cancel{(8)}\cancel{(7)}\cancel{(6)}\cancel{(5)}\cancel{(4)}\cancel{(3)}\cancel{(2)}\cancel{(1)}}{\cancel{(11)}\cancel{(10)}\cancel{(9)}\cancel{(8)}\cancel{(7)}\cancel{(6)}\cancel{(5)}\cancel{(4)}\cancel{(3)}\cancel{(2)}\cancel{(1)}}
+\end{align*}\]</span></p>
+<p>This expression is <span class="math inline">\(20!\)</span> divided by <span class="math inline">\(11!\)</span>, and gives the same as our argument from the product rule for counting directly. This is a more general result than our example with books would suggest. If we have <span class="math inline">\(n\)</span> items, and we want to choose <span class="math inline">\(k\)</span> of them taking into account the order those choices, it will always be <span class="math inline">\(n!\)</span> divided by <span class="math inline">\((n-k)!\)</span>. We call this a permutation.</p>
+<div id="def-permutation" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.3 (Permutations)</strong></span> If we wish to select <span class="math inline">\(k\)</span> items from a collection of <span class="math inline">\(n\)</span> items, where the ordering of these selections matters, then the total number is referred to as a permutation. Mathematically, <span class="math display">\[P_{n,k} = \frac{n!}{(n-k)!}.\]</span></p>
+</div>
+<p>Permutations arise when we select ordered subsets from a collection. We often, in combinatorial problems, talk about ordering, though sometimes what we mean by this is slightly more abstract. Suppose that you want to form a committee with <span class="math inline">\(5\)</span> different people, each of which occupies a different role: the president, vice president, treasurer, note taker, and critic. If there are <span class="math inline">\(30\)</span> people to select for this then there are <span class="math inline">\(P_{30,5}\)</span> total possible committees that can be formed. While there is not a sequential order here, we talk about this as being “ordered” since we can differentiate between the five roles. Instead of labelling them with their names, we could label them <span class="math inline">\(1\)</span> through <span class="math inline">\(5\)</span> and make the ordering more explicit.</p>
+<div id="exm-permutations" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.8 (Seating in a (Not Full) Coffee Shop)</strong></span> Still haunted by that time when the coffee shop was full, Sadie and Charles enter the coffee shop at a later date and find that, including themselves, there are only <span class="math inline">\(7\)</span> patrons in the store, and still the <span class="math inline">\(10\)</span> seats to choose from.</p>
+<ol type="a">
+<li>How many different ways can the <span class="math inline">\(7\)</span> people sit in the <span class="math inline">\(10\)</span> different chairs?</li>
+<li>If there are <span class="math inline">\(10\)</span> drinks on the menu, how many different ways can each person choose a chair and a drink?</li>
+<li>If the coffee shop can make only one of each drink, how does the previous total change?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>In this case we are looking to order subsets from a total collection. If we line up the <span class="math inline">\(7\)</span> patrons we then need to select <span class="math inline">\(7\)</span> chairs to go with them, and keep these ordered. This is simply <span class="math display">\[P_{10,7} = \frac{10!}{3!} = 604800.\]</span></p></li>
+<li><p>In this part of the question we know that the <span class="math inline">\(7\)</span> people have <span class="math inline">\(P_{10,7}\)</span> ways of sitting into seats, we can view this as decision one. Then, for each of these <span class="math inline">\(7\)</span> people there is a decision of what drink they will order. For these <span class="math inline">\(7\)</span> decisions, <span class="math inline">\(n_2 = \cdots = n_8 = 10\)</span>. As a result, we get the total number is <span class="math display">\[P_{10,7}\times10\times10\times\cdots\times10 = P_{10,7}\times 10^{7} = 6,048,000,000,000.\]</span></p></li>
+<li><p>This setting, like part (b) starts with a first decision involving <span class="math inline">\(P_{10,7}\)</span> choices. Then, instead of there being <span class="math inline">\(7\)</span> more decisions with <span class="math inline">\(10\)</span> choices each, we can either view this as <span class="math inline">\(7\)</span> more choices with a descending number of options <span class="math inline">\(10\)</span> for the first, then <span class="math inline">\(9\)</span>, and so on, or we can view this as a single choice where we need to select <span class="math inline">\(7\)</span> <strong>ordered</strong> options from the <span class="math inline">\(10\)</span> drinks available. This gives <span class="math display">\[P_{10,7} \times P_{10,7} = 365,783,040,000,\]</span> total choices.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>Factorials compute the number of orderings for a set of objects, and permutations compute the number of ordered subsets from a collection of objects. What about when we do not wish to differentiate the order of subsets? Suppose that you still need to form a <span class="math inline">\(5\)</span> person committee, but you do not have explicit roles for the different members of the committee. Here we cannot use a permutation directly, as we know that this takes into account the order.</p>
+<p>To determine the number of unordered subsets, we will consider a different approach for taking ordered subsets. Suppose that we formulate the ordered committee as a two step procedure. First, we select <span class="math inline">\(5\)</span> people without concern for their order. Then we choose which order they will have. If <span class="math inline">\(M\)</span> represents the number of unordered sets of <span class="math inline">\(5\)</span> from this population, the product rule for counting tells us that the total number of ordered committees will be <span class="math inline">\(M\times 5!\)</span>, since there are <span class="math inline">\(5!\)</span> arrangements of the <span class="math inline">\(5\)</span> people. Thus, we can write this down as <span class="math display">\[P_{30,5} = \frac{30!}{25!} = M\times 5! \implies M = \frac{30!}{25!5!}.\]</span></p>
+<p>This will be true far more broadly than our committee example. If we want to select <span class="math inline">\(k\)</span> items from a collection of <span class="math inline">\(n\)</span>, we will have <span class="math inline">\(n!\)</span> divided by the product of <span class="math inline">\(k!\)</span> and <span class="math inline">\((n-k)!\)</span>. We refer to these as combinations.</p>
+<div id="def-combinations" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.4 (Combinations)</strong></span> If we wish to select <span class="math inline">\(k\)</span> items from a collection of <span class="math inline">\(n\)</span> items, where the ordering of these selections does not matter, then the total number is referred to as a combination. Mathematically, <span class="math display">\[\binom{n}{k} = \frac{n!}{k!(n-k)!}.\]</span></p>
+</div>
+<p>We read <span class="math inline">\(\binom{n}{k}\)</span> as “<span class="math inline">\(n\)</span> choose <span class="math inline">\(k\)</span>”, which translates to “select <span class="math inline">\(k\)</span> items from a population of <span class="math inline">\(n\)</span> total options, without concern for their order.”</p>
+<p>To summarize: factorials allow us to order a complete collection, permutations allow us to select a subset with consideration of the ordering, and combinations allow us to select a subset from the collection without regard to the order. These three techniques can be used in combination with the product rule for counting to allow us to have very complex total summations.</p>
+<div id="exm-combinations" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.9 (Changing the Seating in the Coffee Shop)</strong></span> Some nights, the coffee shop hosts local music acts. Because of the added equipment, the coffee shop owners only keep out the number of seats that are going to be required based on the number of tickets that were sold.</p>
+<ol type="a">
+<li>If there are <span class="math inline">\(8\)</span> tickets sold, how many different combinations of the <span class="math inline">\(10\)</span> chairs can get left out?</li>
+<li>Suppose that only <span class="math inline">\(6\)</span> people end up showing up. How many different ways can the <span class="math inline">\(6\)</span> people sit in the <span class="math inline">\(8\)</span> chairs that are being selected from the <span class="math inline">\(10\)</span> total possibilities?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Here, there is no ordering for the <span class="math inline">\(8\)</span> chairs that are to be selected. As a result, we are simply looking for how many chairs can be selected from a group of <span class="math inline">\(10\)</span> of them. This is <span class="math display">\[\binom{10}{8} = \frac{10!}{8!\cdot 2!} = 45.\]</span></p></li>
+<li><p>With the first choice having <span class="math inline">\(45\)</span> possible options, the second choice that needs to be made is how <span class="math inline">\(6\)</span> people sit into <span class="math inline">\(8\)</span> chairs. Here the ordering <em>does</em> matter, since the chairs are distinguishable. As a result, this is a permutations question, with there being a total of <span class="math inline">\(P_{8,6} = \frac{8!}{2!}\)</span> ways of having the people select their seats. In total then there are <span class="math display">\[\binom{10}{8}\times P_{8,6} = \frac{10!}{8!\cdot 2!}\cdot\frac{8!}{2!} = 907,200.\]</span></p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="less-common-counting-techniques" class="level3" data-number="3.4.5">
+<h3 data-number="3.4.5" class="anchored" data-anchor-id="less-common-counting-techniques"><span class="header-section-number">3.4.5</span> Less Common Counting Techniques</h3>
+<p>While most of the problems we address will revolve around permutations and combinations (with heavy use of the product rule), there are additional techniques which are important to know (and recognize when to use). In particular, combinations and permutations each assume that we are sampling from our set <strong>without replacement</strong>. That is, each time you select an item, it is removed from the population. These are the most common situations in these combinatorial problems, however, there are <em>some</em> situations which arise where we need to count the number of ordered or unordered subsets <em>with</em> replacement.</p>
+<section id="ordered-subsets-with-replacement" class="level4" data-number="3.4.5.1">
+<h4 data-number="3.4.5.1" class="anchored" data-anchor-id="ordered-subsets-with-replacement"><span class="header-section-number">3.4.5.1</span> Ordered Subsets with Replacement</h4>
+<p>Consider, for instance, forming a password using only lowercase numbers and letters. If you decide on a fixed length for the password, then there are going to be <span class="math inline">\(36\)</span> choices at each decision point, and you want to take an ordered subset of these. This is forming an <strong>ordered subset with replacement</strong>, and to count how many different ways there are of doing this, we can simply use the product rule. That is, you have <span class="math inline">\(36\)</span> choices at each decision point, and so there are <span class="math inline">\(36\times 36\times\cdots\times 36 = 36^k\)</span> total decisions, where <span class="math inline">\(k\)</span> is the number of items to select.</p>
+<p>In general, if you have <span class="math inline">\(n\)</span> total items and you want to make an ordered set of <span class="math inline">\(k\)</span> of these items <strong>with replacement</strong> you will have <span class="math inline">\(n^k\)</span> total ways of doing this.</p>
+</section>
+<section id="unordered-subsets-with-replacement" class="level4" data-number="3.4.5.2">
+<h4 data-number="3.4.5.2" class="anchored" data-anchor-id="unordered-subsets-with-replacement"><span class="header-section-number">3.4.5.2</span> Unordered Subsets with Replacement</h4>
+<p>Forming unordered sets with replacement is slightly less intuitive. Consider rolling <span class="math inline">\(k\)</span> dice which are not distinguishable from one another. We know that there are <span class="math inline">\(6\)</span> total sides that can show up on each of these dice, but how many different combinations of numbers can show up overall? If the dice can be distinguished we would say that there are <span class="math inline">\(6^k\)</span> possible ways of doing this. However, some of these combinations are going to be equivalent in the unordered world. Take the simple case of <span class="math inline">\(k=2\)</span>. Here we have the following possibilities: <span class="math display">\[\begin{align*}
+(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6)&amp;\\
+(2, 2), (2, 3), (2, 4), (2, 5), (2, 6)&amp;\\
+(3, 3), (3, 4), (3, 5), (3, 6)&amp;\\
+(4, 4), (4, 5), (4, 6)&amp;\\
+(5, 5), (5, 6)&amp;\\
+(6,6)&amp;
+\end{align*}\]</span></p>
+<p>This gives a total of <span class="math inline">\(21\)</span> possible combinations, rather than <span class="math inline">\(36\)</span>.</p>
+<p>In general, if we want to find the way of selecting <span class="math inline">\(k\)</span> elements <em>with replacement</em> from a total of <span class="math inline">\(n\)</span>, then the number of ways of doing this will be <span class="math display">\[\binom{n+k-1}{k}.\]</span> In our example this gives <span class="math inline">\(\binom{6+2-1}{2} = 21\)</span>.</p>
+</section>
+<section id="permutations-with-identical-objects" class="level4" data-number="3.4.5.3">
+<h4 data-number="3.4.5.3" class="anchored" data-anchor-id="permutations-with-identical-objects"><span class="header-section-number">3.4.5.3</span> Permutations with Identical Objects</h4>
+<p>Finally, it is worth understanding how to handle identical objects in combinatorial problems. Suppose that, of the <span class="math inline">\(10\)</span> books that we wish to place on a shelf, we have <span class="math inline">\(2\)</span> copies of one of them, <span class="math inline">\(3\)</span> copies of another one, and the other <span class="math inline">\(5\)</span> have one copy each. Supposing that there is no way to tell these identical objects apart, how many ways can we arrange the bookshelf?</p>
+<p>First, if we pretend that all of the items are actually able to be differentiated then there are <span class="math inline">\(10!\)</span> ways of placing these books. Now, in any of these permutations, had we swapped the order of the first book (with <span class="math inline">\(2\)</span> copies) the ordering would have been indistinguishable. As a result, for every ordering of the <span class="math inline">\(8\)</span> other books, we counted that permutation twice (when it should have only been counted once!). So to address the two repeated copies we need to take <span class="math inline">\(10!/2\)</span>. Now, a similar argument is going to hold for the book with <span class="math inline">\(3\)</span> repeated copies. However, instead of there being <span class="math inline">\(2\)</span> permutations which are identical, there are going to be <span class="math inline">\(3! = 6\)</span> permutations which are identical. This is because we can reorder the <span class="math inline">\(3\)</span> copies of the book in anyway we choose, and still wind up with the same overall permutation.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> As a result, the total number is going to be <span class="math display">\[\frac{10!}{2!\cdot3!} = 302400.\]</span></p>
+<p>We can see this same result through an alternative construction. First, we select which of the <span class="math inline">\(10\)</span> slots should have the first book. We do not care about the order, and so there are <span class="math inline">\(\binom{10}{2}\)</span> ways of doing this. Next, we can select which of the <span class="math inline">\(8\)</span> remaining slots should have the second book. Like the first one there will be <span class="math inline">\(\binom{8}{3}\)</span> ways of placing these. Now, there are <span class="math inline">\(5\)</span> slots remaining, and <span class="math inline">\(5\)</span> books to place, so as a result, we can order those in <span class="math inline">\(5!\)</span> different ways, and then slot them into the remaining places in order. This gives, in total <span class="math display">\[\binom{10}{2}\binom{8}{3}(5!) = \frac{10!}{2!\cancel{8!}}\cdot\frac{\cancel{8!}}{3!\cancel{5!}}\cdot\cancel{5!} = \frac{10!}{2!3!}.\]</span></p>
+<p>To generalize this, if we want to order <span class="math inline">\(n\)</span> elements, such that there are <span class="math inline">\(k\)</span> distinguishable elements with <span class="math inline">\(n_1\)</span> of the first type, <span class="math inline">\(n_2\)</span> of the second, and so forth until <span class="math inline">\(n_k\)</span> of the last type (<span class="math inline">\(n = n_1 + n_2 + \cdots + n_k\)</span>), then the total number of orderings will be <span class="math display">\[\frac{n!}{n_1!\cdot n_2!\cdots n_k!}.\]</span></p>
+</section>
+</section>
+</section>
+<section id="from-combinatorics-to-probability" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="from-combinatorics-to-probability"><span class="header-section-number">3.5</span> From Combinatorics to Probability</h2>
+<p>While combinatorics is a field of study on its own, with many intriguing tools and developments surrounding the enumeration of objects, for the purposes of simple probability models these tools will suffice. Ultimately, we care about counting since in the equal probability model, the probability of any event can be determined by counting the number of ways that the event can occur and dividing by the total number of outcomes that are possible. That is, we use these tools to derive <span class="math inline">\(N_A\)</span>, the total number of ways that <span class="math inline">\(A\)</span> can occur, and <span class="math inline">\(N\)</span>, the total number of experimental outcomes, and then we conclude that <span class="math display">\[P(A) = \frac{N_A}{N}.\]</span></p>
+<div id="exm-poker-hands" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.10 (Poker Hand Counts)</strong></span> During one of their conversations, Charles and Sadie were remarking how they never really played poker. As they understand it, in poker you are dealt a hand of <span class="math inline">\(5\)</span> cards and you want to use these <span class="math inline">\(5\)</span> cards to try to match certain sets of cards, some of which are more rare than others. Charles and Sadie start to get hung-up on discussions regarding “straights” and “flushes”.</p>
+<p>A straight is any sequence of <span class="math inline">\(5\)</span> cards in ascending order (where aces can be low, or high). For instance, <span class="math inline">\(7, 8, 9, 10, \text{J}\)</span> of any suit. A flush, is any set of <span class="math inline">\(5\)</span> cards belonging to the same suit. Charles just <em>feels</em> that straights have to be more rare than flushes.</p>
+<ol type="a">
+<li>How many different straights are there from a standard deck of cards?</li>
+<li>How many different flushes are there from a standard deck of cards?</li>
+<li>If dealt <span class="math inline">\(5\)</span> cards at random, what is the probability of a flush? What is the probability of a straight?</li>
+<li>A straight flush occurs when you have <span class="math inline">\(5\)</span> cards in order, of the same suit. What is the probability of a straight flush?</li>
+<li>If straight flushes were not counted as flushes, and not counted as straights, how do the probabilities of either hand change?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>A straight necessitates drawing five cards in order, with each of any suit. Just as with the straight flush, there are <span class="math inline">\(10\)</span> possible starting values for the straight. Once we have selected the starting value, then for each of the five cards we can pick any of the four suits, resulting in <span class="math inline">\(4\)</span> choices each. That gives <span class="math display">\[N_A = 10\times 4\times 4\times 4\times 4\times 4 = 10\times 4^5 = 10240.\]</span></p></li>
+<li><p>A flush necessitates drawing <strong>any</strong> five cards from the same suit. If we had a suit fixed, there would be <span class="math inline">\({13\choose 5}\)</span> ways of doing this, since we do not care about ordering. If we think about first choosing the suit, we have <span class="math inline">\(4\)</span> ways of doing that, resulting in <span class="math display">\[N_A = 4 \times {13 \choose 5} = 5148.\]</span></p></li>
+<li><p>To find the probabilities of each of these, we need to know the total number of <span class="math inline">\(5\)</span> card hands. We do not consider order, and so <span class="math inline">\(N = \binom{52}{5} = 2598960\)</span>. Then, the probability is simply the number of combinations (calculated above) divided by the number of hands. This gives, for straights, <span class="math display">\[P(A) = \frac{10240}{2598960} = \frac{128}{32487} \approx 0.00394,\]</span> and for flushes, <span class="math display">\[P(A) = \frac{5148}{2598960} = \frac{33}{16660} \approx 0.00198.\]</span> As a result, we see that straights are roughly twice as common as flushes are.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a></p></li>
+<li><p>Note that to form a straight flush, we first have to fix a suit. There are <span class="math inline">\({4\choose 1}=4\)</span> total ways of doing this. Next, we need to pick which starting value we will use. Once a card has been selected as a starting value, the remaining cards are fixed. The start value ranges from A through to <span class="math inline">\(10\)</span>. Correspondingly, we have <span class="math display">\[N_A = {4\choose 1}{10 \choose 1} = 4\times10 = 40.\]</span> As a result, we get that <span class="math display">\[P(A) = \frac{40}{2598960} = \frac{1}{64974}.\]</span></p></li>
+<li><p>From (d) exactly <span class="math inline">\(40\)</span> of the straights and <span class="math inline">\(40\)</span> of the flushes are also straight flushes. We can thus remove <span class="math inline">\(40\)</span> from the totals of each of these, giving <span class="math inline">\(\frac{10200}{2598960}\)</span> for straights and <span class="math inline">\(\frac{5108}{2598960}\)</span> for flushes.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-3.1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.1</strong></span> The probability that a smartphone breaks during the first year of use is <span class="math inline">\(0.19\)</span>. What is the probability that it does not break during the first year?</p>
+</div>
+<div id="exr-3.2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.2</strong></span> Assuming that <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are disjoint, which of the following statements are always true.</p>
+<ol type="a">
+<li><span class="math inline">\(P(A\cup B) = 0\)</span>.</li>
+<li><span class="math inline">\(P(A \cap B) = 0\)</span>.</li>
+<li><span class="math inline">\(P(A \cup B) = P(A \cap B)\)</span>.</li>
+<li><span class="math inline">\(P(A \cup B) = P(A) + P(B)\)</span>.</li>
+</ol>
+</div>
+<div id="exr-3.3" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.3</strong></span> A ball is drawn at random from a box containing <span class="math inline">\(6\)</span> red balls, <span class="math inline">\(4\)</span> white balls, and <span class="math inline">\(5\)</span> blue balls. Determine the probabilities associated with the following events.</p>
+<ol type="a">
+<li>The ball is red.</li>
+<li>The ball is white.</li>
+<li>The ball is blue.</li>
+<li>The ball is not red.</li>
+<li>The ball is red or white.</li>
+</ol>
+</div>
+<div id="exr-3.4" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.4</strong></span> A survey of high schoolers were asked about where they most prefer to spend their time when they are at home. The results were:</p>
+<ul>
+<li>Bedroom: <span class="math inline">\(0.37\)</span>;</li>
+<li>Living Room: <span class="math inline">\(0.26\)</span>;</li>
+<li>Den: <span class="math inline">\(0.22\)</span>;</li>
+<li>Basement: <span class="math inline">\(0.12\)</span>;</li>
+<li>Kitchen: <span class="math inline">\(0.02\)</span>;</li>
+<li>Bathroom: <span class="math inline">\(0.01\)</span>.</li>
+</ul>
+<ol type="a">
+<li>What is the probability that a student prefers being in their living room or den?</li>
+<li>What is the probability that a student does not prefer being in their bedroom?</li>
+</ol>
+</div>
+<div id="exr-3.5" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.5</strong></span> Let <span class="math inline">\(S\)</span> be the event that a randomly selected college student has taken any statistics course, and <span class="math inline">\(C\)</span> be the event that a randomly selected college student has taken any chemistry course. Suppose <span class="math inline">\(P(S) = 0.5\)</span>, <span class="math inline">\(P(C) = 0.15\)</span>, and <span class="math inline">\(P(S\cap C) = 0.12\)</span>.</p>
+<ol type="a">
+<li>Find the probability that the student has taken either a statistics or chemistry course.</li>
+<li>Find the probability that a student has taken neither chemistry nor statistics.</li>
+<li>Find the probability that a student has taken statistics but not chemistry.</li>
+</ol>
+</div>
+<div id="exr-3.6" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.6</strong></span> Let <span class="math inline">\(M\)</span> be the event that a student passes their math exam, and let <span class="math inline">\(H\)</span> be the event that a student passes their history exam. Suppose that <span class="math inline">\(P(M) = 0.85\)</span>, <span class="math inline">\(P(H) = 0.95\)</span>, and <span class="math inline">\(P(M\cup H) = 0.99\)</span>.</p>
+<ol type="a">
+<li>Find the probability that the student passes both math and history.</li>
+<li>Find the probability that the student passes neither math, nor history.</li>
+<li>Find the probability that the student passes math, but not history.</li>
+</ol>
+</div>
+<div id="exr-3.7" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.7</strong></span> A medical clinic screening for a particular disease classifies its patients into three health risk categories: low risk, moderate risk, and high risk. Suppose that <span class="math inline">\(70\%\)</span> of the patients are categorized low risk, <span class="math inline">\(20\%\)</span> are categorized as moderate risk, and <span class="math inline">\(10\%\)</span> are categorized as high risk. Suppose a patient is randomly selected.</p>
+<ol type="a">
+<li>What is the probability that the patient is categorized as low risk?</li>
+<li>What is the probability that the patient is not categorized high risk?</li>
+</ol>
+</div>
+<div id="exr-3.8" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.8</strong></span> Two different designs are being considered for a particular mechanical system. For each, determine the probability that the system continues to function.</p>
+<ol type="a">
+<li>The system contains two components, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. The system will continue to function so long as either <span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span> functions. The probability that <span class="math inline">\(A\)</span> functions is <span class="math inline">\(0.95\)</span>, the probability that <span class="math inline">\(B\)</span> functions is <span class="math inline">\(0.90\)</span>, and the probability that the both function is <span class="math inline">\(0.88\)</span>.</li>
+<li>The system contains two components, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. The system will continue to function only if both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> function. The probability that <span class="math inline">\(A\)</span> functions is <span class="math inline">\(0.98\)</span>, the probability that <span class="math inline">\(B\)</span> functions is <span class="math inline">\(0.95\)</span>, and the probability that at least one is functioning is <span class="math inline">\(0.99\)</span>.</li>
+</ol>
+</div>
+<div id="exr-3.9" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.9</strong></span> A hotel chain is concerned about the cleanliness of their rooms, so they send two inspectors to check on this. Inspector A visually inspects <span class="math inline">\(1000\)</span> rooms and found <span class="math inline">\(37\)</span> of them to be inadequately cleaned. Inspector B visually inspects the same rooms found <span class="math inline">\(43\)</span> of them to be lacking sufficient cleanliness. A total of <span class="math inline">\(948\)</span> rooms were found to be clean by both inspectors.</p>
+<ol type="a">
+<li>Find the probability that a randomly selected room has an issue that was found by at least one of the two inspectors.</li>
+<li>Find the probability that a randomly selected room has an issue that was found by both inspectors.</li>
+<li>Find the probability that a randomly selected room has an issue that was found by inspector <span class="math inline">\(A\)</span> but not by inspector <span class="math inline">\(B\)</span>.</li>
+</ol>
+</div>
+<div id="exr-3.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.10</strong></span> Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be events with probabilities <span class="math inline">\(P(A) = \frac{3}{4}\)</span> and <span class="math inline">\(P(B) = \frac{1}{3}\)</span>. Show that <span class="math display">\[\frac{1}{12}\leq P(A\cap B)\leq\frac{1}{3}.\]</span></p>
+</div>
+<div id="exr-3.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.11</strong></span> Find the probability of a <span class="math inline">\(4\)</span> turning up at least once in two tosses of a fair die.</p>
+</div>
+<div id="exr-3.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.12</strong></span> It is required to place <span class="math inline">\(5\)</span> hardcovers and <span class="math inline">\(4\)</span> paperbacks onto a bookshelf, so that each of the paperbacks are between two hardcovers. How many ways can this be done?</p>
+</div>
+<div id="exr-3.13" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.13</strong></span> A committee of eight people must choose a president, a vice-president, and a secretary. In how many ways can this be done?</p>
+</div>
+<div id="exr-3.14" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.14</strong></span> &nbsp;</p>
+<ol type="a">
+<li>One drawer in a dresser contains <span class="math inline">\(8\)</span> blue socks and <span class="math inline">\(6\)</span> white socks. Another drawer contains <span class="math inline">\(4\)</span> blue socks and <span class="math inline">\(2\)</span> white socks. One sock is chosen from each drawer. What is the probability that they match?</li>
+<li>A third drawer contains <span class="math inline">\(6\)</span> red socks, <span class="math inline">\(4\)</span> green socks, and <span class="math inline">\(2\)</span> black socks. Two socks are selected at random. What is the probability that they match.</li>
+</ol>
+</div>
+<div id="exr-3.15" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.15</strong></span> A company has hired <span class="math inline">\(15\)</span> new employees, and must assign <span class="math inline">\(6\)</span> to the day shift, <span class="math inline">\(5\)</span> to the graveyard shift, and <span class="math inline">\(4\)</span> to the night shift. In how many different ways can the shifts be made?</p>
+</div>
+<div id="exr-3.16" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.16</strong></span> A group of <span class="math inline">\(10\)</span> people have gotten together to play basketball. They will begin by dividing themselves into two teams of <span class="math inline">\(5\)</span> players each. One team will wear red and the other blue. How many ways can this be done?</p>
+</div>
+<div id="exr-3.17" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.17</strong></span> A factory produces a total of <span class="math inline">\(15,000\)</span> candies a day, of which <span class="math inline">\(3\%\)</span> are defective. Find the probability that, out of <span class="math inline">\(500\)</span> candies chosen at random on a single day, <span class="math inline">\(12\)</span> are defective.</p>
+</div>
+<div id="exr-3.18" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.18</strong></span> A shelf has <span class="math inline">\(6\)</span> mathematics books and <span class="math inline">\(4\)</span> physics books. If these were randomly ordered, what is the probability that <span class="math inline">\(3\)</span> particular mathematics books will be together.</p>
+</div>
+<div id="exr-3.19" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.19</strong></span> Suppose that car license plates consist of three letters followed by three numbers.</p>
+<ol type="a">
+<li>How many different license plates can be made?</li>
+<li>How many different license plates can be made in which no letter or number appears more than once?</li>
+<li>A license plate is chosen at random. What is the probability that no letter or number appears more than once?</li>
+</ol>
+</div>
+<div id="exr-3.20" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.20</strong></span> A game has individuals forming random “words” (strings of letters, whether they have a meaning or not). On a particular turn, one player must form a word which has <span class="math inline">\(3\)</span> different vowels, and <span class="math inline">\(4\)</span> different consonants, where there are <span class="math inline">\(7\)</span> total consonants and <span class="math inline">\(5\)</span> total vowels to choose from. How many possibilities are there for a valid word?</p>
+</div>
+<div id="exr-3.21" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.21</strong></span> Six pairs of socks come in sets: there are two pairs of red socks, two pairs of white socks, and two pairs with stripes on them. If the socks are placed randomly into pairs, find the probability that no sock ends up in a pair with the same pattern.</p>
+</div>
+<section id="references" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="references">References</h3>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-kahneman" class="csl-entry" role="listitem">
+Kahneman, Daniel, and Amos Tversky. 1972. <span>“Subjective Probability: A Judgment of Representativeness.”</span> <em>Cognitive Psychology</em> 3 (3): 430–54.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Or else conclude that I was mistaken and maybe should not be teaching probability.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>One of the most famous quotes from a statistician was a thought shared by John Tukey, stating “The best thing about being a statistician is that you get to play in everyone’s backyard.” This is a common refrain, and one rooted in truth. Statistics is everywhere, across every field of human inquiry, and can help us make sense of everything from the trivial to the deeply important.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>This does not help to explain why we use urns so much, of course. When was the last time any of us drew a ball from an urn?<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Note that, when we have a set, using the absolute value symbols <span class="math inline">\(|\cdot|\)</span> stands for the <strong>cardinality</strong> of the set. Cardinality is just a fancy way of saying the size or the number of elements that the set has in it.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>A quantity which in the equally likely outcome framework, we know exactly.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>The <code>sample</code> function can also be used without equally likely events by specifying a vector of probabilities, however, this is a less common use case.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>For instance, the Queen of spades being drawn.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>This is actually a scenario where our instincts may lead us awry in some situations. Consider the following from <span class="citation" data-cites="kahneman">Kahneman and Tversky (<a href="#ref-kahneman" role="doc-biblioref">1972</a>)</span>: <span class="blockquote d-block">Linda is 31 years old, single, outspoken, and very bright. She majored in philosophy. As a student, she was deeply concerned with issues of discrimination and social justice, and also participated in anti-nuclear demonstrations. Which is more probable? (a) Linda is a bank teller, or (b) Linda is a bank teller and is active in the feminist movement.</span> A majority of respondents rate (b) as being more probable, even though (a) is contained in (b).<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>These rules, which we call “properties” are formally known as “axioms”.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>What would it mean to have a negative probability? It is perhaps a more interesting question than it seems at first glance. It is a topic that has come up in some pretty strange places and, while it is not presently sensible to call them “probabilities” in a traditional sense, there are interesting results which follow.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Note: if this is not yet clear to you, that’s okay! In the very next section we begin to discuss how to count the possible combinations in these types of scenarios.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Suppose that <span class="math inline">\(d_1 = 2\)</span> and <span class="math inline">\(d_2 = 4\)</span>. Then here, the dice can match when they show either <span class="math inline">\(1\)</span> or <span class="math inline">\(2\)</span>, but if the second die shows <span class="math inline">\(3\)</span> or <span class="math inline">\(4\)</span> there is no possibility of having a match at all.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Factorials are exciting because they always look like they are shouting!<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>It is somewhat interesting to note how large these values get relatively quickly. This is a comparatively small question: only <span class="math inline">\(10\)</span> people with <span class="math inline">\(10\)</span> drinks and <span class="math inline">\(10\)</span> snacks. If you consider any counting problem with a larger number of items, these problems quickly grow to be intensely complex. For instance, a count of my main home book collection reveals <span class="math inline">\(376\)</span> of them. To order these would give <span class="math inline">\(376!\)</span> possible orderings. In decimal representation this is <span class="math display">\[4.992244775852435618292576458782762114148884082811840265632\dots\times10^{806}.\]</span> This is an <span class="math inline">\(807\)</span> digit long number. This is an incomprehensibly large number. This number is <span class="math inline">\(8×10^{726}\)</span> <strong>times larger than</strong> the number of atoms in the universe. That is, if every atom in the universe were given some arrangements of books to hold onto, they would need to hold <span class="math inline">\(8×10^{726}\)</span> of them in order for all of the arrangements to be held. I point this out because combinatorics <em>explodes</em> in this way. Even simple problems grow out of hand very, very quickly. This is where comfort with the algebraic tools is required, rather than a reliance on intuition. There is simply no way to have intuition regarding the scope of these numbers, at least, not without a lot of practice.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>Imagine I am placing books on my shelf. With <span class="math inline">\(3\)</span> books there are <span class="math inline">\(3! = 6\)</span> ways my shelf can look at the end. With <span class="math inline">\(2\)</span> books there are <span class="math inline">\(2! = 2\)</span> ways my shelf can look at the end. With <span class="math inline">\(1\)</span> book there are <span class="math inline">\(1! = 1\)</span> ways my shelf can look at the end. With <span class="math inline">\(0\)</span> books there are <span class="math inline">\(0! = 1\)</span> ways my shelf can look at the end.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Note, this does not help us with the factorials of negative numbers, nor of fractional numbers. Factorials <em>can</em> be extended to these in sensible ways, but these are not for combinatorial purposes and are no longer “factorials” exactly.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>In fact, the reason that there are <span class="math inline">\(2\)</span> ways of doing this with the book with <span class="math inline">\(2\)</span> copies is since <span class="math inline">\(2! = 2\)</span>.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>This is <em>still</em> a deeply unintuitive result to me. To me it feels like it should be harder to get a nice ordering of cards all in a row than it is to find ones of the same suit. And yet, it is about twice as likely to have the straights. Now, if you think about this deeply, it makes a lot of sense: there is a lot more leeway in selecting the straight than the flush. However, my brain refuses to accept this as intuitive. This is something that can often occur in probability questions where the true results can be far from what we would expect. An interesting question is how long does a straight have to be to be less likely than a flush of the same length. Note that the number of ways of choosing a flush will always be <span class="math inline">\(4\times\binom{13}{k}\)</span>, and the number of ways of forming a straight will always be <span class="math inline">\(10\times 4^k\)</span>. If we consider <span class="math inline">\(k\)</span> from <span class="math inline">\(1\)</span> to <span class="math inline">\(13\)</span>, we can take the ratios of these to see just how much more (or less) likely a straight is. Doing this gives: <span class="font-monospace text-light bg-dark m-2 p-2 block">k=1 gives 0.769. k=2 gives 0.513. k=3 gives 0.559. k=4 gives 0.895. k=5 gives 1.989. k=6 gives 5.967. k=7 gives 23.869. k=8 gives 127.304. k=9 gives 916.587. k=10 gives 9165.874. k=11 gives 134432.821. k=12 gives 3226387.692. k=13 gives 167772160.</span> Up to (and including) <span class="math inline">\(4\)</span> cards the straight is indeed harder to achieve. However, this does not last long!<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          trigger: 'click',
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          positionFixed: true,
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../notes/chapter2.html" class="pagination-link  aria-label=" &lt;span="" mathematical="" foundations="" of="" statistical="" experiments&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Mathematical Foundations of Statistical Experiments</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../notes/chapter4.html" class="pagination-link" aria-label="<span class='chapter-number'>4</span>&nbsp; <span class='chapter-title'>Probabilities with More than One Event</span>">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilities with More than One Event</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
