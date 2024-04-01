@@ -386,7 +386,7 @@ Assuming, as it seems reasonable given the information in the question, that onl
 ::::
 :::
 
-## Contingency Tables
+## Contingency Tables{#sec-contingency-tables}
 Through to this point we have discussed probabilities in the abstract, either through an enumeration of equally likely outcomes, or else by directly specifying the likelihood of various events. While these are useful in many regards, we are often looking for more concise manners of summarizing information of interest. One tool for accomplishing this is a contingency table. 
 
 :::{#def-contingency-table}

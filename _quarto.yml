@@ -28,6 +28,7 @@ book:
     - part: "Part 2: Statistics"
       chapters:
       - notes/chapter10.qmd
+      - notes/chapter11.qmd
 
 engine: knitr
 
@@ -38,6 +39,7 @@ bibliography: references.bib
 
 format:
   html:
+    lightbox: true
     theme: 
     - cosmo
     - custom.scss

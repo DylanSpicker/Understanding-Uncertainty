@@ -1,0 +1,1302 @@
+# An Introduction to Univariate Descriptive Statistics
+## The Purpose of Descriptive Statistics
+Suppose that you have collected a dataset, either through a sample of individuals or else through an experiment. You have likely done this with the understanding that these data provide useful insight into the world around you, that they will better inform decisions, or elucidate the truth about questions of interest. However, the data themselves provide very little information directly. Looking through a spreadsheet of numeric values is not a sound way to gather useful insight from data. Instead, we need to rely on pictorial and summary statistics, which take the data and describe or summarize the useful features that we are likely to care about.
+
+We may use tables, charts, graphs, or other numerical summaries. The idea is that we want to use these tools to describe the **distribution** of the dataset. Recall from our study of probability that the distribution of a random variable is the probabilistic behaviour of the random quantity. The distribution of the dataset similarly refers to what values the data take on, and with what frequency those values occur. 
+
+We will continue with the same type of notation that has been used throughout our study of probability. A variable, when it has not yet been observed, will be represented by a capital letter, say $X$. This notation will emphasize the fact that, until we have our sample, $X$ can be thought of as unknown and random. Once we make observations for a variable, we denote these observations as $x$. So, if we for instance, observe a sample of $100$ individuals, we may observe $x_1, x_2, \dots, x_{100}$ for these individuals. 
+
+In general, we will use $x_i$ to represent the $i$th observation of $X$, in a sample of size $n$. We may have multiple different variables that are observed for each individual. In this case, we may use $Y=y_1,\dots,y_n$ or $Z=z_1,\dots,z_n$. Generally, the ordering of the data will be arbitrary, which is to say there is no meaningful difference between individual $i=1$ and $i=10$, except that $i=1$ happens to written first in the data. With this notation, we are able to begin considering how to display data for effective summarization. When describing or summarizing data that have been collected, we will consider numeric summaries, tabular summaries, as well as graphical summaries. For numeric and tabular summaries we are thinking about condensing the data that have been collected into key representations of these values. The information will often be presented in the form of data itself -- which is to say, a table of summary numbers -- however, it is done so in a way to highlight the key features of the larger dataset. The other alternative is to use graphical displays of information.
+
+:::{.callout-note icon="false"}
+## The Connection between Data and Random Variables
+
+We previously thought of the collection and generation of data through both sampling and experimental design. The idea was that there was a population or a random process which we wanted to understand, but which could not be fully observed. Instead, we rely on being able to observe partial information from this, through our collected data. When we begin to discuss descriptive statistics, we will be considering the description of the data we have collected themselves -- the experimental results or sample. The utility of describing these data stems primarily from the fact that, if we have followed best statistical practices while collecting these data, we *should* find that they are representative of the complete population. We will rarely be able to say that they are *perfect* representations for the population, but we are able to use our insight from them to draw conclusions about the population.
+
+Because of this we constantly need to keep two quantities in our minds: the population and the sample. From our perspective, the sample is data, they are pieces of information that we have actually observed. The population, however, is random. It is unobservable, except through the sample or experiment. If we envision a numeric variable of interest, for instance, then once we have collected our sample we will have specific numeric values for this variable for those people in our sample. Which values we observe depends on which members of the population we happened to sample, and if we were to take another random sample, we would get different realizations for this. As a result, we can view sampling and observing as performing a **statistical experiment**. That is, there is some random quantity of interest, $X$, which we only see a value for ($x$) once we take our sample. At that point, we know that $X = x$. 
+
+This is *precisely* the notion of random variables introduced earlier on. That is, we view the quantities that we are going to measure as being random in the population, and our observations of them are **realizations of the random variable**. If we knew the distribution of these quantities then we could make different statements regarding the likelihood of observing various events. As a general rule, however, we do not know the exactly population distribution, and instead are trying to make inference about it through the use of the observed values. The notation introduced above emphasizes this point. We use lower case $x$ to represent the values since lowercase letters represent observations that have actually been made. When discussing the unrealized values in the population, these can be expressed as capital letters. 
+
+For instance, suppose we conduct a survey of heights in some population. We might say: consider the height of an individual in the population to be a random quantity, denoted by $X$. If we want to understand $E[X]$ we can do so by first drawing a sample of $n$ individuals from the population. If we draw these individuals independently, then we can think of each individual's height as a random variable, $X_1,\dots,X_n$ independent and identically distributed from the distribution of heights in the population. Once we actually select and sample the values we observe $x_1,\dots,x_n$, where we are saying that $X_1 = x_1$, $X_2 = x_2$, and so on through to $X_n = x_n$. At this point, we have seen actual realizations for $X_i$, and we can use these realizations to try to draw conclusions about $E[X]$. If we were to repeat this process many times over, each time we did it, we would see different values for $X_i$, depending on who is included in our sample. Thus, $X_i$ is a random variable. 
+
+:::
+
+### The Utility of Data Visualizations
+
+Graphical displays of information, or graphs, use visual representations of qualitative or quantitative data in order to provide an overview of key features of the distribution. If used well, this can allow for an efficient display of dense information in a manner which is easily interpretable. The type of informational display used depends, primarily, on two factors: what feature of the distribution are you trying to emphasize, and what type of data are you working with. Broadly, the types of graphics for qualitative data will differ from those for quantitative data. As multiple variables are collected, and the relationships between these different variables becomes the most interesting component of the distribution, we may combine both qualitative and quantitative variables together into a single display.
+
+Historically, there has been a set of graphics which are considered standard, and which would be taught in an introductory course. We will understand the construction and utility of several, common visualizations. However, the landscape around data visualization has rapidly evolved in recent years. Aided by powerful and comparatively straightforward computer programs, far more creativity and artistry has been injected into the world of data visualizations. There are plenty of electronic visualizations which are interactive, there are people effectively using video or audio mediums to add to the display, and the constraints of "standard practice" have largely been overcome. This advancement in technology is not a universal gain, as with every possibility of doing something novel and effective with this technology there are at least an equal number of ways to do something which obscures the truth. Still, data visualization has emerged as a field in its own regard, one which combines statistics, design, and artistry together to great effect.^[To get a glimpse into the world of graphical displays of information, used both well and poorly, it is worth a scroll through of two subreddits: [/r/dataisbeautiful](https://www.reddit.com/r/dataisbeautiful/){target="_BLANK"} and [/r/dataisugly](https://www.reddit.com/r/dataisugly/){target="_BLANK"}. While I do not universally agree with the categorization of these, a lot of the posts at least demonstrate the ways in which modern technology has expanded the potential for creativity.]
+
+Because of this, we will not cover the entire suite of historical figures. Graphs such as the stem-and-leaf plot or dot plot, while not entirely without purpose, were created prior to the advent of modern computer graphics. This enabled individuals to construct plots by hand, or with primitive early computers, and these were useful for those settings. The utility of by-hand plot construction is greatly diminished, and the advancement of graphics engines has rendered many of these plots essentially out-of-use. Rather than spend time learning or constructing these, we will instead focus on plots which remain in frequent use. 
+
+:::{.callout-warning icon="false"}
+# The Historic Utility of Data Visualizations
+
+Throughout history there have been many prominent illustrations of the utility of data visualizations. Two prominent examples that come to mind are Florence Nightingale, with her work on causes of death during the Crimean War^[Read more about this in [this Scientific American article](https://www.scientificamerican.com/article/how-florence-nightingale-changed-data-visualization-forever/){target="_BLANK"}.] and John Snow, with his work mapping an 1854 cholera outbreak in London.^[Read more about this in [this brief description](https://www.mun.ca/biology/scarr/4270_Cholera_outbreak_1854.html){target="_BLANK"}.] 
+
+Florence Nightingale, a British nurse who worked during the Crimean war, recognized that little was being done to prevent illness transmission throughout the military. She also recognized the importance of conveying the information in ways that would be properly seen and processed by those in positions of decision-making authority. Noting that there was a tendency to overlook tables of figures and data, she instead proposed several graphical displays of the information which would more convincingly illustrate the problem. This served as an important step in the use of data visualizations to tell compelling stories with data. 
+
+John Snow was an English physician who was an early proponent of the germ-theory of disease. This was proposed as an alternative to the then dominant *miasma theory*, which more or less attributed disease to "bad air". After a cholera outbreak in London in 1854, John Snow mapped out the houses in the are which had individuals sick with cholera. Using this graphic, it became evident that the cases of cholera were clustering around a particular water pump on broad street, lending strong evidence to the thought that this was the cause of transmission. This stands as a foundational study in epidemiology which informs practice to this day.^[There is some indication that, while the identification of the water pump lead to it being shutoff by the city, the cases of cholera were already reducing by this point. It is thus unclear whether the intervention was timely enough to be effective. However, the impact of the finding looms large to this day.]
+
+::: {#fig-graphical-displays layout-ncol=2}
+
+![One of Florence Nightingale's data visualizations demonstrating death of soldiers during the Crimean War. The blue area in these plots demonstrates the rate of deaths of preventible illness over the course of the war, the red/pink areas represent deaths from wounds, and the black areas represent all other causes. This clearly demonstrates the outsized impact that the policies had on the health of soldiers.](/graphics/ch11-florence.jpg){#fig-florence}
+
+![The map produced by John Snow illustrating the cholera outbreak. Infected areas are illustrated by the dark shaded rectangles, which appear to cluster around the pump, indicated near the center of the map on broad street. As households move further and further from this central location, the number of cases evidently drops off, providing a strong indication that this may be the cause.](/graphics/ch11-snow.jpg){#fig-snow}
+
+Famous historical graphics produced by Florence Nightingale and John Snow which served great utility in improving health at their time, and stand as an important recognition of the power of visualizing data in a way that renders the message easily interpretable. 
+:::
+
+:::
+
+Outside of graphical summaries, we will also consider numeric summaries. These summaries are typically useful for describing particular features of the data which may be of direct interest. These types of summaries are analogous to the summaries we saw for random variables where we condensed probability mass functions into measures of location and measures of variability. When we did this, we lost much of the nuance of the probabilistic behaviour, however, it became far easier to have a general sense of how a random variable will behave. The same concerns will exist in summarizing data. The more we summarize, the more information we will lose, however, the more we will be able to fully appreciate the numeric summaries that we do have. Descriptive statistics is often about balancing these competing interests. 
+
+As previously mentioned, the tools that we will use to summarize data will depend primarily on the type of data that we have. The summaries available to summarize the behaviour of a qualitative variable differ from those available for quantitative variables. We will begin with a discussion of summarizing qualitative variables.
+
+## Descriptive Statistics for Qualitative Variables
+
+Qualitative variables are those which are not numeric. As a discipline descending from math, statistics centers the ability to quantify information in a large number of its techniques. This presents a challenge with the tools that we have to summarize qualitative data. While the modern tendency to fuse graphics and art has enabled graphical displays of qualitative information, at its core, the process of descriptive statistics for qualitative data relies on first translating the qualitative information into numeric information. While the exact procedure for doing this will depend on the exact data in question^[For instance, if you are looking at measurements of some quantity over time, time can be used as a "numeric quantity". If the data are geographic in nature, perhaps the locations of different events, then you can use geographic location (latitude and longitude) as numeric data, to place them on a map. These two ideas have been combined to create some very effective and compelling data visualizations. Notably, *1945-1998* is a work of art by Isao Hashimoto, which shows a time lapse video of every nuclear detonation between 1945 and 1998. The video, available on [YouTube](https://www.youtube.com/watch?v=LLCF7vPanrY){target="_BLANK"} can be quite affecting. It is very heavy, and while I think a phenomenal representation of the way in which data can be conveyed effectively, please only watch if you are in a position to do so.] the most common method for extracting numeric representations from qualitative data is through the use of a **frequency distribution**.
+
+:::{#def-frequency-distribution}
+## Frequency Distribution
+
+The frequency distribution summarizes the distinct values that a variable can take on, along with the number of observations that equalled each value. The frequency distribution can be thought of as the distribution of drawing a single observation from the sample at random. 
+:::
+
+The frequency distribution is a useful and intuitive way of summarizing a qualitative variable, numerically. In order to find the frequency distribution, the categories of the variable are listed through, and then the number of observations in each category are tallied up. This can be reported in tabular form, similar to contingency tables^[Recall from @sec-contingency-tables a contingency table summarizes a frequency distribution in two or more variables.] or graphically through the use of bar plots.^[You can use other types of plots as well, such as pie charts. Most statisticians will be adamant in their disavowal of pie charts because they are typically pretty bad at doing what they set out to do.] When expressed in tabular form, it can be useful to work out the **relative frequencies** in addition to (or in place of) the counts, giving the proportion of observations for each category. This gives added context to the raw numbers themselves. 
+
+:::{#exm-coffee-orders}
+## Charles and Sadie Count Coffee Orders
+
+Sitting in the coffee shop, Charles and Sadie begin to wonder how common the various different coffee orders are. They decide to categorize each order into one of the following categories, based on what was ordered: coffee only, coffee with food, coffee and non-coffee drinks, coffee with food and non-coffee drinks, food only, food with non-coffee drinks, and non-coffee drinks only. Over the course of an hour observing they collect the following data. 
+
+::: {.grid}
+
+:::: {.g-col-4}
+* Coffee + Food + Drink 
+* Coffee 
+* Coffee 
+* Coffee + Drink 
+* Coffee 
+::::
+
+:::: {.g-col-4}
+* Coffee + Food
+* Coffee 
+* Coffee + Drink 
+* Drink 
+* Food 
+::::
+
+:::: {.g-col-4}
+* Coffee 
+* Food + Drink 
+* Food + Drink 
+* Coffee 
+* Food
+::::
+:::
+
+Based on these data:
+
+a. Write down the tabular frequency distribution for these data.
+b. Write down the relative frequencies for these data.
+c. Which order was observed the most? The least? 
+d. What is the most common order in the population?
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. We will complete (a) and (b) together in a single table. First note that there are $6$ realizations of coffee, $1$ of drink, $2$ of food, $2$ of coffee with drink, $1$ of coffee with food, $1$ of coffee with food and drink, and $2$ of food and drink.
+b. This leads to a total of $15$ orders in the hour, and so taken together we can write down the following frequency distribution.
+
+| Order                 | Frequency (Count) | Relative Frequency | 
+|:------                |:------------:     |:------------:      |
+| Coffee                | $6$               | $6/15 = 0.4$       |
+| Drink                 | $1$               | $1/15 = 0.06666$   |
+| Food                  | $2$               | $2/15 = 0.13333$   |
+|Coffee + Drink         | $2$               | $2/15 = 0.13333$   |
+|Coffee + Food          | $1$               | $1/15 = 0.06666$   |
+|Coffee + Food + Drink  | $1$               | $1/15 = 0.06666$   |
+|Food + Drink           | $2$               | $2/15 = 0.13333$   |
+
+: {.striped}
+
+c. The most frequent order was coffee alone. This was observed by $6$ customers. The least frequent orders were drinks alone, coffee with food, and coffee with food and another drink. These were observed $1$ time each.
+d. These data are from a sample, and by all accounts, not even a random sample. It is important to always keep in mind that there is a difference between population parameters and sample statistics. It is possible that coffee is the most common order in the morning, and that food is far more common later on throughout the day: if the hour watched was in the morning, that could explain this pattern at present. We are only able to **describe** what we observed, rather than **infer** about the population, based on this summary.
+::::
+:::
+
+To express the frequency distribution in graphical form, we typically will make use of a bar plot. A bar plot is a graphic which along one axis (typically the x-axis, though horizontal plots exist) the distinct values of a qualitative variable are listed. Then, along the other axis, the frequencies of those are listed. The values are displayed based on rectangles with equal width for each category, and with a height that goes out to the value that of the observed variable. Then, to read the bar plot, we observe which rectangles are taller (corresponding to more prevalent values in the sample) or smaller (corresponding to values which were more rare in the sample). We can compare across categories, or even back solve for the entire frequency distribution. 
+
+:::{#exm-coffee-orders-redux}
+## Charles and Sadie Count Coffee Orders, Representatively
+
+With the understanding of the flawed methodology that they exhibited on their first attempt, Charles and Sadie decide to perform a random sample to collect data on the different coffee orders made at the local coffee shop. To this end, they randomly select different days of the week, different hours of the day, and then they observe all of the orders that come in over that time. Sadie produces the following bar plot based on their collected data.
+
+```{r}
+#| echo: false
+#| label: sadie_coffee_barplot
+#| cache: true
+#| fig-height: 10
+#| fig-width: 8
+
+set.seed(31415)
+
+options <- c("Coffee", "Coffee + Food", "Coffee + Drink", "Coffee + Food \n + Drink", "Food", "Food + Drink", "Drink")
+probs <- c(0.2, 0.1, 0.1, 0.01, 0.15, 0.29, 0.15)
+
+observations <- sample(options, 60, replace=TRUE,prob=probs)
+
+plt <- barplot(table(observations), 
+        main = "Barplot of Orders at the Coffee Shop", 
+        ylab = "Frequency (Count)",
+        ylim = c(0, max(table(observations))),
+        xaxt = "n",
+        yaxt = "n")
+
+text(plt, par("usr")[3], labels = names(table(observations)), srt = 45, adj = c(1.1,1.1), xpd = TRUE, cex=0.8) 
+
+axis(2, 
+     at = seq(0, max(table(observations))),
+     labels = )
+     
+```
+
+Based on this plot, answer the following questions.
+
+a. Which is the most common order in the sample, and what is the frequency with which it is ordered?
+b. If there are a total of $60$ orders, what is the relative frequency of the least common order?
+c. How many orders had any coffee drink in the order?
+d. Describe the overall frequency distribution.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. In this sample, there are $24$ orders of Food + Drink, which is the most common order.
+b. The least common order is a coffee + food + drink, which occurred $\dfrac{1}{60} = 0.01666$ proportion of the time in the sample.
+c. In total there were $11 + 5 + 9 + 1 = 26$ orders with coffee in them. This accounts for $\dfrac{26}{60} = 0.433333$ of all orders.
+d. The most common order was food and a non-coffee drink, which was more than twice as common as the next most frequent order of just a coffee. It was very unlikely for people to get all three categories of item. People got coffee with food more frequently than food alone, drinks alone, or coffee with drinks.
+
+::::
+:::
+
+Whenever we present a descriptive statistic, be that a numerical summary or a graphical summary, it is always worth asking the question: "what are we trying to highlight?" In the case of frequency distributions, we are typically thinking about highlighting the total counts and cross category comparisons of the different values. Often times these are comparisons that we wish to make and using a bar chart for this is quite effective. However, depending on what we are trying to communicate, there may be alternative choices that make sense to make. It is always important to ensure that your visualization or summary is informed by the goal of your presentation, rather than by outside guidance. Descriptive statistics is fundamentally a field predicated upon communication. With that said, any time that we are presented with an observed qualitative variable, the frequency distribution completely contains all of the information in the data. It may not always be the most useful presentation of the data, however, it is a way of summarizing everything that we know about that variable alone. As a result, deep comfort with frequency distributions will be instrumental to effective communication and description of qualitative data.
+
+:::{#exm-palmer-penguins}
+## Charles finds Palmer's Penguins
+
+While daydreaming one day, Charles imagines the chance to work at the Palmer Station in Antarctica, researching penguins. The day dreams lead to a rich imagination, envisioning all species of penguins across the various islands. As the day dreams wind-on, Charles begins to count the penguins, leading to the following observations.
+
+::: {.grid}
+
+::: {.g-col-2}
+:::
+
+
+::: {.g-col-8}
+```{r}
+#| echo: false
+#| cache: true
+#| label: palmer_penguin_charles
+
+library(palmerpenguins)
+library(magrittr)
+library(knitr)
+library(kableExtra)
+
+kable(table(penguins$species, penguins$island)) %>% column_spec(1, bold = TRUE)
+```
+:::
+
+::: {.g-col-2}
+:::
+:::
+
+Using these data^[Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package Version 0.1.0. https://allisonhorst.github.io/palmerpenguins/. doi:10.5281/zenodo.3960218.] answer the following.
+
+a. Write down the complete frequency distribution for penguin species.
+b. Write down the complete frequency distribution for the inhabited island.
+c. Describe or sketch the bar plots for each of the relevant frequency distributions.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. To get the distribution for species, we add up along each row to get the total observed data into a frequency table. The relative frequency is divided by $344$.
+```{r}
+#| echo: false
+
+library(palmerpenguins)
+library(magrittr)
+library(knitr)
+library(kableExtra)
+
+my_t <- table(penguins$species)
+my_p <- prop.table(my_t)
+
+kable(cbind("Frequency"=my_t, "Relative Frequency"=my_p)) %>% column_spec(1, bold = TRUE)
+```
+
+b. To get the distribution for locations, we add up along each column to get the total observed data into a frequency table.
+```{r}
+#| echo: false
+
+library(palmerpenguins)
+library(magrittr)
+library(knitr)
+library(kableExtra)
+
+my_t <- table(penguins$island)
+my_p <- prop.table(my_t)
+
+kable(cbind("Frequency"=my_t, "Relative Frequency"=my_p)) %>% column_spec(1, bold = TRUE)
+```
+
+c. The following represent the two bar plots for each distribution.
+```{r}
+#| echo: false
+#| label: penguin_bar_plot
+#| cache: true
+#| fig-ncol: 2
+
+barplot(table(penguins$species), main = "Barplot of Palmer Penguin Species")
+barplot(table(penguins$island), main = "Barplot of Palmer Penguin Island")
+
+```
+
+::::
+:::
+
+## Descriptive Statistics for Quantitative Variables
+
+Where our approach for qualitative data was to first summarize the data numerically, and then analyze, with quantitative data the first step is unnecessary. When our data are numeric to begin, we can work directly with them in order to begin to summarize the behaviour of the observed variables. Despite this change in process, the frequency distribution remains an impactful concept in summarizing and describing data which have been observed. 
+
+### The Frequency Distribution for Quantitative Variables
+If the quantitative variables that have been observed are discrete, the frequency distribution can proceed in an exactly equivalent way as in the qualitative case. If, however, we have quantitative variables our frequency distribution needs to be adjusted. The issue is that, if a variable of interest is continuous, we do not expect to ever observe the same value more than once. This renders the frequency distribution to look something like a broken comb^[![](/graphics/ch11-broken_comb.png)], rather than having any interesting features. To avoid this happening, we consider the process of **binning** quantitative variables, where values are placed into **bins** or **classes**, consisting of intervals, in order to better understand the structure of the frequency distribution.
+
+:::{#def-data-binning}
+## Data Binning
+
+Data binning is a (pre-processing) step of a data analysis in which quantitative variables (typically continuous ones) are placed into **bins** or **classes** based on their underlying value. If a quantitative variable $x$ takes values in the interval $[a,b]$, then the interval $[a,b]$ is divided into several sub-intervals, say $[a,p_1], [p_1, p_2], \dots, [p_{k-1},b]$. Then, each observed value for $x$, $x_i$ is placed into its corresponding bin, before the data are analyzed.
+:::
+
+As a general rule, bins should be selected either based on some subject-matter justification (such that they are meaningful to the underlying data), or else to accurately balance the trade-offs of smoothness and accuracy in the frequency distribution. That is, we want to select enough bins so that the true behaviour of the data are correctly represented, while not selecting so many that noise and variability are the primary conclusions to be drawn from the summaries. Plenty of methods to select the number of bins have been proposed, and in most software packages for devising frequency distributions various techniques will be implemented. It is worth ensuring that the technique selected for any particular use case accurately summarizes and describes the available data. Generally, $10-30$ bins will likely suffice, though fewer or more may be necessary in certain situations. 
+
+The only hard-and-fast rules of binning is that, first, bins should^[Almost always.] be of equal width. That is, if you take $[0,1)$ to be the first bin in your data, then every bin should be of length $1$. Second, bins should^[Again, almost always.] span the complete range of your observed data. If you have points ranging from $0$ to $1000$, every value between $0$ and $1000$ should be contained in some bin. Once binned, quantitative frequency distributions can be described in exactly the same manner that qualitative were.
+
+:::{#exm-coffee-orders-counts}
+## Charles and Sadie Count Coffee Order Items
+
+After their success in understanding the makeup of different coffee orders, Charles and Sadie set their sights on understanding the quantity of items ordered by customers at the coffee shop. The observe customers for an hour and consider the total number of items each customer orders. The following observations are made. 
+
+::: {.grid}
+
+:::: {.g-col-2}
+* 3
+* 1
+* 4
+::::
+:::: {.g-col-2}
+* 2
+* 1
+* 1
+::::
+:::: {.g-col-2}
+* 1
+* 6
+* 2
+::::
+:::: {.g-col-2}
+* 3
+* 1
+::::
+:::: {.g-col-2}
+* 2
+* 1
+::::
+:::: {.g-col-2}
+* 3
+* 2
+::::
+:::
+
+Based on these data, answer the following questions.
+
+a. Write down the frequency distribution for the number of items on each order. Include the relative frequency for each observation.
+b. Is data binning required for this frequency distribution? Describe.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. Here the relevant categories are $\{1,2,3,4,5,6\}$. We get 
+
+| Order Size    | Frequency (Count) | Relative Frequency    | 
+|:-             |:--:               |:--:                   |
+| 1             | $6$               | $6/15 = 0.4$          |
+| 2             | $4$               | $4/15 = 0.266666$     |
+| 3             | $3$               | $3/15 = 0.333333$     |
+| 4             | $1$               | $1/15 = 0.066666$     |
+| 5             | $0$               | $0/15 = 0$            |
+| 6             | $1$               | $1/15 = 0.066666$     |
+
+b. No. These data are discrete, and given that there are only $6$ total categories there would be no particular utility to binning here. If the data were continuous, or were discrete with sufficiently many categories so as to be better treated as continuous than discrete, then binning would be pertinent.
+::::
+:::
+
+
+:::{#exm-coffee-orders-values}
+## Charles and Sadie Count Coffee Order Values
+
+As a final way of understanding the distribution of different coffee orders, Charles and Sadie decide to observe the total cost of orders for various customers coming through the store. The following observations are made over the course of an hour.
+
+::: {.grid}
+
+:::: {.g-col-2}
+* \$2.25 
+* \$2.20
+* \$5.13
+::::
+:::: {.g-col-2}
+* \$1.30
+* \$2.02
+* \$4.91
+::::
+:::: {.g-col-2}
+* \$1.64
+* \$3.49
+* \$0.98
+::::
+:::: {.g-col-2}
+* \$2.97
+* \$3.84
+::::
+:::: {.g-col-2}
+* \$5.30
+* \$2.53
+::::
+:::: {.g-col-2}
+* \$2.45
+* \$4.66
+::::
+:::
+
+Based on these data, answer the following questions.
+
+a. Describe the considerations that should be made for bin sizes. Would a bin size of $\$0.10$ be reasonable? What about one that is $\$3.00$?
+b. Suppose that a bin size of $\$0.50$ is used, starting at $0.50$. Write down the frequency distribution.
+
+::::{.callout .solution collapse='true'}
+## Solution
+a. The smallest observed value is $0.98$ and the largest observed value is $5.30$. That means that our bins should encapsulate both of these end points, and be evenly spaced throughout. Because there are only $15$ data points, we likely want fewer bins rather than more, to ensure that our bins are not predominantly empty or with single items. If we use $0.10$, we would require $43$ bins at least to include all of the data. This would guarantee that most bins were empty, and is far too small of a divide to be useful. If we used $\$3.00$, we would span the full range in $2$ to $3$ bins. This is likely not particularly informative either, this time giving too little of a breakdown of the various values. 
+b. The following is the relevant frequency distribution. 
+
+| Bin           | Frequency (Count) | Relative Frequency    |
+|:-             |:--:               |:--:                   |
+|$[0.50,1.00)$  | $1$               | $1/15 = 0.066666666$  |
+|$[1.00,1.50)$  | $1$               | $1/15 = 0.066666666$  |
+|$[1.50,2.00)$  | $1$               | $1/15 = 0.066666666$  |
+|$[2.00,2.50)$  | $4$               | $4/15 = 0.266666666$  |
+|$[2.50,3.00)$  | $2$               | $2/15 = 0.133333333$  |
+|$[3.00,3.50)$  | $1$               | $1/15 = 0.066666666$  |
+|$[3.50,4.00)$  | $1$               | $1/15 = 0.066666666$  |
+|$[4.00,4.50)$  | $0$               | $0/15 = 0$            |
+|$[4.50,5.00)$  | $2$               | $2/15 = 0.0.1333333$  |
+|$[5.00,5.50)$  | $2$               | $2/15 = 0.0.1333333$  |
+
+: {.striped}
+::::
+:::
+
+While the tabular representation of the frequency distribution for quantitative variables is a relevant summary, and one which serves a key role, we will see that there are far more ways of summarizing the behaviour of quantitative variables. Before that, however, it is worth determining how to graphically represent a quantitative frequency distribution, through the use of histograms.
+
+### Using Histograms for Visualizing Quantitative Frequency Distributions
+If we expand the idea of a barplot to quantitative variables, we get the **histogram**. A histogram is primarily useful for displaying the distribution of a single quantitative variable. To do so, the horizontal (x-axis) represents the value of the variable of interest, and the corresponding vertical (y-axis) represents the frequency with which that value occurs in the data. That is, higher points correspond to more frequently occurring values, and lower points correspond to less frequently occurring values.
+
+If the data are binned, then the histogram displays counts within the bins rather than at the values themselves. Just as with a barplot, the graphic proceeds by drawing a rectangle, with a height equal to the frequency, and a width equal to the length of the interval. The larger the rectangle, the more points that were observed in that range.
+
+Sometimes, instead of having the y-axis measure the frequency, we may take it to measure the **density** of falling in that range. The density is given by the probability that a value in that range is observed, divided by the width of the range. For instance, if $10$ of $50$ observations fell between $2$ and $4$, then the height of the rectangle using the density representation would be $\dfrac{10/50}{4-2} = 0.1$. So long as every bin has an equal width, the same relative heights will occur whether using the frequency or density versions.
+
+A key difference between histograms and barplots is that, since the data in a histogram are numeric, we typically consider the x-axis to be continuous. This means that the bins of the histograms expand along the complete axis, and adjacent bins will touch one another. In a barplot there is separation between these categories since there are no values between the two of them.
+
+:::{#exm-coffee-orders}
+## Charles and Sadie Plot the Coffee Orders
+
+Charles and Sadie realize that to make sure that they have a full understanding of the total spend that customers have at the coffee shop they should likely collect more data, and data which are spread out randomly over times of the day and days of the week. As a result, they conduct another random survey. Once collected, both Charles and Sadie produce histograms for the totals, as seen here.
+
+```{r}
+#| echo: false
+#| label: coffee_sale_histograms
+#| cache: true
+#| fig-ncol: 1
+
+set.seed(31415)
+
+n <- 150
+
+x <- pmax(round(10 * rbeta(n, 3, 7), 2), 0.90 + runif(1, 0,0.25))
+
+hist(x, xlab = "Order Totals ($)", ylab = "Frequency (Count)", main = "Charles' Histogram", breaks = 30)
+hist(x, xlab = "Order Totals ($)", ylab = "Frequency (Count)", main = "Sadie's Histogram", breaks = 12)
+
+```
+
+a. What is the approximate bin width used by Charles? By Sadie?
+b. Describe the frequency distribution as depicted by both histograms.
+c. Does one histogram do a better job than the other at representing these data? Explain.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. We can see that in every dollar along the x-axis, Sadie has two histogram rectangles. This suggests a bin width of approximately $0.50$. For Charles, there are $5$ per dollar, and as a result, the bin width will be approximately $0.20$.
+b. Both plots demonstrate that the most frequent order totals are comparatively low, with values around $\$1.00$. With the histogram provided by Sadie, the order totals are fairly uniform between $1$ and $3.50$, with a small spike around $2.00$. Following that, the order totals are fairly uniform between $3.50$ and $6$, before falling again above $6.00$. The patterns in the histogram from Charles are similar, but with slightly more information. While there is a fairly uniform distribution of observations beyond $3.40$, and then a dip beyond $6.00$, for the smaller values there is an oscillating pattern. They spike around $1.00$, $2.00$, $3.00$, and $3.40$, with the other values being appreciably lower. Still, the lower values are definitely higher on average than the higher values, with roughly equivalent breakpoints as was seen with Sadie's. 
+c. The preferred histogram here will likely depend on the use case for the data. The data that Charles is demonstrating provides more specific information, however, it is possible that this added information is more noise than useful. It would be interesting to look at, for instance, the prices of various items at the store to see if there was a reason for the peaks: otherwise, it could be seen to be random variation that is not particularly noisy. Sadie's pattern, by contrast, is far more explicable, but it gains this by smoothing over a lot of the fine details within the graphic. Perhaps a graph that balances these two would be more suitable. 
+
+```{r}
+#| echo: false
+#| label: coffee_sale_histogram_answer
+#| cache: true
+#| fig-ncol: 1
+
+set.seed(31415)
+
+n <- 150
+
+x <- pmax(round(10 * rbeta(n, 3, 7), 2), 0.90 + runif(1, 0,0.25))
+
+hist(x, xlab = "Order Totals ($)", ylab = "Frequency (Count)", main = "Balanced Histogram", breaks = seq(0.9, 7.2, by = 0.3))
+
+```
+::::
+:::
+
+A histogram is a useful graphical display since it succinctly summarizes the entire distribution of a particular variable. You can easily see the range of the data, the points which came up frequently in your observations, those which were rare, and how this behaviour is expressed throughout. It will allow you to readily view points that appear to not fit the trend of the rest of your data, and to investigate a single variable at a glance.
+
+When constructing a histogram, the primary decision that needs to be made is how many bins you should use, or equivalently, how large your bins should be. As you have more and more observations you can typically get away with using smaller bin sizes as, even at the smaller sizes, you likely still have observations that fall into the given intervals. Just as with the discussion on data binning, software that implement histogram construction often provide several techniques for choosing a bin size, or the number of bins, in order to best summarize the data. It is worth considering these for the problem at hand, and ensuring that the choice that is made illustrates the data faithfully.
+
+### Characteristics of the Frequency Distribution 
+While we will typically focus on graphically displaying the distribution of a dataset, it is useful to consider what it is specifically that we are trying to display, and what are the properties of a dataset which are of interest to us? We are primarily concerned with three properties of a distribution: the location, the spread, and the skewness. We have seen all three of these concepts when discussing random variables, but their importance becomes central when summarizing data. More concretely, when describing data we want to make sure to describe the **shape** of the distribution, the **centre** of the distribution, and the **spread** of a distribution. Each of these three concepts have different measures or components which, when taken together, serve as a more complete description of the frequency distribution.
+
+:::{#def-shape}
+## Shape (of a Distribution)
+
+The shape of the data distribution refers to the general pattern of points that are observed in the specific dataset. Typically, the shape of a distribution is decomposed into the **modality** and **skewness** of the distribution. 
+
+The modality refers to the number of peaks that are visible in the distribution: points that are higher than the surrounding points. A distribution is unimodal with one peak, bimodal with two peaks, or multimodal with more than two. 
+
+The skewness corresponds to how symmetric (or not) a distribution is. If a distribution can be mirrored around its center, with the same behaviour above and below the central point, we describe it as symmetric. If a distribution has differing tail-behaviour, extending out in a direction, we say that it is skewed. A distribution that has a long-tail to the right is called **right skewed** or **positive skewed**, where a distribution that has a long-tail to the left is called **left skewed** or **negative skewed**.
+:::
+
+To describe the shape of a frequency distribution, we describe the modality and the skewness of it. These two features combine to give a good sense of the general picture of the distribution, such that someone should be able to sketch a reasonable approximation to the frequency distribution from the description. However, there are many distributions with the same modality and skewness, which are otherwise quite distinct. To understand these differences, it is useful to turn towards measures of location, or central tendency, and measures of spread, or variability. 
+
+:::{#def-location}
+## Location (Central Tendency)
+
+The location of data, also referred to as the central tendency, is a description of where observations in the dataset tended to fall around. This can be measured as the sample mode, the sample median, or the sample mean, and is typically summarized using all three. Measures of central tendency give a sense as to where the middle of the data were, where various definitions of middle can be used. 
+:::
+
+Just as with random variables, measures of location come about by asking what we "expect" to see in the data. When we are discussing samples, rather than random variables, we are instead answering questions around what we saw on average, or what we tended to see in the observed data. Location summaries are quite common, and quite intuitive. You may indicate the most common value, which is the sample mode, or the overall average, the sample mean. However, just as with random variables, the measures of central tendency only tell a partial story. The other key feature of the data is the spread. 
+
+:::{#def-spread}
+## Spread (Variability)
+
+The spread of data is a measure of how separated the data are, and how they tend to be spaced around the location. The spread can be captured using particular measurements, such as the sample variance, sample IQR, or sample range as was done with random variables. The may also refer to the tail behaviour of the data, which looks at how likely values are as they move further and further from the center of the data. 
+
+A distribution is said to be **heavy-tailed** if points that are far from the measures of central tendency are quite frequent in the data, and is said to be **light-tailed** otherwise. These concepts can be formalized more rigorously, however, it is often taken to be an informal rather than formal check.^[Which is to say, we rely on the ✨✨vibes✨✨ of the tails, rather than their mathematical behaviour explicitly.]
+:::
+
+The spread of the data gives a measure as to how concentrated (or not) the observations were. Data which are widely spread out will have large measures of variability compared to those which are less spread out. When combined with the measures of central tendency, as well as a description of the shape of the distribution, it is possible to develop a fairly clear picture of the behaviour of the data, summarized rather succinctly. 
+
+### The Shape of a Distribution
+As indicated, the shape of a distribution is primarily defined by the modality and skewness of the distribution. That is to say, when asked to describe the shape of the distribution, you should report on the modality (including the values of the modal points), as well as on the symmetry or skewness of the distribution. 
+
+:::{#def-modality}
+## Modality
+
+Modality refers to the number of **local** peaks that a frequency distribution has. That is, the number of times that there are values in the frequency distribution that are higher than those in close proximity to them. If looking at the histogram we are looking for the number of "hills" that exist. Modality is classified by the number, and values, of the different modal points. 
+
+A distribution with one local maximum is considered **unimodal**. A distribution with two local maxima is considered **bimodal**. A distribution with three or more local maxima is considered **multimodal**. 
+:::
+
+It is important to emphasize that a frequency distribution may have only one mode, but may be multimodal. That is, we do not require each of the peaks to tend to equate to exactly the same level to be considered peaks. Instead, we compare them to only the points that are around them. This way, we can capture the idea of *local behaviour* indicating that certain regions appeared more frequently than others around them, which is often of direct interest to us. It is also important to recognize that, if reading modal points from a histogram, the number of breaks and the number of observations will likely change the perception of the modality. There will often be judgment calls when discussing the number of modes that a histogram exhibits, with reasonable disagreement being possible. As a general rule, you should not consider small noisy peaks adjacent to others to be additional modal points, unless there is a good reason to do so. If you envision drawing a smooth line over the full distribution of data, the modal points will come where you draw the crests of the hills.
+
+
+:::{.callout-tip icon=false}
+## Identifying the Modality of Distributions
+
+### Unimodal {.unnumbered}
+Data which exhibit a single peak, whether this is in the center or off to one side, are considered to be **unimodal**.
+```{r}
+#| echo: false
+#| label: unimodal_demo
+#| cache: true
+#| fig.ncol: 3
+#| lightbox: true 
+
+set.seed(31415)
+X <- rexp(10^5)
+Y <- rnorm(10^5)
+W <- 50 - rexp(10^5)
+
+hist(X, xlab = "X", ylab = "Density", freq = FALSE, main = "Unimodal Distribution", breaks = 30)
+lines(density(X), lty = 2)
+hist(Y, xlab = "X", ylab = "Density", freq = FALSE, main = "Unimodal Distribution", breaks = 30)
+lines(density(Y), lty = 2)
+hist(W, xlab = "X", ylab = "Density", freq = FALSE, main = "Unimodal Distribution", breaks = 30)
+lines(density(W), lty = 2)
+```
+
+### Bimodal {.unnumbered}
+Data which exhibit exactly two peaks are considered to be **bimodal**.
+```{r}
+#| echo: false
+#| label: bimodal_demo
+#| cache: true
+#| fig.ncol: 3
+#| lightbox: true 
+
+set.seed(31415)
+X <- c(rexp(10^5 * 7/8), rnorm(10^5*1/8, 4, 0.2))
+Y <- c(rnorm(10^5/2, mean = -5, sd = 1), rnorm(10^5/2, mean = 5, sd = 1))
+W <- c(50 - rexp(10^5-50000), rnorm(50000, 55, 1))
+
+hist(X, xlab = "X", ylab = "Density", freq = FALSE, main = "Bimodal Distribution", breaks = 30)
+lines(density(X), lty = 2)
+hist(Y, xlab = "X", ylab = "Density", freq = FALSE, main = "Bimodal Distribution", breaks = 30)
+lines(density(Y), lty = 2)
+hist(W, xlab = "X", ylab = "Density", freq = FALSE, main = "Bimodal Distribution", breaks = 30)
+lines(density(W), lty = 2)
+```
+
+### Multimodal {.unnumbered}
+Data which exhibit more than two peaks are considered to be **multimodal**.
+```{r}
+#| echo: false
+#| label: mutlimodal_demo
+#| cache: true
+#| fig.ncol: 3
+#| lightbox: true 
+
+set.seed(31415)
+X <- c(rexp(10^5 * 6/8), 
+       rnorm(10^5*1/8, 4, 0.2),
+       rnorm(10^5*1/8, 10, 0.2))
+Y <- c(rnorm(10^5/2, mean = 0, sd = 1), 
+       rnorm(10^5/4, mean = 5, sd = 1),
+       rnorm(10^5/8, mean = -5, sd = 1),
+       rnorm(10^5/8, mean = -8, sd = 1))
+W <- c(50 - rexp(10^5-50000-50000), 
+       rnorm(50000, 55, 1),
+       rnorm(25000, 45, 1),
+       rnorm(12500, 40, 1),
+       rnorm(12500, 55, 1))
+
+hist(X, xlab = "X", ylab = "Density", freq = FALSE, main = "Multimodal Distribution", breaks = 30)
+lines(density(X), lty = 2)
+hist(Y, xlab = "X", ylab = "Density", freq = FALSE, main = "Multimodal Distribution", breaks = 30)
+lines(density(Y), lty = 2)
+hist(W, xlab = "X", ylab = "Density", freq = FALSE, main = "Multimodal Distribution", breaks = 30)
+lines(density(W), lty = 2)
+```
+:::
+
+Beyond modality is the skewness. Skewness, or conversely, symmetry is a way of describing the **tail behaviour** of a distribution. As you move away from the central values, the most common values, or the middle values of a distribution, the tails are the values that are far from where you started but still present in the data. In general, if the tails going to the positive and negative directions look similar, the data are said to be symmetric. Otherwise, the data are said to be skewed. We differentiate skewness based on the direction that the tail travels.
+
+:::{#def-skewness}
+## Skewness
+
+Data which are nonsymmetric are said to be skewed. The lack of symmetry can be identified by the behaviour of the tails of a distribution, differentiating between **positive** (or right) skew and **negative** (or left) skew. 
+
+Data are right-skewed if the tail is longer to the righthand side of the figure. Data are left-skewed if the tail is longer to the lefthand side of the figure. 
+:::
+
+Sometimes skewness is quite dramatic, being very evident in which direction the skew will be. In other cases the data are not symmetric, but are also not evidently skewed. In these settings it is worth investigating the data in slightly more depth to try to understand whether the lack of symmetry (or skewness) can be explained based on some particular values, and if the remaining data exhibit a more predictable pattern. 
+
+:::{.callout-tip icon=false}
+## Identifying the Skewness of a Distribution 
+
+To identify whether data are symmetric, right-skewed, or left-skewed, you consider the beahviour of the tails.
+```{r}
+#| echo: false
+#| label: skewness_of_distribution
+#| cache: true
+#| fig.ncol: 3
+#| lightbox: true 
+
+set.seed(31415)
+set.seed(31415)
+X <- rexp(10^5)
+Y <- rnorm(10^5)
+W <- 50 - rexp(10^5)
+
+hist(W, xlab = "X", ylab = "Density", freq = FALSE, main = "Left-skewed Distribution", breaks = 30)
+lines(density(W), lty = 2)
+hist(Y, xlab = "X", ylab = "Density", freq = FALSE, main = "Symmetric Distribution", breaks = 30)
+lines(density(Y), lty = 2)
+hist(X, xlab = "X", ylab = "Density", freq = FALSE, main = "Right-skewed Distribution", breaks = 30)
+lines(density(X), lty = 2)
+```
+:::
+
+As a result, when asked to identify the shape of a distribution, you are being asked about the key features of the distribution: how many modal points are there, and where are those located, and what is happening with the tails of the distribution? Beyond these points, discussion of the shape of the distribution largely centers around giving added context to the nuance with the provided descriptors. For instance, if the skewness is not partiuclarly pronounced, that can be discussed. If modal points are not clearly delineated, that should be acknowledged. Once described, an individual should be able to sketch out a rough distributional curve that approximately mirrors the behaviour of the frequency distribution.
+
+:::{#exm-charles-sadie-modality}
+## Sadie Records the Timing of Hockey Events
+
+Sadie, being a big sports fan, has started to record and analyze the timing of different events throughout the game. Charles decides to help out by producing histograms for the time that these events happen at. Sadie records the time that [faceoffs](https://en.wikipedia.org/wiki/Face-off) occur at, that [goals](https://en.wikipedia.org/wiki/Goal_(ice_hockey)) are scored at, and when [penalties](https://en.wikipedia.org/wiki/Penalty_(ice_hockey)) are taken.^[For reference, NHL games are 60 minutes long (potentially longer if no one is winning at the end of the time), divided into 3 periods. When play is stopped, a face-off takes place to start the play again. Penalties occur when rules are violated by one of the teams. On the histograms, the start of the three periods are indicated in red dotted lines. These data come from a random sample of $200$ games during the 2022-2023 NHL regular season.] The histograms are provided below. 
+
+![](/graphics/ch11-goal-hist.png){.lightbox}
+
+![](/graphics/ch11-faceoff-hist.png){.lightbox}
+
+![](/graphics/ch11-penalty-hist.png){.lightbox}
+
+
+a. Describe the shape of the distribution of goal times in NHL regular season games.
+b. Describe the shape of the distribution of faceoff times in NHL regular season games.
+c. Describe the shape of the distribution of penalty times in NHL regular season games. 
+d. Indicate any difficulties in describing these distributions. 
+
+::::{.callout .solution collapse='true'}
+## Solution
+a. The distribution is approximately **bimodal**, with modal points at approximately $30$ and $60$ minutes. The distribution is non-symmetric, since higher frequency of goals are scored near the end of the game than at the beginning, making it a left-skewed distribution. If the final bin is ignored, which may be reasonable given that the final minute of game has different dynamics than other times, the distribution appears roughly symmetric. 
+b. This distribution is approximately **multimodal**. The modes occur at $0$, $20$, and $40$ minutes. Every period starts with a faceoff, and as a result, every game will have faceoffs taken at exactly $0$, $20$, and $40$ minutes into it. There are some points which may be described as modal points around $10$ minutes and around $30$ minutes, but these are far less obvious than the other three. The distribution is non-symmetric owing to the lack of a modal point at $60$ minutes. Because of this, we may say that there is a slight positive skew to the distribution. It seems more sensible, however, to indicate that in the absence of the three modal points that are clearly explicable, it is a roughly symmetric distribution that is approximately uniform across the whole range.
+c. The modality of the penalty timings is difficult to describe. It may be reasonable to describe this as multimodal with modes appear around $20$, $25$, $38$, $45$, and $60$. However, this may also represent some histogram noise that is better to smooth over. In that case, perhaps you suggest that the three modal points are around $20$, and $40$, and around $50$. The distribution does not exhibit perfect symmetry, owing to the spike near the end of the games, however, there seems to be little apparent skewness in the distribution. With the points near the end of the game removed, it is a mostly symmetric plot, however, with those points in there is some negative skewness indicated. 
+d. While the first two distributions are fairly clear to describe in shape, the penalties are a lot less evident. This becomes even more apparent when we consider how the number of bins selected impacts the overall shape of the distribution. Consider the following histograms (if online, you can click to enlarge them). With few bins, this distribution appears to be approximately symmetric with a single mode in the middle of the distribution. As more and more are added, the pattern remains rather similar until a within-period distribution emerges: the first period has a negative skew, unimodal distribution, the second a fairly uniform symmetric distribution, and the third a bimodal negative skew distribution. As we continue to add bins we see histograms that look similar to the one we considered, before getting to a point that looks more or less consistent throughout the range, with seemingly random spikes at various times. These demonstrate the importance of bin size selection, and illustrate the challenges that can occur when trying to describe real-world data.
+
+```{r}
+#| echo: false
+#| label: penalty_hist
+#| cache: true
+#| fig.ncol: 5
+#| lightbox: true
+
+all_penalties <- c(289, 815, 925, 1304, 1639, 1894, 1894, 2031, 2723, 2772, 3230, 3277, 493, 779, 1078, 1580, 2061, 2130, 1635, 3151, 3378, 467, 488, 755, 1232, 2221, 2462, 3304, 3453, 164, 755, 1318, 1475, 2173, 2924, 3092, 152, 439, 690, 1569, 2307, 2770, 3420, 3420, 40, 1120, 1198, 1442, 2584, 3105, 1768, 1902, 1902, 2722, 2874, 3029, 640, 1535, 1609, 1618, 2010, 3077, 3467, 3467, 3467, 3467, 518, 1867, 2056, 2214, 11, 32, 624, 726, 1130, 1130, 1130, 1200, 1460, 1460, 1568, 1958, 2120, 2162, 2176, 2311, 2831, 2831, 2831, 3483, 510, 535, 588, 1535, 1759, 2379, 1374, 2079, 2480, 2699, 1171, 1785, 2111, 2111, 2245, 3035, 295, 515, 1836, 2061, 2061, 2177, 2773, 3154, 3319, 3587, 3600, 3600, 229, 344, 541, 723, 1106, 2289, 3165, 3246, 3246, 3516, 3516, 3559, 430, 885, 1809, 3193, 3501, 3501, 149, 555, 701, 921, 1453, 3600, 947, 1313, 1711, 1250, 1817, 2688, 2688, 2688, 2688, 2688, 2688, 2697, 2865, 2865, 2865, 3303, 3440, 3440, 3440, 3440, 105, 1079, 1968, 1968, 2130, 2604, 2901, 3079, 390, 887, 1081, 1568, 1698, 2238, 2459, 2802, 3021, 3066, 3427, 3427, 3427, 3427, 3427, 3427, 3506, 3506, 3600, 684, 1191, 1765, 1765, 1765, 2162, 2162, 1614, 1876, 2331, 2876, 2876, 323, 691, 1285, 1511, 1853, 2148, 2370, 3107, 463, 885, 1502, 1764, 1894, 2308, 3213, 913, 913, 1021, 1397, 1544, 1869, 2848, 1038, 2361, 2730, 2952, 3062, 3078, 881, 2185, 3022, 3061, 784, 784, 784, 2202, 3052, 912, 1346, 1993, 2400, 2400, 2569, 2754, 1402, 1533, 2151, 2151, 2463, 3248, 3375, 533, 1945, 2449, 2449, 2628, 566, 804, 1327, 1726, 1893, 2091, 2727, 3047, 3047, 3047, 3047, 3047, 3047, 3047, 426, 593, 905, 2047, 2131, 2131, 2131, 62, 462, 697, 1989, 2681, 3007, 3300, 3300, 3300, 1169, 414, 1096, 1193, 1644, 2625, 3098, 288, 587, 868, 2223, 2223, 2332, 2622, 2660, 3194, 218, 764, 1260, 1437, 1437, 1437, 1496, 1921, 2711, 96, 442, 928, 1869, 2108, 2743, 283, 997, 2212, 2631, 2907, 2935, 3411, 3441, 612, 781, 902, 1406, 1406, 1625, 1687, 1694, 3056, 147, 147, 207, 207, 484, 1336, 1971, 2214, 2214, 2214, 2683, 3549, 49, 276, 656, 656, 848, 950, 1688, 1900, 2654, 2654, 551, 761, 1515, 2243, 2350, 550, 804, 804, 804, 804, 804, 804, 2239, 2239, 2239, 2239, 2583, 2805, 3417, 3600, 509, 825, 1348, 1492, 1938, 2808, 2869, 1400, 1573, 2739, 890, 1681, 294, 470, 710, 720, 1070, 1641, 2385, 2426, 3578, 1525, 1677, 1828, 588, 1515, 2313, 2313, 2334, 2549, 2697, 2697, 2697, 2850, 2850, 2850, 2850, 3264, 3285, 343, 343, 861, 1087, 1244, 1364, 1643, 2301, 2655, 3169, 704, 1163, 1163, 1991, 1991, 1991, 2388, 467, 723, 2923, 1720, 1806, 2364, 2548, 2837, 3172, 3598, 3598, 3598, 540, 540, 540, 624, 772, 1978, 3508, 207, 682, 1068, 1623, 154, 303, 1117, 1642, 1928, 3278, 3278, 90, 266, 1365, 1751, 2339, 2339, 2339, 2710, 222, 270, 734, 1200, 1200, 1936, 2100, 2159, 2159, 2159, 2675, 2918, 3259, 3259, 3259, 3259, 116, 940, 1375, 1422, 1954, 2682, 2886, 3238, 952, 1138, 1626, 1915, 1992, 2315, 2629, 1234, 1744, 1869, 2060, 2118, 408, 955, 1767, 2090, 2984, 1514, 2115, 3130, 242, 1725, 2371, 2927, 1160, 1709, 2160, 2323, 2364, 1476, 1665, 1708, 143, 1192, 1669, 2216, 3400, 307, 1505, 1857, 1857, 1857, 1857, 1857, 1857, 3067, 3382, 738, 1026, 1093, 1424, 1424, 1470, 1470, 2097, 2316, 2418, 2492, 3377, 1154, 1789, 2090, 2529, 2668, 2900, 3323, 3372, 215, 647, 1413, 1625, 3050, 3076, 3403, 3403, 3403, 3403, 399, 709, 855, 899, 1397, 2418, 2972, 3188, 207, 779, 1254, 2124, 2406, 80, 973, 1028, 1535, 1574, 2055, 2324, 2700, 2726, 2881, 3113, 22, 644, 1114, 1114, 1304, 1631, 1717, 2207, 2673, 2843, 36, 925, 1379, 1700, 2666, 1027, 1050, 1451, 2106, 2803, 993, 1269, 1716, 1874, 2025, 2479, 2808, 451, 664, 741, 1090, 1090, 1224, 1902, 3108, 3434, 3581, 374, 573, 795, 973, 1182, 1905, 1905, 1942, 2187, 3250, 219, 219, 270, 270, 1535, 2317, 2367, 58, 100, 1273, 1822, 2204, 2541, 2678, 2770, 2944, 333, 519, 890, 1233, 1929, 3600, 143, 487, 2224, 2541, 253, 384, 1080, 1522, 2485, 1129, 1808, 173, 672, 1979, 2193, 2273, 3325, 784, 951, 1415, 2003, 2348, 2348, 2348, 2660, 3387, 114, 114, 530, 1064, 1460, 1893, 1897, 2140, 2393, 3135, 3460, 1585, 1761, 2003, 2268, 2593, 3359, 3398, 244, 320, 320, 324, 348, 1924, 2552, 2565, 2890, 3037, 3037, 3574, 980, 2245, 2467, 924, 1135, 1304, 2155, 2256, 2306, 3065, 3065, 3065, 3099, 197, 758, 1423, 1847, 1847, 1847, 1847, 2061, 2981, 2981, 3280, 947, 1604, 2977, 1235, 1481, 2367, 2617, 922, 1008, 2326, 2326, 2326, 2844, 3162, 3203, 3203, 3203, 3203, 3556, 703, 1202, 1202, 1274, 2718, 3350, 685, 796, 1316, 1316, 1316, 1316, 1316, 2109, 2109, 2109, 2371, 2549, 2737, 2921, 3260, 3260, 3260, 3260, 3260, 3260, 3260, 861, 1028, 1125, 1125, 1865, 2306, 2564, 3073, 220, 825, 825, 1220, 1745, 2396, 2787, 800, 1107, 1137, 1291, 1291, 1291, 2149, 2465, 2849, 798, 985, 1596, 2489, 2523, 2751, 454, 615, 968, 1337, 1533, 1757, 2245, 2377, 2467, 3021, 872, 955, 481, 1580, 1891, 1891, 2014, 2231, 1174, 1446, 1446, 1550, 2654, 2853, 3217, 3431, 1479, 1499, 2020, 2393, 2595, 2924, 3090, 456, 1530, 1530, 1771, 2144, 2144, 2144, 2783, 362, 617, 1690, 1947, 2272, 2272, 2765, 2976, 799, 879, 1276, 1660, 2229, 2497, 2668, 2925, 3017, 3231, 814, 975, 1473, 1814, 2604, 413, 607, 1042, 1508, 1946, 2745, 2745, 905, 994, 1149, 1149, 1224, 1546, 1955, 2105, 2523, 3024, 3233, 356, 1141, 1471, 1622, 1987, 2145, 2652, 3592, 174, 530, 700, 833, 833, 944, 1286, 1286, 1598, 2177, 2232, 2290, 2624, 2792, 3600, 3600, 301, 301, 301, 608, 1004, 1004, 1004, 1331, 1908, 2886, 3228, 3444, 870, 870, 1384, 2573, 3008, 3008, 3008, 3008, 277, 519, 519, 868, 1152, 1390, 2811, 126, 759, 2033, 2218, 2492, 2750, 3207, 3600, 856, 856, 1027, 1027, 1695, 1860, 2051, 2270, 2725, 2867, 2867, 2867, 1766, 2041, 2320, 2326, 3569, 3569, 3569, 533, 1811, 2186, 2465, 2490, 2658, 53, 175, 332, 954, 1288, 1731, 2442, 2506, 2506, 2652, 2652, 2652, 2652, 2817, 3575, 95, 1077, 1077, 1109, 1359, 1544, 1748, 1798, 1995, 1995, 2750, 104, 755, 926, 1294, 1514, 1514, 1968, 3132, 3287, 679, 679, 885, 1077, 1077, 1077, 1595, 1614, 3555, 83, 829, 1937, 1985, 2308, 2612, 2869, 3049, 3176, 3308, 654, 1073, 1254, 1757, 2644, 2850, 1094, 1114, 1453, 1799, 192, 192, 1855, 2103, 2103, 2103, 2103, 2588, 2605, 3444, 650, 734, 928, 1477, 1630, 2146, 2800, 3044, 3044, 3044, 3044, 3044, 3044, 3460, 3460, 3460, 3460, 3460, 228, 811, 811, 811, 2400, 619, 1194, 1364, 1677, 104, 636, 1711, 1992, 2294, 2566, 3031, 3567, 866, 1469, 1679, 2132, 2169, 2615, 2964, 3086, 3086, 3086, 137, 174, 336, 1704, 2031, 2277, 2904, 772, 975, 1542, 1624, 2097, 2279, 2403, 2798, 3010, 79, 459, 459, 500, 500, 1560, 1560, 2511, 540, 845, 1176, 1362, 2437, 3137, 3470, 1010, 1307, 1307, 1664, 3400, 146, 565, 759, 1750, 1750, 3248, 86, 209, 1033, 1107, 1401, 1544, 1578, 1812, 1950, 2282, 2387, 2426, 2514, 2942, 185, 559, 1249, 1433, 1514, 1613, 2243, 109, 706, 1383, 2605, 2663, 2916, 1028, 1065, 1511, 1563, 2111, 2298, 3311, 3492, 338, 474, 828, 970, 1472, 1776, 2159, 2307, 2794, 3286, 3496, 3496, 3496, 3496, 3496, 3496, 3496, 3496, 3496, 3496, 991, 1064, 1064, 1064, 1200, 1200, 1203, 1203, 1746, 1947, 1947, 2817, 2998, 3047, 3047, 3578, 63, 152, 1270, 1270, 1477, 1663, 1797, 2635, 3600, 52, 436, 436, 578, 655, 726, 851, 851, 954, 1520, 2040, 2397, 3487, 3487, 3533, 54, 447, 670, 1144, 1327, 1432, 1432, 1665, 1670, 1940, 1940, 2473, 2762, 3210, 3416, 364, 977, 977, 1872, 2605, 2650, 3274, 192, 2457, 3460, 333, 476, 546, 1891, 2231, 2231, 2398, 2693, 441, 634, 874, 1361, 1361, 1606, 1747, 1747, 2561, 994, 1074, 1710, 2196, 3170, 791, 1107, 1945, 2727, 3401, 3460, 3476, 386, 727, 1804, 2358, 2358, 2522, 3022, 70, 389, 968, 2119, 3262, 86, 238, 856, 932, 2018, 2144, 2888, 3307, 304, 782, 790, 2143, 100, 722, 1334, 1662, 1666, 516, 636, 1304, 1459, 2900, 3087, 594, 1655, 2763, 2852, 3140, 1009, 2409, 2812, 1487, 2431, 3543, 1112, 1672, 1672, 1915, 1924, 2071, 3023, 3459, 288, 1237, 1932, 2397, 2561, 3599, 104, 233, 459, 616, 1866, 2137, 2812, 2839, 3049, 3055, 3447, 3555, 3555, 3600, 3600, 3600, 3600, 823, 1056, 1056, 2624, 2799, 342, 495, 961, 1046, 1147, 1375, 1570, 2746, 2746, 2774, 606, 894, 1351, 1742, 2326, 3298, 180, 311, 751, 1615, 1625, 2537, 2537, 2687, 2851, 3534, 548, 784, 1130, 1421, 1984, 2311, 3338, 3434, 477, 784, 1844, 2570, 2570, 2570, 591, 1933, 2398, 3050, 3600, 272, 1096, 1580, 1652, 2302, 2997, 1200, 1998, 2365, 2452, 1824, 1919, 2539, 3086, 289, 719, 2333, 2333, 1104, 1277, 1530, 1671, 2426, 3282, 1233, 1600, 2065, 2375, 2527, 2929, 3222, 178, 605, 947, 1657, 940, 1155, 1364, 1511, 2830, 1865, 2649, 2702, 2879, 118, 892, 1468, 1625, 3164, 232, 662, 1133, 1133, 1421, 1628, 2050, 3329, 3588, 420, 610, 1007, 1825, 3004, 3004, 3004, 3271, 3329, 907, 1223, 3009, 64, 1347, 1347, 1653, 2384, 3600, 1776, 3424, 271, 528, 1097, 1563, 2992, 3401, 544, 1099, 1337, 1403, 2111, 2111, 2133, 2288, 2871, 3152, 52, 354, 2008, 2259, 2726, 181, 438, 1038, 2096, 2144, 2584, 3204, 1038, 1303, 1634, 1849, 2057, 2532, 2662, 3147, 3256)
+
+for(mylen in seq(4, 60, by=3)) {
+    hist(all_penalties / 60, 
+        breaks = seq(0,60, length.out=mylen), 
+        freq = FALSE, 
+        main = "Histogram of Time of Game that NHL Penalties are Taken at",
+        xlab = "Time of Game (Minute)")
+    abline(v = 0, lty = 2, col = 'red')
+    abline(v = 20, lty = 2, col = 'red')
+    abline(v = 40, lty = 2, col = 'red')
+}
+
+```
+::::
+:::
+
+### Measures of Location
+The shape of a distribution is described in fairly general terms. If you know that a distribution is right-skewed and unimodal, with a peak around $10$, there are many plausible distributions that could be drawn for what this would look like. While often times this shape captures the most pertinent information for a distribution, sometimes we require more. To add specificity, we can consider the location or central tendency of a frequency distribution. The main measures of location are the sample mean, sample median, and sample mode. These correspond to the exact quantities that we saw in random variables, this time computed on the data directly. 
+
+:::{#def-sample-mode}
+## Sample Mode
+
+The sample mode is the most common value observed in a dataset. When there are more than one value which appear equally often, these are all consider modes. If a variable is binned, we may define the mode in terms of the classes rather than the specific value, depending on the context.
+
+:::
+
+Whichever value appears most often is given as the mode. This is analogous to the most probable value for a random variable. The sample mode and the modal points are related to one another. When discussing modality, we contented ourselves with approximations, considering values *near* the actual modal points when defining the peaks. When discussing the sample mode we are looking for a specific value, or a specific category of values, which actually gives the most frequent value.
+
+:::{#def-sample-median}
+## Sample Median
+
+The sample median is the middle point after ordering the observed data. If there are an even number of observations it is the mean between the two middle points. If we order the observed data as $x_{(1)} \leq x_{(2)} \leq \cdots \leq x_{(n)}$, then the median is defined as $$\text{Median} = \begin{cases}
+    x_{([n+1]/2)} & n \text{ is odd}; \\
+    \dfrac{1}{2}\left(x_{(n/2)} + x_{(n/2 + 1)}\right) & n \text{ is even}.
+\end{cases}$$ That is, it is the middle point when there is an odd number of observations in the data, and it is the average of the two middle points when there are an even number of observations.
+:::
+
+The sample median has the same interpretation as the population median we previously saw. There will always be $50\%$ of the observations which are less than or equal to the median, and always $50\% of the observations which are greater than or equal to the median. This puts the median as the center of the distribution, when measured in terms of frequencies.
+
+:::{#def-sample-mean}
+## Sample Mean
+
+The sample mean is the standard arithmetic average. If we observe $x_1,\dots,x_n$, then we write the mean as $\overline{x}$, and this is calculated as $$\overline{x} = \frac{1}{n}\sum_{i=1}^n x_i.$$ 
+
+:::
+
+The mean is a very commonly reported measure for the center of a distribution. it is also referred to as the average. Just as with random variables and the expected value, the mean can be viewed as balancing the mass of observations. If you place equal mass at each of the observations, then the mean would be the point which balances a seesaw holding those masses.
+
+:::{#exm-compute-central-tendency}
+## Charles' Penguin Bill Lengths
+
+Continuing on in day-dreaming adventures at the Palmer Station in Antarctica, Charles envisions recording the bill lengths of a random sampling of the penguins that are observed. These day-dreamed values are recorded, and Charles would look to summarize the general behaviour of these points, considering the measures of central tendency of them.
+
+| | | | | | | | | | |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 49.0 |  37.8 | 45.8 | 39.0 | 43.2 | 48.8 |  37.8 | 49.1 | 40.9 | 37.3 | 
+
+a. What is the sample mean of these data?
+b. What is the sample median of these data?
+c. What is the sample mode of these data?
+d. What is the expected value for the bill length in the population? Explain.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. For the sample mean, we compute \begin{align*}
+\overline{x} &= \frac{1}{10}(49.0 +  37.8 + 45.8 + 39.0 + 43.2 + 48.8 +  37.8 + 49.1 + 40.9 + 37.3) \\
+&= \frac{428.7}{10} \\
+&= 42.87
+\end{align*}
+
+b. For the median, we first consider ordering the values in ascending order. 
+
+| | | | | | | | | | |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|  37.3 |  37.8 | 37.8 | 39.0 | 40.9 | 43.2 |  45.8 |  48.8 | 49.0 | 49.1 | 
+
+Then we note that the two middle values are $40.9$ and $43.2$, so we get that $$\text{Median} = \frac{1}{2}(40.9 + 43.2) = 42.05.$$
+
+c. The only repeated value in these data is $37.8$, and so that makes it the mode.
+d. We do not know, given this information, what the population expected value will be. We do not have access to enough information to compute the parameter, and instead must rely on using only our sample statistics. These are measures of the data that are observed, rather than the full population.
+::::
+:::
+
+The three common measures of central tendency will often be explicitly computed and reported when access to the data is directly available. These can also be approximately indicated using a histogram of a frequency distribution. The mode will be the bin with the highest frequency, or equivalently, the highest point on the histogram. The median will be found in the bin which contains the middle observation. This can be challenging to find exactly without counting, but an approximation is likely possible. The mean will be found in the bin which balances the mass of the distribution. You can imagine asking yourself: where would the fulcrum need to go in order to balance a seesaw with these weights on it. The answer will tell you where the mean is. Note that this process, without explicit observations, will not be exact. Instead, it is in our interest to attempt to find approximately correct solutions to these questions, getting a general sense of the measures of central tendency from a graphical representation.
+
+:::{#exm-identify-points}
+## Unknown Histogram Markings
+
+Charles wanted to help Sadie with the hockey analysis from before. To do so, Charles worked out the mean, median, and mode for each of the distributions, and indicated this on the histograms with black vertical markings. Unfortunately, Charles does not remember which marking is which. For each of the following graphics, indicate which of the three solid vertical markings corresponds to the mean, median, and mode, or describe why it is not possible to tell. 
+
+a. ![](/graphics/ch11-faceoff-plot-marked.png){.lightbox}
+b. ![](/graphics/ch11-heart-rate.png){.lightbox}
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. In this plot only two markings are differentiable from one another: one in the bin immediately before $30$ and one in the bin immediately before $40$. We know that the mode of the distribution falls into the bin around $40$, and so the two lines here indicate the mean and the median. With the plot we should expect that the mean is slightly higher than the median, since the tail extends ever so slightly beyond symmetry to the positive side. 
+b. Here we can discern the mode to be marked around the $80$ minute mark. The other two markings, for the mean and median, are marked in the bin just beyond $40$. Here we know that the mean should be higher than the median, since the outlying spike later on will have the effect of pulling-up the observed mean, without impacting the median. Thus, we observe in order the median, mean, then mode.
+::::
+:::
+
+It is also important to remember that, for each of these quantities, when computed on a dataset, we refer to them as *sample* measures. That is, we call the mode the **sample mode**, the median the **sample median**, and the mean the **sample mean**. This terminology emphasizes that our calculations are not with respect to a theoretical random variable with some assumed probability distribution, but rather from a sample of data that was actually observed. Recall that we view our sample as being **realizations** of a random quantity, either as a random process or from a larger population. That is, we can think of these measures as **statistics** computed on a sample, rather than the **parameters** that could be computed on the population.
+
+### Measures of Spread or Variability
+When we introduced the concept of the expected value, and other measures of location of a random variable, we indicated that these would be insufficient to accurately summarize the behaviour of a random quantity. The same is true of a frequency distribution. Once again, by complementing the measures of central tendency with measures of spread, we are better able to understand the data which were actually observed, and use this to inform our understanding of the data. Combining variability, with central tendency, and distributional shape gives a good overall picture of what was observed, in a digestible summary form. The primary measures of variability for a dataset's distribution are the same quantities used to measure variability of a random variable: the (sample) variance, (sample) IQR, and (sample) range. 
+
+:::{#def-sample-range}
+## Sample Range
+
+The sample range is the observed range in the data set. We define the sample range to be the difference between the maximum observed data point and the minimum observed data point. That is, if the ordered data is observed as $$x_{(1)} \leq x_{(2)} \leq \cdots \leq x_{(n)},$$ then the sample range is $$\text{Range} = \max\{x\} - \min\{x\} = x_{(n)} - x_{(1)}.$$ Just as with the range of a random variable, the range may be reported as either the distance between the minimum and maximum, or else as the minimum and maximum points themselves.
+:::
+
+Just as with random variables, the sample range gives a rather coarse view of variability within a datset. The sample range does give information regarding the values that are *possible*, based on what was observed within the data, but it does not necessarily provide a reasonable representation of which values were commonly expressed throughout the data. A single outlying point can drramatically impact the range, without meaningfully changing the observed patterns. For this reason, we will often consider the sample IQR instead. 
+
+:::{#def-sample-IQR}
+## Sample Interquartile Range (IQR)
+
+The sample interquartile range is the difference between the first and third quartiles in the dataset. That is, it is the length that spans the middle $50\%$ of observations within the variable. The sample IQR is computed as $\text{IQR} = Q3 - Q1$, where $Q3$ and $Q1$ are the third and first quartiles. 
+
+In order to compute $Q1$ you compute the median of the first half of the data. In order to compute $Q3$ you compute the median of the second half of the data. If there are an odd number of points, the central point is computed in both. That is, taking  $$x_{(1)} \leq x_{(2)} \leq \cdots \leq x_{(n)},$$ then for the first quartile, $$Q1 = \begin{cases}\text{Median}\{x_{(1)}, x_{(2)},\dots, x_{(n/2)}\} & n \text{ even} \\ \text{Median}\{x_{(1)}, x_{(2)}, \dots, x_{([n+1]/2)}\} & n \text{ odd}\end{cases}.$$ The third quartile, $Q3$, is computed similarly as $$Q3 = \begin{cases}\text{Median}\{x_{(n/2+1)}, x_{(n/2 + 2)},\dots, x_{(n)}\} & n \text{ even} \\ \text{Median}\{x_{([n+1]/2)}, x_{([n+1]/2+1)}, \dots, x_{(n)}\} & n \text{ odd}\end{cases}.$$
+:::
+
+The interquartile range has the same benefits when compared to the range in a sample as it did for random variables. Outlying points that substantially deviate from the trends that are actually observed do not make a large difference on the sample IQR, where they will on the sample range. This can be desirable for understanding the variability in *most* of the data. Just as with random variables, the range and IQR are analogous in that they give a full representation of how spread out the data are. It is also possible to conceive of variability as how far from *average* data tend to be. For this, we consider the sample variance (and standard deviation).
+
+:::{#def-sample-variance}
+## Sample Variance
+
+The sample variance is an analogue to the population variance, measuring how far data are from the sample mean, on average. To compute the sample variance we take the following form $$s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \overline{x})^2.$$ Note that the division here is by $n-1$ rather than by $n$.^[This makes the sample variance **unbiased** for the true variance. If you conceive of the sample variance as a random quantity, one that depends on what sample you actually take, dividing by $n-1$ rather than by $n$ will make it so that $E[S^2] = \text{var}(X)$, where if you divide by $n$ this will not be the case.] Notice that if $n$ is large, dividing by $n$ or by $n-1$ will give roughly the same results.
+:::
+
+The sample variance has the same underlying concern as the variance of a random variable: namely, it is a squared quantity. As a result, we will often consider the **sample standard deviation**, which is given by the square root of the sample variance, as an alternative representation of the sample variability.
+
+:::{#def-sample-sd}
+## Sample Standard Deviation
+
+The sample standard deviation is an analogue to the population standard deviation, giving an approximate measure of the mean deviation from the sample mean, measured in the same units. The sample standard deviation is given by the square root of the sample variance, which is to say $$\text{SD} = s = \sqrt{s^2} = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \overline{x})^2}.$$
+:::
+
+These measures of spread are also useful to supplement the understanding of the behaviour of a dataset that is provided by the measures of central tendency. Specifically, by reporting measures of central tendency, alongside measures of spread, and a description of the shape of the distribution, you are able to describe and summarize the beahviour of a dataset in a concise manner in such a way so as to allow for a deep understanding of the patterns that have emerged. 
+
+:::{#exm-compute-spread}
+## Sadie Questions the Spread in Bill Lengths
+
+After having described the central tendency of the bill length data that Charles day dreamed about, Sadie inquires about the variability in the data. Charles, so focused on the penguins themselves, had not even stopped to consider how much variability may be present in these data. Sadie decides to help out by computing measures of sample variability.
+
+| | | | | | | | | | |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 49.0 |  37.8 | 45.8 | 39.0 | 43.2 | 48.8 |  37.8 | 49.1 | 40.9 | 37.3 | 
+
+a. What is the sample range of these data?
+b. What is the sample IQR of these data?
+c. What is the sample variance of these data? What is the sample standard deviation?
+d. What is the variance of the bill lengths? Explain.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+The solution is made easier by first ordering the data. Consider
+
+| | | | | | | | | | |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|  37.3 |  37.8 | 37.8 | 39.0 | 40.9 | 43.2 |  45.8 |  48.8 | 49.0 | 49.1 | 
+
+a. The largest value is $49.1$ and the smallest is $37.3$. As a result the sample range is $49.1 - 37.3 = 11.8$.
+b. To find the sample IQR we find $Q1$ and $Q3$. There are $10$ points, so $Q1$ is the median of the first five, and $Q3$ is the median of the last $5$. The first five points are $37.3, 37.8, 37.8, 39.0, 40.9$ so $Q1 = 37.8$. The last $5$ points are $43.2, 45.8,  48.8, 49.0, 49.1$ so $Q3 =  48.8$. Thus, the IQR is $48.8 - 37.8 = 11$. 
+c. For the sample variance, we first note that (from @exm-compute-central-tendency), we know that $\overline{X} = 42.87$. Thus, we get \begin{align*}
+s^2 &= \frac{1}{n-1}\sum_{i=1}^n(x_i - \overline{x})^2 \\
+&= \frac{1}{9}\left((37.3 - 42.87)^2 + (37.8 - 42.87)^2 + (37.8-42.87)^2 + (39 - 42.87)^2\right. \\
+&\left.+ (40.9-42.87)^2 + (43.2-42.87)^2 + (45.8 - 42.87)^2 + (48.8 - 42.87)^2 + \right.\\
+&\left.(49 -42.87)^2 + (49.1 - 42.87)^2\right) \\
+&= 24.6156
+\end{align*} For the sample standard deviation, we simply take the square root fo this, giving $s = \sqrt{24.6156} = 4.9615$. 
+d.  We do not know, given this information, what the population variance will be. We do not have access to enough information to compute the parameter, and instead must rely on using only our sample statistics. These are measures of the data that are observed, rather than the full population.
+::::
+:::
+
+### The Five Number Summary and Boxplots
+Histograms display a substantial amount of information for the entire observed distribution. They display the shape of the distribution, as well as the details as to which observations are likely or unlikely values, allowing this to be seen in one place. This amount of detail is often very useful, but on occasion it can obscure the larger picture. This becomes particularly apparent when we wish to compare the distribution of two different variables, or perhaps the same variable across two or more categories. In these situations, the numeric summaries that we have discussed end up holding more weight. While it is very often to report the mean along with the standard deviation, as the two values complement eachother well, it is also very common to report the so-called **five number summary** of a data. 
+
+:::{#def-five-number-summary}
+## Five Number Summary
+
+The five number summary is a method for reporting a set of descriptive statistics for a set of observed data. The five number summary consists of five numbers, listed in order. This is given by $$\min(x), Q1, \text{Median}(x), Q3, \max(x).$$ That is, the five number summary reports the minimum, the first quartile, the median, the third quartile, and the maximum value from a dataset. Doing so provides a succinct summary of both the location as well as the spread of observed data.
+:::
+
+From the five number summary we also immediately know the range, and the IQR. While it is useful to specifically report the values of the five number summary, it can be even more effectively to display this graphically. Boxplots are a graphical display which leverage this idea. For a variable, the boxplot displays the minimum, the maximum, the median, as well as the first and third quartiles $Q1$ and $Q3$, in ascending order, for a given variable. In order to do this, a box is drawn starting at $Q1$ and going up to $Q3$. Then, the median is marked in the middle of this box. Extending from the box are the *whiskers*. 
+
+Each whisker is drawn out a length of $1.5$ times the observed IQR, stopping at the highest (or lowest) point within that range. Thus, if all points fall within $1.5$ times the IQR of either $Q1$ or $Q3$, then the whiskers will stop at the minimum or maximum point observed. If not, there are points beyond those included in the whiskers: these are typically referred to as outliers. The outliers are drawn beyond the whiskers of a boxplot, drawing a single dot for each point.
+
+![A visual representation of a boxplot. The five number summary is included, along with an indication of which values fall outside of an expected range by using the whiskers to indicate $1.5$ times the IQR.](/graphics/ch11-boxplot-labeled){#fig-boxplot-labels}
+
+:::{#exm-boxplots-from-numeric-summaries}
+## Boxplots and Numeric Summaries
+
+Charles and Sadie have gotten very much into the summarizing data from the penguins. For the first sample of penguins, they have measurements of bill lengths in mm, with the following observations. 
+
+| | | | | | | | | | |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 49.0 |  37.8 | 45.8 | 39.0 | 43.2 | 48.8 |  37.8 | 49.1 | 40.9 | 37.3 | 
+
+They took another two samples with other bill length measurements, but seemed to have lost the data directly. Fortunately, they have the five number summaries. These are given by the following.
+
+
+| Sample | Min | Q1 | Median | Q3 | Max | 
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| 2 | 32 | 40 | 43 | 45 | 52 |
+| 3 | 34 | 37 | 41 | 49 | 50 |
+
+a. Write down the five number summary for the first sample. 
+b. Sketch a boxplot for the first sample, or explain why it is not possible.
+c. Sketch a boxplot for the second sample, or explain why it is not possible.
+d. Sketch a boxplot for the third sample, or explain why it is not possible.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. In the previous examples, @exm-compute-central-tendency and @exm-compute-spread, we found that the five number summary would be given by $37.3, 37.8, 42.05, 48.8, 49.1$. 
+b. The boxplot here will have a box drawn from $37.8$ to $48.8$, with a median line drawn at $42.05$. The whiskers will extend for $37.3$ which is only $0.5$ beneath $Q1$ and so there will be no outlier points drawn. The upper whisker will be drawn out to $49.1$ which is only $0.3$ above $Q3$ and so it will be drawn without outlier points. This can be pictured as follows.
+```{r}
+#| echo: false
+
+bill_lengths <- c(49.0, 37.8, 45.8, 39.0, 43.2, 48.8,  37.8, 49.1, 40.9, 37.3)
+
+boxplot(bill_lengths, 
+        main = "Sample One Boxplot",
+        ylab = "Bill Length (mm)",
+        xlab = "Sample 1")
+```
+c. In this case we will be unable to draw a boxplot for the sample. The issue is that the minimum point is $32$ which is $8$ below $Q1$. The IQR is $45 - 40 = 5$, and so $1.5\times 5 = 7.5$. As a result, the minimum would need to be drawn as an outlier point, which means that we cannot know where the whiskers will stop. This concern is not present on the upper side, where the whisker would be extended to $52$.
+d. Here we can use the $5$ number summary to draw the boxplot directly. The box would be drawn from $37$ to $49$, with the medina marked at $41$. The whiskers would extend down to $34$ ($3$ below $Q1$) and up to $50$ ($1$ above $Q3$). This can be pictured as follows. 
+```{r}
+#| echo: false
+
+bill_lengths <- c(34, 37, 41, 49, 50)
+
+boxplot(bill_lengths, 
+        main = "Sample Three Boxplot",
+        ylab = "Bill Length (mm)",
+        xlab = "Sample 3")
+```
+::::
+:::
+
+It is important to note that the boxplot is inspired by the five number summary, but it encodes slightly more information. It will be precisely the same whenever the maximum and minimum fall within $1.5$ times the IQR of the first and third quartiles, but it will include further information in all other cases. This is done to indicate points which are **outliers**, those which appear to deviate from expected trends (of nicely behaved data).^[Outliers are a topic that necessitate a great deal of discussion to approach with care. As a general rule, I would be skeptical of any analysis you see which excludes outliers on the basis of a statistical test. Outliers, especially as assessed from these types of rules, are better understood as points that demonstrate that the data are heavy-tailed rather than points which should be ignored.]
+
+Typically, the boxplots will be drawn so that multiple plots are shown on the same graph. In order to read a boxplot you can compare the medians, and then the spread. The typical variability of the quantity is contained within the box portion, and plots which have largely overlapping boxes are often thought to behave similarly. The whiskers represent the outer limits of what is expected within the data: if both whiskers are roughly the same length, the distribution appears to be mostly symmetric. If one is longer than the other, the distribution exhibits either positive or negative skew. The outliers can contribute to the illustration of skewness on the distribution, but are typically less representative of the distribution itself. A boxplot with a lot of outliers is suggestive of a dataset with far heavier tails than is typical for most well-behaved data, and any analysis on these data should proceed cautiously.
+
+:::{#exm-comparing-penguin-species}
+## Penguin Species Comparisons
+
+The enthusiasm that Charles and Sadie had for the penguin data lead them to reaching out to some researchers who have actually studied the penguins. The researchers, grateful to share their work with enthusiastic individuals, sent a series of boxplots comparing multiple different measurements broken up by penguing species and by the sex of the penguins. Charles and Sadie begin to study these various boxplots, comparing the distributions illustrated by each of the boxplots, and trying to determine differences in observations. For each of the following boxplots, compare the location and spread of the various distributions represented, and briefly describe what is observed. The following boxplots are given for:
+
+a. Bill length by species.
+b. Bill depth by species.
+c. Flipper length by sex.
+d. Body mass by sex.
+
+```{r}
+#| echo: false
+#| fig.ncol: 2
+
+library(palmerpenguins)
+
+boxplot(bill_length_mm ~ species, 
+        data = penguins, 
+        xlab = "Species",
+        ylab = "Bill Length (mm)",
+        main = "(a) Bill Length by Species")
+
+boxplot(bill_depth_mm ~ species, 
+        data = penguins, 
+        xlab = "Species",
+        ylab = "Bill Depth (mm)",
+        main = "(b) Bill Depth by Species")
+
+boxplot(flipper_length_mm ~ sex, 
+        data = penguins, 
+        xlab = "Sex",
+        ylab = "Flipper Length (mm)",
+        main = "(c) Flipper Length by Sex")
+
+boxplot(body_mass_g ~ sex, 
+        data = penguins, 
+        xlab = "Sex",
+        ylab = "Body Mass (g)",
+        main = "(d) Body Mass by Sex")
+```
+
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. By way of comparison, the adelie pegnuins appear to have less long bills than both the chinstrap and the gentoos, even when accounting for variability. We can see this since the median is substantially lower, and the box does not appear to overlap at all. The chinstrap and gentoo have more comparable bill length,s with the chinstrap being slightly larger in general, but with the gentoo having extreme observations that are the longest observed. 
+
+    The adelie have a median of just below $40$, will an interquartile range from about $37$ to around $41$, and all observations falling between about $32$ and $46$. The chinstrap have a median length around $50$, with an interquartile range from about $46$ through $51$, and a full data span between about $41$ and $58$. The gentoo have a median of around $47$, with a fairly small IQR, spanning from around $46$ to around $50$. There are no negative outliers, all points falling above about $41$, but the highest point extends to nearly $60$, sitting beyond the outlier limit of around $56$.
+
+    The specific five number summary (not easily read directly from the boxplots are):
+```{r}
+#| echo: false
+
+library(palmerpenguins)
+
+fn_names <- c("Min", "Q1", "Median", "Q3", "Max")
+
+fn_adelie <- fivenum(penguins$bill_length_mm[which(penguins$species == "Adelie")])
+fn_chinstrap <- fivenum(penguins$bill_length_mm[which(penguins$species == "Chinstrap")])
+fn_gentoo <- fivenum(penguins$bill_length_mm[which(penguins$species == "Gentoo")])
+
+names(fn_adelie) <- fn_names
+names(fn_chinstrap) <- fn_names
+names(fn_gentoo) <- fn_names
+
+kable(data.frame("Adelie" = fn_adelie, "Chinstrap" = fn_chinstrap, "Gentoo" = fn_gentoo))
+```
+
+b. The adelie an chinstrap penguins exhibit roughly the same location, with the chinstrap exhibiting slightly more variability in terms of IQR and slightly less variability in terms of the overall range. The gentoo have less deep bills than either of the other species, with very little overlap between them at all.
+
+    The adlie have a median depth of around $18.5$, with an IQR ranging from just under $18$ to around $19$. There is one outlying observation, sitting above $21$, with no outliers in the negative direction. The smallest observed bill depth is around $15.5$. The chinstrap have a similar median, again around $18.5$, with an IQR spanning from just below $18$ to just over $19$. The range of the data, however, sit from around $16.5$ through to approxiamtely $21$, with no extreme outlying observations. The gentoo have a median that is a little ways above $15$, with an IQR from just above $14$ to around $16$. The range of the data in total is from around $13$ to around $17$.
+
+    The specific five number summary (not easily read directly from the boxplots are):
+```{r}
+#| echo: false
+
+library(palmerpenguins)
+
+fn_names <- c("Min", "Q1", "Median", "Q3", "Max")
+
+fn_adelie <- fivenum(penguins$bill_depth_mm[which(penguins$species == "Adelie")])
+fn_chinstrap <- fivenum(penguins$bill_depth_mm[which(penguins$species == "Chinstrap")])
+fn_gentoo <- fivenum(penguins$bill_depth_mm[which(penguins$species == "Gentoo")])
+
+names(fn_adelie) <- fn_names
+names(fn_chinstrap) <- fn_names
+names(fn_gentoo) <- fn_names
+
+kable(data.frame("Adelie" = fn_adelie, "Chinstrap" = fn_chinstrap, "Gentoo" = fn_gentoo))
+```
+
+c. Male penguins have slightly longer flippers, on average, but with fairly substantial overlap. Both males and females tend to exhibit similar spread, both in terms of the IQR and the range of the data, and the it quite a lot of overlap for both. For each species, the median sits closer to the first quartile than the third quartile, which suggests that there is likely some skewness in the positive direction, at least throughout the bulk of theo bservations. 
+
+    To summarize each distribution, you should be able to determine the approximate locations of each of the five numbers from the summary. There are no outliers for any of the measurements. The specific five number summary (not easily read with specificity from the boxplots are):
+```{r}
+#| echo: false
+
+library(palmerpenguins)
+
+fn_names <- c("Min", "Q1", "Median", "Q3", "Max")
+
+fn_female <- fivenum(penguins$flipper_length_mm[which(penguins$sex == "female")])
+fn_male <- fivenum(penguins$flipper_length_mm[which(penguins$sex == "male")])
+
+names(fn_female) <- fn_names
+names(fn_male) <- fn_names
+kable(data.frame("Female" = fn_female, "Male" = fn_male))
+```
+
+d. Male penguins weigh more on average than the females. The male penguins also seem to exhibit a wider spread, both in terms of the IQR and the overall range. There is a substantial amount of overlap between the main data, however, less so than for flipper length. Just as with flipper length, the median sits closer to the first quartile than the third, suggesting that there is a slight positive skew in the data. 
+
+    To summarize each distribution, you should be able to determine the approximate locations of each of the five numbers from the summary. There are no outliers for any of the measurements. The specific five number summary (not easily read with specificity from the boxplots are):
+```{r}
+#| echo: false
+
+library(palmerpenguins)
+
+fn_names <- c("Min", "Q1", "Median", "Q3", "Max")
+
+fn_female <- fivenum(penguins$body_mass_g[which(penguins$sex == "female")])
+fn_male <- fivenum(penguins$body_mass_g[which(penguins$sex == "male")])
+
+names(fn_female) <- fn_names
+names(fn_male) <- fn_names
+kable(data.frame("Female" = fn_female, "Male" = fn_male))
+```
+
+::::
+:::
+
+## Exercises {.unnumbered}
+
+:::{#exr-11.0A}
+In a survey conducted among students, they were asked about their favorite colors. The options were red, blue, green, yellow, and orange. Below are the responses from 10 students. Use these data to construct a frequency distribution.
+
+> Red, Blue, Green, Yellow, Orange, Blue, Red, Green, Green, Yellow
+:::
+
+:::{#exr-11.0B}
+A group of students was surveyed about their preferred leisure activities. The options included reading, playing sports, watching movies, listening to music, and playing video games. Below are the responses from 15 students. Construct the frequency distribution for these data.
+
+> Reading, Playing Sports, Watching Movies, Listening to Music, Playing Video Games, Reading, Playing Sports, Watching Movies, Watching Movies, Listening to Music, Playing Video Games, Reading, Reading, Playing Sports, Playing Sports
+:::
+
+:::{#exr-11.0C}
+In a class of 30 students, each student was asked to choose their favorite genre of music from rock, pop, hip-hop, jazz, and classical. Below are the responses for 10 of them.
+
+> Rock, Pop, Pop, Hip-Hop, Jazz, Classical, Rock, Pop, Pop, Hip-Hop
+
+a. Use these responses to construct a frequency distribution for the data.
+b. What proportion of the $30$ students preferred rock?
+:::
+
+:::{#exr-11.1A}
+A survey was conducted to find out how many pets each household owns. Below are the responses from 20 households.
+
+> 2, 1, 3, 0, 2, 1, 4, 2, 0, 1, 2, 3, 2, 1, 5, 2, 3, 1, 0, 2
+
+a. What type of variable is this?
+b. Write down the frequency distribution for these data. What bin width should you use?
+c. Find the five number summary for these data. 
+d. What is the mode for this variable?
+:::
+
+:::{#exr-11.1B}
+The number of books read by students over the summer break was collected. Below are the responses from 8 students.
+
+> 4, 6, 2, 1, 3, 0, 1, 3
+
+a. Write down the frequency distribution for these data.
+b. Find the five number summary for these data.
+c. Find the mean and standard deviation for these data.
+:::
+
+:::{#exr-11.2A}
+The time taken (in minutes) by students to complete a quiz was recorded. Below are the times taken by 20 students.
+
+> 20, 25, 30, 35, 40, 22, 28, 33, 37, 42, 24, 29, 31, 36, 39, 21, 26, 32, 38, 41
+
+a. What type of variable is this best treated as?
+b. Write down a frequency distribution for these data. What bin width did you use?
+c. Find the five number summary for these data.
+d. What is the mode for this variable?
+:::
+
+:::{#exr-11.2B}
+A survey asked participants about their monthly expenses on groceries, ranging from $100 to $1000. Below are the reported expenses from 5 participants.
+
+> 251, 326, 182, 509, 427
+
+a. Write down the frequency distribution for these data.
+b. Find the five number summary for these data.
+c. Find the mean and standard deviation for these data.
+:::
+
+
+:::{#exr-11.1}
+Consider the following histogram displaying the distribution of volumes for black cherry trees.
+
+![](/graphics/tree_volume.png)
+
+a. Describe the distribution of the data set. 
+a. What is the bin width used?
+a. What is the relative frequency of trees between $10$ and $20$ cubic feet?
+a. Are there any notable outliers, (points which otherwise seem to deviate from the overall pattern)? Describe why this may be the case.
+a. How would the relative frequency between $10$ and $20$ change if $4$ observations between $60$ and $70$ were added?
+:::
+
+:::{#exr-11.2}
+Consider the following histogram displaying the distribution of heights for black cherry trees.
+![](/graphics/tree_height.png)
+
+a. Describe the distribution of the data set. 
+a. What is the bin width used?
+a. What is the relative frequency of trees between $70$ and $75$ cubic feet?
+a. Are there any notable outliers, (points which otherwise seem to deviate from the overall pattern)? Describe why this may be the case.
+
+:::
+
+:::{#exr-11.3}
+Consider the following histogram displaying the distribution of lengths of major rivers in the US.
+![](/graphics/hist_rivers.png)
+
+a. Describe the distribution of the data set. 
+a. What is the bin width used?
+a. Are there any notable outliers, (points which otherwise seem to deviate from the overall pattern)? Describe why this may be the case.
+a. When might this be an effective plot? When might this plot be ineffective?
+a. Approximately what percentage of observations were longer than $2000$?
+
+:::
+
+:::{#exr-11.4}
+Consider the following histogram displaying the distribution of lengths of major rivers in the US, containing only the data on the rivers under $2000$ miles.
+
+![](/graphics/hist_rivers2.png)
+
+a. Describe the distribution of the data set. 
+a. How many bins are there?
+a. Are there any notable outliers, (points which otherwise seem to deviate from the overall pattern)? Describe why this may be the case.
+a. Describe how the previous histogram (from @exr-11.3) would change if the bin width for this graph were used.
+a. Approximately what percentage of observations fell between $1000$ and $1500$?
+
+:::
+
+
+:::{#exr-11.5}
+Consider the following histogram depicting industrial pressure measurements.
+
+![](/graphics/pressure.png)
+
+a. Describe the distribution of the data set. 
+a. What is the bin width used?
+a. Are there any notable outliers, (points which otherwise seem to deviate from the overall pattern)? Describe why this may be the case.
+a. Suppose that measurements beyond $100$ are known to be the result of a transcription error, and they actually should have been recorded between $90$ and $95$. Describe the distribution that would arise. 
+a. Approximately what proportion of observations were below $75$ or above $90$?
+
+:::
+
+:::{#exr-11.6}
+Data from the file used to generate the following histogram was accidentally deleted where observations from the independent variable equaled $4$. If there were $240$ total observations, how many observations were for $4$?
+
+![](/graphics/hist2.png)
+:::
+
+:::{#exr-11.7}
+Consider the following histogram displaying the distribution of volumes for black cherry trees.
+
+![](/graphics/tree_volume.png)
+
+Using the plot, answer the following:
+
+a. What is the median of the distribution?
+a. What is the approximate mean of the distribution? 
+a. What is the mode of the distribution? 
+a. Which measure of central tendency is the best for the distribution?
+a. Calculate (or approximate) several measures of variation for the distribution.
+
+:::
+
+:::{#exr-11.8}
+Consider the following histogram displaying the distribution of heights for black cherry trees.
+
+![](/graphics/tree_height.png)
+
+Using the plot, answer the following:
+
+a. What is the median of the distribution?
+a. What is the approximate mean of the distribution? 
+a. What is the mode of the distribution? 
+a. Which measure of central tendency is the best for the distribution?
+a. Calculate (or approximate) several measures of variation for the distribution.
+
+:::
+
+:::{#exr-11.9}
+Consider the following histogram displaying the distribution of lengths of major rivers in the US.
+
+![](/graphics/hist_rivers.png)
+
+Using the plot, answer the following:
+
+a. What is the median of the distribution?
+a. What is the approximate mean of the distribution? 
+a. What is the mode of the distribution? 
+a. Which measure of central tendency is the best for the distribution?
+a. Calculate (or approximate) several measures of variation for the distribution.
+
+:::
+
+:::{#exr-11.10}
+Consider the following histogram displaying the distribution of lengths of major rivers in the US, containing only the data on the rivers under $2000$ miles.
+
+![](/graphics/hist_rivers2.png)
+
+Using the plot, answer the following:
+
+a. What is the median of the distribution?
+a. What is the approximate mean of the distribution? 
+a. What is the mode of the distribution? 
+a. Which measure of central tendency is the best for the distribution?
+a. Will the measure of variation be larger or smaller when you restrict to the shorter rivers? 
+
+:::
+
+
+:::{#exr-11.11}
+Consider the following histogram depicting industrial pressure measurements.
+
+![](/graphics/pressure.png)
+
+Using the plot, answer the following:
+
+a. What is the median of the distribution?
+a. What is the approximate mean of the distribution? 
+a. What is the mode of the distribution? 
+a. Which measure of central tendency is the best for the distribution?
+a. Calculate (or approximate) several measures of variation for the distribution.
+a. Suppose that measurements beyond $100$ are known to be the result of a transcription error, and they actually should have been recorded between $90$ and $95$. What measure of central tendency is best for the distribution?
+
+:::
+
+:::{#exr-11.12}
+Consider a quantitative variable measured in a dataset.
+
+a. Is the sample mean always equal to one of the values in the sample? If. so, explain why. If not, give an example.
+b. Is the sample median always equal to one of the values in the sample? If. so, explain why. If not, give an example.
+b. Is the sample mode always equal to one of the values in the sample? If. so, explain why. If not, give an example.
+:::
+
+:::{#exr-11.13}
+In one group of $20$ individuals, the mean height was $178$cm. In a second group of $30$ individuals the mean height was $164$cm. What is the mean height for both groups, when they are put together?
+:::
+
+:::{#exr-11.14}
+There are $10$ employees in a particular division of a company. Their salaries have a mean of $70,000$, a median of $55,000$, and a standard deviation of $20,000$. The largest number on the list is $100,000$. 
+
+A clerical error is made which enters the maximum value as a $1,000,000$ rather than $100,000$. 
+
+a. What is the mean of the altered data?
+a. What is the median of the altered data?
+a. What is the standard deviation of the altered data?
+
+:::
+
+:::{#exr-11.15}
+Four research teams caught groups of ganges dolphins, consisting of $15$, $20$, $10,$ and $18$ dolphins each. The reported mean weights (in pounds) of the groups were $162$, $148$, $153$ and $140$, respectively. What was the overall mean of all the dolphins?
+:::
+
+:::{#exr-11.16}
+A certain company is considering giving employees a weekly raise. Currently, the average weekly salary at the company is $1000$, with a standard deviation of $100$. 
+
+a. What would happen to the mean and standard deviation if a $\$50$ raise were given to every employee?
+a. What would happen to the mean and standard deviation if a $5\%$ raise were given to every employee?
+
+:::
+
+:::{#exr-11.17}
+Match each of the following boxplots (A)-(D), with the histograms (1)-(4).
+
+![](/graphics/matching1.png)
+:::
