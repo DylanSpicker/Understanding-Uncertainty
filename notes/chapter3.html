@@ -61,6 +61,9 @@ div.csl-indent {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -871,6 +874,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to Statistics</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -1318,7 +1327,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="chapter3_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><a href="chapter3_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="chapter3_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1342,7 +1351,7 @@ Solution
 Figure&nbsp;3.1: A generic tree diagram. Here the first choice has three different options and the second choice has two. We can see the six total combinations, labelled on the right of the diagram, and can trace the choices required to get there.
 </figcaption>
 <div aria-describedby="fig-tree-diagram-general-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch3-tree-diagram-generic.svg" class="img-fluid figure-img">
+<a href="..\graphics/ch3-tree-diagram-generic.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="..\graphics/ch3-tree-diagram-generic.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1651,6 +1660,9 @@ Solution
 <h3 class="unnumbered anchored" data-anchor-id="references">References</h3>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;3.1: A generic tree diagram. Here the first choice has three different options and the second choice has two. We can see the six total combinations, labelled on the right of the diagram, and can trace the choices required to get there.</span>
+</div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-kahneman" class="csl-entry" role="listitem">
 Kahneman, Daniel, and Amos Tversky. 1972. <span>“Subjective Probability: A Judgment of Representativeness.”</span> <em>Cognitive Psychology</em> 3 (3): 430–54.
@@ -2124,6 +2136,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

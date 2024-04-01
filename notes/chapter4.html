@@ -41,6 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -853,6 +856,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to Statistics</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -874,7 +883,7 @@ window.Quarto = {
   <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">4.3.3</span> Bayes’ Theorem</a></li>
   </ul></li>
   <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="header-section-number">4.4</span> Independence</a></li>
-  <li><a href="#contingency-tables" id="toc-contingency-tables" class="nav-link" data-scroll-target="#contingency-tables"><span class="header-section-number">4.5</span> Contingency Tables</a></li>
+  <li><a href="#sec-contingency-tables" id="toc-sec-contingency-tables" class="nav-link" data-scroll-target="#sec-contingency-tables"><span class="header-section-number">4.5</span> Contingency Tables</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul>
 </nav>
@@ -1434,7 +1443,7 @@ B_3 &amp;= \{(\text{T},\text{H},\text{T}),  (\text{H},\text{T},\text{H})\}.
 Figure&nbsp;4.1: This graphic shows the argument that summing over the joint probabilities between an event and a partition gives the full marginal probability. Note that <span class="math inline">\(B_1,\dots,B_7\)</span> forms a partition of the space where every possible outcome is contained in exactly one of these sets. Then, if we take an arbitrary event <span class="math inline">\(A\)</span>, we can divide <span class="math inline">\(A\)</span> into the components that intersect with each partitioning set, namely <span class="math inline">\(A \cap B_1\)</span>, <span class="math inline">\(A \cap B_2\)</span>, and so forth.
 </figcaption>
 <div aria-describedby="fig-basic-partition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch4-basic-partition.svg" class="img-fluid figure-img">
+<a href="..\graphics/ch4-basic-partition.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="..\graphics/ch4-basic-partition.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1710,8 +1719,8 @@ Solution
 </div>
 </section>
 </section>
-<section id="contingency-tables" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="contingency-tables"><span class="header-section-number">4.5</span> Contingency Tables</h2>
+<section id="sec-contingency-tables" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="sec-contingency-tables"><span class="header-section-number">4.5</span> Contingency Tables</h2>
 <p>Through to this point we have discussed probabilities in the abstract, either through an enumeration of equally likely outcomes, or else by directly specifying the likelihood of various events. While these are useful in many regards, we are often looking for more concise manners of summarizing information of interest. One tool for accomplishing this is a contingency table.</p>
 <div id="def-contingency-table" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 4.7 (Contingency Table)</strong></span> A contingency table is a tabular summary of information which summarizes the joint probabilities of two or more variables. Typically a contingency table will take one factor for the columns and a secondary factor for the rows, where each cell then represents the frequency with which observations occur in the two corresponding categories simultaneously.</p>
@@ -2450,6 +2459,9 @@ charles_p_table`,
 </div>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;4.1: This graphic shows the argument that summing over the joint probabilities between an event and a partition gives the full marginal probability. Note that <span class="math inline">\(B_1,\dots,B_7\)</span> forms a partition of the space where every possible outcome is contained in exactly one of these sets. Then, if we take an arbitrary event <span class="math inline">\(A\)</span>, we can divide <span class="math inline">\(A\)</span> into the components that intersect with each partitioning set, namely <span class="math inline">\(A \cap B_1\)</span>, <span class="math inline">\(A \cap B_2\)</span>, and so forth.</span>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -2921,6 +2933,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

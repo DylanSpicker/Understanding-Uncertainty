@@ -41,6 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -851,6 +854,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to Statistics</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -1082,7 +1091,7 @@ P(X\in(a,b)) &amp;= 1 - P(X\not\in(a,b))\\
 Figure&nbsp;9.1: A number line showcasing the interval <span class="math inline">\((a,b)\)</span> and demonstrating how you can take everything less than <span class="math inline">\(b\)</span> and remove all that is less than <span class="math inline">\(a\)</span> to be left with only <span class="math inline">\((a,b)\)</span>.
 </figcaption>
 <div aria-describedby="fig-number-line-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch9-difference-in-numbers.png" class="img-fluid figure-img">
+<a href="..\graphics/ch9-difference-in-numbers.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="..\graphics/ch9-difference-in-numbers.png" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1172,7 +1181,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="chapter9_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><a href="chapter9_files/figure-html/unnamed-chunk-1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="chapter9_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1262,7 +1271,7 @@ Solution
 Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red and blue), and mean 5 (black). The red density has variance 1, the blue density has variance 4, and the black density has variance 0.25.
 </figcaption>
 <div aria-describedby="fig-normal-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="chapter9_files/figure-html/fig-normal-density-1.png" class="img-fluid figure-img" width="672">
+<a href="chapter9_files/figure-html/fig-normal-density-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="chapter9_files/figure-html/fig-normal-density-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1374,7 +1383,7 @@ The Empirical Rule
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="chapter9_files/figure-html/empirical_rule-1.png" class="img-fluid figure-img" width="672"></p>
+<p><a href="chapter9_files/figure-html/empirical_rule-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="chapter9_files/figure-html/empirical_rule-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1492,7 +1501,7 @@ Closure of the Normal Distribution
 Figure&nbsp;9.3: A plot showing the probability mass function of a <span class="math inline">\(\text{Bin}(100, 0.25)\)</span> distribution, with a <span class="math inline">\(N(25, 18.75)\)</span> density overlaid, demonstrating the utility of the approximation.
 </figcaption>
 <div aria-describedby="fig-normal-approximation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="chapter9_files/figure-html/fig-normal-approximation-1.png" class="img-fluid figure-img" width="672">
+<a href="chapter9_files/figure-html/fig-normal-approximation-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="chapter9_files/figure-html/fig-normal-approximation-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1645,6 +1654,11 @@ Solution
 </div>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;9.1: A number line showcasing the interval <span class="math inline">\((a,b)\)</span> and demonstrating how you can take everything less than <span class="math inline">\(b\)</span> and remove all that is less than <span class="math inline">\(a\)</span> to be left with only <span class="math inline">\((a,b)\)</span>.</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red and blue), and mean 5 (black). The red density has variance 1, the blue density has variance 4, and the black density has variance 0.25.</span>
+<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;9.3: A plot showing the probability mass function of a <span class="math inline">\(\text{Bin}(100, 0.25)\)</span> distribution, with a <span class="math inline">\(N(25, 18.75)\)</span> density overlaid, demonstrating the utility of the approximation.</span>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -2113,6 +2127,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

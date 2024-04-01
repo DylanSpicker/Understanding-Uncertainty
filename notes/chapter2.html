@@ -41,6 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -851,6 +854,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to Statistics</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -1330,7 +1339,7 @@ setdiff(x = sample_space, y = union(E2, E3)) `,
 Figure&nbsp;2.1: A basic Venn diagram, representing the sample space and two different events. In practice, the sample space would have the possible outcomes written into the rectangle, and the circled events would end up containing the relevant outcomes for those events.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch2-venn-diagram-basic.svg" class="img-fluid figure-img">
+<a href="..\graphics/ch2-venn-diagram-basic.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="..\graphics/ch2-venn-diagram-basic.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1341,7 +1350,7 @@ Figure&nbsp;2.1: A basic Venn diagram, representing the sample space and two dif
 Figure&nbsp;2.2: <strong>Union:</strong> The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-union-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch2-venn-diagram-union.svg" class="img-fluid figure-img">
+<a href="..\graphics/ch2-venn-diagram-union.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="..\graphics/ch2-venn-diagram-union.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1351,7 +1360,7 @@ Figure&nbsp;2.2: <strong>Union:</strong> The union of events A and B is shaded h
 Figure&nbsp;2.3: <strong>Intersection:</strong> The intersection of events A and B is shaded here in red. The intersection of two sets is all of the content shared by both sets, given by the overlapping area of the two circles.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-intersection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch2-venn-diagram-intersection.svg" class="img-fluid figure-img">
+<a href="..\graphics/ch2-venn-diagram-intersection.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="..\graphics/ch2-venn-diagram-intersection.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1361,7 +1370,7 @@ Figure&nbsp;2.3: <strong>Intersection:</strong> The intersection of events A and
 Figure&nbsp;2.4: <strong>Complement:</strong> The complement of event A is shaded here in red. The complement of a sets is all of area inside of the sample space, not inside of the set. Here we show the complement of Event A, though Event B would be similar.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-complement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch2-venn-diagram-complement.svg" class="img-fluid figure-img">
+<a href="..\graphics/ch2-venn-diagram-complement.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4"><img src="..\graphics/ch2-venn-diagram-complement.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1381,7 +1390,7 @@ Solution
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The sample space contains the eight possible options. Only <span class="math inline">\((\text{T}, \text{T}, \text{T})\)</span> does not belong to at least one of the events. Both events share <span class="math inline">\((\text{H},\text{H},\text{T})\)</span>, <span class="math inline">\((\text{H},\text{T},\text{H})\)</span>, and <span class="math inline">\((\text{T},\text{H},\text{H})\)</span>.</p>
-<p><img src="..\graphics/ch2-venn-diagram-example.svg" class="img-fluid"></p>
+<p><a href="..\graphics/ch2-venn-diagram-example.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="..\graphics/ch2-venn-diagram-example.svg" class="img-fluid"></a></p>
 </div>
 </div>
 </div>
@@ -1457,6 +1466,12 @@ Solution
 </div>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;2.1: A basic Venn diagram, representing the sample space and two different events. In practice, the sample space would have the possible outcomes written into the rectangle, and the circled events would end up containing the relevant outcomes for those events.</span>
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2.2: <strong>Union:</strong> The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two.</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;2.3: <strong>Intersection:</strong> The intersection of events A and B is shaded here in red. The intersection of two sets is all of the content shared by both sets, given by the overlapping area of the two circles.</span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;2.4: <strong>Complement:</strong> The complement of event A is shaded here in red. The complement of a sets is all of area inside of the sample space, not inside of the set. Here we show the complement of Event A, though Event B would be similar.</span>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -1915,6 +1930,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom","selector":".lightbox","loop":false});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

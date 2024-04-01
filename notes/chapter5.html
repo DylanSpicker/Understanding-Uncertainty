@@ -41,6 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -222,6 +225,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span></a>
   </div>
 </li>
       </ul>
@@ -875,7 +884,7 @@ Marginalization
 Figure&nbsp;5.1: This graphic shows the partitioning of the sample space using a random variable. It is entirely analogous to <a href="chapter4.html#fig-basic-partition" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, where in place of many different events, we partition over the set of values for <span class="math inline">\(Y\)</span>. Here, <span class="math inline">\(\mathcal{Y} = \{1,2,3,4,5,6,7\}\)</span>.
 </figcaption>
 <div aria-describedby="fig-basic-partition-rv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="..\graphics/ch5-basic-partition.svg" class="img-fluid figure-img">
+<a href="..\graphics/ch5-basic-partition.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="..\graphics/ch5-basic-partition.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1127,6 +1136,9 @@ X = 2 &amp; 0.2 &amp; 0.1 &amp; 0.1 \\
 </div>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;5.1: This graphic shows the partitioning of the sample space using a random variable. It is entirely analogous to <a href="chapter4.html#fig-basic-partition" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, where in place of many different events, we partition over the set of values for <span class="math inline">\(Y\)</span>. Here, <span class="math inline">\(\mathcal{Y} = \{1,2,3,4,5,6,7\}\)</span>.</span>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -1591,6 +1603,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 
