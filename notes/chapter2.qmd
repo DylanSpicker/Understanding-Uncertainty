@@ -336,7 +336,7 @@ a. Give an event, in terms of the number of heads observed, which is equivalent 
 :::{#exr-2.7}
 A cinema has $12$ screens, numbered $1$ through $12$. Before opening, an employee checks to ensure that the projectors are correctly calibrated. 
 
-Let $A$ be the event that all the screens are correctly calibrated, $B$ be the event that the third screen is not correctly calibrated, $C$ be the event that exactly one bolt is not correctly calibrated, and $D$ be the event that $5$ and $8$ are correctly calibrated.
+Let $A$ be the event that all the screens are correctly calibrated, $B$ be the event that the third screen is not correctly calibrated, $C$ be the event that exactly one screen is not correctly calibrated, and $D$ be the event that $5$ and $8$ are correctly calibrated.
 
 Which of the following pairs of events are disjoint?
 
