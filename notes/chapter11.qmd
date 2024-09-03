@@ -1,4 +1,4 @@
-# An Introduction to Univariate Descriptive Statistics
+# An Introduction to Descriptive Statistics
 ## The Purpose of Descriptive Statistics
 Suppose that you have collected a dataset, either through a sample of individuals or else through an experiment. You have likely done this with the understanding that these data provide useful insight into the world around you, that they will better inform decisions, or elucidate the truth about questions of interest. However, the data themselves provide very little information directly. Looking through a spreadsheet of numeric values is not a sound way to gather useful insight from data. Instead, we need to rely on pictorial and summary statistics, which take the data and describe or summarize the useful features that we are likely to care about.
 

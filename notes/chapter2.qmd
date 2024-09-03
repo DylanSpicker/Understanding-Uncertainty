@@ -1,6 +1,6 @@
 # The Mathematical Foundations of Statistical Experiments
 ## The Sample Space and Events
-While we gave the mathematical formulation for the Frequentist interpretation of probability, we will typically require a more detailed mathematical model to work with probabilities. We want a description, framed in terms of mathematical objects,  which will allow us to work out the probabilities of interest. In general, to form such a probability model we need both a list of all possible outcomes that the experiment can produce, as well as the probabilities of these outcomes.
+In Chapter 1 we saw the mathematical formulation for the Frequentist interpretation of probability. To study probability, we require a more detailed mathematical model. We want a description, framed in terms of mathematical objects,  which will allow us to work out probabilities of interest. In general, to form such a probability model we need both a list of all possible outcomes that the experiment can produce, as well as the probabilities of these outcomes.
 
 We call the list of outcomes that can occur from an experiment the **sample space** of the experiment. The sample space is denoted $\mathcal{S}$, and is defined as the set of all possible outcomes from the experiment. For instance, if the experiment is flipping a coin we have $\mathcal{S} = \{\text{H}, \text{T}\}$. If the experiment is rolling a six-sided die then $\mathcal{S} = \{1,2,3,4,5,6\}$. 
 
@@ -17,7 +17,7 @@ Write down the complete sample space, $\mathcal{S}$ for the game that Sadie and 
 ::::{.callout .solution collapse="true"}
 ## Solution
 
-For Sadie and Charles their experiment involves tossing a coin three times in sequence. As a result each outcome is a three-dimensional list of values, given for instance by $(\text{H},\text{H},\text{H})$. As a result, we can write down the full sample space as $$\mathcal{S} = \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{H},\text{T},\text{T}), (\text{T},\text{H},\text{H}), (\text{T},\text{H},\text{T}), (\text{T},\text{T},\text{H}), (\text{T},\text{T},\text{T})\}.$$
+For Sadie and Charles their experiment involves tossing a coin three times in sequence. As a result each outcome is a three-dimensional list of values, given for instance by $(\text{H},\text{H},\text{H})$. We can write the full sample space as $$\mathcal{S} = \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{H},\text{T},\text{T}), (\text{T},\text{H},\text{H}), (\text{T},\text{H},\text{T}), (\text{T},\text{T},\text{H}), (\text{T},\text{T},\text{T})\}.$$
 ::::
 :::
 
@@ -29,7 +29,7 @@ With the sample space formally defined, we can revisit @def-event-inf, and forma
 An event is any collection of outcomes from a sample space for a statistical experiment. Mathematically, an event, $E$, is a subset of $\mathcal{S}$, and we write $E\subset\mathcal{S}$.
 :::
 
-Take for instance the experiment of a single coin. In this case, $E_1 = \{\text{H}\}$, $E_2 = \{\text{T}\}$, and $E_3 = \{\text{H},\text{T}\}$ are examples of possible events. Here, $E_1$ corresponds to the event that a head is observed, $E_2$ corresponds to the event that a tail is observed, and $E_3$ corresponds to the event that either a tails or a heads was observed. Note that for each event we have $E_1 \subset \mathcal{S}$, $E_2 \subset \mathcal{S}$, and $E_3 \subseteq \mathcal{S}$.
+Take for instance the experiment of a single coin. In this case, we may define $E_1 = \{\text{H}\}$, $E_2 = \{\text{T}\}$, and $E_3 = \{\text{H},\text{T}\}$ as examples of possible events. Here, $E_1$ corresponds to the event that a head is observed, $E_2$ corresponds to the event that a tail is observed, and $E_3$ corresponds to the event that either a tails or a heads was observed. Note that for each event we have $E_1 \subset \mathcal{S}$, $E_2 \subset \mathcal{S}$, and $E_3 \subseteq \mathcal{S}$.
 
 :::{#exm-basic-events}
 ## Basic Event Listing
@@ -43,28 +43,30 @@ Recall that an event is any subset of the sample space. In @exm-sample-space-bas
 
 :::{#exm-event-identification}
 ## Event Identification
-Is "Charles has to pay" an event from the game that Charles and Sadie are playing? Why?
+Is "Charles has to pay" an event from the game that Charles and Sadie are playing? Why? Explain.
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-No. "Charles has to pay" is not an event as it is not a subset of the sample space. This could plausibly be seen as a real-world description of a possible event, but it is not *itself* an event. ^[As time goes on we will become less strict about this language. When speaking to a statistician, they would understand "Charles has to pay" as an event that *can* occur based on the defined sample space, by simply transforming it into the language of the sample space. However, the distinction is important to make: events are always subsets of the sample space. Once this is second nature, it is a rule that can be loosened, as the knowledge can always be fallen back on when needed. Simply put: you need to know the rules in order to break them!]
+"Charles has to pay" is not directly an event, as it is not a subset of the sample space. This could plausibly be seen as a real-world description of a possible event, but it is not *itself* an event. The strictness of this language will be relaxed as time goes on, however, it is important to familiarize yourself with how descriptions are converted to events. In this case, we could take an event to be 
+$$E = \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{T},\text{H},\text{H})\},$$
+and state that if $E$ occurs then Charles has to pay.^[When speaking to a statistician, they would understand "Charles has to pay" as an event that *can* occur based on the defined sample space, by simply transforming it into the language of the sample space. However, the distinction is important to make: events are always subsets of the sample space. Once this is second nature, it is a rule that can be loosened, as the knowledge can always be fallen back on when needed. Simply put: you need to know the rules in order to break them!]
 ::::
 :::
 
 :::{#exm-event-conversion}
 ## Defining Events from Real-World Descriptions
-What event corresponds to the description "Charles has to pay" in the game that Charles and Sadie are playing? Recall that they flip a coin three times, and Charles will pay if at least two heads come up, while Sadie will pay if at least two tails come up.
+What event corresponds to the description "Sadie has to pay" in the game that Charles and Sadie are playing? Recall that they flip a coin three times, and Charles will pay if at least two heads come up, while Sadie will pay if at least two tails come up.
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-Charles will have to pay whenever there are two or more heads. As a result we can enumerate the possible outcomes that leads to Charles paying. We have
+Sadie will have to pay whenever there are two or more tails. As a result we can enumerate the possible outcomes that leads to Sadie paying. We have
 
-1. $(\text{H},\text{H},\text{H})$; 
-2. $(\text{T},\text{H},\text{H})$; 
-3. $(\text{H},\text{T},\text{H})$; 
-4. $(\text{H},\text{H},\text{T})$.
+1. $(\text{T},\text{T},\text{T})$; 
+2. $(\text{H},\text{T},\text{T})$; 
+3. $(\text{T},\text{H},\text{T})$; 
+4. $(\text{T},\text{T},\text{H})$.
 
-Any other outcome will have fewer than two heads, and as a result, Charles will not have to pay. Thus, to form an event, we consider the set with each of these outcomes in it. This gives $$E = \{(\text{H},\text{H},\text{H}), (\text{T},\text{H},\text{H}), (\text{H},\text{T},\text{H}), (\text{H},\text{H},\text{T})\}.$$
+Any other outcome will have fewer than two tails, and as a result, Sadie will not have to pay. Thus, to form an event, we consider the set with each of these outcomes in it. This gives $$E = \{(\text{T},\text{T},\text{T}), (\text{H},\text{T},\text{T}), (\text{T},\text{H},\text{T}), (\text{T},\text{T},\text{H})\}.$$
 ::::
 :::
 
@@ -94,7 +96,7 @@ An example of a simple event would be $E_1 = \{(\text{H},\text{H},\text{H})\}$ s
 
 We say that an event "occurs" if any of the outcomes comprising the event occur. As a result we can have more than one event occurring as the result of a run of a statistical experimental. Suppose that we are rolling a fair, six-sided die. Consider the events "an even number was rolled" and "a number greater than or equal to four was rolled." If a four or a six are rolled, both of these events happen simultaneously. Our goal when working with probability will be to assign probability values to different events. We will talk about how likely, or unlikely, events of interest are, given the underlying statistical experiment.
 
-Above, we defined $E_3$ to be equal to $\mathcal{S}$. As a result, we can say that $\mathcal{S}$ *is* an event since $\mathcal{S} \subseteq \mathcal{S}$. This is the event that any outcome is observed, which is certain to happen. Since it is certain to happen, we know it happens with probability $1$. There is another "special" event which is important to consider. We call this the *null event*. Denote $\emptyset$, the null event is an event that corresponds to "nothing in the sample space". We know that every time an experiment is run something in the sample space occurs, and so the null event is assigned probability zero.
+Above, we defined $E_3$ to be equal to $\mathcal{S}$. As a result, we can say that $\mathcal{S}$ *is* an event since $\mathcal{S} \subseteq \mathcal{S}$. This is the event that any outcome is observed, which is certain to happen. Since it is certain to happen, we know it happens with probability $1$. There is another "special" event which is important to consider. We call this the *null event*. Denoted $\emptyset$, the null event is an event that corresponds to "nothing in the sample space". We know that every time an experiment is run something in the sample space occurs, and so the null event is assigned probability zero.
 
 :::{#def-null-event}
 ## Null Event
@@ -102,7 +104,7 @@ The null event, denoted $\emptyset$ or $\{\}$, is an event from a statistical ex
 :::
 
 ## Set Operations for Event Manipulation
-Ultimately, we think of all events as being sets. These sets are subsets of the sample space, and can contain single or multiple outcomes. Every quantity that we are interested in can be expressed as some set of outcomes of interest. In building up these sets it is common to construct through the use of "and", "or", and "not" statements. That is, we may say that our event occurs if some outcome **OR** another outcome occurs, or perhaps our outcomes occurs if some outcome does **NOT** occur.^[While both *or* and *not* language is likely clear from the examples we have seen so far, *and* language may be slightly less obvious. While we will explore this in more depth shortly, note that you could not have two simple events occurring simultaneously. If $E_1$ and $E_2$ are both simple events, then you can have $E_1$ **or** $E_2$, and you can have **not** $E_1$, but you cannot have $E_1$ **and** $E_2$. This is *not* true for compound events.]
+Ultimately, all events are sets. These sets are subsets of the sample space, and can contain single or multiple outcomes. Every quantity that we are interested in can be expressed as some set of outcomes of interest. In building up these sets it is common to construct them through the use of "and", "or", and "not" statements. That is, we may say that our event occurs if some outcome **OR** another outcome occurs, or perhaps our outcomes occurs if some outcome does **NOT** occur.^[While both *or* and *not* language is likely clear from the examples we have seen so far, *and* language may be slightly less obvious. While we will explore this in more depth shortly, note that you could not have two simple events occurring simultaneously. If $E_1$ and $E_2$ are both simple events, then you can have $E_1$ **or** $E_2$, and you can have **not** $E_1$, but you cannot have $E_1$ **and** $E_2$. This is *not* true for compound events.]
 
 Consider the example of drawing cards from a standard 52-card deck. In such a deck there are 13 card ranks, and four card suits, with one of each combination present. If we draw a single card we can think of the outcomes of the experiment as being any of the 52 possible combinations of rank and suit. We are often interested in an event such as "the card is red", which is the same as saying "the card is a heart **or** the card is a diamond." Perhaps we want to know whether the card was an ace through ten, this is the same as saying "the card is **not** a Jack **or** a Queen **or** a King." If we are interested in the event that the ace of spades was drawn, this can be expressed by saying that "the card was a spade **and** the card was an ace." 
 
@@ -114,7 +116,7 @@ Describe "Charles has to pay", based on the game Charles and Sadie are playing, 
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-There are plausibly many possible ways of doing so. Consider the following:
+There are many possible ways of doing so. Consider the following:
 
 1. **OR**: Two heads are observed OR three heads are observed. 
 2. **AND**: Not two tails are observed AND not three tails are observed.
@@ -126,12 +128,12 @@ We define mathematical operations to encapsulate the use of **or**, **and**, and
 
 :::{#def-union}
 ## Union
-The union encodes the use of "or" in reference to two or more sets. Formally, with two sets $A$ and $B$, the union of $A$ and $B$ is the set of all elements that are contained in $A$, or $B$, or both $A$ and $B$. We write $A \cup B$ and read that as $A$ union $B$. When we wish to take the union of many sets, $A_1,A_2,\dots,A_n$, we write this as $$\bigcup_{i=1}^n A_i.$$
+The union encodes the use of "or" in reference to two or more sets. Formally, with two sets $A$ and $B$, the union of $A$ and $B$ is the set of all elements that are contained in $A$, or $B$, or both $A$ and $B$. We write $A \cup B$ and read that as $A$ union $B$. When we wish to take the union of many sets, $A_1,A_2,\dots,A_n$, we write this as $$A_1 \cup A_2 \cup \cdots \cup A_n = \bigcup_{i=1}^n A_i.$$
 :::
 
 :::{#def-intersection}
 ## Intersection
-The intersection captures the use of "and" in reference to two or more sets. Formally, the intersection of two sets, $A$, and $B$, is the set that contains all elements that belong to both $A$ and $B$. We write $A \cap B$, and say "$A$ intersect $B$." When we wish to take the union of many sets, $A_1,A_2,\dots,A_n$, we write $$\bigcap_{i=1}^n A_i.$$
+The intersection captures the use of "and" in reference to two or more sets. Formally, the intersection of two sets, $A$, and $B$, is the set that contains all elements that belong to both $A$ and $B$. We write $A \cap B$, and say "$A$ intersect $B$." When we wish to take the union of many sets, $A_1,A_2,\dots,A_n$, we write $$A_1 \cap A_2 \cap \cdots \cap A_n = \bigcap_{i=1}^n A_i.$$
 :::
 
 :::{#def-complement}
@@ -167,10 +169,12 @@ e. $$E_1 \cup E_2 \cup E_3 = \{(\text{H}, \text{H}, \text{H}), (\text{T}, \text{
 Two events, $E_1$ and $E_2$ are said to be disjoint whenever their intersection is the null event. That is, if $E_1 \cap E_2 = \emptyset$ then $E_1$ and $E_2$ are disjoint events.
 :::
 
-These concepts allow us to more compactly express sets of interest, and in particular, will be quite useful when it comes to assigning probability. The more times you work with the set operations, the more familiar they will become, and as a result, practice is always useful. Considering rolling a 6-sided die, and take $A$ to be the event that a $6$ is rolled, $B$ to be the event that the roll was at least $5$, $C$ to be the event that the roll was less than $4$, and $D$ to be the event that the roll was odd.
+These concepts allow us to more compactly express sets of interest, and in particular, will be quite useful when it comes to assigning probability. The more times you work with the set operations, the more familiar they will become, and as a result, practice is always useful. 
+
+Consider rolling a 6-sided die, and take $A$ to be the event that a $6$ is rolled, $B$ to be the event that the roll was at least $5$, $C$ to be the event that the roll was less than $4$, and $D$ to be the event that the roll was odd.
 
 * If we consider $D^C$ this is the event that the roll was even; 
-* $A \cup C$ is the event that a $6$ was rolled or that a number less than $4$ was rolled, which is to say anything other than a $4$ or a $5$; 
+* $A \cup C$ is the event that a $6$ was rolled or that a number less than $4$ was rolled, which is to say anything other than a $4$ or a $5$, which we may also express as $\{4,5\}^C$. 
 * If we take  $A \cup B$ then this will be the same as $B$, and $A\cap B$ will be $A$. 
 * If we take the event $A\cap C$, notice that no outcomes satisfy both conditions, and so $A \cap C = \emptyset$. 
 * We can also join together multiple operations. $D^C \cap C$ gives us even numbers than less than $4$, which is to say the outcome $2$. 
@@ -178,7 +182,7 @@ These concepts allow us to more compactly express sets of interest, and in parti
 
 :::{#exm-card-set-operations}
 ## Set Operations with Decks of Cards
-Charles and Sadie are tiring of flipping their coin, and so they wish to start using decks of cards sometimes instead. Before they formalize a game based on decks of cards, they want to make sure that they are both very comfortable working with these. Suppose that the sample space is defined to be the set of $52$ standard cards that may be drawn on a single draw. Describe how set operations can be used to form events corresponding to:
+Charles and Sadie are tiring of flipping their coin, and so they wish to start using decks of cards sometimes instead. Before they formalize a game based on decks of cards, they want to make sure that they are both very comfortable working with these. Suppose that the sample space is defined to be the set of $52$ standard cards that may be drawn on a single draw from the deck. Describe how set operations can be used to form events corresponding to:
 
 a. A red card is observed.
 b. Any card between an ace and a ten is observed.
@@ -186,7 +190,7 @@ c. The ace of spades is observed.
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-First, we define several events. Note, these can be defined in shorthand to prevent needing to write out many different cards. we take $D$ to be the event that a diamond is observed, we take $H$ to be the event that a heart is observed, take $S$ to be the event that a spade is observed^[Note, these three are compound events with $13$ different outcomes contained within them.] and then take $A$ to be the event that an ace is observed, $J$ to be the event that a Jack is observed, $Q$ to be the event that a Queen is observed, and $K$ to be the event that a King is observed^[Compound events with four different options.] then we can use unions, intersections, and complements to express the previously mentioned scenarios. 
+First, we define several events. Note, these can be defined in shorthand to prevent needing to write out many different cards. we take $D$ to be the event that a diamond is observed, we take $H$ to be the event that a heart is observed, take $S$ to be the event that a spade is observed.^[Note, these three are compound events with $13$ different outcomes contained within them.] Take $A$ to be the event that an ace is observed, $J$ to be the event that a Jack is observed, $Q$ to be the event that a Queen is observed, and $K$ to be the event that a King is observed.^[These are all compound events with four different options.] We can use unions, intersections, and complements to express the previously mentioned scenarios. 
 
 a. To represent outcomes corresponding to "the card is red", we can use $D \cup H$. 
 b. To represent outcomes corresponding to "an ace through ten", we can use $(J \cup Q \cup K)^C$. 
@@ -197,7 +201,9 @@ c. To represent the outcome "the ace of spades", we may use $A \cap S$.
 Working with these basic set operations should eventually become second nature. There are often very many ways of expressing the same event using these different operations, and finding the most useful method of representing a particular event can often be the key to solving challenging probability questions. The first step in making sure that these tools are available to you is in ensuring that the basic operations are fully understood, and this comes via practice. Remember, unions represent "ors", intersections represent "ands", and complements represent "nots". 
 
 ### Using R To Represent Sample Spaces and Events and Performing Set Operations
-We have seen how R can encode sets of elements using vectors. For instance, we may take `sample_space <- 1:6` to represent the sample space of rolling a six-sided die. We can form events by taking subsets of the relevant quantities, selecting via indices. Fortunately, there are also all of the basic set operations implemented in R. We can use `union(x, y)` to perform the union of `x` and `y`, `intersect(x, y)` to perform the intersection of `x` and `y`, and `setdiff(x = sample_space, y)` to perform the complement of `y` (assuming that `sample_space` contains the full sample space).^[R does not implement complements directly, and instead implements the set difference operation. The set difference function, `setdiff(x, y)` returns the set of all elements in `x` which are not in `y`, a sort of subtracting of sets. The complement of a set is defined to be $A^C = \text{setdiff}(\mathcal{S}, A)$, indicating why this works!]
+We have seen how R can encode sets of elements using vectors. For instance, we may take `sample_space <- 1:6` to represent the sample space of rolling a six-sided die. We can form events by taking subsets of the relevant quantities, selecting via indices. Fortunately, there are also all of the basic set operations implemented in R. 
+
+We can use `union(x, y)` to perform the union of `x` and `y`, `intersect(x, y)` to perform the intersection of `x` and `y`, and `setdiff(x = sample_space, y)` to perform the complement of `y` (assuming that `sample_space` contains the full sample space).^[R does not implement complements directly, and instead implements the set difference operation. The set difference function, `setdiff(x, y)` returns the set of all elements in `x` which are not in `y`, a sort of subtracting of sets. The complement of a set is defined to be $A^C = \text{setdiff}(\mathcal{S}, A)$, indicating why this works!]
 
 ::: {.content-visible when-format='pdf'}
 ```{r}
@@ -251,7 +257,9 @@ The sample space is partitioned into outcomes, and the outcomes can be grouped t
 
 ![A basic Venn diagram, representing the sample space and two different events. In practice, the sample space would have the possible outcomes written into the rectangle, and the circled events would end up containing the relevant outcomes for those events.](/graphics/ch2-venn-diagram-basic){#fig-venn-diagram}
 
-On the Venn diagram then, the overlap between circles represents their intersection, the combined area of two (or more) circles represents their union, and everything outside of a given circle represents the complement of a set. This can be a fairly useful method for representing sample spaces, and for visualizing the basic set operations that we use to manipulate events inside the sample spaces. A word of caution: Venn diagrams are useful tools, but they are not suitable as proofs themselves. It is possible to convince yourself of false truths if the wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than asa rigorous tool in and of themselves.^[This is a general principle in mathematics. Coming up with one example that makes something *seem* true does not form an argument demonstrating that it *is* true. Venn Diagrams should largely be thought of as specific examples of the underlying phenomena, which are great if you're a visual learner!]
+On the Venn diagram then, the overlap between circles represents their intersection, the combined area of two (or more) circles represents their union, and everything outside of a given circle represents the complement. This can be a fairly useful method for representing sample spaces, and for visualizing the basic set operations that we use to manipulate events inside the sample spaces. 
+
+A word of caution: Venn diagrams are useful tools, but they are not suitable as mathematical proofs directly. It is possible to convince yourself of false truths if the wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than asa rigorous tool in and of themselves.^[This is a general principle in mathematics. Coming up with one example that makes something *seem* true does not form an argument demonstrating that it *is* true. Venn Diagrams should largely be thought of as specific examples of the underlying phenomena, which are great if you're a visual learner!]
 
 ![**Union:** The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two.](/graphics/ch2-venn-diagram-union){#fig-venn-diagram-union}
 

@@ -1,6 +1,6 @@
 # The Core Concepts of Probability
 ## Assigning Probabilities (and The Equally Likely Outcome Model)
-There are a plethora of ways to assign probabilities to different events. At the most basic level any rule that maps from the space of possible events to real numbers between $0$ and $1$ can be used as rules for probability assignment. That is, probability assignment is simply a set of rules which says "for this event assign this probability."
+There are a plethora of ways to assign probabilities to different events. At the most basic level any rule that maps from the space of possible events to real numbers between $0$ and $1$ can be used as rules for probability assignment. That is, probability assignment is a set of rules which says "for this event assign this probability."
 
 :::{#exm-coin-toss}
 ## Coin Toss Probabilities
@@ -14,7 +14,7 @@ In this case we have $\mathcal{S} = \{\text{H},\text{T}\}$. Thus, the possible e
 
 Not every assignment of probability values is going to be valid. Suppose, for instance, that we have a six-sided die, each side labelled with a number from one to six. If I told you that there was a probability of $0.5$ that it comes up $1$, $0.5$ that it comes up $2$, $0.5$ that it comes up $3$, $0.5$ that it comes up $4$, $0.5$ that it comes up $5$, and $0.5$ that it comes up $6$, you would probably call me a liar.^[Or else conclude that I was mistaken and maybe should not be teaching probability.] If, as we have previously seen, probabilities represent the long run proportion of time that a particular event is observed, we cannot have $6$ different outcomes each occurring in half of all cases.
 
-Beyond the requirements that we impose on what constitutes a "valid" probability rule, we have another concern: scalability. It is perfectly acceptable to indicate that in an experiment with $3$ outcomes, the first has a probability of $0.25$, the second of $0.3$, and the third of $0.45$. What if the experiment has $100$ possible outcomes? Or $1000$? It quickly becomes apparent that enumerating the probabilities of each event in the sample space is an efficient way of assigning probabilities in practice. A core focus of our study of probability will be finding techniques that allow us to efficiently encode probability information into manageable objects. Once we have done this we will be in a position where we can manipulate these (comparatively) simple mathematical quantities in order to make statements and conclusions about any of the events of interest, even if they have never been explicitly outlined as having an assigned probability.
+Beyond the restrictions that we impose to form "valid" probability rules, we have another concern: scalability. It is perfectly acceptable to indicate that in an experiment with $3$ outcomes, the first has a probability of $0.25$, the second of $0.3$, and the third of $0.45$. What if the experiment has $100$ possible outcomes? Or $1000$? It quickly becomes apparent that enumerating the probabilities of each event in the sample space is not an efficient way of assigning probabilities in practice. A core focus of our study of probability will be finding techniques that allow us to efficiently encode probability information into manageable objects. Once we have done this we will be in a position where we can manipulate these (comparatively) simple mathematical quantities in order to make statements and conclusions about any of the events of interest, even if they have never been explicitly outlined as having an assigned probability.
 
 While we will consider myriad methods for accomplishing these goals throughout our study of probability, we begin with a very useful model which simplifies probability assignment, without any added complexity, and creates a solid foundation for us to explore the properties of probability models. We start by considering **equally likely outcomes.** As the name suggests, the probability model considering equally likely outcomes assigns an equal probability to every possible outcome of the experiment. This is a probability model that we are already distinctly familiar with: flipping a coin, rolling a die, or drawing a card are all examples of experiments which rely on the equally likely outcomes framework.
 
@@ -27,7 +27,7 @@ In part these simple experiments are cleaner to handle than "real world" situati
 Why urns, specifically? Well, whether it be coin flipping or dice rolling or card selection, we can model this equivalently using an urn (with $2$, $6$, and $52$ items, respectively). The urn becomes more flexible to *exactly* dictate what the probability of any selection will be, which is a useful way of moving from equally likely models (each ball is equally likely to be selected) to arbitrary models (we can have however many identical balls in the urn as we would like).
 :::
 
-If we have an experiment with a sample space $\mathcal{S}$ which has $|\mathcal{S}| = k$ total elements^[Note that, when we have a set, using the absolute value symbols $|\cdot|$ stands for the **cardinality** of the set. Cardinality is just a fancy way of saying the size or the number of elements that the set has in it.], then each element of the sample space occurs with probability $\frac{1}{k}$. In the case of the coin toss example, $\mathcal{S} = \{\text{H}, \text{T}\}$, and so $k=2$ and each outcome occurs with probability $\frac{1}{2}$. In the case of drawing a card at random, there are $52$ different outcomes, and so $k=52$, and the probability of drawing any particular card is $\frac{1}{52}$.
+If we have an experiment with a sample space $\mathcal{S}$ which has $|\mathcal{S}| = k$ total elements^[Note that, when we have a set, using the absolute value symbols $|\cdot|$ stands for the **cardinality** of the set. Cardinality is just a fancy way of saying the size or the number of elements that the set has in it.], then each element of the sample space occurs with probability $\dfrac{1}{k}$. In the case of the coin toss example, $\mathcal{S} = \{\text{H}, \text{T}\}$, and so $k=2$ and each outcome occurs with probability $\dfrac{1}{2}$. In the case of drawing a card at random, there are $52$ different outcomes, and so $k=52$, and the probability of drawing any particular card is $\dfrac{1}{52}$.
 
 It is critically important to recognize that the equal probability model assigns equal likelihood to the possible outcomes of an experiment, not the possible events of interest. It will not be the case that all events have the same probability. To make this concrete, consider the events $A$ "the ace of spades is drawn" and $B$ "any spade is drawn". It is clear that $B$ happens more frequently than $A$, even though we have said that this is an experiment with equally likely outcomes. Remember: an outcome is an observation from a single experimental run, an event is any collection of these possible outcomes.
 
@@ -49,8 +49,8 @@ set.seed(31415)
 # The sample function takes three main parameters:
 #   x: the sample space
 #   size: the number of items to draw
-#   replace: a boolean representing whether the draws should be
-#            with replacement or not.
+#   replace: a logical (TRUE/FALSE) representing whether the 
+#            draws should be with replacement or not.
 one_roll <- sample(x = sample_space, size = 1)
 ten_rolls_with_replacement <- sample(x = sample_space, 
                                      size = 10, 
@@ -92,17 +92,17 @@ ten_rolls_without_replacement
 ## The Axioms of Probability
 We have previously seen that not every probability assignment can be valid. For instance, assigning $0.5$ probability to each outcome on a die leads to a nonsensical scenario. With just a little imagination, we can conjure equally nonsensical scenarios in other ways. For instance, it would make very little sense to discuss the probability of an event being a negative value. What would it mean for an event to occur in a negative proportion of experimental runs? Alternatively, we can consider two events that are nested in one another: say event $A$ is that we draw the ace of spades, and event $B$ is that we draw any spade. Every single time that $A$ happens, we know that $B$ also happens. But there are ways that $B$ can occur where $A$ does not.^[For instance, the Queen of spades being drawn.] If I told you the probability of $A$ was $0.5$ and the probability of $B$ was $0.2$, this would violate our base instincts. How can it be more likely to draw the ace of spades than it would be to draw any spade at all?^[This is actually a scenario where our instincts may lead us awry in some situations. Consider the following from @kahneman: [Linda is 31 years old, single, outspoken, and very bright. She majored in philosophy. As a student, she was deeply concerned with issues of discrimination and social justice, and also participated in anti-nuclear demonstrations. Which is more probable? (a) Linda is a bank teller, or (b) Linda is a bank teller and is active in the feminist movement.]{.blockquote .d-block} A majority of respondents rate (b) as being more probable, even though (a) is contained in (b).]
 
-Often in mathematics when we have an intuitive set of rules^[These rules, which we call "properties" are formally known as "axioms".] that particular quantities must obey, we work to add formality through defining properties of these concepts. To this end, we can define the key properties that probabilities must obey in order to be well-defined, valid probabilities. With three fairly basic properties, we can completely specify what must be true in order for a set of probabilities to be "valid", and to in turn match with our intuitions. 
+Often in mathematics when we have an intuitive set of rules^[These rules, which we call "properties" are formally known as "axioms".] that particular quantities must obey, we work to add formality through defining properties of these concepts. To this end, we can define the key properties that probabilities must obey in order to be well-defined, valid probabilities. With three fairly basic properties, we can completely specify what must be true in order for a set of probabilities to be "valid", and to in turn align with our intuitions. 
 
 :::{.callout-tip icon=false}
 ## The Axioms of Probability 
 
 1. **Unitary:** Every valid set of probabilities must assign a probability of $1$ to the full sample space. That is, $P(\mathcal{S}) = 1$. This is an intuitive requirement as every time the experiment is run we observe an outcome in the sample space. As a result, in every experimental run the event $\mathcal{S}$ occurs.
 2. **Non-negative:** We require that every probability is non-negative. We can have probabilities of $0$, but we can never have a probability less than zero. Again, this is sensible^[What would it mean to have a negative probability? It is perhaps a more interesting question than it seems at first glance. It is a topic that has come up in some pretty strange places and, while it is not presently sensible to call them "probabilities" in a traditional sense, there are interesting results which follow.] but is important to include in our formalization. Specifically, for every event $E$, we must have $P(E) \geq 0$.
-3. **Additivity:** the final property requires slightly more parsing on first pass. Suppose that we define a sequence of events, $E_1, E_2, E_3, \dots$ such that no two events have any overlap. That is, $E_j \cap E_\ell = \emptyset$ for all $\ell\neq j$. Then, the final property we require for probabilities is that $$P\left(\bigcup_i E_i\right) = \sum_i P(E_i).$$ That is, the probability of the union of disjoint events is the summation of the probability of these events.
+3. **Additivity:** the final property requires slightly more parsing on first pass. Suppose that we define a sequence of events, $E_1, E_2, E_3, \dots$ such that no two events have any overlap. That is, $E_j \cap E_\ell = \emptyset$ for all $\ell\neq j$. Then, the final property we require for probabilities is that $$P(E_1 \cup E_2 \cup E_3 \cup \cdots) = P\left(\bigcup_i E_i\right) = \sum_i P(E_i) = P(E_1) + P(E_2) + P(E_3) + \cdots.$$ That is, the probability of the union of disjoint events is the summation of the probability of these events.
 :::
 
-It is worth dwelling slightly on axiom 3. Consider the case of drawing a card at random from a deck of $52$ cards. Using the equally likely outcome model for probability we know that the probability that any card is drawn is given by $\frac{1}{52}$. If I were to ask "what is the probability you draw that ace of spades?" under this model you can respond, immediately, with $\frac{1}{52}$. Now, if I were to ask "what is the probability that you draw the ace of spades or the two of spades?" then intuitively you likely figure that this will be $\frac{2}{52}$. Note that the event $E_1$, "draw the ace of spades" and the event $E_2$ "draw the two of spades", are disjoint events. Moreover, recall that the union is the "or" and so $E_1\cup E_2$ is the same as $E_1$ or $E_2$. Taken together then, $$P(E_1\cup E_2) = P(E_1) + P(E_2).$$ The axiom of additivity simply extends this intuition to an arbitrary number of events.
+It is worth dwelling slightly on axiom 3. Consider the case of drawing a card at random from a deck of $52$ cards. Using the equally likely outcome model for probability we know that the probability that any card is drawn is given by $\dfrac{1}{52}$. If I were to ask "what is the probability you draw that ace of spades?" under this model you can respond, immediately, with $\dfrac{1}{52}$. Now, if I were to ask "what is the probability that you draw the ace of spades or the two of spades?" then intuitively you likely figure that this will be $\dfrac{2}{52}$. Note that the event $E_1$, "draw the ace of spades" and the event $E_2$ "draw the two of spades", are disjoint events. Moreover, recall that the union is the "or" and so $E_1\cup E_2$ is the same as $E_1$ or $E_2$. Taken together then, $$P(E_1\cup E_2) = P(E_1) + P(E_2).$$ The axiom of additivity extends this intuition to an arbitrary number of events.
 
 :::{#exm-additivity}
 ## Basic Additivity
@@ -117,16 +117,16 @@ Consider $S\cap C_1$. The ace of spades is in $S$ since it is a spade and it is 
 ::::
 :::
 
-These three axioms fully define valid probabilities. Any mechanism that assigns probability values to events which conforms to these rules will assign valid probabilities. While it may seem counterintuitive that such basic rules fully define our notion of a probability, these rules readily give rise to many other properties that are indispensible when working with probabilities.
+These three axioms fully define valid probabilities. Any mechanism that assigns probability values to events which conform to these rules will assign valid probabilities. While it may seem counterintuitive that such basic rules fully define our notion of a probability, these rules readily give rise to many other properties that are very useful when working with probabilities.
 
 ## Secondary Properties of Probabilities
 Using the previously indicated axioms of probability we are able to derive many useful **secondary properties**. These properties will frequently be used to actually compute different probabilities, and are helpful to become familiar with. All of the following properties follow directly from the axioms, though, some are more clear than others. For the following we take $E$ and $E_1,E_2,E_3,\dots$ to be arbitrary events on some well defined sample space.
 
-1. $P(E^C) = 1-P(E)$, and equivalently, $P(E) = 1 - P(E^C)$.
-2. $P(\emptyset) = 0$.
-3. $P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1\cap E_2)$.
-4. \begin{multline*}P(E_1 \cup E_2 \cup E_3) = P(E_1) + P(E_2) + P(E_3) - P(E_1\cap E_2) - P(E_1 \cap E_3) \\ - P(E_2 \cap E_3) + P(E_1 \cap E_2 \cap E_3).\end{multline*}
-5. If $E_1 \subset E_2$ then $P(E_1) \leq P(E_2)$. 
+1. **Complements:** $P(E^C) = 1-P(E)$, and equivalently, $P(E) = 1 - P(E^C)$.
+2. **Null Event:** $P(\emptyset) = 0$.
+3. **Arbitrary Unions (Two Events):** $P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1\cap E_2)$.
+4. **Arbitrary Unions (Three Events):** \begin{multline*}P(E_1 \cup E_2 \cup E_3) = P(E_1) + P(E_2) + P(E_3) - P(E_1\cap E_2) - P(E_1 \cap E_3) \\ - P(E_2 \cap E_3) + P(E_1 \cap E_2 \cap E_3).\end{multline*}
+5. **Containment:** If $E_1 \subset E_2$ then $P(E_1) \leq P(E_2)$. 
 
 :::{.callout-warning icon="false" collapse="true"}
 ## Proofs of the Secondary Properties of Probability
@@ -143,17 +143,17 @@ It may be instructive to see how these properties are derived. Doing so generate
 5. We can rewrite $E_2$ as $E_1 \cup (E_2 \cap E_1^C)$. These two sets are disjoint, since the one is $E_1$ and the other must contain only elements in $E_1^C$. Then, $P(E_2) = P(E_1) + P(E_2 \cap E_1^C)$ by **additivity**. Then, through the **non-negative** property we know that $P(E_2 \cap E_1^C) \geq 0$, and so rearranging we have $P(E_1) = P(E_2) - P(E_2\cap E_1^C) \leq P(E_2)$. 
 :::
 
-These properties are immensely useful when computing probabilities. In fact, these secondary properties will be used with more frequency than the basic axioms when manipulating probabilities in practice. It is worth building comfort with these properties, early and often, as they will assist in manipulating all probability expressions in the future. 
+These properties are useful when computing probabilities. In fact, these secondary properties will be used with more frequency than the basic axioms when manipulating probabilities in practice. It is worth building comfort with these properties, early and often, as they will assist in manipulating all probability expressions in the future. 
 
-While these properties hold in general for all probability models, it is instructive to focus on the equal probability model to begin building familiarity with probability. These properties allow us to take events -- whether compound or simple -- and combine, rewrite, and manipulate expressions to assist in the handling of the computations. Eventually, however, we require the ability to assign numerical values to these probabilities.
+While these properties hold in general for all probability models, it is instructive to focus on the equal probability model to begin building familiarity with probability. These properties allow us to take events -- whether compound or simple -- and combine, rewrite, and manipulate expressions to assist in the handling of the computations. Consider a simple event, $A$. 
 
-Consider a simple event, $A$. Recall that a simple event is defined as a possible outcome of an experiment, and so in this case, $A$ corresponds directly to an event that may be observed. If our sample space is $k$ elements large, then $P(A) = \frac{1}{k}$ in this framework. For instance, if $A$ is the event that a two is rolled on a six-sided fair die, then $P(A) = \frac{1}{6}$. 
+Recall that a simple event is defined as single outcome of an experiment, and so in this case, $A$ corresponds directly to an event that may be observed. If our sample space is $k$ elements large, then $P(A) = \dfrac{1}{k}$ in this framework. For instance, if $A$ is the event that a two is rolled on a six-sided fair die, then $P(A) = \dfrac{1}{6}$. 
 
-Now, suppose that a compound event is defined, $B$. By definition, a compound event can be expressed as a set of possible outcomes from the experiment. Suppose that we enumerate these possible events as $b_1, b_2, \dots, b_\ell$. Then we know that $B$ occurs if any of $b_1,b_2,\dots,b_\ell$ occur. Each $b_j$ are elements of the sample space and correspond to possible outcomes of the experiment. As a result, we know that $P(b_j) = \frac{1}{k}$, based on the equal probability assumption. Now, if we take any two distinct events, say $b_i$ and $b_j$, we know that they must be disjoint: $b_i \cap b_j = \emptyset$. This is because in an experiment run only one outcome can occur. Moreover, we can say that $B = b_1 \cup b_2 \cup\cdots\cup b_\ell$.
+Now, suppose that a compound event is defined, $B$. By definition, a compound event can be expressed as a set of possible outcomes from the experiment. Suppose that we enumerate these possible events as $b_1, b_2, \dots, b_\ell$. Then we know that $B$ occurs if any of $b_1,b_2,\dots,b_\ell$ occur. Each $b_j$ are elements of the sample space and correspond to possible outcomes of the experiment. As a result, we know that $P(b_j) = \dfrac{1}{k}$, based on the equal probability assumption. Now, if we take any two distinct events, say $b_i$ and $b_j$, we know that they must be disjoint: $b_i \cap b_j = \emptyset$. This is because in an experiment run only one outcome can occur. Moreover, we can say that $B = b_1 \cup b_2 \cup\cdots\cup b_\ell$.Using the axioms of probability outlined above we therefore know that $P(B) = \sum_{j=1}^\ell P(b_j) = \sum_{j=1}^\ell \dfrac{1}{k} = \dfrac{\ell}{k}$. This holds in general for any compound event in this setting. 
 
-Using the axioms of probability outlined above we therefore know that $P(B) = \sum_{j=1}^\ell P(b_j) = \sum_{j=1}^\ell \frac{1}{k} = \frac{\ell}{k}$. This holds in general for any compound event in this setting. If we take $B$ to be the event that an even number is rolled on a six-sided die, then we would have $b_1$ is the event that a two is rolled, $b_2$ is the event that a four is rolled, and $b_3$ is the event that a six is rolled. There are three such events, and so the probability that an even number is rolled must be $\frac{3}{6} = 0.5$, which matches our intuition.
+If we take $B$ to be the event that an even number is rolled on a six-sided die, then we would have $b_1$ is the event that a two is rolled, $b_2$ is the event that a four is rolled, and $b_3$ is the event that a six is rolled. There are three such events, and so the probability that an even number is rolled must be $\dfrac{3}{6} = 0.5$, which matches our intuition.
 
-If we consider what this process is doing at its core, we can reframe the calculation as counting up the number of ways that event can happen and dividing by the total number of events. In our previous discussion, there were $\ell$ ways of $B$ occurring, a total of $k$ outcomes, and so the probability becomes $\frac{\ell}{k}$. In the equal probability model, this will always be the case. The probability of any event $A$ occurring is given by $$P(A) = \frac{N_A}{k},$$ where $N_A$ is the number of unique ways that $A$ can occur. In other words, $N_A$ is the size of the set $A$, $|A|$.
+At its core, this process is counting up the number of ways that $B$ can occur, and dividing by the total number of elements in the set. There were $\ell$ ways of $B$ occurring, and a total of $k$ outcomes in the experiment, so the probability becomes $\dfrac{\ell}{k}$. In the equal probability model, this will always be the case. The probability of any event $A$ occurring is given by $$P(A) = \dfrac{N_A}{k},$$ where $N_A$ is the number of unique ways that $A$ can occur. In other words, $N_A$ is the size of the set $A$, $|A|$.
 
 As a result of this, computing probabilities largely relies on the counting of possible outcomes corresponding to different events. If we can determine $N_A = |A|$, and the count of the total number of occurrences, $k$, then we can determine the probability of $A$. This study of counting is known as **combinatorics**, and it is where we will turn our attention next.
 
@@ -163,7 +163,69 @@ Charles and Sadie, not all together content with the progress through decks of c
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-Here, the key is to realize that the probability is easier to solve when considering the complement rather than the event itself. Notably, rolling two, fair, six-sided dice gives a total of $36$ possible outcomes. Of these, exactly $6$ have equal numbers showing on both dice. Thus, the probability that the two dice show the **same** number is going to be $\frac{6}{36} = \frac{1}{6}$. Then, using the fact that $P(E) = 1 - P(E^C)$, and that taking $E$ to refer to the event where the two dice show different numbers, then $E^C$ refers to the event that the two dice show the *same* number. As a result, the probability that we want is $P(E) = 1 - \frac{1}{6} = \frac{5}{6}$.
+We can solve this problem directly by counting up the number of ways that the two dice can show different numbers, and divide that by the total number of combinations. Consider the following enumeration of the possible realizations:
+
+::: {.grid}
+
+:::: {.g-col-2}
+* 1, 1
+* 1, 2
+* 1, 3
+* 1, 4
+* 1, 5
+* 1, 6
+::::
+
+:::: {.g-col-2}
+* 2, 1
+* 2, 2
+* 2, 3
+* 2, 4
+* 2, 5
+* 2, 6
+::::
+
+:::: {.g-col-2}
+* 3, 1
+* 3, 2
+* 3, 3
+* 3, 4
+* 3, 5
+* 3, 6
+::::
+
+:::: {.g-col-2}
+* 4, 1
+* 4, 2
+* 4, 3
+* 4, 4
+* 4, 5
+* 4, 6
+::::
+
+:::: {.g-col-2}
+* 5, 1
+* 5, 2
+* 5, 3
+* 5, 4
+* 5, 5
+* 5, 6
+::::
+
+:::: {.g-col-2}
+* 6, 1
+* 6, 2
+* 6, 3
+* 6, 4
+* 6, 5
+* 6, 6
+::::
+
+:::
+
+There are $36$ possible outcomes. In each column, $5$ of the options show different numbers, so that leads to a total of $30$ outcomes showing different numbers, leading to a probability of $\dfrac{30}{36} = \dfrac{5}{6}$. 
+
+Here, a faster way to approach the problem is to realize that the probability is easier to solve when considering the complement rather than the event itself. Notably, rolling two, fair, six-sided dice gives a total of $36$ possible outcomes. Of these, exactly $6$ have equal numbers showing on both dice. Thus, the probability that the two dice show the **same** number is going to be $\dfrac{6}{36} = \dfrac{1}{6}$. Then, using the fact that $P(E) = 1 - P(E^C)$, and that taking $E$ to refer to the event where the two dice show different numbers, then $E^C$ refers to the event that the two dice show the *same* number. As a result, the probability that we want is $P(E) = 1 - \dfrac{1}{6} = \dfrac{5}{6}$.
 ::::
 :::
 
@@ -173,7 +235,7 @@ Charles and Sadie, working from their intrigue about dice, have decided that ins
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-This problem is conceptually no different from @exm-complement-trick. There will be a total of $d_1\times d_2$ possible combinations of the two dice to be rolled.^[Note: if this is not yet clear to you, that's okay! In the very next section we begin to discuss how to count the possible combinations in these types of scenarios.] Of these, the dice will match in $\min\{d_1, d_2\}$ events.^[Suppose that $d_1 = 2$ and $d_2 = 4$. Then here, the dice can match when they show either $1$ or $2$, but if the second die shows $3$ or $4$ there is no possibility of having a match at all.] Then, with the same complement trick discussed above, we get $$P(E) = 1 - P(E^C) = 1 - \frac{\min\{d_1,d_2\}}{d_1\times d_2}.$$
+This problem is conceptually no different from @exm-complement-trick. There will be a total of $d_1\times d_2$ possible combinations of the two dice to be rolled.^[Note: if this is not yet clear to you, that's okay! In the very next section we begin to discuss how to count the possible combinations in these types of scenarios.] Of these, the dice will match in $\min\{d_1, d_2\}$ events.^[Suppose that $d_1 = 2$ and $d_2 = 4$. Then here, the dice can match when they show either $1$ or $2$, but if the second die shows $3$ or $4$ there is no possibility of having a match at all.] Then, with the same complement trick, we get $$P(E) = 1 - P(E^C) = 1 - \frac{\min\{d_1,d_2\}}{d_1\times d_2}.$$
 ::::
 :::
 
@@ -181,7 +243,7 @@ This problem is conceptually no different from @exm-complement-trick. There will
 ### The Product Rule
 Fundamentally, counting is a matter of assessing the size of a collection of items. Sometimes, this is very straightforward. If you want to count the number of students in a classroom, you start at $1$ and enumerate upwards through the integers. To count the number of days until the next Holiday, you do the same thing. If you really need to sleep, perhaps you will count imaginary sleep until you drift off. There is not much to this type of counting, and it is certainly deeply familiar to you all. However, it is also quite limited in its utility.
 
-Imagine that you are interested in determining how many possible ways there are of arranging a deck of $52$ cards. You could of course arrange them in a particular order, then count each of those. That would take a tremendous amount of time, so perhaps instead of using an actual deck you just write down the combinations. Still, each combination is going to be $52$ cards long, and keeping track of that all will be a tremendous challenge. This seems like an approachable question, and yet, it illustrates how complicated (and large) these types of "counting" problems can become very quickly.
+Imagine that you are interested in determining how many possible ways there are of arranging a deck of $52$ cards. You could of course arrange them in a particular order, then count each of those. That would take a tremendous amount of time, so perhaps instead of using an actual deck you just write down the combinations. Still, each combination is going to be $52$ cards long, and keeping track of that all will be a challenge. This seems like an approachable question, and yet, it illustrates how complicated (and large) these types of "counting" problems can become very quickly.
 
 Fortunately for us there are some strategies for simplifying these problems down, some of which you are likely already familiar with. Think about trying to form an outfit where you have $4$ different sweaters, $3$ pairs of pants, and $2$ options for your shoes. Suppose that any combination of these will work well. How many total outfits are there? Well, if you have already picked your sweater and pants, then there are going to be $2$ different outfits using these: one with each of the pairs of shoes. This is true for each possible sweater-pant combination, and so we can count $2$ for each one these. In other words, to get the total number of outfits we multiply the number of sweater-pant combinations by the number of shoe options. The same rationale can be applied to count the total number of sweater-pant combinations. For each sweater, there are $3$ pairs of possible pants, and so to get the total number we can take $3$ for each possible sweater, or in other words, $3\times 4$. Taken together then we have $4\times 3\times 2 = 24$ total possible outfits. 
 
@@ -230,19 +292,21 @@ Sometimes it is helpful to express counting rules graphically. To do so we rely 
 
 :::{#def-tree-diagram}
 ## Tree Diagram
-A tree diagram is a graphical representation for the product rule of counting. Specifically, a tree diagram puts each of the decisions in sequence, and draws a branch for each separate option, starting from the branches drawn at the previous decision step.
+A tree diagram is a graphical representation for the product rule for counting. Specifically, a tree diagram puts each of the decisions in sequence, and draws a branch for each separate option, starting from the branches drawn at the previous decision step.
 :::
 
 To draw a tree diagram, you start with the first choice, drawing one branch for each of the $n_1$ alternatives, labelling each. Then, at the second choice, you do the same process at the end of each of the branches you drew for choice $1$, this time drawing $n_2$ branches there (so you will have just drawn $n_1\times n_2$ branches). Then for each of those you draw the $n_3$ further branches, and so on and so forth until the end. 
 
-If you want to know the total number of choices, you simply count the end points at the very end of the diagram. Each branch corresponds to a single option. To determine which combination of choices it corresponds to, you simply read off the branch labels at each branch you take. If you want to know how many possible combinations come with certain options selected, you can look at only those branches which are downstream from the choices that you care about.
+If you want to know the total number of choices, you count the end points at the very end of the diagram. Each branch corresponds to a single option. To determine which combination of choices it corresponds to, you read off the branch labels at each branch you take. If you want to know how many possible combinations come with certain options selected, you can look at only those branches which are downstream from the choices that you care about.
 
 ![A generic tree diagram. Here the first choice has three different options and the second choice has two. We can see the six total combinations, labelled on the right of the diagram, and can trace the choices required to get there.](/graphics/ch3-tree-diagram-generic){#fig-tree-diagram-general}
 
-While tree diagrams can be quite useful for visualizing a problem, they often grow to be overly complex. As a result, we need to fall back on the numerical representation afforded to us through the product rule for counting. Counting problems, in general, can very quickly become tremendously large and complex. For this reason, we have several tools to assist us in reducing this complexity based on common types of problems that we would like to count.
+While tree diagrams can be quite useful for visualizing a problem, they often grow to be overly complex. As a result, we need to fall back on the numerical representation afforded to us through the product rule for counting. Counting problems, in general, can very quickly become large and complex. For this reason, we have several tools to assist us in reducing this complexity based on common types of problems that we would like to count.
 
 ### The Factorial
-The first useful tool for simplifying these problems is the **factorial**. The factorial of an integer, denoted by $x!$ is given by the product of all integers from $x$ to $1$.^[Factorials are exciting because they always look like they are shouting!] That is, $$x! = x(x-1)(x-2)\cdots(2)(1).$$ If we consider the product rule for counting then note that if $n_1=1$, $n_2=2$, ... , $n_k = k$, then the total number of options is $k\times(k-1)\times\cdots\times 1 = k!$. The most common reason that this comes up is when we want to order a collection of items. Suppose that you have $10$ books that you want to place on a shelf. You can view this as making $10$ sequential decisions: what book goes first, second, third, and so on. There are $10$ options for the first book, then $9$ for the second (any except for the first one), and then $8$ for the third (any except for the first $2$). This continues down to the last book, and so we conclude that there are $10\times9\times8\times\cdots\times1 = 10!$ ways of arranging these books.
+The first useful tool for simplifying these problems is the **factorial**. The factorial of an integer, denoted by $x!$ is given by the product of all integers from $x$ to $1$.^[Factorials are exciting because they always look like they are shouting!] That is, $$x! = x(x-1)(x-2)\cdots(2)(1).$$ If we consider the product rule for counting then note that if $n_1=1$, $n_2=2$, ... , $n_k = k$, then the total number of options is $k\times(k-1)\times\cdots\times 1 = k!$. The most common reason that this comes up is when we want to order a collection of items. 
+
+Suppose that you have $10$ books that you want to place on a shelf. You can view this as making $10$ sequential decisions: what book goes first, second, third, and so on. There are $10$ options for the first book, then $9$ for the second (any except for the first one), $8$ for the third (any except for the first $2$). This continues down to the last book, and so we conclude that there are $10\times9\times8\times\cdots\times1 = 10!$ ways of arranging these books.
 
 :::{#exm-factorial}
 ## Seating in a (Full) Coffee Shop
@@ -266,12 +330,13 @@ c. Extending the same logic before, there are $10!\times 10!$ ways of getting ea
 ## 0!
 Depending on how factorials are thought of, some trouble can come up around a quantity like $0!$. On one hand, if we view factorials as multiplying each number between $n$ and $1$ together then $0! = 0\times 1$ and we get $0! = 0$. On the other hand, if we view factorials as counting the number of ways which we can order a set of $n$ items, then $0!$ is the number of ways we can order $0$ items, which is $1$.^[Imagine I am placing books on my shelf. With $3$ books there are $3! = 6$ ways my shelf can look at the end. With $2$ books there are $2! = 2$ ways my shelf can look at the end. With $1$ book there are $1! = 1$ ways my shelf can look at the end. With $0$ books there are $0! = 1$ ways my shelf can look at the end.] So, which is it?
 
-We take $0!$ to be equal to $1$. The ordering argument is perhaps the most convincing. However, if you are algebraically minded you may wonder how we get around the tricky issue of using our algebraic definition. The key insight is to not define $n!$ as the product of the numbers from $n$ to $1$, but rather, to define $$(n-1)! = \frac{n!}{n},$$ and specify that $1! = 1$. Then in this case we get all of the usual requirements for how we have discussed factorials, but we also get that $0! = \frac{(0+1)!}{(0+1)} = 1$. As a result, we will take $0! = 1$.^[Note, this does not help us with the factorials of negative numbers, nor of fractional numbers. Factorials *can* be extended to these in sensible ways, but these are not for combinatorial purposes and are no longer "factorials" exactly.]
+We take $0!$ to be equal to $1$. The ordering argument is perhaps the most convincing. However, if you are algebraically minded you may wonder how we get around the tricky issue of using our algebraic definition. The key insight is to not define $n!$ as the product of the numbers from $n$ to $1$, but rather, to define $$(n-1)! = \frac{n!}{n},$$ and specify that $1! = 1$. Then in this case we get all of the usual requirements for how we have discussed factorials, but we also get that $0! = \dfrac{(0+1)!}{(0+1)} = 1$. As a result, we will take $0! = 1$.^[Note, this does not help us with the factorials of negative numbers, nor of fractional numbers. Factorials *can* be extended to these in sensible ways, but these are not for combinatorial purposes and are no longer "factorials" exactly.]
 :::
 
 ### Permutations and Combinations
-Sometimes, we want to order items from a collection, but we want to only take a subset of these times. That is, suppose that you have $20$ books, only $9$ of them will fit on the self, and you want to know "how many ways can you put $10$ books on the shelf, in order, from your collection of $20$?" Using the product rule of counting for this directly, we recognize that there are $20$ options for the first, then $19$, then $18$, and so on until there are $12$ choices for the $10$th book to place. We can write this out in a seemingly strange way. \begin{align*}
-  &\ \frac{(20)(19)(18)(17)(16)(15)(14)(13)(12)(11)(10)(9)(8)(7)(6)(5)(4)(3)(2)(1)}{(11)(10)(9)(8)(7)(6)(5)(4)(3)(2)(1)} \\
+Sometimes, we want to order items from a collection, but we want to only take a subset of these items. That is, suppose that you have $20$ books, only $9$ of them will fit on the shelf, and you want to know "how many ways can you put $10$ books on the shelf, in order, from your collection of $20$?" Using the product rule of counting for this directly, we recognize that there are $20$ options for the first, then $19$, then $18$, and so on until there are $12$ choices for the $10$th book to place. We can write this out in a seemingly strange way. \begin{align*}
+  &\ (20)(19)(18)(17)(16)(15)(14)(13)(12) \\ 
+  &= \frac{(20)(19)(18)(17)(16)(15)(14)(13)(12)(11)(10)(9)(8)(7)(6)(5)(4)(3)(2)(1)}{(11)(10)(9)(8)(7)(6)(5)(4)(3)(2)(1)} \\
   &= \frac{(20)(19)(18)(17)(16)(15)(14)(13)(12)\cancel{(11)}\cancel{(10)}\cancel{(9)}\cancel{(8)}\cancel{(7)}\cancel{(6)}\cancel{(5)}\cancel{(4)}\cancel{(3)}\cancel{(2)}\cancel{(1)}}{\cancel{(11)}\cancel{(10)}\cancel{(9)}\cancel{(8)}\cancel{(7)}\cancel{(6)}\cancel{(5)}\cancel{(4)}\cancel{(3)}\cancel{(2)}\cancel{(1)}}
 \end{align*}
 
@@ -294,7 +359,7 @@ c. If the coffee shop can make only one of each drink, how does the previous tot
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-a. In this case we are looking to order subsets from a total collection. If we line up the $7$ patrons we then need to select $7$ chairs to go with them, and keep these ordered. This is simply $$P_{10,7} = \frac{10!}{3!} = 604800.$$
+a. In this case we are looking to order subsets from a total collection. If we line up the $7$ patrons we then need to select $7$ chairs to go with them, and keep these ordered. This is $$P_{10,7} = \frac{10!}{3!} = 604800.$$
 
 b. In this part of the question we know that the $7$ people have $P_{10,7}$ ways of sitting into seats, we can view this as decision one. Then, for each of these $7$ people there is a decision of what drink they will order. For these $7$ decisions, $n_2 = \cdots = n_8 = 10$. As a result, we get the total number is $$P_{10,7}\times10\times10\times\cdots\times10 = P_{10,7}\times 10^{7} = 6,048,000,000,000.$$
 
@@ -304,16 +369,16 @@ c. This setting, like part (b) starts with a first decision involving $P_{10,7}$
 
 Factorials compute the number of orderings for a set of objects, and permutations compute the number of ordered subsets from a collection of objects. What about when we do not wish to differentiate the order of subsets? Suppose that you still need to form a $5$ person committee, but you do not have explicit roles for the different members of the committee. Here we cannot use a permutation directly, as we know that this takes into account the order. 
 
-To determine the number of unordered subsets, we will consider a different approach for taking ordered subsets. Suppose that we formulate the ordered committee as a two step procedure. First, we select $5$ people without concern for their order. Then we choose which order they will have. If $M$ represents the number of unordered sets of $5$ from this population, the product rule for counting tells us that the total number of ordered committees will be $M\times 5!$, since there are $5!$ arrangements of the $5$ people. Thus, we can write this down as $$P_{30,5} = \frac{30!}{25!} = M\times 5! \implies M = \frac{30!}{25!5!}.$$ 
+To determine the number of unordered subsets, we will consider an alternative approach that we could have used for taking ordered subsets. Suppose that we formulate the ordered committee as a two step procedure. First, we select $5$ people without concern for their order. Then we choose which order they will have. If $M$ represents the number of unordered sets of $5$ from this population, the product rule for counting tells us that the total number of ordered committees will be $M\times 5!$, since there are $5!$ arrangements of the $5$ people. Thus, we can write this down as $$P_{30,5} = \frac{30!}{25!} = M\times 5! \implies M = \frac{30!}{25!5!}.$$ 
 
-This will be true far more broadly than our committee example. If we want to select $k$ items from a collection of $n$, we will have $n!$ divided by the product of $k!$ and $(n-k)!$. We refer to these as combinations.
+This will be true in general. If we want to select $k$ items from a collection of $n$, we will have $n!$ divided by the product of $k!$ and $(n-k)!$. We refer to these as combinations.
 
 :::{#def-combinations}
 ## Combinations
 If we wish to select $k$ items from a collection of $n$ items, where the ordering of these selections does not matter, then the total number is referred to as a combination. Mathematically, $$\binom{n}{k} = \frac{n!}{k!(n-k)!}.$$
 :::
 
-We read $\binom{n}{k}$ as "$n$ choose $k$", which translates to "select $k$ items from a population of $n$ total options, without concern for their order."
+We read $\dbinom{n}{k}$ as "$n$ choose $k$", which translates to "select $k$ items from a population of $n$ total options, without concern for their order."
 
 To summarize: factorials allow us to order a complete collection, permutations allow us to select a subset with consideration of the ordering, and combinations allow us to select a subset from the collection without regard to the order. These three techniques can be used in combination with the product rule for counting to allow us to have very complex total summations. 
 
@@ -326,17 +391,45 @@ b. Suppose that only $6$ people end up showing up. How many different ways can t
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-a. Here, there is no ordering for the $8$ chairs that are to be selected. As a result, we are simply looking for how many chairs can be selected from a group of $10$ of them. This is $$\binom{10}{8} = \frac{10!}{8!\cdot 2!} = 45.$$
+a. Here, there is no ordering for the $8$ chairs that are to be selected. As a result, we are looking for how many chairs can be selected from a group of $10$ of them. This is $$\binom{10}{8} = \frac{10!}{8!\cdot 2!} = 45.$$
 
 b. With the first choice having $45$ possible options, the second choice that needs to be made is how $6$ people sit into $8$ chairs. Here the ordering *does* matter, since the chairs are distinguishable. As a result, this is a permutations question, with there being a total of $P_{8,6} = \frac{8!}{2!}$ ways of having the people select their seats. In total then there are $$\binom{10}{8}\times P_{8,6} = \frac{10!}{8!\cdot 2!}\cdot\frac{8!}{2!} = 907,200.$$
 ::::
+:::
+
+:::{#exm-combinations-and-permutations}
+## Fundraiser Raffle Consultation
+Charles and Sadie are asked by a local organization to help organize a raffle as a fundraiser. The organizers are considering two different versions for the raffle. 
+
+1. They would sell $1000$ tickets, and there are $5$ different prizes (valued at \$1000, \$500, \$250, \$150, and \$100) respectively. 
+2. They would sell $1000$ tickets, and draw $5$ winners. Each winner would win \$400. 
+
+They are curious how these two scenarios differ statistically. 
+
+a. How many possible winning combinations exist for scenario 1?
+b. How many possible winning combinations exist for scenario 2?
+c. Are the probabilities that any specific individual wins the raffle different between the two versions? Explain.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. In the first scenario, the ordering of the winners matters. We can think of drawing the $5$ winners in order from highest value prize to lowest value prize. Then, we are selecting $k=5$ from $n=1000$ with concern for ordering, so the total number of winning combinations is $$P_{1000,5} = \frac{1000!}{995!} = 990,034,950,024,000.$$
+b. In the second scenario, the ordering of the winners does not matter. There is no distinction between the winners, and so we could select any $5$ and then report the winners alphabetically. Then, we are selecting $k=5$ from $n=1000$ with no concern for ordering, so the total number of winning combinations is $$\binom{1000}{5} = \frac{1000!}{5!995!} = 8,250,291,250,200.$$
+c. Intuitively, the probabilities should be the same. Moreover, it makes sense that each probability should be $5/1000$ since the probability of winning any of the prizes is $1/1000$ and there are $5$ such prizes to win. 
+
+    In parts (a) and (b) we saw the total number of each version, and we know that any sequence of winners is equally likely. As a result, we can consider counting the total number of ways that any specific individual can win in both scenarios. In the first, suppose that the individual wins the top prize. Then we need to select 4 other winners (with ordering) from the remaining $999$ individuals. Thus, the total number of ways that they can win the \$1000 prize is $P_{999,4}$. The same goes for all of the other prizes, meaning the total number of ways that they can win is $5\times P_{999,4}$. Thus, the probability that they win is $$\frac{5P_{999,4}}{P_{1000,5}} = \frac{5(999!/995!)}{1000!/995!} = \frac{5}{1000}.$$ 
+    
+    For the second option, if we know that the particular individual wins then we need to select the other $4$ winners from the remaining $999$ individuals, without concern for the ordering. Thus, there are $\dbinom{999}{4}$ winning combinations for the specific individual, and the probability that they win is $$\frac{\binom{999}{4}}{\binom{1000}{5}} = \frac{999! \times 5! \times 995!}{995!\times 4! \times 1000!} = \frac{5}{1000}.$$
+
+::::
+
 :::
 
 ### Less Common Counting Techniques
 While most of the problems we address will revolve around permutations and combinations (with heavy use of the product rule), there are additional techniques which are important to know (and recognize when to use). In particular, combinations and permutations each assume that we are sampling from our set **without replacement**. That is, each time you select an item, it is removed from the population. These are the most common situations in these combinatorial problems, however, there are *some* situations which arise where we need to count the number of ordered or unordered subsets *with* replacement. 
 
 #### Ordered Subsets with Replacement
-Consider, for instance, forming a password using only lowercase numbers and letters. If you decide on a fixed length for the password, then there are going to be $36$ choices at each decision point, and you want to take an ordered subset of these. This is forming an **ordered subset with replacement**, and to count how many different ways there are of doing this, we can simply use the product rule. That is, you have $36$ choices at each decision point, and so there are $36\times 36\times\cdots\times 36 = 36^k$ total decisions, where $k$ is the number of items to select. 
+Consider, for instance, forming a password using only lowercase numbers and letters. If you decide on a fixed length for the password, then there are going to be $36$ choices at each decision point, and you want to take an ordered subset of these. This is forming an **ordered subset with replacement**, and to count how many different ways there are of doing this, we can use the product rule. That is, you have $36$ choices at each decision point, and so there are $36\times 36\times\cdots\times 36 = 36^k$ total decisions, where $k$ is the number of items to select. 
 
 In general, if you have $n$ total items and you want to make an ordered set of $k$ of these items **with replacement** you will have $n^k$ total ways of doing this.
 
@@ -391,11 +484,11 @@ a. A straight necessitates drawing five cards in order, with each of any suit. J
 
 b. A flush necessitates drawing **any** five cards from the same suit. If we had a suit fixed, there would be ${13\choose 5}$ ways of doing this, since we do not care about ordering. If we think about first choosing the suit, we have $4$ ways of doing that, resulting in $$N_A = 4 \times {13 \choose 5} = 5148.$$ 
 
-c. To find the probabilities of each of these, we need to know the total number of $5$ card hands. We do not consider order, and so $N = \binom{52}{5} = 2598960$. Then, the probability is simply the number of combinations (calculated above) divided by the number of hands. This gives, for straights, $$P(A) = \frac{10240}{2598960} = \frac{128}{32487} \approx 0.00394,$$ and for flushes, $$P(A) = \frac{5148}{2598960} = \frac{33}{16660} \approx 0.00198.$$ As a result, we see that straights are roughly twice as common as flushes are.^[This is *still* a deeply unintuitive result to me. To me it feels like it should be harder to get a nice ordering of cards all in a row than it is to find ones of the same suit. And yet, it is about twice as likely to have the straights. Now, if you think about this deeply, it makes a lot of sense: there is a lot more leeway in selecting the straight than the flush. However, my brain refuses to accept this as intuitive. This is something that can often occur in probability questions where the true results can be far from what we would expect. An interesting question is how long does a straight have to be to be less likely than a flush of the same length. Note that the number of ways of choosing a flush will always be $4\times\binom{13}{k}$, and the number of ways of forming a straight will always be $10\times 4^k$. If we consider $k$ from $1$ to $13$, we can take the ratios of these to see just how much more (or less) likely a straight is. Doing this gives: [`r output_str`.]{.font-monospace .text-light .bg-dark .m-2 .p-2 .block} Up to (and including) $4$ cards the straight is indeed harder to achieve. However, this does not last long!]
+c. To find the probabilities of each of these, we need to know the total number of $5$ card hands. We do not consider order, and so $N = \binom{52}{5} = 2598960$. Then, the probability is the number of combinations (calculated above) divided by the number of hands. This gives, for straights, $$P(A) = \frac{10240}{2598960} = \frac{128}{32487} \approx 0.00394,$$ and for flushes, $$P(A) = \frac{5148}{2598960} = \frac{33}{16660} \approx 0.00198.$$ As a result, we see that straights are roughly twice as common as flushes are.^[This is *still* a deeply unintuitive result to me. To me it feels like it should be harder to get a nice ordering of cards all in a row than it is to find ones of the same suit. And yet, it is about twice as likely to have the straights. Now, if you think about this deeply, it makes a lot of sense: there is a lot more leeway in selecting the straight than the flush. However, my brain refuses to accept this as intuitive. This is something that can often occur in probability questions where the true results can be far from what we would expect. An interesting question is how long does a straight have to be to be less likely than a flush of the same length. Note that the number of ways of choosing a flush will always be $4\times\binom{13}{k}$, and the number of ways of forming a straight will always be $10\times 4^k$. If we consider $k$ from $1$ to $13$, we can take the ratios of these to see just how much more (or less) likely a straight is. Doing this gives: [`r output_str`.]{.font-monospace .text-light .bg-dark .m-2 .p-2 .block} Up to (and including) $4$ cards the straight is indeed harder to achieve. However, this does not last long!]
 
 d. Note that to form a straight flush, we first have to fix a suit. There are ${4\choose 1}=4$ total ways of doing this. Next, we need to pick which starting value we will use. Once a card has been selected as a starting value, the remaining cards are fixed. The start value ranges from A through to $10$. Correspondingly, we have $$N_A = {4\choose 1}{10 \choose 1} = 4\times10 = 40.$$ As a result, we get that $$P(A) = \frac{40}{2598960} = \frac{1}{64974}.$$
 
-e. From (d) exactly $40$ of the straights and $40$ of the flushes are also straight flushes. We can thus remove $40$ from the totals of each of these, giving $\frac{10200}{2598960}$ for straights and $\frac{5108}{2598960}$ for flushes.
+e. From (d) exactly $40$ of the straights and $40$ of the flushes are also straight flushes. We can thus remove $40$ from the totals of each of these, giving $\dfrac{10200}{2598960}$ for straights and $\dfrac{5108}{2598960}$ for flushes.
 ::::
 :::
 
@@ -476,7 +569,7 @@ a. Find the probability that a randomly selected room has an issue that was foun
 :::
 
 :::{#exr-3.10}
-Let $A$ and $B$ be events with probabilities $P(A) = \frac{3}{4}$ and $P(B) = \frac{1}{3}$. Show that $$\frac{1}{12}\leq P(A\cap B)\leq\frac{1}{3}.$$
+Let $A$ and $B$ be events with probabilities $P(A) = \dfrac{3}{4}$ and $P(B) = \dfrac{1}{3}$. Show that $$\frac{1}{12}\leq P(A\cap B)\leq\frac{1}{3}.$$
 :::
 
 :::{#exr-3.11}
@@ -505,7 +598,7 @@ A group of $10$ people have gotten together to play basketball. They will begin 
 :::
 
 :::{#exr-3.17}
-A factory produces a total of $15,000$ candies a day, of which $3\%$ are defective. Find the probability that, out of $500$ candies chosen at random on a single day, $12$ are defective.
+A factory produces a total of $15,000$ candies a day, of which $3\%$ do not pass quality standards. Find the probability that, out of $500$ candies chosen at random on a single day, $12$ are deemed insufficient quality.
 :::
 
 

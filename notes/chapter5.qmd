@@ -7,9 +7,13 @@ When introducing probability originally we worked from a sample space and then c
 A random variable is a numeric quantity whose specific value depends on chance through the outcome of a statistical experiment. Formally, a random variable is a mapping from the result of an experiment to a set of numbers. 
 :::
 
-By reporting the numeric value of the random variable, we are able to summarize the key part of the experiment, succinctly. For instance, suppose that we are repeatedly tossing a coin. If we toss the coin $100$ times, then the sample space is going to consist of $2^{100}$ total possible outcomes, each of which is a sequence of $100$ heads and tails.^[Recall our discussions of combinatorics.] Instead, it may be more convenient to assign a random variable to be the number of heads that show up on the $100$ tosses of the coin. In this case, the random variable takes on a non-negative integer between $0$ and $100$. In many situations, such a summary may be all the is relevant from the experiment.
+By reporting the numeric value of the random variable, we are able to summarize the key part of the experiment, succinctly. 
 
-It is important to recognize that information *is* lost when we define this random variable. If $X$ summarizes the number of heads in $100$ tosses of a coin, then provided $X$ you are not able to answer the question "what was the 23rd toss of the coin?" As a result, random variables smooth over the unnecessary information, summarizing the parts of the statistical experiment that we care for. For any statistical experiment, however, we need to carefully define the random variables which are truly of interest to us. For instance, if the $23$rd toss of the coin was integral to our decision-making, then perhaps we define a random variable $Y$ which counts the number of heads that show up on the $100$ tosses of the coin, but does so with negative numbers if the $23$rd toss was a tail, and with positive numbers if it was a head. Then, provided $Y$ you can answer "how many heads showed up in the tosses of the coin? by calculating $|Y|$, and you can answer "what was the $23$rd toss of the coin?" by looking at $\text{sign}(Y)$.
+For instance, suppose that we are repeatedly tossing a coin. If we toss the coin $100$ times, then the sample space is going to consist of $2^{100}$ total possible outcomes, each of which is a sequence of $100$ heads and tails.^[Recall our discussions of combinatorics.] Instead, it may be more convenient to assign a random variable to be the number of heads that show up on the $100$ tosses of the coin. In this case, the random variable takes on a non-negative integer between $0$ and $100$. In many situations, such a summary may be all the is relevant from the experiment.
+
+It is important to recognize that information *is* lost when we define this random variable. If $X$ summarizes the number of heads in $100$ tosses of a coin, then provided $X$ you are not able to answer the question "what was the 23rd toss of the coin?" As a result, random variables smooth over the unnecessary information, summarizing the parts of the statistical experiment that we care for. For any statistical experiment, however, we need to carefully define the random variables which are truly of interest to us. 
+
+For instance, if the $23$rd toss of the coin was integral to our decision-making, then perhaps we define a random variable $Y$ which counts the number of heads that show up on the $100$ tosses of the coin, but does so with negative numbers if the $23$rd toss was a tail, and with positive numbers if it was a head. Then, provided $Y$ you can answer "how many heads showed up in the tosses of the coin? by calculating $|Y|$, and you can answer "what was the $23$rd toss of the coin?" by looking at $\text{sign}(Y)$.
 
 :::{#exm-random-var}
 ## Random Variables at the Coffee Shop
@@ -77,7 +81,7 @@ If we take a set like the positive integers, $\{1,2,3,\dots\}$, then this is an 
 
 What if we took the set of real numbers^[Recall that "real numbers" are just all of the standard numbers that we think of (decimals, whole numbers, fractions, negative values, etc.).] in the interval $[0,1]$? In this case there is **no way** to map each of these values to the values $\{1,2,3,4,\dots\}$ and as a result the interval $[0,1]$ is **not countable**. It is infinitely large, but it remains infinitely large even after we have enumerated an infinite set of the items in it.
 
-A key difference between countable and uncountable sets is that, with a countable set, we can^[(in principle)] sum over the elements of the set. We cannot sum over the elements of an uncountable set, as there would be no way to actually order and enumerate the items. In this course the detailed mathematics of countable versus non-countable sets is tangential to the main point which is in distinguishing between discrete and continuous random variables.
+A key difference between countable and uncountable sets is that, with a countable set, we can^[(in principle)] sum over the elements of the set. We cannot sum over the elements of an uncountable set, as there would be no way to actually order and enumerate the items. In these notes, the detailed mathematics of countable versus non-countable sets is tangential to the main point which is in distinguishing between discrete and continuous random variables.
 :::
 
 Typically, discrete random variables will take on some collection of the integers, where continuous random variables will be defined on some interval (or set of intervals). That is, we may take discrete random variables to be defined on $\{0,1,2,3,\dots,100\}$ or $\{0,1,2,3,\dots\}$ or $\mathbb{Z}$^[This notation refers to the set of all integers]. For continuous random variables we may take $X \in [0,1]$ or $X \in (0,\infty)$ or $X\in (-\infty,129]$. 
@@ -111,7 +115,7 @@ For this we categorize the random variables originally defined in the solution t
 :::
 
 ## Probability Distributions and Probability Mass Functions
-We will discuss continuous random variables later. For now, we turn our focus to discrete random variables. One of the major utilities of random variables is that they provide a shorthand for summarizing the results of a statistical experiment. To this end, there are several tools which have been developed centered on random variables which help to expedite the analysis of the corresponding probabilities. Chief among these tools is the concept of a probability distribution. 
+We will discuss continuous random variables later. For now, we turn our focus to discrete random variables. One of the major utilities of random variables is that they provide a shorthand for summarizing the results of a statistical experiment. To this end, there are several key concepts relating to random variables which help to expedite the analysis of the corresponding probabilities. Chief among these tools is the concept of a probability distribution. 
 
 :::{#def-probability-distribution}
 ## Probability Distribution
@@ -139,10 +143,10 @@ Help to simplify this statistical experiment by first defining a random variable
 ## Solution
 One choice of $X$ is to allow $X$ to be the number of heads that show on three tosses of the coin. In this case we have $\mathcal{X} = \{0,1,2,3\}$. If $x = 0$ or $x = 3$ is observed then Garth pays. If $x = 2$ is observed then Charles pays. Finally, if $x = 1$ is observed, Sadie pays. Thus writing down the probability mass function for $X$ also provides an easy way for computing the probability of each player having to pay.
 
-In order for $X = 0$, we must have all tails come up. There are $2^3 = 8$ total possible sequences of $3$ coin tosses, and only $1$ of these results in $X = 0$, therefore $P(X = 0) = p(0) = \frac{1}{8}$. The same logic applies to $X = 3$ where we need to toss all heads. There are several techniques for finding $p(1)$ and $p(2)$.^[One particularly elegant technique is to realize that $p(1)$ and $p(2)$ must be the same by interchanging the roles of heads and tails. Thus, we have $p(1) + p(2) + 0.25 = 1$ by the unitary property of probability, and rearranging gives $p(1) = p(2) = 0.375$.] The most direct way is to recognize that there are exactly $3$ ways of observing $1$ head (it can be in the first, second, or third toss). Thus, $p(1) = \frac{3}{8}$. For $p(2)$, the same logic applies except we ask "where is the one tail?" to give $p(2) = \frac{3}{8}$. Then, taken together, this results in $$p(x) = \begin{cases} 
-\frac{1}{8} & x \in \{0, 3\} \\
-\frac{3}{8} & x \in \{1, 2\} \\
-0 & \text{otherwise}.\end{cases}$$ We can also read off from this result that Garth pays $\frac{1}{4}$ of the time in the long run, while Sadie and Charles each pay $\frac{3}{8}$ of the time.^[We can actually write down this probability mass function more succinctly as $p(x) = \binom{3}{x}\frac{1}{8}$. You can check this holds for yourself, and we will understand why later on!]
+In order for $X = 0$, we must have all tails come up. There are $2^3 = 8$ total possible sequences of $3$ coin tosses, and only $1$ of these results in $X = 0$, therefore $P(X = 0) = p(0) = \dfrac{1}{8}$. The same logic applies to $X = 3$ where we need to toss all heads. There are several techniques for finding $p(1)$ and $p(2)$.^[One particularly elegant technique is to realize that $p(1)$ and $p(2)$ must be the same by interchanging the roles of heads and tails. Thus, we have $p(1) + p(2) + 0.25 = 1$ by the unitary property of probability, and rearranging gives $p(1) = p(2) = 0.375$.] The most direct way is to recognize that there are exactly $3$ ways of observing $1$ head (it can be in the first, second, or third toss). Thus, $p(1) = \dfrac{3}{8}$. For $p(2)$, the same logic applies except we ask "where is the one tail?" to give $p(2) = \dfrac{3}{8}$. Then, taken together, this results in $$p(x) = \begin{cases} 
+\dfrac{1}{8} & x \in \{0, 3\} \\
+\dfrac{3}{8} & x \in \{1, 2\} \\
+0 & \text{otherwise}.\end{cases}$$ We can also read off from this result that Garth pays $\dfrac{1}{4}$ of the time in the long run, while Sadie and Charles each pay $\dfrac{3}{8}$ of the time.^[We can actually write down this probability mass function more succinctly as $p(x) = \binom{3}{x}\dfrac{1}{8}$. You can check this holds for yourself, and we will understand why later on!]
 ::::
 :::
 
@@ -160,17 +164,28 @@ We know that two properties must be true of all probability mass functions. Firs
 ::::
 :::
 
-When solving questions related to probabilities using a probability mass function, the same secondary properties apply. Notably, if we want to know $P(X\in A)$, for some set of possible values $A$, then we can write $$P(X\in A) = \sum_{x\in A}p(x).$$ This can be particularly helpful, for instance, if we want to know $P(X \leq c)$ for some constant value $c$. In this case we know that the possible values range from teh smallest value $X$ can take on, through to $c$, giving for instance, $$P(X\leq c) = \sum_{x=0}^c p(x),$$ if $X \geq 0$. Rules regarding the complements of events continue to hold as well, where for instance, $P(X > c) = 1 - P(X\leq c)$, giving a useful avenue for simplifying probability calculations.
+When solving questions related to probabilities using a probability mass function, the same secondary properties apply. Notably, if we want to know $P(X\in A)$, for some set of possible values $A$, then we can write $$P(X\in A) = \sum_{x\in A}p(x).$$ This can be particularly helpful, for instance, if we want to know $P(X \leq c)$ for some constant value $c$. In this case we know that the possible values range from the smallest value $X$ can take on, through to $c$, giving for instance, $$P(X\leq c) = \sum_{x=0}^c p(x),$$ if $X \geq 0$. These probabilities that consider the cumulative likelihood of $X$ taking on a value up to (or including) some number arise frequently in probability, and correspondingly, are themselves named. 
+
+:::{#def-cumulative-distribution-function}
+## Cumulative Distribution Function (Discrete)
+
+The cumulative distribution function of a discrete random variable, $X$, is denoted $F_X(x)$, and is defined as the probability that $X$ is less than or equal to a particular value. That is, $$F_X(x) = P(X \leq x) = \sum_{x = -\infty}^x p_X(x).$$ The summation is typically written starting at the smallest value of $X$ rather than starting from $-\infty$.
+
+:::
+
+The cumulative distribution function will be explored more thoroughly in @sec-continuous-rv. Generally, for discrete random variables, the cumulative distribution function is more complex than the probability mass function, and it often is only expressible directly through a summation. Despite this, you can always convert between the probability mass function and the cumulative distribution function, with each uniquely specifying the distribution of the random variable.
+
+The same rules regarding the complements of events continue to hold when working with probability mass functions and cumulative distribution functions. For instance, $$P(X > c) = 1 - P(X\leq c) = 1 - F_X(c),$$ giving a useful avenue for simplifying probability calculations. 
 
 :::{#exm-probability-calc}
 ## Charles and Sadie: Amateur Ornithologists
-Charles and Sadie watched a documentary about birds together, which had Sadie become quite interested in bird watching. Charles is skeptical^[Charles is still not entirely sure if birds are even real, let alone worth watching.] but agrees to go along with Sadie, supposing that there is a high enough probability of something interesting happening. Sadie scours the scholarly literature and determines that, in the area, the probability of seeing $x$ rare birds over a five hour birding session has a probability mass function given by $$p(x) = \frac{e^{-3}3^x}{x!},$$ where $x\geq 0$.^[How Sadie found such a concrete answer, I will never know.]
+Charles and Sadie watched a documentary about birds together, which had Sadie become quite interested in bird watching. Charles is skeptical^[Charles is still not entirely sure if birds are even real, let alone worth watching.] but agrees to go along with Sadie, supposing that there is a high enough probability of something interesting happening. Sadie scours the scholarly literature and determines that, in the area, the probability of seeing $x$ rare birds over a five hour birding session has a probability mass function given by $$p(x) = \dfrac{e^{-3}3^x}{x!},$$ where $x\geq 0$.^[How Sadie found such a concrete answer, I will never know.]
 
 What is the probability that during their bird watching adventure, Charles and Sadie see at least $1$ rare bird?
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-We are interesting in the probability $P(X \geq 1)$, which we can write down explicitly as $$P(X \geq 1) = \sum_{x=1}^\infty \frac{e^{-3}3^x}{x!}.$$ While, strictly speaking, it is possible to solve this infinite summation, it is an infinite summation and we would rather not. Instead we can realize that, if we take the event $A = \{X \geq 1\}$ then $A^C$ is the event $\{X < 1\} = \{X = 0\}$. As a result, using our elementary rules of probability we get that $$P(X \geq 1) = 1 - P(X = 0) = 1 - \frac{e^{-3}3^{0}}{0!} = 1 - e^{-3} \approx 0.95.$$ As a result, there is an approximately $0.95$ probability that they see a rare bird while bird watching for five hours.
+We are interesting in the probability $P(X \geq 1)$, which we can write down explicitly as $$P(X \geq 1) = \sum_{x=1}^\infty \dfrac{e^{-3}3^x}{x!}.$$ While, strictly speaking, it is possible to solve this infinite summation, it is an infinite summation and we would rather not. Instead we can realize that, if we take the event $A = \{X \geq 1\}$ then $A^C$ is the event $\{X < 1\} = \{X = 0\}$. As a result, using our elementary rules of probability we get that $$P(X \geq 1) = 1 - P(X = 0) = 1 - \dfrac{e^{-3}3^{0}}{0!} = 1 - e^{-3} \approx 0.95.$$ As a result, there is an approximately $0.95$ probability that they see a rare bird while bird watching for five hours.
 ::::
 :::
 
@@ -178,7 +193,7 @@ With events defined in terms of random variables, we can talk about events as be
 
 :::{#exm-condition-joint-probability}
 ## Charles: The Ornithological Photographer
-After a single time bird watching Charles is hooked! The next time that they go out, Charles brings a camera to snag some beautiful memories of the majesty they are witnessing. The only trouble is that Charles is not particularly good at taking photographs of stills, let alone of creatures that can fly. Charles is not yet certain, but suspects that every time a photograph is snapped, there is a $0.1$ probability that it turns out good. Because the camera is a film camera, the number of photos taken is a key metric, and Charles works out that, if $X$ is the number of bad photographs taken for every good photograph, the probability mass function for $X$ is given by $$p(x) = (0.1)\times (0.9)^{x},$$ where $x \geq 0$ is an integer.
+After a single time bird watching Charles is hooked! The next time that they go out, Charles brings a camera to snag some beautiful memories of the majesty they are witnessing. The only trouble is that Charles is not particularly good at taking photographs of still subjects, let alone of creatures that can fly. Charles is not yet certain, but suspects that every time a photograph is snapped, there is a $0.1$ probability that it turns out good. Because the camera is a film camera, the number of photos taken is a key metric, and Charles works out that, if $X$ is the number of bad photographs taken for every good photograph, the probability mass function for $X$ is given by $$p(x) = (0.1)\times (0.9)^{x},$$ where $x \geq 0$ is an integer.
 
 a. What is the probability that Charles takes exactly three bad photos before the first good one?
 b. If $A$ is the event that Charles takes three bad photos before the first good one, and $B$ is the event that Charles takes more than four photos before the first good one, what is $P(A,B)$? What does this means about $A$ and $B$?
@@ -194,10 +209,10 @@ a. Here, we want $p(3) = (0.1)\times(0.9)^3 = 0.0729$.
 b. Considering $A \cap B$ we have $\{X = 3\} \cap \{X \geq 4\} = \emptyset$. As a result, $P(A,B) = 0$ since there is no overlap between $A$ and $B$. As a result, these events are mutually exclusive.
 
 c. Here, we can frame this probability as $$P(X \geq 4 | X \geq 2)$$ This can be directly computed using the definition of conditional probability, \begin{align*}
-    P(X \geq 4 | X \geq 2) &= \frac{P(X \geq 4, X \geq 2)}{P(X \geq 2)} \\
-    &= \frac{P(X \geq 4)}{1 - P(X < 2)} \\
-    &= \frac{1 - P(X < 4)}{1 - (0.1 + 0.1\times0.9)} \\
-    &= \frac{1 - (0.1 + 0.1\times 0.9 + 0.1\times 0.9^2 + 0.1\times0.9^3)}{1 - (0.1 + 0.1\times 0.9)} \\
+    P(X \geq 4 | X \geq 2) &= \dfrac{P(X \geq 4, X \geq 2)}{P(X \geq 2)} \\
+    &= \dfrac{P(X \geq 4)}{1 - P(X < 2)} \\
+    &= \dfrac{1 - P(X < 4)}{1 - (0.1 + 0.1\times0.9)} \\
+    &= \dfrac{1 - (0.1 + 0.1\times 0.9 + 0.1\times 0.9^2 + 0.1\times0.9^3)}{1 - (0.1 + 0.1\times 0.9)} \\
     &= 0.81.
 \end{align*}
 
@@ -243,18 +258,18 @@ A joint probability mass function describes the behaviour of the joint distribut
 ## Charles and Sadie's Bird Outings 
 Charles and Sadie have both gotten deeply into their ornithological adventures. They go on trips together, Sadie is responsible for spotting the rare birds, and then Charles for snapping the photos. Charles has settled on a camera setup that allows for $10$ pictures to be taken before changing the film. The strategy that they follow is to go out and look for a rare bird. When one is spotted, Charles takes $10$ photos, trying to get as many good photos as possible. Then, the film is replaced and they repeat the process. 
 
-If $X$ is a random variable representing the number of good photos that are taken, and $Y$ is the number of birds that are seen on the trip, then the joint probability mass function of $X$ and $Y$ is $$p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!},$$ with $0 \leq x \leq 10y$, and $y \geq 0$.
+If $X$ is a random variable representing the number of good photos that are taken, and $Y$ is the number of birds that are seen on the trip, then the joint probability mass function of $X$ and $Y$ is $$p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!},$$ with $0 \leq x \leq 10y$, and $y \geq 0$.
 
 a. What is the probability that one bird is seen and there are no good photos taken?
 b. What is the probability that there is one or fewer good photos taken and two birds seen?
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-a. Here we want $Y = 1$ and $X = 0$. Thus, we compute $$p_{X,Y}(0, 1) = \binom{10(1)}{0}\times(0.25)^{0}\times(0.75)^{10(1) - 0}\times\frac{e^{-3}3^1}{1!} \approx 0.008411.$$
+a. Here we want $Y = 1$ and $X = 0$. Thus, we compute $$p_{X,Y}(0, 1) = \binom{10(1)}{0}\times(0.25)^{0}\times(0.75)^{10(1) - 0}\times\dfrac{e^{-3}3^1}{1!} \approx 0.008411.$$
 
 b. Here we want $\{X \leq 1\}$ and $Y = 2$. This is the same as $X = 0$ with $Y = 2$ or $X = 1$ with $Y = 2$. Thus, \begin{align*}
-p_{X,Y}(0,2) + p_{X,Y}(1,2) &= \binom{10(2)}{0}\times(0.25)^{0}\times(0.75)^{10(2) - 0}\times\frac{e^{-3}3^2}{2!} \\
-&\quad + \binom{10(2)}{1}\times(0.25)^{1}\times(0.75)^{10(2) - 1}\times\frac{e^{-3}3^2}{2!} \\
+p_{X,Y}(0,2) + p_{X,Y}(1,2) &= \binom{10(2)}{0}\times(0.25)^{0}\times(0.75)^{10(2) - 0}\times\dfrac{e^{-3}3^2}{2!} \\
+&\quad + \binom{10(2)}{1}\times(0.25)^{1}\times(0.75)^{10(2) - 1}\times\dfrac{e^{-3}3^2}{2!} \\
 &\approx 0.00547.\end{align*}
 
 ::::
@@ -307,16 +322,16 @@ In words, two random variables are independent whenever all possible combination
 ## Charles the Sports Fan
 Charles is a major sports fan and has been particularly fond of *hurling* ever since a trip to Ireland. Each week, Charles watches with deep investment, becoming very attached to the outcome. Because of this attachment, Charles is willing to do just about anything to help out from behind the television set, which mostly consists of wearing the right coloured clothing. Charles's theory is that by increasing the number of articles of green clothing that are worn, the number of scores in the game will also increase. 
 
-Let $X$ represent the number of articles of green clothing that Charles is wearing, with $X \in \{0,1,2,3,4\}$, and $Y$ is the number of scores in the game. Suppose that $$p_X(x) = \frac{(x-2)^2}{10},$$ and that $$p_Y(y) = \frac{e^{-45}\times 45^y}{y!}.$$
+Let $X$ represent the number of articles of green clothing that Charles is wearing, with $X \in \{0,1,2,3,4\}$, and $Y$ is the number of scores in the game. Suppose that $$p_X(x) = \dfrac{(x-2)^2}{10},$$ and that $$p_Y(y) = \dfrac{e^{-45}\times 45^y}{y!}.$$
 
 a. What is the joint probability mass function for $X$ and $Y$, assuming that they are independent?
 b. If it is determined that, assuming Charles wears no green clothing, the probability of $50$ scores is $0.01$, are these random variables independent?
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-a. If $X\perp Y$, then the joint probability mass function is the product of the two, which is to say $$p_{X,Y}(x,y) = \frac{(x-2)^2}{10}\cdot\frac{e^{-45}\times 45^y}{y!} = \frac{e^{-45}}{10}\times (x-2)^2 \times \frac{45^y}{y!}.$$
+a. If $X\perp Y$, then the joint probability mass function is the product of the two, which is to say $$p_{X,Y}(x,y) = \dfrac{(x-2)^2}{10}\cdot\dfrac{e^{-45}\times 45^y}{y!} = \dfrac{e^{-45}}{10}\times (x-2)^2 \times \dfrac{45^y}{y!}.$$
 
-b. Using the joint probability mass function found in (a), $$p_{X,Y}(0, 15) = \frac{e^{-45}}{10}\times (0-2)^2 \times \frac{45^{50}}{(50)!} \approx 0.017.$$ This is not equal to $0.01$, and so it must be the case that $X\not\perp Y$.
+b. Using the joint probability mass function found in (a), $$p_{X,Y}(0, 15) = \dfrac{e^{-45}}{10}\times (0-2)^2 \times \dfrac{45^{50}}{(50)!} \approx 0.017.$$ This is not equal to $0.01$, and so it must be the case that $X\not\perp Y$.
 ::::
 :::
 
@@ -324,7 +339,7 @@ b. Using the joint probability mass function found in (a), $$p_{X,Y}(0, 15) = \f
 ## The Independence Argument
 Charles and Sadie are having a disagreement about the nature of the probabilities on their bird outings. Charles claims that, without knowing the marginal probability mass functions of the number of good pictures taken, and the number of rare birds that are seen, there is no way to tell whether the the two random quantities are independent or not. Sadie cannot say exactly why this argument feels wrong, but insists that the two quantities must not be independent. 
 
-Who is correct, and why? Recall that $$p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!},$$ with $0 \leq x \leq 10y$, and $y \geq 0$
+Who is correct, and why? Recall that $$p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!},$$ with $0 \leq x \leq 10y$, and $y \geq 0$
 
 ::::{.callout .solution collapse='true'}
 ## Solution
@@ -359,21 +374,21 @@ A conditional distribution of a random variable captures the probabilistic behav
 
 :::{#def-conditional-pmf}
 ## Conditional Probability Mass Function
-A conditional probability mass function assigns probability values associated with any conditional event between multiple random variables. For instance, if there are two random variables $X$ and $Y$, the conditional probability mass function of $X$ given $Y$ characterizes events of the form $X$ given $Y=y$. Mathematically, the conditional mass function is $$p_{X|Y}(x|y) = \frac{p_{X,Y}(x,y)}{p_Y(y)}.$$
+A conditional probability mass function assigns probability values associated with any conditional event between multiple random variables. For instance, if there are two random variables $X$ and $Y$, the conditional probability mass function of $X$ given $Y$ characterizes events of the form $X$ given $Y=y$. Mathematically, the conditional mass function is $$p_{X|Y}(x|y) = \dfrac{p_{X,Y}(x,y)}{p_Y(y)}.$$
 :::
 
-This definition is analogous to the formula for conditional probabilities more generally, give by the joint distribution over the marginal distribution. To determine the probability of any event (for $X$) given some information about $Y$, you plug-in $X=x$ and $Y=y$ into the conditional probability mass function. If you want to condition on more than one random variable, the quantities extend in exactly the same way, where for instance $$P(X=x|Y=y,Z=z)=\frac{P(X=x,Y=y,z=z)}{P(Y=y,Z=z)}.$$
+This definition is analogous to the formula for conditional probabilities more generally, give by the joint distribution over the marginal distribution. To determine the probability of any event (for $X$) given some information about $Y$, you plug-in $X=x$ and $Y=y$ into the conditional probability mass function. If you want to condition on more than one random variable, the quantities extend in exactly the same way, where for instance $$P(X=x|Y=y,Z=z)=\dfrac{P(X=x,Y=y,z=z)}{P(Y=y,Z=z)}.$$
 
 :::{#exm-conditional-pmf}
 ## Charles Accepts the Argument
-After some convincing, Charles accepts the argument that the number of good pictures taken and the number of rare birds seen cannot be independent events. What really makes this clear, however, is when Sadie points out that the marginal probability mass function for the number of rare birds seen is given by $$p_{Y} = \frac{e^{-3}3^y}{y!}.$$ Taken together with the fact that $$p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!},$$ with $0 \leq x \leq 10y$, and $y \geq 0$, Charles realizes that the conditional distribution of $X|Y$ can be computed. 
+After some convincing, Charles accepts the argument that the number of good pictures taken and the number of rare birds seen cannot be independent events. What really makes this clear, however, is when Sadie points out that the marginal probability mass function for the number of rare birds seen is given by $$p_{Y} = \dfrac{e^{-3}3^y}{y!}.$$ Taken together with the fact that $$p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!},$$ with $0 \leq x \leq 10y$, and $y \geq 0$, Charles realizes that the conditional distribution of $X|Y$ can be computed. 
 
 a. What is the conditional probability mass function of $X$ given $Y$?
 b. Given that $2$ birds are seen, what is the probability that any good photos are taken?
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-a. For the conditional probability mass function we take $p_{X,Y}(x, y)/p_{Y}(y)$$. This gives $$p_{X|Y}(x|y) = \frac{\binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!}}{\frac{e^{-3}3^y}{y!}} = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}.$$
+a. For the conditional probability mass function we take $p_{X,Y}(x, y)/p_{Y}(y)$$. This gives $$p_{X|Y}(x|y) = \dfrac{\binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!}}{\dfrac{e^{-3}3^y}{y!}} = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}.$$
 
 b. To represent this, we want $P(X \geq 1 | Y = 2)$. From properties of probability, we know that $P(X \geq 1 | Y = 2) = 1 - P(X < 1 | Y = 2) = P(X = 0 | Y = 2)$, and so using the conditional probability mass function found previously, this gives $$P(X = 0 | Y = 2) = \binom{20}{0}(0.25)^{0}\times(0.75)^{20} = 0.75^{20}.$$ As a result, the probability of interest is $1-0.75^{20} \approx 0.9968$, which is the probability that Charles takes at least one good picture if two birds are seen.
 ::::
@@ -417,7 +432,7 @@ Translating the multiplication rule to use probability mass functions gives $$p_
 
 :::{.callout-tip icon="false"}
 ## Bayes' Theorem (with Probability Mass Functions)
-Bayes' Theorem can be rewritten using probability mass functions as well. Specifically, $$p_{Y|X}(y|x) = \frac{p_{X|Y}(x|y)p_Y(y)}{p_X(x)}.$$ This follows directly from the definition of conditional probabilities, as well as the multiplication rule.
+Bayes' Theorem can be rewritten using probability mass functions as well. Specifically, $$p_{Y|X}(y|x) = \dfrac{p_{X|Y}(x|y)p_Y(y)}{p_X(x)}.$$ This follows directly from the definition of conditional probabilities, as well as the multiplication rule.
 :::
 
 These rules give the ability to compute the joint distribution and the other conditional information, when we have information regarding some of the marginals and some of the conditionals. These properties are used less *explicitly* when dealing with probability mass functions directly. Instead, they almost become absorbed into the fabric of the defining relationships themselves. That is to say, you are less likely to see Bayes' theorem invoked directly when moving between conditional distributions; however, moving between conditional distributions *is* an important skill, and requires the use of Bayes' Theorem.
@@ -443,7 +458,7 @@ a. For this question, we require the joint probability mass function we apply th
 
 b. For Charles, we want $P(Y=0|X=1)$, which can be solved for directly using the provided conditional probability mass function. That is, $$p_{Y|X}(0|1) = (0.5 + 0.4)^{0}\times(0.5 - 0.4)^{1} = 0.1.$$ For Sadie, we want $P(Y=0|X=0)$. This gives $$p_{Y|X}(0|0) = (0.5)^{0}\times(0.5)^{1} = 0.5.$$ 
 
-c. Here we require the alternative conditional distribution, $P(X|Y)$. For this we can leverage Bayes' Theorem. Specifically, $$p_{X|Y} = \frac{p_{Y|X}(y|x)p_{X}(x)}{p_{Y}(y)} = \frac{(0.5 + 0.4x)^{y}\times(0.5 - 0.4x)^{1-y}\times0.85^{x}\times(0.15)^{1-x}}{.85\times(0.9)^y(0.1)^{1-y} + 0.075}.$$ Then, the probability that Charles did the chore, given it was late, is $p_{X|Y}(1|0) = 0.53125$ and the probability that Sadie did the chore, given it was late, is $p_{X|Y}(0|0) = 0.46875$. 
+c. Here we require the alternative conditional distribution, $P(X|Y)$. For this we can leverage Bayes' Theorem. Specifically, $$p_{X|Y} = \dfrac{p_{Y|X}(y|x)p_{X}(x)}{p_{Y}(y)} = \dfrac{(0.5 + 0.4x)^{y}\times(0.5 - 0.4x)^{1-y}\times0.85^{x}\times(0.15)^{1-x}}{.85\times(0.9)^y(0.1)^{1-y} + 0.075}.$$ Then, the probability that Charles did the chore, given it was late, is $p_{X|Y}(1|0) = 0.53125$ and the probability that Sadie did the chore, given it was late, is $p_{X|Y}(0|0) = 0.46875$. 
 
 d. Two things are true with the given probabilities. First, if a chore was done late, it was more likely done by Charles than Sadie. Second, Sadie is more likely to do chores late than Charles. This explains why Charles may feel responsibility for the late chores: a higher proportion of late chores are Charles's chores. However, that is only because Charles does so many more chores to begin (the probability that Charles does a chore is $0.85$).^[This is another example of *confusion of the inverse*.] 
 ::::
@@ -455,7 +470,7 @@ Unlike the multiplication rule and Bayes' theorem, the extension of the law of t
 ## Marginalization
 The idea with marginalization is that we are going to take a joint probability mass function and *marginalize it*, turning it into a marginal distribution. This is analogous to the law of total probability. 
 
-When dealing with a random variable, $Y$, there is some set of numeric values that $Y$ can take on, namely the support of $Y$, which we denote $\mathcal{Y}$. A natural partition of the space is to then take each possible value for $Y$ as the event, and simply enumerate through the elements of $\mathcal{Y}$.
+When dealing with a random variable, $Y$, there is some set of numeric values that $Y$ can take on, namely the support of $Y$, which we denote $\mathcal{Y}$. A natural partition of the space is to then take each possible value for $Y$ as the event, and enumerate through the elements of $\mathcal{Y}$.
 
 Using this partition, we can ask about the ways that $X$ can take on any particular value. In order for $X$ to be some specific value, $x'$, we know that $Y$ must be one of the values, $y'\in\mathcal{Y}$. Thus, if we add up all the possible combinations, $(X=x',Y=y_1)$, $(X=x',Y=y_2)$, and so forth, we will have covered every possible way of making $X=x'$. This is the exact same process we used when looking at contingency tables, where we summed a row or column to get the marginal probabilities.
 
@@ -472,7 +487,7 @@ In mathematical terms this means you have a firm belief about the conditional di
 
 :::{#exm-conditioning}
 ## Photos and Bird Sightings on their Own
-Recall that when Charles and Sadie go on their bird watching adventures, Charles takes photos hoping for as many good ones as possible, and Sadie spots the birds. We take $X$ to be the number of good photos taken on these trips, and $Y$ to be the number of rare birds that are seen. We noted that $$p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!},$$ with $0 \leq x \leq 10y$, and $y \geq 0$.
+Recall that when Charles and Sadie go on their bird watching adventures, Charles takes photos hoping for as many good ones as possible, and Sadie spots the birds. We take $X$ to be the number of good photos taken on these trips, and $Y$ to be the number of rare birds that are seen. We noted that $$p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!},$$ with $0 \leq x \leq 10y$, and $y \geq 0$.
 
 a. Write down an expression for the marginal probability mass function of $Y$.
 b. Write down an expression for the marginal probability mass function of $X$.
@@ -480,14 +495,14 @@ c. **Challenge:** solve for the marginal probability mass function of $Y$.
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-a. To find $p_Y(y)$, we marginalize over $X$. That is, we sum the joint probability distribution function over all values for $X$. This gives $$p_Y(y) = \sum_{x = 0}^{10y} p_{X,Y}(x, y) = \sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!}.$$
+a. To find $p_Y(y)$, we marginalize over $X$. That is, we sum the joint probability distribution function over all values for $X$. This gives $$p_Y(y) = \sum_{x = 0}^{10y} p_{X,Y}(x, y) = \sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!}.$$
 
-b. To find $p_X(x)$, we marginalize over $Y$. That is, we sum the joint probability distribution function over all values for $Y$. This gives $$p_X(x) = \sum_{y = 0}^{\infty} p_{X,Y}(x, y) = \sum_{y = 0}^{\infty} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!}.$$
+b. To find $p_X(x)$, we marginalize over $Y$. That is, we sum the joint probability distribution function over all values for $Y$. This gives $$p_X(x) = \sum_{y = 0}^{\infty} p_{X,Y}(x, y) = \sum_{y = 0}^{\infty} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!}.$$
 
 c. Note, that you will generally not be expected to manipulate these types of sums, however, it is possible to do. First, for $p_Y(y)$, \begin{align*}
-p_Y(y) &= \sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!} \\
-&= \frac{e^{-3}3^y}{y!}\underbrace{\sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}}_{=1} \\
-&= \frac{e^{-3}3^y}{y!}.
+p_Y(y) &= \sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!} \\
+&= \dfrac{e^{-3}3^y}{y!}\underbrace{\sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}}_{=1} \\
+&= \dfrac{e^{-3}3^y}{y!}.
 \end{align*}
 ::::
 :::
@@ -521,14 +536,14 @@ a. Yes, this is a reasonable explanation. In this case, if Charles is willing to
 b. Recall that for independent random variables, the joint probability mass function is given by the product of the marginal probability mass functions. To simplify the notation, we will define $T(X) = \sum_{i=1}^y x_i$. Thus the probability mass function of $X_1,\dots,X_y$ is given by \begin{align*}
     p_{X_1,X_2,\dots,X_y}(x_1,\dots,x_y) &= \prod_{i=1}^y \binom{10}{x_i}(0.25)^{x_i}(0.75)^{10-x_i} \\
     &= \left(\prod_{i=1}^y\binom{10}{x_i}\right)\times(0.25)^{\sum_{i=1}^y x_i}(0.75)^{10y - \sum_{i=1}^yx_i} \\
-    &= \left(\prod_{i=1}^y \frac{10!}{x_i!(10-x_i)!}\right)\times 0.25^{T(X)}\times 0.75^{10y - T(X)} \\
-    &= \left(\frac{(10!)^y}{\prod_{i=1}^y x_i!(10 - x_i)!}\right)\times 0.25^{T(X)}\times 0.75^{10y - T(X)}.
+    &= \left(\prod_{i=1}^y \dfrac{10!}{x_i!(10-x_i)!}\right)\times 0.25^{T(X)}\times 0.75^{10y - T(X)} \\
+    &= \left(\dfrac{(10!)^y}{\prod_{i=1}^y x_i!(10 - x_i)!}\right)\times 0.25^{T(X)}\times 0.75^{10y - T(X)}.
 \end{align*}
 
 ::::
 :::
 
-While we will use the assumption of iid random variables explicitly at a later point.The iid assumption also provides an intuitive method for interpreting probability functions and distributions. 
+While we will use the assumption of iid random variables explicitly at a later point, the iid assumption also provides an intuitive method for interpreting probability functions and distributions. 
 
 Suppose that we were to take a probability mass function, $p_X(x)$. If we were able to generate independent and identically distributed realizations from this probability mass function, then the function $p_X(x)$ describes the behaviour for these repeated realizations. Specifically, $p_X(x)$ will give the long-run proportion of realizations of the iid random variables which take the value $x$.
 
@@ -583,7 +598,7 @@ Suppose that a probability mass function is given by $$p(x) = \begin{cases}
 :::{#exr-5.5}
 Consider a probability mass function given by $$p(x) = \begin{cases}
     z & x = 1 \\
-    \frac{1}{x^2} & x = 2, 3, 4, 5, 6, 7, 8, 9, 10 \\
+    \dfrac{1}{x^2} & x = 2, 3, 4, 5, 6, 7, 8, 9, 10 \\
     0 & \text{otherwise}
 \end{cases}.$$
 
@@ -592,7 +607,7 @@ a. What is the probability that $X$ is an even number?
 :::
 
 :::{#exr-5.6}
-Consider the probability mass function, defined for all non-negative integers, given by $$p(x) = \frac{2^xe^{-2}}{x!}.$$
+Consider the probability mass function, defined for all non-negative integers, given by $$p(x) = \dfrac{2^xe^{-2}}{x!}.$$
 
 a. What is $P(X = 0)$?
 a. What is $P(X = 5)$?
@@ -604,7 +619,7 @@ For each of the following, indicate and explain whether the following properties
 
 a. $p(x) < 0$ for some $x \in \mathbb{Z}$.
 a. $p(x) > 1$ for some $x \in\mathbb{Z}$.
-a. $p(x) > \frac{\pi}{\ell}$ for all elements of an $\ell$ element set.
+a. $p(x) > \dfrac{\pi}{\ell}$ for all elements of an $\ell$ element set.
 a. $p(-|x|) > 0$ for all $x\in\mathbb{Z}$.
 :::
 
@@ -613,7 +628,7 @@ Suppose that, for some fixed integer, $y$, you define the mathematical function 
 :::
 
 ::: {#exr-5.9}
-Consider the joint probability mass function of two random variables, $X$ and $Y$, given by $$P(X=x, Y=y) = \frac{1}{150}(x + y), 1\leq x, y\leq 5.$$
+Consider the joint probability mass function of two random variables, $X$ and $Y$, given by $$P(X=x, Y=y) = \dfrac{1}{150}(x + y), 1\leq x, y\leq 5.$$
 
 a. Show that this is a valid joint probability mass function. 
 b. What is $P(X = 2, Y = 3)$?
@@ -625,7 +640,7 @@ f. What is the conditional probability mass function of $Y$ given $X$?
 :::
 
 ::: {#exr-5.10}
-Consider the joint probability mass function of two random variables, $X$ and $Y$, given by $$P(X=x, Y=y) = \frac{1}{12}(y - x)^2, 1\leq x, y\leq 3.$$
+Consider the joint probability mass function of two random variables, $X$ and $Y$, given by $$P(X=x, Y=y) = \dfrac{1}{12}(y - x)^2, 1\leq x, y\leq 3.$$
 
 a. Show that this is a valid joint probability mass function. 
 b. What is $P(X = 1, Y = 2)$?
@@ -657,7 +672,7 @@ f. What is $P(X = 2| Y = 2)$?
 :::
 
 ::: {#exr-5.12}
-Suppose that a particular disease is associated with two common types of genetic mutations, say type $A$ and type $B$. Let $A$ and $B$ correspond to the random variables which count the locations at which each type of mutation has occurred. In order for a type $B$ mutation to occur, a type $A$ must have also occurred at the same location, and so we can say that $$P(B=b|A=a) = \binom{a}{b}(0.25)^b(0.75)^{a-b}, \quad b\in\{0,1,2,\dots, a\}.$$ Moreover, suppose that $$P(A=a) = \frac{10-a}{45} \quad a\in\{0,1,2,3,4,5\}.$$
+Suppose that a particular disease is associated with two common types of genetic mutations, say type $A$ and type $B$. Let $A$ and $B$ correspond to the random variables which count the locations at which each type of mutation has occurred. In order for a type $B$ mutation to occur, a type $A$ must have also occurred at the same location, and so we can say that $$P(B=b|A=a) = \binom{a}{b}(0.25)^b(0.75)^{a-b}, \quad b\in\{0,1,2,\dots, a\}.$$ Moreover, suppose that $$P(A=a) = \dfrac{10-a}{45} \quad a\in\{0,1,2,3,4,5\}.$$
 
 a. What is the joint probability mass function of $A$ and $B$?
 b. What is the marginal probability mass function of $B$?
@@ -668,7 +683,7 @@ f. Suppose that you are at a substantially increased risk of the disease if the 
 :::
 
 ::: {#exr-5.13}
-Suppose a factory produces two types of products: Widgets and Gadgets. Let $W$ and $G$ represent the random variables denoting the number of units produced for each type, in a particular hour. Suppose that the following is observed as the joint probability mass function $$P(W=w, G=g) = \frac{1}{80}, \quad w \in \{1,2,3,\dots,8\}, g \in \{1,2,3,\dots,10\}.$$
+Suppose a factory produces two types of products: Widgets and Gadgets. Let $W$ and $G$ represent the random variables denoting the number of units produced for each type, in a particular hour. Suppose that the following is observed as the joint probability mass function $$P(W=w, G=g) = \dfrac{1}{80}, \quad w \in \{1,2,3,\dots,8\}, g \in \{1,2,3,\dots,10\}.$$
 
 a. What is the marginal probability mass function, $P(W)$?
 b. What is the marginal probability mass function, $P(G)$?

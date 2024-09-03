@@ -417,6 +417,126 @@ e. If Sadie gets a measure of the average number of visitors per day to the webs
 ::::
 :::
 
+### The Poisson Process {#sec-poisson-process}
+One particularly useful feature of the Poisson distribution stems from the fact that, when events of interest occur at a constant rate overtime, we can find a relevant Poisson distribution to describe these occurrences. When we model events in this manner, we refer to it as a **Poisson process**. 
+
+:::{.callout-tip icon="false"}
+## The Poisson Process
+Suppose that $X$ counts the number events over a period of time of length $t$. Further suppose that:
+
+1. Events at interest happen at a constant rate overtime. Denote the rate as $\alpha$ (per unit time).
+2. Events occur independently of one another, so that the occurrence of one event does not influence any others.
+3. No two events occur at precisely the same time.
+
+Then, the number of events that occur during the time interval $t$, $X$, are said to follow a **Poisson process**. Specifically, $X$ will follow a $\text{Poi}(\alpha t)$ distribution.
+:::
+
+The utility of the Poisson process is that, supposing we can determine the average rate of occurrence for any events, and supposing that we are willing to make the independence and non-simultaneous assumptions for the process, the distribution of events will always be Poisson. For instance, if we know how many events occur per hour and want to know how many events will occur per year, so long as the assumptions still hold, we can scale up the rate of occurrences and continue to use a Poisson distribution. For this reason, the Poisson distribution is frequently deployed for modelling real-world phenomenon. 
+
+
+:::{#exm-poi-process}
+## Sadie's Vegan Bakery Aspirations
+With the success of Sadie's vegan baking blog, there is some excited chatter about the prospects of opening up a real-world bakery! Before committing to this investment, Sadie wants to have an idea of whether the bakery would really be sustainable, and if so, what the staffing needs would be. Based on Sadie's market research, it is expected that $168$ customers would arrive per week. 
+
+a. What assumptions would Sadie need to make in order to model this as a Poisson process? Is this likely to be accurate in actuality?
+b. Sadie figures that it is important to bake everything fresh each day. If the bakery would be open 8 hours a day, 7 days a week, on average how many customers are expected to show up each day?
+c. If each customer purchases 2 items on average, what is the probability that Sadie sells out on a day if each morning $50$ items are baked? 
+d. Sadie is very concerned about the impact of waste on a successful business. Write an expression for the probability that Sadie has a certain amount of waste ($w$) given the preparation of $n$ baked good at the start of each day. Assume that customers purchase 2 items on average.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. Sadie would need to be willing to assume that customers arrive at a constant rate overtime (throughout all hours of the day, days of the week, weeks of the year), that customer arrivals are independent of each other (one customer arriving does not impact any other customer arriving), and that no two customers arrive at precisely the same time. These are not very reasonable assumptions in practice. It is very likely that certain times of the day or certain days of the week would be more (or less) popular than others. Moreover, it seems likely that people may arrive in groups, violating the independence assumption.
+
+b. If we make the assumptions regarding the Poisson process, then we know that the arrival rate, $\alpha$, is $168$ per week. A day is $8$ hours, out of the full $56$ available, and so it corresponds to $t = \dfrac{1}{7}$. Thus, we know that the number of customers arriving per day will follow a $$\text{Poi}(\frac{1}{7}\times 168) = \text{Poi}(24),$$ distribution, and as such the expected number of customers will be $24$. 
+
+c. The number of purchases made by a customer is $2$. As a result, the number of purchases per day will be $2\times 24 = 48$. As a result, we can model the number of daily purchases as a $\text{Poi}(48)$ distribution. If we want to know what the probability that Sadie sells out, we want to know $$P(X \geq 50) = 1 - P(X < 50) = 1 - \sum_{x = 0}^{49} \frac{(48)^xe^{-48}}{x!}.$$ Using a computer to calculate this gives `r round(1 - ppois(49, lambda=48), 4)`.
+
+d. If Sadie prepares $n$ items, and wants to know the probability of having a certain amount of waste $w$ ($w \in \{0,1,\dots,n\}$), this can be analyzed using the same $\text{Poi}(48)$ from the previous part. Specifically, taking $X$ to be the number of items sold in a day, then Sadie will be $w$ waste if $n - X = w$, or equivalently $X = n + w$. Thus, $$P(W = w) = P(X = n + w) = \frac{(48)^{n+w}e^{-48}}{(n+w)!},$$ for $w = \{1, \dots, n\}$. The probability that there is no waste, is $$P(W = 0) = P(X \geq n) = 1 - \sum_{x = 0}^{n-1}\frac{(48)^{x}e^{-48}}{x!}.$$
+::::
+:::
+
+It is important to note that a Poisson process can be defined over space as well, not just time. For instance, if we know that errors occur in the manufacturing of a particular chemical at a rate of $1$ per kiloliter, then the number of errors when producing any volume of the chemicals will also follow a Poisson process. It is most common to discuss the units as events per time, but every other unit will function in the exact same manner.
+
+### The Poisson Approximation to the Binomial
+The Poisson distribution and binomial distribution may appear, on the surface, to be fairly disconnected from one another. The binomial distribution counts the number of successes in a discrete number of trials, where the number of trials is known in advance. The Poisson distribution, on the other hand, counts the number of events that occur not on repeated trials, but from a set window of observation. Both distributions are counting the number of occurrences of an event within a fixed observation window, but under very different circumstances. 
+
+Consider, however, what would happen if you began to perform more and more trials in a binomial experiment, with each of these trials getting closer and closer together. Intuitively, as this happens, the statistical experiment at hand begins to look more and more like the continual observation of a process. Consider, for instance, rolling a die every second and watching for when a certain outcome is observed. What if instead of once per second the die were rolled $100$ times per second? At some point, the individual experiments in the binomial experiment begin to blend together into a continuous process. At this point, the binomial and the Poisson distribution seemingly intersect: in each, you are observing a process in continuous time, counting the number of events that occur.
+
+This intuition turns out to be correct. The Poisson distribution can be thought of as the limiting distribution to the binomial distribution. This can be formalized mathematically in the following manner. 
+
+:::{.callout-tip icon="false"}
+## Limiting Case of the Binomial
+Suppose that $X \sim \text{Bin}(n, \dfrac{\lambda}{n})$, with $E[X] = \lambda$, and probability mass function $$p(x) = \binom{n}{x}\left(\frac{\lambda}{n}\right)^x\left(1-\frac{\lambda}{n}\right)^{n-x}.$$ Then, $$\lim_{n\to\infty} p(x) = \frac{\lambda^{x}e^{-\lambda}}{x!},$$ which is the probability mass function for a $\text{Poi}(\lambda)$ random variable.
+:::
+
+Note that in order for the limiting behaviour of this to hold the binomial requires both $n\to\infty$ as well as $p\to 0$ at such a rate so that $np = \lambda$ is constant. If this happens then in the limit the two distributions exactly coincide. While it is unlikely to perform a binomial experiment with infinite trials and a shrinking success probability, we may be faced with binomial distributions that have fairly high $n$ and fairly low $p$, and in these cases, we can use the Poisson to approximate binomial probabilities.^[As a rough rule of thumb, we would want to have $n \geq 100$ and $np \leq 10$.] In order to do so we say that if $X \sim \text{Binom}(n, p)$ then $X \dot\sim \text{Poi}(np)$, where $\dot\sim$ is read "is approximately distributed according to".
+
+The main utility of the approximation is that, especially for large $n$, binomial probabilities can be challenging to compute owing to the need to calculate $\dbinom{n}{x}$. Poisson probabilities are comparatively straightforward, and as such, when a rough calculation is all that is required, they can work fairly well. 
+
+```{r}
+#| echo: false
+#| label: fig-plot
+#| fig-cap: "This plot demonstrates the convergence of the Binomial to the Poisson (in terms of probability mass function) as $n$ increases and $p$ decreases, holding $np$ constant. The red circles show the Poisson probabilities, and the sequence of blue shapes show several binomial distributions, with increasing $n$, that are progressively better approximated by the Poisson."
+
+# Set parameters for the Binomial distribution
+# Calculate the corresponding Poisson parameter
+ns <- c(10, 50, 100, 200, 1000)
+lambda <- 5
+x <- 0:14
+
+pois_probs <- dpois(x, lambda = lambda)
+
+plot(NULL, xlim = c(0,14), ylim = c(0, 0.26), xlab = "Number of successes", ylab = "Probability",
+     main = "Poisson Approximation to the Binomial Distribution")
+# points(x, pois_probs, pch = 16, col = "red")
+
+for(ii in 0:4) {
+    n <- ns[ii+1]
+    p <- lambda/n
+    binom_probs <- dbinom(x, size = n, prob = p)
+
+    points(x, binom_probs, pch = ii, col = "blue")
+    # lines(x, binom_probs, lwd = 2, col = "blue")
+}
+
+points(x, pois_probs, type = "p", col = "red", pch = 19)
+
+legend("topright", 
+        legend = c("Poisson(5)", 
+                   "Binomial(10, 0.5)",
+                   "Binomial(50, 0.1)",
+                   "Binomial(100, 0.05)",
+                   "Binomial(200, 0.025)",
+                   "Binomial(1000, 0.005)"), 
+        col = c("red", "blue", "blue", "blue", "blue", "blue"), 
+        pch = c(19, 0:4))
+```
+
+
+:::{#exm-poi-approx}
+## Charles' Viral Trick-Shot Attempt
+Charles has been watching online videos of seemingly impossible "trick shots", where individuals toss household objects to land in increasingly complex locations. Inspired by this trend, Charles decides to try a version of this at home, where the goal is to bounce a dime off of the table and have it land in an upright coke bottle. Suppose that the probability that Charles succeeds on any given attempt of this trick shot is $0.01$.
+
+a. If Charles attempts the trick shot $100$ times, what is the probability that at least one of the attempts is successful?
+b. How can the probability in part (a) be approximated using a Poisson? How close is the approximation.
+c. Suppose that Charles instead attempts a new, more challenging the trick shot $1000$ times. This shot has a success probability of just $0.001$. What is the approximate probability that more than one of these attempts are successful?
+d. Do you expect that the probability in (b) or (c) will be closer to the truth? Explain.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. The number of successes will follow a $\text{Bin}(100, 0.01)$. We want to know $P(X \geq 1) = 1 - P(X = 0)$, and so we can compute this by calculating $$P(X = 0) = \binom{100}{0}(0.01)^{0}(0.99)^{100} = 0.99^{100}.$$ As a result, the probability of at least one success is $1 - 0.99^{100}$ or approximately `r round(1 - 0.99^(100), 4)`. 
+b. The binomial can be approximated using a $\text{Poi}(100(0.01)) = \text{Poi}(1)$ distribution. In this case, $$P(X \geq 1) = 1 - P(X = 0) \approx 1 - \frac{e^{-1}1^0}{0!} = 1 - e^{-1} \approx 0.632.$$ This approximation differs from the truth by `r  (1 - 0.99^(100)) - (1 - exp(-1))`. 
+c. This binomial can be approximated using the same $\text{Poi}(1)$ distribution, since $1000(0.001) = 1$. As a result, the approximate probability will still be $1 - e^{-1} \approx 0.632$. 
+d. The probability in (c) should be closer to the truth since $n$ is larger and the approximation is based on the limit as $n\to\infty$. Thus, for larger $n$ with constant $np$, the approximation should improve. Indeed, if we check the actual binomial probability in the second case we get `r 1-0.999^(1000)` which differs from the approximation by just `r format((1-0.999^(1000)) - (1 - exp(-1)), scientific=FALSE)`.
+
+
+::::
+
+:::
+
+
 ## Using Named Distributions
 While many other named, discrete distributions exist, these are the most common. When confronted with a problem in the real-world for which you wish to understand the uncertainty associated with it, a reasonable first step is to determine whether a named distribution is well-suited to representing the underlying phenomenon. Is it a situation with enumerated events which are equally likely? Use the discrete uniform. Is it a binary outcome? Use the Bernoulli. Are you counting the number of success in a fixed number of trials? Use the binomial. Are you running repeated trials until a (certain number of) success(es)? Use the geometric (or negative binomial). Are you sampling without replacement? Use the hypergeometric. Are you counting events over a fixed space? Use the Poisson.
 
@@ -634,4 +754,26 @@ The number of defective components produced in a process follows a Poisson distr
 a. Find the probability that exactly $15$ defective components are produced.
 a. Given that exactly $15$ defective components are produced, find the probability that exactly $10$ can be repaired.
 a. If $N$ is the number of components produced, and $X$ is the number which are repairable, then given the value of $N$, what is the pmf of $X$?
+:::
+
+:::{#exr-8.21}
+Suppose that $X \sim \text{Bin}(200, 0.04)$. 
+
+a. What is the approximate probability that $X = 4$? 
+b. Is your answer from (a) likely to be closer or further from the truth compared to if $X$ followed a $\text{Bin}(2000, 0.004)$ distribution? Explain.
+:::
+
+:::{#exr-8.22}
+Suppose that a company manufactures components in lots. Their contracts stipulate that in lots of $200$, no more than $4$ components can be defective. If there are more than $4$ defective components, the lot is rejected. If each manufactured component has a probability of being defective of $0.01$, what is the approximate probability that the lot is rejected? 
+:::
+
+:::{#exr-8.23}
+The Poisson distribution has the property that, for $X\sim\text{Poi}(\lambda)$, $E[X] = \text{var}(X)$. We also know that the limiting distribution of a $\text{Bin}(n, p)$ distribution is a Poisson. Explain how these two facts can be reconciled with one another.
+:::
+
+:::{#exr-8.24}
+Suppose that a popular website is analyzing their traffic to determine the stability of their servers. Their analysis concludes that, on average, $3$ users per hour face a server issue preventing them from accessing the service. 
+
+a. If, in in one particular hour, there are $10,000$ visitors, what distribution best models the number of users who face server issues?
+b. Suppose that the company is concerned with the number of individuals who cannot access the website over a $2$ hour period, without knowing precisely how many visitors they receive during that time. Approximate the probability that they will have more than $4$ visitors not being able to access the site, and explain why this is a reasonable approximation.
 :::

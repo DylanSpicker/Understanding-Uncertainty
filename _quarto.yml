@@ -1,16 +1,19 @@
 project:
   type: book
   output-dir: _book
+  resources:
+    - "webex.js"
   preview:
     port: 9123
     browser: false
     host: 0.0.0.0
   
 book:
-  title: "STAT 1793: Course Notes"
-  subtitle: "Introduction to Probability and Statistics I"
+  title: "Understanding Uncertainty"
+  subtitle: "An Introduction to Probability and Statistics"
   author: "Dylan Spicker"
-  date: "12/30/2023"
+  original-date: "12/30/2023"
+  date: "09/03/2024"
   downloads: ["pdf"]
   chapters:
     - index.qmd
@@ -29,6 +32,11 @@ book:
       chapters:
       - notes/chapter10.qmd
       - notes/chapter11.qmd
+      - notes/chapter12.qmd
+      - notes/chapter13.qmd
+      - notes/chapter14.qmd
+      - notes/chapter15.qmd
+      - notes/chapter16.qmd
 
 engine: knitr
 
@@ -43,6 +51,9 @@ format:
     theme: 
     - cosmo
     - custom.scss
+    include-after-body: 
+      text: |
+        <script type="application/javascript" src="/webex.js"></script>
     code-annotations: select
     default-image-extension: svg
   pdf:
@@ -50,6 +61,15 @@ format:
     default-image-extension: png
     fig-pos: H
     include-in-header: macros.tex
+
+crossref:
+  custom:
+    - kind: float
+      reference-prefix: Practice Problem
+      latex-env: prac
+      key: prac
+prac-cap-location: top
+
 
 # comments:
 #   hypothesis: 

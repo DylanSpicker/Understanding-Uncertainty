@@ -347,7 +347,7 @@ In each of these distributions we have the mean, median, and mode all equalling 
 ## Summarizing the Variability of a Random Variable
 A key characteristic of the behaviour of a random variable which is not captured by the measures of location is the variability of the quantity. If we imagine taking repeated realizations of a random variable, the variability of the random variable captures how much movement there will be observation to observation. If a random variable has low variability, we expect that the various observations will cluster together, becoming not too distant from one another. If a random variable has high variability, we expect the observations to jump around each time.
 
-## The Range
+### The Range
 Just as was the case with measures of location, there are several measures of variability which may be applicable in any given setting. One fairly basic measure of this variability is the range of possible values: what is the highest possible value, what is the lowest possible value, and how much distance is there between those two points? 
 
 :::{#def-range}
@@ -407,12 +407,13 @@ Looking at the defining relationship for this random variable, we can see that t
 ::::
 :::
 
-## The Interquartile Range
+### The Interquartile Range
 To remedy these two issues, we may think of techniques to modify the range. Instead of taking the minimum and maximum possible values, we can instead consider ranges of values which remain more plausible. A common way to do this is to extend our concept of a median beyond the half-way point. The median of a random variable $X$, is the value, $m$, such that $P(X \leq m) = 0.5$^[And, as a result, $P(X > m) = 0.5$ as well.]. While there is good reason to care about the midpoint, we can think of generalizing this to be *any* probability.
 
 That is, we could find a number $z$, such that $P(X \leq z) = 0.1$. We could then use this value to conclude that the probability of observing a value less than $z$ is $10\%$. These values are referred to, generally, as **percentiles** and they are the natural extension of medians. 
 
 :::{#def-percentile}
+## Percentiles
 The $100p$th percentile (e.g., $70$th percentile for $p=0.7$, or $20$th percentile for $p=0.20$), is denoted $\zeta(p)$ and is the value such that $P(X \leq \zeta(p)) = p$. Thus, the median is given by $\zeta(0.5)$ and is also called the $50$th percentile.^[Note that, when dealing with discrete random variables, it may not be possible to find a value $\zeta(p)$ such that $P(X \leq \zeta(p)) = p$ exactly. Instead, we typically define the percentile here to be such that $P(X < \zeta(p)) < p \leq P(X \leq \zeta(p))$.]
 :::
 
@@ -503,7 +504,7 @@ breaks = c(0,1,2,3,4,5,6,7,8,9,10,50,51))
 ::::
 :::
 
-## The Variance and Mean Absolute Deviation
+### The Variance and Mean Absolute Deviation
 Both the range and the interquartile range give a sense of the variation in the distribution irrespective of the measures of location for that distribution. Another plausible method for assessing the variability of a distribution is to assess how far we expect observations to be from its center. Intuitively, if observations of $X$ are near the center with high probability, then the distribution will be less variable than if the average distance to the center is larger. 
 
 This intuitive measure of variability is useful for capturing the behaviour of a random variable, particularly when paired with a measure of location. However, we do have to be careful: not all measures of dispersion based on this notion will be useful. Consider the most basic possibility, $X - E[X]$. We might ask, for instance, what is the expected value of this quantity. If we take $E[X - E[X]]$ then note that this a linear combination in expectation since $E[X]$ is just some number. Thus, $E[X-E[X]] = E[X] - E[X] = 0$. In other words, the expected difference between a random variable and its mean is exactly $0$. We thus need to think harder about how best to turn this intuition into a useful measure of spread.
@@ -578,6 +579,7 @@ The higher that an individual random variable's variance is, the more spread we 
 Suppose you have a random time being measured, perhaps the reaction time for some treatment to take effect in a treated patient. Finding the mean or median will give you a result that you can read off in seconds. The range and interquartile range both give you the spread in seconds. However, if you work out the variance of this quantity it will be measured in seconds squared -- a unit that is challenging to have much intuition about. To remedy this we will often use a transformed version of the variance, called the **standard deviation**, returning the units to be only the original scale. 
 
 :::{#def-sd}
+## Standard Deviation
 The standard deviation of a random variable is the square root of the variance, which is to say $$\text{SD}(X) = \sqrt{\text{var}(X)}.$$ 
 :::
 
@@ -623,7 +625,7 @@ Charles has compared the standard deviation of the first quantity to the varianc
 ::::
 :::
 
-### Computing the Variance 
+## Computing the Variance 
 When computing the variance of a random quantity, we often use a shortcut for the formula, $$\text{var}(X) = E[X^2] - E[X]^2.$$ Generally, this is moderately more straightforward to calculate since $X^2$ is an easier transformation than $(X-E[X])^2$. This identity will come back time and time again, with a lot of versatility in the ways that it can be used. Typically, when a variance is needed to be calculated the process is to simply compute $E[X]$ and $E[X^2]$, and then apply this relationship.
 
 :::{.callout-warning icon="false" collapse="true"}
@@ -651,7 +653,7 @@ To get the $E[X]$ we can apply the standard expectation formula. To get the vari
 ::::
 :::
 
-### The Variance of Transformations
+## The Variance of Transformations
 With expectations, we saw that $E[g(X)]$ needed to be directly computed from the definition. The same is true for variances of transformations. Specifically, $\text{var}(g(X))$ is given by $E[(g(X) - E[g(X)])^2]$ which can be simplified with the previous relationship as $E[g(X)^2] - E[g(X)]^2$. Just as with expectations, it is important to realize that $\text{var}(g(X)) \neq g(\text{var}(X))$, and so dealing with transformations requires further work.
 
 With expectations, we highlighted linear transformations as a special case, with $g(X) = aX + b$. For the variance, the linear transformations are also worth distinguishing from others. In particular, $$\text{var}(aX + b) = a^2\text{var}(X).$$ In the same way that the linearity of expectation demonstrates that the expected value of any constant is that constant, we can use this identity to show that the variance of constant is zero. However, we can also reason to this based on our definitions so far. Suppose that we have a random variable which is constant.^[This seems to be an oxymoron, but it is perfectly well defined.] A constant $b$ can be seen as a random variable with probability distribution $p_X(x) = 1$ if $x=b$ and $p_X(x) = 0$ otherwise. The expected value is going to be $E[X] = 1(b) = b$, and $E[X^2] = 1(b)^2 = b^2$. Thus, $\text{var}(b) = E[X^2] - E[X]^2 = b^2 - b^2 = 0$. From an intuitive perspective, there is no variation around the mean of a constant. It is always the same value. As a result, when taking the variance, we know that it should be $0$. 
@@ -837,7 +839,7 @@ e. What is the standard deviation of $X$?
 :::
 
 :::{#exr-6.15}
-Consider a book containing 200 pages. You randomly select a page number. Let $V$ represent the sum of the digits in the page number selected.
+Consider a book containing 200 pages. You randomly select a page number. Let $X$ represent the sum of the digits in the page number selected.
 
 a. What is the expected value of $X$?
 c. What is the variance of $X$?
