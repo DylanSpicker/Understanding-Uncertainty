@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>STAT 1793: Course Notes - 6&nbsp; The Expected Value, Location Summaries, and Measures of Variability</title>
+<title>Understanding Uncertainty - 6&nbsp; The Expected Value, Location Summaries, and Measures of Variability</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -128,9 +128,9 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">STAT 1793: Course Notes</a> 
+      <a href="../">Understanding Uncertainty</a> 
         <div class="sidebar-tools-main">
-    <a href="../STAT-1793--Course-Notes.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../Understanding-Uncertainty.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -230,7 +230,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Descriptive Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Methods of Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Confidence Intervals</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
   </div>
 </li>
       </ul>
@@ -255,15 +285,15 @@ window.Quarto = {
   </ul></li>
   <li><a href="#which-measure-of-central-tendency-should-be-used" id="toc-which-measure-of-central-tendency-should-be-used" class="nav-link" data-scroll-target="#which-measure-of-central-tendency-should-be-used"><span class="header-section-number">6.3</span> Which Measure of Central Tendency Should be Used?</a></li>
   <li><a href="#expected-values-of-functions-of-random-variables" id="toc-expected-values-of-functions-of-random-variables" class="nav-link" data-scroll-target="#expected-values-of-functions-of-random-variables"><span class="header-section-number">6.4</span> Expected Values of Functions of Random Variables</a></li>
-  <li><a href="#summarizing-the-variability-of-a-random-variable" id="toc-summarizing-the-variability-of-a-random-variable" class="nav-link" data-scroll-target="#summarizing-the-variability-of-a-random-variable"><span class="header-section-number">6.5</span> Summarizing the Variability of a Random Variable</a></li>
-  <li><a href="#the-range" id="toc-the-range" class="nav-link" data-scroll-target="#the-range"><span class="header-section-number">6.6</span> The Range</a></li>
-  <li><a href="#the-interquartile-range" id="toc-the-interquartile-range" class="nav-link" data-scroll-target="#the-interquartile-range"><span class="header-section-number">6.7</span> The Interquartile Range</a></li>
-  <li><a href="#the-variance-and-mean-absolute-deviation" id="toc-the-variance-and-mean-absolute-deviation" class="nav-link" data-scroll-target="#the-variance-and-mean-absolute-deviation"><span class="header-section-number">6.8</span> The Variance and Mean Absolute Deviation</a>
+  <li><a href="#summarizing-the-variability-of-a-random-variable" id="toc-summarizing-the-variability-of-a-random-variable" class="nav-link" data-scroll-target="#summarizing-the-variability-of-a-random-variable"><span class="header-section-number">6.5</span> Summarizing the Variability of a Random Variable</a>
   <ul class="collapse">
-  <li><a href="#standard-deviation" id="toc-standard-deviation" class="nav-link" data-scroll-target="#standard-deviation"><span class="header-section-number">6.8.1</span> Standard Deviation</a></li>
-  <li><a href="#computing-the-variance" id="toc-computing-the-variance" class="nav-link" data-scroll-target="#computing-the-variance"><span class="header-section-number">6.8.2</span> Computing the Variance</a></li>
-  <li><a href="#the-variance-of-transformations" id="toc-the-variance-of-transformations" class="nav-link" data-scroll-target="#the-variance-of-transformations"><span class="header-section-number">6.8.3</span> The Variance of Transformations</a></li>
+  <li><a href="#the-range" id="toc-the-range" class="nav-link" data-scroll-target="#the-range"><span class="header-section-number">6.5.1</span> The Range</a></li>
+  <li><a href="#the-interquartile-range" id="toc-the-interquartile-range" class="nav-link" data-scroll-target="#the-interquartile-range"><span class="header-section-number">6.5.2</span> The Interquartile Range</a></li>
+  <li><a href="#the-variance-and-mean-absolute-deviation" id="toc-the-variance-and-mean-absolute-deviation" class="nav-link" data-scroll-target="#the-variance-and-mean-absolute-deviation"><span class="header-section-number">6.5.3</span> The Variance and Mean Absolute Deviation</a></li>
+  <li><a href="#standard-deviation" id="toc-standard-deviation" class="nav-link" data-scroll-target="#standard-deviation"><span class="header-section-number">6.5.4</span> Standard Deviation</a></li>
   </ul></li>
+  <li><a href="#computing-the-variance" id="toc-computing-the-variance" class="nav-link" data-scroll-target="#computing-the-variance"><span class="header-section-number">6.6</span> Computing the Variance</a></li>
+  <li><a href="#the-variance-of-transformations" id="toc-the-variance-of-transformations" class="nav-link" data-scroll-target="#the-variance-of-transformations"><span class="header-section-number">6.7</span> The Variance of Transformations</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul>
 </nav>
@@ -504,7 +534,7 @@ Cost for a Game of Chance
 Figure&nbsp;6.1: This plot produces 50000 realizations of the random variable described in <a href="#exm-expected-value-one" class="quarto-xref">Example&nbsp;<span>6.5</span></a>. As computed in the example, the expected value is 2.6. As many repeated observations are averaged, the empirical average converges to this computed value.
 </figcaption>
 <div aria-describedby="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter6_files/figure-html/fig-plot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="chapter6_files/figure-html/fig-plot-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter6_files/figure-html/fig-plot-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="chapter6_files/figure-html/fig-plot-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -697,9 +727,8 @@ p_Z(z) = \begin{cases}
 <section id="summarizing-the-variability-of-a-random-variable" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="summarizing-the-variability-of-a-random-variable"><span class="header-section-number">6.5</span> Summarizing the Variability of a Random Variable</h2>
 <p>A key characteristic of the behaviour of a random variable which is not captured by the measures of location is the variability of the quantity. If we imagine taking repeated realizations of a random variable, the variability of the random variable captures how much movement there will be observation to observation. If a random variable has low variability, we expect that the various observations will cluster together, becoming not too distant from one another. If a random variable has high variability, we expect the observations to jump around each time.</p>
-</section>
-<section id="the-range" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="the-range"><span class="header-section-number">6.6</span> The Range</h2>
+<section id="the-range" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="the-range"><span class="header-section-number">6.5.1</span> The Range</h3>
 <p>Just as was the case with measures of location, there are several measures of variability which may be applicable in any given setting. One fairly basic measure of this variability is the range of possible values: what is the highest possible value, what is the lowest possible value, and how much distance is there between those two points?</p>
 <div id="def-range" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 6.5 (Range)</strong></span> For a random variable, <span class="math inline">\(X\)</span>, the range of the random variable is defined as <span class="math inline">\(\text{Range}(X) = \max(X) - \min(X)\)</span>. That is, it is the distance between the maximum value that the random variable can take on, and the minimum value that the random variable can take on. Sometimes the range is reported with these outpoints explicitly specified.</p>
@@ -765,12 +794,12 @@ Solution
 </div>
 </div>
 </section>
-<section id="the-interquartile-range" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="the-interquartile-range"><span class="header-section-number">6.7</span> The Interquartile Range</h2>
+<section id="the-interquartile-range" class="level3" data-number="6.5.2">
+<h3 data-number="6.5.2" class="anchored" data-anchor-id="the-interquartile-range"><span class="header-section-number">6.5.2</span> The Interquartile Range</h3>
 <p>To remedy these two issues, we may think of techniques to modify the range. Instead of taking the minimum and maximum possible values, we can instead consider ranges of values which remain more plausible. A common way to do this is to extend our concept of a median beyond the half-way point. The median of a random variable <span class="math inline">\(X\)</span>, is the value, <span class="math inline">\(m\)</span>, such that <span class="math inline">\(P(X \leq m) = 0.5\)</span><a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>. While there is good reason to care about the midpoint, we can think of generalizing this to be <em>any</em> probability.</p>
 <p>That is, we could find a number <span class="math inline">\(z\)</span>, such that <span class="math inline">\(P(X \leq z) = 0.1\)</span>. We could then use this value to conclude that the probability of observing a value less than <span class="math inline">\(z\)</span> is <span class="math inline">\(10\%\)</span>. These values are referred to, generally, as <strong>percentiles</strong> and they are the natural extension of medians.</p>
 <div id="def-percentile" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6.6</strong></span> The <span class="math inline">\(100p\)</span>th percentile (e.g., <span class="math inline">\(70\)</span>th percentile for <span class="math inline">\(p=0.7\)</span>, or <span class="math inline">\(20\)</span>th percentile for <span class="math inline">\(p=0.20\)</span>), is denoted <span class="math inline">\(\zeta(p)\)</span> and is the value such that <span class="math inline">\(P(X \leq \zeta(p)) = p\)</span>. Thus, the median is given by <span class="math inline">\(\zeta(0.5)\)</span> and is also called the <span class="math inline">\(50\)</span>th percentile.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
+<p><span class="theorem-title"><strong>Definition 6.6 (Percentiles)</strong></span> The <span class="math inline">\(100p\)</span>th percentile (e.g., <span class="math inline">\(70\)</span>th percentile for <span class="math inline">\(p=0.7\)</span>, or <span class="math inline">\(20\)</span>th percentile for <span class="math inline">\(p=0.20\)</span>), is denoted <span class="math inline">\(\zeta(p)\)</span> and is the value such that <span class="math inline">\(P(X \leq \zeta(p)) = p\)</span>. Thus, the median is given by <span class="math inline">\(\zeta(0.5)\)</span> and is also called the <span class="math inline">\(50\)</span>th percentile.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
 </div>
 <div id="exm-percentile" class="theorem example">
 <p><span class="theorem-title"><strong>Example 6.11 (Perplexed at the Ice Cream Parlour)</strong></span> Charles and Sadie remained somewhat disappointed by their lack of ability to accurately capture the behaviour of a random variable using the range. To this end, they spend a lot more time at the ice cream parlor, and come up with, what they believe, is the correct probability mass function for how many flavours customers order, in total. <span class="math display">\[
@@ -864,8 +893,8 @@ Solution
 </div>
 </div>
 </section>
-<section id="the-variance-and-mean-absolute-deviation" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="the-variance-and-mean-absolute-deviation"><span class="header-section-number">6.8</span> The Variance and Mean Absolute Deviation</h2>
+<section id="the-variance-and-mean-absolute-deviation" class="level3" data-number="6.5.3">
+<h3 data-number="6.5.3" class="anchored" data-anchor-id="the-variance-and-mean-absolute-deviation"><span class="header-section-number">6.5.3</span> The Variance and Mean Absolute Deviation</h3>
 <p>Both the range and the interquartile range give a sense of the variation in the distribution irrespective of the measures of location for that distribution. Another plausible method for assessing the variability of a distribution is to assess how far we expect observations to be from its center. Intuitively, if observations of <span class="math inline">\(X\)</span> are near the center with high probability, then the distribution will be less variable than if the average distance to the center is larger.</p>
 <p>This intuitive measure of variability is useful for capturing the behaviour of a random variable, particularly when paired with a measure of location. However, we do have to be careful: not all measures of dispersion based on this notion will be useful. Consider the most basic possibility, <span class="math inline">\(X - E[X]\)</span>. We might ask, for instance, what is the expected value of this quantity. If we take <span class="math inline">\(E[X - E[X]]\)</span> then note that this a linear combination in expectation since <span class="math inline">\(E[X]\)</span> is just some number. Thus, <span class="math inline">\(E[X-E[X]] = E[X] - E[X] = 0\)</span>. In other words, the expected difference between a random variable and its mean is exactly <span class="math inline">\(0\)</span>. We thus need to think harder about how best to turn this intuition into a useful measure of spread.</p>
 <p>The issue with this procedure is that some realizations are going to be below the mean, making the difference negative, and some will be above the mean, making the difference positive. Our defining relationship for the mean relied on balancing these two sets of mass. However, when discussing the variability of the random variable, we do not much care whether the observations are lower than expected or higher than expected, we simply care how much variability there is around what is expected. To remedy this, we should consider only the distance between the observation and the expectation, not the sign. That is, if <span class="math inline">\(X\)</span> is <span class="math inline">\(5\)</span> below <span class="math inline">\(E[X]\)</span> we should treat that the same as if <span class="math inline">\(X\)</span> is <span class="math inline">\(5\)</span> above <span class="math inline">\(E[X]\)</span>.</p>
@@ -993,12 +1022,13 @@ Solution
 </div>
 </div>
 </div>
-<section id="standard-deviation" class="level3" data-number="6.8.1">
-<h3 data-number="6.8.1" class="anchored" data-anchor-id="standard-deviation"><span class="header-section-number">6.8.1</span> Standard Deviation</h3>
+</section>
+<section id="standard-deviation" class="level3" data-number="6.5.4">
+<h3 data-number="6.5.4" class="anchored" data-anchor-id="standard-deviation"><span class="header-section-number">6.5.4</span> Standard Deviation</h3>
 <p>The higher that an individual random variable’s variance is, the more spread we expect there to be in repeated realizations of that quantity. Specifically, the more spread out around the mean value the random variable will be. A random variable with a low variance will concentrate more around its mean value than one with a higher variance. One confusing part of the variance of a random variable is in trying to assess the units. Suppose that a random quantity is measured in a particular set of units – dollars, seconds, grams, or similar. In this case, our interpretations of measures of location will all be in the same units, which aids in drawing connections to the underlying phenomenon that we are trying to study. However, because the variance is squared, we cannot make the same extensions to it. Variance is not measured in the regular units, but in the regular units, <em>squared</em>.</p>
 <p>Suppose you have a random time being measured, perhaps the reaction time for some treatment to take effect in a treated patient. Finding the mean or median will give you a result that you can read off in seconds. The range and interquartile range both give you the spread in seconds. However, if you work out the variance of this quantity it will be measured in seconds squared – a unit that is challenging to have much intuition about. To remedy this we will often use a transformed version of the variance, called the <strong>standard deviation</strong>, returning the units to be only the original scale.</p>
 <div id="def-sd" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6.10</strong></span> The standard deviation of a random variable is the square root of the variance, which is to say <span class="math display">\[\text{SD}(X) = \sqrt{\text{var}(X)}.\]</span></p>
+<p><span class="theorem-title"><strong>Definition 6.10 (Standard Deviation)</strong></span> The standard deviation of a random variable is the square root of the variance, which is to say <span class="math display">\[\text{SD}(X) = \sqrt{\text{var}(X)}.\]</span></p>
 </div>
 <p>We do not often consider computing the standard deviation directly, and so will most commonly refer to the variance when discussing the behaviour of a random variable, but it is important to be able to move seamlessly between these two measures of spread.</p>
 <div id="exm-sd" class="theorem example">
@@ -1057,8 +1087,9 @@ Solution
 </div>
 </div>
 </section>
-<section id="computing-the-variance" class="level3" data-number="6.8.2">
-<h3 data-number="6.8.2" class="anchored" data-anchor-id="computing-the-variance"><span class="header-section-number">6.8.2</span> Computing the Variance</h3>
+</section>
+<section id="computing-the-variance" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="computing-the-variance"><span class="header-section-number">6.6</span> Computing the Variance</h2>
 <p>When computing the variance of a random quantity, we often use a shortcut for the formula, <span class="math display">\[\text{var}(X) = E[X^2] - E[X]^2.\]</span> Generally, this is moderately more straightforward to calculate since <span class="math inline">\(X^2\)</span> is an easier transformation than <span class="math inline">\((X-E[X])^2\)</span>. This identity will come back time and time again, with a lot of versatility in the ways that it can be used. Typically, when a variance is needed to be calculated the process is to simply compute <span class="math inline">\(E[X]\)</span> and <span class="math inline">\(E[X^2]\)</span>, and then apply this relationship.</p>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
@@ -1104,8 +1135,8 @@ Solution
 </div>
 </div>
 </section>
-<section id="the-variance-of-transformations" class="level3" data-number="6.8.3">
-<h3 data-number="6.8.3" class="anchored" data-anchor-id="the-variance-of-transformations"><span class="header-section-number">6.8.3</span> The Variance of Transformations</h3>
+<section id="the-variance-of-transformations" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="the-variance-of-transformations"><span class="header-section-number">6.7</span> The Variance of Transformations</h2>
 <p>With expectations, we saw that <span class="math inline">\(E[g(X)]\)</span> needed to be directly computed from the definition. The same is true for variances of transformations. Specifically, <span class="math inline">\(\text{var}(g(X))\)</span> is given by <span class="math inline">\(E[(g(X) - E[g(X)])^2]\)</span> which can be simplified with the previous relationship as <span class="math inline">\(E[g(X)^2] - E[g(X)]^2\)</span>. Just as with expectations, it is important to realize that <span class="math inline">\(\text{var}(g(X)) \neq g(\text{var}(X))\)</span>, and so dealing with transformations requires further work.</p>
 <p>With expectations, we highlighted linear transformations as a special case, with <span class="math inline">\(g(X) = aX + b\)</span>. For the variance, the linear transformations are also worth distinguishing from others. In particular, <span class="math display">\[\text{var}(aX + b) = a^2\text{var}(X).\]</span> In the same way that the linearity of expectation demonstrates that the expected value of any constant is that constant, we can use this identity to show that the variance of constant is zero. However, we can also reason to this based on our definitions so far. Suppose that we have a random variable which is constant.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> A constant <span class="math inline">\(b\)</span> can be seen as a random variable with probability distribution <span class="math inline">\(p_X(x) = 1\)</span> if <span class="math inline">\(x=b\)</span> and <span class="math inline">\(p_X(x) = 0\)</span> otherwise. The expected value is going to be <span class="math inline">\(E[X] = 1(b) = b\)</span>, and <span class="math inline">\(E[X^2] = 1(b)^2 = b^2\)</span>. Thus, <span class="math inline">\(\text{var}(b) = E[X^2] - E[X]^2 = b^2 - b^2 = 0\)</span>. From an intuitive perspective, there is no variation around the mean of a constant. It is always the same value. As a result, when taking the variance, we know that it should be <span class="math inline">\(0\)</span>.</p>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
@@ -1169,7 +1200,6 @@ E[X^2] = \sum_{x=10}^{24} x^2p_X(x) &amp;= 0.1\sum_{x=10}^{14}x^2 + 0.05\sum_{x=
 </div>
 </div>
 <p>Unlike the expectation, the variance of additive terms will not generally be the addition of the variances themselves. That is, we cannot say that <span class="math inline">\(\text{var}(g(X) + h(X)) = \text{var}(g(X)) + \text{var}(h(X))\)</span>. Writing out the definition shows issue with this, <span class="math display">\[E[(g(X) + h(X))^2] = E[g(X)^2] + 2E[g(X)h(X)] + E[h(X)^2].\]</span> The first and third terms here are nicely separated and behave well. However, the central term is not generally easy to simplify. You can view <span class="math inline">\(g(X)h(X)\)</span> as a function itself, and so <span class="math display">\[E[g(X)h(X)] \neq E[g(X)]E[h(X)].\]</span> Instead, this will typically need to be worked out for any specific set of functions.</p>
-</section>
 </section>
 <section id="exercises" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
@@ -1298,7 +1328,7 @@ p_W(w) = \begin{cases}
 </ol>
 </div>
 <div id="exr-6.15" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 6.15</strong></span> Consider a book containing 200 pages. You randomly select a page number. Let <span class="math inline">\(V\)</span> represent the sum of the digits in the page number selected.</p>
+<p><span class="theorem-title"><strong>Exercise 6.15</strong></span> Consider a book containing 200 pages. You randomly select a page number. Let <span class="math inline">\(X\)</span> represent the sum of the digits in the page number selected.</p>
 <ol type="a">
 <li>What is the expected value of <span class="math inline">\(X\)</span>?</li>
 <li>What is the variance of <span class="math inline">\(X\)</span>?</li>
@@ -1775,7 +1805,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom"});
+<script type="application/javascript" src="../webex.js"></script>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

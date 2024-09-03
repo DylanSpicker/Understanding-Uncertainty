@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>STAT 1793: Course Notes - 8&nbsp; The Named Discrete Distributions</title>
+<title>Understanding Uncertainty - 8&nbsp; The Named Discrete Distributions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -41,6 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -752,9 +755,9 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">STAT 1793: Course Notes</a> 
+      <a href="../">Understanding Uncertainty</a> 
         <div class="sidebar-tools-main">
-    <a href="../STAT-1793--Course-Notes.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../Understanding-Uncertainty.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -854,7 +857,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Descriptive Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Methods of Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Confidence Intervals</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
   </div>
 </li>
       </ul>
@@ -875,7 +908,11 @@ window.Quarto = {
   <li><a href="#the-geometric-distribution" id="toc-the-geometric-distribution" class="nav-link" data-scroll-target="#the-geometric-distribution"><span class="header-section-number">8.4</span> The Geometric Distribution</a></li>
   <li><a href="#the-negative-binomial-distribution" id="toc-the-negative-binomial-distribution" class="nav-link" data-scroll-target="#the-negative-binomial-distribution"><span class="header-section-number">8.5</span> The Negative Binomial Distribution</a></li>
   <li><a href="#the-hypergeometric-distribution" id="toc-the-hypergeometric-distribution" class="nav-link" data-scroll-target="#the-hypergeometric-distribution"><span class="header-section-number">8.6</span> The Hypergeometric Distribution</a></li>
-  <li><a href="#the-poisson-distribution" id="toc-the-poisson-distribution" class="nav-link" data-scroll-target="#the-poisson-distribution"><span class="header-section-number">8.7</span> The Poisson Distribution</a></li>
+  <li><a href="#the-poisson-distribution" id="toc-the-poisson-distribution" class="nav-link" data-scroll-target="#the-poisson-distribution"><span class="header-section-number">8.7</span> The Poisson Distribution</a>
+  <ul class="collapse">
+  <li><a href="#sec-poisson-process" id="toc-sec-poisson-process" class="nav-link" data-scroll-target="#sec-poisson-process"><span class="header-section-number">8.7.1</span> The Poisson Process</a></li>
+  <li><a href="#the-poisson-approximation-to-the-binomial" id="toc-the-poisson-approximation-to-the-binomial" class="nav-link" data-scroll-target="#the-poisson-approximation-to-the-binomial"><span class="header-section-number">8.7.2</span> The Poisson Approximation to the Binomial</a></li>
+  </ul></li>
   <li><a href="#using-named-distributions" id="toc-using-named-distributions" class="nav-link" data-scroll-target="#using-named-distributions"><span class="header-section-number">8.8</span> Using Named Distributions</a>
   <ul class="collapse">
   <li><a href="#named-distributions-in-r" id="toc-named-distributions-in-r" class="nav-link" data-scroll-target="#named-distributions-in-r"><span class="header-section-number">8.8.1</span> Named Distributions in R</a></li>
@@ -1600,6 +1637,126 @@ Solution
 </div>
 </div>
 </div>
+<section id="sec-poisson-process" class="level3" data-number="8.7.1">
+<h3 data-number="8.7.1" class="anchored" data-anchor-id="sec-poisson-process"><span class="header-section-number">8.7.1</span> The Poisson Process</h3>
+<p>One particularly useful feature of the Poisson distribution stems from the fact that, when events of interest occur at a constant rate overtime, we can find a relevant Poisson distribution to describe these occurrences. When we model events in this manner, we refer to it as a <strong>Poisson process</strong>.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Poisson Process
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(X\)</span> counts the number events over a period of time of length <span class="math inline">\(t\)</span>. Further suppose that:</p>
+<ol type="1">
+<li>Events at interest happen at a constant rate overtime. Denote the rate as <span class="math inline">\(\alpha\)</span> (per unit time).</li>
+<li>Events occur independently of one another, so that the occurrence of one event does not influence any others.</li>
+<li>No two events occur at precisely the same time.</li>
+</ol>
+<p>Then, the number of events that occur during the time interval <span class="math inline">\(t\)</span>, <span class="math inline">\(X\)</span>, are said to follow a <strong>Poisson process</strong>. Specifically, <span class="math inline">\(X\)</span> will follow a <span class="math inline">\(\text{Poi}(\alpha t)\)</span> distribution.</p>
+</div>
+</div>
+<p>The utility of the Poisson process is that, supposing we can determine the average rate of occurrence for any events, and supposing that we are willing to make the independence and non-simultaneous assumptions for the process, the distribution of events will always be Poisson. For instance, if we know how many events occur per hour and want to know how many events will occur per year, so long as the assumptions still hold, we can scale up the rate of occurrences and continue to use a Poisson distribution. For this reason, the Poisson distribution is frequently deployed for modelling real-world phenomenon.</p>
+<div id="exm-poi-process" class="theorem example">
+<p><span class="theorem-title"><strong>Example 8.14 (Sadie’s Vegan Bakery Aspirations)</strong></span> With the success of Sadie’s vegan baking blog, there is some excited chatter about the prospects of opening up a real-world bakery! Before committing to this investment, Sadie wants to have an idea of whether the bakery would really be sustainable, and if so, what the staffing needs would be. Based on Sadie’s market research, it is expected that <span class="math inline">\(168\)</span> customers would arrive per week.</p>
+<ol type="a">
+<li>What assumptions would Sadie need to make in order to model this as a Poisson process? Is this likely to be accurate in actuality?</li>
+<li>Sadie figures that it is important to bake everything fresh each day. If the bakery would be open 8 hours a day, 7 days a week, on average how many customers are expected to show up each day?</li>
+<li>If each customer purchases 2 items on average, what is the probability that Sadie sells out on a day if each morning <span class="math inline">\(50\)</span> items are baked?</li>
+<li>Sadie is very concerned about the impact of waste on a successful business. Write an expression for the probability that Sadie has a certain amount of waste (<span class="math inline">\(w\)</span>) given the preparation of <span class="math inline">\(n\)</span> baked good at the start of each day. Assume that customers purchase 2 items on average.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Sadie would need to be willing to assume that customers arrive at a constant rate overtime (throughout all hours of the day, days of the week, weeks of the year), that customer arrivals are independent of each other (one customer arriving does not impact any other customer arriving), and that no two customers arrive at precisely the same time. These are not very reasonable assumptions in practice. It is very likely that certain times of the day or certain days of the week would be more (or less) popular than others. Moreover, it seems likely that people may arrive in groups, violating the independence assumption.</p></li>
+<li><p>If we make the assumptions regarding the Poisson process, then we know that the arrival rate, <span class="math inline">\(\alpha\)</span>, is <span class="math inline">\(168\)</span> per week. A day is <span class="math inline">\(8\)</span> hours, out of the full <span class="math inline">\(56\)</span> available, and so it corresponds to <span class="math inline">\(t = \dfrac{1}{7}\)</span>. Thus, we know that the number of customers arriving per day will follow a <span class="math display">\[\text{Poi}(\frac{1}{7}\times 168) = \text{Poi}(24),\]</span> distribution, and as such the expected number of customers will be <span class="math inline">\(24\)</span>.</p></li>
+<li><p>The number of purchases made by a customer is <span class="math inline">\(2\)</span>. As a result, the number of purchases per day will be <span class="math inline">\(2\times 24 = 48\)</span>. As a result, we can model the number of daily purchases as a <span class="math inline">\(\text{Poi}(48)\)</span> distribution. If we want to know what the probability that Sadie sells out, we want to know <span class="math display">\[P(X \geq 50) = 1 - P(X &lt; 50) = 1 - \sum_{x = 0}^{49} \frac{(48)^xe^{-48}}{x!}.\]</span> Using a computer to calculate this gives 0.4054.</p></li>
+<li><p>If Sadie prepares <span class="math inline">\(n\)</span> items, and wants to know the probability of having a certain amount of waste <span class="math inline">\(w\)</span> (<span class="math inline">\(w \in \{0,1,\dots,n\}\)</span>), this can be analyzed using the same <span class="math inline">\(\text{Poi}(48)\)</span> from the previous part. Specifically, taking <span class="math inline">\(X\)</span> to be the number of items sold in a day, then Sadie will be <span class="math inline">\(w\)</span> waste if <span class="math inline">\(n - X = w\)</span>, or equivalently <span class="math inline">\(X = n + w\)</span>. Thus, <span class="math display">\[P(W = w) = P(X = n + w) = \frac{(48)^{n+w}e^{-48}}{(n+w)!},\]</span> for <span class="math inline">\(w = \{1, \dots, n\}\)</span>. The probability that there is no waste, is <span class="math display">\[P(W = 0) = P(X \geq n) = 1 - \sum_{x = 0}^{n-1}\frac{(48)^{x}e^{-48}}{x!}.\]</span></p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>It is important to note that a Poisson process can be defined over space as well, not just time. For instance, if we know that errors occur in the manufacturing of a particular chemical at a rate of <span class="math inline">\(1\)</span> per kiloliter, then the number of errors when producing any volume of the chemicals will also follow a Poisson process. It is most common to discuss the units as events per time, but every other unit will function in the exact same manner.</p>
+</section>
+<section id="the-poisson-approximation-to-the-binomial" class="level3" data-number="8.7.2">
+<h3 data-number="8.7.2" class="anchored" data-anchor-id="the-poisson-approximation-to-the-binomial"><span class="header-section-number">8.7.2</span> The Poisson Approximation to the Binomial</h3>
+<p>The Poisson distribution and binomial distribution may appear, on the surface, to be fairly disconnected from one another. The binomial distribution counts the number of successes in a discrete number of trials, where the number of trials is known in advance. The Poisson distribution, on the other hand, counts the number of events that occur not on repeated trials, but from a set window of observation. Both distributions are counting the number of occurrences of an event within a fixed observation window, but under very different circumstances.</p>
+<p>Consider, however, what would happen if you began to perform more and more trials in a binomial experiment, with each of these trials getting closer and closer together. Intuitively, as this happens, the statistical experiment at hand begins to look more and more like the continual observation of a process. Consider, for instance, rolling a die every second and watching for when a certain outcome is observed. What if instead of once per second the die were rolled <span class="math inline">\(100\)</span> times per second? At some point, the individual experiments in the binomial experiment begin to blend together into a continuous process. At this point, the binomial and the Poisson distribution seemingly intersect: in each, you are observing a process in continuous time, counting the number of events that occur.</p>
+<p>This intuition turns out to be correct. The Poisson distribution can be thought of as the limiting distribution to the binomial distribution. This can be formalized mathematically in the following manner.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Limiting Case of the Binomial
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(X \sim \text{Bin}(n, \dfrac{\lambda}{n})\)</span>, with <span class="math inline">\(E[X] = \lambda\)</span>, and probability mass function <span class="math display">\[p(x) = \binom{n}{x}\left(\frac{\lambda}{n}\right)^x\left(1-\frac{\lambda}{n}\right)^{n-x}.\]</span> Then, <span class="math display">\[\lim_{n\to\infty} p(x) = \frac{\lambda^{x}e^{-\lambda}}{x!},\]</span> which is the probability mass function for a <span class="math inline">\(\text{Poi}(\lambda)\)</span> random variable.</p>
+</div>
+</div>
+<p>Note that in order for the limiting behaviour of this to hold the binomial requires both <span class="math inline">\(n\to\infty\)</span> as well as <span class="math inline">\(p\to 0\)</span> at such a rate so that <span class="math inline">\(np = \lambda\)</span> is constant. If this happens then in the limit the two distributions exactly coincide. While it is unlikely to perform a binomial experiment with infinite trials and a shrinking success probability, we may be faced with binomial distributions that have fairly high <span class="math inline">\(n\)</span> and fairly low <span class="math inline">\(p\)</span>, and in these cases, we can use the Poisson to approximate binomial probabilities.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> In order to do so we say that if <span class="math inline">\(X \sim \text{Binom}(n, p)\)</span> then <span class="math inline">\(X \dot\sim \text{Poi}(np)\)</span>, where <span class="math inline">\(\dot\sim\)</span> is read “is approximately distributed according to”.</p>
+<p>The main utility of the approximation is that, especially for large <span class="math inline">\(n\)</span>, binomial probabilities can be challenging to compute owing to the need to calculate <span class="math inline">\(\dbinom{n}{x}\)</span>. Poisson probabilities are comparatively straightforward, and as such, when a rough calculation is all that is required, they can work fairly well.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-plot" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.1: This plot demonstrates the convergence of the Binomial to the Poisson (in terms of probability mass function) as <span class="math inline">\(n\)</span> increases and <span class="math inline">\(p\)</span> decreases, holding <span class="math inline">\(np\)</span> constant. The red circles show the Poisson probabilities, and the sequence of blue shapes show several binomial distributions, with increasing <span class="math inline">\(n\)</span>, that are progressively better approximated by the Poisson.
+</figcaption>
+<div aria-describedby="fig-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter8_files/figure-html/fig-plot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="chapter8_files/figure-html/fig-plot-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div id="exm-poi-approx" class="theorem example">
+<p><span class="theorem-title"><strong>Example 8.15 (Charles’ Viral Trick-Shot Attempt)</strong></span> Charles has been watching online videos of seemingly impossible “trick shots”, where individuals toss household objects to land in increasingly complex locations. Inspired by this trend, Charles decides to try a version of this at home, where the goal is to bounce a dime off of the table and have it land in an upright coke bottle. Suppose that the probability that Charles succeeds on any given attempt of this trick shot is <span class="math inline">\(0.01\)</span>.</p>
+<ol type="a">
+<li>If Charles attempts the trick shot <span class="math inline">\(100\)</span> times, what is the probability that at least one of the attempts is successful?</li>
+<li>How can the probability in part (a) be approximated using a Poisson? How close is the approximation.</li>
+<li>Suppose that Charles instead attempts a new, more challenging the trick shot <span class="math inline">\(1000\)</span> times. This shot has a success probability of just <span class="math inline">\(0.001\)</span>. What is the approximate probability that more than one of these attempts are successful?</li>
+<li>Do you expect that the probability in (b) or (c) will be closer to the truth? Explain.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>The number of successes will follow a <span class="math inline">\(\text{Bin}(100, 0.01)\)</span>. We want to know <span class="math inline">\(P(X \geq 1) = 1 - P(X = 0)\)</span>, and so we can compute this by calculating <span class="math display">\[P(X = 0) = \binom{100}{0}(0.01)^{0}(0.99)^{100} = 0.99^{100}.\]</span> As a result, the probability of at least one success is <span class="math inline">\(1 - 0.99^{100}\)</span> or approximately 0.634.</li>
+<li>The binomial can be approximated using a <span class="math inline">\(\text{Poi}(100(0.01)) = \text{Poi}(1)\)</span> distribution. In this case, <span class="math display">\[P(X \geq 1) = 1 - P(X = 0) \approx 1 - \frac{e^{-1}1^0}{0!} = 1 - e^{-1} \approx 0.632.\]</span> This approximation differs from the truth by 0.0018471.</li>
+<li>This binomial can be approximated using the same <span class="math inline">\(\text{Poi}(1)\)</span> distribution, since <span class="math inline">\(1000(0.001) = 1\)</span>. As a result, the approximate probability will still be <span class="math inline">\(1 - e^{-1} \approx 0.632\)</span>.</li>
+<li>The probability in (c) should be closer to the truth since <span class="math inline">\(n\)</span> is larger and the approximation is based on the limit as <span class="math inline">\(n\to\infty\)</span>. Thus, for larger <span class="math inline">\(n\)</span> with constant <span class="math inline">\(np\)</span>, the approximation should improve. Indeed, if we check the actual binomial probability in the second case we get 0.6323046 which differs from the approximation by just 0.0001840164.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="using-named-distributions" class="level2" data-number="8.8">
 <h2 data-number="8.8" class="anchored" data-anchor-id="using-named-distributions"><span class="header-section-number">8.8</span> Using Named Distributions</h2>
@@ -1608,7 +1765,7 @@ Solution
 <p>An additional utility with this approach to solving probability questions is that, over time and repeated practice, you can build an intuition as to the behaviour of random variables following these various distributions. Probabilities in general can be deeply unintuitive. It can be hard to assess, without formally working it out, whether an event is likely or unlikely, let alone how likely an event is. However, the lack of intuition from our wider experience can be negated almost entirely by building of intuition through the repeated application of these distributions. You can start to gain a sense of how binomial random variables behave, being able to determine just from inspection whether events seem plausible or not. Much of the study of probability and statistics is about building a set of tools that can overcome the flaws in our intuitive reasoning regarding uncertainty. This comes only through practice, however, this framework of named distributions provides a very solid foundation to perform such practice.</p>
 <section id="named-distributions-in-r" class="level3" data-number="8.8.1">
 <h3 data-number="8.8.1" class="anchored" data-anchor-id="named-distributions-in-r"><span class="header-section-number">8.8.1</span> Named Distributions in R</h3>
-<p>In R all of the named distributions that we have discussed, and in fact, many that we have not discussed, are implemented to make calculations easier. In particular, there are R functions which evaluate the probability mass function for the various distributions. Alongside these, there are also functions which calculate what we refer to as the <em>cumulative probability</em><a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>, which is to say the <span class="math inline">\(P(X\leq k)\)</span> for some value <span class="math inline">\(k\)</span>. These functions generally are called <code>d{distname}</code>, where <code>{distname}</code> is the name of the relevant distribution. For instance, <code>dbinom</code> for the binomial, <code>dpoi</code> for the Poisson, and so forth. These will evaluate the probability mass function at the relevant values. In order to evaluate the cumulative probability at the specified values you would call <code>p{distname}</code>. These functions take in a parameter for the value to evaluate at, and then parameters that correspond to the various parameters from the distributions themselves.</p>
+<p>In R all of the named distributions that we have discussed, and in fact, many that we have not discussed, are implemented to make calculations easier. In particular, there are R functions which evaluate the probability mass function for the various distributions. Alongside these, there are also functions which calculate what we refer to as the <em>cumulative probability</em><a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>, which is to say the <span class="math inline">\(P(X\leq k)\)</span> for some value <span class="math inline">\(k\)</span>. These functions generally are called <code>d{distname}</code>, where <code>{distname}</code> is the name of the relevant distribution. For instance, <code>dbinom</code> for the binomial, <code>dpoi</code> for the Poisson, and so forth. These will evaluate the probability mass function at the relevant values. In order to evaluate the cumulative probability at the specified values you would call <code>p{distname}</code>. These functions take in a parameter for the value to evaluate at, and then parameters that correspond to the various parameters from the distributions themselves.</p>
 <div id="qwebr-insertion-location-1"></div>
 <script type="module">
 // Retrieve the insertion point
@@ -1796,8 +1953,31 @@ ppois(5, lambda = 4)              # P(X<=5)`,
 <li>If <span class="math inline">\(N\)</span> is the number of components produced, and <span class="math inline">\(X\)</span> is the number which are repairable, then given the value of <span class="math inline">\(N\)</span>, what is the pmf of <span class="math inline">\(X\)</span>?</li>
 </ol>
 </div>
+<div id="exr-8.21" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 8.21</strong></span> Suppose that <span class="math inline">\(X \sim \text{Bin}(200, 0.04)\)</span>.</p>
+<ol type="a">
+<li>What is the approximate probability that <span class="math inline">\(X = 4\)</span>?</li>
+<li>Is your answer from (a) likely to be closer or further from the truth compared to if <span class="math inline">\(X\)</span> followed a <span class="math inline">\(\text{Bin}(2000, 0.004)\)</span> distribution? Explain.</li>
+</ol>
+</div>
+<div id="exr-8.22" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 8.22</strong></span> Suppose that a company manufactures components in lots. Their contracts stipulate that in lots of <span class="math inline">\(200\)</span>, no more than <span class="math inline">\(4\)</span> components can be defective. If there are more than <span class="math inline">\(4\)</span> defective components, the lot is rejected. If each manufactured component has a probability of being defective of <span class="math inline">\(0.01\)</span>, what is the approximate probability that the lot is rejected?</p>
+</div>
+<div id="exr-8.23" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 8.23</strong></span> The Poisson distribution has the property that, for <span class="math inline">\(X\sim\text{Poi}(\lambda)\)</span>, <span class="math inline">\(E[X] = \text{var}(X)\)</span>. We also know that the limiting distribution of a <span class="math inline">\(\text{Bin}(n, p)\)</span> distribution is a Poisson. Explain how these two facts can be reconciled with one another.</p>
+</div>
+<div id="exr-8.24" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 8.24</strong></span> Suppose that a popular website is analyzing their traffic to determine the stability of their servers. Their analysis concludes that, on average, <span class="math inline">\(3\)</span> users per hour face a server issue preventing them from accessing the service.</p>
+<ol type="a">
+<li>If, in in one particular hour, there are <span class="math inline">\(10,000\)</span> visitors, what distribution best models the number of users who face server issues?</li>
+<li>Suppose that the company is concerned with the number of individuals who cannot access the website over a <span class="math inline">\(2\)</span> hour period, without knowing precisely how many visitors they receive during that time. Approximate the probability that they will have more than <span class="math inline">\(4\)</span> visitors not being able to access the site, and explain why this is a reasonable approximation.</li>
+</ol>
+</div>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;8.1: This plot demonstrates the convergence of the Binomial to the Poisson (in terms of probability mass function) as <span class="math inline">\(n\)</span> increases and <span class="math inline">\(p\)</span> decreases, holding <span class="math inline">\(np\)</span> constant. The red circles show the Poisson probabilities, and the sequence of blue shapes show several binomial distributions, with increasing <span class="math inline">\(n\)</span>, that are progressively better approximated by the Poisson.</span>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -1819,7 +1999,8 @@ ppois(5, lambda = 4)              # P(X<=5)`,
 <li id="fn15"><p>Now, <span class="math inline">\(1.5\)</span> socks can never be observed. As a result, you may say that Charles expects to see either <span class="math inline">\(1\)</span> or <span class="math inline">\(2\)</span> red socks, though, recall our way of interpreting the expected value.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn16"><p>The Poisson distribution gets it name from the French mathematician, Siméon Poisson, rather than from the french word for <em>fish</em>. Though, I suppose it is likely that the surname came from the french word for fish, so in a roundabout way, the distribution is sort of the <em>Fish Distribution</em>.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn17"><p>The Poisson distribution is interesting in that the mean and variance are always equal to one another.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn18"><p>More on this in the coming chapter.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>As a rough rule of thumb, we would want to have <span class="math inline">\(n \geq 100\)</span> and <span class="math inline">\(np \leq 10\)</span>.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>More on this in the coming chapter.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -2265,6 +2446,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script type="application/javascript" src="../webex.js"></script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom","closeEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

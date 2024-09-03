@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>STAT 1793: Course Notes - 9&nbsp; Continuous Random Variables</title>
+<title>Understanding Uncertainty - 9&nbsp; Continuous Random Variables</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -755,9 +755,9 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">STAT 1793: Course Notes</a> 
+      <a href="../">Understanding Uncertainty</a> 
         <div class="sidebar-tools-main">
-    <a href="../STAT-1793--Course-Notes.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../Understanding-Uncertainty.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -857,7 +857,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Descriptive Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Methods of Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Confidence Intervals</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
   </div>
 </li>
       </ul>
@@ -874,18 +904,38 @@ window.Quarto = {
   <ul>
   <li><a href="#continuous-versus-discrete" id="toc-continuous-versus-discrete" class="nav-link active" data-scroll-target="#continuous-versus-discrete"><span class="header-section-number">9.1</span> Continuous Versus Discrete</a></li>
   <li><a href="#cumulative-distribution-functions" id="toc-cumulative-distribution-functions" class="nav-link" data-scroll-target="#cumulative-distribution-functions"><span class="header-section-number">9.2</span> Cumulative Distribution Functions</a></li>
-  <li><a href="#the-probability-density-function" id="toc-the-probability-density-function" class="nav-link" data-scroll-target="#the-probability-density-function"><span class="header-section-number">9.3</span> The Probability Density Function</a></li>
-  <li><a href="#using-continuous-distributions" id="toc-using-continuous-distributions" class="nav-link" data-scroll-target="#using-continuous-distributions"><span class="header-section-number">9.4</span> Using Continuous Distributions</a></li>
+  <li><a href="#the-probability-density-function" id="toc-the-probability-density-function" class="nav-link" data-scroll-target="#the-probability-density-function"><span class="header-section-number">9.3</span> The Probability Density Function</a>
+  <ul class="collapse">
+  <li><a href="#int-the-formal-mathematics-for-continuous-random-variables" id="toc-int-the-formal-mathematics-for-continuous-random-variables" class="nav-link" data-scroll-target="#int-the-formal-mathematics-for-continuous-random-variables"><span class="header-section-number">9.3.1</span> <span class="math inline">\(\int\)</span> The Formal Mathematics for Continuous Random Variables</a></li>
+  </ul></li>
+  <li><a href="#using-continuous-distributions" id="toc-using-continuous-distributions" class="nav-link" data-scroll-target="#using-continuous-distributions"><span class="header-section-number">9.4</span> Using Continuous Distributions</a>
+  <ul class="collapse">
+  <li><a href="#int-differences-in-working-with-discrete-and-continuous-random-variables" id="toc-int-differences-in-working-with-discrete-and-continuous-random-variables" class="nav-link" data-scroll-target="#int-differences-in-working-with-discrete-and-continuous-random-variables"><span class="header-section-number">9.4.1</span> <span class="math inline">\(\int\)</span> Differences in Working With Discrete and Continuous Random Variables</a></li>
+  <li><a href="#int-calculating-expected-values-for-continuous-random-variables" id="toc-int-calculating-expected-values-for-continuous-random-variables" class="nav-link" data-scroll-target="#int-calculating-expected-values-for-continuous-random-variables"><span class="header-section-number">9.4.2</span> <span class="math inline">\(\int\)</span> Calculating Expected Values for Continuous Random Variables</a></li>
+  <li><a href="#int-calculating-percentiles-for-continuous-random-variables" id="toc-int-calculating-percentiles-for-continuous-random-variables" class="nav-link" data-scroll-target="#int-calculating-percentiles-for-continuous-random-variables"><span class="header-section-number">9.4.3</span> <span class="math inline">\(\int\)</span> Calculating Percentiles for Continuous Random Variables</a></li>
+  <li><a href="#the-named-continuous-distributions" id="toc-the-named-continuous-distributions" class="nav-link" data-scroll-target="#the-named-continuous-distributions"><span class="header-section-number">9.4.4</span> The Named Continuous Distributions</a></li>
+  </ul></li>
   <li><a href="#the-uniform-distribution" id="toc-the-uniform-distribution" class="nav-link" data-scroll-target="#the-uniform-distribution"><span class="header-section-number">9.5</span> The Uniform Distribution</a></li>
   <li><a href="#the-normal-distribution" id="toc-the-normal-distribution" class="nav-link" data-scroll-target="#the-normal-distribution"><span class="header-section-number">9.6</span> The Normal Distribution</a>
   <ul class="collapse">
   <li><a href="#the-specification-of-the-distribution" id="toc-the-specification-of-the-distribution" class="nav-link" data-scroll-target="#the-specification-of-the-distribution"><span class="header-section-number">9.6.1</span> The Specification of the Distribution</a></li>
   <li><a href="#the-standard-normal-distribution" id="toc-the-standard-normal-distribution" class="nav-link" data-scroll-target="#the-standard-normal-distribution"><span class="header-section-number">9.6.2</span> The Standard Normal Distribution</a></li>
-  <li><a href="#sec-r-normal" id="toc-sec-r-normal" class="nav-link" data-scroll-target="#sec-r-normal"><span class="header-section-number">9.6.3</span> Normal Probability Calculations in R</a></li>
-  <li><a href="#the-empirical-rule-and-chebyshevs-inequality" id="toc-the-empirical-rule-and-chebyshevs-inequality" class="nav-link" data-scroll-target="#the-empirical-rule-and-chebyshevs-inequality"><span class="header-section-number">9.6.4</span> The Empirical Rule and Chebyshev’s Inequality</a></li>
+  <li><a href="#the-empirical-rule-and-chebyshevs-inequality" id="toc-the-empirical-rule-and-chebyshevs-inequality" class="nav-link" data-scroll-target="#the-empirical-rule-and-chebyshevs-inequality"><span class="header-section-number">9.6.3</span> The Empirical Rule and Chebyshev’s Inequality</a></li>
   </ul></li>
   <li><a href="#closure-of-the-normal-distribution" id="toc-closure-of-the-normal-distribution" class="nav-link" data-scroll-target="#closure-of-the-normal-distribution"><span class="header-section-number">9.7</span> Closure of the Normal Distribution</a></li>
   <li><a href="#approximations-using-the-normal-distribution" id="toc-approximations-using-the-normal-distribution" class="nav-link" data-scroll-target="#approximations-using-the-normal-distribution"><span class="header-section-number">9.8</span> Approximations Using the Normal Distribution</a></li>
+  <li><a href="#the-t-distribution" id="toc-the-t-distribution" class="nav-link" data-scroll-target="#the-t-distribution"><span class="header-section-number">9.9</span> The <span class="math inline">\(t\)</span> Distribution</a></li>
+  <li><a href="#the-exponential-distribution" id="toc-the-exponential-distribution" class="nav-link" data-scroll-target="#the-exponential-distribution"><span class="header-section-number">9.10</span> The Exponential Distribution</a>
+  <ul class="collapse">
+  <li><a href="#the-memoryless-property-of-the-exponential-distribution" id="toc-the-memoryless-property-of-the-exponential-distribution" class="nav-link" data-scroll-target="#the-memoryless-property-of-the-exponential-distribution"><span class="header-section-number">9.10.1</span> The Memoryless Property of the Exponential Distribution</a></li>
+  <li><a href="#the-exponential-distribution-and-poisson-processes" id="toc-the-exponential-distribution-and-poisson-processes" class="nav-link" data-scroll-target="#the-exponential-distribution-and-poisson-processes"><span class="header-section-number">9.10.2</span> The Exponential Distribution and Poisson Processes</a></li>
+  <li><a href="#the-exponential-distribution-in-the-real-world" id="toc-the-exponential-distribution-in-the-real-world" class="nav-link" data-scroll-target="#the-exponential-distribution-in-the-real-world"><span class="header-section-number">9.10.3</span> The Exponential Distribution in the Real-World</a></li>
+  </ul></li>
+  <li><a href="#int-the-gamma-distribution" id="toc-int-the-gamma-distribution" class="nav-link" data-scroll-target="#int-the-gamma-distribution"><span class="header-section-number">9.11</span> <span class="math inline">\(\int\)</span> The Gamma Distribution</a>
+  <ul class="collapse">
+  <li><a href="#connection-to-other-distributions" id="toc-connection-to-other-distributions" class="nav-link" data-scroll-target="#connection-to-other-distributions"><span class="header-section-number">9.11.1</span> Connection to Other Distributions</a></li>
+  </ul></li>
+  <li><a href="#sec-r-continuous" id="toc-sec-r-continuous" class="nav-link" data-scroll-target="#sec-r-continuous"><span class="header-section-number">9.12</span> Continuous Probability Calculations in R</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul>
 </nav>
@@ -1058,7 +1108,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (
 <p>Many quantities of interest are better treated as a continuous quantity rather than a discrete one even when this is not technically correct. For instance, time measured in seconds is often best thought of as continuous, even though any stop watch used to grab these measurements will have some limit to the precision with which they can measure. Similarly, lengths and heights will often be better treated as continuous quantities, even though any measuring device will necessarily have some minimal threshold after which it cannot discern distances. Thus, deciding whether a quantity is continuous or discrete is sometimes a judgment call. In general discrete quantities are harder to work with when the set of possibilities is very large. In these cases, not much is lost by treating the random variables as though they were continuous. This distinction is another area which requires the active development of intuition, but once present, the distinctions become second nature.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <section id="continuous-versus-discrete" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="continuous-versus-discrete"><span class="header-section-number">9.1</span> Continuous Versus Discrete</h2>
-<p>Distinguishing whether a random quantity is continuous or discrete is crucial as, broadly speaking, the two types of quantities are treated differently. The same underlying ideas are present, but the distinctions between the two settings require some careful thought. The use of continuous random variables necessitates an understanding of introductory calculus. These course notes are designed to be understood without any experience in calculus, and as a result, we will not spend much time focusing on continuous random variables. However, continuous random variables are <em>the</em> dominant type of random variables outside of introductory courses. As a result, understanding the distinctions, and becoming familiar with how they are to be manipulated is an important skill.</p>
+<p>Distinguishing whether a random quantity is continuous or discrete is crucial as, broadly speaking, the two types of quantities are treated differently. The same underlying ideas are present, but the distinctions between the two settings require some careful thought. The use of continuous random variables necessitates an understanding of introductory calculus. These course notes are designed to be understood without any experience in calculus, and as a result, we will first present continuous random variables in general, without the need for calculus. Additional sections containing the technical details follow. Despite requiring calculus to be complete understood, continuous random variables are <em>the</em> dominant type of random variables outside of introductory courses. As a result, understanding the distinctions, and becoming familiar with how they are to be manipulated is an important skill.</p>
 <p>The key difference between discrete and continuous random variables is that, for discrete random variables the behaviour is governed by assessing <span class="math inline">\(P(X=x)\)</span> for all possible values of <span class="math inline">\(x\)</span>, while for continuous random variables <span class="math inline">\(P(X=x)=0\)</span> for <strong>every</strong> value of <span class="math inline">\(x\)</span>. This is likely a surprising statement, and as such it is worth reiterating. With discrete random variables we discussed how all of the probabilistic behaviour is governed by the probability mass function. This is defined as <span class="math inline">\(p_X(x) = P(X=x)\)</span>. If <span class="math inline">\(X\)</span> is a continuous random variable, we must have <span class="math inline">\(P(X=x) = 0\)</span>. Correspondingly, continuous random variables do not have probability mass functions, and to understand the behaviour of these random variables we must us other quantities.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1091,7 +1141,7 @@ P(X\in(a,b)) &amp;= 1 - P(X\not\in(a,b))\\
 Figure&nbsp;9.1: A number line showcasing the interval <span class="math inline">\((a,b)\)</span> and demonstrating how you can take everything less than <span class="math inline">\(b\)</span> and remove all that is less than <span class="math inline">\(a\)</span> to be left with only <span class="math inline">\((a,b)\)</span>.
 </figcaption>
 <div aria-describedby="fig-number-line-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="..\graphics/ch9-difference-in-numbers.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="..\graphics/ch9-difference-in-numbers.png" class="img-fluid figure-img"></a>
+<a href="..\graphics/ch9-difference-in-numbers.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="..\graphics/ch9-difference-in-numbers.png" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1130,14 +1180,13 @@ Solution
 </div>
 </div>
 </div>
-<p>The centrality of events of the form <span class="math inline">\(X \leq a\)</span> prompts the definition of a mathematical function which we call the <strong>cumulative distribution function</strong>.</p>
-<div id="def-cdf" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 9.1 (Cumulative Distribution Function)</strong></span> The cumulative distribution function of a random variable <span class="math inline">\(X\)</span>, typically denoted as <span class="math inline">\(F(x)\)</span> or <span class="math inline">\(F_X(x)\)</span>, is defined as the function that gives the probability that the random variable is less than or equal to some threshold. That is, <span class="math inline">\(F_X(x) = P(X \leq x)\)</span>. We may also refer to the cumulative distribution function simply as the <strong>distribution function</strong>.</p>
-</div>
-<p>Once we have defined the distribution function for a random variable, using the above derivation we are able to determine the probability associated with any events based on intervals. It is worth noting that the cumulative distribution function can also be defined for discrete random variables. In the case of a discrete random variable, we would have <span class="math display">\[F_X(x) = \sum_{k \in\mathcal{X}; k \leq x} p_X(k).\]</span> Since it is simply the summation of the probability mass function it tends to be a less useful quantity.</p>
+<p>The centrality of events of the form <span class="math inline">\(X \leq a\)</span> prompts further consideration the <strong>cumulative distribution function</strong> (introduced in <a href="chapter5.html#def-cumulative-distribution-function" class="quarto-xref">Definition&nbsp;<span>5.6</span></a>).</p>
+<p>:::{#def-cumulative distribution function} ## Cumulative Distribution Function The cumulative distribution function of a random variable <span class="math inline">\(X\)</span>, typically denoted as <span class="math inline">\(F(x)\)</span> or <span class="math inline">\(F_X(x)\)</span>, is defined as the function that gives the probability that the random variable is less than or equal to some threshold.</p>
+<p>That is, <span class="math inline">\(F_X(x) = P(X \leq x)\)</span>. We may also refer to the cumulative distribution function simply as the <strong>distribution function</strong>. :::</p>
+<p>Once we have defined the distribution function for a random variable, using the above derivation we are able to determine the probability associated with any events based on intervals. The cumulative distribution function for continuous random variables is central to nearly every probability calculation that is performed. In the discrete case, since it is simply the summation of the probability mass function, it tends to be a less useful quantity.</p>
 <p>Suppose that, for a random variable <span class="math inline">\(X\)</span>, we know the cumulative distribution function. This knowledge permits the computation of <em>any</em> probability associated with the random variable. Consider some event defined in terms of <span class="math inline">\(X\)</span> which we may wish to determine the probability of. We know that events are subsets of the sample space. Every one of these events can be written using our basic set operations (unions, intersections, and complements) applied to intervals of the form <span class="math inline">\((a,b)\)</span> and sets of the form <span class="math inline">\(\{x\}\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> The axioms of probability allow us to compute probabilities across the set operations. Further, our knowledge of the cumulative distribution function, the conversion of <span class="math inline">\(P(X \in (a,b))\)</span> into <span class="math inline">\(F_X(b) - F_X(a)\)</span>, and the fact that <span class="math inline">\(P(X=x) = 0\)</span> for all <span class="math inline">\(x\)</span> gives all of the results we need to derive probabilities for these events.</p>
-<div id="exm-lightbulb-cdf" class="theorem example">
-<p><span class="theorem-title"><strong>Example 9.2 (Charles and Sadie’s Light Bulbs)</strong></span> Charles and Sadie decide that they need to replace some light bulbs. In their research online, a particular manufacturer of light bulbs, <em>Bayesian Brights</em>, lists the cumulative distribution function for the lifetime of their bulbs, in hours. The model Charles and Sadie are considering is said to have a lifetime (in hours) governed by <span class="math display">\[F_X(x) = 1 - \exp\left(-\frac{x}{10000}\right).\]</span></p>
+<p>:::{#exm-lightbulb-cumulative distribution function} ## Charles and Sadie’s Light Bulbs</p>
+<p>Charles and Sadie decide that they need to replace some light bulbs. In their research online, a particular manufacturer of light bulbs, <em>Bayesian Brights</em>, lists the cumulative distribution function for the lifetime of their bulbs, in hours. The model Charles and Sadie are considering is said to have a lifetime (in hours) governed by <span class="math display">\[F_X(x) = 1 - \exp\left(-\frac{x}{10000}\right).\]</span></p>
 <ol type="a">
 <li>What is the probability that a purchased lightbulb lasts for less than <span class="math inline">\(5000\)</span> hours?</li>
 <li>What is the probability that a purchased lightbulb lasts for between <span class="math inline">\(7500\)</span> and <span class="math inline">\(12000\)</span> hours?</li>
@@ -1164,7 +1213,7 @@ Solution
 </div>
 </div>
 </div>
-</div>
+<p>:::</p>
 </section>
 <section id="the-probability-density-function" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="the-probability-density-function"><span class="header-section-number">9.3</span> The Probability Density Function</h2>
@@ -1172,11 +1221,11 @@ Solution
 <p>We had set out to find a quantity that paralleled the probability mass function. Instead, we concluded that the cumulative distribution function can be made to play the same role in terms of describing the behaviour of the random quantity. Still, it may be of interest for us to have a function which takes into account the <em>relative likelihood</em> of being near some value. Suppose, for instance, that for a random variable defined on <span class="math inline">\([0,1]\)</span> we wanted to know how likely it was to be in the vicinity of <span class="math inline">\(X=0.5\)</span>. We could take a small number, say <span class="math inline">\(\delta = 0.01\)</span> and calculate <span class="math display">\[P(X\in(0.5-\delta,0.5+\delta)) = F(0.5+\delta)-F(0.5-\delta).\]</span> This is perfectly well defined based on our discussions to this point. Now, suppose that <span class="math inline">\(\delta\)</span> is small enough so that it is reasonable to assume that this probability is fairly evenly distributed throughout the interval. Then, if we wanted to assign a likelihood to each value, we could divide this total probability by the length of the interval, <span class="math inline">\(2\delta\)</span>. As a result, in this case, the probability that <span class="math inline">\(X\)</span> is nearly <span class="math inline">\(0.5\)</span> will be approximately given by the expression <span class="math display">\[\dfrac{F(0.5+\delta)-F(0.5-\delta)}{2\delta}.\]</span></p>
 <p>We had taken <span class="math inline">\(\delta=0.01\)</span>, but the same process could be applied for smaller and smaller <span class="math inline">\(\delta\)</span>, say <span class="math inline">\(0.001\)</span> or <span class="math inline">\(0.0001\)</span>. Intuitively, as the size of this interval shrinks more and more we are getting a better and better estimate for the likelihood that the random variable is in the immediate vicinity of <span class="math inline">\(0.5\)</span>. Moreover, as <span class="math inline">\(\delta\)</span> gets smaller and smaller our assumption of a uniform probability over the interval becomes more and more reasonable. Unfortunately, we cannot set <span class="math inline">\(\delta=0\)</span>, exactly. We can ask what happens <em>in the limit</em> as <span class="math inline">\(\delta\)</span> continues to get smaller and smaller. This question is in the purview of calculus, and can in fact be answered. While working out the answer is beyond the scope of the course, we will provide the result anyway.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> The resulting function is called the <strong>probability density function</strong>, and is related to the cumulative distribution function through derivatives (and integrals).</p>
 <div id="def-probability-density-function" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 9.2 (Probability Density Function)</strong></span> A random variable <span class="math inline">\(X\)</span>, with cumulative distribution function <span class="math inline">\(F(x)\)</span>, is further characterized by its probability density function, denoted <span class="math inline">\(f(x)\)</span>. The density function describes the relative likelihood of a random variable taking on values in a particular interval, and mirrors the behaviour of the probability mass function in the discrete case. Formally, the probability density function is equal to the derivative of the cumulative distribution function.</p>
+<p><span class="theorem-title"><strong>Definition 9.1 (Probability Density Function)</strong></span> A random variable <span class="math inline">\(X\)</span>, with cumulative distribution function <span class="math inline">\(F(x)\)</span>, is further characterized by its probability density function, denoted <span class="math inline">\(f(x)\)</span>. The density function describes the relative likelihood of a random variable taking on values in a particular interval, and mirrors the behaviour of the probability mass function in the discrete case. Formally, the probability density function is equal to the derivative of the cumulative distribution function.</p>
 </div>
 <p>Roughly speaking, the density function evaluates how likely it is for a continuous quantity to be in a small neighbourhood of the given value. Critically, <strong>probability density functions do not give probabilities directly</strong>. In fact, probability density functions may give values that are greater than <span class="math inline">\(1\)</span>!<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> Still, if we see the shape of the probability density function, we can state how likely it is to make observations near the results of interest. We will often graph the density functions. The high points of the graph indicate regions with more probability than the regions of the graph which are lower. Again, the specific probability of any event <span class="math inline">\(X=x\)</span> will always be <span class="math inline">\(0\)</span>, but some events fall in neighbourhoods which are more likely to observe than others.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
 <div id="exm-bus-trips-two" class="theorem example">
-<p><span class="theorem-title"><strong>Example 9.3 (The Types of Busses in the City)</strong></span> After returning from their trip to the big city, Charles and Sadie are talking to their friend Garth, with a lot more experience in the matter. Garth explains that there are actually several different types of busses, with different arrival schedules over the <span class="math inline">\(15\)</span> minute interval. Knowing that Charles and Sadie have started to learn about probability density functions, Garth draws out the following sketch, giving the probability density function for three different busses.</p>
+<p><span class="theorem-title"><strong>Example 9.2 (The Types of Busses in the City)</strong></span> After returning from their trip to the big city, Charles and Sadie are talking to their friend Garth, with a lot more experience in the matter. Garth explains that there are actually several different types of busses, with different arrival schedules over the <span class="math inline">\(15\)</span> minute interval. Knowing that Charles and Sadie have started to learn about probability density functions, Garth draws out the following sketch, giving the probability density function for three different busses.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1218,20 +1267,22 @@ Solution
 </div>
 </div>
 </div>
-</section>
-<section id="using-continuous-distributions" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="using-continuous-distributions"><span class="header-section-number">9.4</span> Using Continuous Distributions</h2>
-<p>With the exception of the previously indicated differences, continuous and discrete random variables are treated similarly. The tools to analyze them differ<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, but the fundamentals remain the same. It is possible to compute expected values, medians, and modes, with roughly the same interpretations. It is possible to describe the range, interquartile range, and variance, with similar interpretations. The axioms of probability still underpin the manipulation and analysis of these random variables. The distinction is merely that in, place of elementary mathematics to complete the calculations, calculus is required.</p>
-<p>Just as with discrete distributions, there are named continuous distributions. These are typically governed by either a density function or cumulative distribution function, alongside the expected value and variance. Just like the named discrete distributions, by matching the underlying scenario to the correct process we are able to avoid a lot of work in understanding the behaviour of the random quantities. Now, because calculus is not assumed knowledge, we will not work too widely with continuous random variables. We will introduce only two named continuous distributions: the uniform distribution<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> and the normal distribution.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
-</section>
-<section id="the-uniform-distribution" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="the-uniform-distribution"><span class="header-section-number">9.5</span> The Uniform Distribution</h2>
-<p>The uniform distribution<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> is parameterized over an interval specified as <span class="math inline">\((a,b)\)</span>. On this interval, equal probability density is given to every event, which is to say that the density function is constant. Specifically, if <span class="math inline">\(X\sim\text{Unif}(a,b)\)</span> then <span class="math display">\[f(x) = \begin{cases}\frac{1}{b-a} &amp; x \in (a,b) \\ 0 &amp; \text{otherwise}.\end{cases}\]</span> From the density function we can find that <span class="math display">\[F(x) = \frac{x - a}{b - a}\]</span> for <span class="math inline">\(x \in (a,b)\)</span>, with <span class="math inline">\(F(x) = 0\)</span> for <span class="math inline">\(x &lt; a\)</span> and <span class="math inline">\(F(x) = 1\)</span> for <span class="math inline">\(x &gt; b\)</span>. Moreover, we have <span class="math inline">\(E[X] = \frac{a+b}{2}\)</span> and <span class="math inline">\(\text{var}(X) = \frac{(b-a)^2}{12}\)</span>.</p>
-<div id="exm-charles-and-sadie-bus-times-expected" class="theorem example">
-<p><span class="theorem-title"><strong>Example 9.4 (Characterizing the Wait Time)</strong></span> Still considering the wait time for buses in the city, Sadie points out that the bus they were waiting for follows a <span class="math inline">\(\text{Unif}(0,15)\)</span> distribution. They can use their newfound wisdom to make deeper conclusions about the process!<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+<p>Formally, the probability of any event of interest, say <span class="math inline">\(P(X \in [a,b])\)</span> for some interval <span class="math inline">\([a,b]\)</span>, is given by the area under the probability density function. As a result, if the probability density function is plotted, then considering the area that is encompassed within any particular interval (or set of intervals) is equivalent to considering the probability that the random variable takes on a value in that range. This can be particularly useful when working with distributions and trying to get a sense of probabilities: drawing out the density function, and then highlighting the area of interest is an effective tool for understanding the probabilities that you are dealing with.</p>
+<div id="exm-area-under-curve" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.3 (Non-Uniform Bus Arrivals)</strong></span> After some further investigation, Charles and Sadie decide that the uniformly arriving buses are not actually uniformly arriving. Instead, there is a lower probability of arriving, which increases for the first two minutes, then a uniform probability for the next eleven minutes, followed by a decreasing probability for the final two minutes. Charles draws a rough sketch of the density function that is expected.</p>
+<div class="cell" data-crop="true">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="chapter9_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="chapter9_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
 <ol type="a">
-<li>How long should they expect to wait for the bus?</li>
-<li>What is the variance for the amount of time that they will be waiting?</li>
+<li>At what value is the uniform portion of the probability density function depicted?</li>
+<li>What is the probability that the bus arrives in the first two minutes?</li>
+<li>What is the probability that the bus arrives in the final four minutes?</li>
 </ol>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
@@ -1245,6 +1296,306 @@ Solution
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>We know that the total probability must equal <span class="math inline">\(1\)</span>. Moreover, we know that the probability is given by the area under the curve. This area can be decomposed into two triangles, each with a base of <span class="math inline">\(2\)</span> and an unknown height, <span class="math inline">\(h\)</span>, as well as a rectangle with a width of <span class="math inline">\(11\)</span> and a height of <span class="math inline">\(h\)</span>. Thus, using geometric area formulae we get <span class="math display">\[1 = 2\times\frac{1}{2}\times2\times h + 11\times h = 13h \implies h = \frac{1}{13}.\]</span> Thus, the height will be <span class="math inline">\(\dfrac{1}{13}\)</span>.</p></li>
+<li><p>The probability that the bus arrives in the first two minutes is the area under the curve between <span class="math inline">\(x = 0\)</span> and <span class="math inline">\(x = 2\)</span>. This is given by a triangle with base <span class="math inline">\(2\)</span> and height (from (a)) of <span class="math inline">\(\dfrac{1}{13}\)</span>. Thus, the probability that the bus arrives in the first two minutes is <span class="math inline">\(\dfrac{1}{2}\times2\times\dfrac{1}{13} = \dfrac{1}{13}\)</span>.</p></li>
+<li><p>The probability that the bus arrives in the final four minutes is the same as the area under the curve between <span class="math inline">\(x=11\)</span> and <span class="math inline">\(x=15\)</span>. This can either be computed as a trapezoidal area, or as the area of a rectangle plus that of a triangle. The triangle is equivalent to that computed for part (b), and the rectangle has a base of <span class="math inline">\(2\)</span> and a height of <span class="math inline">\(\dfrac{1}{13}\)</span>, so that total the area is <span class="math display">\[2\times\dfrac{1}{13} + \frac{1}{13} = \frac{3}{13}.\]</span></p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<section id="int-the-formal-mathematics-for-continuous-random-variables" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="int-the-formal-mathematics-for-continuous-random-variables"><span class="header-section-number">9.3.1</span> <span class="math inline">\(\int\)</span> The Formal Mathematics for Continuous Random Variables</h3>
+<p>The use and understanding of a continuous cumulative distribution function can be done completely without calculus. However, even while motivating the idea of a probability density function we leaned on the concept of limits. The connection between the cumulative distribution function and the probability density function, as well as the use of the probability density function for the computation of probabilities, fundamentally relies on a grasp of differential and integral calculus. Consider the example outlined above that <span class="math inline">\(X\)</span> is near <span class="math inline">\(0.5\)</span>. We argued that the probability is approximately <span class="math inline">\(2\delta f(0.5)\)</span>, where we defined <span class="math display">\[f(0.5) = \lim_{\delta\to 0} \frac{F(0.5+\delta) - F(0.5-\delta)}{2\delta}.\]</span> This is precisely the first principles definition of a derivative, meaning that <span class="math display">\[f(0.5) = \left.\frac{d}{dx} F(x)\right|_{x=0.5} = F'(0.5).\]</span></p>
+<div id="def-pdf-calculus" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.2 (The Probability Density Function (Calculus))</strong></span> The probability density function, denoted <span class="math inline">\(f(x)\)</span>, of a random variable <span class="math inline">\(X\)</span> with cumulative distribution function <span class="math inline">\(F(x)\)</span> is given by the first derivative of the cumulative distribution function, <span class="math display">\[f(x) = \frac{d}{dx}F(x) = F'(x).\]</span></p>
+</div>
+<p>The interpretation remains the same: the probability density function gives a rough idea of how likely events near the desired outcome will be, but does not itself give probabilities. In order to get specific probabilities from the probability density function, we need to use the area under the curve.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Calculating Probabilities with Probability Density Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that we wish to calculate <span class="math inline">\(P(X \in (a, b))\)</span> for a continuous random variable <span class="math inline">\(X\)</span> with probability density function <span class="math inline">\(f(x)\)</span>. This is given by <span class="math display">\[P(X \in (a,b)) = \int_{a}^b f(x)dx = F(a) - F(b),\]</span> where <span class="math inline">\(F(x)\)</span> is the cumulative distribution function. Suppose that, instead of a single interval, we wish to know the probability that <span class="math inline">\(A\)</span> occurs, where <span class="math inline">\(A\)</span> is an event that is comprised of the union of many intervals, say <span class="math display">\[A = (a_1, b_1) \cup (a_2, b_2) \cup \cdots \cup (a_k, c_k).\]</span> In this case we can apply the axiom of additivity to give, <span class="math display">\[P(A) = \int_{a_1}^{b_1}f(x)dx + \int_{a_2}^{b_2}f(x)dx + \cdots + \int_{a_k}^{b_k}f(x)dx.\]</span></p>
+</div>
+</div>
+<p>Using the fact that a probability density function is integrated in order to derive probability expressions, we can discuss the required features for a probability density function to be valid. These properties stem, fundamentally, from the requirements (under the axioms of probability) that <span class="math inline">\(P(E) \geq 0\)</span> for all events and <span class="math inline">\(P(\mathcal{S}) = 1\)</span>.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Properties of a Probability Density Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Non-negative</strong>: A valid probability density function, <span class="math inline">\(f(x)\)</span>, will be such that <span class="math inline">\(f(x) \geq 0\)</span> for all real-valued <span class="math inline">\(x\)</span>.</li>
+<li><strong>Integrate to One</strong>: A valid probability density function will be such that <span class="math display">\[\int_{-\infty}^\infty f(x)dx = 1.\]</span></li>
+</ol>
+</div>
+</div>
+<p>These properties are analogous to the properties for a probability mass function, with one distinct difference: there is no requirement that the density function be less than or equal to <span class="math inline">\(1\)</span>. The rationale is that we require the complete area to be bounded above by <span class="math inline">\(1\)</span> (in a property that is analogous to the sum-to-one constraint of probability mass functions), which occasionally results in probability density values above <span class="math inline">\(1\)</span>.</p>
+<p>Given that the density function is the first derivative of the cumulative distribution function, we can apply the Fundamental Theorem of Calculus to conclude that the cumulative distribution function must be derived by integrating the density function. We can see this by noting that <span class="math inline">\(F(x) = P(X \in (-\infty, x))\)</span>, which we stated was given by integrating the density over <span class="math inline">\((-\infty, x)\)</span>.</p>
+<p>:::{#def-cumulative distribution function-calculus} ## The Cumulative Distribution Function (Calculus) The cumulative distribution function of a continuous random variable, <span class="math inline">\(X\)</span>, computes the probability that <span class="math inline">\(X\)</span> is less than or equal to a threshold value <span class="math inline">\(x\)</span>. This can be computed as <span class="math display">\[F(x) = \int_{-\infty}^x f(t)dt.\]</span> :::</p>
+<div id="exm-finding-valid-pdf" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.4 (A More Complicated Density for the Bus)</strong></span> Charles and Sadie, while pleased with the added complexity afforded by the probability density function in <a href="#exm-area-under-curve" class="quarto-xref">Example&nbsp;<span>9.3</span></a>, they are not sure that it is quite right. It seems that it is more likely that the bus arrives around the halfway point than it is at any other time throughout the interval. After playing around a bit, they propose the following curve, <span class="math display">\[f(x) = \alpha\left(\frac{x}{15}\right)^2\left(1-\frac{x}{15}\right)^2, \quad x \in [0,15].\]</span> This curve seems to have a shape that better tracks the expected arrivals.</p>
+<div class="cell" data-crop="true">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="chapter9_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="chapter9_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li>What is the value of <span class="math inline">\(\alpha\)</span> that renders this curve a valid probability density function?</li>
+<li>What is the probability that the bus arrives in the first two minutes?</li>
+<li>What is the probability that the bus arrives in the final four minutes?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>We require both that the density function integrates to <span class="math inline">\(1\)</span> and that it is always positive. Note that as long as <span class="math inline">\(\alpha &gt; 0\)</span>, then <span class="math inline">\(f(x) \geq 0\)</span>, and so we will restrict attention only to solutions where <span class="math inline">\(\alpha &gt; 0\)</span>. Beyond this, we require unit integration. That is, <span class="math display">\[\begin{align*}
+1 &amp;= \int_{0}^{15} \alpha \left(\frac{x}{15}\right)^2\left(1-\frac{x}{15}\right)^2dx \\
+&amp;= 15\alpha\int_{0}^1 x^2(1 - x)^2dx \\
+&amp;= 15\alpha\int_{0}^1 x^2(1 - 2x + x^2)dx \\
+&amp;= 15\alpha\int_{0}^1 x^2 - 2x^3 + x^4dx \\
+&amp;= 15\alpha\left[\frac{x^3}{3} - \frac{x^4}{2} + \frac{x^5}{5}\right]_{x=0}^1 \\
+&amp;= 15\alpha\left[\frac{1}{3} - \frac{1}{2} + \frac{1}{5}\right] \\
+&amp;= 15\alpha\frac{1}{30} \\
+&amp;= \frac{\alpha}{2} \\
+\implies \alpha = 2.
+\end{align*}\]</span></p></li>
+<li><p>The probabilities can then be derived by integrating the density over the given area. As an alternative solution, you can integrate the density to derive the cumulative distribution function, and then use this to solve for the probabilities. Both techniques are shown.</p>
+<p>To find <span class="math inline">\(F(x)\)</span>, we take <span class="math display">\[\begin{align*}
+     F(x) &amp;= \int_{0}^{x}  2\left(\frac{t}{15}\right)^2\left(1-\frac{t}{15}\right)^2dt \\
+     &amp;= 30\left[\frac{t^3}{3} - \frac{t^4}{2} + \frac{t^5}{5}\right]_{t=0}^{t=x/15} \\
+     &amp;= 10\left(\frac{x}{15}\right)^3 - 15\left(\frac{x}{15}\right)^4 + 6\left(\frac{x}{15}\right)^5.
+\end{align*}\]</span> Then, if we wish to find <span class="math display">\[P(X \leq 2) = F(2) = 10\left(\frac{2}{15}\right)^3 - 15\left(\frac{2}{15}\right)^4 + 6\left(\frac{2}{15}\right)^5 = \frac{4864}{253125}.\]</span></p>
+<p>Alternatively, we could have solved <span class="math display">\[\int_{0}^{2} 2\left(\frac{t}{15}\right)^2\left(1-\frac{t}{15}\right)^2dt = \frac{4864}{253125},\]</span> directly, through the same integration steps outlined.</p></li>
+<li><p>We can use the cumulative distribution function found previously, or else directly integrate. To directly integrate you would solve <span class="math display">\[\int_{11}^{15} 2\left(\frac{t}{15}\right)^2\left(1-\frac{t}{15}\right)^2dt,\]</span> however, given that <span class="math inline">\(F(x)\)</span> is known it is simpler to use that. This is given by <span class="math display">\[P(11 \leq X \leq 15) = F(15) - F(11) = 1 - F(11) = 1 - \left(10\left(\frac{11}{15}\right)^3 - 15\left(\frac{11}{15}\right)^4 + 6\left(\frac{11}{15}\right)^5\right),\]</span> which gives <span class="math display">\[P(11 \leq X \leq 15) = \frac{30848}{253125}.\]</span></p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="using-continuous-distributions" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="using-continuous-distributions"><span class="header-section-number">9.4</span> Using Continuous Distributions</h2>
+<p>With the exception of the previously indicated differences, continuous and discrete random variables are treated similarly. The tools to analyze them differ<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, but the fundamentals remain the same. It is possible to compute expected values, medians, and modes, with roughly the same interpretations. It is possible to describe the range, interquartile range, and variance, with similar interpretations. The axioms of probability still underpin the manipulation and analysis of these random variables. The distinction is merely that in, place of elementary mathematics to complete the calculations, calculus is required.</p>
+<section id="int-differences-in-working-with-discrete-and-continuous-random-variables" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="int-differences-in-working-with-discrete-and-continuous-random-variables"><span class="header-section-number">9.4.1</span> <span class="math inline">\(\int\)</span> Differences in Working With Discrete and Continuous Random Variables</h3>
+<p>Most of what was covered for discrete random variables will hold for continuous random variables as well, with the caveat that in the continuous case we replace summations with integrals. We have seen this to an extent already. In the discrete case, if a random variable <span class="math inline">\(X\)</span> has probability mass function <span class="math inline">\(p(x)\)</span>, then <span class="math inline">\(P(a \leq X \leq b) = \sum_{x=a}^{b} p(x)\)</span>. Similarly, in the continuous case, if the probability density function is <span class="math inline">\(f(x)\)</span>, then we write <span class="math inline">\(P(a \leq X \leq b) = \sum_{a}^b f(x)dx\)</span>.</p>
+<p>This holds across other defining identities as well, for instance discussing the expected value or variance of a random variable. It is worth highlighting the two major differences for working with continuous random variables once more. First, while in the discrete case we think predominantly of probabilities being defined on the singletons, with the probability mass function encoding <span class="math inline">\(p(x) = P(X = x)\)</span>, these probabilities are all zero for continuous random variables. We can make this argument more concretely now using our technique for calculating probabilities based on the density function, where <span class="math display">\[P(X = a) = P(a \leq X \leq a) = \int_{a}^{a} f(x)dx = 0.\]</span> As a result, no matter the value or the random variable under consideration, we always know that <span class="math inline">\(P(X = x) = 0\)</span> for continuous quantities.</p>
+<p>Secondly, the density function does not directly encode probabilities, and so can take on values greater than <span class="math inline">\(1\)</span>. As a result, when considering the validity of a probability density function we need to consider not the specific values of the density being bounded, but rather the entire range.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<p>Beyond introductory courses and notes, it is quite common to discuss only continuous random variables. In areas where both discrete and continuous random variables are relevant, a common convention is to simply define the integral sign in such a way so as to read it as a summation if a discrete random variable is being used. That is, in reading beyond these notes you may have authors express <span class="math inline">\(\sum_{x=0}^5 p(x)\)</span> as <span class="math inline">\(\int_{0}^5 p(x)dx\)</span>, where the summation is implied if <span class="math inline">\(p(x)\)</span> characterizes a discrete distribution. In these notes we will continue separating out integrals and summations explicitly.</p>
+</section>
+<section id="int-calculating-expected-values-for-continuous-random-variables" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="int-calculating-expected-values-for-continuous-random-variables"><span class="header-section-number">9.4.2</span> <span class="math inline">\(\int\)</span> Calculating Expected Values for Continuous Random Variables</h3>
+<p>Using the convention that summations become integrals when moving from discrete to continuous random variables, we can introduce the idea of a continuous expected value.</p>
+<div id="def-EV-continuous" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.3 (Expected Value (Mean) of a Continuous Random Variable)</strong></span> For a continuous random variable, <span class="math inline">\(X\)</span>, the expected value is interpreted as the center of mass of the distribution. Supposing that <span class="math inline">\(X\)</span> has density function, <span class="math inline">\(f(x)\)</span>, then <span class="math display">\[E[X] = \int_{-\infty}^\infty xf(x)dx.\]</span> When the random variable <span class="math inline">\(X\)</span> is defined on a bounded support <span class="math inline">\(\mathcal{X}\)</span>, the expected value can be equivalently written as the integral only over that support <span class="math display">\[E[X] = \int_{\mathcal{X}} f(x)dx.\]</span></p>
+</div>
+<p>Beyond the swapping of the summation for an integral, expected values behave equivalently whether the underlying distribution is discrete or continuous. That is, any of the properties relating to expected values can be written in terms of the expectation notation, <span class="math inline">\(E[\cdot]\)</span>, with the relevant sum or integral being computed as required. The quantities are otherwise interpreted in the same manner as well. Notably, this means that the Law of the Unconscious Statistician holds in the continuous case.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Law of the Unconscious Statistician
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The law of the unconscious statistician (LOTUS) states that, for a random variable <span class="math inline">\(X\)</span>, if we wish to find <span class="math inline">\(E[g(X)]\)</span>, then we compute <span class="math display">\[E[g(X)] = \int_{-\infty}^\infty g(x)f_X(x)dx.\]</span></p>
+</div>
+</div>
+<p>Using the continuous version of the LOTUS, we can define the following quantities which parallel their discrete counterparts.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Expected Value of a Linear Transformation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are arbitrary real numbers then, <span class="math display">\[E[aX + b] = aE[X] + b.\]</span></p>
+</div>
+</div>
+<div id="def-variance-continuous" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.4 (Variance)</strong></span> The variance of a random variable, typically denoted <span class="math inline">\(\text{var}(X)\)</span>, is given by the expected value of the squared deviations of a random variable from its mean. That is, <span class="math display">\[\text{var}(X) = E\left[(X - E[X])^2\right].\]</span></p>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Computing the Variance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The variance of a random variable, <span class="math inline">\(X\)</span>, can be computed as <span class="math display">\[\text{var}(X) = E[(X - E[X])^2] = E[X^2] - E[X]^2.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Variance of a Linear Transformation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are arbitrary real numbers then, <span class="math display">\[\text{var}[aX + b] = a^2\text{var}(X).\]</span></p>
+</div>
+</div>
+<div id="def-sd-continuous" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.5 (Standard Deviation)</strong></span> The standard deviation of a random variable is the square root of the variance, which is to say <span class="math display">\[\text{SD}(X) = \sqrt{\text{var}(X)}.\]</span></p>
+</div>
+<div id="exm-expectations-for-crvs" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.5 (Charles and Sadie Potato Yield)</strong></span> Charles and Sadie have purchased a plot of land and they are looking to do some sustainable development of it. In their planning, they are looking at different crops that they could grow. Charles and Sadie decide that potatoes sound particularly fun, and do some research into the amount that they can anticipate from each plant. From their research they find that the probability density function for single plant potato yield (in pounds) is given by <span class="math display">\[f(x) = \frac{25}{52}\exp\left(-\frac{25x}{52}\right) \quad x \geq 0.\]</span></p>
+<ol type="a">
+<li>What is the expected yield, in pounds, for a single potato plant?</li>
+<li>What is the variance and standard deviation for the yield for a single potato plant?</li>
+<li>While Sadie is happy to work in pounds, Charles much prefers kilograms. Moreover, the yield given by the previous distribution function was over counting by <span class="math inline">\(0.2\)</span>lbs per plant, since they had not considered the dirt that came with the harvest. What is the actual expected value, variance, and standard deviation for the total yield in kilograms (note, <span class="math inline">\(1\)</span> kilogram is <span class="math inline">\(2.2\)</span> pounds).</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>To get the expected yield we find <span class="math display">\[E[X] = \int_{0}^\infty xf(x)dx = \int_{0}^\infty x\frac{25}{52}\exp\left(-\frac{25x}{52}\right)dx.\]</span> This can be solved via integration by parts as <span class="math display">\[\begin{align*}
+E[X] &amp;= \int_{0}^\infty x\frac{25}{52}\exp\left(-\frac{25x}{52}\right)dx \\
+&amp;= \left[-x\exp\left(-\frac{25x}{52}\right)\right]_{x=0}^\infty + \int_{0}^\infty \exp\left(-\frac{25x}{52}\right)dx \\
+&amp;= 0+\left[-\frac{52}{25}\exp\left(-\frac{25x}{52}\right)\right]_{x=0}^\infty \\
+&amp;= \frac{52}{25}.
+\end{align*}\]</span></p></li>
+<li><p>For the variance, we can use the fact that <span class="math inline">\(\text{var}(X) = E[X^2] - E[X]^2\)</span>. Note that <span class="math inline">\(E[X^2]\)</span> can be computed in much the same way as <span class="math inline">\(E[X]\)</span>, requiring two applications of integration by parts, <span class="math display">\[\begin{align*}
+E[X^2] &amp;= \int_{0}^\infty x^2\frac{25}{52}\exp\left(-\frac{25x}{52}\right)dx \\
+&amp;= \left[x^2\exp\left(-\frac{25x}{52}\right)\right]_{x=0}^\infty + 2\int_{0}^\infty x\exp\left(-\frac{25x}{52}\right) \\
+&amp;= 2\int_{0}^\infty x\exp\left(-\frac{25x}{52}\right) \\
+&amp;= 2\times\frac{52}{25}\times\int_{0}^\infty x\frac{25}{52}\exp\left(-\frac{25x}{52}\right) \\
+&amp;= \frac{104}{25}\times E[X] \\
+&amp;= \frac{104}{25}\times\frac{52}{25}.
+\end{align*}\]</span> Thus, <span class="math display">\[\text{var}(X) = \frac{104}{25}\times\frac{52}{25} - \left(\frac{52}{25}\right)^2 = \left(\frac{52}{25}\right)^2.\]</span> As a result, <span class="math inline">\(\text{SD}(X) = E[X] = \frac{52}{25}\)</span>.</p></li>
+<li><p>If <span class="math inline">\(X\)</span> is the weight in pounds, then the new weight will be <span class="math display">\[Y = frac{(X - 0.2)}{2.2} = \frac{1}{2.2}X - \frac{1}{11}.\]</span> Then, we can apply the linear transformation theorems to get <span class="math display">\[E[Y] = \frac{1}{2.2}E[X] - \frac{1}{11} = \frac{47}{55}.\]</span> Similarly, we have <span class="math display">\[\text{var}(Y) = \frac{1}{2.2^2}\text{var}(X) = \frac{2704}{3025}.\]</span> This leads to a standard deviation of <span class="math display">\[\text{SD}(X) = \frac{52}{55}.\]</span></p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="int-calculating-percentiles-for-continuous-random-variables" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="int-calculating-percentiles-for-continuous-random-variables"><span class="header-section-number">9.4.3</span> <span class="math inline">\(\int\)</span> Calculating Percentiles for Continuous Random Variables</h3>
+<p>In the same way that expected values generalized from the discrete to the continuous case, so too will percentiles.</p>
+<div id="def-percentile-continuous" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.6 (Percentiles)</strong></span> The <span class="math inline">\(100p\)</span>th percentile, is denoted <span class="math inline">\(\zeta(p)\)</span> and is the value such that <span class="math inline">\(P(X \leq \zeta(p)) = p\)</span>. Thus, the median is given by <span class="math inline">\(\zeta(0.5)\)</span> and is also called the <span class="math inline">\(50\)</span>th percentile.</p>
+</div>
+<p>A key distinction between percentiles in discrete case as compared to the continuous case is that, in the discrete case, it was often not possible to find <span class="math inline">\(\zeta(p)\)</span> such that <span class="math inline">\(P(X \leq \zeta(p)) = p\)</span> held exactly. Instead, we found <span class="math inline">\(\zeta(p)\)</span> such that <span class="math inline">\(P(X \leq \zeta(p)) \geq p\)</span> and <span class="math inline">\(P(X \geq \zeta(p)) \geq p\)</span>. In the continuous case, this is not typically required. This gives two (equivalent) techniques for solving for a given percentile using continuous distributions. If the cumulative distribution function, <span class="math inline">\(F(x)\)</span>, is known then <span class="math inline">\(\zeta(p) = F^{-1}(p)\)</span>.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<p>Alternatively, we can work from the density function directly and solve the integral equation, <span class="math display">\[\int_{-\infty}^{\zeta(p)} f(x)dx = p,\]</span> for <span class="math inline">\(\zeta(p)\)</span>. Doing so implicitly works out the cumulative distribution function as an intermediate step, however, there are cases where there is no closed-form solution for the cumulative distribution function but this technique can still be used.</p>
+<p>Given the definition of a percentile in the continuous case, we can introduce both the median and the interquartile range as being exactly analogous to the quantities in the discrete case.</p>
+<div id="def-median-continuous" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.7 (Median (Continuous))</strong></span> The median of a distribution is the <span class="math inline">\(50\)</span>th percentile, <span class="math inline">\(\zeta(0.5)\)</span>. That is, the median <span class="math inline">\(m\)</span> is the value such that <span class="math inline">\(P(X \leq m) = 0.5\)</span>.</p>
+</div>
+<div id="def-iqr-continuous" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.8 (Interquartile Range (IQR))</strong></span> The interquartile range, or IQR, is defined as <span class="math inline">\(\zeta(0.75) - \zeta(0.25)\)</span>, the difference between the third and first quartiles. It is a measure of spread, and is typically denoted as <span class="math inline">\(\text{IQR} = Q3 - Q1\)</span>, where <span class="math inline">\(Q\)</span> stands for quartiles.</p>
+</div>
+<div id="exm-expectations-for-crvs" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.6 (Median Potato Yield)</strong></span> Still interested in the potatoes that they could grow on their land, Charles and Sadie want to further investigate what they should expect for the potatoes that they grow. While they now understand the mean and variance, they figure that it is probably worth understanding the median and interquartile range as well, as this may give a better capacity to plan for the best and worst case scenarios. Suppose that the probability density function for single plant potato yield (in pounds) is given by <span class="math display">\[f(x) = \frac{25}{52}\exp\left(-\frac{25x}{52}\right) \quad x \geq 0.\]</span></p>
+<ol type="a">
+<li>What is the median yield for a single potato plant?</li>
+<li>What is the interquartile range for the yield of a single potato plant?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>For the median we need to solve <span class="math inline">\(F(x) = 0.5\)</span> for <span class="math inline">\(x\)</span>. We could do this direct from the integral, or by first finding the cumulative distribution function. We will first find the cumulative distribution function to ease the efforts required for the interquartile range calculation. Note that <span class="math display">\[F(x) = \int_{0}^x \frac{25}{52}\exp\left(-\frac{25t}{52}\right)dt = \left[-\exp\left(-\frac{25t}{52}\right)\right]_{t=0}^{x} = 1 - \exp\left(-\frac{25x}{52}\right).\]</span> Then, we get <span class="math display">\[\begin{align*}
+0.5 &amp;= 1 - \exp\left(-\frac{25x}{52}\right) \\
+0.5 &amp;= \exp\left(-\frac{25x}{52}\right) \\
+\log(0.5) &amp;= -\frac{25x}{52} \\
+x &amp;= \frac{52}{25}\log(2) \\
+&amp;\approx 1.442.
+\end{align*}\]</span></p></li>
+<li><p>The IQR first requires Q1 and Q3. Thus, we solve these in the same way as above. In fact, for general percentile we get <span class="math display">\[\begin{align*}
+p &amp;= 1 - \exp\left(-\frac{25x}{52}\right) \\
+1-p &amp;= \exp\left(-\frac{25x}{52}\right) \\
+\log(1-p) &amp;= -\frac{25x}{52} \\
+x &amp;= \frac{52}{25}\log(\frac{1}{1-p}).
+\end{align*}\]</span> Thus, we have <span class="math display">\[\text{IQR} = \frac{52}{25}\log(\frac{1}{0.25}) - \frac{52}{25}\log(\frac{1}{0.75}) \approx 2.2851.\]</span></p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-named-continuous-distributions" class="level3" data-number="9.4.4">
+<h3 data-number="9.4.4" class="anchored" data-anchor-id="the-named-continuous-distributions"><span class="header-section-number">9.4.4</span> The Named Continuous Distributions</h3>
+<p>Just as with discrete distributions, there are named continuous distributions. These are typically governed by either a density function or cumulative distribution function, alongside the expected value and variance. Just like the named discrete distributions, by matching the underlying scenario to the correct process we are able to avoid a lot of work in understanding the behaviour of the random quantities. Now, because calculus is not assumed knowledge, we will not work too widely with continuous random variables. We will introduce several named continuous distributions: the uniform distribution<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>, the normal distribution,<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> as well as the <span class="math inline">\(t\)</span>, exponential and gamma distributions.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
+</section>
+</section>
+<section id="the-uniform-distribution" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="the-uniform-distribution"><span class="header-section-number">9.5</span> The Uniform Distribution</h2>
+<p>The uniform distribution<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> is parameterized over an interval specified as <span class="math inline">\((a,b)\)</span>. On this interval, equal probability density is given to every event, which is to say that the density function is constant. Specifically, if <span class="math inline">\(X\sim\text{Unif}(a,b)\)</span> then <span class="math display">\[f(x) = \begin{cases}\frac{1}{b-a} &amp; x \in (a,b) \\ 0 &amp; \text{otherwise}.\end{cases}\]</span> From the density function we can find that <span class="math display">\[F(x) = \frac{x - a}{b - a}\]</span> for <span class="math inline">\(x \in (a,b)\)</span>, with <span class="math inline">\(F(x) = 0\)</span> for <span class="math inline">\(x &lt; a\)</span> and <span class="math inline">\(F(x) = 1\)</span> for <span class="math inline">\(x &gt; b\)</span>. Moreover, we have <span class="math inline">\(E[X] = \frac{a+b}{2}\)</span> and <span class="math inline">\(\text{var}(X) = \frac{(b-a)^2}{12}\)</span>.</p>
+<div id="exm-charles-and-sadie-bus-times-expected" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.7 (Characterizing the Wait Time)</strong></span> Still considering the wait time for buses in the city, Sadie points out that the bus they were waiting for follows a <span class="math inline">\(\text{Unif}(0,15)\)</span> distribution. They can use their newfound wisdom to make deeper conclusions about the process!<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a></p>
+<ol type="a">
+<li>How long should they expect to wait for the bus?</li>
+<li>What is the variance for the amount of time that they will be waiting?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Here, we know that <span class="math inline">\(X\sim\text{Unif}(0,15)\)</span>.</p>
 <ol type="a">
 <li><span class="math inline">\(E[X]\)</span> is <span class="math inline">\(\dfrac{a+b}{2} = \dfrac{0+15}{2} = 7.5\)</span>, so they should expect to wait <span class="math inline">\(7.5\)</span> minutes.</li>
@@ -1254,12 +1605,12 @@ Solution
 </div>
 </div>
 </div>
-<p>The uniform distribution is analogous to the discrete uniform. Any time there is an interval of possible outcomes which are all equally likely, the uniform distribution is the distribution to use. Compared with other distributions it is also fairly straightforward to work with, which makes it a useful demonstration of the concepts relating the continuous probability calculations.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
+<p>The uniform distribution is analogous to the discrete uniform. Any time there is an interval of possible outcomes which are all equally likely, the uniform distribution is the distribution to use. Compared with other distributions it is also fairly straightforward to work with, which makes it a useful demonstration of the concepts relating the continuous probability calculations.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a></p>
 </section>
 <section id="the-normal-distribution" class="level2" data-number="9.6">
 <h2 data-number="9.6" class="anchored" data-anchor-id="the-normal-distribution"><span class="header-section-number">9.6</span> The Normal Distribution</h2>
 <p>The normal distribution, also sometimes referred to as the Gaussian distribution, is a named continuous distribution function defined on the complete real line. The distribution is far and away the most prominently used distribution in all of probability and statistics. In fact, most people have heard of normal distributions even if they are not aware of this fact. Any time that there is a discussion of a bell curve, for instance, this is in reference to the normal distribution. Normally distributed quantities arise all over the place from measurements of heights, grades, or reaction times through to levels of job satisfaction, reading ability, or blood pressure. There is a tremendous number of normally distributed phenomena naturally occurring in the world, which renders the normal distribution deeply important across a wide range of domains.</p>
-<p>Perhaps more important than the places where the normal distribution arises in nature are the places where it arises mathematically. At the end of this course we will see a result, <em>the central limit theorem</em>, which is one of the core results in all of statistics. Much of the statistical theory that drives scientific inquiry sits atop the central limit theorem. And at the core of the central limit theorem is the normal distribution. It is virtually impossible to overstate the importance of the normal distribution, and as a result, it is worthy of investigation.</p>
+<p>Perhaps more important than the places where the normal distribution arises in nature are the places where it arises mathematically. Later in these notes we will see a result, <em>the central limit theorem</em>, which is one of the core results in all of statistics. Much of the statistical theory that drives scientific inquiry sits atop the central limit theorem. And at the core of the central limit theorem is the normal distribution. It is virtually impossible to overstate the importance of the normal distribution, and as a result, it is worthy of investigation.</p>
 <section id="the-specification-of-the-distribution" class="level3" data-number="9.6.1">
 <h3 data-number="9.6.1" class="anchored" data-anchor-id="the-specification-of-the-distribution"><span class="header-section-number">9.6.1</span> The Specification of the Distribution</h3>
 <p>A normal distribution is parameterized by two parameters: the mean, <span class="math inline">\(\mu\)</span>, and the variance <span class="math inline">\(\sigma^2\)</span>. We write <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>. These parameters directly correspond to the relevant quantities such that <span class="math inline">\(E[X] = \mu\)</span> and <span class="math inline">\(\text{var}(X) = \sigma^2\)</span>. The density function is given by <span class="math display">\[f(x) = \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).\]</span> This can be quite unwieldy to work with, however, when it is plotted we see that the normal distribution takes on a bell curve which is centered at <span class="math inline">\(\mu\)</span>.</p>
@@ -1271,7 +1622,7 @@ Solution
 Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red and blue), and mean 5 (black). The red density has variance 1, the blue density has variance 4, and the black density has variance 0.25.
 </figcaption>
 <div aria-describedby="fig-normal-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-normal-density-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="chapter9_files/figure-html/fig-normal-density-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-normal-density-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" data-glightbox="description: .lightbox-desc-5"><img src="chapter9_files/figure-html/fig-normal-density-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1283,11 +1634,11 @@ Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red an
 <p>Normally distributed random variables are particularly well-behaved. One way in which this is true is that if you multiply a normally distributed random variable by a constant, it will remain normally distributed, and if you add a constant to a normally distributed random variable, it will remain normally distributed. Consider, for <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>, taking the <span class="math inline">\(X - \mu\)</span>. From our discussions of expected values we know that <span class="math inline">\(E[X-\mu] = E[X]-\mu = 0\)</span>. Furthermore, adding or subtracting a constant will not change the variance. Thus, <span class="math inline">\(X-\mu\sim N(0,\sigma^2)\)</span>.</p>
 <p>Now, consider dividing this by <span class="math inline">\(\sigma\)</span>, or equivalently, multiply by <span class="math inline">\(\dfrac{1}{\sigma}\)</span>. The expected value of the new quantity will be <span class="math inline">\(\dfrac{1}{\sigma}\times 0 = 0\)</span>, and, from our discussions regarding the variance of linear transformations, the variance of the new quantity will be <span class="math inline">\(\frac{1}{\sigma^2}\times\sigma^2 = 1\)</span>. Taken together then, if <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>, <span class="math display">\[Z = \frac{X - \mu}{\sigma} \sim N(0,1).\]</span> This holds true for <em>any</em> normal distribution with <em>any</em> mean or variance values. This straightforward transformation allows us to discuss normal distributions in terms of <span class="math inline">\(N(0,1)\)</span>. We call this the <strong>standard normal distribution</strong>, and will typically use <span class="math inline">\(Z\)</span> to denote a random variable from the standard normal distribution.</p>
 <div id="def-standard-normal" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 9.3 (Standard Normal Distribution)</strong></span> The standard normal distribution is the version of the normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(1\)</span>. We say that <span class="math inline">\(Z\)</span> follows a standard normal, and write <span class="math inline">\(Z\sim N(0,1)\)</span>, if the density of <span class="math inline">\(Z\)</span> is given by <span class="math display">\[f_Z(z) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{z^2}{2}\right).\]</span> We denote the density of <span class="math inline">\(Z\)</span> as <span class="math inline">\(\varphi(z)\)</span>, and the cumulative distribution function of <span class="math inline">\(Z\)</span> as <span class="math inline">\(\Phi(z)\)</span>. The cumulative distribution function, <span class="math inline">\(\Phi(z)\)</span>, does not have a nice form to be written down, however, it is a commonly applied enough function that many computing languages have implemented it, including of course R.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p>
+<p><span class="theorem-title"><strong>Definition 9.9 (Standard Normal Distribution)</strong></span> The standard normal distribution is the version of the normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(1\)</span>. We say that <span class="math inline">\(Z\)</span> follows a standard normal, and write <span class="math inline">\(Z\sim N(0,1)\)</span>, if the density of <span class="math inline">\(Z\)</span> is given by <span class="math display">\[f_Z(z) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{z^2}{2}\right).\]</span> We denote the density of <span class="math inline">\(Z\)</span> as <span class="math inline">\(\varphi(z)\)</span>, and the cumulative distribution function of <span class="math inline">\(Z\)</span> as <span class="math inline">\(\Phi(z)\)</span>. The cumulative distribution function, <span class="math inline">\(\Phi(z)\)</span>, does not have a nice form to be written down, however, it is a commonly applied enough function that many computing languages have implemented it, including of course R.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a></p>
 </div>
 <p>The utility in this process of converting normally distributed random variables to be standard normal random variables, a process known as <strong>standardization</strong>, is demonstrated by realizing that events can be converted using the same transformations. Specifically, suppose we have <span class="math inline">\(X \sim N(\mu,\sigma^2)\)</span>, and we want to find <span class="math inline">\(P(X \leq x)\)</span>. Note that, <span class="math inline">\(X \leq x\)</span> must also mean that <span class="math display">\[\frac{X-\mu}{\sigma} \leq \frac{x - \mu}{\sigma},\]</span> through an application of the same transformation to both sides. But we <em>know</em> that the left hand side of this inequality is exactly <span class="math inline">\(Z\)</span>, a standard normal random variable with cumulative distribution function <span class="math inline">\(\Phi(z)\)</span>. Thus, <span class="math display">\[P(X \leq x) = P\left(Z \leq \frac{x - \mu}{\sigma}\right) = \Phi\left(\frac{x-\mu}{\sigma}\right).\]</span> Using this trick of standardization any normal probability can be converted into a probability regarding the standard normal.</p>
 <div id="exm-standardization-example" class="theorem example">
-<p><span class="theorem-title"><strong>Example 9.5 (Charles and Sadie Explore House Plants)</strong></span> Charles and Sadie learn that the heights of fully grown house plants are often normally distributed. They are exploring which plants will work best in their new apartment, but are finding it difficult to reason about them in comparison to one another. Some plants end up being taller on average with a lot more variability, while others may be shorter but far more certain. Sadie realizes that the cumulative distribution function of a standard normal, <span class="math inline">\(\Phi(z)\)</span>, can be evaluated using their smart phones. As a result, they get to work expressing different probabilities in terms of <span class="math inline">\(\Phi(z)\)</span>.</p>
+<p><span class="theorem-title"><strong>Example 9.8 (Charles and Sadie Explore House Plants)</strong></span> Charles and Sadie learn that the heights of fully grown house plants are often normally distributed. They are exploring which plants will work best in their new apartment, but are finding it difficult to reason about them in comparison to one another. Some plants end up being taller on average with a lot more variability, while others may be shorter but far more certain. Sadie realizes that the cumulative distribution function of a standard normal, <span class="math inline">\(\Phi(z)\)</span>, can be evaluated using their smart phones. As a result, they get to work expressing different probabilities in terms of <span class="math inline">\(\Phi(z)\)</span>.</p>
 <p>They are comparing four different plant species. These species have heights according to the following random variables.</p>
 <ol type="i">
 <li>Plant <span class="math inline">\(A\)</span> has height <span class="math inline">\(X\)</span>, which follows a normal distribution with mean <span class="math inline">\(90\)</span> and variance <span class="math inline">\(100\)</span>.</li>
@@ -1303,7 +1654,7 @@ Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red an
 <li>A fourth spot requires a plant that is somewhere between <span class="math inline">\(80\)</span>cm and <span class="math inline">\(90\)</span>cm. What is the probability that plant <span class="math inline">\(D\)</span> will work?</li>
 </ol>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1312,7 +1663,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
 <li>Here we wish to standard a <span class="math inline">\(N(90, 100)\)</span> random variable. To do this we note that <span class="math display">\[\frac{X-90}{\sqrt{100}} = \frac{X - 90}{10} \sim N(0,1).\]</span> Thus, taking <span class="math inline">\(Z \sim N(0,1)\)</span>, we know that <span class="math display">\[P(X \leq 80) = P\left(\frac{X - 90}{10} \leq \frac{80 - 90}{10}\right) = P(Z \leq -1) = \Phi(-1).\]</span></li>
@@ -1324,44 +1675,11 @@ Solution
 </div>
 </div>
 </div>
-<p>As a result, combining our knowledge of continuous random variables, with the process of standardization we are able to calculate normal probabilities for any events relating to normally distributed random quantities. Moreover, since the shape of the normal distribution is so predictable, it is often easy to draw out the density function, and indicate on this graphic the probabilities of interest, which in turn helps with the required probability calculations. Calculating probabilities from normal distributions remains a central component of working with statistics and probabilities beyond this course. Developing the skills and intuition at this point, through repeated practice is a key step in successfully navigating statistics here and beyond.</p>
+<p>As a result, combining our knowledge of continuous random variables, with the process of standardization we are able to calculate normal probabilities for any events relating to normally distributed random quantities. Moreover, since the shape of the normal distribution is so predictable, it is often easy to draw out the density function, and indicate on this graphic the probabilities of interest, which in turn helps with the required probability calculations. Calculating probabilities from normal distributions remains a central component of working with statistics and probabilities beyond these notes. Developing the skills and intuition at this point, through repeated practice is a key step in successfully navigating statistics here and beyond.</p>
 <p>When you have access to a computer, and your interest is in calculating a normal probability, as described above, there is not typically a need for standardization. However, it remains an important skill for several reasons. First, by always working with the same normal distribution, you will develop a much more refined intuition for the likelihoods of different events. It goes beyond working with the same family of distributions, you get very used to working with exactly the same distribution. Second, you will likely become quite familiar with certain key <strong>critical values</strong> of the standard normal distribution. These values arise frequently, and allow you to quickly approximate the likelihood of different events. Finally, as we begin to move away from studying probability and into studying statistics, the standard normal will feature prominently there.</p>
 </section>
-<section id="sec-r-normal" class="level3" data-number="9.6.3">
-<h3 data-number="9.6.3" class="anchored" data-anchor-id="sec-r-normal"><span class="header-section-number">9.6.3</span> Normal Probability Calculations in R</h3>
-<p>Just as with the named discrete distributions, R provides functions for calculating probabilities related to normal random variables. The relevant functions are the <code>dnorm</code> and <code>pnorm</code> function, for the density function and the cumulative distribution function, respectively. These functions can take arguments for the mean and standard deviation<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> of the normal. If not provided, it will default to the standard normal.</p>
-<div id="qwebr-insertion-location-1"></div>
-<script type="module">
-// Retrieve the insertion point
-const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
-
-// Initalize an interactive element
-const initializedElement =   qwebrCreateInteractiveElement(
-    1
-  );
-
-// Add the interactive element into the document scope
-currentDocumentLocation.appendChild(initializedElement);
-
-// Initialize a Monaco Editor Instance
-qwebrCreateMonacoEditorInstance(
-  `# N(0, 1)
-dnorm(0.25) # f(0.25)
-pnorm(0.25) # P(X <= 0.25)
-
-# N(5, 4)
-dnorm(4.9, mean = 5, sd = sqrt(4)) # f(4.9)
-pnorm(4.9, mean = 5, sd = sqrt(4)) # P(X <= 4.9)
-
-# N(0, 1) - Explicitly
-dnorm(1, mean = 0, sd = 1) # f(1)
-pnorm(1, mean = 0, sd = 1) # P(X <= 1)`, 
-  1);
-</script>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-</section>
-<section id="the-empirical-rule-and-chebyshevs-inequality" class="level3" data-number="9.6.4">
-<h3 data-number="9.6.4" class="anchored" data-anchor-id="the-empirical-rule-and-chebyshevs-inequality"><span class="header-section-number">9.6.4</span> The Empirical Rule and Chebyshev’s Inequality</h3>
+<section id="the-empirical-rule-and-chebyshevs-inequality" class="level3" data-number="9.6.3">
+<h3 data-number="9.6.3" class="anchored" data-anchor-id="the-empirical-rule-and-chebyshevs-inequality"><span class="header-section-number">9.6.3</span> The Empirical Rule and Chebyshev’s Inequality</h3>
 <p>Another way in which the normal distribution is well behaved is summarized in the <strong>emprical rule</strong>. The shape of the distribution is such that, no matter the specific mean or variance, all members of the family remain quite similar. This enables the derivation of an easy, approximate result, to help intuitively gauge the probabilities of normal events.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1383,7 +1701,7 @@ The Empirical Rule
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="chapter9_files/figure-html/empirical_rule-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="chapter9_files/figure-html/empirical_rule-1.png" class="img-fluid figure-img" width="672"></a></p>
+<p><a href="chapter9_files/figure-html/empirical_rule-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="chapter9_files/figure-html/empirical_rule-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1396,7 +1714,7 @@ The Empirical Rule
     P(\mu - 3\sigma \leq X \leq \mu + 3\sigma) &amp;\approx 0.997.
 \end{align*}\]</span> With the standard normal we can replace <span class="math inline">\(\mu\)</span> with <span class="math inline">\(0\)</span>, and <span class="math inline">\(\sigma\)</span> with <span class="math inline">\(1\)</span> to get a version which is slightly more concise to state. It is then possible to combine these different intervals by recognizing the symmetry in the normal distribution. That is, <span class="math inline">\(P(\mu \leq X \leq \mu + \sigma) \approx \dfrac{0.68}{2} = 0.34\)</span>.</p>
 <div id="exm-empirical-rule-calc" class="theorem example">
-<p><span class="theorem-title"><strong>Example 9.6 (Charles and Sadie Can Never Have Enough House Plants)</strong></span> Their standardization efforts paid off, and Charles and Sadie found some plants that should fit the spaces that they need once they’ve grown up. Because of how well the plants worked out, they wanted to buy some more. They end up back at the store, and they know that they need to get a plant that will grow to be between <span class="math inline">\(70\)</span>cm and <span class="math inline">\(106\)</span>cm. They have several options for plants again:</p>
+<p><span class="theorem-title"><strong>Example 9.9 (Charles and Sadie Can Never Have Enough House Plants)</strong></span> Their standardization efforts paid off, and Charles and Sadie found some plants that should fit the spaces that they need once they’ve grown up. Because of how well the plants worked out, they wanted to buy some more. They end up back at the store, and they know that they need to get a plant that will grow to be between <span class="math inline">\(70\)</span>cm and <span class="math inline">\(106\)</span>cm. They have several options for plants again:</p>
 <ol type="i">
 <li>A plant with heights <span class="math inline">\(X\)</span> according to <span class="math inline">\(N(88, 36)\)</span>.</li>
 <li>A plant with heights <span class="math inline">\(Y\)</span> according to <span class="math inline">\(N(124, 324)\)</span>.</li>
@@ -1404,7 +1722,7 @@ The Empirical Rule
 </ol>
 <p>Unfortunately, Charles and Sadie forget their phones at home and so they cannot make direct calculations using <span class="math inline">\(\Phi(z)\)</span>. Can you help them, without using a normal probability calculator, determine which plant has the highest probability of being acceptable?</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1413,7 +1731,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Without access to <span class="math inline">\(\Phi(z)\)</span> we can instead make use of the empirical rule. Consider that for <span class="math inline">\(X\)</span> we have <span class="math inline">\(\mu_X = 88\)</span> and <span class="math inline">\(\sigma = \sqrt{36} = 6\)</span>.</p>
 <ol type="1">
@@ -1443,13 +1761,13 @@ Chebyshev’s Inequality
 </div>
 <p>Here <span class="math inline">\(k\)</span> can be any real number which is greater than <span class="math inline">\(0\)</span>. If <span class="math inline">\(k\leq 1\)</span>, this result is uninteresting since the bound simply is <span class="math inline">\(0\)</span>. However, taking <span class="math inline">\(k=2\)</span> gives the <span class="math inline">\(0.75\)</span> lower bound outlined above, which is a more useful result. Additionally, there is no requirement for <span class="math inline">\(k\)</span> to be an integer here, and so, for instance, the probability of observing a value within <span class="math inline">\(\mu\pm\sqrt{2}\sigma\)</span> is at least <span class="math inline">\(0.5\)</span>, for all distributions.</p>
 <div id="exm-chebyshevs-ineqaulity" class="theorem example">
-<p><span class="theorem-title"><strong>Example 9.7 (Fitting in the Strange Plants)</strong></span> Charles and Sadie selected a plant to fit in the spot requiring one between <span class="math inline">\(70\)</span> and <span class="math inline">\(106\)</span>cm. However, as they are checking out at the store they see a plant that they like much better. They are conflicted since they do not know whether this plant will satisfy normality assumptions in its height. The worker tells them that on average the plant grows to be <span class="math inline">\(88\)</span>cm, and figures that the variance will be approximately <span class="math inline">\(51.84\)</span>. Charles and Sadie want to be at least <span class="math inline">\(90\%\)</span> certain that the plant will fit. If they are, they will buy it!</p>
+<p><span class="theorem-title"><strong>Example 9.10 (Fitting in the Strange Plants)</strong></span> Charles and Sadie selected a plant to fit in the spot requiring one between <span class="math inline">\(70\)</span> and <span class="math inline">\(106\)</span>cm. However, as they are checking out at the store they see a plant that they like much better. They are conflicted since they do not know whether this plant will satisfy normality assumptions in its height. The worker tells them that on average the plant grows to be <span class="math inline">\(88\)</span>cm, and figures that the variance will be approximately <span class="math inline">\(51.84\)</span>. Charles and Sadie want to be at least <span class="math inline">\(90\%\)</span> certain that the plant will fit. If they are, they will buy it!</p>
 <ol type="a">
 <li>If they assume that the plants heights are normally distributed, should they buy the plant?</li>
 <li>If they do not assume that the plants heights are normally distributed, should they buy the plant?</li>
 </ol>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1458,7 +1776,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
 <li>Note that in this case, we have a mean of <span class="math inline">\(88\)</span> and a standard deviation of <span class="math inline">\(7.2\)</span>. As a result, we have that <span class="math inline">\(70\)</span> is <span class="math inline">\(\mu - 2.5\sigma\)</span> and <span class="math inline">\(106\)</span> is <span class="math inline">\(\mu + 2.5\sigma\)</span>. The empirical rule does not tell us directly how to address probabilities in this case, however, we know that <span class="math display">\[P(X \in [\mu-2\sigma, \mu+2\sigma]) \leq P(X \in [\mu - 2.5\sigma, \mu+2.5\sigma]) \leq P(X \in [\mu-3\sigma,\mu+3\sigma]).\]</span> According to the empirical rule then we can say that, if this plant follows a normal distribution, the probability it is accessible will be between <span class="math inline">\(0.95\)</span> and <span class="math inline">\(0.997\)</span>. If the normal distribution is a reasonable assumption, then they should buy the plant.</li>
@@ -1501,7 +1819,7 @@ Closure of the Normal Distribution
 Figure&nbsp;9.3: A plot showing the probability mass function of a <span class="math inline">\(\text{Bin}(100, 0.25)\)</span> distribution, with a <span class="math inline">\(N(25, 18.75)\)</span> density overlaid, demonstrating the utility of the approximation.
 </figcaption>
 <div aria-describedby="fig-normal-approximation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-normal-approximation-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="chapter9_files/figure-html/fig-normal-approximation-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-normal-approximation-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" data-glightbox="description: .lightbox-desc-7"><img src="chapter9_files/figure-html/fig-normal-approximation-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1509,20 +1827,20 @@ Figure&nbsp;9.3: A plot showing the probability mass function of a <span class="
 </div>
 <p>One consideration that we need to make when applying this approximation has to do with the fact that the normal distribution is continuous while the binomial distribution is discrete. As a result, the normal distribution can take on any value on the real line, where the binomial is limited to the integers. A question that we must answer is what to do with the non-integer valued numbers. The natural solution is to rely on rounding. That is, for any value between <span class="math inline">\([1.5, 2.5)\)</span> we would round to the nearest integer, which is <span class="math inline">\(2\)</span>.</p>
 <div id="def-continuity-correction" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 9.4 (Continuity Correction)</strong></span> The continuity correction is a technique for adjusting the probabilities computed using a continuous approximation to a discrete random variable. The correction relies on rounding non-integer values, which may be observed with regards to the continuous random variable, to the corresponding integer values for the discrete random variable that is being approximated.</p>
+<p><span class="theorem-title"><strong>Definition 9.10 (Continuity Correction)</strong></span> The continuity correction is a technique for adjusting the probabilities computed using a continuous approximation to a discrete random variable. The correction relies on rounding non-integer values, which may be observed with regards to the continuous random variable, to the corresponding integer values for the discrete random variable that is being approximated.</p>
 </div>
 <p>This natural solution is in fact a fairly useful technique, and it is the one that we will make use of in the normal approximation. While rounding is quite natural, the process for leveraging this idea in probability approximation is somewhat backwards. That is, we typically will need to go from probabilities relating to <span class="math inline">\(X\)</span> and transform those into probabilities relating to <span class="math inline">\(W\)</span>. So, for instance, if we wish to know <span class="math inline">\(P(X \leq 2)\)</span>, then we need to be able to make this a statement regarding the random variable <span class="math inline">\(W\)</span>. In order to do this we need to ask “what is the largest value for <span class="math inline">\(W\)</span> that would get rounded to <span class="math inline">\(2\)</span>?” The answer is <span class="math inline">\(2.5\)</span> and so <span class="math inline">\(P(X \leq 2) \approx P(W \leq 2.5)\)</span>.</p>
 <p>A similar adjustment would be required if we instead wanted <span class="math inline">\(P(X \geq 5)\)</span>. Here we would ask “what is the smallest value for <span class="math inline">\(W\)</span> which would get rounded to <span class="math inline">\(5\)</span>?” and note that the answer is <span class="math inline">\(4.5\)</span>. Thus, <span class="math inline">\(P(X \geq 5) \approx P(W \geq 4.5)\)</span>. Once we have expressed the probability of interest in terms of the normal random variable, we can use the standard techniques previously outlined to compute the relevant probabilities. It is very important to note that these two results are of the form <span class="math inline">\(X \geq x\)</span> and <span class="math inline">\(X \leq x'\)</span>. If we instead had considered <span class="math inline">\(X &gt; x\)</span> or <span class="math inline">\(X &lt; x'\)</span>, we would need to take an additional step.</p>
 <p>For continuous random variables whether <span class="math inline">\(X \geq x\)</span> or <span class="math inline">\(X &gt; x\)</span> is considered makes no difference. However, for discrete random variables this is not the case. As a result we should first convert the event the an equivalent event which contains the equality sign within the inequality, and then apply the continuity correction. That is, if we want <span class="math inline">\(P(X &gt; 3)\)</span> first note that for <span class="math inline">\(X &gt; 3\)</span> to hold, we could equivalently write this as <span class="math inline">\(X \geq 4\)</span>. Alternatively, if the event of interest is <span class="math inline">\(X &lt; 8\)</span>, this is the same as <span class="math inline">\(X \leq 7\)</span>.</p>
 <div id="exm-normal-approximation" class="theorem example">
-<p><span class="theorem-title"><strong>Example 9.8 (Charles and Sadie Payouts over a Year)</strong></span> Charles and Sadie are back sitting at the coffee shop, reflecting on all of the probability that they have learned since their games began. They realize that each time they play the game to see who will pay, that is a Bernoulli trial with <span class="math inline">\(0.5\)</span> probability. As a result, over the course of the year, if they go <span class="math inline">\(200\)</span> times to get coffee, the number of times each of them will have to pay is governed by a <span class="math inline">\(\text{Bin}(200, 0.5)\)</span> random variable. Charles realizes that this is infeasible to work with a binomial distribution, and so seeks another way.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> Sadie suggest that they could use the normal approximation to the binomial.</p>
+<p><span class="theorem-title"><strong>Example 9.11 (Charles and Sadie Payouts over a Year)</strong></span> Charles and Sadie are back sitting at the coffee shop, reflecting on all of the probability that they have learned since their games began. They realize that each time they play the game to see who will pay, that is a Bernoulli trial with <span class="math inline">\(0.5\)</span> probability. As a result, over the course of the year, if they go <span class="math inline">\(200\)</span> times to get coffee, the number of times each of them will have to pay is governed by a <span class="math inline">\(\text{Bin}(200, 0.5)\)</span> random variable. Charles realizes that this is infeasible to work with a binomial distribution, and so seeks another way.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> Sadie suggest that they could use the normal approximation to the binomial.</p>
 <ol type="a">
 <li>What is the approximate probability that Charles pays more than <span class="math inline">\(115\)</span> times in a year, expressed in terms of <span class="math inline">\(\Phi\)</span>.</li>
 <li>What is the approximate probability that Sadie will pay between <span class="math inline">\(86\)</span> and <span class="math inline">\(107\)</span> times? Explain how this can be approximated numerically.</li>
 <li>Give an upper and lower bound that both Charles and Sadie can be <span class="math inline">\(95\%\)</span> sure they will pay between (that is, two numbers such that the probability they pay at least the lower and at most the upper bound is <span class="math inline">\(0.95\)</span>).</li>
 </ol>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1531,20 +1849,333 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>For these questions we will take <span class="math inline">\(X \sim \text{Bin}(200, 0.5)\)</span>, and therefore, <span class="math inline">\(X \dot\sim W \sim N(100, 50)\)</span>. Thus, to calculate these probabilities, we can use normal approximations, making sure to apply the continuity corrections.</p>
 <ol type="a">
-<li>We want <span class="math inline">\(P(X &gt; 115)\)</span>. This is the same as asking <span class="math inline">\(P(X \geq 116)\)</span>, and with the continuity correction, <span class="math inline">\(P(X \geq 116) \approx P(W \geq 115.5)\)</span>. Thus, we take <span class="math display">\[P(W \geq 115.5) = P\left(Z \geq \frac{115.5 - 100}{\sqrt{50}}\right) = 1 - \Phi\left(2.192\right).\]</span> This could be worked out using a normal probability calculator.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a></li>
+<li>We want <span class="math inline">\(P(X &gt; 115)\)</span>. This is the same as asking <span class="math inline">\(P(X \geq 116)\)</span>, and with the continuity correction, <span class="math inline">\(P(X \geq 116) \approx P(W \geq 115.5)\)</span>. Thus, we take <span class="math display">\[P(W \geq 115.5) = P\left(Z \geq \frac{115.5 - 100}{\sqrt{50}}\right) = 1 - \Phi\left(2.192\right).\]</span> This could be worked out using a normal probability calculator.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a></li>
 <li>We want <span class="math display">\[P(86 &lt; X &lt; 107) = P(87 \leq X \leq 106 \approx P(87.5 \leq W \leq 106.5).\]</span> Note that if we consider <span class="math display">\[\frac{106.5 - 100}{\sqrt{50}} = 0.919 \quad\text{and}\quad \frac{87.5 - 100}{\sqrt{50}} = -1.838.\]</span> If we wanted to get a rough approximation of this, we could say that, from the empirical rule, the probability that <span class="math display">\[\begin{multline*}P(\mu_W - 1.838\sigma_W \leq W \leq \mu_W + 0.919\sigma_W) \leq P(\mu_W - 2\sigma_W \leq W \leq \mu_W + \sigma_W) \\
-= \frac{0.68}{2} + \frac{0.95}{2} = 0.815.\end{multline*}\]</span> Note that this gives an upper bound on the probability. We could also get a lower bound on the probability by moving in the other directions, <span class="math display">\[P(\mu_W - 1.838\sigma_W \leq W \leq \mu_W + 0.919\sigma_W) \leq P(\mu_W - 2\sigma_W \leq W \leq \mu_W) = \frac{0.95}{2} = 0.475.\]</span> This gives a fairly wide range, but we can be relatively confident it will be a lot closer to <span class="math inline">\(0.815\)</span> than to <span class="math inline">\(0.475\)</span>, since the values are a lot close to <span class="math inline">\(-2\)</span> and <span class="math inline">\(1\)</span> than <span class="math inline">\(-1\)</span> and <span class="math inline">\(0\)</span>.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a></li>
-<li>Note that, if we use a normal approximation and the empirical rule, we know that there is approximately a <span class="math inline">\(0.95\)</span> probability that a random variable falls within <span class="math inline">\(2\sigma\)</span> of the mean. The mean of <span class="math inline">\(W\)</span> is <span class="math inline">\(100\)</span> and <span class="math inline">\(\sigma = \sqrt{50}\)</span>, so we can take the interval <span class="math inline">\([85.8578, 114.1421]\)</span>. Note that if we widen this slightly the probability will increase slightly, so that the probability <span class="math inline">\(W \in [85.5, 114.5]\)</span> must be greater than <span class="math inline">\(0.95\)</span>. The quantity <span class="math inline">\(P(85.5 \leq W \leq 114.5)\)</span> corresponds to <span class="math inline">\(P(86 \leq X \leq 114)\)</span>, and so we can say that Charles and Sadie can each be roughly <span class="math inline">\(95\%\)</span> confident that they will need to pay between <span class="math inline">\(86\)</span> and <span class="math inline">\(114\)</span> times.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a></li>
+= \frac{0.68}{2} + \frac{0.95}{2} = 0.815.\end{multline*}\]</span> Note that this gives an upper bound on the probability. We could also get a lower bound on the probability by moving in the other directions, <span class="math display">\[P(\mu_W - 1.838\sigma_W \leq W \leq \mu_W + 0.919\sigma_W) \leq P(\mu_W - 2\sigma_W \leq W \leq \mu_W) = \frac{0.95}{2} = 0.475.\]</span> This gives a fairly wide range, but we can be relatively confident it will be a lot closer to <span class="math inline">\(0.815\)</span> than to <span class="math inline">\(0.475\)</span>, since the values are a lot close to <span class="math inline">\(-2\)</span> and <span class="math inline">\(1\)</span> than <span class="math inline">\(-1\)</span> and <span class="math inline">\(0\)</span>.<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a></li>
+<li>Note that, if we use a normal approximation and the empirical rule, we know that there is approximately a <span class="math inline">\(0.95\)</span> probability that a random variable falls within <span class="math inline">\(2\sigma\)</span> of the mean. The mean of <span class="math inline">\(W\)</span> is <span class="math inline">\(100\)</span> and <span class="math inline">\(\sigma = \sqrt{50}\)</span>, so we can take the interval <span class="math inline">\([85.8578, 114.1421]\)</span>. Note that if we widen this slightly the probability will increase slightly, so that the probability <span class="math inline">\(W \in [85.5, 114.5]\)</span> must be greater than <span class="math inline">\(0.95\)</span>. The quantity <span class="math inline">\(P(85.5 \leq W \leq 114.5)\)</span> corresponds to <span class="math inline">\(P(86 \leq X \leq 114)\)</span>, and so we can say that Charles and Sadie can each be roughly <span class="math inline">\(95\%\)</span> confident that they will need to pay between <span class="math inline">\(86\)</span> and <span class="math inline">\(114\)</span> times.<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a></li>
 </ol>
 </div>
 </div>
 </div>
 </div>
 <p>When it is not necessary, it rarely makes sense to use an approximation. There will be cases where the approximation is directly useful, and in those moments it is great to be able to use it. This example of using the normal distribution to approximate a discrete random variable serves as a nice bridge from the study of probability to the study of statistics. In statistics we take a different view of the types of problems we have been considering to date, and we require the tools of probability that have been brought forth. As a result, a deep comfort with manipulating probability expressions is required to build a strong foundation while studying statistics.</p>
+</section>
+<section id="the-t-distribution" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="the-t-distribution"><span class="header-section-number">9.9</span> The <span class="math inline">\(t\)</span> Distribution</h2>
+<p>The <span class="math inline">\(t\)</span> distribution, or Student’s <span class="math inline">\(t\)</span> distribution named after the individual who popularized the distribution,<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a> is a bell-shaped distribution, not unlike the normal. It is parameterized by a single parameter, typically denoted <span class="math inline">\(\nu\)</span> and referred to as the <strong>degrees of freedom</strong> of the distribution.</p>
+<p>While it has a similar shape to the normal distribution, the <span class="math inline">\(t\)</span> distribution has <strong>heavier tails</strong> than the normal, which is to say that the probability of observing an extreme event is larger in the <span class="math inline">\(t\)</span> than in the normal. The <span class="math inline">\(t\)</span> distribution is always centered at <span class="math inline">\(0\)</span>. Neither the probability density function nor the cumulative distribution function are particularly nice,<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a> however, the mean, median, and mode are all <span class="math inline">\(0\)</span>. The variance of the <span class="math inline">\(t\)</span> distribution is only properly defined for <span class="math inline">\(\nu &gt; 2\)</span>, and in this case if <span class="math inline">\(X \sim t_{\nu}\)</span> then <span class="math display">\[\text{var}(X) = \frac{\nu}{\nu - 2}.\]</span></p>
+<p>The parameter <span class="math inline">\(\nu\)</span> is any real, positive number. Typically, <span class="math inline">\(\nu\)</span> is restricted to be a positive integer, for reasons that will become clear later. As <span class="math inline">\(\nu\)</span> increases, the tails of the <span class="math inline">\(t\)</span> distribution become smaller and smaller. In the limit, as <span class="math inline">\(\nu\)</span> tends towards <span class="math inline">\(\infty\)</span>, the <span class="math inline">\(t\)</span> distribution approaches the standard normal. In fact, when <span class="math inline">\(\nu \geq 30\)</span>, the two distributions are nearly identical.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-t-dist" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-t-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: The <span class="math inline">\(t\)</span> distribution compared with the standard normal. As the degrees of freedom increasing, the density function for the <span class="math inline">\(t\)</span> becomes closer and closer to the standard normal’s density function, and at <span class="math inline">\(\nu = \infty\)</span> they theoretically overlap.
+</figcaption>
+<div aria-describedby="fig-t-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter9_files/figure-html/fig-t-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" data-glightbox="description: .lightbox-desc-8"><img src="chapter9_files/figure-html/fig-t-dist-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that, compared with the normal distribution, the <span class="math inline">\(t\)</span> distributions (particularly with lower degrees of freedom) are more likely to observe extreme events. Based on the empirical rule, we know that the probability of observing an event outside of <span class="math inline">\(\pm 3\)</span> on the standard normal is <span class="math inline">\(0.3\%\)</span>. This is incredibly rare. By contrast, a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(2\)</span> degrees of freedom has a 9.55% chance of observing a value outside of the interval <span class="math inline">\(\pm 3\)</span>. When it is said that the <span class="math inline">\(t\)</span> distribution has heavier tails, this is what is meant.</p>
+<div id="exm-t-distribution" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.12 (Characterizing Scale Errors)</strong></span> Charles and Sadie have been using a new kitchen scale to weigh the vegetables that they have started to grow in their garden. They are trying to keep a detailed log of the counts and weights of all the vegetables that they harvest so that they may know what works and what does not. Unfortunately, they realize that the scale that they are using is not perfectly accurate and seems to be introducing random errors. They begin to investigate these errors.</p>
+<ol type="a">
+<li>Suppose that, by repeatedly weighing a reference weight, they determine that the mean error is equal to <span class="math inline">\(0\)</span> and the variance is equal to <span class="math inline">\(1\)</span>. If the errors are normally distributed, approximately how likely is it that Sadie and Charles observe an error that is greater than <span class="math inline">\(2\)</span> grams?</li>
+<li>Sadie and Charles are skeptical of the normality of the errors. They suspect that perhaps the variance they measured was incorrect, and should have actually been <span class="math inline">\(2\)</span>. If this is the case, what is the corresponding <span class="math inline">\(t\)</span> distribution that would be valid?</li>
+<li>If the errors truly follow the <span class="math inline">\(t\)</span> distribution from part (b), is it more or less likely that Sadie and Charles will observe an error greater than <span class="math inline">\(2\)</span> grams, compared with (a)? Explain.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Given their findings this will follow a <span class="math inline">\(N(0, 1)\)</span> distribution. By the empirical rule, we know that approximately <span class="math inline">\(95\%\)</span> of observations will fall within <span class="math inline">\(\pm 2\)</span> standard deviations of the mean, which in this case is <span class="math inline">\(1\)</span> gram. Thus, they should observe errors that are smaller than <span class="math inline">\(2\)</span> in magnitude <span class="math inline">\(95\%\)</span> of the time, which means the probability of observing an error larger than this is approximately <span class="math inline">\(0.05\)</span>.</p></li>
+<li><p>If instead they are faced with a <span class="math inline">\(t\)</span> distribution, if the variance <span class="math inline">\(2\)</span>, then the number of degrees of freedom can be solved for by taking <span class="math display">\[2 = \frac{\nu}{\nu - 2} \implies \nu = 4.\]</span> As a result, based on their measured results this would suggest a <span class="math inline">\(t_4\)</span> distribution.</p></li>
+<li><p>If the true error distribution is <span class="math inline">\(t_4\)</span>, then it is more likely to observe extreme values since the tails of the <span class="math inline">\(t\)</span> distribution are heavier than the tails of the normal distribution. Using the computer to estimate this probability gives 0.1161, which is quite a lot larger than the <span class="math inline">\(0.05\)</span> from (a).</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>The <span class="math inline">\(t\)</span> distribution, with its close connections to the normal distribution, will often arise in statistical applications. While less central than the normal, the <span class="math inline">\(t\)</span> distribution is nevertheless very important for statistical analyses, and will be explored in more depth in the second part of these notes.</p>
+</section>
+<section id="the-exponential-distribution" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="the-exponential-distribution"><span class="header-section-number">9.10</span> The Exponential Distribution</h2>
+<p>The exponential distribution is a single-parameter, skewed distribution that is always positive. The distribution has a probability density functioned supported on <span class="math inline">\([0,\infty)\)</span>, which exhibits exponential decay over this interval, meaning that extreme events are possible, but fairly unlikely. The probability density function is characterized by a single parameter referred to as the rate, and is typically denoted using <span class="math inline">\(\lambda\)</span>. Thus, if <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, then <span class="math inline">\(X\)</span> is a continuous random variable with probability density function given by <span class="math display">\[f(x) = \lambda\exp(-\lambda x), \ x \in [0,\infty).\]</span> The cumulative distribution function for the exponential can be obtained through integration of the density, resulting in <span class="math display">\[F(x) = 1 - \exp(-\lambda x).\]</span> Moreover, if <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, then <span class="math inline">\(E[X] = \dfrac{1}{\lambda}\)</span> and <span class="math inline">\(\text{var}(X) = \dfrac{1}{\lambda^2}\)</span>.<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-exp-dist" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-exp-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.5: The exponential distribution shown for decreasing values of <span class="math inline">\(\lambda\)</span>. Note that as the rate decreases, the mean increases. As a result, at this resolution, the curve will appear to flatten out. This has the effect of making larger events increasing likely, while decreasing the relative likelihood of small events.
+</figcaption>
+<div aria-describedby="fig-exp-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter9_files/figure-html/fig-exp-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" data-glightbox="description: .lightbox-desc-9"><img src="chapter9_files/figure-html/fig-exp-dist-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div id="exm-lifespan-of-solar-panels" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.13 (Charles and Sadie Install Solar Panels)</strong></span> Charles and Sadie are considering purchasing solar panels for a plot of land they wish to develop. The manufacturer of the solar panels suggests that the panels are exponentially distributed with a mean lifetime of 15 years.</p>
+<ol type="a">
+<li>What is the variance in the expected lifetime of these panels?</li>
+<li>What is the probability that the panels will need to be replaced in less than <span class="math inline">\(10\)</span> years?</li>
+<li>What is the probability that the panels last at least <span class="math inline">\(20\)</span> years before needing to be replaced?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>The mean lifespan is <span class="math inline">\(15\)</span> and so we must have that <span class="math inline">\(\lambda = \dfrac{1}{15}\)</span>. Thus, <span class="math inline">\(X \sim \text{Exp}(\dfrac{1}{15})\)</span>, and <span class="math inline">\(\text{var}(X) = \dfrac{1}{225}\)</span>.</li>
+<li>This is <span class="math display">\[P(X \leq 10) = F(10) = 1 - \exp(-\dfrac{10}{15}) =  1 - \exp(-2/3) \approx 0.48658.\]</span></li>
+<li>This is <span class="math display">\[P(X \geq 20) = 1 - F(20) = 1 - (1 - \exp(-\dfrac{20}{15})) = \exp(-4/3) \approx 0.26360.\]</span></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<section id="the-memoryless-property-of-the-exponential-distribution" class="level3" data-number="9.10.1">
+<h3 data-number="9.10.1" class="anchored" data-anchor-id="the-memoryless-property-of-the-exponential-distribution"><span class="header-section-number">9.10.1</span> The Memoryless Property of the Exponential Distribution</h3>
+<p>The exponential distribution has one particularly important property that makes it a mathematically convenient model, while often challenging its validity for real-world applications. Specifically, the exponential distribution exhibits a <strong>memoryless</strong> property.<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a> The memoryless property states, roughly, that if you observe a process that is exponentially distributed before an event has been observed, the remaining time until an event will by exponentially distributed with the same parameter, with the current time being counted as zero. That is, the process seems to not have any memory of the elapsed duration.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Memoryless Property of an Exponential
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>. Then, for any real numbers <span class="math inline">\(t \geq s \geq 0\)</span>, <span class="math display">\[P(X \geq t | X \geq s) = P(X \geq t - s).\]</span> In this way, the elapsed time does not impact future probabilities, as the process “forgets”.</p>
+</div>
+</div>
+<p>Suppose that the lifespan of an electrical component is thought to be exponentially distributed with parameter <span class="math inline">\(\lambda\)</span>. Then, we could work out the probability that the component lasts at least <span class="math inline">\(10\)</span> years to be <span class="math inline">\(1 - F(10) = \exp(-10\lambda)\)</span>. However, suppose that we knew that the component had already been in service for <span class="math inline">\(8\)</span> years. Given this information, we can conclude that the probability that the component will last another <span class="math inline">\(10\)</span> years, is <span class="math display">\[P(X \geq 18 | X \geq 8) = P(X \geq 18-8) = P(X \geq 10) = \exp(-10\lambda).\]</span> Thus, if we know the component has been in service for <span class="math inline">\(10\)</span> years and is still functioning, then it will be equally likely that it will last to <span class="math inline">\(18\)</span> years as it was to have lasted to <span class="math inline">\(10\)</span> from the start.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof of the Memoryless Property
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Note that the memoryless property can be proved using our standard notions of joint and conditional probabilities. Specifically, suppose that <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, and take the event <span class="math inline">\(A\)</span> to be <span class="math inline">\(\{ X \geq t \}\)</span> and the event <span class="math inline">\(B\)</span> to be <span class="math inline">\(\{X \geq s \}\)</span>, for <span class="math inline">\(t \geq s\)</span>. Thus, if <span class="math inline">\(A\)</span> occurs then we know that <span class="math inline">\(B\)</span> also occurs, since <span class="math inline">\(t \geq s\)</span>, and as such we have that <span class="math inline">\(A\cap B = A = \{X \geq t\}\)</span>. Thus, <span class="math display">\[\begin{align*}
+P(X \geq t | X \geq s) &amp;= \frac{P(A \cap B)}{P(B)} \\
+&amp;= \frac{P(A)}{P(B)} \\
+&amp;= \frac{\exp(-t\lambda)}{\exp(-s\lambda)} \\
+&amp;= \exp(-(t-s)\lambda) \\
+&amp;= P(X \geq t - s).
+\end{align*}\]</span></p>
+</div>
+</div>
+</div>
+<div id="exm-lifespan-of-solar-panels" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.14 (Charles and Sadie Consider Used Solar Panels)</strong></span> Charles and Sadie, in doing research on solar panels, are considering going the route of purchasing used solar panels instead of the new ones. The two options in front of them are to go with the new solar panels with a mean lifetime of <span class="math inline">\(15\)</span> years, or purchase the used panels instead. When they were manufactured, the panels had an anticipated lifespan of <span class="math inline">\(18\)</span> years, but they have been in service (and are still functioning) for a total of <span class="math inline">\(12\)</span> years so far.</p>
+<ol type="a">
+<li>Which is more likely: that the new solar panels will last <span class="math inline">\(15\)</span> years or that the used solar panels will last to a total of <span class="math inline">\(27\)</span> years, given the current status?</li>
+<li>Is the exponential distribution likely to be reasonable for this setting? Explain.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>We know that <span class="math inline">\(P(X \geq 15) = 1 - F(15) = 1 - (1 - \exp(-15/15)) = \exp(-1)\)</span>. Thus, there is a probability of approximately <span class="math inline">\(0.3679\)</span> that the new panels will last for <span class="math inline">\(15\)</span> years. Using the memoryless property we can work out the probability for the used panels. <span class="math display">\[P(X' \geq 27 | X' \geq 12) = P(X' \geq 27-12) = P(X' \geq 15).\]</span> Since the used panels have a mean of <span class="math inline">\(18\)</span>, the rate will be <span class="math inline">\(\dfrac{1}{18}\)</span>, and so the probability is <span class="math inline">\(\exp(-\dfrac{15}{18}) \approx 0.4346\)</span>. Thus, it is more likely that the used panels survive to <span class="math inline">\(27\)</span> than the new panels surviving to <span class="math inline">\(15\)</span>, given that we have observed the new panels functioning at <span class="math inline">\(12\)</span> years.</li>
+<li>The exponential distribution is likely not appropriate in this case, owing to the memoryless property. Specifically, it seems unlikely that a panel that has been in use for <span class="math inline">\(15\)</span> years will continue functioning for an additional <span class="math inline">\(15\)</span> years with the same probability as it was to hit <span class="math inline">\(15\)</span> years in the first place. We know that as panels are in use, they are likely suffering ongoing deterioration from exposure, just simply through use.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-exponential-distribution-and-poisson-processes" class="level3" data-number="9.10.2">
+<h3 data-number="9.10.2" class="anchored" data-anchor-id="the-exponential-distribution-and-poisson-processes"><span class="header-section-number">9.10.2</span> The Exponential Distribution and Poisson Processes</h3>
+<p>The exponential distribution is closely related to the Poisson distribution through the Poisson process (recall <a href="chapter8.html#sec-poisson-process" class="quarto-xref"><span>Section 8.7.1</span></a> for the definition of the Poisson process). In particular, recall that in a Poisson process we are counting the number of events that occur over a particular interval. We concluded that the number of events, under the assumptions of the Poisson process, that occur during a set interval will follow a particular Poisson distribution. The exponential distribution arises in this context as the distribution for the <strong>interarrival times</strong>. That is, the number of events that occur during an interval will follow a Poisson distribution, however, the time between any two consecutive events will follow an exponential distribution, with the same rate parameter.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Interarrival Times for a Poisson Process
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(X\)</span> follows a Poisson process with rate <span class="math inline">\(\alpha\)</span>. Then the time between any two successive events will be distributed according to a <span class="math inline">\(\text{Exp}(\alpha)\)</span> distribution.</p>
+</div>
+</div>
+<div id="exm-exp-poi-process" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.15 (Sadie’s Vegan Bakery Aspirations: Revisited)</strong></span> Sadie has continued to consider the prospect of opening up a vegan bakery. Market research continues to suggest that it is expected that <span class="math inline">\(168\)</span> customers would arrive per week, supposing that Sadie’s bakery was open <span class="math inline">\(8\)</span> hours a day, <span class="math inline">\(7\)</span> days a week.</p>
+<ol type="a">
+<li>How long (in hours) should Sadie expect to wait before the first customer arrives?</li>
+<li>How long (in hours) should Sadie expect to wait between the 99th and 100th customer arrivals?</li>
+<li>Suppose that Sadie was having a particularly slow start to the day, and it had been <span class="math inline">\(45\)</span> minutes with no customers. What is the probability Sadie has to wait at least another <span class="math inline">\(15\)</span> minutes before one finally arrives?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Customers arrive at a rate of <span class="math inline">\(3\)</span> per hour, and thus, the time between any customers arriving will be distributed as an <span class="math inline">\(\text{Exp}(3)\)</span> random variable. As a result, Sadie should expect to wait <span class="math inline">\(\dfrac{1}{3}\)</span> hours (or <span class="math inline">\(20\)</span> minutes) for the first customer.</li>
+<li>Because all interarrival times are distributed the same way, the time between the <span class="math inline">\(99\)</span>th and <span class="math inline">\(100\)</span>th customer is distributed exactly as the time between the <span class="math inline">\(0\)</span>th and <span class="math inline">\(1\)</span>st, and as a result, the answer is the same as part (a).</li>
+<li>Let <span class="math inline">\(T\)</span> be the time of arrival for the first customer. We want to know <span class="math inline">\(P(T &gt; 1 | T &gt; \dfrac{3}{4})\)</span> which we can solve for knowing that <span class="math inline">\(T \sim \text{Exp}(3)\)</span> and as such the memoryless property applies. Thus, <span class="math display">\[P(T &gt; 1 | T &gt; \dfrac{3}{4}) = P(T &gt; \dfrac{1}{4}) = 1 - (1 - \exp(-\dfrac{3}{4})) = \exp(-3/4) \approx 0.4724.\]</span></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-exponential-distribution-in-the-real-world" class="level3" data-number="9.10.3">
+<h3 data-number="9.10.3" class="anchored" data-anchor-id="the-exponential-distribution-in-the-real-world"><span class="header-section-number">9.10.3</span> The Exponential Distribution in the Real-World</h3>
+<p>The exponential distribution arises frequently in the modelling of extreme events and in the lifetimes of objects. Most frequently, it arises as the interarrival time in Poisson processes. While it is often not a perfect representation of the underlying reality, it will frequently work well enough to provide useful results. The exponential distribution is itself a part of a large family of distributions know as the gamma distribution. We will consider the Gamma distribution next, however, owing to the compact form and the frequent use of the exponential distribution, it is worth considering separate from the remainder of the gamma family distributions.</p>
+</section>
+</section>
+<section id="int-the-gamma-distribution" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="int-the-gamma-distribution"><span class="header-section-number">9.11</span> <span class="math inline">\(\int\)</span> The Gamma Distribution</h2>
+<p>The Gamma distribution is a two-parameter distribution, supported on <span class="math inline">\([0,\infty)\)</span>. The distributions parameters are typically denoted <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> and are referred to as the <strong>shape</strong> and <strong>scale</strong> parameter, respectively. The probability density function for <span class="math inline">\(X \sim \text{Gamma}(\alpha, \beta)\)</span> is given by <span class="math display">\[f(x) = \frac{1}{\Gamma(\alpha)\beta^{\alpha}}x^{\alpha - 1}\exp(-\frac{x}{\beta}).\]</span> In this expression, <span class="math inline">\(\Gamma(\alpha)\)</span> is the <strong>Gamma function</strong>, a function which is expressible in general only via an integral.</p>
+<div id="def-gamma-function" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 9.11 (Gamma Function)</strong></span> The Gamma function, denoted <span class="math inline">\(\Gamma(k)\)</span>, is a function given by <span class="math display">\[\Gamma(k) = \int_{0}^\infty x^{k-1}e^{-x}dx.\]</span> If <span class="math inline">\(k\)</span> is a positive integer, then <span class="math inline">\(\Gamma(k) = (k-1)!\)</span>, and in general, <span class="math inline">\(\Gamma(k) = (k-1)\Gamma(k - 1)\)</span>.</p>
+</div>
+<p>Note that if <span class="math inline">\(X \sim \text{Gamma}(\alpha, \beta)\)</span>, then <span class="math inline">\(E[X] = \alpha\beta\)</span> and <span class="math inline">\(\text{var}(X) = \alpha\beta^2\)</span>.<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a> The cumulative distribution function can be expressed as <span class="math display">\[F(x) = \frac{1}{\Gamma(\alpha)}\gamma(\alpha, \frac{x}{\beta}),\]</span> where <span class="math inline">\(\gamma(a, b)\)</span> is the lower incomplete gamma function, given by <span class="math display">\[\gamma(a, b) = \int_{0}^b x^{a-1}e^{-x}dx.\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-gamma-dist" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-gamma-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.6: The Gamma distribution shown for various combinations of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>.
+</figcaption>
+<div aria-describedby="fig-gamma-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter9_files/figure-html/fig-gamma-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" data-glightbox="description: .lightbox-desc-10"><img src="chapter9_files/figure-html/fig-gamma-dist-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<section id="connection-to-other-distributions" class="level3" data-number="9.11.1">
+<h3 data-number="9.11.1" class="anchored" data-anchor-id="connection-to-other-distributions"><span class="header-section-number">9.11.1</span> Connection to Other Distributions</h3>
+<p>It was briefly mentioned above that the exponential distribution is actually a special case of the Gamma distribution. If we investigate the corresponding desnity functions we may note that taking <span class="math inline">\(\alpha = 1\)</span> and <span class="math inline">\(\beta = \dfrac{1}{\lambda}\)</span> gives us <span class="math display">\[f(x) = \lambda\exp(-\lambda x),\]</span> which is exactly the exponential probability density function. As a result we can say that <span class="math inline">\(\text{Exp}(\lambda) = \text{Gamma}(1, 1/\lambda)\)</span>. The Gamma distribution is connected to several important distributions that arise throughout the study of probability and statistics.</p>
+<p>Beyond the exponential, the most prominent distribution which is connecte to the Gamma is the chi-squared distribution. The chi-squared distribution is a distribution that arises in many statistical inference procedures. It is characterized by a single parameter, <span class="math inline">\(\nu\)</span>, referred to as the degrees of freedom. To characterize the chi-squared distribution with <span class="math inline">\(\nu\)</span> degrees of freedom, denoted <span class="math inline">\(\chi^2_\nu\)</span>, we take <span class="math inline">\(X \sim \text{Gamma}(\nu/2, 2)\)</span>. Thus, the mean of the distribution is <span class="math inline">\(\nu\)</span> and the variance is <span class="math inline">\(2\nu\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-chisq-dist" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-chisq-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.7: The chi-sqaured distribution shown for increasing degrees of freedom.
+</figcaption>
+<div aria-describedby="fig-chisq-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter9_files/figure-html/fig-chisq-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" data-glightbox="description: .lightbox-desc-11"><img src="chapter9_files/figure-html/fig-chisq-dist-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-r-continuous" class="level2" data-number="9.12">
+<h2 data-number="9.12" class="anchored" data-anchor-id="sec-r-continuous"><span class="header-section-number">9.12</span> Continuous Probability Calculations in R</h2>
+<p>Just as with the named discrete distributions, R provides functions for calculating probabilities related to continuous random variables. The relevant functions are, as in the discrete case, <code>d{distname}</code> and <code>p{distname}</code>, where <code>{distname}</code> is one the named distributions. These evaluate the density and cumulative distribution functions, respectively. So for instance, <code>dnorm</code> and <code>pnorm</code> calculate normal probabilities, <code>dt</code> and <code>pt</code> calculate probability for the <span class="math inline">\(t\)</span> distribution, <code>dexp</code> and <code>pexp</code> calculate exponential probabilities, <code>dgamma</code> and <code>pgamma</code> calculate Gamma probabilities, and <code>dchisq</code> and <code>pchisq</code> calculate the chi-squared probabilities.</p>
+<p>Each function takes in a set of parameters to indicate which of the specific distributions is being considered. Note, it is important to ensure that the correct parameterizations are used. For the normal, the functions can take arguments for the mean and standard deviation<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a> of the normal. If not provided, it will default to the standard normal. The <span class="math inline">\(t\)</span> and chi-squared distributions each take a degrees of freedom argument, named <code>df</code>. For the exponential, the parameter is named <code>rate</code>. The Gamma distribution can be parameterized either as the shape/scale, or the shape/rate characterization, where we learned the former.</p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# N(0, 1)
+dnorm(0.25) # f(0.25)
+pnorm(0.25) # P(X <= 0.25)
+
+# N(5, 4)
+dnorm(4.9, mean = 5, sd = sqrt(4)) # f(4.9)
+pnorm(4.9, mean = 5, sd = sqrt(4)) # P(X <= 4.9)
+
+# N(0, 1) - Explicitly
+dnorm(1, mean = 0, sd = 1) # f(1)
+pnorm(1, mean = 0, sd = 1) # P(X <= 1)
+
+## t-Distribution
+# t_5
+dt(0.25, df = 5)
+pt(0.25, df = 5)
+
+# Consider the approach to the normal distribution
+for(df in 2:30) {
+  print(paste0("The difference at df=", df, " is ", 
+                dt(0, df=df) - dnorm(0)))
+}
+
+## Exponential Distribution
+dexp(2, rate = 1/2)
+pexp(2, rate = 1/2)
+
+## Gamma Distribution
+dgamma(2, shape = 1, scale = 2) # Exp(2)
+pgamma(2, shape = 1, scale = 2) # Exp(2)
+
+## Chisquare Distribution
+dchisq(2, df = 5)
+pchisq(2, df = 5)
+
+# Using Gamma Functions
+dgamma(2, shape = 5/2, scale = 2)
+pgamma(2, shape = 5/2, scale = 2)`, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </section>
 <section id="exercises" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
@@ -1652,12 +2283,123 @@ Solution
 <li>Estimate the probability from (a).</li>
 </ol>
 </div>
+<div id="exr-9.16" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.16</strong></span> For each of the following, indicate and explain whether the following properties could belong to a valid PDF.</p>
+<ol type="a">
+<li><span class="math inline">\(f(x) &lt; 0\)</span> for some <span class="math inline">\(x \in \mathbb{R}\)</span>.</li>
+<li><span class="math inline">\(f(x) &gt; 1\)</span> for some <span class="math inline">\(x \in\mathbb{R}\)</span>.</li>
+<li><span class="math inline">\(f(x) &gt; \frac{\pi}{\ell}\)</span> over an interval of length <span class="math inline">\(\ell\)</span>.</li>
+<li><span class="math inline">\(f(-|x|) &gt; 0\)</span> for all <span class="math inline">\(x\in\mathbb{R}\)</span>.</li>
+</ol>
+</div>
+<div id="exr-9.17" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.17</strong></span> A manufacturer of chemicals rates the quality of batches based on a number of factors, with different uses cases requiring different purity. A batch with a quality score labeled <span class="math inline">\(100\)</span> has a true quality that falls between <span class="math inline">\(80\)</span> and $120.</p>
+<p>Suppose that <span class="math inline">\(X\)</span> represents the quality of a particular batch of the chemical, with probability density function of <span class="math inline">\(X\)</span> is given by <span class="math display">\[f(x) = \begin{cases}
+        \frac{x - 80}{800} &amp; 80 &lt; x &lt; 120 \\
+        0 &amp; \text{otherwise}.
+    \end{cases}\]</span></p>
+<ol type="a">
+<li>What is the probability that the chemical has quality equal to <span class="math inline">\(90\)</span>.</li>
+<li>What proportion of batches have quality less than <span class="math inline">\(90\)</span>?</li>
+<li>Find the mean quality.</li>
+<li>Find the variance of the quality.</li>
+<li>Find the probability that the quality is less than <span class="math inline">\(k\)</span>, for arbitrary <span class="math inline">\(k\)</span>.</li>
+<li>Find the median quality.</li>
+</ol>
+</div>
+<div id="exr-9.18" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.18</strong></span> A particular fungus has a lifetime governed by the density function <span class="math display">\[f(x) = \begin{cases}
+        \frac{81}{(x + 3)^4} &amp; x &gt; 0 \\
+        0 &amp; \text{otherwise}
+    \end{cases}.\]</span></p>
+<ol type="a">
+<li>What is the probability that the fungus survives more than <span class="math inline">\(3\)</span> years?</li>
+<li>What is the probability that the fungus survives between <span class="math inline">\(1\)</span> and <span class="math inline">\(3\)</span> years?</li>
+<li>What is the mean lifetime?</li>
+<li>What is the variance of the lifetimes?</li>
+<li>What is the cumulative distribution function of the lifetime?</li>
+<li>What is the median lifetime?</li>
+<li>What is the <span class="math inline">\(30\)</span>th percentile of the lifetime?</li>
+</ol>
+</div>
+<div id="exr-9.19" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.19</strong></span> A certain part being manufactured can have errors in its length. These errors are random and follow the following probability density function, <span class="math display">\[f(x) = \begin{cases}
+\frac{e^{-x}}{1-e^{-1}} &amp; 0 &lt; x &lt; 1 \\
+0 &amp; \text{otherwise}
+\end{cases}.\]</span></p>
+<ol type="a">
+<li>What is the probability that the error is less than <span class="math inline">\(0.2\)</span>mm?</li>
+<li>What is the mean error?</li>
+<li>What is the variance of the error?</li>
+<li>Find the cumulative distribution function of the error.</li>
+<li>Find the median error.</li>
+<li>If the specification is that the error is between <span class="math inline">\(0\)</span> and <span class="math inline">\(0.3\)</span>, what is the probability the specification is met?</li>
+</ol>
+</div>
+<div id="exr-9.20" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.20</strong></span> A random variable <span class="math inline">\(X\)</span> has the density function <span class="math display">\[f(x) = \frac{c}{x^2+1},\]</span> where <span class="math inline">\(-\infty&lt;x&lt;\infty\)</span>.</p>
+<ol type="a">
+<li>What is the value of <span class="math inline">\(c\)</span>?</li>
+<li>What is the probability that <span class="math inline">\(X^2\)</span> lies between <span class="math inline">\(\frac{1}{3}\)</span> and <span class="math inline">\(1\)</span>?</li>
+</ol>
+</div>
+<div id="exr-9.21" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.21</strong></span> Find the expected value and variance of a random variable <span class="math inline">\(X\)</span>, with density <span class="math inline">\(f(x) = 2e^{-2|x|}\)</span>, for <span class="math inline">\(x \in \mathbb{R}\)</span>.</p>
+</div>
+<div id="exr-9.22" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.22</strong></span> A sample of <span class="math inline">\(10\)</span> observations is made at random from a continuous distribution with density <span class="math inline">\(f(x)\)</span>. What is the probability that the first and last observations are smaller than the other <span class="math inline">\(8\)</span>?</p>
+</div>
+<div id="exr-9.23" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.23</strong></span> A continuous random variable <span class="math inline">\(X\)</span>, with <span class="math inline">\(E[X] = 1\)</span>, has probability density function <span class="math inline">\(f_X(x)\)</span> given by <span class="math display">\[f_X(x) = \begin{cases}a(b-x)^2 &amp; 0 \leq x \leq b, \\ 0 &amp; \text{otherwise}\end{cases}.\]</span> Find the values of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.</p>
+</div>
+<div id="exr-9.24" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.24</strong></span> Suppose that <span class="math inline">\(T \sim \text{Exp}(0.45)\)</span>. Find:</p>
+<ol type="a">
+<li><span class="math inline">\(E[T]\)</span>.</li>
+<li><span class="math inline">\(\text{var}(T)\)</span>.</li>
+<li><span class="math inline">\(P(T &gt; 3)\)</span>.</li>
+<li>The median of <span class="math inline">\(T\)</span>.</li>
+</ol>
+</div>
+<div id="exr-9.25" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.25</strong></span> The time between requests to a web server is exponentially distributed with mean <span class="math inline">\(0.5\)</span> seconds.</p>
+<ol type="a">
+<li>What is the value of <span class="math inline">\(\lambda\)</span>?</li>
+<li>What is the median time between requests?</li>
+<li>What is the <span class="math inline">\(80\)</span>th percentile of request times?</li>
+<li>What is the probability that more than <span class="math inline">\(1\)</span> second elapses between requests.</li>
+<li>If there have been no requests for the past two seconds, what is the probability that more than one additional second will elapse before the next request?</li>
+</ol>
+</div>
+<div id="exr-9.26" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.26</strong></span> A certain type of component can be purchased new or used. Fifty percent of all new components last more than five years, but only thirty percent of used components last more than five years. Is it possible that the lifetimes of these components are exponentially distributed? Why?</p>
+</div>
+<div id="exr-9.27" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.27</strong></span> The number of traffic accidents at a certain intersection is modeled by a Poisson process with a mean of <span class="math inline">\(3\)</span> accidents per year.</p>
+<ol type="a">
+<li>Find the mean waiting time between accidents.</li>
+<li>Find the standard deviation of the waiting times between accidents.</li>
+<li>Find the probability that more than one year elapses between accidents.</li>
+<li>If no accidents have occurred within the last six months, what is the probability that an accident will occur within the next year?</li>
+</ol>
+</div>
+<div id="exr-9.28" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.28</strong></span> &nbsp;</p>
+<ol type="a">
+<li>Show that the mean of the exponential distribution is <span class="math inline">\(1/\lambda\)</span>, and that its variance is <span class="math inline">\(1/\lambda^2\)</span>.</li>
+<li>Suppose there are two independent random variables, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, with <span class="math inline">\(X \sim \text{Exp}(\alpha)\)</span> and <span class="math inline">\(Y\sim\text{Exp}(2\alpha)\)</span>. If <span class="math inline">\(T = \text{min}\{X, Y\}\)</span>, then show that <span class="math inline">\(P(T \geq \alpha) = e^{-3/2}\)</span>.</li>
+</ol>
+</div>
 
 
 <div class="hidden" aria-hidden="true">
 <span class="glightbox-desc lightbox-desc-1">Figure&nbsp;9.1: A number line showcasing the interval <span class="math inline">\((a,b)\)</span> and demonstrating how you can take everything less than <span class="math inline">\(b\)</span> and remove all that is less than <span class="math inline">\(a\)</span> to be left with only <span class="math inline">\((a,b)\)</span>.</span>
-<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red and blue), and mean 5 (black). The red density has variance 1, the blue density has variance 4, and the black density has variance 0.25.</span>
-<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;9.3: A plot showing the probability mass function of a <span class="math inline">\(\text{Bin}(100, 0.25)\)</span> distribution, with a <span class="math inline">\(N(25, 18.75)\)</span> density overlaid, demonstrating the utility of the approximation.</span>
+<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red and blue), and mean 5 (black). The red density has variance 1, the blue density has variance 4, and the black density has variance 0.25.</span>
+<span class="glightbox-desc lightbox-desc-7">Figure&nbsp;9.3: A plot showing the probability mass function of a <span class="math inline">\(\text{Bin}(100, 0.25)\)</span> distribution, with a <span class="math inline">\(N(25, 18.75)\)</span> density overlaid, demonstrating the utility of the approximation.</span>
+<span class="glightbox-desc lightbox-desc-8">Figure&nbsp;9.4: The <span class="math inline">\(t\)</span> distribution compared with the standard normal. As the degrees of freedom increasing, the density function for the <span class="math inline">\(t\)</span> becomes closer and closer to the standard normal’s density function, and at <span class="math inline">\(\nu = \infty\)</span> they theoretically overlap.</span>
+<span class="glightbox-desc lightbox-desc-9">Figure&nbsp;9.5: The exponential distribution shown for decreasing values of <span class="math inline">\(\lambda\)</span>. Note that as the rate decreases, the mean increases. As a result, at this resolution, the curve will appear to flatten out. This has the effect of making larger events increasing likely, while decreasing the relative likelihood of small events.</span>
+<span class="glightbox-desc lightbox-desc-10">Figure&nbsp;9.6: The Gamma distribution shown for various combinations of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>.</span>
+<span class="glightbox-desc lightbox-desc-11">Figure&nbsp;9.7: The chi-sqaured distribution shown for increasing degrees of freedom.</span>
 </div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
@@ -1671,17 +2413,25 @@ Solution
 <li id="fn6"><p>This is not a rare occurrence either. For instance, if we consider a random variable that will take on values in the interval <span class="math inline">\([0,0.5]\)</span> with equal likelihood, the probability density function in this case will be <span class="math inline">\(f(x) = 2\)</span>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>Think about the fact that, while we may think of human adult heights as a continuous quantity, it is far more likely to observe a height around <span class="math inline">\(5\)</span> feet <span class="math inline">\(6\)</span> inches than around <span class="math inline">\(9\)</span> feet <span class="math inline">\(2\)</span> inches.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>In the continuous case we cannot sum over the sample space, and so we must use techniques from calculus to mirror this process, for instance.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>Which we have actually already seen.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>Which is far and away the most important distribution (discrete or continuous) in all of probability and statistics.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>Sometimes called the continuous uniform distribution to distinguish it from its discrete counterpart.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12"><p>In <a href="#exm-charles-and-sadie-bus-times" class="quarto-xref">Example&nbsp;<span>9.1</span></a> we implicitly used the cumulative distribution function of the uniform. It is worth revisiting these probabilities <em>knowing</em> that this is the case.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13"><p>For instance, in <a href="chapter8.html#exm-geometric" class="quarto-xref">Example&nbsp;<span>8.6</span></a>, we implicitly used a continuous uniform distribution to give the probability that Charles hits the dartboard. This type of reasoning is very prevalent.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn14"><p>See <a href="#sec-r-normal" class="quarto-xref"><span>Section 9.6.3</span></a> for more details on this.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn15"><p>Recall, the standard deviation is the square root of the variance.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn16"><p>Note that, for instance, <span class="math inline">\(\binom{200}{75} = 168849997346404286704489530268603459022868706883102845056\)</span>. This is <span class="math inline">\(168\)</span> septendecillion. This is <span class="math inline">\(3.2\)</span> million times more than the number of possible arrangements of a chess board. This is a silly large number.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn17"><p>Doing so results in 0.0141898. Note, if we had used a binomial probability calculator instead, we would have gotten 0.0140627.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn18"><p>In fact, the actual probability here is 0.7824647.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn19"><p>The actual binomial probabilities here are 0.9519985, while the normal approximation is 0.959695.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>As a note, the integrate to one and sum to one properties for density functions and mass functions, respectively, are an additional example of a situation wherein the sum and integral can be interchanged for one another.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>When <span class="math inline">\(F\)</span> is not strictly invertible, we can instead consider the generalized inverse based on the right-continuity of <span class="math inline">\(F\)</span>, giving <span class="math inline">\(F^{-1}(p) = \inf\{x\in\mathbb{R}\mid p \leq F(x)\}\)</span>.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Which we have actually already seen.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Which is far and away the most important distribution (discrete or continuous) in all of probability and statistics.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>The exponential is actually a special case of the gamma distribution, as are several other important named distributions, which will be brought up as required.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>Sometimes called the continuous uniform distribution to distinguish it from its discrete counterpart.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>In <a href="#exm-charles-and-sadie-bus-times" class="quarto-xref">Example&nbsp;<span>9.1</span></a> we implicitly used the cumulative distribution function of the uniform. It is worth revisiting these probabilities <em>knowing</em> that this is the case.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>For instance, in <a href="chapter8.html#exm-geometric" class="quarto-xref">Example&nbsp;<span>8.6</span></a>, we implicitly used a continuous uniform distribution to give the probability that Charles hits the dartboard. This type of reasoning is very prevalent.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>See <a href="#sec-r-continuous" class="quarto-xref"><span>Section 9.12</span></a> for more details on this.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>Note that, for instance, <span class="math inline">\(\binom{200}{75} = 168849997346404286704489530268603459022868706883102845056\)</span>. This is <span class="math inline">\(168\)</span> septendecillion. This is <span class="math inline">\(3.2\)</span> million times more than the number of possible arrangements of a chess board. This is a silly large number.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>Doing so results in 0.0141898. Note, if we had used a binomial probability calculator instead, we would have gotten 0.0140627.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20"><p>In fact, the actual probability here is 0.7824647.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p>The actual binomial probabilities here are 0.9519985, while the normal approximation is 0.959695.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22"><p>William Gosset, was a statistician, chemist, and brewer who worked as the head brewer at Guinness. During his work there he was concerned with statistical problems related to testing the quality of ingredients. In this work, he made a discovery relating to the <span class="math inline">\(t\)</span> distribution which was published in a scientific article under the pseudonym Student (hence, Student’s <span class="math inline">\(t\)</span> distribution). Guinness preferred that their employees used pseudonyms when publishing scientific articles, perhaps to ensure that trade secrets were kept secret, and hence Student’s <span class="math inline">\(t\)</span> was born.<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23"><p>The density function, for instance, is given by <span class="math display">\[\frac{\Gamma(\frac{\nu+1}{2})}{\sqrt{\pi\nu}\Gamma(\frac{\nu}{2})}\left(1+\frac{x^2}{\nu}\right)^{-(\nu+1)/2},\]</span> where <span class="math inline">\(\Gamma(\cdot)\)</span> is the Gamma function, a mathematical expression touched on later.<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24"><p>Note, some authors instead parameterize the exponential distribution with the mean, <span class="math inline">\(\mu\)</span>. In this case, <span class="math inline">\(E[X] = \mu\)</span>, <span class="math inline">\(\text{var}(X) = \mu^2\)</span>, but the density will have <span class="math inline">\(\dfrac{1}{\mu}\)</span> in place of <span class="math inline">\(\lambda\)</span>.<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn25"><p>The exponential distribution shares this property with the geometric distribution, and can as such be thought of as a continuous analog to the geometric distribution.<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn26"><p>As is the case with many distributions, some authors will use a different parametrization of the Gamma distribution. In particular, they may use parameters that equal <span class="math inline">\(\alpha\)</span> and then <span class="math inline">\(1/\beta\)</span>, making the necessary substitutions in the different quantities.<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn27"><p>Recall, the standard deviation is the square root of the variance.<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -2127,7 +2877,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom"});
+<script type="application/javascript" src="../webex.js"></script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

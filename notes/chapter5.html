@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>STAT 1793: Course Notes - 5&nbsp; Summarizing Statistical Experiments with Random Variables</title>
+<title>Understanding Uncertainty - 5&nbsp; Summarizing Statistical Experiments with Random Variables</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -128,9 +128,9 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">STAT 1793: Course Notes</a> 
+      <a href="../">Understanding Uncertainty</a> 
         <div class="sidebar-tools-main">
-    <a href="../STAT-1793--Course-Notes.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../Understanding-Uncertainty.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -230,7 +230,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Descriptive Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Methods of Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Confidence Intervals</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
   </div>
 </li>
       </ul>
@@ -287,8 +317,10 @@ window.Quarto = {
 <div id="def-random-variable" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 5.1 (Random Variable)</strong></span> A random variable is a numeric quantity whose specific value depends on chance through the outcome of a statistical experiment. Formally, a random variable is a mapping from the result of an experiment to a set of numbers.</p>
 </div>
-<p>By reporting the numeric value of the random variable, we are able to summarize the key part of the experiment, succinctly. For instance, suppose that we are repeatedly tossing a coin. If we toss the coin <span class="math inline">\(100\)</span> times, then the sample space is going to consist of <span class="math inline">\(2^{100}\)</span> total possible outcomes, each of which is a sequence of <span class="math inline">\(100\)</span> heads and tails.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Instead, it may be more convenient to assign a random variable to be the number of heads that show up on the <span class="math inline">\(100\)</span> tosses of the coin. In this case, the random variable takes on a non-negative integer between <span class="math inline">\(0\)</span> and <span class="math inline">\(100\)</span>. In many situations, such a summary may be all the is relevant from the experiment.</p>
-<p>It is important to recognize that information <em>is</em> lost when we define this random variable. If <span class="math inline">\(X\)</span> summarizes the number of heads in <span class="math inline">\(100\)</span> tosses of a coin, then provided <span class="math inline">\(X\)</span> you are not able to answer the question “what was the 23rd toss of the coin?” As a result, random variables smooth over the unnecessary information, summarizing the parts of the statistical experiment that we care for. For any statistical experiment, however, we need to carefully define the random variables which are truly of interest to us. For instance, if the <span class="math inline">\(23\)</span>rd toss of the coin was integral to our decision-making, then perhaps we define a random variable <span class="math inline">\(Y\)</span> which counts the number of heads that show up on the <span class="math inline">\(100\)</span> tosses of the coin, but does so with negative numbers if the <span class="math inline">\(23\)</span>rd toss was a tail, and with positive numbers if it was a head. Then, provided <span class="math inline">\(Y\)</span> you can answer “how many heads showed up in the tosses of the coin? by calculating <span class="math inline">\(|Y|\)</span>, and you can answer”what was the <span class="math inline">\(23\)</span>rd toss of the coin?” by looking at <span class="math inline">\(\text{sign}(Y)\)</span>.</p>
+<p>By reporting the numeric value of the random variable, we are able to summarize the key part of the experiment, succinctly.</p>
+<p>For instance, suppose that we are repeatedly tossing a coin. If we toss the coin <span class="math inline">\(100\)</span> times, then the sample space is going to consist of <span class="math inline">\(2^{100}\)</span> total possible outcomes, each of which is a sequence of <span class="math inline">\(100\)</span> heads and tails.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Instead, it may be more convenient to assign a random variable to be the number of heads that show up on the <span class="math inline">\(100\)</span> tosses of the coin. In this case, the random variable takes on a non-negative integer between <span class="math inline">\(0\)</span> and <span class="math inline">\(100\)</span>. In many situations, such a summary may be all the is relevant from the experiment.</p>
+<p>It is important to recognize that information <em>is</em> lost when we define this random variable. If <span class="math inline">\(X\)</span> summarizes the number of heads in <span class="math inline">\(100\)</span> tosses of a coin, then provided <span class="math inline">\(X\)</span> you are not able to answer the question “what was the 23rd toss of the coin?” As a result, random variables smooth over the unnecessary information, summarizing the parts of the statistical experiment that we care for. For any statistical experiment, however, we need to carefully define the random variables which are truly of interest to us.</p>
+<p>For instance, if the <span class="math inline">\(23\)</span>rd toss of the coin was integral to our decision-making, then perhaps we define a random variable <span class="math inline">\(Y\)</span> which counts the number of heads that show up on the <span class="math inline">\(100\)</span> tosses of the coin, but does so with negative numbers if the <span class="math inline">\(23\)</span>rd toss was a tail, and with positive numbers if it was a head. Then, provided <span class="math inline">\(Y\)</span> you can answer “how many heads showed up in the tosses of the coin? by calculating <span class="math inline">\(|Y|\)</span>, and you can answer”what was the <span class="math inline">\(23\)</span>rd toss of the coin?” by looking at <span class="math inline">\(\text{sign}(Y)\)</span>.</p>
 <div id="exm-random-var" class="theorem example">
 <p><span class="theorem-title"><strong>Example 5.1 (Random Variables at the Coffee Shop)</strong></span> Back at their favourite coffee shop, Charles and Sadie are sitting in their favourite chairs, discussing random variables and watching the cash register for the inevitable sequence of customers who will arrive there. Charles suggests playing a game together, which is creatively called “how many random variables can we name that have to do with the statistical experiment of watching for customers at a cash register?” Seeing as how catchy the name is, Sadie is excited to play along, and so they start.</p>
 <p>Name several distinct random variables which could be observed via the described statistical experiment.</p>
@@ -367,7 +399,7 @@ Countable and Uncountable Sets
 <p>We say that a set is <strong>countable</strong> whenever we can enumerate the elements of the set using the positive integers. If we have a set with a finite number of elements in it, then we say that it is countable because each element in the set can get assigned an integer value (just using <span class="math inline">\(1\)</span> through to the cardinality of the set).</p>
 <p>If we take a set like the positive integers, <span class="math inline">\(\{1,2,3,\dots\}\)</span>, then this is an infinitely large set. However, it is still countable because we can assign each element of the set an integer value (just use the same integer it is corresponding to!). What if we have the set of positive, even integers ({2,4,6,8,})? Each of these is just <span class="math inline">\(2\)</span> times one of the counting numbers, in order, and so these too are countable.</p>
 <p>What if we took the set of real numbers<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> in the interval <span class="math inline">\([0,1]\)</span>? In this case there is <strong>no way</strong> to map each of these values to the values <span class="math inline">\(\{1,2,3,4,\dots\}\)</span> and as a result the interval <span class="math inline">\([0,1]\)</span> is <strong>not countable</strong>. It is infinitely large, but it remains infinitely large even after we have enumerated an infinite set of the items in it.</p>
-<p>A key difference between countable and uncountable sets is that, with a countable set, we can<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> sum over the elements of the set. We cannot sum over the elements of an uncountable set, as there would be no way to actually order and enumerate the items. In this course the detailed mathematics of countable versus non-countable sets is tangential to the main point which is in distinguishing between discrete and continuous random variables.</p>
+<p>A key difference between countable and uncountable sets is that, with a countable set, we can<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> sum over the elements of the set. We cannot sum over the elements of an uncountable set, as there would be no way to actually order and enumerate the items. In these notes, the detailed mathematics of countable versus non-countable sets is tangential to the main point which is in distinguishing between discrete and continuous random variables.</p>
 </div>
 </div>
 </div>
@@ -405,7 +437,7 @@ Solution
 </section>
 <section id="probability-distributions-and-probability-mass-functions" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="probability-distributions-and-probability-mass-functions"><span class="header-section-number">5.2</span> Probability Distributions and Probability Mass Functions</h2>
-<p>We will discuss continuous random variables later. For now, we turn our focus to discrete random variables. One of the major utilities of random variables is that they provide a shorthand for summarizing the results of a statistical experiment. To this end, there are several tools which have been developed centered on random variables which help to expedite the analysis of the corresponding probabilities. Chief among these tools is the concept of a probability distribution.</p>
+<p>We will discuss continuous random variables later. For now, we turn our focus to discrete random variables. One of the major utilities of random variables is that they provide a shorthand for summarizing the results of a statistical experiment. To this end, there are several key concepts relating to random variables which help to expedite the analysis of the corresponding probabilities. Chief among these tools is the concept of a probability distribution.</p>
 <div id="def-probability-distribution" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 5.4 (Probability Distribution)</strong></span> A probability distribution is a mathematical statement describing the probabilistic behaviour of a random variable.</p>
 </div>
@@ -433,10 +465,10 @@ Solution
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>One choice of <span class="math inline">\(X\)</span> is to allow <span class="math inline">\(X\)</span> to be the number of heads that show on three tosses of the coin. In this case we have <span class="math inline">\(\mathcal{X} = \{0,1,2,3\}\)</span>. If <span class="math inline">\(x = 0\)</span> or <span class="math inline">\(x = 3\)</span> is observed then Garth pays. If <span class="math inline">\(x = 2\)</span> is observed then Charles pays. Finally, if <span class="math inline">\(x = 1\)</span> is observed, Sadie pays. Thus writing down the probability mass function for <span class="math inline">\(X\)</span> also provides an easy way for computing the probability of each player having to pay.</p>
-<p>In order for <span class="math inline">\(X = 0\)</span>, we must have all tails come up. There are <span class="math inline">\(2^3 = 8\)</span> total possible sequences of <span class="math inline">\(3\)</span> coin tosses, and only <span class="math inline">\(1\)</span> of these results in <span class="math inline">\(X = 0\)</span>, therefore <span class="math inline">\(P(X = 0) = p(0) = \frac{1}{8}\)</span>. The same logic applies to <span class="math inline">\(X = 3\)</span> where we need to toss all heads. There are several techniques for finding <span class="math inline">\(p(1)\)</span> and <span class="math inline">\(p(2)\)</span>.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> The most direct way is to recognize that there are exactly <span class="math inline">\(3\)</span> ways of observing <span class="math inline">\(1\)</span> head (it can be in the first, second, or third toss). Thus, <span class="math inline">\(p(1) = \frac{3}{8}\)</span>. For <span class="math inline">\(p(2)\)</span>, the same logic applies except we ask “where is the one tail?” to give <span class="math inline">\(p(2) = \frac{3}{8}\)</span>. Then, taken together, this results in <span class="math display">\[p(x) = \begin{cases}
-\frac{1}{8} &amp; x \in \{0, 3\} \\
-\frac{3}{8} &amp; x \in \{1, 2\} \\
-0 &amp; \text{otherwise}.\end{cases}\]</span> We can also read off from this result that Garth pays <span class="math inline">\(\frac{1}{4}\)</span> of the time in the long run, while Sadie and Charles each pay <span class="math inline">\(\frac{3}{8}\)</span> of the time.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<p>In order for <span class="math inline">\(X = 0\)</span>, we must have all tails come up. There are <span class="math inline">\(2^3 = 8\)</span> total possible sequences of <span class="math inline">\(3\)</span> coin tosses, and only <span class="math inline">\(1\)</span> of these results in <span class="math inline">\(X = 0\)</span>, therefore <span class="math inline">\(P(X = 0) = p(0) = \dfrac{1}{8}\)</span>. The same logic applies to <span class="math inline">\(X = 3\)</span> where we need to toss all heads. There are several techniques for finding <span class="math inline">\(p(1)\)</span> and <span class="math inline">\(p(2)\)</span>.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> The most direct way is to recognize that there are exactly <span class="math inline">\(3\)</span> ways of observing <span class="math inline">\(1\)</span> head (it can be in the first, second, or third toss). Thus, <span class="math inline">\(p(1) = \dfrac{3}{8}\)</span>. For <span class="math inline">\(p(2)\)</span>, the same logic applies except we ask “where is the one tail?” to give <span class="math inline">\(p(2) = \dfrac{3}{8}\)</span>. Then, taken together, this results in <span class="math display">\[p(x) = \begin{cases}
+\dfrac{1}{8} &amp; x \in \{0, 3\} \\
+\dfrac{3}{8} &amp; x \in \{1, 2\} \\
+0 &amp; \text{otherwise}.\end{cases}\]</span> We can also read off from this result that Garth pays <span class="math inline">\(\dfrac{1}{4}\)</span> of the time in the long run, while Sadie and Charles each pay <span class="math inline">\(\dfrac{3}{8}\)</span> of the time.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
 </div>
 </div>
 </div>
@@ -462,9 +494,14 @@ Solution
 </div>
 </div>
 </div>
-<p>When solving questions related to probabilities using a probability mass function, the same secondary properties apply. Notably, if we want to know <span class="math inline">\(P(X\in A)\)</span>, for some set of possible values <span class="math inline">\(A\)</span>, then we can write <span class="math display">\[P(X\in A) = \sum_{x\in A}p(x).\]</span> This can be particularly helpful, for instance, if we want to know <span class="math inline">\(P(X \leq c)\)</span> for some constant value <span class="math inline">\(c\)</span>. In this case we know that the possible values range from teh smallest value <span class="math inline">\(X\)</span> can take on, through to <span class="math inline">\(c\)</span>, giving for instance, <span class="math display">\[P(X\leq c) = \sum_{x=0}^c p(x),\]</span> if <span class="math inline">\(X \geq 0\)</span>. Rules regarding the complements of events continue to hold as well, where for instance, <span class="math inline">\(P(X &gt; c) = 1 - P(X\leq c)\)</span>, giving a useful avenue for simplifying probability calculations.</p>
+<p>When solving questions related to probabilities using a probability mass function, the same secondary properties apply. Notably, if we want to know <span class="math inline">\(P(X\in A)\)</span>, for some set of possible values <span class="math inline">\(A\)</span>, then we can write <span class="math display">\[P(X\in A) = \sum_{x\in A}p(x).\]</span> This can be particularly helpful, for instance, if we want to know <span class="math inline">\(P(X \leq c)\)</span> for some constant value <span class="math inline">\(c\)</span>. In this case we know that the possible values range from the smallest value <span class="math inline">\(X\)</span> can take on, through to <span class="math inline">\(c\)</span>, giving for instance, <span class="math display">\[P(X\leq c) = \sum_{x=0}^c p(x),\]</span> if <span class="math inline">\(X \geq 0\)</span>. These probabilities that consider the cumulative likelihood of <span class="math inline">\(X\)</span> taking on a value up to (or including) some number arise frequently in probability, and correspondingly, are themselves named.</p>
+<div id="def-cumulative-distribution-function" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5.6 (Cumulative Distribution Function (Discrete))</strong></span> The cumulative distribution function of a discrete random variable, <span class="math inline">\(X\)</span>, is denoted <span class="math inline">\(F_X(x)\)</span>, and is defined as the probability that <span class="math inline">\(X\)</span> is less than or equal to a particular value. That is, <span class="math display">\[F_X(x) = P(X \leq x) = \sum_{x = -\infty}^x p_X(x).\]</span> The summation is typically written starting at the smallest value of <span class="math inline">\(X\)</span> rather than starting from <span class="math inline">\(-\infty\)</span>.</p>
+</div>
+<p>The cumulative distribution function will be explored more thoroughly in <a href="chapter9.html" class="quarto-xref"><span>Chapter 9</span></a>. Generally, for discrete random variables, the cumulative distribution function is more complex than the probability mass function, and it often is only expressible directly through a summation. Despite this, you can always convert between the probability mass function and the cumulative distribution function, with each uniquely specifying the distribution of the random variable.</p>
+<p>The same rules regarding the complements of events continue to hold when working with probability mass functions and cumulative distribution functions. For instance, <span class="math display">\[P(X &gt; c) = 1 - P(X\leq c) = 1 - F_X(c),\]</span> giving a useful avenue for simplifying probability calculations.</p>
 <div id="exm-probability-calc" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.6 (Charles and Sadie: Amateur Ornithologists)</strong></span> Charles and Sadie watched a documentary about birds together, which had Sadie become quite interested in bird watching. Charles is skeptical<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> but agrees to go along with Sadie, supposing that there is a high enough probability of something interesting happening. Sadie scours the scholarly literature and determines that, in the area, the probability of seeing <span class="math inline">\(x\)</span> rare birds over a five hour birding session has a probability mass function given by <span class="math display">\[p(x) = \frac{e^{-3}3^x}{x!},\]</span> where <span class="math inline">\(x\geq 0\)</span>.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+<p><span class="theorem-title"><strong>Example 5.6 (Charles and Sadie: Amateur Ornithologists)</strong></span> Charles and Sadie watched a documentary about birds together, which had Sadie become quite interested in bird watching. Charles is skeptical<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> but agrees to go along with Sadie, supposing that there is a high enough probability of something interesting happening. Sadie scours the scholarly literature and determines that, in the area, the probability of seeing <span class="math inline">\(x\)</span> rare birds over a five hour birding session has a probability mass function given by <span class="math display">\[p(x) = \dfrac{e^{-3}3^x}{x!},\]</span> where <span class="math inline">\(x\geq 0\)</span>.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
 <p>What is the probability that during their bird watching adventure, Charles and Sadie see at least <span class="math inline">\(1\)</span> rare bird?</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
@@ -478,14 +515,14 @@ Solution
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>We are interesting in the probability <span class="math inline">\(P(X \geq 1)\)</span>, which we can write down explicitly as <span class="math display">\[P(X \geq 1) = \sum_{x=1}^\infty \frac{e^{-3}3^x}{x!}.\]</span> While, strictly speaking, it is possible to solve this infinite summation, it is an infinite summation and we would rather not. Instead we can realize that, if we take the event <span class="math inline">\(A = \{X \geq 1\}\)</span> then <span class="math inline">\(A^C\)</span> is the event <span class="math inline">\(\{X &lt; 1\} = \{X = 0\}\)</span>. As a result, using our elementary rules of probability we get that <span class="math display">\[P(X \geq 1) = 1 - P(X = 0) = 1 - \frac{e^{-3}3^{0}}{0!} = 1 - e^{-3} \approx 0.95.\]</span> As a result, there is an approximately <span class="math inline">\(0.95\)</span> probability that they see a rare bird while bird watching for five hours.</p>
+<p>We are interesting in the probability <span class="math inline">\(P(X \geq 1)\)</span>, which we can write down explicitly as <span class="math display">\[P(X \geq 1) = \sum_{x=1}^\infty \dfrac{e^{-3}3^x}{x!}.\]</span> While, strictly speaking, it is possible to solve this infinite summation, it is an infinite summation and we would rather not. Instead we can realize that, if we take the event <span class="math inline">\(A = \{X \geq 1\}\)</span> then <span class="math inline">\(A^C\)</span> is the event <span class="math inline">\(\{X &lt; 1\} = \{X = 0\}\)</span>. As a result, using our elementary rules of probability we get that <span class="math display">\[P(X \geq 1) = 1 - P(X = 0) = 1 - \dfrac{e^{-3}3^{0}}{0!} = 1 - e^{-3} \approx 0.95.\]</span> As a result, there is an approximately <span class="math inline">\(0.95\)</span> probability that they see a rare bird while bird watching for five hours.</p>
 </div>
 </div>
 </div>
 </div>
 <p>With events defined in terms of random variables, we can talk about events as being independent of each other or mutually exclusive using the familiar definitions. On a related note, we can talk of joint and conditional probabilities, relating to multiple events. With joint probabilities, it is often easiest to combine the event into a single, compound event, and find the marginal probability of that event. For instance, if you have the events <span class="math inline">\(X\)</span> is even and <span class="math inline">\(X \leq 15\)</span>, then the intersection of these events is <span class="math inline">\(X \in \{2,4,6,8,10,12,14\}\)</span> (supposing <span class="math inline">\(X &gt; 0\)</span>).</p>
 <div id="exm-condition-joint-probability" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.7 (Charles: The Ornithological Photographer)</strong></span> After a single time bird watching Charles is hooked! The next time that they go out, Charles brings a camera to snag some beautiful memories of the majesty they are witnessing. The only trouble is that Charles is not particularly good at taking photographs of stills, let alone of creatures that can fly. Charles is not yet certain, but suspects that every time a photograph is snapped, there is a <span class="math inline">\(0.1\)</span> probability that it turns out good. Because the camera is a film camera, the number of photos taken is a key metric, and Charles works out that, if <span class="math inline">\(X\)</span> is the number of bad photographs taken for every good photograph, the probability mass function for <span class="math inline">\(X\)</span> is given by <span class="math display">\[p(x) = (0.1)\times (0.9)^{x},\]</span> where <span class="math inline">\(x \geq 0\)</span> is an integer.</p>
+<p><span class="theorem-title"><strong>Example 5.7 (Charles: The Ornithological Photographer)</strong></span> After a single time bird watching Charles is hooked! The next time that they go out, Charles brings a camera to snag some beautiful memories of the majesty they are witnessing. The only trouble is that Charles is not particularly good at taking photographs of still subjects, let alone of creatures that can fly. Charles is not yet certain, but suspects that every time a photograph is snapped, there is a <span class="math inline">\(0.1\)</span> probability that it turns out good. Because the camera is a film camera, the number of photos taken is a key metric, and Charles works out that, if <span class="math inline">\(X\)</span> is the number of bad photographs taken for every good photograph, the probability mass function for <span class="math inline">\(X\)</span> is given by <span class="math display">\[p(x) = (0.1)\times (0.9)^{x},\]</span> where <span class="math inline">\(x \geq 0\)</span> is an integer.</p>
 <ol type="a">
 <li>What is the probability that Charles takes exactly three bad photos before the first good one?</li>
 <li>If <span class="math inline">\(A\)</span> is the event that Charles takes three bad photos before the first good one, and <span class="math inline">\(B\)</span> is the event that Charles takes more than four photos before the first good one, what is <span class="math inline">\(P(A,B)\)</span>? What does this means about <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>?</li>
@@ -510,10 +547,10 @@ Solution
 <li><p>Here, we want <span class="math inline">\(p(3) = (0.1)\times(0.9)^3 = 0.0729\)</span>.</p></li>
 <li><p>Considering <span class="math inline">\(A \cap B\)</span> we have <span class="math inline">\(\{X = 3\} \cap \{X \geq 4\} = \emptyset\)</span>. As a result, <span class="math inline">\(P(A,B) = 0\)</span> since there is no overlap between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. As a result, these events are mutually exclusive.</p></li>
 <li><p>Here, we can frame this probability as <span class="math display">\[P(X \geq 4 | X \geq 2)\]</span> This can be directly computed using the definition of conditional probability, <span class="math display">\[\begin{align*}
-P(X \geq 4 | X \geq 2) &amp;= \frac{P(X \geq 4, X \geq 2)}{P(X \geq 2)} \\
-&amp;= \frac{P(X \geq 4)}{1 - P(X &lt; 2)} \\
-&amp;= \frac{1 - P(X &lt; 4)}{1 - (0.1 + 0.1\times0.9)} \\
-&amp;= \frac{1 - (0.1 + 0.1\times 0.9 + 0.1\times 0.9^2 + 0.1\times0.9^3)}{1 - (0.1 + 0.1\times 0.9)} \\
+P(X \geq 4 | X \geq 2) &amp;= \dfrac{P(X \geq 4, X \geq 2)}{P(X \geq 2)} \\
+&amp;= \dfrac{P(X \geq 4)}{1 - P(X &lt; 2)} \\
+&amp;= \dfrac{1 - P(X &lt; 4)}{1 - (0.1 + 0.1\times0.9)} \\
+&amp;= \dfrac{1 - (0.1 + 0.1\times 0.9 + 0.1\times 0.9^2 + 0.1\times0.9^3)}{1 - (0.1 + 0.1\times 0.9)} \\
 &amp;= 0.81.
 \end{align*}\]</span></p></li>
 <li><p>Through direct calculation we get <span class="math display">\[P(X \geq 2) = 1 - P(X &lt; 2) = 1 - (0.1 + 0.1\times 0.9) = 0.81.\]</span></p></li>
@@ -547,15 +584,15 @@ A Discussion of Distributional Language
 <p>Suppose that we roll two six-sided fair dice. Let <span class="math inline">\(X\)</span> denote the sum of the two dice, and let <span class="math inline">\(Y\)</span> denote the maximum value showing on the two dice. <span class="math inline">\(X\)</span> is a discrete random variable taking on values between <span class="math inline">\(2\)</span> and <span class="math inline">\(12\)</span>, while <span class="math inline">\(Y\)</span> is a discrete random variable taking on values between <span class="math inline">\(1\)</span> and <span class="math inline">\(6\)</span>. The supports for the two random variables are different from one another and so immediately we know that their probabilistic behaviour must be different, despite the fact that both random variables summarize the same statistical experiment.</p>
 <p>We can also immediately see that the two random variables, while not equal to each other, are dependent. For instance, if you know that <span class="math inline">\(Y=1\)</span> then you know that <span class="math inline">\(X = 2\)</span>, and if you know that <span class="math inline">\(Y = 3\)</span>, then you know that <span class="math inline">\(X \leq 6\)</span>. To begin to capture the joint behaviour of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> we introduce the joint distribution and joint probability mass function.</p>
 <div id="def-joint-distribution" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.6 (Joint Distribution)</strong></span> A joint probability distribution describes the joint probabilistic behaviour of two or more random variables, simultaneously.</p>
+<p><span class="theorem-title"><strong>Definition 5.7 (Joint Distribution)</strong></span> A joint probability distribution describes the joint probabilistic behaviour of two or more random variables, simultaneously.</p>
 </div>
 <div id="def-joint-pmf" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.7 (Joint Probability Mass Function)</strong></span> A joint probability mass function describes the behaviour of the joint distribution of multiple random variables. For a set of random variables, <span class="math inline">\(X_1, \dots, X_n\)</span>, the joint probability mass function assigns a probability value for every <em>tuple</em> of values that <span class="math inline">\((X_1,\dots,X_n)\)</span> can take on.</p>
+<p><span class="theorem-title"><strong>Definition 5.8 (Joint Probability Mass Function)</strong></span> A joint probability mass function describes the behaviour of the joint distribution of multiple random variables. For a set of random variables, <span class="math inline">\(X_1, \dots, X_n\)</span>, the joint probability mass function assigns a probability value for every <em>tuple</em> of values that <span class="math inline">\((X_1,\dots,X_n)\)</span> can take on.</p>
 </div>
 <p>The joint probability mass function is analogous to the marginal probability mass function, only it considers joint events rather than marginal ones. Suppose that you have two random variables, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. The joint probability mass function assigns a probability value for every pair of values that <span class="math inline">\((X,Y)\)</span> can take on. That is, <span class="math inline">\(p_{X,Y}(x,y) = P(X = x, Y = y)\)</span>. Then, once you know the joint behaviour of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, you can fully summarize the combined behaviour of the underlying experiment.</p>
 <div id="exm-joint-pmf" class="theorem example">
 <p><span class="theorem-title"><strong>Example 5.8 (Charles and Sadie’s Bird Outings)</strong></span> Charles and Sadie have both gotten deeply into their ornithological adventures. They go on trips together, Sadie is responsible for spotting the rare birds, and then Charles for snapping the photos. Charles has settled on a camera setup that allows for <span class="math inline">\(10\)</span> pictures to be taken before changing the film. The strategy that they follow is to go out and look for a rare bird. When one is spotted, Charles takes <span class="math inline">\(10\)</span> photos, trying to get as many good photos as possible. Then, the film is replaced and they repeat the process.</p>
-<p>If <span class="math inline">\(X\)</span> is a random variable representing the number of good photos that are taken, and <span class="math inline">\(Y\)</span> is the number of birds that are seen on the trip, then the joint probability mass function of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <span class="math display">\[p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!},\]</span> with <span class="math inline">\(0 \leq x \leq 10y\)</span>, and <span class="math inline">\(y \geq 0\)</span>.</p>
+<p>If <span class="math inline">\(X\)</span> is a random variable representing the number of good photos that are taken, and <span class="math inline">\(Y\)</span> is the number of birds that are seen on the trip, then the joint probability mass function of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <span class="math display">\[p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!},\]</span> with <span class="math inline">\(0 \leq x \leq 10y\)</span>, and <span class="math inline">\(y \geq 0\)</span>.</p>
 <ol type="a">
 <li>What is the probability that one bird is seen and there are no good photos taken?</li>
 <li>What is the probability that there is one or fewer good photos taken and two birds seen?</li>
@@ -573,10 +610,10 @@ Solution
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
-<li><p>Here we want <span class="math inline">\(Y = 1\)</span> and <span class="math inline">\(X = 0\)</span>. Thus, we compute <span class="math display">\[p_{X,Y}(0, 1) = \binom{10(1)}{0}\times(0.25)^{0}\times(0.75)^{10(1) - 0}\times\frac{e^{-3}3^1}{1!} \approx 0.008411.\]</span></p></li>
+<li><p>Here we want <span class="math inline">\(Y = 1\)</span> and <span class="math inline">\(X = 0\)</span>. Thus, we compute <span class="math display">\[p_{X,Y}(0, 1) = \binom{10(1)}{0}\times(0.25)^{0}\times(0.75)^{10(1) - 0}\times\dfrac{e^{-3}3^1}{1!} \approx 0.008411.\]</span></p></li>
 <li><p>Here we want <span class="math inline">\(\{X \leq 1\}\)</span> and <span class="math inline">\(Y = 2\)</span>. This is the same as <span class="math inline">\(X = 0\)</span> with <span class="math inline">\(Y = 2\)</span> or <span class="math inline">\(X = 1\)</span> with <span class="math inline">\(Y = 2\)</span>. Thus, <span class="math display">\[\begin{align*}
-p_{X,Y}(0,2) + p_{X,Y}(1,2) &amp;= \binom{10(2)}{0}\times(0.25)^{0}\times(0.75)^{10(2) - 0}\times\frac{e^{-3}3^2}{2!} \\
-&amp;\quad + \binom{10(2)}{1}\times(0.25)^{1}\times(0.75)^{10(2) - 1}\times\frac{e^{-3}3^2}{2!} \\
+p_{X,Y}(0,2) + p_{X,Y}(1,2) &amp;= \binom{10(2)}{0}\times(0.25)^{0}\times(0.75)^{10(2) - 0}\times\dfrac{e^{-3}3^2}{2!} \\
+&amp;\quad + \binom{10(2)}{1}\times(0.25)^{1}\times(0.75)^{10(2) - 1}\times\dfrac{e^{-3}3^2}{2!} \\
 &amp;\approx 0.00547.\end{align*}\]</span></p></li>
 </ol>
 </div>
@@ -653,12 +690,12 @@ Solution
 <p>If we continue to consider the case of a bivariate (two variable) joint distribution, we can use this setting to introduce the independence of random variables. Recall that the joint probability mass function of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is a function, <span class="math inline">\(p_{X,Y}(x,y) = P(X = x, Y = y)\)</span>. We have also introduced the marginal mass functions, <span class="math inline">\(p_X(x) = P(X = x)\)</span> and <span class="math inline">\(p_Y(y) = P(Y = y)\)</span>. Further, we have said that two events, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, are independent if their joint probability is equal to the product of their marginal probabilities, that is <span class="math inline">\(P(A,B) = P(A)P(B)\)</span>.</p>
 <p>If we take <span class="math inline">\(A=\{X=x'\}\)</span> and <span class="math inline">\(B=\{Y=y'\}\)</span>, then if <span class="math inline">\(A\perp B\)</span> we can write <span class="math inline">\(p_{X,Y}(x',y')=p_X(x')p_Y(y')\)</span>. If this holds for every possible <span class="math inline">\(x'\)</span> and every possible <span class="math inline">\(y'\)</span>, then we say that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent random variables, and we write <span class="math inline">\(X \perp Y\)</span>.</p>
 <div id="def-independent-rv" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.8 (Independent Random Variables)</strong></span> Two random variables, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are said to be independent random variables if their joint probability mass function is given by the product of their marginal probability mass functions, <span class="math display">\[p_{X,Y}(x,y) = p_X(x)p_Y(y).\]</span> We write <span class="math inline">\(X\perp Y\)</span>, and read: <span class="math inline">\(X\)</span> is independent of <span class="math inline">\(Y\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 5.9 (Independent Random Variables)</strong></span> Two random variables, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are said to be independent random variables if their joint probability mass function is given by the product of their marginal probability mass functions, <span class="math display">\[p_{X,Y}(x,y) = p_X(x)p_Y(y).\]</span> We write <span class="math inline">\(X\perp Y\)</span>, and read: <span class="math inline">\(X\)</span> is independent of <span class="math inline">\(Y\)</span>.</p>
 </div>
 <p>In words, two random variables are independent whenever all possible combinations of events between them are independent.</p>
 <div id="exm-pmf-independence" class="theorem example">
 <p><span class="theorem-title"><strong>Example 5.10 (Charles the Sports Fan)</strong></span> Charles is a major sports fan and has been particularly fond of <em>hurling</em> ever since a trip to Ireland. Each week, Charles watches with deep investment, becoming very attached to the outcome. Because of this attachment, Charles is willing to do just about anything to help out from behind the television set, which mostly consists of wearing the right coloured clothing. Charles’s theory is that by increasing the number of articles of green clothing that are worn, the number of scores in the game will also increase.</p>
-<p>Let <span class="math inline">\(X\)</span> represent the number of articles of green clothing that Charles is wearing, with <span class="math inline">\(X \in \{0,1,2,3,4\}\)</span>, and <span class="math inline">\(Y\)</span> is the number of scores in the game. Suppose that <span class="math display">\[p_X(x) = \frac{(x-2)^2}{10},\]</span> and that <span class="math display">\[p_Y(y) = \frac{e^{-45}\times 45^y}{y!}.\]</span></p>
+<p>Let <span class="math inline">\(X\)</span> represent the number of articles of green clothing that Charles is wearing, with <span class="math inline">\(X \in \{0,1,2,3,4\}\)</span>, and <span class="math inline">\(Y\)</span> is the number of scores in the game. Suppose that <span class="math display">\[p_X(x) = \dfrac{(x-2)^2}{10},\]</span> and that <span class="math display">\[p_Y(y) = \dfrac{e^{-45}\times 45^y}{y!}.\]</span></p>
 <ol type="a">
 <li>What is the joint probability mass function for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, assuming that they are independent?</li>
 <li>If it is determined that, assuming Charles wears no green clothing, the probability of <span class="math inline">\(50\)</span> scores is <span class="math inline">\(0.01\)</span>, are these random variables independent?</li>
@@ -676,8 +713,8 @@ Solution
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
-<li><p>If <span class="math inline">\(X\perp Y\)</span>, then the joint probability mass function is the product of the two, which is to say <span class="math display">\[p_{X,Y}(x,y) = \frac{(x-2)^2}{10}\cdot\frac{e^{-45}\times 45^y}{y!} = \frac{e^{-45}}{10}\times (x-2)^2 \times \frac{45^y}{y!}.\]</span></p></li>
-<li><p>Using the joint probability mass function found in (a), <span class="math display">\[p_{X,Y}(0, 15) = \frac{e^{-45}}{10}\times (0-2)^2 \times \frac{45^{50}}{(50)!} \approx 0.017.\]</span> This is not equal to <span class="math inline">\(0.01\)</span>, and so it must be the case that <span class="math inline">\(X\not\perp Y\)</span>.</p></li>
+<li><p>If <span class="math inline">\(X\perp Y\)</span>, then the joint probability mass function is the product of the two, which is to say <span class="math display">\[p_{X,Y}(x,y) = \dfrac{(x-2)^2}{10}\cdot\dfrac{e^{-45}\times 45^y}{y!} = \dfrac{e^{-45}}{10}\times (x-2)^2 \times \dfrac{45^y}{y!}.\]</span></p></li>
+<li><p>Using the joint probability mass function found in (a), <span class="math display">\[p_{X,Y}(0, 15) = \dfrac{e^{-45}}{10}\times (0-2)^2 \times \dfrac{45^{50}}{(50)!} \approx 0.017.\]</span> This is not equal to <span class="math inline">\(0.01\)</span>, and so it must be the case that <span class="math inline">\(X\not\perp Y\)</span>.</p></li>
 </ol>
 </div>
 </div>
@@ -685,7 +722,7 @@ Solution
 </div>
 <div id="exm-independence-arg" class="theorem example">
 <p><span class="theorem-title"><strong>Example 5.11 (The Independence Argument)</strong></span> Charles and Sadie are having a disagreement about the nature of the probabilities on their bird outings. Charles claims that, without knowing the marginal probability mass functions of the number of good pictures taken, and the number of rare birds that are seen, there is no way to tell whether the the two random quantities are independent or not. Sadie cannot say exactly why this argument feels wrong, but insists that the two quantities must not be independent.</p>
-<p>Who is correct, and why? Recall that <span class="math display">\[p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!},\]</span> with <span class="math inline">\(0 \leq x \leq 10y\)</span>, and <span class="math inline">\(y \geq 0\)</span></p>
+<p>Who is correct, and why? Recall that <span class="math display">\[p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!},\]</span> with <span class="math inline">\(0 \leq x \leq 10y\)</span>, and <span class="math inline">\(y \geq 0\)</span></p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -733,14 +770,14 @@ P(X \in A, Y \in B) &amp;= \sum_{x\in A}P(X=x,Y\in B) \\
 <h2 data-number="5.5" class="anchored" data-anchor-id="conditional-probability-distributions"><span class="header-section-number">5.5</span> Conditional Probability Distributions</h2>
 <p>When introducing events, we discussed how the concepts of independence and dependence could be understood more intuitively through the use of conditional probabilities. The same is true for random variables.</p>
 <div id="def-conditional-distribution" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.9 (Conditional Distributions)</strong></span> A conditional distribution of a random variable captures the probabilistic behaviour of a random variable, given information regarding another (or several other) random variables.</p>
+<p><span class="theorem-title"><strong>Definition 5.10 (Conditional Distributions)</strong></span> A conditional distribution of a random variable captures the probabilistic behaviour of a random variable, given information regarding another (or several other) random variables.</p>
 </div>
 <div id="def-conditional-pmf" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.10 (Conditional Probability Mass Function)</strong></span> A conditional probability mass function assigns probability values associated with any conditional event between multiple random variables. For instance, if there are two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, the conditional probability mass function of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y\)</span> characterizes events of the form <span class="math inline">\(X\)</span> given <span class="math inline">\(Y=y\)</span>. Mathematically, the conditional mass function is <span class="math display">\[p_{X|Y}(x|y) = \frac{p_{X,Y}(x,y)}{p_Y(y)}.\]</span></p>
+<p><span class="theorem-title"><strong>Definition 5.11 (Conditional Probability Mass Function)</strong></span> A conditional probability mass function assigns probability values associated with any conditional event between multiple random variables. For instance, if there are two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, the conditional probability mass function of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y\)</span> characterizes events of the form <span class="math inline">\(X\)</span> given <span class="math inline">\(Y=y\)</span>. Mathematically, the conditional mass function is <span class="math display">\[p_{X|Y}(x|y) = \dfrac{p_{X,Y}(x,y)}{p_Y(y)}.\]</span></p>
 </div>
-<p>This definition is analogous to the formula for conditional probabilities more generally, give by the joint distribution over the marginal distribution. To determine the probability of any event (for <span class="math inline">\(X\)</span>) given some information about <span class="math inline">\(Y\)</span>, you plug-in <span class="math inline">\(X=x\)</span> and <span class="math inline">\(Y=y\)</span> into the conditional probability mass function. If you want to condition on more than one random variable, the quantities extend in exactly the same way, where for instance <span class="math display">\[P(X=x|Y=y,Z=z)=\frac{P(X=x,Y=y,z=z)}{P(Y=y,Z=z)}.\]</span></p>
+<p>This definition is analogous to the formula for conditional probabilities more generally, give by the joint distribution over the marginal distribution. To determine the probability of any event (for <span class="math inline">\(X\)</span>) given some information about <span class="math inline">\(Y\)</span>, you plug-in <span class="math inline">\(X=x\)</span> and <span class="math inline">\(Y=y\)</span> into the conditional probability mass function. If you want to condition on more than one random variable, the quantities extend in exactly the same way, where for instance <span class="math display">\[P(X=x|Y=y,Z=z)=\dfrac{P(X=x,Y=y,z=z)}{P(Y=y,Z=z)}.\]</span></p>
 <div id="exm-conditional-pmf" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.12 (Charles Accepts the Argument)</strong></span> After some convincing, Charles accepts the argument that the number of good pictures taken and the number of rare birds seen cannot be independent events. What really makes this clear, however, is when Sadie points out that the marginal probability mass function for the number of rare birds seen is given by <span class="math display">\[p_{Y} = \frac{e^{-3}3^y}{y!}.\]</span> Taken together with the fact that <span class="math display">\[p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!},\]</span> with <span class="math inline">\(0 \leq x \leq 10y\)</span>, and <span class="math inline">\(y \geq 0\)</span>, Charles realizes that the conditional distribution of <span class="math inline">\(X|Y\)</span> can be computed.</p>
+<p><span class="theorem-title"><strong>Example 5.12 (Charles Accepts the Argument)</strong></span> After some convincing, Charles accepts the argument that the number of good pictures taken and the number of rare birds seen cannot be independent events. What really makes this clear, however, is when Sadie points out that the marginal probability mass function for the number of rare birds seen is given by <span class="math display">\[p_{Y} = \dfrac{e^{-3}3^y}{y!}.\]</span> Taken together with the fact that <span class="math display">\[p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!},\]</span> with <span class="math inline">\(0 \leq x \leq 10y\)</span>, and <span class="math inline">\(y \geq 0\)</span>, Charles realizes that the conditional distribution of <span class="math inline">\(X|Y\)</span> can be computed.</p>
 <ol type="a">
 <li>What is the conditional probability mass function of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y\)</span>?</li>
 <li>Given that <span class="math inline">\(2\)</span> birds are seen, what is the probability that any good photos are taken?</li>
@@ -758,7 +795,7 @@ Solution
 <div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
-<li><p>For the conditional probability mass function we take <span class="math inline">\(p_{X,Y}(x, y)/p_{Y}(y)\)</span>$. This gives <span class="math display">\[p_{X|Y}(x|y) = \frac{\binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!}}{\frac{e^{-3}3^y}{y!}} = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}.\]</span></p></li>
+<li><p>For the conditional probability mass function we take <span class="math inline">\(p_{X,Y}(x, y)/p_{Y}(y)\)</span>$. This gives <span class="math display">\[p_{X|Y}(x|y) = \dfrac{\binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!}}{\dfrac{e^{-3}3^y}{y!}} = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}.\]</span></p></li>
 <li><p>To represent this, we want <span class="math inline">\(P(X \geq 1 | Y = 2)\)</span>. From properties of probability, we know that <span class="math inline">\(P(X \geq 1 | Y = 2) = 1 - P(X &lt; 1 | Y = 2) = P(X = 0 | Y = 2)\)</span>, and so using the conditional probability mass function found previously, this gives <span class="math display">\[P(X = 0 | Y = 2) = \binom{20}{0}(0.25)^{0}\times(0.75)^{20} = 0.75^{20}.\]</span> As a result, the probability of interest is <span class="math inline">\(1-0.75^{20} \approx 0.9968\)</span>, which is the probability that Charles takes at least one good picture if two birds are seen.</p></li>
 </ol>
 </div>
@@ -825,7 +862,7 @@ Bayes’ Theorem (with Probability Mass Functions)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Bayes’ Theorem can be rewritten using probability mass functions as well. Specifically, <span class="math display">\[p_{Y|X}(y|x) = \frac{p_{X|Y}(x|y)p_Y(y)}{p_X(x)}.\]</span> This follows directly from the definition of conditional probabilities, as well as the multiplication rule.</p>
+<p>Bayes’ Theorem can be rewritten using probability mass functions as well. Specifically, <span class="math display">\[p_{Y|X}(y|x) = \dfrac{p_{X|Y}(x|y)p_Y(y)}{p_X(x)}.\]</span> This follows directly from the definition of conditional probabilities, as well as the multiplication rule.</p>
 </div>
 </div>
 <p>These rules give the ability to compute the joint distribution and the other conditional information, when we have information regarding some of the marginals and some of the conditionals. These properties are used less <em>explicitly</em> when dealing with probability mass functions directly. Instead, they almost become absorbed into the fabric of the defining relationships themselves. That is to say, you are less likely to see Bayes’ theorem invoked directly when moving between conditional distributions; however, moving between conditional distributions <em>is</em> an important skill, and requires the use of Bayes’ Theorem.</p>
@@ -857,7 +894,7 @@ Solution
 <ol type="a">
 <li><p>For this question, we require the joint probability mass function we apply the product rule. That is, <span class="math display">\[p_{X,Y}(x,y) = p_{Y|X}(y|x)p_{X}(x) = (0.5 + 0.4x)^{y}\times(0.5 - 0.4x)^{1-y}\times0.85^{x}\times(0.15)^{1-x}.\]</span> Then, to find the probability that a chore is late and done by Charles we take <span class="math inline">\(p_{X,Y}(1,0) = 0.1\times 0.85 = 0.085.\)</span></p></li>
 <li><p>For Charles, we want <span class="math inline">\(P(Y=0|X=1)\)</span>, which can be solved for directly using the provided conditional probability mass function. That is, <span class="math display">\[p_{Y|X}(0|1) = (0.5 + 0.4)^{0}\times(0.5 - 0.4)^{1} = 0.1.\]</span> For Sadie, we want <span class="math inline">\(P(Y=0|X=0)\)</span>. This gives <span class="math display">\[p_{Y|X}(0|0) = (0.5)^{0}\times(0.5)^{1} = 0.5.\]</span></p></li>
-<li><p>Here we require the alternative conditional distribution, <span class="math inline">\(P(X|Y)\)</span>. For this we can leverage Bayes’ Theorem. Specifically, <span class="math display">\[p_{X|Y} = \frac{p_{Y|X}(y|x)p_{X}(x)}{p_{Y}(y)} = \frac{(0.5 + 0.4x)^{y}\times(0.5 - 0.4x)^{1-y}\times0.85^{x}\times(0.15)^{1-x}}{.85\times(0.9)^y(0.1)^{1-y} + 0.075}.\]</span> Then, the probability that Charles did the chore, given it was late, is <span class="math inline">\(p_{X|Y}(1|0) = 0.53125\)</span> and the probability that Sadie did the chore, given it was late, is <span class="math inline">\(p_{X|Y}(0|0) = 0.46875\)</span>.</p></li>
+<li><p>Here we require the alternative conditional distribution, <span class="math inline">\(P(X|Y)\)</span>. For this we can leverage Bayes’ Theorem. Specifically, <span class="math display">\[p_{X|Y} = \dfrac{p_{Y|X}(y|x)p_{X}(x)}{p_{Y}(y)} = \dfrac{(0.5 + 0.4x)^{y}\times(0.5 - 0.4x)^{1-y}\times0.85^{x}\times(0.15)^{1-x}}{.85\times(0.9)^y(0.1)^{1-y} + 0.075}.\]</span> Then, the probability that Charles did the chore, given it was late, is <span class="math inline">\(p_{X|Y}(1|0) = 0.53125\)</span> and the probability that Sadie did the chore, given it was late, is <span class="math inline">\(p_{X|Y}(0|0) = 0.46875\)</span>.</p></li>
 <li><p>Two things are true with the given probabilities. First, if a chore was done late, it was more likely done by Charles than Sadie. Second, Sadie is more likely to do chores late than Charles. This explains why Charles may feel responsibility for the late chores: a higher proportion of late chores are Charles’s chores. However, that is only because Charles does so many more chores to begin (the probability that Charles does a chore is <span class="math inline">\(0.85\)</span>).<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p></li>
 </ol>
 </div>
@@ -876,7 +913,7 @@ Marginalization
 </div>
 <div class="callout-body-container callout-body">
 <p>The idea with marginalization is that we are going to take a joint probability mass function and <em>marginalize it</em>, turning it into a marginal distribution. This is analogous to the law of total probability.</p>
-<p>When dealing with a random variable, <span class="math inline">\(Y\)</span>, there is some set of numeric values that <span class="math inline">\(Y\)</span> can take on, namely the support of <span class="math inline">\(Y\)</span>, which we denote <span class="math inline">\(\mathcal{Y}\)</span>. A natural partition of the space is to then take each possible value for <span class="math inline">\(Y\)</span> as the event, and simply enumerate through the elements of <span class="math inline">\(\mathcal{Y}\)</span>.</p>
+<p>When dealing with a random variable, <span class="math inline">\(Y\)</span>, there is some set of numeric values that <span class="math inline">\(Y\)</span> can take on, namely the support of <span class="math inline">\(Y\)</span>, which we denote <span class="math inline">\(\mathcal{Y}\)</span>. A natural partition of the space is to then take each possible value for <span class="math inline">\(Y\)</span> as the event, and enumerate through the elements of <span class="math inline">\(\mathcal{Y}\)</span>.</p>
 <p>Using this partition, we can ask about the ways that <span class="math inline">\(X\)</span> can take on any particular value. In order for <span class="math inline">\(X\)</span> to be some specific value, <span class="math inline">\(x'\)</span>, we know that <span class="math inline">\(Y\)</span> must be one of the values, <span class="math inline">\(y'\in\mathcal{Y}\)</span>. Thus, if we add up all the possible combinations, <span class="math inline">\((X=x',Y=y_1)\)</span>, <span class="math inline">\((X=x',Y=y_2)\)</span>, and so forth, we will have covered every possible way of making <span class="math inline">\(X=x'\)</span>. This is the exact same process we used when looking at contingency tables, where we summed a row or column to get the marginal probabilities.</p>
 <div id="fig-basic-partition-rv" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -895,7 +932,7 @@ Figure&nbsp;5.1: This graphic shows the partitioning of the sample space using a
 <p>When confronted with questions from statistics and probability, it will often be the case that the natural answer to the question is “it depends.” For instance, if asked “what is the probability that a student passes their next exam?” the likely response is “it depends.” One very useful technique for solving these questions in a satisfactory way is to continue that line of thought and explicitly specify “on what.” In the previous example, you may say “it depends on how much they study.” The conceit here is that, if you knew how much the student studied, then you would better understand the outcomes of the student’s exam.</p>
 <p>In mathematical terms this means you have a firm belief about the conditional distribution between the random quantities of <em>exam performance</em> and <em>study time</em>. The process of marginalization, and the law of total probability before that, provide useful ways of being able to translate these “it depends” statements into concrete beliefs about the marginal probabilities. Recall that marginal distributions are distributions which do not depend on any other quantity, and instead, thy capture the overall behaviour of a random variable. They have, in some sense, averaged out all other factors and give you the beliefs which do not depend on anything else at all. The technique for accomplishing this is marginalization.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a></p>
 <div id="exm-conditioning" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.15 (Photos and Bird Sightings on their Own)</strong></span> Recall that when Charles and Sadie go on their bird watching adventures, Charles takes photos hoping for as many good ones as possible, and Sadie spots the birds. We take <span class="math inline">\(X\)</span> to be the number of good photos taken on these trips, and <span class="math inline">\(Y\)</span> to be the number of rare birds that are seen. We noted that <span class="math display">\[p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!},\]</span> with <span class="math inline">\(0 \leq x \leq 10y\)</span>, and <span class="math inline">\(y \geq 0\)</span>.</p>
+<p><span class="theorem-title"><strong>Example 5.15 (Photos and Bird Sightings on their Own)</strong></span> Recall that when Charles and Sadie go on their bird watching adventures, Charles takes photos hoping for as many good ones as possible, and Sadie spots the birds. We take <span class="math inline">\(X\)</span> to be the number of good photos taken on these trips, and <span class="math inline">\(Y\)</span> to be the number of rare birds that are seen. We noted that <span class="math display">\[p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!},\]</span> with <span class="math inline">\(0 \leq x \leq 10y\)</span>, and <span class="math inline">\(y \geq 0\)</span>.</p>
 <ol type="a">
 <li>Write down an expression for the marginal probability mass function of <span class="math inline">\(Y\)</span>.</li>
 <li>Write down an expression for the marginal probability mass function of <span class="math inline">\(X\)</span>.</li>
@@ -914,12 +951,12 @@ Solution
 <div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
-<li><p>To find <span class="math inline">\(p_Y(y)\)</span>, we marginalize over <span class="math inline">\(X\)</span>. That is, we sum the joint probability distribution function over all values for <span class="math inline">\(X\)</span>. This gives <span class="math display">\[p_Y(y) = \sum_{x = 0}^{10y} p_{X,Y}(x, y) = \sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!}.\]</span></p></li>
-<li><p>To find <span class="math inline">\(p_X(x)\)</span>, we marginalize over <span class="math inline">\(Y\)</span>. That is, we sum the joint probability distribution function over all values for <span class="math inline">\(Y\)</span>. This gives <span class="math display">\[p_X(x) = \sum_{y = 0}^{\infty} p_{X,Y}(x, y) = \sum_{y = 0}^{\infty} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!}.\]</span></p></li>
+<li><p>To find <span class="math inline">\(p_Y(y)\)</span>, we marginalize over <span class="math inline">\(X\)</span>. That is, we sum the joint probability distribution function over all values for <span class="math inline">\(X\)</span>. This gives <span class="math display">\[p_Y(y) = \sum_{x = 0}^{10y} p_{X,Y}(x, y) = \sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!}.\]</span></p></li>
+<li><p>To find <span class="math inline">\(p_X(x)\)</span>, we marginalize over <span class="math inline">\(Y\)</span>. That is, we sum the joint probability distribution function over all values for <span class="math inline">\(Y\)</span>. This gives <span class="math display">\[p_X(x) = \sum_{y = 0}^{\infty} p_{X,Y}(x, y) = \sum_{y = 0}^{\infty} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!}.\]</span></p></li>
 <li><p>Note, that you will generally not be expected to manipulate these types of sums, however, it is possible to do. First, for <span class="math inline">\(p_Y(y)\)</span>, <span class="math display">\[\begin{align*}
-p_Y(y) &amp;= \sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\frac{e^{-3}3^y}{y!} \\
-&amp;= \frac{e^{-3}3^y}{y!}\underbrace{\sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}}_{=1} \\
-&amp;= \frac{e^{-3}3^y}{y!}.
+p_Y(y) &amp;= \sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!} \\
+&amp;= \dfrac{e^{-3}3^y}{y!}\underbrace{\sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}}_{=1} \\
+&amp;= \dfrac{e^{-3}3^y}{y!}.
 \end{align*}\]</span></p></li>
 </ol>
 </div>
@@ -931,7 +968,7 @@ p_Y(y) &amp;= \sum_{x = 0}^{10y} \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y
 <h2 data-number="5.7" class="anchored" data-anchor-id="independent-and-identically-distributed-a-framework-for-interpretation"><span class="header-section-number">5.7</span> Independent and Identically Distributed: A Framework for Interpretation</h2>
 <p>A very common assumption when addressing questions in statistics and in probability is that we have a set of random variables which are independent and identically distributed (often written iid). We now have the tools to understand concretely what this means.</p>
 <div id="def-iid" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.11 (Independent and Identically Distributed (iid))</strong></span> A set of random variables, <span class="math inline">\(X_1,X_2,\dots,X_n\)</span> are said to be independent and identically distributed (denoted iid) whenever:</p>
+<p><span class="theorem-title"><strong>Definition 5.12 (Independent and Identically Distributed (iid))</strong></span> A set of random variables, <span class="math inline">\(X_1,X_2,\dots,X_n\)</span> are said to be independent and identically distributed (denoted iid) whenever:</p>
 <ol type="i">
 <li>every subset of random variables in the collection is independent of every other subset of random variables in the collection; and</li>
 <li>the marginal distribution for each of the random variables are exactly the same.</li>
@@ -964,15 +1001,15 @@ Solution
 <li><p>Recall that for independent random variables, the joint probability mass function is given by the product of the marginal probability mass functions. To simplify the notation, we will define <span class="math inline">\(T(X) = \sum_{i=1}^y x_i\)</span>. Thus the probability mass function of <span class="math inline">\(X_1,\dots,X_y\)</span> is given by <span class="math display">\[\begin{align*}
 p_{X_1,X_2,\dots,X_y}(x_1,\dots,x_y) &amp;= \prod_{i=1}^y \binom{10}{x_i}(0.25)^{x_i}(0.75)^{10-x_i} \\
 &amp;= \left(\prod_{i=1}^y\binom{10}{x_i}\right)\times(0.25)^{\sum_{i=1}^y x_i}(0.75)^{10y - \sum_{i=1}^yx_i} \\
-&amp;= \left(\prod_{i=1}^y \frac{10!}{x_i!(10-x_i)!}\right)\times 0.25^{T(X)}\times 0.75^{10y - T(X)} \\
-&amp;= \left(\frac{(10!)^y}{\prod_{i=1}^y x_i!(10 - x_i)!}\right)\times 0.25^{T(X)}\times 0.75^{10y - T(X)}.
+&amp;= \left(\prod_{i=1}^y \dfrac{10!}{x_i!(10-x_i)!}\right)\times 0.25^{T(X)}\times 0.75^{10y - T(X)} \\
+&amp;= \left(\dfrac{(10!)^y}{\prod_{i=1}^y x_i!(10 - x_i)!}\right)\times 0.25^{T(X)}\times 0.75^{10y - T(X)}.
 \end{align*}\]</span></p></li>
 </ol>
 </div>
 </div>
 </div>
 </div>
-<p>While we will use the assumption of iid random variables explicitly at a later point.The iid assumption also provides an intuitive method for interpreting probability functions and distributions.</p>
+<p>While we will use the assumption of iid random variables explicitly at a later point, the iid assumption also provides an intuitive method for interpreting probability functions and distributions.</p>
 <p>Suppose that we were to take a probability mass function, <span class="math inline">\(p_X(x)\)</span>. If we were able to generate independent and identically distributed realizations from this probability mass function, then the function <span class="math inline">\(p_X(x)\)</span> describes the behaviour for these repeated realizations. Specifically, <span class="math inline">\(p_X(x)\)</span> will give the long-run proportion of realizations of the iid random variables which take the value <span class="math inline">\(x\)</span>.</p>
 <p>This type of statement is always the flavour of interpretation statements that are made with respect to probability and statistics. It is always be the case that, in order to understand what is meant by a statement of probability, we consider the repetition of some statistical experiment over and over again. When we were discussing sample spaces and experiments directly, we talked about repeating the experiment over and over again. When we begin to work with random variables instead, it becomes more natural to think about the replication procedures coming through the use of independent and identically distributed random variables.</p>
 <p>As your study of probability progresses, you will begin to work with random quantities in a strictly theoretical sense. In introductory level problems, we are often holding in mind very concrete examples to illustrate the procedures and concepts. In this setting it is easy enough to hold in mind the experiment of interest: for instance, we may have a random variable representing the result of a coin toss, and you can envision repeatedly tossing a coin. As the concepts become less concrete, more abstract, and harder to draw direct parallels to tangible scenarios, it becomes more and more important to rely on the interpretations rooted in a series of independent and identically distributed random variables.</p>
@@ -1020,7 +1057,7 @@ p_{X_1,X_2,\dots,X_y}(x_1,\dots,x_y) &amp;= \prod_{i=1}^y \binom{10}{x_i}(0.25)^
 <div id="exr-5.5" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 5.5</strong></span> Consider a probability mass function given by <span class="math display">\[p(x) = \begin{cases}
     z &amp; x = 1 \\
-    \frac{1}{x^2} &amp; x = 2, 3, 4, 5, 6, 7, 8, 9, 10 \\
+    \dfrac{1}{x^2} &amp; x = 2, 3, 4, 5, 6, 7, 8, 9, 10 \\
     0 &amp; \text{otherwise}
 \end{cases}.\]</span></p>
 <ol type="a">
@@ -1029,7 +1066,7 @@ p_{X_1,X_2,\dots,X_y}(x_1,\dots,x_y) &amp;= \prod_{i=1}^y \binom{10}{x_i}(0.25)^
 </ol>
 </div>
 <div id="exr-5.6" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.6</strong></span> Consider the probability mass function, defined for all non-negative integers, given by <span class="math display">\[p(x) = \frac{2^xe^{-2}}{x!}.\]</span></p>
+<p><span class="theorem-title"><strong>Exercise 5.6</strong></span> Consider the probability mass function, defined for all non-negative integers, given by <span class="math display">\[p(x) = \dfrac{2^xe^{-2}}{x!}.\]</span></p>
 <ol type="a">
 <li>What is <span class="math inline">\(P(X = 0)\)</span>?</li>
 <li>What is <span class="math inline">\(P(X = 5)\)</span>?</li>
@@ -1041,7 +1078,7 @@ p_{X_1,X_2,\dots,X_y}(x_1,\dots,x_y) &amp;= \prod_{i=1}^y \binom{10}{x_i}(0.25)^
 <ol type="a">
 <li><span class="math inline">\(p(x) &lt; 0\)</span> for some <span class="math inline">\(x \in \mathbb{Z}\)</span>.</li>
 <li><span class="math inline">\(p(x) &gt; 1\)</span> for some <span class="math inline">\(x \in\mathbb{Z}\)</span>.</li>
-<li><span class="math inline">\(p(x) &gt; \frac{\pi}{\ell}\)</span> for all elements of an <span class="math inline">\(\ell\)</span> element set.</li>
+<li><span class="math inline">\(p(x) &gt; \dfrac{\pi}{\ell}\)</span> for all elements of an <span class="math inline">\(\ell\)</span> element set.</li>
 <li><span class="math inline">\(p(-|x|) &gt; 0\)</span> for all <span class="math inline">\(x\in\mathbb{Z}\)</span>.</li>
 </ol>
 </div>
@@ -1049,7 +1086,7 @@ p_{X_1,X_2,\dots,X_y}(x_1,\dots,x_y) &amp;= \prod_{i=1}^y \binom{10}{x_i}(0.25)^
 <p><span class="theorem-title"><strong>Exercise 5.8</strong></span> Suppose that, for some fixed integer, <span class="math inline">\(y\)</span>, you define the mathematical function <span class="math inline">\(p(x) = \delta_y = I(x = y)\)</span>. That is, it takes a value of <span class="math inline">\(1\)</span> if <span class="math inline">\(x = y\)</span> and <span class="math inline">\(0\)</span> otherwise. Is this a valid probability mass function? Why?</p>
 </div>
 <div id="exr-5.9" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.9</strong></span> Consider the joint probability mass function of two random variables, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, given by <span class="math display">\[P(X=x, Y=y) = \frac{1}{150}(x + y), 1\leq x, y\leq 5.\]</span></p>
+<p><span class="theorem-title"><strong>Exercise 5.9</strong></span> Consider the joint probability mass function of two random variables, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, given by <span class="math display">\[P(X=x, Y=y) = \dfrac{1}{150}(x + y), 1\leq x, y\leq 5.\]</span></p>
 <ol type="a">
 <li>Show that this is a valid joint probability mass function.</li>
 <li>What is <span class="math inline">\(P(X = 2, Y = 3)\)</span>?</li>
@@ -1061,7 +1098,7 @@ p_{X_1,X_2,\dots,X_y}(x_1,\dots,x_y) &amp;= \prod_{i=1}^y \binom{10}{x_i}(0.25)^
 </ol>
 </div>
 <div id="exr-5.10" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.10</strong></span> Consider the joint probability mass function of two random variables, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, given by <span class="math display">\[P(X=x, Y=y) = \frac{1}{12}(y - x)^2, 1\leq x, y\leq 3.\]</span></p>
+<p><span class="theorem-title"><strong>Exercise 5.10</strong></span> Consider the joint probability mass function of two random variables, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, given by <span class="math display">\[P(X=x, Y=y) = \dfrac{1}{12}(y - x)^2, 1\leq x, y\leq 3.\]</span></p>
 <ol type="a">
 <li>Show that this is a valid joint probability mass function.</li>
 <li>What is <span class="math inline">\(P(X = 1, Y = 2)\)</span>?</li>
@@ -1092,7 +1129,7 @@ X = 2 &amp; 0.2 &amp; 0.1 &amp; 0.1 \\
 </ol>
 </div>
 <div id="exr-5.12" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.12</strong></span> Suppose that a particular disease is associated with two common types of genetic mutations, say type <span class="math inline">\(A\)</span> and type <span class="math inline">\(B\)</span>. Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> correspond to the random variables which count the locations at which each type of mutation has occurred. In order for a type <span class="math inline">\(B\)</span> mutation to occur, a type <span class="math inline">\(A\)</span> must have also occurred at the same location, and so we can say that <span class="math display">\[P(B=b|A=a) = \binom{a}{b}(0.25)^b(0.75)^{a-b}, \quad b\in\{0,1,2,\dots, a\}.\]</span> Moreover, suppose that <span class="math display">\[P(A=a) = \frac{10-a}{45} \quad a\in\{0,1,2,3,4,5\}.\]</span></p>
+<p><span class="theorem-title"><strong>Exercise 5.12</strong></span> Suppose that a particular disease is associated with two common types of genetic mutations, say type <span class="math inline">\(A\)</span> and type <span class="math inline">\(B\)</span>. Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> correspond to the random variables which count the locations at which each type of mutation has occurred. In order for a type <span class="math inline">\(B\)</span> mutation to occur, a type <span class="math inline">\(A\)</span> must have also occurred at the same location, and so we can say that <span class="math display">\[P(B=b|A=a) = \binom{a}{b}(0.25)^b(0.75)^{a-b}, \quad b\in\{0,1,2,\dots, a\}.\]</span> Moreover, suppose that <span class="math display">\[P(A=a) = \dfrac{10-a}{45} \quad a\in\{0,1,2,3,4,5\}.\]</span></p>
 <ol type="a">
 <li>What is the joint probability mass function of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>?</li>
 <li>What is the marginal probability mass function of <span class="math inline">\(B\)</span>?</li>
@@ -1103,7 +1140,7 @@ X = 2 &amp; 0.2 &amp; 0.1 &amp; 0.1 \\
 </ol>
 </div>
 <div id="exr-5.13" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.13</strong></span> Suppose a factory produces two types of products: Widgets and Gadgets. Let <span class="math inline">\(W\)</span> and <span class="math inline">\(G\)</span> represent the random variables denoting the number of units produced for each type, in a particular hour. Suppose that the following is observed as the joint probability mass function <span class="math display">\[P(W=w, G=g) = \frac{1}{80}, \quad w \in \{1,2,3,\dots,8\}, g \in \{1,2,3,\dots,10\}.\]</span></p>
+<p><span class="theorem-title"><strong>Exercise 5.13</strong></span> Suppose a factory produces two types of products: Widgets and Gadgets. Let <span class="math inline">\(W\)</span> and <span class="math inline">\(G\)</span> represent the random variables denoting the number of units produced for each type, in a particular hour. Suppose that the following is observed as the joint probability mass function <span class="math display">\[P(W=w, G=g) = \dfrac{1}{80}, \quad w \in \{1,2,3,\dots,8\}, g \in \{1,2,3,\dots,10\}.\]</span></p>
 <ol type="a">
 <li>What is the marginal probability mass function, <span class="math inline">\(P(W)\)</span>?</li>
 <li>What is the marginal probability mass function, <span class="math inline">\(P(G)\)</span>?</li>
@@ -1152,7 +1189,7 @@ X = 2 &amp; 0.2 &amp; 0.1 &amp; 0.1 \\
 <li id="fn7"><p>This notation refers to the set of all integers<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>That is, <span class="math inline">\(p(x)\)</span> is a function, <span class="math inline">\(p\colon\mathcal{X}\to[0,1]\)</span>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9"><p>One particularly elegant technique is to realize that <span class="math inline">\(p(1)\)</span> and <span class="math inline">\(p(2)\)</span> must be the same by interchanging the roles of heads and tails. Thus, we have <span class="math inline">\(p(1) + p(2) + 0.25 = 1\)</span> by the unitary property of probability, and rearranging gives <span class="math inline">\(p(1) = p(2) = 0.375\)</span>.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>We can actually write down this probability mass function more succinctly as <span class="math inline">\(p(x) = \binom{3}{x}\frac{1}{8}\)</span>. You can check this holds for yourself, and we will understand why later on!<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>We can actually write down this probability mass function more succinctly as <span class="math inline">\(p(x) = \binom{3}{x}\dfrac{1}{8}\)</span>. You can check this holds for yourself, and we will understand why later on!<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>Charles is still not entirely sure if birds are even real, let alone worth watching.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p>How Sadie found such a concrete answer, I will never know.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn13"><p>Instead of independence, we may describe this distribution as being “memoryless”. If you know that you have been waiting a certain amount of time for something to happen (a good picture to get taken) that does not change your belief about how much longer you have to wait; the process “forgets” that it has been ongoing for sometime.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -1603,7 +1640,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"openEffect":"zoom","descPosition":"bottom"});
+<script type="application/javascript" src="../webex.js"></script>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

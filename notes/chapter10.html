@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>STAT 1793: Course Notes - 10&nbsp; Introduction to Statistics</title>
+<title>Understanding Uncertainty - 10&nbsp; Introduction to Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -128,9 +128,9 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">STAT 1793: Course Notes</a> 
+      <a href="../">Understanding Uncertainty</a> 
         <div class="sidebar-tools-main">
-    <a href="../STAT-1793--Course-Notes.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../Understanding-Uncertainty.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -230,7 +230,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Descriptive Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Methods of Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Confidence Intervals</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
   </div>
 </li>
       </ul>
@@ -296,7 +326,7 @@ window.Quarto = {
 <div id="def-statistics" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 10.1 (Statistics (Field of Study))</strong></span> Statistics is the discipline in which data are collected, analyzed, and presented with the goal of understanding the mechanisms through which those data were generated.</p>
 </div>
-<p>In Probability we make assumptions about the world and calculate probabilities. These probabilities describe what we should expect to see if we were to observe the processes as they were assumed to exist. In Statistics, we collect information from statistical experiments, and use these data to infer what conditions were likely to have given rise to our observations. We are back solving for what set of assumptions are most plausible, given the observations. Uncertainty remains at the core of statistics. We will rarely be able to know <em>for certain</em> what different assumptions gave rise to the data that we observe, but instead look to clarify and quantify the ever-present uncertainty. Probability remains central to the study of statistics. Specifically, probability is the core tool for quantifying the ever-present uncertainty. Probability statements are the language of Statistics. As a result, the study of Statistics is largely the study of how we can take the set of tools that have been developed throughout the first part of this course, and apply them in the reverse direction. Statistics gives us the tools that we need to make sense of the world around us. Statistics serves as a process for evaluating the quality of evidence and drawing conclusions from it. Statistics is the necessary area of study to draw informed conclusions from the information that we collect. Ultimately, it is Statistics which powers quantitative decision-making. Virtually every avenue of the modern world demands that we make decisions on the basis of incomplete or imperfect information, and through Statistics we can ensure that these decisions are as informed as possible.</p>
+<p>In Probability we make assumptions about the world and calculate probabilities. These probabilities describe what we should expect to see if we were to observe the processes as they were assumed to exist. In Statistics, we collect information from statistical experiments, and use these data to infer what conditions were likely to have given rise to our observations. We are back solving for what set of assumptions are most plausible, given the observations. Uncertainty remains at the core of statistics. We will rarely be able to know <em>for certain</em> what different assumptions gave rise to the data that we observe, but instead look to clarify and quantify the ever-present uncertainty. Probability remains central to the study of statistics. Specifically, probability is the core tool for quantifying the ever-present uncertainty. Probability statements are the language of Statistics. As a result, the study of Statistics is largely the study of how we can take the set of tools that have been developed throughout the first part of these notes, and apply them in the reverse direction. Statistics gives us the tools that we need to make sense of the world around us. Statistics serves as a process for evaluating the quality of evidence and drawing conclusions from it. Statistics is the necessary area of study to draw informed conclusions from the information that we collect. Ultimately, it is Statistics which powers quantitative decision-making. Virtually every avenue of the modern world demands that we make decisions on the basis of incomplete or imperfect information, and through Statistics we can ensure that these decisions are as informed as possible.</p>
 </section>
 <section id="background-and-data" class="level2" data-number="10.2">
 <h2 data-number="10.2" class="anchored" data-anchor-id="background-and-data"><span class="header-section-number">10.2</span> Background and Data</h2>
@@ -816,7 +846,7 @@ Solution
 </section>
 <section id="data-description-and-organization" class="level2" data-number="10.5">
 <h2 data-number="10.5" class="anchored" data-anchor-id="data-description-and-organization"><span class="header-section-number">10.5</span> Data Description and Organization</h2>
-<p>Whether data are collected via sampling or experimentation, it is important to ensure that statistical principles are followed so that the observed data are representative of the population of interest and useful for accomplishing the goals of the statistical analysis. There is a substantial amount of statistical work which goes into ensuring that data collection is valid. Once valid data have been collected, we must <em>do</em> something with them. As previously discussed, there are typically four use cases for data. In this course, our focus is on description and inference. Before we can use the data to describe patterns or conduct inference, we must first develop a shared language around what data <em>are</em>. Some of this has been informally introduced throughout our discussions thus far, however, the formal definition remains important for ensuring the foundation for statistical analyses.</p>
+<p>Whether data are collected via sampling or experimentation, it is important to ensure that statistical principles are followed so that the observed data are representative of the population of interest and useful for accomplishing the goals of the statistical analysis. There is a substantial amount of statistical work which goes into ensuring that data collection is valid. Once valid data have been collected, we must <em>do</em> something with them. As previously discussed, there are typically four use cases for data. In these notes, our focus is on description and inference. Before we can use the data to describe patterns or conduct inference, we must first develop a shared language around what data <em>are</em>. Some of this has been informally introduced throughout our discussions thus far, however, the formal definition remains important for ensuring the foundation for statistical analyses.</p>
 <div id="def-variable" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 10.20 (Variable)</strong></span> A characteristic or trait that can vary from one observation to the next is called a variable. Variables are the relevant pieces of information that are recorded in our data. We may have one or more variable recorded for each individual unit in our data.</p>
 </div>
@@ -871,7 +901,7 @@ Solution
 </section>
 <section id="from-data-to-insight" class="level2" data-number="10.6">
 <h2 data-number="10.6" class="anchored" data-anchor-id="from-data-to-insight"><span class="header-section-number">10.6</span> From Data to Insight</h2>
-<p>Whether data are collected via sampling or via experiments, the data themselves are not particularly useful for insight. If you are presented with a large dataset, it will likely not be possible to directly interpret the data, or communicate a message. Instead, we need to take the data as input and convert them to more useful products. The remainder of this course will focus on ways of doing this within statistics.</p>
+<p>Whether data are collected via sampling or via experiments, the data themselves are not particularly useful for insight. If you are presented with a large dataset, it will likely not be possible to directly interpret the data, or communicate a message. Instead, we need to take the data as input and convert them to more useful products. The remainder of these notes will focus on ways of doing this within statistics.</p>
 <p>We will focus both on how to summarize and communicate data that have been collected, and then how to begin gaining insight from these data. These are the first two roles of statistics, as introduced before: description and inference. All of the roles that statistics plays build from the idea that we have been able to collect data which are somehow relevant and representative of the underlying population of interest. We investigate the data, describe what has been observed in the sample, or attempt to conduct inference not because we are interested in the data themselves, but because we hope that the data will be reflective of the population of interest. We are not primarily interested in the statistics that we calculate, but on what these statistics say about the parameters of interest.</p>
 <p>It is important, as we begin to explore how we can use data directly, to keep in mind that the entire statistical enterprise relies on having high quality data available. This relies on having measured the factors that we care about, in ways that are meaningful. It relies on representative samples and well-designed experiments. Without adhering to the principles discussed throughout this chapter, statistics cannot proceed in a way which addresses our goals. High quality data is not a substitute for statistical analysis, but it is a prerequisite for it.</p>
 </section>
@@ -1166,7 +1196,7 @@ Solution
 <li id="fn6"><p>The sample.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>The probability of this is <span class="math inline">\(0.00000000000000000000094036353533487965306938402439390200376889694666715513449162\)</span>, which is very, very small, but not zero.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>This, as we will remember from our previous chapters, makes the hypergeometric distribution deeply connected to simple random sampling.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>There are ways of doing this, but they are more complex and fall beyond the scope of this course.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>There are ways of doing this, but they are more complex and fall beyond the scope of these notes.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10"><p>Instead of selecting <span class="math inline">\(m\)</span> between <span class="math inline">\(1\)</span> and <span class="math inline">\(k\)</span>.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>For instance, <span class="math inline">\(3\)</span> and <span class="math inline">\(5\)</span> both show up twice, while every other element shows up only once.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p>For instance, some people claim that music will help with plant growth.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -1613,13 +1643,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/chapter11.html" class="pagination-link" aria-label="<span class='chapter-number'>11</span>&nbsp; <span class='chapter-title'>An Introduction to Univariate Descriptive Statistics</span>">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../notes/chapter11.html" class="pagination-link" aria-label="<span class='chapter-number'>11</span>&nbsp; <span class='chapter-title'>An Introduction to Descriptive Statistics</span>">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Descriptive Statistics</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom"});
+<script type="application/javascript" src="../webex.js"></script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

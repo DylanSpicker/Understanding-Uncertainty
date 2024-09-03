@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>STAT 1793: Course Notes - 2&nbsp; The Mathematical Foundations of Statistical Experiments</title>
+<title>Understanding Uncertainty - 2&nbsp; The Mathematical Foundations of Statistical Experiments</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -755,9 +755,9 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">STAT 1793: Course Notes</a> 
+      <a href="../">Understanding Uncertainty</a> 
         <div class="sidebar-tools-main">
-    <a href="../STAT-1793--Course-Notes.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../Understanding-Uncertainty.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -857,7 +857,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Univariate Descriptive Statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Descriptive Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Methods of Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Confidence Intervals</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
   </div>
 </li>
       </ul>
@@ -1048,7 +1078,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (
 
 <section id="the-sample-space-and-events" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="the-sample-space-and-events"><span class="header-section-number">2.1</span> The Sample Space and Events</h2>
-<p>While we gave the mathematical formulation for the Frequentist interpretation of probability, we will typically require a more detailed mathematical model to work with probabilities. We want a description, framed in terms of mathematical objects, which will allow us to work out the probabilities of interest. In general, to form such a probability model we need both a list of all possible outcomes that the experiment can produce, as well as the probabilities of these outcomes.</p>
+<p>In Chapter 1 we saw the mathematical formulation for the Frequentist interpretation of probability. To study probability, we require a more detailed mathematical model. We want a description, framed in terms of mathematical objects, which will allow us to work out probabilities of interest. In general, to form such a probability model we need both a list of all possible outcomes that the experiment can produce, as well as the probabilities of these outcomes.</p>
 <p>We call the list of outcomes that can occur from an experiment the <strong>sample space</strong> of the experiment. The sample space is denoted <span class="math inline">\(\mathcal{S}\)</span>, and is defined as the set of all possible outcomes from the experiment. For instance, if the experiment is flipping a coin we have <span class="math inline">\(\mathcal{S} = \{\text{H}, \text{T}\}\)</span>. If the experiment is rolling a six-sided die then <span class="math inline">\(\mathcal{S} = \{1,2,3,4,5,6\}\)</span>.</p>
 <div id="def-sample-space" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.1 (Sample Space)</strong></span> The sample space of a statistical experiment is the set of all possible outcomes that can be realized from that experiment. The sample space is typically denoted <span class="math inline">\(\mathcal{S}\)</span>, or with similar script letters.</p>
@@ -1067,7 +1097,7 @@ Solution
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>For Sadie and Charles their experiment involves tossing a coin three times in sequence. As a result each outcome is a three-dimensional list of values, given for instance by <span class="math inline">\((\text{H},\text{H},\text{H})\)</span>. As a result, we can write down the full sample space as <span class="math display">\[\mathcal{S} = \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{H},\text{T},\text{T}), (\text{T},\text{H},\text{H}), (\text{T},\text{H},\text{T}), (\text{T},\text{T},\text{H}), (\text{T},\text{T},\text{T})\}.\]</span></p>
+<p>For Sadie and Charles their experiment involves tossing a coin three times in sequence. As a result each outcome is a three-dimensional list of values, given for instance by <span class="math inline">\((\text{H},\text{H},\text{H})\)</span>. We can write the full sample space as <span class="math display">\[\mathcal{S} = \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{H},\text{T},\text{T}), (\text{T},\text{H},\text{H}), (\text{T},\text{H},\text{T}), (\text{T},\text{T},\text{H}), (\text{T},\text{T},\text{T})\}.\]</span></p>
 </div>
 </div>
 </div>
@@ -1076,7 +1106,7 @@ Solution
 <div id="def-event" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.2 (Event)</strong></span> An event is any collection of outcomes from a sample space for a statistical experiment. Mathematically, an event, <span class="math inline">\(E\)</span>, is a subset of <span class="math inline">\(\mathcal{S}\)</span>, and we write <span class="math inline">\(E\subset\mathcal{S}\)</span>.</p>
 </div>
-<p>Take for instance the experiment of a single coin. In this case, <span class="math inline">\(E_1 = \{\text{H}\}\)</span>, <span class="math inline">\(E_2 = \{\text{T}\}\)</span>, and <span class="math inline">\(E_3 = \{\text{H},\text{T}\}\)</span> are examples of possible events. Here, <span class="math inline">\(E_1\)</span> corresponds to the event that a head is observed, <span class="math inline">\(E_2\)</span> corresponds to the event that a tail is observed, and <span class="math inline">\(E_3\)</span> corresponds to the event that either a tails or a heads was observed. Note that for each event we have <span class="math inline">\(E_1 \subset \mathcal{S}\)</span>, <span class="math inline">\(E_2 \subset \mathcal{S}\)</span>, and <span class="math inline">\(E_3 \subseteq \mathcal{S}\)</span>.</p>
+<p>Take for instance the experiment of a single coin. In this case, we may define <span class="math inline">\(E_1 = \{\text{H}\}\)</span>, <span class="math inline">\(E_2 = \{\text{T}\}\)</span>, and <span class="math inline">\(E_3 = \{\text{H},\text{T}\}\)</span> as examples of possible events. Here, <span class="math inline">\(E_1\)</span> corresponds to the event that a head is observed, <span class="math inline">\(E_2\)</span> corresponds to the event that a tail is observed, and <span class="math inline">\(E_3\)</span> corresponds to the event that either a tails or a heads was observed. Note that for each event we have <span class="math inline">\(E_1 \subset \mathcal{S}\)</span>, <span class="math inline">\(E_2 \subset \mathcal{S}\)</span>, and <span class="math inline">\(E_3 \subseteq \mathcal{S}\)</span>.</p>
 <div id="exm-basic-events" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.2 (Basic Event Listing)</strong></span> List several events from the game that Charles and Sadie are playing. Indicate why these are events.</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
@@ -1097,7 +1127,7 @@ Solution
 </div>
 </div>
 <div id="exm-event-identification" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.3 (Event Identification)</strong></span> Is “Charles has to pay” an event from the game that Charles and Sadie are playing? Why?</p>
+<p><span class="theorem-title"><strong>Example 2.3 (Event Identification)</strong></span> Is “Charles has to pay” an event from the game that Charles and Sadie are playing? Why? Explain.</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1110,13 +1140,13 @@ Solution
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>No.&nbsp;“Charles has to pay” is not an event as it is not a subset of the sample space. This could plausibly be seen as a real-world description of a possible event, but it is not <em>itself</em> an event. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>“Charles has to pay” is not directly an event, as it is not a subset of the sample space. This could plausibly be seen as a real-world description of a possible event, but it is not <em>itself</em> an event. The strictness of this language will be relaxed as time goes on, however, it is important to familiarize yourself with how descriptions are converted to events. In this case, we could take an event to be <span class="math display">\[E = \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{T},\text{H},\text{H})\},\]</span> and state that if <span class="math inline">\(E\)</span> occurs then Charles has to pay.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 </div>
 </div>
 </div>
 </div>
 <div id="exm-event-conversion" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.4 (Defining Events from Real-World Descriptions)</strong></span> What event corresponds to the description “Charles has to pay” in the game that Charles and Sadie are playing? Recall that they flip a coin three times, and Charles will pay if at least two heads come up, while Sadie will pay if at least two tails come up.</p>
+<p><span class="theorem-title"><strong>Example 2.4 (Defining Events from Real-World Descriptions)</strong></span> What event corresponds to the description “Sadie has to pay” in the game that Charles and Sadie are playing? Recall that they flip a coin three times, and Charles will pay if at least two heads come up, while Sadie will pay if at least two tails come up.</p>
 <div class="solution callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1129,14 +1159,14 @@ Solution
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Charles will have to pay whenever there are two or more heads. As a result we can enumerate the possible outcomes that leads to Charles paying. We have</p>
+<p>Sadie will have to pay whenever there are two or more tails. As a result we can enumerate the possible outcomes that leads to Sadie paying. We have</p>
 <ol type="1">
-<li><span class="math inline">\((\text{H},\text{H},\text{H})\)</span>;</li>
-<li><span class="math inline">\((\text{T},\text{H},\text{H})\)</span>;</li>
-<li><span class="math inline">\((\text{H},\text{T},\text{H})\)</span>;</li>
-<li><span class="math inline">\((\text{H},\text{H},\text{T})\)</span>.</li>
+<li><span class="math inline">\((\text{T},\text{T},\text{T})\)</span>;</li>
+<li><span class="math inline">\((\text{H},\text{T},\text{T})\)</span>;</li>
+<li><span class="math inline">\((\text{T},\text{H},\text{T})\)</span>;</li>
+<li><span class="math inline">\((\text{T},\text{T},\text{H})\)</span>.</li>
 </ol>
-<p>Any other outcome will have fewer than two heads, and as a result, Charles will not have to pay. Thus, to form an event, we consider the set with each of these outcomes in it. This gives <span class="math display">\[E = \{(\text{H},\text{H},\text{H}), (\text{T},\text{H},\text{H}), (\text{H},\text{T},\text{H}), (\text{H},\text{H},\text{T})\}.\]</span></p>
+<p>Any other outcome will have fewer than two tails, and as a result, Sadie will not have to pay. Thus, to form an event, we consider the set with each of these outcomes in it. This gives <span class="math display">\[E = \{(\text{T},\text{T},\text{T}), (\text{H},\text{T},\text{T}), (\text{T},\text{H},\text{T}), (\text{T},\text{T},\text{H})\}.\]</span></p>
 </div>
 </div>
 </div>
@@ -1169,14 +1199,14 @@ Solution
 </div>
 </div>
 <p>We say that an event “occurs” if any of the outcomes comprising the event occur. As a result we can have more than one event occurring as the result of a run of a statistical experimental. Suppose that we are rolling a fair, six-sided die. Consider the events “an even number was rolled” and “a number greater than or equal to four was rolled.” If a four or a six are rolled, both of these events happen simultaneously. Our goal when working with probability will be to assign probability values to different events. We will talk about how likely, or unlikely, events of interest are, given the underlying statistical experiment.</p>
-<p>Above, we defined <span class="math inline">\(E_3\)</span> to be equal to <span class="math inline">\(\mathcal{S}\)</span>. As a result, we can say that <span class="math inline">\(\mathcal{S}\)</span> <em>is</em> an event since <span class="math inline">\(\mathcal{S} \subseteq \mathcal{S}\)</span>. This is the event that any outcome is observed, which is certain to happen. Since it is certain to happen, we know it happens with probability <span class="math inline">\(1\)</span>. There is another “special” event which is important to consider. We call this the <em>null event</em>. Denote <span class="math inline">\(\emptyset\)</span>, the null event is an event that corresponds to “nothing in the sample space”. We know that every time an experiment is run something in the sample space occurs, and so the null event is assigned probability zero.</p>
+<p>Above, we defined <span class="math inline">\(E_3\)</span> to be equal to <span class="math inline">\(\mathcal{S}\)</span>. As a result, we can say that <span class="math inline">\(\mathcal{S}\)</span> <em>is</em> an event since <span class="math inline">\(\mathcal{S} \subseteq \mathcal{S}\)</span>. This is the event that any outcome is observed, which is certain to happen. Since it is certain to happen, we know it happens with probability <span class="math inline">\(1\)</span>. There is another “special” event which is important to consider. We call this the <em>null event</em>. Denoted <span class="math inline">\(\emptyset\)</span>, the null event is an event that corresponds to “nothing in the sample space”. We know that every time an experiment is run something in the sample space occurs, and so the null event is assigned probability zero.</p>
 <div id="def-null-event" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.5 (Null Event)</strong></span> The null event, denoted <span class="math inline">\(\emptyset\)</span> or <span class="math inline">\(\{\}\)</span>, is an event from a statistical experiment which corresponds to nothing within the sample space. The null event has probability zero, and it is impossible to observe. Note that, no matter the sample space, <span class="math inline">\(\emptyset\subset\mathcal{S}\)</span>.</p>
 </div>
 </section>
 <section id="set-operations-for-event-manipulation" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="set-operations-for-event-manipulation"><span class="header-section-number">2.2</span> Set Operations for Event Manipulation</h2>
-<p>Ultimately, we think of all events as being sets. These sets are subsets of the sample space, and can contain single or multiple outcomes. Every quantity that we are interested in can be expressed as some set of outcomes of interest. In building up these sets it is common to construct through the use of “and”, “or”, and “not” statements. That is, we may say that our event occurs if some outcome <strong>OR</strong> another outcome occurs, or perhaps our outcomes occurs if some outcome does <strong>NOT</strong> occur.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Ultimately, all events are sets. These sets are subsets of the sample space, and can contain single or multiple outcomes. Every quantity that we are interested in can be expressed as some set of outcomes of interest. In building up these sets it is common to construct them through the use of “and”, “or”, and “not” statements. That is, we may say that our event occurs if some outcome <strong>OR</strong> another outcome occurs, or perhaps our outcomes occurs if some outcome does <strong>NOT</strong> occur.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>Consider the example of drawing cards from a standard 52-card deck. In such a deck there are 13 card ranks, and four card suits, with one of each combination present. If we draw a single card we can think of the outcomes of the experiment as being any of the 52 possible combinations of rank and suit. We are often interested in an event such as “the card is red”, which is the same as saying “the card is a heart <strong>or</strong> the card is a diamond.” Perhaps we want to know whether the card was an ace through ten, this is the same as saying “the card is <strong>not</strong> a Jack <strong>or</strong> a Queen <strong>or</strong> a King.” If we are interested in the event that the ace of spades was drawn, this can be expressed by saying that “the card was a spade <strong>and</strong> the card was an ace.”</p>
 <p>As you begin to pay attention to the linguistic representation of events that we use, you will notice more and more the use of these words to form compound events in particular. As a result, we give each of them a mathematical operation which allow us to quickly and compactly express these quantities in notation.</p>
 <div id="exm-linguistic-description" class="theorem example">
@@ -1193,7 +1223,7 @@ Solution
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>There are plausibly many possible ways of doing so. Consider the following:</p>
+<p>There are many possible ways of doing so. Consider the following:</p>
 <ol type="1">
 <li><strong>OR</strong>: Two heads are observed OR three heads are observed.</li>
 <li><strong>AND</strong>: Not two tails are observed AND not three tails are observed.</li>
@@ -1205,10 +1235,10 @@ Solution
 </div>
 <p>We define mathematical operations to encapsulate the use of <strong>or</strong>, <strong>and</strong>, and <strong>not</strong>. These operations apply to any mathematical sets, whether they refer to events or not.</p>
 <div id="def-union" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.6 (Union)</strong></span> The union encodes the use of “or” in reference to two or more sets. Formally, with two sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, the union of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is the set of all elements that are contained in <span class="math inline">\(A\)</span>, or <span class="math inline">\(B\)</span>, or both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. We write <span class="math inline">\(A \cup B\)</span> and read that as <span class="math inline">\(A\)</span> union <span class="math inline">\(B\)</span>. When we wish to take the union of many sets, <span class="math inline">\(A_1,A_2,\dots,A_n\)</span>, we write this as <span class="math display">\[\bigcup_{i=1}^n A_i.\]</span></p>
+<p><span class="theorem-title"><strong>Definition 2.6 (Union)</strong></span> The union encodes the use of “or” in reference to two or more sets. Formally, with two sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, the union of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is the set of all elements that are contained in <span class="math inline">\(A\)</span>, or <span class="math inline">\(B\)</span>, or both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. We write <span class="math inline">\(A \cup B\)</span> and read that as <span class="math inline">\(A\)</span> union <span class="math inline">\(B\)</span>. When we wish to take the union of many sets, <span class="math inline">\(A_1,A_2,\dots,A_n\)</span>, we write this as <span class="math display">\[A_1 \cup A_2 \cup \cdots \cup A_n = \bigcup_{i=1}^n A_i.\]</span></p>
 </div>
 <div id="def-intersection" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.7 (Intersection)</strong></span> The intersection captures the use of “and” in reference to two or more sets. Formally, the intersection of two sets, <span class="math inline">\(A\)</span>, and <span class="math inline">\(B\)</span>, is the set that contains all elements that belong to both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. We write <span class="math inline">\(A \cap B\)</span>, and say “<span class="math inline">\(A\)</span> intersect <span class="math inline">\(B\)</span>.” When we wish to take the union of many sets, <span class="math inline">\(A_1,A_2,\dots,A_n\)</span>, we write <span class="math display">\[\bigcap_{i=1}^n A_i.\]</span></p>
+<p><span class="theorem-title"><strong>Definition 2.7 (Intersection)</strong></span> The intersection captures the use of “and” in reference to two or more sets. Formally, the intersection of two sets, <span class="math inline">\(A\)</span>, and <span class="math inline">\(B\)</span>, is the set that contains all elements that belong to both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. We write <span class="math inline">\(A \cap B\)</span>, and say “<span class="math inline">\(A\)</span> intersect <span class="math inline">\(B\)</span>.” When we wish to take the union of many sets, <span class="math inline">\(A_1,A_2,\dots,A_n\)</span>, we write <span class="math display">\[A_1 \cap A_2 \cap \cdots \cap A_n = \bigcap_{i=1}^n A_i.\]</span></p>
 </div>
 <div id="def-complement" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.8 (Complement)</strong></span> The complement makes formal the concept of “not.” The complement of a set is the set of all elements which occur in the sample space but are not in the given set. We write this as <span class="math inline">\(A^C\)</span> and say “<span class="math inline">\(A\)</span> complement.” When dealing with a sample space, <span class="math inline">\(\mathcal{S}\)</span>, the complement of <span class="math inline">\(A\)</span> is the set of all elements in <span class="math inline">\(\mathcal{S}\)</span> that are not in <span class="math inline">\(A\)</span>.</p>
@@ -1249,17 +1279,18 @@ Solution
 <div id="def-disjoint-events" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.9 (Disjoint Events)</strong></span> Two events, <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> are said to be disjoint whenever their intersection is the null event. That is, if <span class="math inline">\(E_1 \cap E_2 = \emptyset\)</span> then <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> are disjoint events.</p>
 </div>
-<p>These concepts allow us to more compactly express sets of interest, and in particular, will be quite useful when it comes to assigning probability. The more times you work with the set operations, the more familiar they will become, and as a result, practice is always useful. Considering rolling a 6-sided die, and take <span class="math inline">\(A\)</span> to be the event that a <span class="math inline">\(6\)</span> is rolled, <span class="math inline">\(B\)</span> to be the event that the roll was at least <span class="math inline">\(5\)</span>, <span class="math inline">\(C\)</span> to be the event that the roll was less than <span class="math inline">\(4\)</span>, and <span class="math inline">\(D\)</span> to be the event that the roll was odd.</p>
+<p>These concepts allow us to more compactly express sets of interest, and in particular, will be quite useful when it comes to assigning probability. The more times you work with the set operations, the more familiar they will become, and as a result, practice is always useful.</p>
+<p>Consider rolling a 6-sided die, and take <span class="math inline">\(A\)</span> to be the event that a <span class="math inline">\(6\)</span> is rolled, <span class="math inline">\(B\)</span> to be the event that the roll was at least <span class="math inline">\(5\)</span>, <span class="math inline">\(C\)</span> to be the event that the roll was less than <span class="math inline">\(4\)</span>, and <span class="math inline">\(D\)</span> to be the event that the roll was odd.</p>
 <ul>
 <li>If we consider <span class="math inline">\(D^C\)</span> this is the event that the roll was even;</li>
-<li><span class="math inline">\(A \cup C\)</span> is the event that a <span class="math inline">\(6\)</span> was rolled or that a number less than <span class="math inline">\(4\)</span> was rolled, which is to say anything other than a <span class="math inline">\(4\)</span> or a <span class="math inline">\(5\)</span>;</li>
+<li><span class="math inline">\(A \cup C\)</span> is the event that a <span class="math inline">\(6\)</span> was rolled or that a number less than <span class="math inline">\(4\)</span> was rolled, which is to say anything other than a <span class="math inline">\(4\)</span> or a <span class="math inline">\(5\)</span>, which we may also express as <span class="math inline">\(\{4,5\}^C\)</span>.</li>
 <li>If we take <span class="math inline">\(A \cup B\)</span> then this will be the same as <span class="math inline">\(B\)</span>, and <span class="math inline">\(A\cap B\)</span> will be <span class="math inline">\(A\)</span>.</li>
 <li>If we take the event <span class="math inline">\(A\cap C\)</span>, notice that no outcomes satisfy both conditions, and so <span class="math inline">\(A \cap C = \emptyset\)</span>.</li>
 <li>We can also join together multiple operations. <span class="math inline">\(D^C \cap C\)</span> gives us even numbers than less than <span class="math inline">\(4\)</span>, which is to say the outcome <span class="math inline">\(2\)</span>.</li>
 <li>Similarly, <span class="math inline">\((A \cap B)^C\)</span> would represent the event that a number less than <span class="math inline">\(6\)</span> is rolled.</li>
 </ul>
 <div id="exm-card-set-operations" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.8 (Set Operations with Decks of Cards)</strong></span> Charles and Sadie are tiring of flipping their coin, and so they wish to start using decks of cards sometimes instead. Before they formalize a game based on decks of cards, they want to make sure that they are both very comfortable working with these. Suppose that the sample space is defined to be the set of <span class="math inline">\(52\)</span> standard cards that may be drawn on a single draw. Describe how set operations can be used to form events corresponding to:</p>
+<p><span class="theorem-title"><strong>Example 2.8 (Set Operations with Decks of Cards)</strong></span> Charles and Sadie are tiring of flipping their coin, and so they wish to start using decks of cards sometimes instead. Before they formalize a game based on decks of cards, they want to make sure that they are both very comfortable working with these. Suppose that the sample space is defined to be the set of <span class="math inline">\(52\)</span> standard cards that may be drawn on a single draw from the deck. Describe how set operations can be used to form events corresponding to:</p>
 <ol type="a">
 <li>A red card is observed.</li>
 <li>Any card between an ace and a ten is observed.</li>
@@ -1277,7 +1308,7 @@ Solution
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>First, we define several events. Note, these can be defined in shorthand to prevent needing to write out many different cards. we take <span class="math inline">\(D\)</span> to be the event that a diamond is observed, we take <span class="math inline">\(H\)</span> to be the event that a heart is observed, take <span class="math inline">\(S\)</span> to be the event that a spade is observed<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and then take <span class="math inline">\(A\)</span> to be the event that an ace is observed, <span class="math inline">\(J\)</span> to be the event that a Jack is observed, <span class="math inline">\(Q\)</span> to be the event that a Queen is observed, and <span class="math inline">\(K\)</span> to be the event that a King is observed<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> then we can use unions, intersections, and complements to express the previously mentioned scenarios.</p>
+<p>First, we define several events. Note, these can be defined in shorthand to prevent needing to write out many different cards. we take <span class="math inline">\(D\)</span> to be the event that a diamond is observed, we take <span class="math inline">\(H\)</span> to be the event that a heart is observed, take <span class="math inline">\(S\)</span> to be the event that a spade is observed.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> Take <span class="math inline">\(A\)</span> to be the event that an ace is observed, <span class="math inline">\(J\)</span> to be the event that a Jack is observed, <span class="math inline">\(Q\)</span> to be the event that a Queen is observed, and <span class="math inline">\(K\)</span> to be the event that a King is observed.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> We can use unions, intersections, and complements to express the previously mentioned scenarios.</p>
 <ol type="a">
 <li>To represent outcomes corresponding to “the card is red”, we can use <span class="math inline">\(D \cup H\)</span>.</li>
 <li>To represent outcomes corresponding to “an ace through ten”, we can use <span class="math inline">\((J \cup Q \cup K)^C\)</span>.</li>
@@ -1290,7 +1321,8 @@ Solution
 <p>Working with these basic set operations should eventually become second nature. There are often very many ways of expressing the same event using these different operations, and finding the most useful method of representing a particular event can often be the key to solving challenging probability questions. The first step in making sure that these tools are available to you is in ensuring that the basic operations are fully understood, and this comes via practice. Remember, unions represent “ors”, intersections represent “ands”, and complements represent “nots”.</p>
 <section id="using-r-to-represent-sample-spaces-and-events-and-performing-set-operations" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="using-r-to-represent-sample-spaces-and-events-and-performing-set-operations"><span class="header-section-number">2.2.1</span> Using R To Represent Sample Spaces and Events and Performing Set Operations</h3>
-<p>We have seen how R can encode sets of elements using vectors. For instance, we may take <code>sample_space &lt;- 1:6</code> to represent the sample space of rolling a six-sided die. We can form events by taking subsets of the relevant quantities, selecting via indices. Fortunately, there are also all of the basic set operations implemented in R. We can use <code>union(x, y)</code> to perform the union of <code>x</code> and <code>y</code>, <code>intersect(x, y)</code> to perform the intersection of <code>x</code> and <code>y</code>, and <code>setdiff(x = sample_space, y)</code> to perform the complement of <code>y</code> (assuming that <code>sample_space</code> contains the full sample space).<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>We have seen how R can encode sets of elements using vectors. For instance, we may take <code>sample_space &lt;- 1:6</code> to represent the sample space of rolling a six-sided die. We can form events by taking subsets of the relevant quantities, selecting via indices. Fortunately, there are also all of the basic set operations implemented in R.</p>
+<p>We can use <code>union(x, y)</code> to perform the union of <code>x</code> and <code>y</code>, <code>intersect(x, y)</code> to perform the intersection of <code>x</code> and <code>y</code>, and <code>setdiff(x = sample_space, y)</code> to perform the complement of <code>y</code> (assuming that <code>sample_space</code> contains the full sample space).<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 <div id="qwebr-insertion-location-1"></div>
 <script type="module">
 // Retrieve the insertion point
@@ -1343,7 +1375,8 @@ Figure&nbsp;2.1: A basic Venn diagram, representing the sample space and two dif
 </div>
 </figure>
 </div>
-<p>On the Venn diagram then, the overlap between circles represents their intersection, the combined area of two (or more) circles represents their union, and everything outside of a given circle represents the complement of a set. This can be a fairly useful method for representing sample spaces, and for visualizing the basic set operations that we use to manipulate events inside the sample spaces. A word of caution: Venn diagrams are useful tools, but they are not suitable as proofs themselves. It is possible to convince yourself of false truths if the wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than asa rigorous tool in and of themselves.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<p>On the Venn diagram then, the overlap between circles represents their intersection, the combined area of two (or more) circles represents their union, and everything outside of a given circle represents the complement. This can be a fairly useful method for representing sample spaces, and for visualizing the basic set operations that we use to manipulate events inside the sample spaces.</p>
+<p>A word of caution: Venn diagrams are useful tools, but they are not suitable as mathematical proofs directly. It is possible to convince yourself of false truths if the wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than asa rigorous tool in and of themselves.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
 <div id="fig-venn-diagram-union" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-venn-diagram-union-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1476,13 +1509,13 @@ Solution
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>As time goes on we will become less strict about this language. When speaking to a statistician, they would understand “Charles has to pay” as an event that <em>can</em> occur based on the defined sample space, by simply transforming it into the language of the sample space. However, the distinction is important to make: events are always subsets of the sample space. Once this is second nature, it is a rule that can be loosened, as the knowledge can always be fallen back on when needed. Simply put: you need to know the rules in order to break them!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>When speaking to a statistician, they would understand “Charles has to pay” as an event that <em>can</em> occur based on the defined sample space, by simply transforming it into the language of the sample space. However, the distinction is important to make: events are always subsets of the sample space. Once this is second nature, it is a rule that can be loosened, as the knowledge can always be fallen back on when needed. Simply put: you need to know the rules in order to break them!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>While both <em>or</em> and <em>not</em> language is likely clear from the examples we have seen so far, <em>and</em> language may be slightly less obvious. While we will explore this in more depth shortly, note that you could not have two simple events occurring simultaneously. If <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> are both simple events, then you can have <span class="math inline">\(E_1\)</span> <strong>or</strong> <span class="math inline">\(E_2\)</span>, and you can have <strong>not</strong> <span class="math inline">\(E_1\)</span>, but you cannot have <span class="math inline">\(E_1\)</span> <strong>and</strong> <span class="math inline">\(E_2\)</span>. This is <em>not</em> true for compound events.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>It may be helpful to notice that you can mix and match these terms to your hearts content!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Note that whenever we have two events, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, with <span class="math inline">\(A\subset B\)</span>, then <span class="math inline">\(A\cup B = B\)</span>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>Note that whenever we have two events, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, with <span class="math inline">\(A\subset B\)</span> then <span class="math inline">\(A \cap B = A\)</span>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Note, these three are compound events with <span class="math inline">\(13\)</span> different outcomes contained within them.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>Compound events with four different options.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>These are all compound events with four different options.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>R does not implement complements directly, and instead implements the set difference operation. The set difference function, <code>setdiff(x, y)</code> returns the set of all elements in <code>x</code> which are not in <code>y</code>, a sort of subtracting of sets. The complement of a set is defined to be <span class="math inline">\(A^C = \text{setdiff}(\mathcal{S}, A)\)</span>, indicating why this works!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9"><p>This is a general principle in mathematics. Coming up with one example that makes something <em>seem</em> true does not form an argument demonstrating that it <em>is</em> true. Venn Diagrams should largely be thought of as specific examples of the underlying phenomena, which are great if you’re a visual learner!<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
@@ -1930,7 +1963,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","loop":false,"descPosition":"bottom"});
+<script type="application/javascript" src="../webex.js"></script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
