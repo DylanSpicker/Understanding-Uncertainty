@@ -354,7 +354,7 @@ E[X^2] &= \int_{0}^\infty x^2\frac{25}{52}\exp\left(-\frac{25x}{52}\right)dx \\
 &= \frac{104}{25}\times\frac{52}{25}.
 \end{align*} Thus, $$\text{var}(X) = \frac{104}{25}\times\frac{52}{25} - \left(\frac{52}{25}\right)^2 = \left(\frac{52}{25}\right)^2.$$ As a result, $\text{SD}(X) = E[X] = \frac{52}{25}$.
 
-c. If $X$ is the weight in pounds, then the new weight will be $$Y = $frac{(X - 0.2)}{2.2} = \frac{1}{2.2}X - \frac{1}{11}.$$ Then, we can apply the linear transformation theorems to get $$E[Y] = \frac{1}{2.2}E[X] - \frac{1}{11} = \frac{47}{55}.$$ Similarly, we have $$\text{var}(Y) = \frac{1}{2.2^2}\text{var}(X) = \frac{2704}{3025}.$$ This leads to a standard deviation of $$\text{SD}(X) = \frac{52}{55}.$$
+c. If $X$ is the weight in pounds, then the new weight will be $$Y = frac{(X - 0.2)}{2.2} = \frac{1}{2.2}X - \frac{1}{11}.$$ Then, we can apply the linear transformation theorems to get $$E[Y] = \frac{1}{2.2}E[X] - \frac{1}{11} = \frac{47}{55}.$$ Similarly, we have $$\text{var}(Y) = \frac{1}{2.2^2}\text{var}(X) = \frac{2704}{3025}.$$ This leads to a standard deviation of $$\text{SD}(X) = \frac{52}{55}.$$
 ::::
 
 :::
