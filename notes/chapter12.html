@@ -41,6 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -68,7 +71,663 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">.monaco-editor pre {
+  background-color: unset !important;
+}
 
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-button-run {
+  background-color: #EEEEEE;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; /* Extra styling for consistency */
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration: none;
+  /* vertical-align: middle; */ /* Prevents a space from appearing between the code cell and button */
+  -webkit-user-select: none;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button-run:hover {
+  color: #000;
+  background-color: #e3e6ea;
+  border-color: #e1e5e9;
+}
+
+.qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+  pointer-events: none;
+  opacity: .65
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+</style>
+<script type="module">// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Determine if we need to install R packages
+var installRPackagesList = [''];
+// Check to see if we have an empty array, if we do set to skip the installation.
+var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+var autoloadRPackages = true;
+
+// Display a startup message?
+var showStartupMessage = true;
+var showHeaderMessage = false;
+if (showStartupMessage) {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  var startupMessageWebR = document.createElement("p");
+  startupMessageWebR.innerText = "🟡 Loading...";
+  startupMessageWebR.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  startupMessageWebR.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(startupMessageWebR);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML) {
+    // Append to the existing "title-block-header" element
+    headerHTML.appendChild(quartoTitleMeta);
+  } else if (headerRevealJS) {
+    // If using RevealJS, add to the "title-slide" div
+    headerRevealJS.appendChild(firstInnerDiv);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+// Retrieve the webr.mjs
+import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.2/webr.mjs";
+
+// Populate WebR options with defaults or new values based on 
+// webr meta
+globalThis.webR = new WebR({
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": ChannelType.Automatic
+});
+
+// Initialization WebR
+await webR.init();
+
+// Setup a shelter
+globalThis.webRCodeShelter = await new webR.Shelter();
+
+// Setup a pager to allow processing help documentation 
+await webR.evalRVoid('webr::pager_install()'); 
+
+// Function to set the button text
+function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message
+function qwebrUpdateStatusHeader(message) {
+  startupMessageWebR.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await globalThis.webR.installPackages([packageName]);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await globalThis.webR.evalRVoid(`library(${packageName});`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+    
+    // Display the update
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await globalThis.webR.flush();
+  }
+}
+
+
+// Check to see if any packages need to be installed
+if (setupRPackages) {
+  // Obtain only a unique list of packages
+  const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+  // Install R packages one at a time (either silently or with a status update)
+  await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+  if(autoloadRPackages) {
+    // Load R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+  }
+}
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+// Release document status as ready
+if (showStartupMessage) {
+  startupMessageWebR.innerText = "🟢 Ready!"
+}
+
+qwebrSetInteractiveButtonState(
+  `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+  true
+);
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};</script>
+<script type="module">// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+    Interactive: 'interactive',
+    Setup: 'setup',
+    Output: 'output',
+});
+
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await webR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await webR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // ---- 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid(`webr::canvas(width=${options["fig-width"]}, height=${options["fig-height"]})`);
+
+    const result = await webRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    try {
+
+        // Stop creating images
+        await webR.evalRVoid("dev.off()");
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${qwebrEscapeHTMLCharacters(evt.data)}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await webR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * options["fig-width"]);
+                canvas.setAttribute("height", 2 * options["fig-height"]);
+                canvas.style.width = "700px";
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            elements.outputGraphDiv.appendChild(canvas);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        webRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    evalType = EvalTypes.Interactive,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { "fig-width": 504, "fig-height": 360 };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+</script>
+<script type="module">// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (insertElement,
+  qwebrCounter, 
+  evalType = EvalTypes.Interactive,
+  options = {}) {
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive: 
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter);
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter);
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter);
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  insertElement.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-interactive-area';
+
+  // Create button element
+  var button = document.createElement('button');
+  button.className = 'btn btn-default qwebr-button-run';
+  button.disabled = true;
+  button.type = 'button';
+  button.id = 'qwebr-button-run-' + qwebrCounter;
+  button.textContent = '🟡 Loading webR...';
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(button);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-area';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-setup-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-setup-area';
+
+  return mainDiv;
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -239,10 +898,167 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-goal-and-fundamental-dilemma-of-statistics" id="toc-the-goal-and-fundamental-dilemma-of-statistics" class="nav-link active" data-scroll-target="#the-goal-and-fundamental-dilemma-of-statistics"><span class="header-section-number">12.1</span> The Goal, and Fundamental Dilemma, of Statistics</a></li>
+  <li><a href="#sampling-distributions" id="toc-sampling-distributions" class="nav-link" data-scroll-target="#sampling-distributions"><span class="header-section-number">12.2</span> Sampling Distributions</a></li>
+  <li><a href="#the-sampling-distribution-of-a-sample-mean" id="toc-the-sampling-distribution-of-a-sample-mean" class="nav-link" data-scroll-target="#the-sampling-distribution-of-a-sample-mean"><span class="header-section-number">12.3</span> The Sampling Distribution of a Sample Mean</a>
+  <ul class="collapse">
+  <li><a href="#characterizing-the-sampling-distribution-of-the-sample-mean" id="toc-characterizing-the-sampling-distribution-of-the-sample-mean" class="nav-link" data-scroll-target="#characterizing-the-sampling-distribution-of-the-sample-mean"><span class="header-section-number">12.3.1</span> Characterizing the Sampling Distribution of the Sample Mean</a></li>
+  <li><a href="#the-sampling-distribution-of-the-sample-mean-in-normal-populations" id="toc-the-sampling-distribution-of-the-sample-mean-in-normal-populations" class="nav-link" data-scroll-target="#the-sampling-distribution-of-the-sample-mean-in-normal-populations"><span class="header-section-number">12.3.2</span> The Sampling Distribution of the Sample Mean in Normal Populations</a></li>
+  <li><a href="#the-central-limit-theorem" id="toc-the-central-limit-theorem" class="nav-link" data-scroll-target="#the-central-limit-theorem"><span class="header-section-number">12.3.3</span> The Central Limit Theorem</a></li>
+  </ul></li>
+  <li><a href="#exploring-sampling-distributions-in-r" id="toc-exploring-sampling-distributions-in-r" class="nav-link" data-scroll-target="#exploring-sampling-distributions-in-r"><span class="header-section-number">12.4</span> Exploring Sampling Distributions in R</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
+<script type="module">// Global dictionary to store Monaco Editor instances
+const qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (
+    initialCode, 
+    qwebrCounter) {
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value
+    editor.__qwebrinitialCode = initialCode;
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter,
+            EvalTypes.Interactive);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, EvalTypes.Interactive);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, EvalTypes.Interactive);
+  };
+
+}</script>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter10.html">Part 2: Statistics</a></li><li class="breadcrumb-item"><a href="../notes/chapter12.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -263,8 +1079,635 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="the-goal-and-fundamental-dilemma-of-statistics" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="the-goal-and-fundamental-dilemma-of-statistics"><span class="header-section-number">12.1</span> The Goal, and Fundamental Dilemma, of Statistics</h2>
+<p>Recall that the goal of statistics, at the most basic of levels, is to draw conclusions regarding the parameter values in a population of interest by analyzing a sample and computing statistics. Revisit <a href="chapter10.html#fig-population-sample" class="quarto-xref">Figure&nbsp;<span>10.1</span></a> for a visual representation of this procedure. In <a href="chapter11.html" class="quarto-xref"><span>Chapter 11</span></a> we discussed in depth the study of descriptive statistics. Descriptive statistics aim to describe the data that have been observed through the study, through the computation of sample statistics or similar graphical procedures. That is, using the techniques from descriptive statistics we can take a sample and derive statistics from it. The fundamental dilemma we are faced with, however, is that a statistic will not typically equal a parameter value exactly. That is, the value we compute using a sample for any property<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> will not equal the value that the same property would take on in the population. As a result, while descriptive statistics allow us to understand thoroughly the data that we have collected, the do not (alone) address the complete goal of statistics.</p>
+<p>To compliment descriptive statistics we wish to be able to make statements about how sample statistics relate to, or are connected to, parameter values. In order to do so it is worth asking why do the values of statistics tend to differ from the values of the corresponding parameters. Intuitively, the issue we are faced with is that a sample does not include every element of the population. As a result, quantities computed on a sample will differ from the same quantities computed in the population owing to the different make-up of the sample. We could envision what would happen if we took a second, different sample from the same population. We would likely get different elements in the sample, and as a result, anything computed on the sample would differ from the first time. If we continued to take samples, compute the values, and compare them we would find that each sample is subtly different than every other, leading to the values of statistics moving around sample-to-sample. Of course, if we could access the full population, the value of the parameter would never change since there is only one, true value. These differences sample-to-sample are referred to as <strong>sampling variability</strong>, and explains the core reason why statistics and parameters differ from one another.</p>
+<div id="def-sampling-variability" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 12.1 (Sampling Variability)</strong></span> Sampling variability refers to the variation that occurs between samples drawn from the same population (whether the same method for selection is used or not). This variability manifests itself in the values of statistics that are computed on a sample, where repeated sampling from the same population will result in different values for the statistics. This variability is inherent in the sampling process and emerges owing to the fact that each sample will be comprised of different elements from the same population.</p>
+</div>
+<p>To understand this procedure completely, consider the following population of squares, depicted visually. If we had access to this entire population we would be able to determine any parameter value that we would like to know about, for instance, understanding the proportion of black squares present (in the population this results in a proportion of 0.195).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-population-visual" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-population-visual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.1: The population of squares. Consider each colour to represent a trait or variable for each individual in the population.
+</figcaption>
+<div aria-describedby="fig-population-visual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter12_files/figure-html/fig-population-visual-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="chapter12_files/figure-html/fig-population-visual-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>Generally, we will be unable to observe an entire population, and instead would be required to take random samples. If we take samples of size <span class="math inline">\(10\)</span> from the population we may end up with something like the following.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-first-sample" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-first-sample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.2: A single sample from the population. In this sample of size <span class="math inline">\(10\)</span>, <span class="math inline">\(2\)</span> of the resulting squares are black, making the sample proportion <span class="math inline">\(0.2\)</span>.
+</figcaption>
+<div aria-describedby="fig-first-sample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter12_files/figure-html/fig-first-sample-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="chapter12_files/figure-html/fig-first-sample-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>This sample, however, was not the only sample that we could have seen. Consider the following <span class="math inline">\(16\)</span> samples. In each of them the number of black squares (and thus the proportion of black squares) differs. These differences arise naturally based on which squares happened to be included in the sample, and those that happened to be ignored. If we continued to sample more and more from the population and work out the corresponding proportion of black squares observed, we would see the proportions continue to vary.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-all-samples" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-all-samples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.3: Sixteen samples from the population. Each sample exhibits a different proportion of squares which are black, and as a result, a different sample proportion. Because this proportion differs from sample-to-sample we say that it is subject to sampling variability.
+</figcaption>
+<div aria-describedby="fig-all-samples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter12_files/figure-html/fig-all-samples-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="chapter12_files/figure-html/fig-all-samples-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>Owing to sampling variability, every time that we take a sample we expect to get a different value for our statistic. Because of this we can often regard the value of the statistic as being random. Ultimately, if the members of our sample determine the value of our statistic, and the members of our sample are randomly selected, then we know that the value of our statistic is a random value. Any numeric quantity which takes on random values is referred to as a random variable (<a href="chapter5.html#def-random-variable" class="quarto-xref">Definition&nbsp;<span>5.1</span></a>) and as a result <strong>statistics are random variables</strong>. Because statistics are random variables we must also conclude that <strong>statistics have distributions</strong>. The distribution of a statistic is referred to as the <strong>sampling distribution</strong> for the statistic, and serves as the primary tool for understanding how well the values of statistics and parameters agree with one another.</p>
+<div id="exm-charles-and-sadie-ketchup" class="theorem example">
+<p><span class="theorem-title"><strong>Example 12.1 (Sadie, Charles, and Ketchup)</strong></span> Sadie and Charles get along quite well in most regards, however, they cannot agree at all on ketchup. Specifically, Charles finds ketchup to be repugnant, disliking even being in its presence. Sadie, on the other hand, finds it to be quite pleasant and will happily enjoy it alongside many dishes. This is a frequent point of contention for them. As a result, they decide that they should take a survey of the individuals at their favourite coffee shop to settle the debate once-and-for-all. Thus, they go around asking each individual their thoughts on ketchup.</p>
+<ol type="a">
+<li>In the population as a whole, the number of people who like ketchup is best described by what distribution? What is the parameter of interest for Charles and Sadie?</li>
+<li>If it is found that more people in the coffee shop agree with Charles than with Sadie, does that mean that more people in the population dislike ketchup? Explain.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>The population distribution should be approximately binomial. The relevant parameter will be <span class="math inline">\(p\)</span>, the probability of “success”. Here <span class="math inline">\(p\)</span> can either represent the proportion of individuals who like (or dislike) ketchup, depending on the ways in which the questions were phrased.</li>
+<li>No, not necessarily. Because of sampling variability, it is possible to have selected a sample that shows a much different proportion than the true proportion in the population. It may be the case that it is close, or that it is far off. However, the general procedure of computing a statistic on a population is random and as such, the variation needs to be accounted for when drawing conclusions.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sampling-distributions" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="sampling-distributions"><span class="header-section-number">12.2</span> Sampling Distributions</h2>
+<div id="def-sampling-distribution" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 12.2 (Sampling Distribution)</strong></span> A sampling distribution is the distribution of a sample statistic. The sampling distribution arises due to sampling variability, rendering samples – and statistics computed using samples – random.</p>
+</div>
+<p>The fact that statistics are random variables is the critical realization that facilitates inferential statistics. However, this is a concept which is not always immediately clear. It is worth reemphasizing how sampling distributions emerge, and how they differ from both frequency (or data) distributions, as well as from the underlying population distributions. We first consider a population. In this population the trait of interest will differ between individuals, and these differences will be summarized by a relevant parameter. When populations are large<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> we can view the trait in the population as being randomly distributed. We are thinking that, if we were to observe a single individual from the population, their value of the trait would follow some distribution. We call this underlying distribution the <strong>population distribution</strong>. Our interest is ultimately in the population distribution.</p>
+<p>We can then think of taking a random, finite sample from the population. We can measure the value of the trait for all individuals in the sample. These observations constitute an observable dataset. Within these data we can discuss the <strong>frequency distribution</strong> or the <strong>data distribution</strong>, which summarizes how often values of the trait occurred in the sample. The data distribution describes what we actually observed, and we can characterize it exactly. We hope that our sample was a good sample<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and as a result, we hope that the data distribution is similar to the population distribution. However, we do not expect that these distributions will coincide directly since our sample is a subset of the population, meaning many values have been excluded. Using this sample we are able to compute statistics that are the sample version of the parameters of interest. These statistics characterize the data distribution in a similar way as the parameters characterize the population distribution.</p>
+<p>We can then imagine repeating this process of sampling many times. Each time we do we would receive a slightly different sample, which in turn produces a slightly different data distribution, and as a result a slightly different statistic value. Suppose that we recorded the value of the statistic each time that we took our sample, and then re-sampled again. Doing this over and over again would produce a set of values for the statistics. These values would be seen as specific realizations from the distribution of possible realizations of the sample. This distribution is the <strong>sampling distribution</strong>. The sampling distribution characterizes the random variability in the value of a sample statistic, were we able to repeatedly compute this over many different samples. The more spread that is in the sampling distribution, the more we expect different samples to differ from one another in terms of the value of the relevant statistic.</p>
+<p>Consider the previous example of sampling squares from the population in <a href="#fig-population-visual" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>. If we continued to do this over, and over again, and we recorded the proportion of squares that were black, the resulting distribution would the sampling distribution of the proportion of black squares. Looking at this distribution we could then ask “given a single sample from the population, how likely are we to get a representative value for the sample proportion?” If this probability is high then we can be relatively confident that a sample will provide us with a useful guess to the true parameter value. If this probability is low, we cannot be sure that we are learning much from the sample.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-sampling-dist" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-sampling-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.4: The sampling distribution for the proportion of black squares in samples of size <span class="math inline">\(10\)</span> from the population of coloured squares. This distribution can be thought to emerge from the process of repeatedly sampling from the population, computing the resulting statistic, and then recording those statistics into a dataset itself. Moreover, we can read the probabilities here as stating “the probability that the proportion of black squares in a sample of size <span class="math inline">\(10\)</span> will take on <span class="math inline">\(x\)</span> is <span class="math inline">\(y\)</span>.”
+</figcaption>
+<div aria-describedby="fig-sampling-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter12_files/figure-html/fig-sampling-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4"><img src="chapter12_files/figure-html/fig-sampling-dist-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>If the sampling distribution of a statistic were known exactly, then probabilities could be computed regarding that statistic in the same way as probabilities are computed for <em>any</em> random variable. In our example, for instance, if we took <span class="math inline">\(\rho\)</span> to represent the sample proportion for a random sample of size <span class="math inline">\(10\)</span>, then we could claim that <span class="math display">\[P(\rho = 0.2) \approx 0.3056561.\]</span> Because we know the value of the population parameter, and because <span class="math inline">\(0.2\)</span> is as close to <span class="math inline">\(0.195\)</span> as a sample can get in a population of size <span class="math inline">\(10\)</span>, we can thus say that nearly <span class="math inline">\(31\%\)</span> of samples will provide an estimate that is as close to the truth as is possible, given the sample size. If we instead consider <span class="math display">\[P(0.1 \leq \rho \leq 0.3) \approx 0.7792981,\]</span> and so nearly <span class="math inline">\(78\%\)</span> of our samples should be within <span class="math inline">\(1\)</span> of the closest sample value to the true population parameter. That is, we can use the sampling distribution to assess how reliable our statistic is as a proxy for the parameter value.</p>
+<p>A major difficulty in the application of this procedure in practice is that typically we do not have the true population on hand to either directly compute the sampling distribution, or to know what the true parameter value should be. If we did have access to the full population we would not need to to use samples in the first place. Despite these limitations, the sampling distribution is still the key tool in unlocking an assessment of reliability of statistics as proxies for parameters. By recognizing that the sampling distribution is inherently useful in explaining the random behaviour of statistics, all that remains is being able to connect the sampling distribution to the population distribution. Fortunately, we will find that in many cases, even without knowing the specific sampling distribution, we will be able to make definitive statements about the link between the sampling distribution and the population distribution, giving a bridge between statistics and the corresponding parameters.</p>
+<div id="exm-charles-and-sadie-ketchup-two" class="theorem example">
+<p><span class="theorem-title"><strong>Example 12.2 (Sadie, Charles, and Ketchup (Repeated Over and Over))</strong></span> After recognizing the lack of scientific validity of their single sample, Charles and Sadie decide that they should repeat their survey many times over. Each time they gather a sample of individuals and ask whether they agree with Charles or Sadie more. They do this many, many times, and report the proportion of individuals who agree with Sadie in the following chart.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="chapter12_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="chapter12_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li>How is this graph related to the data distribution? The population distribution? The sampling distribution?</li>
+<li>According to this graph, what is (approximately) the probability that in a sample they will find more people agreeing with Sadie?</li>
+<li>What conclusions can be drawn?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>This graph shows the sampling distribution of the proportion of individuals who like ketchup in samples at random from the population. The population distribution would be binary, with everyone being either a <span class="math inline">\(1\)</span> or a <span class="math inline">\(0\)</span>, however, the proportion in the <span class="math inline">\(0\)</span> category should be related to the proportions realized in this graphic (so, around a 50-50 split). The data distribution would be comprised of observations from a single sample, where individuals in that sample were split at <span class="math inline">\(1\)</span> and <span class="math inline">\(0\)</span> as well. These observations would give rise to a single proportion displayed here.</li>
+<li>According to the graph it appears that the data are split roughly 50-50 with proportions above and below <span class="math inline">\(0.5\)</span>. That is, it seems about equally likely that in a sample of individuals more people agree with Charles or more people agree with Sadie.</li>
+<li>While drawing any definitive conclusions here is challenging from the graphic alone, owing to sampling variability, it seems likely that we could suggest that there is not a strong preference one way or the other in the population. If there were we would expect that more proportions would end up falling in favour of either Charles or Sadie, rather than the equal split that we actually observe.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-sampling-distribution-of-a-sample-mean" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="the-sampling-distribution-of-a-sample-mean"><span class="header-section-number">12.3</span> The Sampling Distribution of a Sample Mean</h2>
+<p>As an illustrative example demonstrating the connection between the sampling distribution and the population distribution we will consider the case of sample means. Note that sample means are among the most important statistics that are worked with and so this example is representative of a large quantity of statistics in practical use. Moreover, statistics like sample proportions can be thought of as the sample mean of binary data.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Other statistics can be analyzed in a similar manner, allowing us to draw similar conclusions for other parameters of interest.</p>
+<section id="characterizing-the-sampling-distribution-of-the-sample-mean" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="characterizing-the-sampling-distribution-of-the-sample-mean"><span class="header-section-number">12.3.1</span> Characterizing the Sampling Distribution of the Sample Mean</h3>
+<p>Consider an arbitrary population distribution for some trait. Suppose that <span class="math inline">\(X\)</span> is a random variable that is drawn from this population distribution, so that the mean in the population is <span class="math inline">\(E[X]\)</span> and the variance in the population is <span class="math inline">\(\text{var}(X)\)</span>. We will typically denote <span class="math inline">\(E[X] = \mu\)</span> and <span class="math inline">\(\text{var}(X) = \sigma^2\)</span>, as we did for normal populations. Now, if we consider drawing a sample of size <span class="math inline">\(n\)</span> from this population, and if we suppose that these are drawn independently of one another, then our sample can be thought of as a collection of <span class="math inline">\(n\)</span> independent and identically distributed (<a href="chapter5.html#def-iid" class="quarto-xref">Definition&nbsp;<span>5.12</span></a>) random variables, denoted <span class="math inline">\(X_1, X_2, \dots, X_n\)</span>. Each of these random variables will have mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>, and each is independent of all the others. Then, the sample mean of this hypothetical sample is given by <span class="math display">\[\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i.\]</span> Note that we are using the same notation we used for random variables where capital letters indicate a random quantity, and the corresponding lowercase letters represent a specific value. Thus, <span class="math inline">\(\overline{X}\)</span> is thought of as a random variable which represents the sample mean for a random sample. If we actually take a sample and compute the mean, we would have a corresponding <span class="math inline">\(\overline{x}\)</span>, which is just one realization of the random variable <span class="math inline">\(\overline{X}\)</span>.</p>
+<p>Since <span class="math inline">\(\overline{X}\)</span> is random it has a distribution. Because it is a statistic, its distribution is a <strong>sampling distribution</strong>, and in particular it is the sampling distribution of the sample mean. The specific form of this distribution will not generally be known, however, we can ask questions regarding parameters of this distribution (that is, sampling distribution parameters). Specifically, we may ask ourselves whether it is possible to determine <span class="math inline">\(E[\overline{X}]\)</span> and <span class="math inline">\(\text{var}(\overline{X})\)</span>. Note that these are not the same as <span class="math inline">\(E[X]\)</span> and <span class="math inline">\(\text{var}(X)\)</span>, where the former are the parameters of the sampling distribution and the latter are the parameters of the population distribution.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Mean and Variance for the Sampling Distribution of the Sample Mean
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the properties of expectation and variance of independent and identically distributed samples discussed in <a href="chapter7.html#sec-indep-expectations" class="quarto-xref"><span>Section 7.5</span></a>, we can claim that no matter the population distribution, <span class="math display">\[E[\overline{X}] = \mu \quad\text{ and }\quad \text{var}(\overline{X}) = \frac{\sigma^2}{n}.\]</span> That is, the mean and variance of the sampling distribution of the sample mean correspond to the mean of the population distribution and the variance of the population distribution scaled by the sample size, respectively.</p>
+</div>
+</div>
+<p>Practically this means that the sample mean is centered on the true population mean, and on average should be correct. Moreover, the variance of the sample mean is related to the variance in the population<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and is inversely related to the sample size. The relationship to the sample size gives a mathematical justification for the intuition that “larger samples are preferable.” It makes sense that if your sample size is larger, you will get a better estimate of the truth. This can be justified since, as the sample size grows, the variance of the sampling distribution shrinks, and the sampling distribution becomes more heavily concentrated around the true population mean. It is constructive to consider what happens to the variability in the sampling distribution as the sample size increases <span class="math inline">\(n\to\infty\)</span>.</p>
+<p>Specifically, as the sample size grows more and more, the variance shrinks smaller and smaller. Eventually, in the limit, the variance will shrink all the way to <span class="math inline">\(0\)</span>. At this point, we will be left with a sample mean that is exactly equal to the population mean, since <span class="math inline">\(E[X] = E[\overline{X}]\)</span> and the variance of <span class="math inline">\(\overline{X}\)</span> is zero. Of course, if we could take an infinite sample we would have taken every member of the population into the sample and so we should expect that the two align in that case. Now, it will never be the case that we have a truly infinite sample, and so there will always be some variability that remains in the sampling distribution. However, the reduction in variance occurs even at finite samples. As more and more members are included in the sample, there is less and less variability in the statistic, and the results become more and more concentrated around the true population value. The important point of this characterization is that it does not matter what the population distribution is, nor what the value for the sample mean is.</p>
+<p>More often than not when discussing the variability of the sampling distribution the measure of choice will be the standard deviation rather than the variance. That is, instead of reporting that <span class="math inline">\(\text{var}(\overline{X}) = \dfrac{\sigma^2}{n}\)</span>, it is far more common to report that <span class="math inline">\(\text{SD}(\overline{X}) = \dfrac{\sigma}{\sqrt{n}}\)</span>. These two quantities hold the same information, and it is straightforward to move from one to the other by either taking the square root or squaring the quantity. Now, when the standard deviation is computed for a statistic, such as the sample mean, it is not typically referred to as a standard deviation. Instead, it is called a <strong>standard error</strong>.</p>
+<div id="def-standard-error" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 12.3 (Standard Error (of a statistic))</strong></span> For any statistic <span class="math inline">\(\widehat{\theta}\)</span> the standard error of the statistic is given by its standard deviation. That is, <span class="math display">\[\text{SE}(\widehat{\theta}) = \text{SD}(\widehat{\theta}).\]</span></p>
+</div>
+<div id="def-standard-error-mean" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 12.4 (Standard Error (of the Sample Mean))</strong></span> The standard error of the sample mean (SEM) is the standard error of <span class="math inline">\(\overline{X}\)</span>. For a population with variance <span class="math inline">\(\sigma^2\)</span>, this is given by <span class="math display">\[\text{SE}(\overline{X}) = \frac{\sigma}{\sqrt{n}}.\]</span></p>
+</div>
+<p>The standard error is a useful metric since, if reported alongside the estimate, we can directly quantify the uncertainty of the statistic. A higher standard error equates directly to more uncertainty in the statistic and this uncertainty is measured on the same scale as the statistic itself. Now, in practice, you will not have an exact value for the standard error since it relies on knowledge of <span class="math inline">\(\sigma\)</span>. Still, it will often be the case that we can get a good sense as to the standard error via the sample standard deviation, and use this quantity in place.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div id="exm-charles-and-sadie-zoo-trip" class="theorem example">
+<p><span class="theorem-title"><strong>Example 12.3 (Charles and Sadie Visit the Zoo)</strong></span> One day Charles and Sadie decide to visit the local zoo (a zoo with a strong focus on conservational research). Charles and Sadie learn that:</p>
+<ul>
+<li>Eastern lowland gorillas weigh on average around <span class="math inline">\(407\)</span>lbs, with a standard deviation of approximately <span class="math inline">\(65\)</span>lbs.</li>
+<li>Sumatran elephants weigh on average around <span class="math inline">\(6600\)</span>lbs, with a standard deviation of approximately <span class="math inline">\(750\)</span>lbs.</li>
+<li>Leatherback sea turtles weigh on average around <span class="math inline">\(1036\)</span>lbs, with a standard deviation of approximately <span class="math inline">\(125\)</span>lbs.</li>
+</ul>
+<p>Charles and Sadie think about finding samples of <span class="math inline">\(16\)</span> of each of these species in the wild.</p>
+<ol type="a">
+<li>Characterize the sampling distribution for each of the species.</li>
+<li>If larger samples were taken, how would this change the mean and standard error of the sampling distributions?</li>
+<li>Suppose a sample of size <span class="math inline">\(n\)</span> is taken of leatherback turtles. How large of a sample of Sumatran elephants would be needed to have the same standard error of the sample mean?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>For the gorillas, the sampling distribution will be characterized by a mean of <span class="math inline">\(407\)</span> and a variance of <span class="math inline">\(\dfrac{65^2}{16} = 264.0625\)</span>. The standard error is given by <span class="math inline">\(\dfrac{65}{\sqrt{16}} = 16.25\)</span>. For the elephants, the sampling distribution’s mean will be <span class="math inline">\(6600\)</span> with a variance of <span class="math inline">\(35156.25\)</span> and a standard error of <span class="math inline">\(187.5\)</span>. Finally, the sea turtles will have a sampling distribution characterized by a mean of <span class="math inline">\(1036\)</span> with a variance of <span class="math inline">\(976.5625\)</span> and a standard error of <span class="math inline">\(31.25\)</span>.</li>
+<li>No matter the sample size, the mean of the sampling distribution does not change. As the sample size increases, however, the standard error will decrease. As a result, we would expect less variability in the sampling distribution with larger samples compared to the sampling distribution with smaller samples.</li>
+<li>Suppose <span class="math inline">\(n_2\)</span> elephants are sampled. The standard errors are given by <span class="math inline">\(\dfrac{125}{\sqrt{n}}\)</span> and <span class="math inline">\(\dfrac{750}{\sqrt{n_2}}\)</span>, respectively. Thus, we get <span class="math display">\[\begin{align*}
+\frac{125}{\sqrt{n}} &amp;= \frac{750}{\sqrt{n_2}} \\
+\sqrt{n_2} &amp;= 6\sqrt{n} \\
+n_2 &amp;= 36n.
+\end{align*}\]</span> As a result, you would need to sample <span class="math inline">\(36\)</span> times as many elephants as you did turtles to have the same standard error.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chebyshev’s Inequality and Bounds on the Sampling Distribution of the Sample Mean
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Suppose that the population variance is known but that the population mean is unknown. Moreover, the population distribution is unknown. In this case, we can still apply Chebyshev’s inequality to make probability statements regarding the likelihood that <span class="math inline">\(\overline{X}\)</span> is close to <span class="math inline">\(\mu\)</span>. Recall that Chebyshev’s inequality states that, for a random variable <span class="math inline">\(X\)</span> with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, <span class="math display">\[P(\mu - k\sigma \leq X \leq \mu + k\sigma) \geq 1 - \frac{1}{k^2}.\]</span> Suppose then that we consider the sample mean, <span class="math inline">\(\overline{X}\)</span> to be the random variable of interest. The standard deviation of <span class="math inline">\(\overline{X}\)</span> is <span class="math inline">\(\text{SE}(\overline{X}) = \sigma/\sqrt{n}\)</span>. Then, if we take <span class="math inline">\(\delta\)</span> to be some positive value, we can state that the probability that <span class="math inline">\(\overline{X}\)</span> is within <span class="math inline">\(\delta\)</span> of <span class="math inline">\(\mu\)</span> is at least, <span class="math display">\[P(\mu - \delta \leq \overline{X} \leq \mu + \delta) \geq 1 - \frac{\sigma^2}{\delta^2n^2}.\]</span> This will hold for any positive value of <span class="math inline">\(\delta\)</span>.</p>
+<p>If we take <span class="math inline">\(\delta = 2\dfrac{\sigma}{\sqrt{n}}\)</span>, for instance, then we will find that the probability that the sample mean is within two standard errors of the true population mean is at least <span class="math inline">\(0.75\)</span>. That is, no matter the distribution of the population, there is always at least a <span class="math inline">\(0.75\)</span> chance that the sample mean will be within two standard errors of the truth. This gives further justification for reporting the standard error.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-sampling-distribution-of-the-sample-mean-in-normal-populations" class="level3" data-number="12.3.2">
+<h3 data-number="12.3.2" class="anchored" data-anchor-id="the-sampling-distribution-of-the-sample-mean-in-normal-populations"><span class="header-section-number">12.3.2</span> The Sampling Distribution of the Sample Mean in Normal Populations</h3>
+<p>While it is possible to make concrete statements regarding the relationship between the parameters of the sampling distribution and the population distribution, we are not able to make concrete probability statements regarding the sample mean in general.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> However, in certain cases we are able to make stronger statements regarding the sampling distribution. These statements stem from knowledge that we may have of the underlying population. While it may be unrealistic to make strong assumptions regarding the values of population parameters, it is often the case that we may have a general idea of the shape of the underlying distribution. In <a href="chapter8.html" class="quarto-xref"><span>Chapter 8</span></a> and in <a href="chapter9.html" class="quarto-xref"><span>Chapter 9</span></a> we discussed how certain named distributions emerge as a result of the underlying processes, and how these can be identified based on the particulars of a given scenario. If you are in a case where you are willing to make an assumption regarding the shape of the population distribution, it may be possible to make stronger statements regarding the sampling distribution.</p>
+<p>The most common assumption to make regarding an underlying population distribution is that the population is (approximately) normally distributed. That is, we assume that <span class="math inline">\(X \sim N(\mu,\sigma^2)\)</span>, where we perhaps have no knowledge as to what the values of <span class="math inline">\(\mu\)</span> or <span class="math inline">\(\sigma^2\)</span> are. Making this assumption regarding the shape of the distribution allows us to fully characterize the sampling distribution of <span class="math inline">\(\overline{X}\)</span>. To do so, we need only revisit the closure properties of the normal distribution. Specifically, if we have multiple quantities which are independent of one another, and each of them follows a normal distribution, then the sum of these random quantities will also follow a normal distribution. In addition, if we have a normally distributed random variable and we multiply it by a constant, then the result will <em>still</em> be a normally distributed random variable.</p>
+<p>The sample mean is constructed by first taking a sum of a set of random variables, and then second multiplying this summation by <span class="math inline">\(\dfrac{1}{n}\)</span>. If the population is normally distributed then this is the sum of a set of normally distributed random variables, and as a result, will be normally distributed itself. That is, whenever the population distribution is normally distributed, the sampling distribution of the sample mean will also be normally distributed.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Sampling Distribution of the Sample Mean in Normal Populations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that a population is normally distributed with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Then, supposing a random sample is taken independently, giving <span class="math inline">\(X_1,\dots,X_n\)</span>, the sampling distribution of the sample mean will be such that <span class="math display">\[\overline{X} \sim N(\mu, \frac{\sigma^2}{n}).\]</span></p>
+</div>
+</div>
+<p>In these cases, it is possible to make more concrete statements regarding the behaviour of the sample mean. For instance, an application of the empirical rule tells us that in approximately <span class="math inline">\(95\%\)</span> of cases, the sample mean will be within two standard errors of the true mean. Supposing that the population variance is not too large, or the sample size is sufficiently large, this gives reasonable certainty that the sample mean is a good proxy for the population mean. Using this result to make definitive probability statements still requires knowledge of <span class="math inline">\(\sigma^2\)</span> in the population, which will often be an unrealistic assumption. In the coming chapters we will learn how to overcome this shortcoming and quantify the uncertainty in the values of statistics even without direct knowledge of the population variance. A more pressing question, however, is whether there are any strong statements that can be made about the distribution of the sample mean when the population is not normally distributed.</p>
+<div id="exm-charles-and-sadie-zoo-trip-normal" class="theorem example">
+<p><span class="theorem-title"><strong>Example 12.4 (Charles and Sadie Consider their Zoo Trip)</strong></span> After returning from the zoo, Charles and Sadie wish to figure out whether the zoo appeared to have a good representation of the animals or not. They record all of the following information:</p>
+<ul>
+<li>Eastern lowland gorillas weigh on average around <span class="math inline">\(407\)</span>lbs, with a standard deviation of approximately <span class="math inline">\(65\)</span>lbs. The zoo had <span class="math inline">\(4\)</span> gorillas with an average weight of <span class="math inline">\(342\)</span>lbs.</li>
+<li>Sumatran elephants weigh on average around <span class="math inline">\(6600\)</span>lbs, with a standard deviation of approximately <span class="math inline">\(750\)</span>lbs. The zoo had <span class="math inline">\(25\)</span> elephants with an average weight of <span class="math inline">\(6750\)</span>lbs.</li>
+<li>Leatherback sea turtles weigh on average around <span class="math inline">\(1036\)</span>lbs, with a standard deviation of approximately <span class="math inline">\(125\)</span>lbs. The zoo had <span class="math inline">\(64\)</span> turtles, with an average weight of <span class="math inline">\(1030\)</span>lbs.</li>
+</ul>
+<p>In order to proceed, Charles and Sadie are willing to assume that the animals all have weights that are approximately normally distributed in the population.</p>
+<ol type="a">
+<li>Describe the sampling distributions for each animal from the zoo.</li>
+<li>If the sample of gorillas is randomly selected from the wild, what is the probability that the zoo would have a sample weight as low (or lower) as what they have?</li>
+<li>If the sample of elephants is randomly selected from the wild, what is the probability that the zoo would have a sample weight as high (or higher) as what they have?</li>
+<li>If the sample of turtles is randomly selected from the wild, what is the probability that the zoo would have a sample weight between <span class="math inline">\(1020.375\)</span> and <span class="math inline">\(1051.625\)</span>?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Because the populations are normally distributed all of the sampling distributions will be normally distributed as well. Let <span class="math inline">\(G\)</span>, <span class="math inline">\(E\)</span>, and <span class="math inline">\(T\)</span> represent the random variables corresponding to gorillas, elephants, and turtles respectively. Then <span class="math display">\[\begin{align*}
+\overline{G} &amp;\sim N\left(407, \frac{4225}{4}\right)  \\
+\overline{E} &amp;\sim N\left(6600, \frac{562500}{25}\right) =  N\left(6600, 22500\right)\\
+\overline{T} &amp;\sim N\left(1036, \frac{15625}{64}\right).
+\end{align*}\]</span></li>
+<li>Since the sampling distribution is normal we can compute this as <span class="math display">\[\begin{align*}
+P(\overline{G} \leq 342) &amp;= P(\frac{\overline{G} - 407}{\sqrt{4225/4}} \leq \frac{342 - 407}{\sqrt{4225/4}}) \\
+&amp;= \Phi\left(-2\right) \\
+&amp;\approx 0.025.
+\end{align*}\]</span> The final approximation stems from an application of the empirical rule.</li>
+<li>As above we can take <span class="math display">\[\begin{align*}
+P(\overline{E} \geq 6750) &amp;= 1 - P(\overline{E} \leq 6750) \\
+&amp;= 1 - P(\frac{\overline{E} - 6600}{\sqrt{22500}} \leq \frac{6750 - 6600}{\sqrt{22500}}) \\
+&amp;= 1 - \Phi(1) \\
+&amp;\approx 0.16.
+\end{align*}\]</span></li>
+<li>For the turtles we get <span class="math display">\[\begin{align*}
+P(1020.375 \leq \overline{T} \leq 1051.625) &amp;= P(\frac{1020.375 - 1036}{\sqrt{15625/64}} \leq \frac{\overline{T} - 1036}{\sqrt{15625/64}} \leq \frac{1051.625 - 1036}{\sqrt{15625/64}}) \\
+&amp;= \Phi(1) - \Phi(-1) \\
+&amp;\approx 0.68.
+\end{align*}\]</span></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-central-limit-theorem" class="level3" data-number="12.3.3">
+<h3 data-number="12.3.3" class="anchored" data-anchor-id="the-central-limit-theorem"><span class="header-section-number">12.3.3</span> The Central Limit Theorem</h3>
+<p>If the underlying population does not follow a normal distribution it will not be the case that the sampling distribution is <em>exactly</em> normally distributed. However, a remarkable result states that, while we cannot state that a normal distribution will be <em>exactly</em> correct for the sampling distribution, we can state that, in large enough samples, the normal distribution will be <em>approximately</em> correct for the sampling distribution. That is to say, no matter the population distribution, if the sample size is large enough, the sample mean will have a distribution that is approximately normal. This statement is known as the <strong>Central Limit Theorem</strong>, and it sits at the heart of many of the results we will leverage for inferential statistics.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Central Limit Theorem (CLT)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(X\)</span> is drawn from a population with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>, but an otherwise unspecified distribution. If a sample of size <span class="math inline">\(n\)</span> is drawn from this population, giving <span class="math inline">\(X_1,\dots,X_n\)</span>, then supposing that <span class="math inline">\(n\)</span> is large enough, we will have that <span class="math display">\[\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i \dot\sim N(\mu, \frac{\sigma^2}{n}),\]</span> where <span class="math inline">\(\dot\sim\)</span> means “is approximately distributed as”. More formally, we can state that as <span class="math inline">\(n\to\infty\)</span>, the distribution of <span class="math inline">\(\overline{X}\)</span> converges to a normal distribution.</p>
+</div>
+</div>
+<p>The power of this result is difficult to overstate. Simply put, if <span class="math inline">\(n\)</span> is sufficiently large then we do not need to know <em>anything</em> about the underlying population distribution in order to make use of the results from the normal distribution in assessing its behaviour. No matter the underlying population we can calculate using normal probabilities, make use of the empirical rule, and make definitive statements like those in the previous section. Importantly, these probabilities will not be exactly correct, however, even for moderate large <span class="math inline">\(n\)</span>, they will likely be close enough to be very useful. A natural question regarding the application of the Central Limit Theorem is then how large does <span class="math inline">\(n\)</span> have to be? The short answer is that it depends. The required sample size for <span class="math inline">\(n\)</span> depends primarily on how close to normality the original population is. If you have a population that is approximately normal to begin, even very small sample sizes will suffice for approximate normality. If the original population is further from normality then it will take larger samples to apply the CLT.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>This plots shows the convergence of the sampling distribution of the sample mean to the normal distribution for three different populations. In the top row the population distribution is shown, followed by the sampling distribution for the sample mean over increasing values of <span class="math inline">\(n\)</span>. While all three end up following a normal distribution, and all three end-up having very little variance as the sample size grows (the <span class="math inline">\(x\)</span>-axis are held constant across all plots), we can see that normality emerges more quickly for the populations that are closer to normality to begin.</figcaption>
+<p><a href="chapter12_files/figure-html/Convergence of Sampling Distributions via the CLT-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" data-glightbox="description: .lightbox-desc-6" title="This plots shows the convergence of the sampling distribution of the sample mean to the normal distribution for three different populations. In the top row the population distribution is shown, followed by the sampling distribution for the sample mean over increasing values of n. While all three end up following a normal distribution, and all three end-up having very little variance as the sample size grows (the x-axis are held constant across all plots), we can see that normality emerges more quickly for the populations that are closer to normality to begin."><img src="chapter12_files/figure-html/Convergence of Sampling Distributions via the CLT-1.png" class="img-fluid figure-img" width="672" alt="This plots shows the convergence of the sampling distribution of the sample mean to the normal distribution for three different populations. In the top row the population distribution is shown, followed by the sampling distribution for the sample mean over increasing values of n. While all three end up following a normal distribution, and all three end-up having very little variance as the sample size grows (the x-axis are held constant across all plots), we can see that normality emerges more quickly for the populations that are closer to normality to begin."></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Often, the concrete advice will be that, if <span class="math inline">\(n \geq 30\)</span>, the CLT will apply. As with most hard-and-fast rules, I would advise against following this dogmatically. The issue is two-fold. First, if populations are near to normality then the CLT will likely provide a suitable approximation for much smaller <span class="math inline">\(n\)</span> than <span class="math inline">\(30\)</span>. Second, and more concerning, if the initial population is sufficiently far from normality it may require substantially larger sample sizes for the sampling distribution to appear normal. Instead of using a definitive, arbitrary cutoff, it is more sensible to consider the problem at hand, the likely shape of the population, and the sensitivity of your conclusions to the assumption that the CLT Is a good approximation. While it is hard to establish a clear cut rule, it is always the case that as <span class="math inline">\(n\)</span> increases in size the approximation becomes more and more reasonable. Throughout these course notes we will endeavour to make clear whenever the sample size is “large enough” for the CLT to hold. When in doubt, taking <span class="math inline">\(n\geq 30\)</span> provides a useful starting point.</p>
+<div id="exm-charles-and-sadie-zoo-trip-nonnormal" class="theorem example">
+<p><span class="theorem-title"><strong>Example 12.5 (Charles and Sadie Re-Consider their Zoo Trip)</strong></span> After working out the probabilities associated with their zoo trip and the likelihood of observing what they observed (<a href="#exm-charles-and-sadie-zoo-trip-normal" class="quarto-xref">Example&nbsp;<span>12.4</span></a>), Charles and Sadie do some additional research. They learn that their assumptions around the normally distributed weights of the animals likely does not hold. Instead, they learn that</p>
+<ul>
+<li>The weights of gorillas are far from normal, with different modes emerging depending on various factors around the gorilla. The zoo had a sample of size <span class="math inline">\(4\)</span>.</li>
+<li>The weights of elephants are close to normal, but not exactly so – there is more variability than would be expected in a normal population. The zoo had a sample of size <span class="math inline">\(25\)</span>.</li>
+<li>The weights of sea turtles are far from normal, exhibiting skewness and multi-modality. The zoo ahd a sample of size <span class="math inline">\(64\)</span>.</li>
+</ul>
+<ol type="a">
+<li>Which of the conclusions that Charles and Sadie have previously drawn are still justified? Why and how?</li>
+<li>Which of the conclusions that Charles and Sadie have previously drawn are no longer justified? Why?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Concluding that the sampling distribution for the sample mean weight of elephants is normally distributed is likely still justifiable. This is because the sample size (<span class="math inline">\(25\)</span>) is likely large enough to invoke the CLT, meaning that the sampling distribution will be approximately normally distributed. This is justifiable since the population is approximately normal. Concluding that the sampling distribution for the sample mean weight of sea turtles is approximately normal is also likely justifiable. This is because, despite the fact that the population distribution is far from normal, the sample is large enough (<span class="math inline">\(64\)</span>) to invoke the CLT. The distributions here will not be exactly normal, however, they will be close enough to use it as an approximation.</li>
+<li>Concluding that the sampling distribution for the sample mean weight of the gorillas is normal is no longer justified. Because the sample size is very small (<span class="math inline">\(4\)</span>) we cannot use the CLT. As a result, we would rely on the population distribution being normal in order to use normal probabilities; however, in this case, the population is far from normal, invalidating the assumption.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="exploring-sampling-distributions-in-r" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="exploring-sampling-distributions-in-r"><span class="header-section-number">12.4</span> Exploring Sampling Distributions in R</h2>
+<p>The fact that the sampling distribution is best interpreted as the distribution that arises from repeatedly computing a particular statistic renders statistical programming to be an effective tool for exploring the ideas associated with sampling variability and sample statistics. If the population distribution is known, then it is possible to (using the previously discussed tools for drawing samples from named distributions) to work out empirically the sampling distribution for <em>any</em> statistic. Moreover, we can use R to determine the necessary sample sizes in order for the sampling distribution of the sample mean to appear approximately normal. The process in all of these cases is similar: we repeatedly sample from the population distribution, compute the estimated statistic, and then record this value. Then, we can plot the sampling distribution by plotting the result of the various estimates.</p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# First Set a Seed to Ensure Replicability
+set.seed(31415)
+
+# Next define the sample size and population parameters
+# and the number of times to repeat the experiment
+n <- 10
+rate <- 4 # We will use Exp(4)
+replicates <- 1000
+
+# Store the Results in a Vector
+estimates <- c()
+
+# Repeatedly compute the statistic of interest
+for(ii in 1:replicates) {
+    sample <- rexp(n, rate = rate)
+    estimates <- c(estimates, mean(sample)) # Add the statistic
+}
+
+# Produce the Resulting Histogram
+hist(estimates, main = "Sampling Distribution of Sample Mean")
+
+# Output the Sampling Distribution Parameters
+print(paste0("The mean of the sample distribution is ", mean(estimates), "."))
+print(paste0("The variance is ", var(estimates), "."))`, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>The results of this first experiment demonstrate that, if the population is exponentially distributed, a sample of size <span class="math inline">\(10\)</span> is insufficient to approximate normality. Consider what happens as you increase the sample size to the shape of the histogram. We can also see that the approximated mean and variance are close to what we would theoretically expect them to be, namely <span class="math inline">\(\dfrac{1}{4}\)</span> and <span class="math inline">\(\dfrac{1}{160}\)</span>. If the number of replicates were increased, these values should become closer to the truth.</p>
+<p>Perhaps more useful than considering the sampling distribution of the sample mean, however, is the use of statistical software to consider the sampling distributions of other statistics. Try to determine how you may modify this code to look at the sampling distribution for the sample variance, or the sample median, or the sample minimum, or any other statistic that can be computed on a sample. The following code will do just that for a normally distributed population.</p>
+<div id="qwebr-insertion-location-2"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-2");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    2
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# Set a Seed to Ensure Replicability
+set.seed(31415)
+
+# Define the Parameters of Interest
+n <- 50
+replicates <- 5000
+mean <- 62
+sd <- 3
+
+# Define holders for the various statistics
+medians <- c()
+variances <- c()
+minimums <- c()
+
+# Loop over the various replicates to work out the sampling distributions
+for (ii in 1:replicates) {
+    sample <- rnorm(n, mean = mean, sd = sd)
+
+    # Compute the statistics
+    medians <- c(medians, median(sample))
+    variances <- c(variances, var(sample))
+    minimums <- c(minimums, min(sample))
+}
+
+# Output Histograms for the Sampling Distributions
+hist(medians, main = "Sampling Distribution for the Median")`, 
+  2);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div id="qwebr-insertion-location-3"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-3");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    3
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `hist(variances, main = "Sampling Distribution for the Variance")`, 
+  3);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div id="qwebr-insertion-location-4"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-4");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    4
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `hist(minimums, main = "Sampling Distribution for the Minimum")`, 
+  4);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>The use of these <em>simulations</em> to determine the sampling distribution is an incredibly powerful tool in statistics. It allows us to work with quantities in a practical manner even when the theory is too cumbersome to derive. What is more, the same ideas can be extended to approximate sampling distributions even when the population distribution is not known at all. The process is called <em>bootstrapping</em>, and it is one of the most powerful ideas that has been derived in modern statistics.</p>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-12.0" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.1</strong></span> Describe the concept of sampling variability.</p>
+</div>
+<div id="exr-12.00" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.2</strong></span> A certain process for manufacturing CPUs has been in use for a period of time, and it is known that <span class="math inline">\(12\%\)</span> of the CPUs it produces are defective. A new process that is supposed to reduce the proportion of defectives is being tested. In a simple random sample of <span class="math inline">\(100\)</span> CPUs produced by the new process, <span class="math inline">\(12\)</span> were defective.</p>
+<ol type="a">
+<li>One of the engineers suggests that the test proves that the new process is no better than the old process, since the proportion of defectives in the sample is the same. Is this conclusion justified? Explain.</li>
+<li>Assume that there had been only <span class="math inline">\(11\)</span> defective CPUs in the sample of <span class="math inline">\(100\)</span>. Would this have proven that the new process is better? Explain.</li>
+<li>Which outcome represents strong evidence that the new process is better: finding <span class="math inline">\(11\)</span> defective CPUs or finding <span class="math inline">\(2\)</span> defective CPUs?</li>
+</ol>
+</div>
+<div id="exr-12.000" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.3</strong></span> There is an intuitive sense that larger samples from a study will produce more reliable results. Describe why this is the case.</p>
+</div>
+<div id="exr-12.1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.4</strong></span> Describe the difference between a sampling distribution and a population distribution.</p>
+</div>
+<div id="exr-12.2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.5</strong></span> Suppose that you are told that the sampling distribution for the mean weight of a manufactured component is given <span class="math inline">\(N(10, 3)\)</span>.</p>
+<ol type="a">
+<li>How likely is it that, in a random sample of these components, the calculated mean will exceed <span class="math inline">\(13\)</span>?</li>
+<li>What is the population mean weight for these components?</li>
+<li>If the sample size is <span class="math inline">\(50\)</span>, what is the population variance?</li>
+<li>Do you think that the population is normally distributed? Explain.</li>
+</ol>
+</div>
+<div id="exr-12.3" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.6</strong></span> When a particular machine is correctly calibrated, it produces a mean chemical yield which follows a <span class="math inline">\(N(50, 4)\)</span> distribution. Three batches are produced and yields of <span class="math inline">\(48\)</span>, <span class="math inline">\(46\)</span>, and <span class="math inline">\(56\)</span> are observed.</p>
+<ol type="a">
+<li>If the machine is correctly calibrated, how likely is it for you to observe a mean yield less than or equal to <span class="math inline">\(48\)</span>?</li>
+<li>If the machine is correctly calibrated, how likely is it for you to observe a mean yield less than or equal to <span class="math inline">\(46\)</span>?</li>
+<li>If the machine is correctly calibrated, how likely is it for you to observe a mean yield greater than or equal to <span class="math inline">\(56\)</span>?</li>
+<li>Do you believe that the machine is correctly calibrated? Why?</li>
+</ol>
+</div>
+<div id="exr-12.4" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.7</strong></span> Suppose that <span class="math inline">\(X\sim \text{Bern}(p)\)</span>. If we take multiple, independent realizations of <span class="math inline">\(X\)</span>, denoted <span class="math inline">\(X_i\)</span>, then the total of these realizations, <span class="math inline">\(T = \sum_{i=1}^n X_i\)</span> follows a <span class="math inline">\(\text{Bin}(n,p)\)</span> distribution.</p>
+<ol type="a">
+<li>Suppose that Jim is a strong poker player, and wins <span class="math inline">\(45\%\)</span> of hands that he plays. What is the distribution of the result of a poker hand for Jim?</li>
+<li>If Jim were to play <span class="math inline">\(100\)</span> hands in an evening, what is the sampling distribution for the total number of hands that Jim wins in the evening?</li>
+<li>What is the probability that Jim wins the <span class="math inline">\(47\)</span>th hand of poker?</li>
+<li>On any given night, what is the probability that Jim wins between <span class="math inline">\(30\)</span> and <span class="math inline">\(80\)</span> hands of poker?</li>
+</ol>
+</div>
+<div id="exr-12.5" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.8</strong></span> It has been found that <span class="math inline">\(2\%\)</span> of the tools produced by a certain machine are defective. Suppose a shipment of <span class="math inline">\(400\)</span> tools are received.</p>
+<ol type="a">
+<li>What is the probability that <span class="math inline">\(3\%\)</span> or more are defective?</li>
+<li>What is the probability that <span class="math inline">\(2\%\)</span> or less will be defective?</li>
+</ol>
+</div>
+<div id="exr-12.6" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.9</strong></span> In a large box containing many, many marbles, the mean weight is <span class="math inline">\(5.02\)</span> grams with a standard deviation of <span class="math inline">\(0.3\)</span> grams. Suppose that an elementary school student wishes to bring <span class="math inline">\(100\)</span> marbles to school to play with at recess. Their parents are concerned about the weight added to the student’s backpack.</p>
+<ol type="a">
+<li>What is the probability that the student’s marbles will weigh between <span class="math inline">\(496\)</span> and <span class="math inline">\(500\)</span> grams?</li>
+<li>What is the probability that the student’s marbles will weigh more than <span class="math inline">\(510\)</span> grams?</li>
+</ol>
+</div>
+<div id="exr-12.7" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.10</strong></span> Assume that the heights of <span class="math inline">\(3000\)</span> students are normally distributed with a mean of <span class="math inline">\(68\)</span> inches and a standard deviation of <span class="math inline">\(3\)</span> inches.</p>
+<ol type="a">
+<li>If <span class="math inline">\(80\)</span> samples consisting of <span class="math inline">\(25\)</span> students each are obtained, what would be the expected mean and standard deviation of the resulting sampling distribution of means if sampling were done with replacement?</li>
+<li>Would you expect these results to change if sampling were done without replacement? Explain.</li>
+</ol>
+</div>
+<div id="exr-12.8" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.11</strong></span> An automated process attempts to fill containers of a particular chemical with exactly <span class="math inline">\(350\)</span>mL of the chemical. Owing to random variation in the process, however, the fill amount is random with a mean of <span class="math inline">\(350.01\)</span>mL and a standard deviation of <span class="math inline">\(0.2\)</span>mL.</p>
+<ol type="a">
+<li>What is the probability that the mean volume of a sample of <span class="math inline">\(100\)</span> containers is less than <span class="math inline">\(350\)</span>mL?</li>
+<li>If instead the process were re-calibrated to increase the mean fill volume to <span class="math inline">\(350.03\)</span>, what is the probability that the sample of size <span class="math inline">\(100\)</span> will result in a mean fill less than <span class="math inline">\(350\)</span>mL?</li>
+</ol>
+</div>
+<div id="exr-12.9" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.12</strong></span> A simple random sample of <span class="math inline">\(100\)</span> individuals is chosen from a population with a mean height of <span class="math inline">\(70\)</span> inches and a standard deviation of <span class="math inline">\(2.5\)</span> inches.</p>
+<ol type="a">
+<li>Describe the sampling distribution for this mean height of this sample.</li>
+<li>What is the probability that the average height of the sample is greater than <span class="math inline">\(69.5\)</span>?</li>
+</ol>
+</div>
+<div id="exr-12.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.13</strong></span> Among adults in a large city, <span class="math inline">\(30\%\)</span> attended university. A simple random sample of <span class="math inline">\(100\)</span> adults is chosen.</p>
+<ol type="a">
+<li>What is the population distribution?</li>
+<li>What is the approximate sampling distribution for the proportion of adults who attended university in the sample?</li>
+<li>What is the probability that more than <span class="math inline">\(35\)</span> of the sampled adults attended university?</li>
+</ol>
+</div>
+<div id="exr-12.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.14</strong></span> Suppose that houses in a town have a mean living space of <span class="math inline">\(1742\)</span> square feet with a standard deviation of <span class="math inline">\(568\)</span> square feet.</p>
+<ol type="a">
+<li>Describe the sampling distribution for a mean sample of <span class="math inline">\(25\)</span> homes.</li>
+<li>How would the parameters of the sampling distribution change if <span class="math inline">\(400\)</span> homes were sampled instead?</li>
+<li>If the population distribution is normally distributed, what is the sampling distribution in a sample of <span class="math inline">\(n\)</span> homes?</li>
+<li>If the population is not normally distributed, what is the sampling distribution in a sample of <span class="math inline">\(n\)</span> homes?</li>
+</ol>
+</div>
+<div id="exr-12.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.15</strong></span> Suppose that <span class="math inline">\(X\)</span> is taken to represent the number of individuals living in households. Suppose that it is known that <span class="math inline">\(X\)</span> has a mean of <span class="math inline">\(2.5\)</span> and a standard deviation of <span class="math inline">\(1.4\)</span>.</p>
+<ol type="a">
+<li>Is the population likely to be normally distributed? Explain.</li>
+<li>Suppose that a sample of <span class="math inline">\(3\)</span> households is taken. What can we say about the probability that the sample mean exceeds <span class="math inline">\(3\)</span>?</li>
+<li>Suppose that a sample of <span class="math inline">\(49\)</span> households is taken. What can we say about the probability that the sample mean exceeds <span class="math inline">\(3\)</span>?</li>
+</ol>
+</div>
+<div id="exr-12.13" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 12.16</strong></span> Suppose that <span class="math inline">\(X\)</span> is a random variable representing the birth weights for children in a neonatal unit at a local hospital. Suppose that the mean weight in the unit is <span class="math inline">\(2500\)</span> grams, with a standard deviation of <span class="math inline">\(360\)</span> grams.</p>
+<ol type="a">
+<li>Suppose that samples of size <span class="math inline">\(400\)</span> are taken. What is the approximate sampling distribution for the sample mean?</li>
+<li>What is the approximate probability that the sample mean is within <span class="math inline">\(36\)</span> grams of the true mean (either above or below)?</li>
+</ol>
+</div>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;12.1: The population of squares. Consider each colour to represent a trait or variable for each individual in the population.</span>
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;12.2: A single sample from the population. In this sample of size <span class="math inline">\(10\)</span>, <span class="math inline">\(2\)</span> of the resulting squares are black, making the sample proportion <span class="math inline">\(0.2\)</span>.</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;12.3: Sixteen samples from the population. Each sample exhibits a different proportion of squares which are black, and as a result, a different sample proportion. Because this proportion differs from sample-to-sample we say that it is subject to sampling variability.</span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;12.4: The sampling distribution for the proportion of black squares in samples of size <span class="math inline">\(10\)</span> from the population of coloured squares. This distribution can be thought to emerge from the process of repeatedly sampling from the population, computing the resulting statistic, and then recording those statistics into a dataset itself. Moreover, we can read the probabilities here as stating “the probability that the proportion of black squares in a sample of size <span class="math inline">\(10\)</span> will take on <span class="math inline">\(x\)</span> is <span class="math inline">\(y\)</span>.”</span>
+<span class="glightbox-desc lightbox-desc-6">This plots shows the convergence of the sampling distribution of the sample mean to the normal distribution for three different populations. In the top row the population distribution is shown, followed by the sampling distribution for the sample mean over increasing values of <span class="math inline">\(n\)</span>. While all three end up following a normal distribution, and all three end-up having very little variance as the sample size grows (the <span class="math inline">\(x\)</span>-axis are held constant across all plots), we can see that normality emerges more quickly for the populations that are closer to normality to begin.</span>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Be that a mean, variance, median, maximum, or so forth.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In small populations the same general procedure still applies, however, it will often be the case that in smaller populations we have a lesser need for deep statistical methodologies. Instead, we will be able to rely on census techniques or similar.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Meaning that is generally represents the underlying population.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>To see this, consider the example of the population of coloured squares. For each square in our sample, record a <span class="math inline">\(1\)</span> if the square is black and a <span class="math inline">\(0\)</span> otherwise. Then, the sample mean <span class="math inline">\(\overline{x}\)</span> is computed as <span class="math inline">\(\frac{1}{n}\sum_{i=1}^n x_i\)</span>. This is equivalent to the number of <span class="math inline">\(i\)</span> that have <span class="math inline">\(x_i = 1\)</span> divided by the total number, or put differently, the number of squares that are black divided by the total number of squares. In this sense, the proportion of black squares <em>is</em> a sample mean, and the ensuing discussion applies equally well to either case.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>The more variability in the population the more variability in statistics computed from the population. This should make some intuitive sense. If a population is very concentrated in values, it does not really matter what sample you take as everyone will be close to one another, and most sample will be similar. If instead, the population has a lot of variability, then the specific sample will matter a great deal, and you will expect tremendous variability sample-to-sample.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Note, some authors refer to the standard error as the standard error using the sample standard deviation instead. That is, they define the standard error of the sample mean to be <span class="math inline">\(\dfrac{s}{\sqrt{n}}\)</span> rather than <span class="math inline">\(\dfrac{\sigma}{\sqrt{n}}\)</span>. This has the benefit of being able to be computed, but the drawback of not being the true value of the standard deviation of the statistic. In these notes we will refer to this, where relevant, as the estimated standard error, and we will view this quantity as a guess at the true standard error.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>We can lower-bound the probabilities using Chebyshev’s inequality, but this is not necessarily a useful lower bound.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -709,6 +2152,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </nav>
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
+<script>var lightboxQuarto = GLightbox({"loop":false,"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

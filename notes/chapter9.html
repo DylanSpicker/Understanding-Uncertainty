@@ -1141,7 +1141,7 @@ P(X\in(a,b)) &amp;= 1 - P(X\not\in(a,b))\\
 Figure&nbsp;9.1: A number line showcasing the interval <span class="math inline">\((a,b)\)</span> and demonstrating how you can take everything less than <span class="math inline">\(b\)</span> and remove all that is less than <span class="math inline">\(a\)</span> to be left with only <span class="math inline">\((a,b)\)</span>.
 </figcaption>
 <div aria-describedby="fig-number-line-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="..\graphics/ch9-difference-in-numbers.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="..\graphics/ch9-difference-in-numbers.png" class="img-fluid figure-img"></a>
+<a href="..\graphics/ch9-difference-in-numbers.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="..\graphics/ch9-difference-in-numbers.png" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1270,7 +1270,7 @@ Solution
 <p>Formally, the probability of any event of interest, say <span class="math inline">\(P(X \in [a,b])\)</span> for some interval <span class="math inline">\([a,b]\)</span>, is given by the area under the probability density function. As a result, if the probability density function is plotted, then considering the area that is encompassed within any particular interval (or set of intervals) is equivalent to considering the probability that the random variable takes on a value in that range. This can be particularly useful when working with distributions and trying to get a sense of probabilities: drawing out the density function, and then highlighting the area of interest is an effective tool for understanding the probabilities that you are dealing with.</p>
 <div id="exm-area-under-curve" class="theorem example">
 <p><span class="theorem-title"><strong>Example 9.3 (Non-Uniform Bus Arrivals)</strong></span> After some further investigation, Charles and Sadie decide that the uniformly arriving buses are not actually uniformly arriving. Instead, there is a lower probability of arriving, which increases for the first two minutes, then a uniform probability for the next eleven minutes, followed by a decreasing probability for the final two minutes. Charles draws a rough sketch of the density function that is expected.</p>
-<div class="cell" data-crop="true">
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1347,7 +1347,7 @@ Properties of a Probability Density Function
 <p>:::{#def-cumulative distribution function-calculus} ## The Cumulative Distribution Function (Calculus) The cumulative distribution function of a continuous random variable, <span class="math inline">\(X\)</span>, computes the probability that <span class="math inline">\(X\)</span> is less than or equal to a threshold value <span class="math inline">\(x\)</span>. This can be computed as <span class="math display">\[F(x) = \int_{-\infty}^x f(t)dt.\]</span> :::</p>
 <div id="exm-finding-valid-pdf" class="theorem example">
 <p><span class="theorem-title"><strong>Example 9.4 (A More Complicated Density for the Bus)</strong></span> Charles and Sadie, while pleased with the added complexity afforded by the probability density function in <a href="#exm-area-under-curve" class="quarto-xref">Example&nbsp;<span>9.3</span></a>, they are not sure that it is quite right. It seems that it is more likely that the bus arrives around the halfway point than it is at any other time throughout the interval. After playing around a bit, they propose the following curve, <span class="math display">\[f(x) = \alpha\left(\frac{x}{15}\right)^2\left(1-\frac{x}{15}\right)^2, \quad x \in [0,15].\]</span> This curve seems to have a shape that better tracks the expected arrivals.</p>
-<div class="cell" data-crop="true">
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1622,7 +1622,7 @@ Solution
 Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red and blue), and mean 5 (black). The red density has variance 1, the blue density has variance 4, and the black density has variance 0.25.
 </figcaption>
 <div aria-describedby="fig-normal-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-normal-density-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" data-glightbox="description: .lightbox-desc-5"><img src="chapter9_files/figure-html/fig-normal-density-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-normal-density-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="chapter9_files/figure-html/fig-normal-density-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1819,7 +1819,7 @@ Closure of the Normal Distribution
 Figure&nbsp;9.3: A plot showing the probability mass function of a <span class="math inline">\(\text{Bin}(100, 0.25)\)</span> distribution, with a <span class="math inline">\(N(25, 18.75)\)</span> density overlaid, demonstrating the utility of the approximation.
 </figcaption>
 <div aria-describedby="fig-normal-approximation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-normal-approximation-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" data-glightbox="description: .lightbox-desc-7"><img src="chapter9_files/figure-html/fig-normal-approximation-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-normal-approximation-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="chapter9_files/figure-html/fig-normal-approximation-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1877,7 +1877,7 @@ Solution
 Figure&nbsp;9.4: The <span class="math inline">\(t\)</span> distribution compared with the standard normal. As the degrees of freedom increasing, the density function for the <span class="math inline">\(t\)</span> becomes closer and closer to the standard normal’s density function, and at <span class="math inline">\(\nu = \infty\)</span> they theoretically overlap.
 </figcaption>
 <div aria-describedby="fig-t-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-t-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" data-glightbox="description: .lightbox-desc-8"><img src="chapter9_files/figure-html/fig-t-dist-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-t-dist-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8"><img src="chapter9_files/figure-html/fig-t-dist-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1925,7 +1925,7 @@ Solution
 Figure&nbsp;9.5: The exponential distribution shown for decreasing values of <span class="math inline">\(\lambda\)</span>. Note that as the rate decreases, the mean increases. As a result, at this resolution, the curve will appear to flatten out. This has the effect of making larger events increasing likely, while decreasing the relative likelihood of small events.
 </figcaption>
 <div aria-describedby="fig-exp-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-exp-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" data-glightbox="description: .lightbox-desc-9"><img src="chapter9_files/figure-html/fig-exp-dist-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-exp-dist-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="quarto-lightbox-gallery-9"><img src="chapter9_files/figure-html/fig-exp-dist-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -2090,7 +2090,7 @@ Solution
 Figure&nbsp;9.6: The Gamma distribution shown for various combinations of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>.
 </figcaption>
 <div aria-describedby="fig-gamma-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-gamma-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" data-glightbox="description: .lightbox-desc-10"><img src="chapter9_files/figure-html/fig-gamma-dist-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-gamma-dist-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="quarto-lightbox-gallery-10"><img src="chapter9_files/figure-html/fig-gamma-dist-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -2108,7 +2108,7 @@ Figure&nbsp;9.6: The Gamma distribution shown for various combinations of <span 
 Figure&nbsp;9.7: The chi-sqaured distribution shown for increasing degrees of freedom.
 </figcaption>
 <div aria-describedby="fig-chisq-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-chisq-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" data-glightbox="description: .lightbox-desc-11"><img src="chapter9_files/figure-html/fig-chisq-dist-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-chisq-dist-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-11" data-gallery="quarto-lightbox-gallery-11"><img src="chapter9_files/figure-html/fig-chisq-dist-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -2878,7 +2878,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </nav>
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","loop":false});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","loop":false,"selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

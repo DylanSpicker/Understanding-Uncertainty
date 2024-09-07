@@ -279,7 +279,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#linear-combinations-of-random-variables" id="toc-linear-combinations-of-random-variables" class="nav-link" data-scroll-target="#linear-combinations-of-random-variables"><span class="header-section-number">7.4.1</span> Linear Combinations of Random Variables</a></li>
   </ul></li>
-  <li><a href="#expectations-when-random-variables-are-independent" id="toc-expectations-when-random-variables-are-independent" class="nav-link" data-scroll-target="#expectations-when-random-variables-are-independent"><span class="header-section-number">7.5</span> Expectations when Random Variables are Independent</a></li>
+  <li><a href="#sec-indep-expectations" id="toc-sec-indep-expectations" class="nav-link" data-scroll-target="#sec-indep-expectations"><span class="header-section-number">7.5</span> Expectations when Random Variables are Independent</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul>
 </nav>
@@ -622,8 +622,8 @@ E[X+Y] &amp;= \sum_{x=1}^4\sum_{y=1}^4 (x+y)\frac{14xy}{251(x + y)} \\
 </div>
 </section>
 </section>
-<section id="expectations-when-random-variables-are-independent" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="expectations-when-random-variables-are-independent"><span class="header-section-number">7.5</span> Expectations when Random Variables are Independent</h2>
+<section id="sec-indep-expectations" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="sec-indep-expectations"><span class="header-section-number">7.5</span> Expectations when Random Variables are Independent</h2>
 <p>Whenever we can assume independence of random quantities, we can greatly simplify the expressions we are dealing with. Recall that the key defining relationship with independence is that <span class="math inline">\(p_{X,Y}(x,y) = p_X(x)p_Y(y)\)</span>. Suppose then that we can write <span class="math inline">\(g(X,Y) = g_X(X)h_Y(Y)\)</span>. For instance, for the covariance we have <span class="math inline">\(g(X,Y)=(x-E[X])(Y-E[Y])\)</span> and so <span class="math inline">\(g_X(X) = X-E[X]\)</span> and <span class="math inline">\(h_Y(Y) = Y-E[Y]\)</span>. If we want to compute <span class="math inline">\(E[g(X,Y)]\)</span> then we get <span class="math display">\[\begin{align*}
 E[g(X,Y)] &amp;= E[g_X(X)h_Y(Y)] \\
 &amp;= \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}g_X(x)h_Y(y)p_{X,Y}(x,y) \\
