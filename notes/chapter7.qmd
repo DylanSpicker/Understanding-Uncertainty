@@ -233,7 +233,7 @@ e. We want $$\text{var}(X+Y) = \text{var}(X) + \text{var}(Y) + 2\text{cov}(X,Y) 
 ::::
 :::
 
-## Expectations when Random Variables are Independent
+## Expectations when Random Variables are Independent {#sec-indep-expectations}
 Whenever we can assume independence of random quantities, we can greatly simplify the expressions we are dealing with. Recall that the key defining relationship with independence is that $p_{X,Y}(x,y) = p_X(x)p_Y(y)$. Suppose then that we can write $g(X,Y) = g_X(X)h_Y(Y)$. For instance, for the covariance we have $g(X,Y)=(x-E[X])(Y-E[Y])$ and so $g_X(X) = X-E[X]$ and $h_Y(Y) = Y-E[Y]$. If we want to compute $E[g(X,Y)]$ then we get \begin{align*}
 E[g(X,Y)] &= E[g_X(X)h_Y(Y)] \\
 &= \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}g_X(x)h_Y(y)p_{X,Y}(x,y) \\

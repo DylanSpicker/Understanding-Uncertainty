@@ -162,8 +162,6 @@ After some further investigation, Charles and Sadie decide that the uniformly ar
 
 ```{r}
 #| echo: false
-#| crop: true
-
 x <- c(0, 2, 13, 15)
 y <- c(0, 1/13, 1/13, 0)
 
@@ -229,7 +227,6 @@ Charles and Sadie, while pleased with the added complexity afforded by the proba
 
 ```{r}
 #| echo: false
-#| crop: true
 
 x <- seq(0, 15, length.out = 10000)
 fx <- function(x) { 

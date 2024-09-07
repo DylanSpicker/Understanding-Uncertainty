@@ -37,7 +37,6 @@ book:
       - notes/chapter14.qmd
       - notes/chapter15.qmd
       - notes/chapter16.qmd
-
 engine: knitr
 
 filters: 

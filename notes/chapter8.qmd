@@ -1,4 +1,4 @@
-# The Named Discrete Distributions
+# The Named Discrete Distributions {#sec-named-distributions}
 
 ## General Named Distributions and the Discrete Uniform
 So far, our discussion of probability distributions and their summaries has centered on general results for arbitrary probability mass functions. The basic premise has been that, by knowing a probability mass function, you are able to understand the complete behaviour of a random quantity. Directly from this mass function we are able to derive summaries for the behaviour, for instance describing the location and variability of the random variable. In short by knowing the probability mass function^[... and to a lesser extent, the expected value and variance.] we immediately understand how the random variable behaves. We have not, however, spent much time discussing where the probability mass functions actually *come* from.
