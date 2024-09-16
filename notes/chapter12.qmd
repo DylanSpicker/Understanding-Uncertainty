@@ -5,7 +5,7 @@ library(ggplot2)
 library(dplyr)
 ```
 
-# Sampling Distributions
+# Sampling Distributions {#sec-sampling-distributions}
 
 ## The Goal, and Fundamental Dilemma, of Statistics
 Recall that the goal of statistics, at the most basic of levels, is to draw conclusions regarding the parameter values in a population of interest by analyzing a sample and computing statistics. Revisit @fig-population-sample for a visual representation of this procedure. In @sec-desc-statistics we discussed in depth the study of descriptive statistics. Descriptive statistics aim to describe the data that have been observed through the study, through the computation of sample statistics or similar graphical procedures. That is, using the techniques from descriptive statistics we can take a sample and derive statistics from it. The fundamental dilemma we are faced with, however, is that a statistic will not typically equal a parameter value exactly. That is, the value we compute using a sample for any property^[Be that a mean, variance, median, maximum, or so forth.] will not equal the value that the same property would take on in the population. As a result, while descriptive statistics allow us to understand thoroughly the data that we have collected, the do not (alone) address the complete goal of statistics. 

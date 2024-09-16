@@ -1,1 +1,1 @@
-# Null Hypothesis Significance Testing: Basics
+# The Basics of Null Hypothesis Significance Testing

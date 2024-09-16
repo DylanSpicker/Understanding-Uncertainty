@@ -334,7 +334,7 @@ We take $0!$ to be equal to $1$. The ordering argument is perhaps the most convi
 :::
 
 ### Permutations and Combinations
-Sometimes, we want to order items from a collection, but we want to only take a subset of these items. That is, suppose that you have $20$ books, only $9$ of them will fit on the shelf, and you want to know "how many ways can you put $10$ books on the shelf, in order, from your collection of $20$?" Using the product rule of counting for this directly, we recognize that there are $20$ options for the first, then $19$, then $18$, and so on until there are $12$ choices for the $10$th book to place. We can write this out in a seemingly strange way. \begin{align*}
+Sometimes, we want to order items from a collection, but we want to only take a subset of these items. That is, suppose that you have $20$ books, only $9$ of them will fit on the shelf, and you want to know "how many ways can you put $9$ books on the shelf, in order, from your collection of $20$?" Using the product rule of counting for this directly, we recognize that there are $20$ options for the first, then $19$, then $18$, and so on until there are $12$ choices for the $9$th book to place. We can write this out in a seemingly strange way. \begin{align*}
   &\ (20)(19)(18)(17)(16)(15)(14)(13)(12) \\ 
   &= \frac{(20)(19)(18)(17)(16)(15)(14)(13)(12)(11)(10)(9)(8)(7)(6)(5)(4)(3)(2)(1)}{(11)(10)(9)(8)(7)(6)(5)(4)(3)(2)(1)} \\
   &= \frac{(20)(19)(18)(17)(16)(15)(14)(13)(12)\cancel{(11)}\cancel{(10)}\cancel{(9)}\cancel{(8)}\cancel{(7)}\cancel{(6)}\cancel{(5)}\cancel{(4)}\cancel{(3)}\cancel{(2)}\cancel{(1)}}{\cancel{(11)}\cancel{(10)}\cancel{(9)}\cancel{(8)}\cancel{(7)}\cancel{(6)}\cancel{(5)}\cancel{(4)}\cancel{(3)}\cancel{(2)}\cancel{(1)}}

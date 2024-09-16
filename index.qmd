@@ -2,6 +2,7 @@
 library(webexercises)
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
 # Preface {.unnumbered}
 
 ## What are these notes?
