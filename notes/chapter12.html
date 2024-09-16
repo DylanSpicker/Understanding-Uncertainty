@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Understanding Uncertainty - 12&nbsp; Sampling Distributions</title>
+<title>12&nbsp; Sampling Distributions – Understanding Uncertainty</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -699,7 +699,7 @@ globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
   return mainDiv;
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -737,13 +737,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter10.html">Part 2: Statistics</a></li><li class="breadcrumb-item"><a href="../notes/chapter12.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -776,9 +776,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 1: Probability</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -841,9 +841,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 2: Statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -881,13 +881,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">The Basics of Null Hypothesis Significance Testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -1062,7 +1068,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter10.html">Part 2: Statistics</a></li><li class="breadcrumb-item"><a href="../notes/chapter12.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></h1>
+<h1 class="title"><span id="sec-sampling-distributions" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></span></h1>
 </div>
 
 
@@ -1089,13 +1095,13 @@ globalThis.qwebrCreateMonacoEditorInstance = function (
 <p>To understand this procedure completely, consider the following population of squares, depicted visually. If we had access to this entire population we would be able to determine any parameter value that we would like to know about, for instance, understanding the proportion of black squares present (in the population this results in a proportion of 0.195).</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-population-visual" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-population-visual" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-population-visual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12.1: The population of squares. Consider each colour to represent a trait or variable for each individual in the population.
 </figcaption>
 <div aria-describedby="fig-population-visual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter12_files/figure-html/fig-population-visual-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="chapter12_files/figure-html/fig-population-visual-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter12_files/figure-html/fig-population-visual-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;12.1: The population of squares. Consider each colour to represent a trait or variable for each individual in the population."><img src="chapter12_files/figure-html/fig-population-visual-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1104,13 +1110,13 @@ Figure&nbsp;12.1: The population of squares. Consider each colour to represent a
 <p>Generally, we will be unable to observe an entire population, and instead would be required to take random samples. If we take samples of size <span class="math inline">\(10\)</span> from the population we may end up with something like the following.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-first-sample" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-first-sample" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-first-sample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12.2: A single sample from the population. In this sample of size <span class="math inline">\(10\)</span>, <span class="math inline">\(2\)</span> of the resulting squares are black, making the sample proportion <span class="math inline">\(0.2\)</span>.
 </figcaption>
 <div aria-describedby="fig-first-sample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter12_files/figure-html/fig-first-sample-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="chapter12_files/figure-html/fig-first-sample-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter12_files/figure-html/fig-first-sample-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;12.2: A single sample from the population. In this sample of size 10, 2 of the resulting squares are black, making the sample proportion 0.2."><img src="chapter12_files/figure-html/fig-first-sample-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1119,13 +1125,13 @@ Figure&nbsp;12.2: A single sample from the population. In this sample of size <s
 <p>This sample, however, was not the only sample that we could have seen. Consider the following <span class="math inline">\(16\)</span> samples. In each of them the number of black squares (and thus the proportion of black squares) differs. These differences arise naturally based on which squares happened to be included in the sample, and those that happened to be ignored. If we continued to sample more and more from the population and work out the corresponding proportion of black squares observed, we would see the proportions continue to vary.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-all-samples" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-all-samples" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-all-samples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12.3: Sixteen samples from the population. Each sample exhibits a different proportion of squares which are black, and as a result, a different sample proportion. Because this proportion differs from sample-to-sample we say that it is subject to sampling variability.
 </figcaption>
 <div aria-describedby="fig-all-samples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter12_files/figure-html/fig-all-samples-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="chapter12_files/figure-html/fig-all-samples-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter12_files/figure-html/fig-all-samples-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;12.3: Sixteen samples from the population. Each sample exhibits a different proportion of squares which are black, and as a result, a different sample proportion. Because this proportion differs from sample-to-sample we say that it is subject to sampling variability."><img src="chapter12_files/figure-html/fig-all-samples-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1170,13 +1176,13 @@ Solution
 <p>Consider the previous example of sampling squares from the population in <a href="#fig-population-visual" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>. If we continued to do this over, and over again, and we recorded the proportion of squares that were black, the resulting distribution would the sampling distribution of the proportion of black squares. Looking at this distribution we could then ask “given a single sample from the population, how likely are we to get a representative value for the sample proportion?” If this probability is high then we can be relatively confident that a sample will provide us with a useful guess to the true parameter value. If this probability is low, we cannot be sure that we are learning much from the sample.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-sampling-dist" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-sampling-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-sampling-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12.4: The sampling distribution for the proportion of black squares in samples of size <span class="math inline">\(10\)</span> from the population of coloured squares. This distribution can be thought to emerge from the process of repeatedly sampling from the population, computing the resulting statistic, and then recording those statistics into a dataset itself. Moreover, we can read the probabilities here as stating “the probability that the proportion of black squares in a sample of size <span class="math inline">\(10\)</span> will take on <span class="math inline">\(x\)</span> is <span class="math inline">\(y\)</span>.”
 </figcaption>
 <div aria-describedby="fig-sampling-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter12_files/figure-html/fig-sampling-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4"><img src="chapter12_files/figure-html/fig-sampling-dist-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter12_files/figure-html/fig-sampling-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;12.4: The sampling distribution for the proportion of black squares in samples of size 10 from the population of coloured squares. This distribution can be thought to emerge from the process of repeatedly sampling from the population, computing the resulting statistic, and then recording those statistics into a dataset itself. Moreover, we can read the probabilities here as stating “the probability that the proportion of black squares in a sample of size 10 will take on x is y.”"><img src="chapter12_files/figure-html/fig-sampling-dist-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1403,7 +1409,7 @@ The Central Limit Theorem (CLT)
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <figcaption>This plots shows the convergence of the sampling distribution of the sample mean to the normal distribution for three different populations. In the top row the population distribution is shown, followed by the sampling distribution for the sample mean over increasing values of <span class="math inline">\(n\)</span>. While all three end up following a normal distribution, and all three end-up having very little variance as the sample size grows (the <span class="math inline">\(x\)</span>-axis are held constant across all plots), we can see that normality emerges more quickly for the populations that are closer to normality to begin.</figcaption>
-<p><a href="chapter12_files/figure-html/Convergence of Sampling Distributions via the CLT-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" data-glightbox="description: .lightbox-desc-6" title="This plots shows the convergence of the sampling distribution of the sample mean to the normal distribution for three different populations. In the top row the population distribution is shown, followed by the sampling distribution for the sample mean over increasing values of n. While all three end up following a normal distribution, and all three end-up having very little variance as the sample size grows (the x-axis are held constant across all plots), we can see that normality emerges more quickly for the populations that are closer to normality to begin."><img src="chapter12_files/figure-html/Convergence of Sampling Distributions via the CLT-1.png" class="img-fluid figure-img" width="672" alt="This plots shows the convergence of the sampling distribution of the sample mean to the normal distribution for three different populations. In the top row the population distribution is shown, followed by the sampling distribution for the sample mean over increasing values of n. While all three end up following a normal distribution, and all three end-up having very little variance as the sample size grows (the x-axis are held constant across all plots), we can see that normality emerges more quickly for the populations that are closer to normality to begin."></a></p>
+<p><a href="chapter12_files/figure-html/Convergence of Sampling Distributions via the CLT-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="This plots shows the convergence of the sampling distribution of the sample mean to the normal distribution for three different populations. In the top row the population distribution is shown, followed by the sampling distribution for the sample mean over increasing values of n. While all three end up following a normal distribution, and all three end-up having very little variance as the sample size grows (the x-axis are held constant across all plots), we can see that normality emerges more quickly for the populations that are closer to normality to begin."><img src="chapter12_files/figure-html/Convergence of Sampling Distributions via the CLT-1.png" class="img-fluid figure-img" width="672" alt="This plots shows the convergence of the sampling distribution of the sample mean to the normal distribution for three different populations. In the top row the population distribution is shown, followed by the sampling distribution for the sample mean over increasing values of n. While all three end up following a normal distribution, and all three end-up having very little variance as the sample size grows (the x-axis are held constant across all plots), we can see that normality emerges more quickly for the populations that are closer to normality to begin."></a></p>
 </figure>
 </div>
 </div>
@@ -1688,13 +1694,6 @@ qwebrCreateMonacoEditorInstance(
 </div>
 
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;12.1: The population of squares. Consider each colour to represent a trait or variable for each individual in the population.</span>
-<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;12.2: A single sample from the population. In this sample of size <span class="math inline">\(10\)</span>, <span class="math inline">\(2\)</span> of the resulting squares are black, making the sample proportion <span class="math inline">\(0.2\)</span>.</span>
-<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;12.3: Sixteen samples from the population. Each sample exhibits a different proportion of squares which are black, and as a result, a different sample proportion. Because this proportion differs from sample-to-sample we say that it is subject to sampling variability.</span>
-<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;12.4: The sampling distribution for the proportion of black squares in samples of size <span class="math inline">\(10\)</span> from the population of coloured squares. This distribution can be thought to emerge from the process of repeatedly sampling from the population, computing the resulting statistic, and then recording those statistics into a dataset itself. Moreover, we can read the probabilities here as stating “the probability that the proportion of black squares in a sample of size <span class="math inline">\(10\)</span> will take on <span class="math inline">\(x\)</span> is <span class="math inline">\(y\)</span>.”</span>
-<span class="glightbox-desc lightbox-desc-6">This plots shows the convergence of the sampling distribution of the sample mean to the normal distribution for three different populations. In the top row the population distribution is shown, followed by the sampling distribution for the sample mean over increasing values of <span class="math inline">\(n\)</span>. While all three end up following a normal distribution, and all three end-up having very little variance as the sample size grows (the <span class="math inline">\(x\)</span>-axis are held constant across all plots), we can see that normality emerges more quickly for the populations that are closer to normality to begin.</span>
-</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -1745,18 +1744,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1788,7 +1776,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1823,7 +1851,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -2140,42 +2172,49 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notes/chapter11.html" class="pagination-link  aria-label=" &lt;span="" introduction="" to="" descriptive="" statistics&lt;="" span&gt;"="">
+      <a href="../notes/chapter11.html" class="pagination-link" aria-label="An Introduction to Descriptive Statistics">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Descriptive Statistics</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/chapter13.html" class="pagination-link" aria-label="<span class='chapter-number'>13</span>&nbsp; <span class='chapter-title'>Methods of Estimation</span>">
+      <a href="../notes/chapter13.html" class="pagination-link" aria-label="Methods of Estimation">
         <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Methods of Estimation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
-<script>var lightboxQuarto = GLightbox({"loop":false,"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","openEffect":"zoom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 

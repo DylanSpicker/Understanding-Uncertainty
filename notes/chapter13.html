@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Understanding Uncertainty - 13&nbsp; Methods of Estimation</title>
+<title>13&nbsp; Methods of Estimation – Understanding Uncertainty</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -41,6 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -68,7 +71,663 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">.monaco-editor pre {
+  background-color: unset !important;
+}
 
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-button-run {
+  background-color: #EEEEEE;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; /* Extra styling for consistency */
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration: none;
+  /* vertical-align: middle; */ /* Prevents a space from appearing between the code cell and button */
+  -webkit-user-select: none;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button-run:hover {
+  color: #000;
+  background-color: #e3e6ea;
+  border-color: #e1e5e9;
+}
+
+.qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+  pointer-events: none;
+  opacity: .65
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+</style>
+<script type="module">// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Determine if we need to install R packages
+var installRPackagesList = [''];
+// Check to see if we have an empty array, if we do set to skip the installation.
+var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+var autoloadRPackages = true;
+
+// Display a startup message?
+var showStartupMessage = true;
+var showHeaderMessage = false;
+if (showStartupMessage) {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  var startupMessageWebR = document.createElement("p");
+  startupMessageWebR.innerText = "🟡 Loading...";
+  startupMessageWebR.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  startupMessageWebR.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(startupMessageWebR);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML) {
+    // Append to the existing "title-block-header" element
+    headerHTML.appendChild(quartoTitleMeta);
+  } else if (headerRevealJS) {
+    // If using RevealJS, add to the "title-slide" div
+    headerRevealJS.appendChild(firstInnerDiv);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+// Retrieve the webr.mjs
+import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.2/webr.mjs";
+
+// Populate WebR options with defaults or new values based on 
+// webr meta
+globalThis.webR = new WebR({
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": ChannelType.Automatic
+});
+
+// Initialization WebR
+await webR.init();
+
+// Setup a shelter
+globalThis.webRCodeShelter = await new webR.Shelter();
+
+// Setup a pager to allow processing help documentation 
+await webR.evalRVoid('webr::pager_install()'); 
+
+// Function to set the button text
+function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message
+function qwebrUpdateStatusHeader(message) {
+  startupMessageWebR.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await globalThis.webR.installPackages([packageName]);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await globalThis.webR.evalRVoid(`library(${packageName});`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+    
+    // Display the update
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await globalThis.webR.flush();
+  }
+}
+
+
+// Check to see if any packages need to be installed
+if (setupRPackages) {
+  // Obtain only a unique list of packages
+  const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+  // Install R packages one at a time (either silently or with a status update)
+  await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+  if(autoloadRPackages) {
+    // Load R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+  }
+}
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+// Release document status as ready
+if (showStartupMessage) {
+  startupMessageWebR.innerText = "🟢 Ready!"
+}
+
+qwebrSetInteractiveButtonState(
+  `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+  true
+);
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};</script>
+<script type="module">// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+    Interactive: 'interactive',
+    Setup: 'setup',
+    Output: 'output',
+});
+
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await webR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await webR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // ---- 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid(`webr::canvas(width=${options["fig-width"]}, height=${options["fig-height"]})`);
+
+    const result = await webRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    try {
+
+        // Stop creating images
+        await webR.evalRVoid("dev.off()");
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${qwebrEscapeHTMLCharacters(evt.data)}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await webR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * options["fig-width"]);
+                canvas.setAttribute("height", 2 * options["fig-height"]);
+                canvas.style.width = "700px";
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            elements.outputGraphDiv.appendChild(canvas);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        webRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    evalType = EvalTypes.Interactive,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { "fig-width": 504, "fig-height": 360 };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+</script>
+<script type="module">// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (insertElement,
+  qwebrCounter, 
+  evalType = EvalTypes.Interactive,
+  options = {}) {
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive: 
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter);
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter);
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter);
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  insertElement.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-interactive-area';
+
+  // Create button element
+  var button = document.createElement('button');
+  button.className = 'btn btn-default qwebr-button-run';
+  button.disabled = true;
+  button.type = 'button';
+  button.id = 'qwebr-button-run-' + qwebrCounter;
+  button.textContent = '🟡 Loading webR...';
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(button);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-area';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-setup-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-setup-area';
+
+  return mainDiv;
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -78,13 +737,13 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter10.html">Part 2: Statistics</a></li><li class="breadcrumb-item"><a href="../notes/chapter13.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Methods of Estimation</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -117,9 +776,9 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 1: Probability</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -182,9 +841,9 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 2: Statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -222,13 +881,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">The Basics of Null Hypothesis Significance Testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -239,10 +904,172 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-role-of-estimation-estimators-and-estimates" id="toc-the-role-of-estimation-estimators-and-estimates" class="nav-link active" data-scroll-target="#the-role-of-estimation-estimators-and-estimates"><span class="header-section-number">13.1</span> The Role of Estimation, Estimators, and Estimates</a></li>
+  <li><a href="#assessing-the-performance-of-estimators" id="toc-assessing-the-performance-of-estimators" class="nav-link" data-scroll-target="#assessing-the-performance-of-estimators"><span class="header-section-number">13.2</span> Assessing the Performance of Estimators</a>
+  <ul class="collapse">
+  <li><a href="#the-bias-of-an-estimator" id="toc-the-bias-of-an-estimator" class="nav-link" data-scroll-target="#the-bias-of-an-estimator"><span class="header-section-number">13.2.1</span> The Bias of an Estimator</a></li>
+  <li><a href="#the-variance-of-an-estimator" id="toc-the-variance-of-an-estimator" class="nav-link" data-scroll-target="#the-variance-of-an-estimator"><span class="header-section-number">13.2.2</span> The Variance of an Estimator</a></li>
+  <li><a href="#the-mean-squared-error-accuracy-and-precision" id="toc-the-mean-squared-error-accuracy-and-precision" class="nav-link" data-scroll-target="#the-mean-squared-error-accuracy-and-precision"><span class="header-section-number">13.2.3</span> The Mean Squared Error, Accuracy, and Precision</a></li>
+  <li><a href="#conditions-beyond-the-mean-squared-error" id="toc-conditions-beyond-the-mean-squared-error" class="nav-link" data-scroll-target="#conditions-beyond-the-mean-squared-error"><span class="header-section-number">13.2.4</span> Conditions Beyond the Mean Squared Error</a></li>
+  </ul></li>
+  <li><a href="#procedures-for-estimation" id="toc-procedures-for-estimation" class="nav-link" data-scroll-target="#procedures-for-estimation"><span class="header-section-number">13.3</span> Procedures for Estimation</a></li>
+  <li><a href="#method-of-moments-estimators" id="toc-method-of-moments-estimators" class="nav-link" data-scroll-target="#method-of-moments-estimators"><span class="header-section-number">13.4</span> Method of Moments Estimators</a>
+  <ul class="collapse">
+  <li><a href="#shortcomings-of-the-method-of-moments-procedure" id="toc-shortcomings-of-the-method-of-moments-procedure" class="nav-link" data-scroll-target="#shortcomings-of-the-method-of-moments-procedure"><span class="header-section-number">13.4.1</span> Shortcomings of the Method of Moments Procedure</a></li>
+  <li><a href="#method-of-moment-estimation-in-r" id="toc-method-of-moment-estimation-in-r" class="nav-link" data-scroll-target="#method-of-moment-estimation-in-r"><span class="header-section-number">13.4.2</span> Method of Moment Estimation in R</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
+<script type="module">// Global dictionary to store Monaco Editor instances
+const qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (
+    initialCode, 
+    qwebrCounter) {
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value
+    editor.__qwebrinitialCode = initialCode;
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter,
+            EvalTypes.Interactive);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, EvalTypes.Interactive);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, EvalTypes.Interactive);
+  };
+
+}</script>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter10.html">Part 2: Statistics</a></li><li class="breadcrumb-item"><a href="../notes/chapter13.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Methods of Estimation</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -263,8 +1090,848 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="the-role-of-estimation-estimators-and-estimates" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="the-role-of-estimation-estimators-and-estimates"><span class="header-section-number">13.1</span> The Role of Estimation, Estimators, and Estimates</h2>
+<p>When introducing sample statistics, we had been discussing their role as relating to population parameters. That is, to formalize the process we are following we started from the position that there is a population that we wish to learn about, and specifically some parameter(s) in that population whose value we would like to know. Owing to the fundamental limitations we are faced with<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> we are unable to directly observe the population in full. As a result, the parameter value remains unknown to us. Instead, we attempt to understand the population by observing a sample. We are able to consider the distribution of this sample via the <em>data distribution</em>, and we are able to compute statistics on this sample. These statistics, intuitively, are connected to the parameter values of interest.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> The <em>sampling distribution</em> of the sample statistics provides one technique for codifying the connection between the parameter value and the value of the statistic that we can compute.</p>
+<p>In this process it is possible to view statistics as serving two distinct, but related, roles. The first is as a means of describing the true sample. That is, we use statistics in the description of the data distribution, and they provide a description of what we actually observed. The second is as a “guess” as to the value of an unknown parameter. The process of using data to “guess” the value of an unknown parameter is referred to as <strong>estimation</strong>, and it is one of the primary goals of statistical inference.</p>
+<div id="def-estimation" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.1 (Estimation)</strong></span> Any procedure that attempts to infer the value of a parameter in a population using information from a sample is referred to as estimation. With estimation, statistics are computed from data with the explicit goal of providing information about the population.</p>
+</div>
+<p>Thus, if we are interested in the mean value for some trait in a population, we take a sample, and using this sample compute the sample mean for this value, then we can view this as a procedure to estimate to true mean in the population. This process of estimation will not, generally, give us an exact value for the population parameter, however, if we follow efficient estimation procedures, we can be fairly confident that the reported values will be close to the truth.</p>
+<p>We will formalize the process of estimation by considering an arbitrary parameter in the population. Suppose that this parameter has an unknown value, denoted <span class="math inline">\(\theta\)</span>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Owing to limitations in our ability to directly observe the population, we cannot directly compute <span class="math inline">\(\theta\)</span>. Instead, it is our goal to determine an <em>estimated value</em> for <span class="math inline">\(\theta\)</span> using data that are observed in a sample. Before we have collected any data at all, we can determine a procedure that we could follow to generate these estimated values. This procedure is referred to as an <strong>estimator</strong>.</p>
+<div id="def-estimator" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.2 (Estimator)</strong></span> An estimator is a mathematical procedure (function) that takes in observable data (from a sample) and outputs an estimate for a parameter value. Estimators are specific to the parameter that they are attempting to estimate. For instance, if <span class="math inline">\(\theta\)</span> is an unknown parameter of interest, then we may define <span class="math display">\[\widehat{\theta}(X_1,X_2,\dots,X_n) = \widehat{\theta},\]</span> as a procedure that takes in a sample (<span class="math inline">\(X_1, \dots, X_n\)</span>) and outputs a value. In this framework we hope that, once computed, <span class="math inline">\(\widehat{\theta} \approx \theta\)</span>.</p>
+</div>
+<p>Estimators are simply statistics that are computed with the goal of approximating the value of a parameter. Thus, any of the statistics that we have seen previously can be viewed as estimators. The sample mean, <span class="math display">\[\overline{X} = \widehat{\mu} = \frac{1}{n}\sum_{i=1}^n X_i,\]</span> can be viewed as an estimator of the population mean, <span class="math inline">\(\mu\)</span>. The sample variance, <span class="math display">\[S^2 = \widehat{\sigma}^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X})^2,\]</span> can be viewed as an estimator of the population variance, <span class="math inline">\(\sigma^2\)</span>. The defining feature of an estimator is that it is a <em>mathematical function</em>, meaning that it takes in data that may be observed in a sample. An estimator is <strong>not</strong> a specific numeric value. Because estimators take as input data from a sample, and because we regard the data from samples as being random, <strong>estimators are random variables</strong>. For instance, the value of the sample mean can be regarded as a random value <em>prior</em> to a sample being observed.</p>
+<p>The fact that estimators are random variables means that estimators have distributions. Estimators are, however, just statistics. In <a href="chapter12.html" class="quarto-xref"><span>Chapter 12</span></a> we defined the <strong>sampling distribution of a statistic</strong>. The sampling distribution of a statistic was the distribution of a statistic when it was regarded as a process that takes in random data, and outputs a value. The sampling distribution emerges by considering the repeated sampling of data and the computation of a statistic using these data. Estimators have sampling distributions in exactly the same way. That is, we may consider repeatedly drawing samples from a population of interest. On each of these samples we may apply our estimator to generate a guess as the the parameter value. If we repeated this over many different samples, we would observe many different values computed by the estimator. These values would differ owing to sampling variability. The distribution that emerges from this repeated process is the <strong>sampling distribution of an estimator</strong>.</p>
+<div id="exm-hockey-season-mean" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.1 (Charles’ Excitement for the Hockey Season)</strong></span> As the summer came to a close, Charles began to get very excited about the upcoming hockey season. This time of year is always exciting as teams begin to make roster announcements, and Charles is excitedly scrolling through the list of players currently under contract. When hockey is being played there are typically 6 individuals on the ice at any point for each team, the goalie and 5 skaters. Charles recognizes that this group of 6 players is not a perfectly random sample, but decides to consider it as such anyways. If the 6 players were regarded as a random sample, Charles recognizes that the average weight of the players on the ice at any time could be viewed as an estimator of the average weight of players on the team as a whole.</p>
+<p>Curious as to how such an estimator would behave, Charles records the following data, comprising the weight of every player (in pounds) currently on the roster.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">224</td>
+<td style="text-align: center;">216</td>
+<td style="text-align: center;">178</td>
+<td style="text-align: center;">190</td>
+<td style="text-align: center;">175</td>
+<td style="text-align: center;">217</td>
+<td style="text-align: center;">217</td>
+<td style="text-align: center;">188</td>
+<td style="text-align: center;">192</td>
+<td style="text-align: center;">187</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">181</td>
+<td style="text-align: center;">183</td>
+<td style="text-align: center;">170</td>
+<td style="text-align: center;">184</td>
+<td style="text-align: center;">202</td>
+<td style="text-align: center;">166</td>
+<td style="text-align: center;">181</td>
+<td style="text-align: center;">215</td>
+<td style="text-align: center;">179</td>
+<td style="text-align: center;">199</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">196</td>
+<td style="text-align: center;">217</td>
+<td style="text-align: center;">192</td>
+<td style="text-align: center;">178</td>
+<td style="text-align: center;">230</td>
+<td style="text-align: center;">212</td>
+<td style="text-align: center;">209</td>
+<td style="text-align: center;">188</td>
+<td style="text-align: center;">202</td>
+<td style="text-align: center;">193</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">201</td>
+<td style="text-align: center;">158</td>
+<td style="text-align: center;">220</td>
+<td style="text-align: center;">196</td>
+<td style="text-align: center;">209</td>
+<td style="text-align: center;">238</td>
+<td style="text-align: center;">202</td>
+<td style="text-align: center;">196</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">205</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">225</td>
+<td style="text-align: center;">222</td>
+<td style="text-align: center;">207</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>Because this represents the entire population, Charles is able to know that the true average weight for players on this team is 199.5348837 pounds.</p>
+<ol type="a">
+<li>Describe the sampling distribution of the estimator outlined by Charles.</li>
+<li>Describe how different realizations from the sampling distribution could be generated. Generate several of these values, explaining the procedure.</li>
+<li>(Challenge) construct a histogram that represents the probability mass function for the sampling distribution of the estimator.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>The sampling distribution can be constructed by conceiving of every sample of size <span class="math inline">\(6\)</span> from this population as being equally likely. There are <span class="math inline">\(\dbinom{43}{6}\)</span> different combinations of <span class="math inline">\(6\)</span> players that can be selected here, and each of these combinations is thought of as being equally likely. Then, with each combination, the sample mean <span class="math display">\[\overline{x} = \frac{1}{6}(x_1 + x_2 + x_3 + x_4 + x_5 + x_6),\]</span> can be computed. This value will be assigned probability <span class="math display">\[\frac{1}{\binom{43}{6}}.\]</span> Now, it is important to note that there are multiple combinations that will result in the same <span class="math inline">\(\overline{x}\)</span>, and as a result, when summarizing the probabilities some combinations will have higher probability than others. Still, the sampling distribution of the estimator can be conceived of as being the equally likely probability model applied to the sample of <span class="math inline">\(6096454\)</span> possible combinations of players.</li>
+<li>A realization of the sampling distribution is generated by selecting <span class="math inline">\(6\)</span> individuals at random and computing their average weight. For instance, if we number the players from left-to-right, top-to-bottom, <span class="math inline">\(1\)</span> through <span class="math inline">\(43\)</span>, then perhaps we select 2, 17, 14, 35, 37, 43 as a sample. These individuals have weights 216, 181, 184, 209, 202, 207, resulting in a sample average of 199.8333333. Note that this is reasonably close to the population mean, but not exactly equal. We can consider doing this several times over.
+<ul>
+<li>A sample of 41, 35, 40, 16, 20, 22 produces weights of 225, 209, 205, 166, 199, 217 with a mean of 203.5.</li>
+<li>A sample of 22, 23, 9, 42, 40, 34 produces weights of 217, 192, 192, 222, 205, 196 with a mean of 204.</li>
+<li>A sample of 8, 26, 11, 4, 41, 34 produces weights of 188, 212, 181, 190, 225, 196 with a mean of 198.6666667.</li>
+<li>A sample of 29, 4, 42, 35, 6, 3 produces weights of 202, 190, 222, 209, 217, 178 with a mean of 203.</li>
+</ul></li>
+<li>Because there are over 6 million possible combinations, it is infeasible to consider this by-hand. Instead, we can use R, for instance, to construct all possible combinations of the sample weights, and plot these together.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="chapter13_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="chapter13_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>While the value of an estimator is random when the estimator is thought of as a mathematical procedure, once we have data, we are able to compute an exact value using the estimator. The value that the sample mean will take on, before we have observed a sample, is unknown and random. However, once we have taken a sample, the value of the sample mean is some fixed number. These fixed values that are computed using estimators are referred to as <strong>estimates</strong>. We will typically regard estimates as “guesses” of the value of a parameter.</p>
+<div id="def-estimate" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.3 (Estimate)</strong></span> A constant value that is computed using an estimator is referred to as an estimate. An estimate is derived by applying some estimator, <span class="math inline">\(\widehat{\theta}\)</span>, to an observed sample of data, <span class="math inline">\(X_1=x_1, X_2=x_2,\dots, X_n=x_n\)</span>. Once computed, the value of the estimate is regarded as a proxy for the value of the parameter, <span class="math inline">\(\theta\)</span>.</p>
+</div>
+<p>Because estimates are constant values, computed for a specific sample, estimates are <em>not</em> random. There is no distribution for estimates. Instead, they are simply numeric values that are tied to the specific sample from which they were computed. Thus, in the population there are parameters, which take on some unknown, constant value. These are not random, however, they are also unobservable. In an attempt to infer the value of a parameter, we can devise a mathematical procedure used for estimation. This procedure, referred to as an estimator, is a random function since it takes in data from an unobserved sample. The distribution of the estimator is the sampling distribution. Once a sample is actually drawn, the estimator can be applied to the sample, producing an estimate. The estimate is a fixed numeric value, and as such is not random. Unlike the parameter value, the value of the estimate <em>is</em> known since it is derived from a sample. The goal of estimation is to have the value of the estimate be a reasonable approximation for the value of the parameter.</p>
+<div id="exm-the-starting-line" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.2 (Charles and the Starting Line)</strong></span> Still invested in the upcoming hockey season, Charles decides to continue investigating the weights of the players. Instead of considering the full roster, Charles begins to consider the population as simply the members of the team who will likely be on the ice to start the first game of the season, excluding the goalie. Taking these <span class="math inline">\(5\)</span> individuals as the populations, the relevant weights are: <span class="math inline">\(175\)</span>, <span class="math inline">\(212\)</span>, <span class="math inline">\(230\)</span>, <span class="math inline">\(196\)</span>, and <span class="math inline">\(201\)</span>. Suppose that these are considered the population, and Charles considers estimating values about this population through the use of samples.</p>
+<ol type="a">
+<li>Write down the complete sampling distribution for the sample mean if samples of size <span class="math inline">\(2\)</span> are taken.</li>
+<li>Write down an estimate for the population mean if a sample of size <span class="math inline">\(3\)</span> is taken. What estimator did you use?</li>
+<li>Suppose that instead of considering the average, Charles is interested in the minimum weight of the players. What estimator can be used to estimate this value from samples of size <span class="math inline">\(4\)</span>? What is the corresponding sampling distribution.</li>
+<li>Describe, in relation to this current setup, the difference between the sampling distribution and the population distribution.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>There are a total of <span class="math inline">\(\dbinom{5}{2} = 10\)</span> possible samples that can be taken. These result in:</p>
+<ul>
+<li><span class="math inline">\(175\)</span>, <span class="math inline">\(212\)</span> for a mean of <span class="math inline">\(193.5\)</span></li>
+<li><span class="math inline">\(175\)</span>, <span class="math inline">\(230\)</span> for a mean of <span class="math inline">\(202.5\)</span></li>
+<li><span class="math inline">\(175\)</span>, <span class="math inline">\(196\)</span> for a mean of <span class="math inline">\(185.5\)</span></li>
+<li><span class="math inline">\(175\)</span>, <span class="math inline">\(201\)</span> for a mean of <span class="math inline">\(188\)</span></li>
+<li><span class="math inline">\(212\)</span>, <span class="math inline">\(230\)</span> for a mean of <span class="math inline">\(221\)</span></li>
+<li><span class="math inline">\(212\)</span>, <span class="math inline">\(196\)</span> for a mean of <span class="math inline">\(204\)</span></li>
+<li><span class="math inline">\(212\)</span>, <span class="math inline">\(201\)</span> for a mean of <span class="math inline">\(206.5\)</span></li>
+<li><span class="math inline">\(230\)</span>, <span class="math inline">\(196\)</span> for a mean of <span class="math inline">\(213\)</span></li>
+<li><span class="math inline">\(230\)</span>, <span class="math inline">\(201\)</span> for a mean of <span class="math inline">\(215.5\)</span></li>
+<li><span class="math inline">\(196\)</span>, <span class="math inline">\(201\)</span> for a mean of <span class="math inline">\(198.5\)</span></li>
+</ul>
+<p>There are no repeated values here and so the sampling distribution is an equally likely probability model with the set of possible outcomes equalling <span class="math display">\[\mathcal{X} = \{193.5, 202.5, 182.5, 188, 221, 204, 206.5, 213, 215.5, 198.5\}.\]</span> Specifically, each outcome has probability <span class="math inline">\(0.1\)</span>.</p></li>
+<li><p>Suppose that the sample we obtained was <span class="math inline">\(175, 196, 230\)</span>. Then if we used the sample mean as the estimator, we would estimate the value of the population mean to be <span class="math display">\[\frac{601}{3} = 200.333333.\]</span></p></li>
+<li><p>We could consider using the sample minimum as the estimator. In this case, with samples of size <span class="math inline">\(4\)</span> there are <span class="math inline">\(5\)</span> possible samples (one where each observation is held out). In every sample where <span class="math inline">\(175\)</span> is included, it will be the minimum. In the sample where it is not included, the minimum will be <span class="math inline">\(196\)</span>. Thus, suppose that we take <span class="math inline">\(X_{(1)}\)</span> to be the sample minimum estimator, then <span class="math display">\[p_{X_{(1)}}(x) = \begin{cases}
+\frac{4}{5} &amp; x = 175 \\
+\frac{1}{5} &amp; x = 196 \\
+0 &amp; \text{otherwise}
+\end{cases}.\]</span></p></li>
+<li><p>Here, the five measurements of weight correspond to the population. If we sample from these five individuals, then any statistics that are computed using this sample will be an estimate of the relevant value in the population. These samples, containing just a subset of the five weights, are subject to sampling variability based on which individual observations are included or are not included. As a result, if we envision the set of possible samples that <em>could</em> be realized we can discuss the distribution of the statistics via the sampling distribution. These distributions answer the question “if we were to repeatedly sample from this population, what is the probability we will observe particular values for the computed estimate?” For instance, in (c) we saw that if we take samples of size <span class="math inline">\(4\)</span> from the population, there is a <span class="math inline">\(0.8\)</span> probability that the estimated minimum will exactly equal the population minimum. This <span class="math inline">\(0.8\)</span> comes from the sampling distribution of the sample minimum.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>The process described above is more specifically referred to as <strong>point estimation</strong>. In point estimation, we form <strong>point estimators</strong> and generate the corresponding <strong>point estimates</strong> to approximate the value of a parameter using one, single value. That is, a point estimator outputs a single number that should be our “best guess” to the value of the parameter. Point estimation stands in contrast to <strong>interval estimation</strong> where instead of making a guess of a single value, we give a range of plausible values that the parameter may take on. Typically, if something is referred to as an “estimator” or an “estimate”, it is implied that this is in reference to a “point estimator” or a “point estimate”. We will investigate interval estimation in the coming chapters.</p>
+</section>
+<section id="assessing-the-performance-of-estimators" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="assessing-the-performance-of-estimators"><span class="header-section-number">13.2</span> Assessing the Performance of Estimators</h2>
+<p>The process of estimation described above is a seemingly intuitive method for approximating parameter values through the use of sample statistics. However, to this point we have not stopped to consider whether this intuitive procedure actually works well <em>in practice</em>. To remedy this, we need to devise techniques that will allow us to assess the performance of estimators broadly. We want to be sure that, if we are using an estimate as an approximation for a parameter, we can be reasonably certain that this is a justifiable thing to do. While defining the performance of an estimator requires some care, intuitively, an estimator will have better performance if it typically produces estimates that are close to the truth.</p>
+<section id="the-bias-of-an-estimator" class="level3" data-number="13.2.1">
+<h3 data-number="13.2.1" class="anchored" data-anchor-id="the-bias-of-an-estimator"><span class="header-section-number">13.2.1</span> The Bias of an Estimator</h3>
+<p>One way to formalize the performance of an estimator is to suggest that we want estimates to be close to the truth, on average. Intuitively, an estimator that is reliable is one that, were it to be computed over and over again, would have a typical value that is close to the parameter. Now, because estimators are random functions and they have distributions, it is also possible to conceive of the expected value of an estimator. If an estimator is reliable it is reasonable to suggest that the expected value of the estimator should be close to the parameter. As a result, we can define a measure of performance based on how far the estimator is from the truth, on average. We call this the <strong>bias</strong> of an estimator.</p>
+<div id="def-bias-estimator" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.4 (Bias (of an estimator))</strong></span> The bias of an estimator, <span class="math inline">\(\widehat{\theta}\)</span>, of a parameter <span class="math inline">\(\theta\)</span> is a measure of the expected difference between the estimator and the truth. That is, <span class="math display">\[\text{Bias}(\widehat{\theta}) = E[\widehat{\theta} - \theta] = E[\widehat{\theta}] - \theta.\]</span></p>
+</div>
+<p>All else equal, it is preferable to have estimators that have a low bias. If the bias is low then on average we expect the estimator to be close to the truth. A low bias provides a reasonable justification for using an estimator in many situations. In the event that the bias of an estimator is shown to be <span class="math inline">\(0\)</span>, we call the estimator <strong>unbiased</strong>.</p>
+<div id="def-unbiased-estimator" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.5 (Unbiased Estimator)</strong></span> An unbiased estimator is any estimator, <span class="math inline">\(\widehat{\theta}\)</span>, with a bias of <span class="math inline">\(0\)</span>. That is, <span class="math display">\[E[\widehat{\theta}] - \theta = 0 \implies E[\widehat{\theta}] = \theta.\]</span></p>
+</div>
+<p>If an estimator is unbiased then its expectation exactly coincides with the truth. If you were able to take many different samples, compute estimates on each of those samples, and then take the average of those various estimates, an unbiased estimator will have this average coincide with the true parameter value. This is typically a desirable trait, and it is very common to try to find unbiased estimators for parameters of interest. Many of the common estimators that we have seen are unbiased. Despite the utility of unbiased estimators, knowing that something is unbiased is not enough to justify its use. Moreover, it is often possible to find many different unbiased estimators for the same parameter, which nevertheless give different estimates. In these cases it is important to be able to choose between different estimators on the basis of additional performance metrics.</p>
+<div id="exm-x1-versus-xbar" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.3 (Sadie and Charles Explore Bias)</strong></span> Fascinated by having the bias to assess the quality of estimators, Charles and Sadie turn their attention to trying to determine as many ways of estimating population means as they can think of. For each of the following pairs of estimators, assess the bias of each of them and determine which estimator is preferable based on the bias alone.</p>
+<ol type="a">
+<li>Charles considers an arbitrary population and suggests that both <span class="math inline">\(\overline{X}\)</span>, the sample mean, as well as <span class="math inline">\(X_1\)</span>, the first observation, may be used to estimate the mean of the distribution.</li>
+<li>Sadie, thinking of a Poisson distribution, suggests that both the sample variance, <span class="math inline">\(S^2\)</span>, as well as <span class="math inline">\(\dfrac{1}{2}(X_1 - X_2)^2\)</span> may work to estimate <span class="math inline">\(\lambda\)</span>.</li>
+<li>In a normal population, Charles and Sadie both want to estimate <span class="math inline">\(\mu^2\)</span>. Charles suggests taking the average of <span class="math inline">\(X_i^2\)</span>, that is <span class="math display">\[\frac{1}{n}\sum_{i=1}^n X_i^2,\]</span> while Sadie suggests taking <span class="math inline">\(\overline{X}^2\)</span>.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Both of these estimators are unbiased for the truth. To see this note that <span class="math display">\[E[\overline{X}] = E\left[\frac{1}{n}\sum_{i=1}^n X_i\right] = \frac{1}{n}\sum_{i=1}^n E[X_i] = \mu.\]</span> Similarly, we know that <span class="math inline">\(E[X_i] = \mu\)</span> for all <span class="math inline">\(i = 1,\dots, n\)</span> so <span class="math inline">\(E[X_1] = \mu\)</span>. As a result, the bias of both estimators are the same and selecting either is equivalent in terms of the bias.</li>
+<li>Recall that for a Poisson distribution, <span class="math inline">\(E[X] = \text{var}(X) = \lambda\)</span>. Thus, <span class="math display">\[\begin{align*}
+E[S^2] &amp;= E\left[\frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X})^2\right] \\
+&amp;= \frac{1}{n-1}\sum_{i=1}^n E[(X_i - \lambda + \lambda - \overline{X})^2] \\
+&amp;= \frac{1}{n-1}\sum_{i=1}^n E[(X_i - \lambda)^2] + 2E[(X_i - \lambda)(\lambda - \overline{X})] + E[(\lambda - \overline{X})^2] \\
+&amp;= \frac{1}{n-1}\sum_{i=1}^n \text{var}(X_i) - 2E[(X_i - \lambda)(\overline{X} - \lambda)] + \text{var}(\overline{X}) \\
+&amp;= \frac{1}{n-1}\sum_{i=1}^n \left[\lambda - \frac{2}{n}\sum_{j=1}^n E[(X_i-\lambda)(X_j-\lambda)] + \frac{\lambda}{n}\right] \\
+&amp;= \frac{1}{n-1}\sum_{i=1}^n \left[\lambda - \frac{2}{n}E[(X_i-\lambda)^2] + \frac{\lambda}{n}\right] \\
+&amp;= \frac{1}{n-1}\sum_{i=1}^n \lambda - \frac{\lambda}{n} \\
+&amp;= \lambda.
+\end{align*}\]</span> On the other hand, we have that <span class="math display">\[\begin{align*}
+  E\left[\frac{1}{2}(X_1 - X_2)^2\right] &amp;= \frac{1}{2}\left(E[X_1^2] - 2E[X_1X_2] + E[X_2^2]\right)\\
+  &amp;= \frac{1}{2}\left((\lambda + \lambda^2) - 2E[X_1]E[X_2] + (\lambda + \lambda^2)\right) \\
+  &amp;= \lambda.
+\end{align*}\]</span> As a result, both of the proposed estimators are unbiased and just as in the previous case, they cannot be selected between one another based on bias alone.</li>
+<li>First, consider the expected value of Charles’ estimator. Notably, <span class="math display">\[\begin{align*}
+E\left[\frac{1}{n}\sum_{i=1}^nX_i^2\right] &amp;= \frac{1}{n}\sum_{i=1}^n E[X_i^2] \\
+&amp;= \frac{1}{n}\sum_{i=1}^n (\sigma^2 + \mu^2) \\
+&amp;= \sigma^2 + \mu^2.
+\end{align*}\]</span> Meanwhile, for Sadie’s estimator we find <span class="math display">\[\begin{align*}
+  E\left[\overline{X}^2\right] &amp;= \text{var}(\overline{X}) + E[\overline{X}]^2 \\
+  &amp;= \frac{\sigma^2}{n} + \mu^2.
+\end{align*}\]</span> As a result, both estimators are biased. The one proposed by Charles has a bias of <span class="math display">\[\sigma^2 + \mu^2 - \mu^2 = \sigma^2,\]</span> while Sadie’s has a bias of <span class="math display">\[\frac{\sigma^2}{n} + \mu^2 - \mu^2 = \frac{\sigma^2}{n}.\]</span> As a result, Sadie’s estimator has a smaller bias and is preferable in that regard.</li>
+</ol>
+<p>In a normal population, Charles and Sadie both want to estimate <span class="math inline">\(\mu^2\)</span>. Charles suggests taking the average of <span class="math inline">\(X_i^2\)</span>, that is <span class="math display">\[\frac{1}{n}\sum_{i=1}^n X_i^2,\]</span> while Sadie suggests taking <span class="math inline">\(\overline{X}^2\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A Note on Variance Estimation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>The standard technique for computing the sample variance is to take <span class="math display">\[\widehat{\sigma}^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X})^2.\]</span> This is a slightly strange formula for the sample variance where it would feel far more natural for <span class="math display">\[\widehat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^n (X_i - \overline{X})^2.\]</span> However, the reason that the first technique is typically used is because it is an unbiased estimator, where the more natural version is biased. To see this consider <span class="math display">\[\begin{align*}
+    E[\widehat{\sigma}^2] &amp;= E\left[\frac{1}{n}\sum_{i=1}^n (X_i - \overline{X})^2\right] \\
+    &amp;= \frac{1}{n-1}\sum_{i=1}^n E[(X_i - \mu + \mu - \overline{X})^2] \\
+    &amp;= \frac{1}{n-1}\sum_{i=1}^n E[(X_i - \mu)^2] + 2E[(X_i - \mu)(\mu - \overline{X})] + E[(\mu - \overline{X})^2] \\
+    &amp;= \frac{1}{n-1}\sum_{i=1}^n \text{var}(X_i) - 2E[(X_i - \mu)(\overline{X} - \mu)] + \text{var}(\overline{X}) \\
+    &amp;= \frac{1}{n-1}\sum_{i=1}^n \left[\sigma^2 - \frac{2}{n}\sum_{j=1}^n E[(X_i-\mu)(X_j-\mu)] + \frac{\sigma^2}{n}\right] \\
+    &amp;= \frac{1}{n-1}\sum_{i=1}^n \left[\sigma^2 - \frac{2}{n}E[(X_i-\mu)^2] + \frac{\sigma^2}{n}\right] \\
+    &amp;= \frac{1}{n-1}\sum_{i=1}^n \sigma^2 - \frac{\sigma^2}{n} \\
+    &amp;= \sigma^2.
+\end{align*}\]</span> Note that in this derivation, the first step simply adds <span class="math inline">\(0\)</span> (by adding and subtract <span class="math inline">\(\mu\)</span>). Moreover, when trying to find <span class="math inline">\(E[(X_i - \mu)(X_j - \mu)]\)</span> we use the fact that if <span class="math inline">\(i\neq j\)</span> then <span class="math inline">\(X_i \perp X_j\)</span> and so <span class="math display">\[E[(X_i - \mu)(X_j - \mu)] = E[(X_i - \mu)]E[(X_j - \mu)],\]</span> which is zero. Thus, dividing by <span class="math inline">\(n-1\)</span> gives an unbiased estimator for <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>Note that this means that if we instead divided by <span class="math inline">\(n\)</span> we would find that the bias were <span class="math display">\[\frac{n-1}{n}\sigma^2 - \sigma^2 = \frac{-\sigma^2}{n}.\]</span> As <span class="math inline">\(n\)</span> increases this bias tends towards <span class="math inline">\(0\)</span> and the differences between the two estimators is minimal.</p>
+</div>
+</div>
+</div>
+<p>When we summarized random variables with location summaries we saw that the variability inherent in the random variable was missed. We can think of bias as being a measure of the estimators location, relative to the truth. In this sense the variability of the estimator is also overlooked when reporting bias. We may consider two estimators, each of which is unbiased for the truth. In terms of their <em>average</em> location, there is no difference between the two of them. However, it may be the case that one of the estimators is far more variable than the other. If this is so then we know that, while on average it will equal the true value, we will also expect it to be further from the truth on any given realization. That is, a good estimator is one that is close to the truth on average, but that also is not <em>too</em> variable. If the estimator moves around a lot, it is less reliable, and any given estimate from the estimator may be likely to be quite far from the truth. Thus, just as with random variables we needed to include measures of location and variability, so too with estimators should include measures of the bias and variance.</p>
+</section>
+<section id="the-variance-of-an-estimator" class="level3" data-number="13.2.2">
+<h3 data-number="13.2.2" class="anchored" data-anchor-id="the-variance-of-an-estimator"><span class="header-section-number">13.2.2</span> The Variance of an Estimator</h3>
+<p>Remembering that estimators are random variables and are realizations from a sampling distribution, we are able to discuss the variance of an estimator in exactly the same way as we would discuss the variance of any random quantity.</p>
+<div id="def-estimator-variance" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.6 (Variance of an Estimator)</strong></span> The variance of an estimator is the variance of the sampling distribution of the estimator. That is, an estimator <span class="math inline">\(\widehat{\theta}\)</span>, will have variance given by <span class="math display">\[\text{var}(\widehat{\theta}) = E[(\widehat{\theta} - E[\widehat{\theta}])^2] = E[\widehat{\theta}^2] - E[\widehat{\theta}]^2.\]</span> If an estimator is unbiased then <span class="math inline">\(E[\widehat{\theta}] = \theta\)</span> and the variance simplifies to <span class="math display">\[\text{var}(\widehat{\theta}) = E[\widehat{\theta}^2] - \theta^2.\]</span></p>
+</div>
+<p>The variance of an estimator can be interpreted in much the same way as the variance of any random variable is. Specifically, variance is a measure of the spread around an estimator’s mean. If the process of drawing samples and computing estimates were to be repeated over and over again, then a higher variance estimator will have more spread in the estimates that are computed as compared to a lower variance estimator. In this sense, the variance of an estimator serves as a measure of the reliability of the estimator. It is typically preferable, all else equal, to have an estimator with low variability. This gives more confidence that any estimate that is computed is likely to be near any other estimate that could have been computed, with less susceptibility to the specifics of the random sample.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<div id="exm-beyond-bias" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.4 (Sadie and Charles Moved Beyond Bias)</strong></span> Content in their exploration of bias alone, Sadie and Charles realize that they must be missing part of the picture. In particular, they found two estimators that have equivalent bias but, intuitively, they each know that they are not equivalent estimators. They want to understand why that is. Together, they set out to investigate the two estimators that Charles was considering for the population mean of an arbitrary distribution.</p>
+<ol type="a">
+<li>In an arbitrary population, is <span class="math inline">\(\overline{X}\)</span>, the sample mean, or <span class="math inline">\(X_1\)</span>, the first observation, a better estimator for the mean of the distribution? Why?</li>
+<li>Suppose that an estimator is considered of the form <span class="math display">\[\widehat{\theta} = \sum_{i=1}^n \omega_iX_i,\]</span> where <span class="math inline">\(\sum_{i=1}^n \omega_i = 1\)</span>. Then the sample mean takes <span class="math inline">\(\omega_i = \dfrac{1}{n}\)</span> for all <span class="math inline">\(i\)</span>, and the first point takes <span class="math inline">\(\omega_1 = 1\)</span> and <span class="math inline">\(\omega_i = 0\)</span> for all other points. How does this general estimator compare to the sample mean?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>The sample mean is a better estimator than the first observation. The bias is the same for each estimator and so we can directly compare the variance. The variance of <span class="math inline">\(\overline{X}\)</span> is <span class="math display">\[\text{var}(\overline{X}) = \frac{\sigma^2}{n}.\]</span> On the other hand, the first data point, <span class="math inline">\(X_1\)</span>, will have variance <span class="math inline">\(\sigma^2\)</span>. As a result, the variance for the single estimator is <span class="math inline">\(n\)</span> times larger than the variance of the sample mean, justifying its use instead.</li>
+<li>First, we consider the bias. Note that <span class="math display">\[\begin{align*}
+E[\widehat{\theta}] = E\left[\sum_{i=1}^n \omega_iX_i\right] \\
+&amp;= \sum_{i=1}^n \omega_iE[X_i] \\
+&amp;= \sum_{i=1}^n \omega_i\mu \\
+&amp;= \mu\sum_{i=1}^n \omega_i = \mu.
+\end{align*}\]</span> Thus, the estimator is unbiased. Then, to consider the variance of the estimator we get <span class="math display">\[\begin{align*}
+\text{var}(\widehat{\theta}) &amp;= \text{var}\left(\sum_{i=1}^n \omega_iX_i\right) \\
+&amp;= \sum_{i=1}^n \text{var}(\omega_iX_i) \\
+&amp;= \sum_{i=1}^n \omega_i^2\text{var}(X_i) \\
+&amp;= \sigma^2\sum_{i=1}^n \omega_i^2.
+\end{align*}\]</span> Then, the variance of the estimator depends on <span class="math inline">\(\sum_{i=1}^n \omega_i^2\)</span>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>In many cases the variance of an estimator becomes a secondary consideration once the bias is known to be small. If you have shown a comparatively small bias for two estimators then by reducing the variance of the estimator you are increasing the probability that the estimates produced will be near the truth. This becomes especially relevant when the estimators under consideration are unbiased. When comparing two unbiased estimators, the natural point of comparison is in the variance. We know that on average both estimators will produce estimates of the truth. To have a more useful estimator for a single sample, however, we want the one that will more reliability produce values that are close to the truth, which is to say, the lower variance estimator. In fact, if we consider only unbiased estimators, then it would be most ideal to search for the unbiased estimator with the lowest possible variance, the so-called <strong>minimum variance unbiased estimator</strong>.</p>
+<div id="def-mvue" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.7 (Minimum Variance Unbiased Estimator (MVUE))</strong></span> The minimum variance unbiased estimator (MVUE) is the unbiased estimator for a parameter that has the smallest possible variance among all unbiased estimators for that parameter. That is, if <span class="math inline">\(\widehat{\theta}^*\)</span> is the MVUE, and <span class="math inline">\(\widehat{\theta}\)</span> is any estimator such that <span class="math inline">\(E[\widehat{\theta}] = \theta\)</span>, then <span class="math display">\[\text{var}(\widehat{\theta}^*) \leq \text{var}(\widehat{\theta}).\]</span></p>
+</div>
+<p>Generally, the MVUE will depend on both the underlying population distribution and on the parameter that is being estimated. It is also often the case that MVUEs are not feasible to find. However, in cases where they are known and easy to calculate, there is a strong justification for their application. Specifically, the MVUE is guaranteed to be the lowest variance estimator among any estimator that will be correct on average. Some commonly applied estimators happen to be the MVUEs. For instance, if the data are normally distributed then <span class="math inline">\(\overline{X}\)</span> is the MVUE for <span class="math inline">\(\mu\)</span>. Moreover, if the data are from a binomial distribution, then <span class="math inline">\(\widehat{p}\)</span>, the sample proportion, is the MVUE for <span class="math inline">\(p\)</span>. In general, however, the sample mean will not be the MVUE for the population mean, nor will the sample variance be the MVUE for the population variance. Despite this, the sample mean and variance remain useful estimators for their respective parameters. Why is this the case?</p>
+<p>The MVUE codifies one possible condition for the <em>optimality</em> of an estimator. That is, if we define the optimal estimator to be unbiased and with low variance, then the MVUE is optimal. However, this is a rather restrictive definition for optimality. Specifically, requiring estimators to be unbiased removes many useful estimators that wind-up performing better on average. Often it will be possible to sacrifice a little bit in terms of the bias for major gains in terms of the variance. Doing this may be worthwhile, undermining the optimality of the MVUE. What’s more, the MVUE only considers the properties of bias and variance in performance assessment. While the bias and variance are the most commonly applied metrics for estimator performance, other considerations are often useful, depending on the context.</p>
+</section>
+<section id="the-mean-squared-error-accuracy-and-precision" class="level3" data-number="13.2.3">
+<h3 data-number="13.2.3" class="anchored" data-anchor-id="the-mean-squared-error-accuracy-and-precision"><span class="header-section-number">13.2.3</span> The Mean Squared Error, Accuracy, and Precision</h3>
+<p>The MVUE achieves a fairly restrictive trade-off between the bias and variance of the estimator. Specifically, by only considering estimators that are unbiased, the MVUE begins from a restrictive place. As was previously argued, it is important to consider both the mean and the variance when assessing the performance on estimator, though, that does not specifically necessitate considering unbiased estimators. Instead, we may wish to consider estimators that are able to be biased, but only if there is a sufficient reduction in variance to justify this. In essence, we are hoping to find estimators that minimize both quantities simultaneously. As it turns out, this is well-summarized through the use of the <strong>mean squared error</strong>.</p>
+<div id="def-mse" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.8 (Mean Squared Error)</strong></span> The mean squared error (MSE) of an estimator is the expected square distance between the estimator and the true value of the parameter. If <span class="math inline">\(\widehat{\theta}\)</span> is an estimator for <span class="math inline">\(\theta\)</span>, then <span class="math display">\[\text{MSE}(\widehat{\theta}) = E[(\widehat{\theta} - \theta)^2].\]</span></p>
+</div>
+<p>Estimators with lower MSE values are typically preferred, all else equal. The MSE of an estimator at first glance appears to be similar to the variance. However, where in the variance the squared distance is computed to the expected value of the estimator, <span class="math inline">\(E[\widehat{\theta}]\)</span>, for the MSE the squared distance is computed to the true value of the estimator, <span class="math inline">\(\theta\)</span>. Note that for unbiased estimators we know that <span class="math inline">\(E[\widehat{\theta}] = \theta\)</span>, and so if the bias of an estimator is <span class="math inline">\(0\)</span>, then the MSE is exactly equal to the variance. However, even when the bias of the estimator is non-zero, the MSE still balances the bias and the variance of the estimator. This is best seen through the bias-variance decomposition.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Bias-Variance Decomposition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The mean squared error of an estimator can be decomposed such that <span class="math display">\[\text{MSE}(\widehat{\theta}) = \text{Bias}(\widehat{\theta})^2 + \text{var}(\widehat{\theta}).\]</span> In this way, reducing the MSE is akin to the simultaneous reduction of the bias and the variance, allowing a trade-off between them.</p>
+</div>
+</div>
+<p>The decomposition of the MSE into the bias and variance formalizes the notion that we wish to simultaneously minimize each quantity. It also directly allows us to consider the tradeoff between bias and variance that is inherent in much of statistics. Often, by reducing the variance of an estimator you must incur extra bias, or by reducing the bias, you must incur extra variance. The MSE provides a metric to consider to understand when these tradeoffs are worthwhile and when they are not. In a sense, finding minimal MSE estimators is a generalization of the procedure of finding the MVUE. In this case, however, we are permitted to consider estimators which have positive bias (so long as their reduced variance justifies consideration).</p>
+<div id="exm-bias-variance-variance-estimator" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.5 (Charles and Sadie Consider Variance Estimators)</strong></span> When introduced originally, Charles was quite perturbed by the sample variance formula and the division by <span class="math inline">\(n-1\)</span>. In a conversation with Sadie, Charles expressed some frustration that the formula should just divide by <span class="math inline">\(n\)</span>. What’s the big difference between the two, after all? Sadie, remembering this conversation, returns to Charles and points out that at least they now understand that the <span class="math inline">\(n-1\)</span> exists to make the estimator unbiased. Charles was satisfied until learning of the MSE and bias-variance decomposition. “Why not sacrifice some bias in exchange for a more interpretable formula? What is really being lost?” Sadie points out that they could answer this by considering the MSE of the estimators. Charles thinks that is a great idea and recalls reading somewhere that, in a normal population, the variance of <span class="math inline">\(S^2\)</span> is <span class="math inline">\(\dfrac{2\sigma^4}{n-1}\)</span>.</p>
+<ol type="a">
+<li>What is the MSE of <span class="math inline">\(S^2\)</span>?</li>
+<li>What is the MSE of the variance estimator that divides by <span class="math inline">\(n\)</span> in place of <span class="math inline">\(n-1\)</span>?</li>
+<li>Frustrated by the arbitrariness, Charles declares, “Why not divide by <span class="math inline">\(n+1\)</span> instead?” If this were done, what would the MSE be?</li>
+<li>Which of the three estimators is quantitatively the best?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Note that given that <span class="math inline">\(E[S^2] = \sigma^2\)</span>, the bias of the estimator is <span class="math inline">\(0\)</span>. As a result, <span class="math display">\[\text{MSE}(S^2) = \text{var}(S^2) = \frac{2}{n-1}\sigma^4\]</span>.</li>
+<li>To find the MSE we consider first the bias. We know that the estimator can be written as <span class="math inline">\(\dfrac{n-1}{n}S^2\)</span> and so <span class="math display">\[E\left[\frac{n-1}{n}S^2\right] = \frac{n-1}{n}E[S^2] = \frac{n-1}{n}\sigma^2.\]</span> Thus, the bias is given by <span class="math display">\[\frac{n-1}{n}\sigma^2 - \sigma^2 = \frac{-\sigma^2}{n}.\]</span> We can perform a similar calculation for the variance, giving <span class="math display">\[\text{var}\left(\frac{n-1}{n}S^2\right) = \frac{(n-1)^2}{n^2}\text{var}(S^2) = 2\frac{(n-1)}{n^2}\sigma^4.\]</span> Then we get that <span class="math display">\[\text{MSE}(S_{n}^2) = \left(-\frac{\sigma^2}{n}\right)^2 + 2\frac{(n-1)}{n^2}\sigma^4 = \frac{2n - 1}{n^2}\sigma^4.\]</span></li>
+<li>We can use a similar procedure here. Note that <span class="math display">\[S_{n+1}^2 = \frac{n-1}{n+1}S^2\]</span> and so for the bias we get <span class="math display">\[\left(\frac{n-1}{n+1} - 1\right)\sigma^2 = \frac{-2\sigma^2}{n+1}.\]</span> Then, working on the variance we find <span class="math display">\[\text{var}(S_{n+1}^2) = 2\frac{(n-1)}{(n+1)^2}\sigma^4.\]</span> Thus, combined the MSE is given by <span class="math display">\[\text{MSE}(S_{n+1}^2) = \frac{2n + 2}{(n+1)^2}\sigma^4 = \frac{2}{n+1}\sigma^4.\]</span></li>
+<li>We can compare the three different MSEs either algebraically, graphically, or via example. The following graph plots their respective values for <span class="math inline">\(n=2\)</span> through to <span class="math inline">\(n=30\)</span>. Note that if <span class="math inline">\(n=1\)</span> then all estimators will produce <span class="math inline">\(0\)</span> so it is not a valid point of comparison. Also note that this is simply graphing the constant multiple of <span class="math inline">\(\sigma^4\)</span>. This can be interpreted as either a case where <span class="math inline">\(\sigma^2 = 1\)</span> or else as the multiple of the squared variance that is relevant.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="chapter13_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="chapter13_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that the lowest MSE is the estimator dividing by <span class="math inline">\(n+1\)</span>, followed by that dividing by <span class="math inline">\(n\)</span>, followed by the standard variance estimator. Algebraically it is clear the see that <span class="math inline">\(\text{MSE}(S^2) \geq \text{MSE}(S_{n+1}^2)\)</span>, since dividing by <span class="math inline">\(n+1\)</span> will be smaller for all <span class="math inline">\(n\)</span>. While it is slightly more involved, it is possible to show that dividing by <span class="math inline">\(n\)</span> will always fall between these two. That is, quantitatively, the best estimator (of those considered) for the variance of a normal population is the sample variance that divides by <span class="math inline">\(n+1\)</span> rather than by <span class="math inline">\(n-1\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<p>The innate tradeoff between the bias and variance of estimators is understandable through its analogue in <em>accuracy</em> and <em>precision</em>. When speaking of the bias of an estimator we are speaking primarily of the accuracy of the estimator. To say that the bias is low is to say that, on average, we expect the estimated values to center on the truth. On average, a low bias estimator will be nearly correct. This says nothing to how tightly the points concentrate around the truth. In contrast, the variance of the estimator is a measure of the precision of the estimator. A low variance estimator will frequently take values that are clustered around one another. This cluster may or may not be near the true value, however, there will be minimal spread in them. A perfect estimator would have high accuracy (low bias) and high precision (low variance), however, it will often be the case that we can achieve on aim or the other. Using the MSE allows us to quantitatively consider the tradeoffs between accuracy and precision, and find an estimator that strikes a good balance.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-accuracy-precision" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-accuracy-precision-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.1: A plot demonstrating the difference between high accuracy (with low precision) and high precision (with low accuracy). Higher accuracy refers to the tendency to be centered correctly on the truth. High precision refers for the tendency to be tightly clustered together. The accuracy is analogous to the bias of an estimator where the precision is analogous to the variance of an estimator. The mean squared error combines both concepts.
+</figcaption>
+<div aria-describedby="fig-accuracy-precision-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter13_files/figure-html/fig-accuracy-precision-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;13.1: A plot demonstrating the difference between high accuracy (with low precision) and high precision (with low accuracy). Higher accuracy refers to the tendency to be centered correctly on the truth. High precision refers for the tendency to be tightly clustered together. The accuracy is analogous to the bias of an estimator where the precision is analogous to the variance of an estimator. The mean squared error combines both concepts."><img src="chapter13_files/figure-html/fig-accuracy-precision-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>In general, unless otherwise specified, the best estimator to use in a given situation will be the estimator with the lowest MSE. There may be scenarios where an unbiased estimator is particularly important, in which case, you may instead search for the MVUE. Alternatively, there may scenarios where the precision is of utmost importance, seeking the lowest variance estimator among those that are reasonable. Still, more often than not, the minimal MSE estimator will be preferred from a performance perspective. With that said, there are occasionally considerations beyond the bias or variance of an estimator that ought to be considered when assessing performance.</p>
+</section>
+<section id="conditions-beyond-the-mean-squared-error" class="level3" data-number="13.2.4">
+<h3 data-number="13.2.4" class="anchored" data-anchor-id="conditions-beyond-the-mean-squared-error"><span class="header-section-number">13.2.4</span> Conditions Beyond the Mean Squared Error</h3>
+<p>While it is typically the case that our primary concern is the MSE of an estimator, there are other considerations that we may need to make on occasion. It is important to always consider that we are assessing estimators for a particular purpose in a particular setting. The generality of the MSE rule makes it a useful place to start, however, we should always be cognizant of the particular demands of our scenario. For instance, the bias, variance, and MSE of an estimator are all dependent on the sampling distribution of the estimator. The sampling distribution, in turn, will often depend on the population distribution. As a result, estimators that minimize the MSE will typically only minimize the MSE for a specific population distribution. If the estimator is applied to data drawn from a different population, the MSE will typically change. As a result, if we are uncertain about the population distribution we may prefer to find an estimator that will perform well regardless of what the truth happens to be, even if it has a higher MSE for certain populations than other estimators. This is a measure of the <em>robustness</em> of an estimator.</p>
+<div id="def-robustness" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.9 (Robust (Estimator))</strong></span> Roughly speaking, an estimator is said to be robust if the estimator performs well even when the distributional assumptions made regarding the estimators are incorrect.</p>
+</div>
+<p>Robustness is a property which, when present, gives more certainty that the estimators will perform well in practice. There are also practical considerations we may need to make regarding estimators. For instance, we may be concerned with how well we are able to compute estimates using the estimators. If an estimator is theoretically performant, but in practice, it requires substantial computational resources to calculate, then it may not be practical in use. Additionally, there may be assumptions beyond the distributional assumptions addressed with robustness required for certain estimators. It may be preferable to select an estimator with fewer assumptions, or perhaps, less restrictive assumptions, even if that means sacrificing quantitative performance. One final consideration that may be required is the popularity of the estimator. In certain fields there are expected analytical pathways since the individuals working or researching in those fields are used to interpreting particular estimators. In these cases, even if a more performant estimator exists, the added utility of estimating quantities that others know and understand, and the capacity to compare to work that was previously done, may be a benefit worthy of consideration.</p>
+<div id="exm-charles-and-sadie-more-variance" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.6 (Understanding the Sample Variance Estimator)</strong></span> Charles and Sadie continue to discuss the sample variance estimator. After determining (<a href="#exm-bias-variance-variance-estimator" class="quarto-xref">Example&nbsp;<span>13.5</span></a>) that the MSE of the estimator that divides by <span class="math inline">\(n+1\)</span> has a better MSE than the estimator that divides by <span class="math inline">\(n-1\)</span>, Charles is perturbed that it has become so common to take the sample variance to be defined as the unbiased estimator. When discussing with Sadie, Charles notes that unbiasedness is only one small part of an estimators performance, and that it is an arbitrary decision to select it. Sadie, sensing the frustration that Charles feel at the scenario, suggests that they do an exercise together of making an argument in favour of each of the three estimators that they have been studying, <span class="math inline">\(S^2\)</span>, <span class="math inline">\(S_{n}^2\)</span>, and, <span class="math inline">\(S_{n+1}^2\)</span>.</p>
+<p>What may the arguments include?</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For <span class="math inline">\(S^2\)</span>, the primary argument quantitatively is that it is unbiased. Moreover, for even moderate <span class="math inline">\(n\)</span>, the reduction in the MSE that the other estimators achieve over <span class="math inline">\(S^2\)</span> will be minimal, and as such, the unbiasedness is a desirable property. Moreover, when sample variances are computed and reported, it is most common that they will be computed and reported according to <span class="math inline">\(S^2\)</span>. As a result, it is important for interpretability and communication to estimate variance in the same manner when discussing results with other people.</p>
+<p>For <span class="math inline">\(S_n^2\)</span>, the primary argument is that it is conceptually straightforward. It mirrors the sample mean, and feels far less arbitrary than either <span class="math inline">\(S^2\)</span> or <span class="math inline">\(S_{n+1}^2\)</span>. While the estimator is biased, for moderate <span class="math inline">\(n\)</span> the bias will be fairly small, and despite the bias, the MSE is an improvement over the MSE of <span class="math inline">\(S^2\)</span>. As a result, you can gain simplicity of the estimator, improve the performance in terms of MSE, and only minimally sacrifice on the bias.</p>
+<p>For <span class="math inline">\(S_{n+1}^2\)</span>, the primary argument is that it is the best estimator by the standards of the MSE. When considering accuracy and precision jointly, it will perform better than either <span class="math inline">\(S^2\)</span> or <span class="math inline">\(S_n^2\)</span>. What is more, the bias that the estimator has is minimal for even moderate <span class="math inline">\(n\)</span>. The added complexity of the formula feels no more complex, and no more arbitrary, than the complexity in the formula for taking <span class="math inline">\(n-1\)</span>, and this complexity could be justified by appealing to the optimality of the estimator.</p>
+</div>
+</div>
+</div>
+</div>
+<p>There are undoubtedly considerations beyond those listed here that may be worth considering. The overarching point is that, ultimately, estimators are meant to be tools that provide useful information in particular settings. It is important to keep the context of the estimation problem in mind when selecting an estimator, rather than simply deferring to a rigid quantitative principle.</p>
+</section>
+</section>
+<section id="procedures-for-estimation" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="procedures-for-estimation"><span class="header-section-number">13.3</span> Procedures for Estimation</h2>
+<p>In most situations considered until this point, the parameter of interest in the population has been a quantity with a well defined sample analog. For instance, we were concerned with the population mean, <span class="math inline">\(\mu\)</span>, and as such it made sense to consider the sample mean, <span class="math inline">\(\overline{X}\)</span>, as an estimator. This is a reasonable approach for parameters that map well onto descriptive statistics, however, many distributions will be characterized by parameters that do not have well-studied sample variants. Despite this, there will still often be a need to derive estimators for these parameters. As a result, it is desirable to have strategies that can be applied in order to derive estimators for parameters of interest in general. We refer to such strategies as <em>estimation procedures</em>.</p>
+<p>There are two particularly prominent estimation procedures, which together, cover many of the most common estimators in frequent use. These are <strong>maximum likelihood estimators</strong> and <strong>method of moment estimators</strong>. In maximum likelihood estimation, the goal is to determine the parameter value that, if it were the correct value, would result in the highest likelihood of observing the sample that is observed. These estimators are in frequent use and have many desirable theoretical properties. Calculating the maximum likelihood estimator relies on differential calculus, as it necessitates us solving optimization problems.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> Method of moments estimators, on the other hand, take the intuitive idea of matching sample and population statistics directly, and generalize this to account for arbitrary parameters to be estimated. As a result, the method of moments procedure is quite intuitive, and provides an accessible introduction to general estimation techniques.</p>
+</section>
+<section id="method-of-moments-estimators" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="method-of-moments-estimators"><span class="header-section-number">13.4</span> Method of Moments Estimators</h2>
+<p>Fundamentally, method of moments estimators are derived by finding estimators that match <strong>population moments</strong> to <strong>sample moments</strong>. To understand this fully, we start by defining moments.</p>
+<div id="def-moments" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.10 ((Population) Moments)</strong></span> The <span class="math inline">\(k\)</span>th population moment of a random variable <span class="math inline">\(X\)</span> is defined to be $<span class="math inline">\(m_K = E[X^k]\)</span>. Thus, the expected value is the first population moment, <span class="math inline">\(E[X^2]\)</span> is the second, and so forth. In general, if the population distribution is characterized by a parameter <span class="math inline">\(\theta\)</span>, then the population moments will be functions of the unknown parameter <span class="math inline">\(\theta\)</span>.</p>
+</div>
+<p>The population moments can, in a sense, be thought of as containing most of the information in the distribution. As a result, two distributions that share the same set moments can, in many situations, be thought of as the same distribution. Thus, if an estimator of <span class="math inline">\(\theta\)</span> reproduces the population moments then this estimator can be regarded as a useful estimator, at least in theory. As a result, in method of moments estimation, we match population moments to sample moments.</p>
+<div id="def-sample-moments" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.11 (Sample Moments)</strong></span> The <span class="math inline">\(k\)</span>th sample moment of a random sample, <span class="math inline">\(X_1,\dots,X_n\)</span>, is given by the sample average of <span class="math inline">\(X_i^k\)</span>. That is, <span class="math display">\[\widehat{m}_k = \frac{1}{n}\sum_{i=1}^n X_i^k.\]</span> The <span class="math inline">\(k\)</span>th sample moment can be regarded as an estimator for the <span class="math inline">\(k\)</span>th population moment. Moreover, the <span class="math inline">\(k\)</span>th sample moment will be unbiased for the <span class="math inline">\(k\)</span>th population moment.</p>
+</div>
+<p>Given an observed sample it is possible to calculate specific values for any sample moment. We know that these estimators are unbiased for the corresponding population moments, and that the corresponding population moments are functions of the unknown parameter <span class="math inline">\(\theta\)</span>. This motivates the method of moments estimation procedure.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Method of Moments Procedure
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that a population is characterized by an unknown parameter, <span class="math inline">\(\theta\)</span>. Suppose that <span class="math inline">\(\theta\)</span> has <span class="math inline">\(L\)</span> components. The goal is to estimate <span class="math inline">\(\theta\)</span> using a sample <span class="math inline">\(X_1,\dots,X_n\)</span>. To proceed, the method of moments estimator, <span class="math inline">\(\widehat{\theta}_\text{MoM}\)</span>, is calculated as follows:</p>
+<ol type="1">
+<li>Compute the first <span class="math inline">\(L\)</span> population moments, <span class="math inline">\(m_1,\dots,m_L\)</span> producing <span class="math inline">\(L\)</span> functions of <span class="math inline">\(\theta\)</span>. Note, if any of the first <span class="math inline">\(L\)</span> population moments do not depend on <span class="math inline">\(\theta\)</span>, continue computing these until there are <span class="math inline">\(L\)</span> equations.</li>
+<li>Compute the <span class="math inline">\(L\)</span> sample moments, <span class="math inline">\(\widehat{m}_1,\dots,\widehat{m}_L\)</span>, corresponding to each of the population moments computed.</li>
+<li>For each <span class="math inline">\(j = 1, \dots, L\)</span>, set <span class="math display">\[m_j(\theta) = \widehat{m}_j.\]</span></li>
+<li>Finally, simultaneously solve the <span class="math inline">\(L\)</span> equations for <span class="math inline">\(\theta\)</span>.</li>
+</ol>
+<p>The solution to these equations produces <span class="math inline">\(\widehat{\theta}_\text{MoM}\)</span>.</p>
+</div>
+</div>
+<div id="exm-method-of-moments-one" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.7 (Charles Estimates the Weight Distribution of Hockey Players)</strong></span> With a firmer understanding of estimation procedures, Charles returns to the earlier fascination regarding the weights of professional hockey players. In particular, Charles, making the assumption that the weights across the entire league are normally distributed with a mean of <span class="math inline">\(\mu\)</span> and a variance of <span class="math inline">\(\sigma^2\)</span>, wants to estimate these values from a sample of <span class="math inline">\(5\)</span> observations.</p>
+<ol type="a">
+<li>Write down the method of moments estimators for <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> in a normal population.</li>
+<li>If Charles samples 188, 212, 181, 190, 225, 196, what are the estimated values for <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>First, we find the population moments. Note that <span class="math inline">\(E[X] = \mu\)</span>. Moreover, we know that <span class="math inline">\(\sigma^2 = E[X^2] - E[X]^2\)</span>, and so <span class="math inline">\(E[X^2] = \sigma^2 + E[X]^2 = \sigma^2 + \mu^2\)</span>. Thus, taking <span class="math inline">\(\widehat{m}_1\)</span> and <span class="math inline">\(\widehat{m}_2\)</span> to be the first two sample moments, we get: <span class="math display">\[\begin{align*}
+  \mu &amp;= \widehat{m}_1 \\
+  \sigma^2 + \mu^2 &amp;= \widehat{m}_2 \\
+  \implies \sigma^2 &amp;= \widehat{m}_2 - \mu^2 \\
+  &amp;= \widehat{m}_2 - \widehat{m}_1^2.
+\end{align*}\]</span> Thus, the estimators are <span class="math inline">\(\widehat{m}_1\)</span> and <span class="math inline">\(\widehat{m}_2 - \widehat{m}_1^2\)</span>, respectively.</li>
+<li>In this sample we can find that <span class="math inline">\(\widehat{m}_1\)</span> is given by 198.6667 and that <span class="math inline">\(\widehat{m}_2\)</span> is given by 39698.33. <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Taking these values into the formula derived in the previous part gives an estimate for <span class="math inline">\(\mu\)</span> as 198.6667 and and estimate for <span class="math inline">\(\sigma^2\)</span> as 229.8889.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="exm-sadies-game" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.8 (Sadie’s Game)</strong></span> Sadie has started playing a new game with Charles. The game goes as follows. First, Sadie selects a random sized die, without Charles seeing the die. Then, Sadie will roll the die and flip a coin. If the coin comes up heads, the number that turned up on the die is told to Charles. If the coin comes up tails, the number is reported as a negative value. Charles does not see this process at all, and is just told that a string of numbers from a discrete uniform distribution between <span class="math inline">\(-a\)</span> and <span class="math inline">\(a\)</span> will be reported.</p>
+<ol type="a">
+<li>If Charles gets to hear <span class="math inline">\(n\)</span> numbers and then has to guess <span class="math inline">\(a\)</span>, what is the method of moments estimator that could be used?</li>
+<li>Suppose that Charles observes -5, 2, 3, 0. What is the method of moments estimate?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>The first step is to derive the population moments. Note that for the discrete uniform on the interval between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> we have <span class="math display">\[E[X] = \frac{a+b}{2}.\]</span> Thus, in this case that results in <span class="math inline">\(E[X] = 0\)</span>. As a result, we must turn to the second population moment in order to use the method of moments estimators since <span class="math inline">\(E[X]\)</span> does not depend on <span class="math inline">\(\theta\)</span>. To this end we have <span class="math display">\[\text{var}(X) = \frac{(a - (-a) + 1)^2 - 1}{12} = \frac{(2a + 1)^2 - 1}{12}.\]</span> Note that here, <span class="math inline">\(\text{var}(X) = E[X^2]\)</span>, since <span class="math inline">\(E[X] = 0\)</span>. Thus, we can set <span class="math inline">\(\widehat{m}_2\)</span> equal to this moment and solve for <span class="math inline">\(a\)</span>. This gives <span class="math display">\[\begin{align*}
+\frac{(2a + 1)^2 - 1}{12} &amp;= \widehat{m}_2 \\
+4a^2 + 4a + 1 - 1 - 12\widehat{m}_2 &amp;= 0 \\
+a^2 + a - 3\widehat{m}_2 &amp;= 0 \\
+\implies a &amp;= \frac{-1 \pm \sqrt{1 + 12\widehat{m}_2}}{2}.
+\end{align*}\]</span> Since <span class="math inline">\(a\)</span> is positive, we need only consider the positive root in this case, giving <span class="math inline">\(\widehat{a} = \dfrac{-1 + \sqrt{1 + 12\widehat{m}_2}}{2}\)</span>.</li>
+<li>From this sample, the second sample moment is equal to 9.5. Thus, applying the result from above this would give estimates of either 4.8619.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>Intuitively, this procedures takes the population moments, matches them to the sample moments, and defines the estimator to be the value of the parameter that equates these two sets of quantities. This is a reasonable sounding approach to derive estimators and, in practice, method of moments estimators perform quite well. Specifically, the method of moments estimators tend to be fairly robust to distributional assumptions, making them appropriate across a wide variety of populations and modelling scenarios. Beyond the robustness and intuitiveness, the method of moments estimators tend to be fairly performant, and are often easy to compute. All of these factors make this an attractive estimation technique in practice. With that said, there are some notable shortcomings of the method of moments procedure.</p>
+<section id="shortcomings-of-the-method-of-moments-procedure" class="level3" data-number="13.4.1">
+<h3 data-number="13.4.1" class="anchored" data-anchor-id="shortcomings-of-the-method-of-moments-procedure"><span class="header-section-number">13.4.1</span> Shortcomings of the Method of Moments Procedure</h3>
+<p>There are three shortcomings of the method of moments procedures. Whether these shortcomings will override the utility and benefits of these techniques will depend on the specific scenario in which the estimators are being applied. The first concern is that, in order to calculate the method of moments estimators, we must assume that the population moments actually exist. While it is uncommon in practice, there are many distributions which do not have moments, or do not have all of their moments, and in these settings, it is not possible to use the method of moments technique at all. Second, the method of moments estimators tend to be biased for the true parameter values. This is not universally true, however, in most scenarios with even moderate complexity, the resulting estimators will not be unbiased. As discussed previously, the existence of bias does not disqualify an estimator from being useful or performant, however, it can be a shortcoming of the technique in certain settings. Finally, the estimates produced through the method of moments are not guaranteed to be valid estimates for the parameters. For instance, using method of moments estimators may result in variances that are negative, proportions greater than one, or other impossible estimates. These estimates can often be assessed to be evidently incorrect when they arise in practice, however, the fact that such estimates are possible at all can render the methods of moments to be of limited utility in certain scenarios.</p>
+</section>
+<section id="method-of-moment-estimation-in-r" class="level3" data-number="13.4.2">
+<h3 data-number="13.4.2" class="anchored" data-anchor-id="method-of-moment-estimation-in-r"><span class="header-section-number">13.4.2</span> Method of Moment Estimation in R</h3>
+<p>While it will often be the case that explicit forms for the method of moments estimators can be derived, this is not always straightforward, and not always desired. Instead, we may choose to leverage R to numerically work out the estimator for the method of moments, rather than doing so by hand. There are several possible approaches to this depending on the size of the parameter, <span class="math inline">\(\theta\)</span>, that we wish to estimate as well as on the information that we already know. In particular, if <span class="math inline">\(\theta\)</span> is a single parameter then we can use a more straightforward technique compared to if <span class="math inline">\(\theta\)</span> is multidimensional. Further, we will differentiate the scenario where we know the closed form version of the population moments from those scenarios where we are only aware of the underlying distribution.</p>
+<section id="one-dimensional-parameter-with-known-moment" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="one-dimensional-parameter-with-known-moment">One Dimensional Parameter with Known Moment</h4>
+<p>In the simplest case we have a single dimensional parameter, <span class="math inline">\(\theta\)</span>, and we know the population moments. In this case we can make use of the R <code>uniroot</code> function, which solves for the value of <span class="math inline">\(x\)</span> such that <span class="math inline">\(f(x) = 0\)</span> for some specified function. To use <code>uniroot</code>, we need to provide the function that we wish to solve for the root of, as well as an interval over which we are searching for a root. The idea is that we will define a function, <span class="math display">\[f(\widehat{\theta}) = m_1(\widehat{\theta}) - \widehat{m}_1.\]</span> The value for which <span class="math inline">\(f\)</span> is equal to <span class="math inline">\(0\)</span> will correspond to the value for <span class="math inline">\(\widehat{\theta}\)</span> that equates <span class="math inline">\(m_1 = \widehat{m}_1\)</span>, which is what is required for a single dimensional parameter. Consider, for instance, the exponential distribution, characterized by a single parameter <span class="math inline">\(\lambda\)</span>. The first moment of an exponential distribution is <span class="math inline">\(\frac{1}{\lambda}\)</span>. In this case we will have <span class="math inline">\(\theta = \lambda\)</span> as a single dimensional parameter, and so we can use the following procedure.</p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# Define a function for population moment from theta 
+exp.moment1 <- function(theta) {
+  1 / theta
+}
+
+# Define a function that finds the method of moments estimator for 
+# an exponential population.
+# This will take 'x', which is the sample, as well as a lower value
+# and upper value for the parameter, theta. This will default to 
+# 0.01 and 100, respectively.
+exp.MOMestimator <- function(x, lower = 0.01, upper = 100) {
+  # Work out the first sample moment
+  sample.moment_1 <- mean(x)
+
+  # Define the function that we wish to find the root of
+  f <- function(theta) {
+    exp.moment1(theta) - sample.moment_1
+  }
+
+  # Call uniroot to figure out where f = 0
+  root <- uniroot(f, interval = c(lower, upper))
+
+  # Return the root.
+  root$root
+}
+
+# Test this out with some different exponential samples
+set.seed(31415) 
+X1 <- rexp(n = 50, rate = 3)
+X2 <- rexp(n = 20, rate = 80)
+X3 <- rexp(n = 100, rate = 1)
+
+exp.MOMestimator(X1)
+exp.MOMestimator(X2)
+exp.MOMestimator(X3)`, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="one-dimensional-parameter-with-unknown-moment" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="one-dimensional-parameter-with-unknown-moment">One Dimensional Parameter with Unknown Moment</h4>
+<p>If the moment is unknown then it is often still possible to workout the method of moment estimator, however, it is required to use R to solve for the approximate moment(s) of the distribution in place of using the closed form solution. This will typically be less efficient, and there may be stability concerns with the computation, however, in many scenarios this will provide a quicker technique for approximating the solution. To do so we will make use of either <code>sum</code> for discrete distributions or <code>integrate</code> for continuous distributions. Note that if <span class="math inline">\(X\)</span> is discrete then <span class="math display">\[E[X^k] = \sum_{x} x^kp_X(x),\]</span> and if <span class="math inline">\(X\)</span> is a continuous random variable then <span class="math display">\[E[X^k] = \int_{x} x^kf_X(x)dx.\]</span> As long as we know either <span class="math inline">\(p_X(x)\)</span> or <span class="math inline">\(f_X(x)\)</span> then we can leverage R to directly compute these values. Consider the same example as above, without assuming knowledge of <code>exp.moment1</code>.</p>
+<div id="qwebr-insertion-location-2"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-2");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    2
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# Define a function to estimate the population moment from theta 
+exp.moment1_est <- function(theta) {
+  # Define the function that can be integrate to find E[X]
+  f <- function(x) {
+    # Recall that dexp is the exponential density function. Could have also used
+    # theta * exp(-theta * x) directly. 
+
+    x * dexp(x, rate = theta)
+  }
+
+  # Integrate the function from x = 0 .. Inf
+  moment <- integrate(f, lower = 0, upper = Inf)
+
+  moment$value
+}
 
 
+# Define a function that finds the method of moments estimator for 
+# an exponential population.
+# This will take 'x', which is the sample, as well as a lower value
+# and upper value for the parameter, theta. This will default to 
+# 0.01 and 100, respectively.
+exp.MOMestimator <- function(x, lower = 0.01, upper = 100) {
+  # Work out the first sample moment
+  sample.moment_1 <- mean(x)
+
+  # Define the function that we wish to find the root of
+  f <- function(theta) {
+    exp.moment1_est(theta) - sample.moment_1
+  }
+
+  # Call uniroot to figure out where f = 0
+  root <- uniroot(f, interval = c(lower, upper))
+
+  # Return the root.
+  root$root
+}
+
+# Test this out with some different exponential samples
+set.seed(31415) 
+X1 <- rexp(n = 50, rate = 3)
+X2 <- rexp(n = 20, rate = 80)
+X3 <- rexp(n = 100, rate = 1)
+
+exp.MOMestimator(X1)
+exp.MOMestimator(X2)
+exp.MOMestimator(X3)`, 
+  2);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Notice that these estimates are effectively identical to the above estimates when the population moments were assumed to be known. Note that effectively the same procedure can be applied in the case of a discrete random variable however, instead of integrating over <code>x</code>, we form a vector of the outputs of <span class="math inline">\(xp_X(x)\)</span> and then sum over this. For instance, suppose that we have a hypergeometric distribution where we do not know the number of ‘success’ items, but we do know that there are <span class="math inline">\(100\)</span> items in total and that our sample will be of size <span class="math inline">\(10\)</span>.</p>
+<div id="qwebr-insertion-location-3"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-3");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    3
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `# Estimate the expected value from a HG(100, theta, 10)
+# Note that theta must fall between 0 and theta.
+HG.moment1_est <- function(theta) {
+  # Define the function that we would like to sum over the values
+  # of 'x'.
+  f <- function(x) {
+    x * dhyper(x, m = theta, n = 100 - theta, k = 10)
+  }
+
+  xvals <- 0:theta
+
+  # Return the expected value calculated as sum x*f(x)
+  sum(f(xvals)) 
+}
+
+# Define a function that finds the method of moments estimator for 
+# a hypergeometric population.
+# This will take 'x', which is the sample, as well as a lower value
+# and upper value for the parameter, theta. This will default to 
+# 0.01 and 100, respectively.
+HG.MOMestimator <- function(x, lower = 0, upper = 100) {
+  # Work out the first sample moment
+  sample.moment_1 <- mean(x)
+
+  # Define the function that we wish to find the root of
+  f <- function(theta) {
+    # Theta can only be whole values. 
+    # round it to the nearest whole.
+    theta <- round(theta)
+    HG.moment1_est(theta) - sample.moment_1
+  }
+
+  # Call uniroot to figure out where f = 0
+  root <- uniroot(f, interval = c(lower, upper))
+
+  # Return the root, rounded to the nearest whole
+  round(root$root)
+}
+
+# Test this out with some different HG samples
+set.seed(31415) 
+X1 <- rhyper(nn = 50, m = 20, n = 80, k = 10)
+X2 <- rhyper(nn = 20, m = 50, n = 50, k = 10)
+X3 <- rhyper(nn = 100, m = 5, n = 95, k = 10)
+
+HG.MOMestimator(X1)
+HG.MOMestimator(X2)
+HG.MOMestimator(X3)`, 
+  3);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="multidimensional-parameters" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="multidimensional-parameters">Multidimensional Parameters</h4>
+<p>The same general procedure can be applied when <span class="math inline">\(\theta\)</span> has more than one parameter. The changes that are required are two-fold. First, it is required to define multiple functions for the required population moments and, correspondingly, multiple equations to set to be equal to zero. Second, the <code>uniroot</code> function only applies for one dimensional equations and so we must instead use a technique designed for higher dimensional solving. For instance, the <code>multiroot</code> function from the <code>rootSolve</code> package can be applied. Alternatively, we can turn this into an optimization rather than a root finding problem and apply <code>optim</code>. Beyond these changes the process is similar. The functions for population moments can either be explicitly encoded or approximated numerically, and the process will work whether there is a discrete or continuous random variable under consideration. While the procedure is conceptually straightforward, root finding and optimization in multiple dimensions can be fairly unstable computationally. As a result, it will often be the case that other tricks from computational statistics are required in order to accurately determine the roots of the functions, and in turn, solve for the method of moments estimation. For the interested, I would advise you looking into the documentation on <code>multiroot</code> and <code>optim</code>, however, a deeper exploration of these packages is beyond the scope of these notes.</p>
+</section>
+</section>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-13.1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.1</strong></span> Describe the difference between an estimator and an estimate.</p>
+</div>
+<div id="exr-13.2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.2</strong></span> Suppose that a sample of size <span class="math inline">\(250\)</span> is drawn from a population with a distribution with mean <span class="math inline">\(25\)</span> and variance <span class="math inline">\(5\)</span>. The sample mean, denoted <span class="math inline">\(\overline{x}\)</span>, is found to be <span class="math inline">\(23.3\)</span>. What is the probability that <span class="math inline">\(\overline{x}\)</span> is less than or equal to <span class="math inline">\(25\)</span>?</p>
+</div>
+<div id="exr-13.3" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.3</strong></span> A set of <span class="math inline">\(10\)</span> houses in a particular area are being sampled to understand their weekly grocery expenses. Suppose that the average grocery spend during the week under study is denoted <span class="math inline">\(\mu\)</span>. Moreover, suppose that in the sample of <span class="math inline">\(10\)</span> observations, the houses spend: <span class="math inline">\(103\)</span>, <span class="math inline">\(156\)</span>, <span class="math inline">\(118\)</span>, <span class="math inline">\(89\)</span>, <span class="math inline">\(125\)</span>, <span class="math inline">\(147\)</span>, <span class="math inline">\(122\)</span>, <span class="math inline">\(109\)</span>, <span class="math inline">\(138\)</span>, and <span class="math inline">\(99\)</span>.</p>
+<ol type="a">
+<li>Compute a point estimate for <span class="math inline">\(\mu\)</span>.</li>
+<li>Suppose that there are <span class="math inline">\(10,000\)</span> houses in this area. Let <span class="math inline">\(\tau\)</span> denote the total amount spent by all of these houses during the week. Estimate <span class="math inline">\(\tau\)</span> using the data collected. What estimator did you use?</li>
+<li>Use the data given data to estimate <span class="math inline">\(p\)</span>, the proportion of all houses that spend at least <span class="math inline">\(100\)</span> in a week on groceries.</li>
+<li>Give a point estimate of the population median spend based on the sample. What estimator did you use?</li>
+</ol>
+</div>
+<div id="exr-13.4" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.4</strong></span> In a random sample of <span class="math inline">\(80\)</span> components of a certain type, <span class="math inline">\(12\)</span> are found the be defective.</p>
+<ol type="a">
+<li>Give a point estimate of the proportion of all such components that are not defective.</li>
+<li>A system is the be constructed by randomly selecting two of these components and combining them in sequence. The connection will function if and only if both components function correctly. Estimate the proportion of all such systems that will work properly.</li>
+</ol>
+</div>
+<div id="exr-13.5" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.5</strong></span> Show that the estimator for the sample variance which divides by <span class="math inline">\(n\)</span> is bias. That is, <span class="math display">\[S_n^2 = \frac{1}{n}\sum_{i=1}^n (X_i - \overline{X})^2,\]</span> is a biased estimator of <span class="math inline">\(\sigma^2\)</span>.</p>
+</div>
+<div id="exr-13.6" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.6</strong></span> Show that the sample variance estimator is unbiased. That is, <span class="math display">\[S_{n-1}^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X})^2,\]</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>.</p>
+</div>
+<div id="exr-13.7" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.7</strong></span> Suppose that we wish to estimate the population mean from a sample of size <span class="math inline">\(n\geq 1\)</span>. We consider the two estimators, <span class="math inline">\(\widehat{\theta}_1 = \overline{X}\)</span> and <span class="math inline">\(\widehat{\theta}_2 = X_1\)</span>.</p>
+<ol type="a">
+<li>Which estimator has a lower bias?</li>
+<li>Which estimator has a lower variance?</li>
+<li>Which is the better estimator?</li>
+</ol>
+</div>
+<div id="exr-13.8" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.8</strong></span> Suppose that a square plot of land with side length <span class="math inline">\(\mu\)</span> is desired. To form this plot, a long measuring stick of side length <span class="math inline">\(\mu\)</span> is used. The value of <span class="math inline">\(\mu\)</span> is unknown, and as a result, the area of the plots are unknown. In order to determine this, you make measurements of the measuring stick, denoted <span class="math inline">\(X_1,\dots,X_n\)</span>. Assume that each <span class="math inline">\(X_i\)</span> is unbiased for <span class="math inline">\(\mu\)</span>, with variance <span class="math inline">\(\sigma^2\)</span>.</p>
+<ol type="a">
+<li>Is <span class="math inline">\(\overline{X}^2\)</span> an unbiased estimator for <span class="math inline">\(\mu^2\)</span>?</li>
+<li>Suppose you consider estimators of the form <span class="math inline">\(\overline{X}^2 - kS^2\)</span>. What value of <span class="math inline">\(k\)</span> makes this an unbiased estimator?</li>
+</ol>
+</div>
+<div id="exr-13.9" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.9</strong></span> Let <span class="math inline">\(X_1,X_2,\dots,X_n\)</span> represent a random sample from the distribution <span class="math display">\[f(x;\theta) = \frac{x}{\theta}\exp\left(-\frac{x^2}{2\theta}\right) \quad x &gt; 0. \]</span></p>
+<ol type="a">
+<li>It can be shown that <span class="math inline">\(E[X^2] = 2\theta\)</span>.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> Use this fact to construct an unbiased estimator of <span class="math inline">\(\theta\)</span> based on <span class="math inline">\(X_1\)</span>.</li>
+<li>Construct an unbiased estimator of <span class="math inline">\(\theta\)</span> based on <span class="math inline">\(\sum_{i=1}^n X_i^2\)</span>.</li>
+</ol>
+</div>
+<div id="exr-13.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.10</strong></span> Consider a random sample <span class="math inline">\(X_1,\dots,X_n\)</span> from the pdf <span class="math display">\[f(x;\theta) = 0.5(1+\theta x) \quad -1\leq x\leq 1.\]</span> The value of <span class="math inline">\(\theta\)</span> falls in the range <span class="math inline">\([-1,1]\)</span>. Show that <span class="math inline">\(\widehat{\theta} = 3\overline{X}\)</span> is an unbiased estimator of <span class="math inline">\(\theta\)</span>.</p>
+</div>
+<div id="exr-13.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.11</strong></span> Let <span class="math inline">\(X_1,\dots,X_n\)</span> be Bernoulli random variables, independently drawn, with success probability <span class="math inline">\(p\)</span>. What is a method of moments estimator for <span class="math inline">\(p\)</span>?</p>
+</div>
+<div id="exr-13.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.12</strong></span> Suppose that the proportion of allotted time that a randomly selected student spends working on a certain test is denoted <span class="math inline">\(X\)</span>. Suppose that the pdf of <span class="math inline">\(X\)</span> is given by <span class="math display">\[f(x;\theta) = \begin{cases}
+(\theta + 1)x^\theta &amp; 0 \leq x \leq 1 \\
+0 &amp; \text{otherwise}
+\end{cases}.\]</span> Here we have <span class="math inline">\(-1 &lt; \theta\)</span>.</p>
+<ol type="a">
+<li>Use the method of moments to obtain an estimator of <span class="math inline">\(\theta\)</span>.</li>
+<li>Consider a sample of <span class="math inline">\(10\)</span> observations given by <span class="math inline">\(0.92\)</span>, <span class="math inline">\(0.79\)</span>, <span class="math inline">\(0.90\)</span>, <span class="math inline">\(0.65\)</span>, <span class="math inline">\(0.86\)</span>, <span class="math inline">\(0.47\)</span>, <span class="math inline">\(0.73\)</span>, <span class="math inline">\(0.97\)</span>, <span class="math inline">\(0.94\)</span>, and <span class="math inline">\(0.77\)</span>. What is an estimate of <span class="math inline">\(\theta\)</span>?</li>
+</ol>
+</div>
+<div id="exr-13.13" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.13</strong></span> Suppose that <span class="math inline">\(X \sim \text{Unif}(-\theta,\theta)\)</span>.</p>
+<ol type="a">
+<li>What is the method of moments estimator for <span class="math inline">\(\theta\)</span> based on a sample of size <span class="math inline">\(n\)</span>?</li>
+<li>Is this estimator unbiased for <span class="math inline">\(\theta\)</span>?</li>
+</ol>
+</div>
+<div id="exr-13.14" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.14</strong></span> Show that the method of moments estimator for the mean of a distribution is unbiased.</p>
+</div>
+<div id="exr-13.15" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 13.15</strong></span> Are method of moments estimators always unbiased? Justify your answer.</p>
+</div>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>For instance, the population being too large, us being resource constrained, it being a <em>conceptual population</em> without any finite representation, laziness… any of the usual culprits!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>For instance, we may be interest in the population mean and as a result we compute the sample mean.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Thus, <span class="math inline">\(\theta\)</span> may be the value of the true mean in the population, or the variance, or the <span class="math inline">\(75\)</span>th percentile. Any possible value that we could compute, if we had access to the full population, can be encompassed in this framework.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Note that it may not <em>always</em> be the case that a low variance is preferable, even between two estimators that have the same bias. Consider if the bias of two estimators is <em>really</em> bad. In this case, an estimator with low variance is guaranteed to give you an estimate that is really bad, in the sense that it will be far from the truth. On the other hand, a high variance estimator may give you an estimate that is really bad, however, the higher variability may also mean that it gives an estimate closer to the truth then would be feasible from the low variance estimator. This is not a typical case, and you would be ill-advised to rely on this high-bias/high-variance estimator in practice, but the example is useful to demonstrate the true concern with variance: it is less predictably close to its expected value.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>It can be shown that, subject to the constraint that <span class="math inline">\(\sum_{i=1}^n \omega_i = 1\)</span>, the sum of squares is minimized for <span class="math inline">\(\omega_i = \frac{1}{n}\)</span>. This is an exercise that you can complete if you are familiar with Lagrange multipliers!<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>That is to say, problems where we seek the value that will maximize a function. If you have take differential calculus, these types of questions are likely commonplace.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Note: this is <em>not</em> the sample variance. It is the mean of <span class="math inline">\(X_i^2\)</span>. Thus, you square the data, and then average the results.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Try to show this!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -302,18 +1969,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -345,7 +2001,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -380,7 +2076,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -697,18 +2397,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notes/chapter12.html" class="pagination-link  aria-label=" &lt;span="" distributions&lt;="" span&gt;"="">
+      <a href="../notes/chapter12.html" class="pagination-link" aria-label="Sampling Distributions">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/chapter14.html" class="pagination-link" aria-label="<span class='chapter-number'>14</span>&nbsp; <span class='chapter-title'>Confidence Intervals</span>">
+      <a href="../notes/chapter14.html" class="pagination-link" aria-label="Confidence Intervals">
         <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Confidence Intervals</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

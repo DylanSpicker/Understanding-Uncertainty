@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Understanding Uncertainty - 9&nbsp; Continuous Random Variables</title>
+<title>9&nbsp; Continuous Random Variables – Understanding Uncertainty</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -699,7 +699,7 @@ globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
   return mainDiv;
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -737,13 +737,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter9.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Continuous Random Variables</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -776,9 +776,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 1: Probability</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -841,9 +841,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 2: Statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -881,13 +881,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">The Basics of Null Hypothesis Significance Testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -1135,13 +1141,13 @@ P(X\in(a,b)) &amp;= 1 - P(X\not\in(a,b))\\
 &amp;= 1 - \left(P(X &lt; a) + P(X &gt; b)\right)\\
 &amp;= 1 - P(X &gt; b) - P(X &lt; a)\\
 &amp;= P(X &lt; b) - P(X &lt; a).\end{align*}\]</span></p>
-<div id="fig-number-line" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-number-line" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-number-line-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.1: A number line showcasing the interval <span class="math inline">\((a,b)\)</span> and demonstrating how you can take everything less than <span class="math inline">\(b\)</span> and remove all that is less than <span class="math inline">\(a\)</span> to be left with only <span class="math inline">\((a,b)\)</span>.
 </figcaption>
 <div aria-describedby="fig-number-line-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="..\graphics/ch9-difference-in-numbers.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="..\graphics/ch9-difference-in-numbers.png" class="img-fluid figure-img"></a>
+<a href="..\graphics/ch9-difference-in-numbers.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;9.1: A number line showcasing the interval (a,b) and demonstrating how you can take everything less than b and remove all that is less than a to be left with only (a,b)."><img src="..\graphics/ch9-difference-in-numbers.png" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1616,13 +1622,13 @@ Solution
 <p>A normal distribution is parameterized by two parameters: the mean, <span class="math inline">\(\mu\)</span>, and the variance <span class="math inline">\(\sigma^2\)</span>. We write <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>. These parameters directly correspond to the relevant quantities such that <span class="math inline">\(E[X] = \mu\)</span> and <span class="math inline">\(\text{var}(X) = \sigma^2\)</span>. The density function is given by <span class="math display">\[f(x) = \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).\]</span> This can be quite unwieldy to work with, however, when it is plotted we see that the normal distribution takes on a bell curve which is centered at <span class="math inline">\(\mu\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-normal-density" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-normal-density" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-normal-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red and blue), and mean 5 (black). The red density has variance 1, the blue density has variance 4, and the black density has variance 0.25.
 </figcaption>
 <div aria-describedby="fig-normal-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-normal-density-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="chapter9_files/figure-html/fig-normal-density-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-normal-density-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red and blue), and mean 5 (black). The red density has variance 1, the blue density has variance 4, and the black density has variance 0.25."><img src="chapter9_files/figure-html/fig-normal-density-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1813,13 +1819,13 @@ Closure of the Normal Distribution
 <p>Suppose that <span class="math inline">\(X\sim\text{Bin}(n,p)\)</span>. Through knowledge of the binomial distribution, we know that <span class="math inline">\(E[X] = np\)</span> and <span class="math inline">\(\text{var}(X) = np(1-p)\)</span>. If <span class="math inline">\(n\)</span> is sufficiently large then it is possible to approximate a binomial distribution using a normal distribution with the corresponding mean and variance. That is, for <span class="math inline">\(n\)</span> large enough, we can take <span class="math inline">\(X\sim\text{Bin}(n,p)\)</span> to have approximately the same distribution as <span class="math display">\[W\sim N(np, np(1-p)).\]</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-normal-approximation" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-normal-approximation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-normal-approximation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.3: A plot showing the probability mass function of a <span class="math inline">\(\text{Bin}(100, 0.25)\)</span> distribution, with a <span class="math inline">\(N(25, 18.75)\)</span> density overlaid, demonstrating the utility of the approximation.
 </figcaption>
 <div aria-describedby="fig-normal-approximation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-normal-approximation-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="chapter9_files/figure-html/fig-normal-approximation-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-normal-approximation-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;9.3: A plot showing the probability mass function of a \text{Bin}(100, 0.25) distribution, with a N(25, 18.75) density overlaid, demonstrating the utility of the approximation."><img src="chapter9_files/figure-html/fig-normal-approximation-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1871,13 +1877,13 @@ Solution
 <p>The parameter <span class="math inline">\(\nu\)</span> is any real, positive number. Typically, <span class="math inline">\(\nu\)</span> is restricted to be a positive integer, for reasons that will become clear later. As <span class="math inline">\(\nu\)</span> increases, the tails of the <span class="math inline">\(t\)</span> distribution become smaller and smaller. In the limit, as <span class="math inline">\(\nu\)</span> tends towards <span class="math inline">\(\infty\)</span>, the <span class="math inline">\(t\)</span> distribution approaches the standard normal. In fact, when <span class="math inline">\(\nu \geq 30\)</span>, the two distributions are nearly identical.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-t-dist" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-t-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-t-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.4: The <span class="math inline">\(t\)</span> distribution compared with the standard normal. As the degrees of freedom increasing, the density function for the <span class="math inline">\(t\)</span> becomes closer and closer to the standard normal’s density function, and at <span class="math inline">\(\nu = \infty\)</span> they theoretically overlap.
 </figcaption>
 <div aria-describedby="fig-t-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-t-dist-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8"><img src="chapter9_files/figure-html/fig-t-dist-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-t-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;9.4: The t distribution compared with the standard normal. As the degrees of freedom increasing, the density function for the t becomes closer and closer to the standard normal’s density function, and at \nu = \infty they theoretically overlap."><img src="chapter9_files/figure-html/fig-t-dist-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -1919,13 +1925,13 @@ Solution
 <p>The exponential distribution is a single-parameter, skewed distribution that is always positive. The distribution has a probability density functioned supported on <span class="math inline">\([0,\infty)\)</span>, which exhibits exponential decay over this interval, meaning that extreme events are possible, but fairly unlikely. The probability density function is characterized by a single parameter referred to as the rate, and is typically denoted using <span class="math inline">\(\lambda\)</span>. Thus, if <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, then <span class="math inline">\(X\)</span> is a continuous random variable with probability density function given by <span class="math display">\[f(x) = \lambda\exp(-\lambda x), \ x \in [0,\infty).\]</span> The cumulative distribution function for the exponential can be obtained through integration of the density, resulting in <span class="math display">\[F(x) = 1 - \exp(-\lambda x).\]</span> Moreover, if <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, then <span class="math inline">\(E[X] = \dfrac{1}{\lambda}\)</span> and <span class="math inline">\(\text{var}(X) = \dfrac{1}{\lambda^2}\)</span>.<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a></p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-exp-dist" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-exp-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-exp-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.5: The exponential distribution shown for decreasing values of <span class="math inline">\(\lambda\)</span>. Note that as the rate decreases, the mean increases. As a result, at this resolution, the curve will appear to flatten out. This has the effect of making larger events increasing likely, while decreasing the relative likelihood of small events.
 </figcaption>
 <div aria-describedby="fig-exp-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-exp-dist-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="quarto-lightbox-gallery-9"><img src="chapter9_files/figure-html/fig-exp-dist-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-exp-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9.5: The exponential distribution shown for decreasing values of \lambda. Note that as the rate decreases, the mean increases. As a result, at this resolution, the curve will appear to flatten out. This has the effect of making larger events increasing likely, while decreasing the relative likelihood of small events."><img src="chapter9_files/figure-html/fig-exp-dist-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -2084,13 +2090,13 @@ Solution
 <p>Note that if <span class="math inline">\(X \sim \text{Gamma}(\alpha, \beta)\)</span>, then <span class="math inline">\(E[X] = \alpha\beta\)</span> and <span class="math inline">\(\text{var}(X) = \alpha\beta^2\)</span>.<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a> The cumulative distribution function can be expressed as <span class="math display">\[F(x) = \frac{1}{\Gamma(\alpha)}\gamma(\alpha, \frac{x}{\beta}),\]</span> where <span class="math inline">\(\gamma(a, b)\)</span> is the lower incomplete gamma function, given by <span class="math display">\[\gamma(a, b) = \int_{0}^b x^{a-1}e^{-x}dx.\]</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-gamma-dist" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-gamma-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-gamma-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.6: The Gamma distribution shown for various combinations of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>.
 </figcaption>
 <div aria-describedby="fig-gamma-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-gamma-dist-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="quarto-lightbox-gallery-10"><img src="chapter9_files/figure-html/fig-gamma-dist-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-gamma-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;9.6: The Gamma distribution shown for various combinations of \alpha and \beta."><img src="chapter9_files/figure-html/fig-gamma-dist-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -2102,13 +2108,13 @@ Figure&nbsp;9.6: The Gamma distribution shown for various combinations of <span 
 <p>Beyond the exponential, the most prominent distribution which is connecte to the Gamma is the chi-squared distribution. The chi-squared distribution is a distribution that arises in many statistical inference procedures. It is characterized by a single parameter, <span class="math inline">\(\nu\)</span>, referred to as the degrees of freedom. To characterize the chi-squared distribution with <span class="math inline">\(\nu\)</span> degrees of freedom, denoted <span class="math inline">\(\chi^2_\nu\)</span>, we take <span class="math inline">\(X \sim \text{Gamma}(\nu/2, 2)\)</span>. Thus, the mean of the distribution is <span class="math inline">\(\nu\)</span> and the variance is <span class="math inline">\(2\nu\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-chisq-dist" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-chisq-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-chisq-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.7: The chi-sqaured distribution shown for increasing degrees of freedom.
 </figcaption>
 <div aria-describedby="fig-chisq-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="chapter9_files/figure-html/fig-chisq-dist-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-11" data-gallery="quarto-lightbox-gallery-11"><img src="chapter9_files/figure-html/fig-chisq-dist-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="chapter9_files/figure-html/fig-chisq-dist-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;9.7: The chi-sqaured distribution shown for increasing degrees of freedom."><img src="chapter9_files/figure-html/fig-chisq-dist-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -2392,15 +2398,6 @@ pgamma(2, shape = 5/2, scale = 2)`,
 </div>
 
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;9.1: A number line showcasing the interval <span class="math inline">\((a,b)\)</span> and demonstrating how you can take everything less than <span class="math inline">\(b\)</span> and remove all that is less than <span class="math inline">\(a\)</span> to be left with only <span class="math inline">\((a,b)\)</span>.</span>
-<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;9.2: Three normal distribution densities plotted with mean 0 (red and blue), and mean 5 (black). The red density has variance 1, the blue density has variance 4, and the black density has variance 0.25.</span>
-<span class="glightbox-desc lightbox-desc-7">Figure&nbsp;9.3: A plot showing the probability mass function of a <span class="math inline">\(\text{Bin}(100, 0.25)\)</span> distribution, with a <span class="math inline">\(N(25, 18.75)\)</span> density overlaid, demonstrating the utility of the approximation.</span>
-<span class="glightbox-desc lightbox-desc-8">Figure&nbsp;9.4: The <span class="math inline">\(t\)</span> distribution compared with the standard normal. As the degrees of freedom increasing, the density function for the <span class="math inline">\(t\)</span> becomes closer and closer to the standard normal’s density function, and at <span class="math inline">\(\nu = \infty\)</span> they theoretically overlap.</span>
-<span class="glightbox-desc lightbox-desc-9">Figure&nbsp;9.5: The exponential distribution shown for decreasing values of <span class="math inline">\(\lambda\)</span>. Note that as the rate decreases, the mean increases. As a result, at this resolution, the curve will appear to flatten out. This has the effect of making larger events increasing likely, while decreasing the relative likelihood of small events.</span>
-<span class="glightbox-desc lightbox-desc-10">Figure&nbsp;9.6: The Gamma distribution shown for various combinations of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>.</span>
-<span class="glightbox-desc lightbox-desc-11">Figure&nbsp;9.7: The chi-sqaured distribution shown for increasing degrees of freedom.</span>
-</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -2471,18 +2468,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2514,7 +2500,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -2549,7 +2575,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -2866,42 +2896,49 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notes/chapter8.html" class="pagination-link  aria-label=" &lt;span="" named="" discrete="" distributions&lt;="" span&gt;"="">
+      <a href="../notes/chapter8.html" class="pagination-link" aria-label="The Named Discrete Distributions">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Named Discrete Distributions</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/chapter10.html" class="pagination-link" aria-label="<span class='chapter-number'>10</span>&nbsp; <span class='chapter-title'>Introduction to Statistics</span>">
+      <a href="../notes/chapter10.html" class="pagination-link" aria-label="Introduction to Statistics">
         <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to Statistics</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","loop":false,"selector":".lightbox"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Understanding Uncertainty - 11&nbsp; An Introduction to Descriptive Statistics</title>
+<title>11&nbsp; An Introduction to Descriptive Statistics – Understanding Uncertainty</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,9 +72,11 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+
 <link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -112,13 +114,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter10.html">Part 2: Statistics</a></li><li class="breadcrumb-item"><a href="../notes/chapter11.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">An Introduction to Descriptive Statistics</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -151,9 +153,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 1: Probability</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -216,9 +218,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 2: Statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -256,13 +258,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">The Basics of Null Hypothesis Significance Testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -366,25 +374,25 @@ Figure&nbsp;11.1: Famous historical graphics produced by Florence Nightingale an
 <div aria-describedby="fig-graphical-displays-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-graphical-displays" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-florence" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-florence" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-florence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) One of Florence Nightingale’s data visualizations demonstrating death of soldiers during the Crimean War. The blue area in these plots demonstrates the rate of deaths of preventible illness over the course of the war, the red/pink areas represent deaths from wounds, and the black areas represent all other causes. This clearly demonstrates the outsized impact that the policies had on the health of soldiers.
 </figcaption>
 <div aria-describedby="fig-florence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="..\graphics/ch11-florence.jpg" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="fig-graphical-displays"><img src="..\graphics/ch11-florence.jpg" class="img-fluid figure-img" data-ref-parent="fig-graphical-displays"></a>
+<a href="..\graphics/ch11-florence.jpg" class="lightbox" data-gallery="fig-graphical-displays" title="Figure&nbsp;11.1&nbsp;(a): One of Florence Nightingale’s data visualizations demonstrating death of soldiers during the Crimean War. The blue area in these plots demonstrates the rate of deaths of preventible illness over the course of the war, the red/pink areas represent deaths from wounds, and the black areas represent all other causes. This clearly demonstrates the outsized impact that the policies had on the health of soldiers."><img src="..\graphics/ch11-florence.jpg" class="img-fluid figure-img" data-ref-parent="fig-graphical-displays"></a>
 </div>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-graphical-displays" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-snow" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-snow" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-snow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) The map produced by John Snow illustrating the cholera outbreak. Infected areas are illustrated by the dark shaded rectangles, which appear to cluster around the pump, indicated near the center of the map on broad street. As households move further and further from this central location, the number of cases evidently drops off, providing a strong indication that this may be the cause.
 </figcaption>
 <div aria-describedby="fig-snow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="..\graphics/ch11-snow.jpg" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="fig-graphical-displays"><img src="..\graphics/ch11-snow.jpg" class="img-fluid figure-img" data-ref-parent="fig-graphical-displays"></a>
+<a href="..\graphics/ch11-snow.jpg" class="lightbox" data-gallery="fig-graphical-displays" title="Figure&nbsp;11.1&nbsp;(b): The map produced by John Snow illustrating the cholera outbreak. Infected areas are illustrated by the dark shaded rectangles, which appear to cluster around the pump, indicated near the center of the map on broad street. As households move further and further from this central location, the number of cases evidently drops off, providing a strong indication that this may be the cause."><img src="..\graphics/ch11-snow.jpg" class="img-fluid figure-img" data-ref-parent="fig-graphical-displays"></a>
 </div>
 </figure>
 </div>
@@ -460,7 +468,7 @@ Solution
 <li>We will complete (a) and (b) together in a single table. First note that there are <span class="math inline">\(6\)</span> realizations of coffee, <span class="math inline">\(1\)</span> of drink, <span class="math inline">\(2\)</span> of food, <span class="math inline">\(2\)</span> of coffee with drink, <span class="math inline">\(1\)</span> of coffee with food, <span class="math inline">\(1\)</span> of coffee with food and drink, and <span class="math inline">\(2\)</span> of food and drink.</li>
 <li>This leads to a total of <span class="math inline">\(15\)</span> orders in the hour, and so taken together we can write down the following frequency distribution.</li>
 </ol>
-<table class="table-striped table">
+<table class="table-striped caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Order</th>
@@ -565,7 +573,7 @@ Solution
 <div class="g-col-8">
 <div class="cell">
 <div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -627,7 +635,7 @@ Solution
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -662,7 +670,7 @@ Solution
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -787,7 +795,7 @@ Solution
 <ol type="a">
 <li>Here the relevant categories are <span class="math inline">\(\{1,2,3,4,5,6\}\)</span>. We get</li>
 </ol>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Order Size</th>
@@ -899,7 +907,7 @@ Solution
 <li>The smallest observed value is <span class="math inline">\(0.98\)</span> and the largest observed value is <span class="math inline">\(5.30\)</span>. That means that our bins should encapsulate both of these end points, and be evenly spaced throughout. Because there are only <span class="math inline">\(15\)</span> data points, we likely want fewer bins rather than more, to ensure that our bins are not predominantly empty or with single items. If we use <span class="math inline">\(0.10\)</span>, we would require <span class="math inline">\(43\)</span> bins at least to include all of the data. This would guarantee that most bins were empty, and is far too small of a divide to be useful. If we used <span class="math inline">\(\$3.00\)</span>, we would span the full range in <span class="math inline">\(2\)</span> to <span class="math inline">\(3\)</span> bins. This is likely not particularly informative either, this time giving too little of a breakdown of the various values.</li>
 <li>The following is the relevant frequency distribution.</li>
 </ol>
-<table class="table-striped table">
+<table class="table-striped caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Bin</th>
@@ -1287,7 +1295,7 @@ Solution
 <p>The mean is a very commonly reported measure for the center of a distribution. it is also referred to as the average. Just as with random variables and the expected value, the mean can be viewed as balancing the mass of observations. If you place equal mass at each of the observations, then the mean would be the point which balances a seesaw holding those masses.</p>
 <div id="exm-compute-central-tendency" class="theorem example">
 <p><span class="theorem-title"><strong>Example 11.8 (Charles’ Penguin Bill Lengths)</strong></span> Continuing on in day-dreaming adventures at the Palmer Station in Antarctica, Charles envisions recording the bill lengths of a random sampling of the penguins that are observed. These day-dreamed values are recorded, and Charles would look to summarize the general behaviour of these points, considering the measures of central tendency of them.</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 10%">
 <col style="width: 10%">
@@ -1341,7 +1349,7 @@ Solution
 \end{align*}\]</span></p></li>
 <li><p>For the median, we first consider ordering the values in ascending order.</p></li>
 </ol>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 10%">
 <col style="width: 10%">
@@ -1429,7 +1437,7 @@ Solution
 <p>These measures of spread are also useful to supplement the understanding of the behaviour of a dataset that is provided by the measures of central tendency. Specifically, by reporting measures of central tendency, alongside measures of spread, and a description of the shape of the distribution, you are able to describe and summarize the beahviour of a dataset in a concise manner in such a way so as to allow for a deep understanding of the patterns that have emerged.</p>
 <div id="exm-compute-spread" class="theorem example">
 <p><span class="theorem-title"><strong>Example 11.10 (Sadie Questions the Spread in Bill Lengths)</strong></span> After having described the central tendency of the bill length data that Charles day dreamed about, Sadie inquires about the variability in the data. Charles, so focused on the penguins themselves, had not even stopped to consider how much variability may be present in these data. Sadie decides to help out by computing measures of sample variability.</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 10%">
 <col style="width: 10%">
@@ -1476,7 +1484,7 @@ Solution
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The solution is made easier by first ordering the data. Consider</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 10%">
 <col style="width: 10%">
@@ -1529,19 +1537,19 @@ s^2 &amp;= \frac{1}{n-1}\sum_{i=1}^n(x_i - \overline{x})^2 \\
 </div>
 <p>From the five number summary we also immediately know the range, and the IQR. While it is useful to specifically report the values of the five number summary, it can be even more effectively to display this graphically. Boxplots are a graphical display which leverage this idea. For a variable, the boxplot displays the minimum, the maximum, the median, as well as the first and third quartiles <span class="math inline">\(Q1\)</span> and <span class="math inline">\(Q3\)</span>, in ascending order, for a given variable. In order to do this, a box is drawn starting at <span class="math inline">\(Q1\)</span> and going up to <span class="math inline">\(Q3\)</span>. Then, the median is marked in the middle of this box. Extending from the box are the <em>whiskers</em>.</p>
 <p>Each whisker is drawn out a length of <span class="math inline">\(1.5\)</span> times the observed IQR, stopping at the highest (or lowest) point within that range. Thus, if all points fall within <span class="math inline">\(1.5\)</span> times the IQR of either <span class="math inline">\(Q1\)</span> or <span class="math inline">\(Q3\)</span>, then the whiskers will stop at the minimum or maximum point observed. If not, there are points beyond those included in the whiskers: these are typically referred to as outliers. The outliers are drawn beyond the whiskers of a boxplot, drawing a single dot for each point.</p>
-<div id="fig-boxplot-labels" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-boxplot-labels" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-boxplot-labels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;11.2: A visual representation of a boxplot. The five number summary is included, along with an indication of which values fall outside of an expected range by using the whiskers to indicate <span class="math inline">\(1.5\)</span> times the IQR.
 </figcaption>
 <div aria-describedby="fig-boxplot-labels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="..\graphics/ch11-boxplot-labeled.svg" class="lightbox" data-glightbox="description: .lightbox-desc-46" data-gallery="quarto-lightbox-gallery-46"><img src="..\graphics/ch11-boxplot-labeled.svg" class="img-fluid figure-img"></a>
+<a href="..\graphics/ch11-boxplot-labeled.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-46" title="Figure&nbsp;11.2: A visual representation of a boxplot. The five number summary is included, along with an indication of which values fall outside of an expected range by using the whiskers to indicate 1.5 times the IQR."><img src="..\graphics/ch11-boxplot-labeled.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
 <div id="exm-boxplots-from-numeric-summaries" class="theorem example">
 <p><span class="theorem-title"><strong>Example 11.11 (Boxplots and Numeric Summaries)</strong></span> Charles and Sadie have gotten very much into the summarizing data from the penguins. For the first sample of penguins, they have measurements of bill lengths in mm, with the following observations.</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 10%">
 <col style="width: 10%">
@@ -1570,7 +1578,7 @@ Figure&nbsp;11.2: A visual representation of a boxplot. The five number summary 
 </tbody>
 </table>
 <p>They took another two samples with other bill length measurements, but seemed to have lost the data directly. Fortunately, they have the five number summaries. These are given by the following.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: center;">Sample</th>
@@ -1698,7 +1706,7 @@ Solution
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -1751,7 +1759,7 @@ Solution
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -1803,7 +1811,7 @@ Solution
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -1849,7 +1857,7 @@ Solution
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -2118,11 +2126,6 @@ Solution
 </div>
 
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;11.1&nbsp;(a): One of Florence Nightingale’s data visualizations demonstrating death of soldiers during the Crimean War. The blue area in these plots demonstrates the rate of deaths of preventible illness over the course of the war, the red/pink areas represent deaths from wounds, and the black areas represent all other causes. This clearly demonstrates the outsized impact that the policies had on the health of soldiers.</span>
-<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;11.1&nbsp;(b): The map produced by John Snow illustrating the cholera outbreak. Infected areas are illustrated by the dark shaded rectangles, which appear to cluster around the pump, indicated near the center of the map on broad street. As households move further and further from this central location, the number of cases evidently drops off, providing a strong indication that this may be the cause.</span>
-<span class="glightbox-desc lightbox-desc-46">Figure&nbsp;11.2: A visual representation of a boxplot. The five number summary is included, along with an indication of which values fall outside of an expected range by using the whiskers to indicate <span class="math inline">\(1.5\)</span> times the IQR.</span>
-</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -2181,18 +2184,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2224,7 +2216,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -2259,7 +2291,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -2576,12 +2612,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notes/chapter10.html" class="pagination-link  aria-label=" &lt;span="" to="" statistics&lt;="" span&gt;"="">
+      <a href="../notes/chapter10.html" class="pagination-link" aria-label="Introduction to Statistics">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to Statistics</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/chapter12.html" class="pagination-link" aria-label="<span class='chapter-number'>12</span>&nbsp; <span class='chapter-title'>Sampling Distributions</span>">
+      <a href="../notes/chapter12.html" class="pagination-link" aria-label="Sampling Distributions">
         <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sampling Distributions</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -2589,29 +2625,36 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
 <script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Understanding Uncertainty - 4&nbsp; Probabilities with More than One Event</title>
+<title>4&nbsp; Probabilities with More than One Event – Understanding Uncertainty</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -92,7 +92,9 @@ div.csl-indent {
   }
 }</script>
 <script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+
 <link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
   
@@ -721,7 +723,7 @@ globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
   return mainDiv;
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -759,13 +761,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Probabilities with More than One Event</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -798,9 +800,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 1: Probability</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -863,9 +865,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 2: Statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -903,13 +905,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">The Basics of Null Hypothesis Significance Testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -1144,7 +1152,7 @@ Solution
 <ol type="a">
 <li><p>In this case we want the <strong>marginal probability</strong> of a six showing up on the roll of two dice. Take <span class="math inline">\(E\)</span> to represent the event wherein at least one six is showing on the roll of two dice. Thus, <span class="math inline">\(E^C\)</span> is the event that no sixes are showing. There are <span class="math inline">\(5\times 5=25\)</span> (using the product rule for counting) ways of <em>not</em> rolling a <span class="math inline">\(6\)</span>, meaning that <span class="math display">\[P(E^C) = \dfrac{25}{36} \implies P(E) = 1 - \dfrac{25}{36} = \dfrac{11}{36}.\]</span> Thus, Charles should guess that there is no <span class="math inline">\(6\)</span> as the probability is only <span class="math inline">\(11/36 \approx 0.31\)</span>.</p></li>
 <li><p>Here we wish to determine conditional probabilities. We take <span class="math inline">\(E\)</span> to be the event that at least one <span class="math inline">\(6\)</span> is showing, and then <span class="math inline">\(S\)</span> to be a variable representing the sum of the two dice. For <span class="math inline">\(s= 1, \dots, 12\)</span> we wish to find <span class="math inline">\(P(E|\{S=s\})\)</span>. Notice that for <span class="math inline">\(s=2,\dots,6\)</span> <span class="math inline">\(P(E|S=s) = 0\)</span>. If the sum is <span class="math inline">\(2\)</span> we know that there could not have been a <span class="math inline">\(6\)</span>. Moreover, for <span class="math inline">\(s=11,12\)</span> we know that <span class="math inline">\(P(E|S=s) = 1\)</span> since the only way to form <span class="math inline">\(11\)</span> is a five and a six, and the only way to form <span class="math inline">\(12\)</span> is to have two sixes. This leaves <span class="math inline">\(s = 7,\dots,10\)</span> to check. The following table gives the set of values, the possible combinations to reach the value, and then the combinations that end up involving a <span class="math inline">\(6\)</span>.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Value</th>
@@ -1220,7 +1228,7 @@ Solution
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The relevant table of solutions is copied from above.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Value</th>
@@ -1275,7 +1283,7 @@ Solution
 <p>What if instead we had considered the second event to be “the card was a spade.” In this case if we want to know <span class="math inline">\(P(A|B)\)</span> then, given a spade being drawn, we know that the probability of drawing a heart is <span class="math inline">\(0\)</span>.</p>
 <div id="exm-conditional-probability-urn" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4.3 (Charles’s Mismatched Urn Mishap)</strong></span> Charles’s love of probability prompts a spontaneous decision: buy an urn and some coloured balls to fill it up with. Unfortunately, the supplier of the balls misunderstood the request and sent over an assortment of different shapes rather than just spheres. There are some spheres, some cubes, some pyramids, and some cones. There are also five different colours present, red, blue, green, yellow, and black. Charles is slightly dismayed as, when reaching into the urn, it is very easy to feel what shape you are pulling out before you see the object, and the distribution of colour-shape combinations is not even. Despite the dismay, Charles shows Sadie, who is deeply excited, explaining how this mismatched urn is perfect for understanding conditional probabilities deeply. The distribution of shapes and colours is presented in the following table.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th><strong>Colour</strong></th>
@@ -1344,7 +1352,7 @@ Solution
 <li><p>Take <span class="math inline">\(S\)</span>, <span class="math inline">\(C\)</span>, <span class="math inline">\(P\)</span>, <span class="math inline">\(Cn\)</span> to be the events that a sphere, cube, pyramid, or cone are drawn, respectively. Take <span class="math inline">\(R\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(G\)</span>, <span class="math inline">\(Y\)</span>, <span class="math inline">\(Bk\)</span> to be the events that a red, blue, green, yellow, or black object is drawn, respectively. We want the probability of each colour, given the corresponding shape. There are a total of <span class="math inline">\(20\)</span> conditional probabilities to solve for here. We walk through, in full, the first conditional probability calculation. Afterwards, the same process follows to get the (provided) answer.</p>
 <p>First note that there are <span class="math inline">\(8\)</span> spheres, <span class="math inline">\(10\)</span> cubes, <span class="math inline">\(6\)</span> pyramids, and <span class="math inline">\(11\)</span> cones. Thus, the marginal probabilities are <span class="math inline">\(P(S) = 8/35\)</span>, <span class="math inline">\(P(C) = 10/35\)</span>, <span class="math inline">\(P(P) = 6/35\)</span>, and <span class="math inline">\(P(Cn) = 11/35\)</span>. Note further that the joint probability between any colour-shape combination is going to be given by the number of that combination that exist, divided by <span class="math inline">\(35\)</span>. Thus, suppose we want <span class="math inline">\(P(R|S)\)</span>. There are <span class="math inline">\(2\)</span> red spheres, so <span class="math inline">\(P(R \cap S) = 2/35\)</span>. The marginal probability <span class="math inline">\(P(S) = 8/35\)</span>, so taken together this gives <span class="math display">\[P(R|S) = \dfrac{2/35}{8/35} = \dfrac{2}{8} = \dfrac{1}{4}.\]</span></p>
 <p>Applying the same process gives the following probabilities, reported in the table for convenience.</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 5%">
 <col style="width: 23%">
@@ -1494,13 +1502,13 @@ B_3 &amp;= \{(\text{T},\text{H},\text{T}),  (\text{H},\text{T},\text{H})\}.
 </div>
 <p>Partitions allow us to move from discussions regarding the joint probability of events to the marginal probability of an event. Suppose that we have a partition given by <span class="math inline">\(B_1, B_2, \dots\)</span>. This means that our full sample space can be cut up into these various non-overlapping sets, and every single outcome belongs to exactly one of them. Now, suppose we are interested in some other event <span class="math inline">\(A\)</span>. We can ask: how can <span class="math inline">\(A\)</span> occur, in terms of the events <span class="math inline">\(B_1, B_2, \dots\)</span>?</p>
 <p>Since every single event in the sample space belongs to exactly one of our partitioning sets, then it <strong>must</strong> be the case that every single event in <span class="math inline">\(A\)</span> belongs to exactly one of our partitioning sets. This means that if we consider <span class="math inline">\(A\cap B_j\)</span>, for all <span class="math inline">\(j\)</span>, then every single event in <span class="math inline">\(A\)</span> must belong to exactly one of these. In other words, it must be the case that <span class="math display">\[A = \bigcup_{j} A\cap B_j,\]</span> for any partition <span class="math inline">\(B_1, B_2,\dots\)</span>. Moreover, every single <span class="math inline">\(A\cap B_j\)</span> is disjoint from every other <span class="math inline">\(A \cap B_\ell\)</span>, whenever <span class="math inline">\(\ell \neq j\)</span>. This means that we can use the axiom of additivity to give <span class="math display">\[P(A) = P\left(\bigcup_{j} A\cap B_j\right) = \sum_{j} P(A \cap B_j).\]</span> In other words: the marginal probability of <span class="math inline">\(A\)</span> can be found by summing over <strong>all</strong> joint probabilities between <span class="math inline">\(A\)</span> and sets that form a partition. This argument gives the law of total probability.</p>
-<div id="fig-basic-partition" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-basic-partition" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-basic-partition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4.1: This graphic shows the argument that summing over the joint probabilities between an event and a partition gives the full marginal probability. Note that <span class="math inline">\(B_1,\dots,B_7\)</span> forms a partition of the space where every possible outcome is contained in exactly one of these sets. Then, if we take an arbitrary event <span class="math inline">\(A\)</span>, we can divide <span class="math inline">\(A\)</span> into the components that intersect with each partitioning set, namely <span class="math inline">\(A \cap B_1\)</span>, <span class="math inline">\(A \cap B_2\)</span>, and so forth.
 </figcaption>
 <div aria-describedby="fig-basic-partition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="..\graphics/ch4-basic-partition.svg" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="..\graphics/ch4-basic-partition.svg" class="img-fluid figure-img"></a>
+<a href="..\graphics/ch4-basic-partition.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;4.1: This graphic shows the argument that summing over the joint probabilities between an event and a partition gives the full marginal probability. Note that B_1,\dots,B_7 forms a partition of the space where every possible outcome is contained in exactly one of these sets. Then, if we take an arbitrary event A, we can divide A into the components that intersect with each partitioning set, namely A \cap B_1, A \cap B_2, and so forth."><img src="..\graphics/ch4-basic-partition.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1541,7 +1549,7 @@ Solution
 <div id="exm-lotp-example-two" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4.7 (Charles’ Many Urns)</strong></span> While shopping at some garage sales one Sunday morning, Charles and Sadie stumble across a wonderful find! They see three urns which are <strong>exactly</strong> identical to the one that Charles had already purchased to store the different balls which turned out to not be balls at all. Realizing the opportunity they splurge and purchase them all, and then divide the various objects between the four urns, placing all the spheres in one container, all the cubes in another, all the pyramids in a third, and all the cones in a fourth.</p>
 <p>Once done, they use a different selection mechanism. First, they pick an urn at random. Next, they randomly grab one of the items from within it. The distribution of colours and shapes is included in the following table.</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 5%">
 <col style="width: 23%">
@@ -1793,14 +1801,14 @@ Solution
 </div>
 <p>To begin, you could imagine constructing a frequency table relaying the frequency with which undergraduate students are enrolled in various faculties at a particular university. This tells you, of the whole population of students at the university, what is the faculty breakdown. By dividing the number in each faculty by the total number of students, you convert the frequencies to proportions, and these proportions can be viewed as probabilities. (See <a href="#tbl-uni-frequency" class="quarto-xref">Table&nbsp;<span>4.1</span></a>.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>) The interpretation of proportions as probabilities implies a very specific statistical experiment. In particular, the proportion represents the probability that an individual selected at random from the entire population has the given trait. This is frequently a probability of interest, which makes these summary tables a useful tool.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a></p>
 <div class="cell" data-tbl-colwidths="[20,40,40]">
-<div id="tbl-uni-frequency" class="cell quarto-float anchored">
+<div id="tbl-uni-frequency" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,40,40]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-uni-frequency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;4.1: Frequency and corresponding proportions of enrolment by faculty in a university.
 </figcaption>
 <div aria-describedby="tbl-uni-frequency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Faculty</th>
@@ -1860,14 +1868,14 @@ Table&nbsp;4.1: Frequency and corresponding proportions of enrolment by faculty 
 </div>
 <p>When a single trait is displayed we refer to these tabular summaries as frequency tables or frequency distributions. A contingency table instead plots two or more traits on the same table, with each cell representing the frequency of both traits occurring simultaneously in the population. Extending the university example, we may further include the student’s current year of study to see the breakdown of both faculty and year of study, in one table.</p>
 <div class="cell" data-tbl-colwidths="[20,40,40]">
-<div id="tbl-uni-contingency" class="cell quarto-float anchored">
+<div id="tbl-uni-contingency" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,40,40]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-uni-contingency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;4.2: Frequency of enrolment by faculty and year of study in a university.
 </figcaption>
 <div aria-describedby="tbl-uni-contingency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -1965,14 +1973,14 @@ Table&nbsp;4.2: Frequency of enrolment by faculty and year of study in a univers
 <p>Consider the two-way contingency table, <a href="#tbl-uni-contingency" class="quarto-xref">Table&nbsp;<span>4.2</span></a>. Each cell consists of frequency with which a combination of the two traits occurs in the population.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> If we take events corresponding to each of the levels of the two variables of interest, then these central cells represent the frequency of joint events. That is, each interior cell gives the total number of observations with a set level for variable one<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> AND a set level for variable two<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>. For instance, there are 50 individuals who are in Law and studying in Year 2.</p>
 <p>Each row is then summed, with the total number following into the corresponding row recorded in the right hand margin. each column is summed, with the total number corresponding to the given column recorded in the bottom margin. For instance there are a total of 786 students in Education and a total of 1393 in Year 3. Then the margin totals are summed and the total is recorded in the lower right margin space (in this case, 5801). Whether the rows or columns are summed, they should sum to the same total, which is the total of the population under consideration. This is the same as simply adding all of the observed interior frequencies. To turn a frequency into a probability, you need only divide the correct frequency by the correct total.</p>
 <div class="cell" data-tbl-colwidths="[20,40,40]">
-<div id="tbl-uni-prop" class="cell quarto-float anchored">
+<div id="tbl-uni-prop" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,40,40]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-uni-prop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;4.3: Proportions of enrolment by faculty and year of study in a university.
 </figcaption>
 <div aria-describedby="tbl-uni-prop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -2090,7 +2098,7 @@ The Law of Total Probability: Contingency Table’s Version
 <p><span class="theorem-title"><strong>Example 4.11 (The Evolving Contents of Charle’s Urns)</strong></span> After learning of contingency tables, Sadie points out to Charles that with the whole urn debacle they went through, the two of them actually ended up using a contingency table to summarize the information. How neat! In the interim, there has been some development in the contents of Charles’s urns, and armed with the new knowledge of contingency tables, the following summary is produced.</p>
 <div class="cell">
 <div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -2201,7 +2209,7 @@ Solution
 <p><span class="theorem-title"><strong>Example 4.12 (Independent or Mutually Exclusive Urn Shapes)</strong></span> After helping Charles <em>neatly</em> fill in the contingency table, Sadie begins to wonder about whether there are any shape-colour combinations which are independent, or if any are mutually exclusive.</p>
 <div class="cell">
 <div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -2521,9 +2529,6 @@ charles_p_table`,
 </div>
 
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;4.1: This graphic shows the argument that summing over the joint probabilities between an event and a partition gives the full marginal probability. Note that <span class="math inline">\(B_1,\dots,B_7\)</span> forms a partition of the space where every possible outcome is contained in exactly one of these sets. Then, if we take an arbitrary event <span class="math inline">\(A\)</span>, we can divide <span class="math inline">\(A\)</span> into the components that intersect with each partitioning set, namely <span class="math inline">\(A \cap B_1\)</span>, <span class="math inline">\(A \cap B_2\)</span>, and so forth.</span>
-</div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Carroll" class="csl-entry" role="listitem">
 Carroll, Lewis. 2013. <em>The Mathematical Recreations of Lewis Carroll: Pillow Problems and a Tangled Tale</em>. Mineola, NY: Dover Publications.
@@ -2595,18 +2600,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2638,7 +2632,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -2673,7 +2707,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -2990,42 +3028,49 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notes/chapter3.html" class="pagination-link  aria-label=" &lt;span="" core="" concepts="" of="" probability&lt;="" span&gt;"="">
+      <a href="../notes/chapter3.html" class="pagination-link" aria-label="The Core Concepts of Probability">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Core Concepts of Probability</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/chapter5.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Summarizing Statistical Experiments with Random Variables</span>">
+      <a href="../notes/chapter5.html" class="pagination-link" aria-label="Summarizing Statistical Experiments with Random Variables">
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summarizing Statistical Experiments with Random Variables</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","loop":false,"closeEffect":"zoom","descPosition":"bottom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","loop":false,"openEffect":"zoom","closeEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 

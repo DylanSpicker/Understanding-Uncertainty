@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Understanding Uncertainty - 2&nbsp; The Mathematical Foundations of Statistical Experiments</title>
+<title>2&nbsp; The Mathematical Foundations of Statistical Experiments – Understanding Uncertainty</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -699,7 +699,7 @@ globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
   return mainDiv;
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -737,13 +737,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter1.html">Part 1: Probability</a></li><li class="breadcrumb-item"><a href="../notes/chapter2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Mathematical Foundations of Statistical Experiments</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -776,9 +776,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 1: Probability</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -841,9 +841,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Part 2: Statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -881,13 +881,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Null Hypothesis Significance Testing: Basics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">The Basics of Null Hypothesis Significance Testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/chapter16.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hypothesis Testing and Confidence Intervals in Two Populations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/chapter17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -1365,45 +1371,45 @@ setdiff(x = sample_space, y = union(E2, E3)) `,
 <section id="venn-diagrams" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="venn-diagrams"><span class="header-section-number">2.3</span> Venn Diagrams</h2>
 <p>The sample space is partitioned into outcomes, and the outcomes can be grouped together into events. These events are sets and can be manipulated via basic set operations. Sometimes it is convenient to represent this process graphically through the use of Venn diagrams. In a Venn diagram, the sample space is represented by a rectangle with the possible outcomes placed inside, and events are drawn inside of this as circles containing the relevant outcomes.</p>
-<div id="fig-venn-diagram" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-venn-diagram" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-venn-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.1: A basic Venn diagram, representing the sample space and two different events. In practice, the sample space would have the possible outcomes written into the rectangle, and the circled events would end up containing the relevant outcomes for those events.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="..\graphics/ch2-venn-diagram-basic.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="..\graphics/ch2-venn-diagram-basic.svg" class="img-fluid figure-img"></a>
+<a href="..\graphics/ch2-venn-diagram-basic.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;2.1: A basic Venn diagram, representing the sample space and two different events. In practice, the sample space would have the possible outcomes written into the rectangle, and the circled events would end up containing the relevant outcomes for those events."><img src="..\graphics/ch2-venn-diagram-basic.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
 <p>On the Venn diagram then, the overlap between circles represents their intersection, the combined area of two (or more) circles represents their union, and everything outside of a given circle represents the complement. This can be a fairly useful method for representing sample spaces, and for visualizing the basic set operations that we use to manipulate events inside the sample spaces.</p>
 <p>A word of caution: Venn diagrams are useful tools, but they are not suitable as mathematical proofs directly. It is possible to convince yourself of false truths if the wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than asa rigorous tool in and of themselves.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
-<div id="fig-venn-diagram-union" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-venn-diagram-union" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-venn-diagram-union-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.2: <strong>Union:</strong> The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-union-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="..\graphics/ch2-venn-diagram-union.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="..\graphics/ch2-venn-diagram-union.svg" class="img-fluid figure-img"></a>
+<a href="..\graphics/ch2-venn-diagram-union.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2.2: Union: The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two."><img src="..\graphics/ch2-venn-diagram-union.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
-<div id="fig-venn-diagram-intersection" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-venn-diagram-intersection" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-venn-diagram-intersection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.3: <strong>Intersection:</strong> The intersection of events A and B is shaded here in red. The intersection of two sets is all of the content shared by both sets, given by the overlapping area of the two circles.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-intersection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="..\graphics/ch2-venn-diagram-intersection.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="..\graphics/ch2-venn-diagram-intersection.svg" class="img-fluid figure-img"></a>
+<a href="..\graphics/ch2-venn-diagram-intersection.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;2.3: Intersection: The intersection of events A and B is shaded here in red. The intersection of two sets is all of the content shared by both sets, given by the overlapping area of the two circles."><img src="..\graphics/ch2-venn-diagram-intersection.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
-<div id="fig-venn-diagram-complement" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-venn-diagram-complement" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-venn-diagram-complement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.4: <strong>Complement:</strong> The complement of event A is shaded here in red. The complement of a sets is all of area inside of the sample space, not inside of the set. Here we show the complement of Event A, though Event B would be similar.
 </figcaption>
 <div aria-describedby="fig-venn-diagram-complement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="..\graphics/ch2-venn-diagram-complement.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4"><img src="..\graphics/ch2-venn-diagram-complement.svg" class="img-fluid figure-img"></a>
+<a href="..\graphics/ch2-venn-diagram-complement.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;2.4: Complement: The complement of event A is shaded here in red. The complement of a sets is all of area inside of the sample space, not inside of the set. Here we show the complement of Event A, though Event B would be similar."><img src="..\graphics/ch2-venn-diagram-complement.svg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
@@ -1499,12 +1505,6 @@ Solution
 </div>
 
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;2.1: A basic Venn diagram, representing the sample space and two different events. In practice, the sample space would have the possible outcomes written into the rectangle, and the circled events would end up containing the relevant outcomes for those events.</span>
-<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2.2: <strong>Union:</strong> The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two.</span>
-<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;2.3: <strong>Intersection:</strong> The intersection of events A and B is shaded here in red. The intersection of two sets is all of the content shared by both sets, given by the overlapping area of the two circles.</span>
-<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;2.4: <strong>Complement:</strong> The complement of event A is shaded here in red. The complement of a sets is all of area inside of the sample space, not inside of the set. Here we show the complement of Event A, though Event B would be similar.</span>
-</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -1557,18 +1557,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1600,7 +1589,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1635,7 +1664,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1952,42 +1985,49 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notes/chapter1.html" class="pagination-link  aria-label=" &lt;span="" to="" probability&lt;="" span&gt;"="">
+      <a href="../notes/chapter1.html" class="pagination-link" aria-label="Introduction to Probability">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Probability</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/chapter3.html" class="pagination-link" aria-label="<span class='chapter-number'>3</span>&nbsp; <span class='chapter-title'>The Core Concepts of Probability</span>">
+      <a href="../notes/chapter3.html" class="pagination-link" aria-label="The Core Concepts of Probability">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Core Concepts of Probability</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom","closeEffect":"zoom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 
