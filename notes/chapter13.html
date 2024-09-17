@@ -1462,7 +1462,7 @@ Solution
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
-<li>Note that given that <span class="math inline">\(E[S^2] = \sigma^2\)</span>, the bias of the estimator is <span class="math inline">\(0\)</span>. As a result, <span class="math display">\[\text{MSE}(S^2) = \text{var}(S^2) = \frac{2}{n-1}\sigma^4\]</span>.</li>
+<li>Note that given that <span class="math inline">\(E[S^2] = \sigma^2\)</span>, the bias of the estimator is <span class="math inline">\(0\)</span>. As a result, <span class="math display">\[\text{MSE}(S^2) = \text{var}(S^2) = \frac{2}{n-1}\sigma^4.\]</span></li>
 <li>To find the MSE we consider first the bias. We know that the estimator can be written as <span class="math inline">\(\dfrac{n-1}{n}S^2\)</span> and so <span class="math display">\[E\left[\frac{n-1}{n}S^2\right] = \frac{n-1}{n}E[S^2] = \frac{n-1}{n}\sigma^2.\]</span> Thus, the bias is given by <span class="math display">\[\frac{n-1}{n}\sigma^2 - \sigma^2 = \frac{-\sigma^2}{n}.\]</span> We can perform a similar calculation for the variance, giving <span class="math display">\[\text{var}\left(\frac{n-1}{n}S^2\right) = \frac{(n-1)^2}{n^2}\text{var}(S^2) = 2\frac{(n-1)}{n^2}\sigma^4.\]</span> Then we get that <span class="math display">\[\text{MSE}(S_{n}^2) = \left(-\frac{\sigma^2}{n}\right)^2 + 2\frac{(n-1)}{n^2}\sigma^4 = \frac{2n - 1}{n^2}\sigma^4.\]</span></li>
 <li>We can use a similar procedure here. Note that <span class="math display">\[S_{n+1}^2 = \frac{n-1}{n+1}S^2\]</span> and so for the bias we get <span class="math display">\[\left(\frac{n-1}{n+1} - 1\right)\sigma^2 = \frac{-2\sigma^2}{n+1}.\]</span> Then, working on the variance we find <span class="math display">\[\text{var}(S_{n+1}^2) = 2\frac{(n-1)}{(n+1)^2}\sigma^4.\]</span> Thus, combined the MSE is given by <span class="math display">\[\text{MSE}(S_{n+1}^2) = \frac{2n + 2}{(n+1)^2}\sigma^4 = \frac{2}{n+1}\sigma^4.\]</span></li>
 <li>We can compare the three different MSEs either algebraically, graphically, or via example. The following graph plots their respective values for <span class="math inline">\(n=2\)</span> through to <span class="math inline">\(n=30\)</span>. Note that if <span class="math inline">\(n=1\)</span> then all estimators will produce <span class="math inline">\(0\)</span> so it is not a valid point of comparison. Also note that this is simply graphing the constant multiple of <span class="math inline">\(\sigma^4\)</span>. This can be interpreted as either a case where <span class="math inline">\(\sigma^2 = 1\)</span> or else as the multiple of the squared variance that is relevant.</li>
@@ -2409,7 +2409,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </nav>
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"selector":".lightbox","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
