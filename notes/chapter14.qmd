@@ -438,9 +438,9 @@ a. One of these confidence intervals is a $90\%$ interval, the other is a $99\%$
 A random sample of $50$ bottles of a brand of cough syrup are selected and have their alcohol content determined. If $\mu$ is the average alcohol content for the population of all bottles under study, then suppose that a $95\%$ confidence interval for $\mu$ is computed as $(7.8, 9.4)$. 
 
 a. Would a $90\%$ confidence interval calculated from this sample have been narrower or wider than the given interval? Why?
-a. Is the following statement correct? Why? ``There is a $95\%$ chance that $\mu$ is between $7.8$ and $9.4$.''
-a. Is the following statement correct? Why? ``We can be highly confident that $95\%$ of bottles of this type of cough syrup have an alcohol content that is between $7.8$ and $9.4$.''
-a. Is the following statement correct? Why? ``If the process of selecting a sample of size $50$ then computing the corresponding $95\%$ interval is repeated $100$ times, $95$ of the resulting intervals will include $\mu$.''
+a. Is the following statement correct? Why? "There is a $95\%$ chance that $\mu$ is between $7.8$ and $9.4$."
+a. Is the following statement correct? Why? "We can be highly confident that $95\%$ of bottles of this type of cough syrup have an alcohol content that is between $7.8$ and $9.4$."
+a. Is the following statement correct? Why? "If the process of selecting a sample of size $50$ then computing the corresponding $95\%$ interval is repeated $100$ times, $95$ of the resulting intervals will include $\mu$."
 
 :::
 
@@ -534,7 +534,7 @@ Based on a large sample of capacitors of a certain type, a $95\%$ confidence int
 :::
 
 :::{#exr-14.19}
-Based on a sample of repair records, an engineer calculates a $95\%$ confidence interval for the mean cost to repair a fiber-optic component to be $(140, 160)$. A supervisor summarizes this result saying ``We are $95\%$ confident that the mean cost of repairs is less than \$160.'' Is the supervisor underestimating, overestimating, or getting the confidence of this statement correct? Why?
+Based on a sample of repair records, an engineer calculates a $95\%$ confidence interval for the mean cost to repair a fiber-optic component to be $(140, 160)$. A supervisor summarizes this result saying "We are $95\%$ confident that the mean cost of repairs is less than \$160." Is the supervisor underestimating, overestimating, or getting the confidence of this statement correct? Why?
 
 :::
 
@@ -579,7 +579,7 @@ A normal probability plot of $n=26$ observations shows a substantial linear patt
 :::
 
 :::{#exr-14.26}
-A colleague computes a $95\%$ confidence interval using a normal approximation in a sample of $n \ll 30$, where the standard deviation was estimated as $s$.
+A colleague computes a $95\%$ confidence interval using a normal approximation in a sample of $n \ll 30$, where the standard deviation was estimated as $s$. How many times longer would the correct confidence interval be?
 :::
 
 :::{#exr-14.27}
@@ -598,10 +598,9 @@ Fission tracks are trails found in uranium-bearing minerals, left by fragments r
 :::{#exr-14.30}
 The following output is generated from statistical software computing the confidence interval for a population mean. 
 
-\begin{tabular}{cccccc} 
-        Variable & $N$ & Mean & Std. Dev & S.E. Mean & $95\%$ CI \\
-        $X$ & $10$ & $6.59635$ & $0.11213$ & $0.03546$ & $(6.51513, 6.67656)$.
-\end{tabular} 
+| Variable | $N$ | Mean | Std. Dev | S.E. Mean | $95\%$ CI |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| $X$ | $10$ | $6.59635$ | $0.11213$ | $0.03546$ | $(6.51513, 6.67656)$ |
 
 a. How many degrees of freedom does the $t$ distribution have?
 a. Using the information in the table, find a $99\%$ confidence interval for the mean.
