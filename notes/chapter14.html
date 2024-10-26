@@ -68,7 +68,663 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">.monaco-editor pre {
+  background-color: unset !important;
+}
 
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-button-run {
+  background-color: #EEEEEE;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; /* Extra styling for consistency */
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration: none;
+  /* vertical-align: middle; */ /* Prevents a space from appearing between the code cell and button */
+  -webkit-user-select: none;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button-run:hover {
+  color: #000;
+  background-color: #e3e6ea;
+  border-color: #e1e5e9;
+}
+
+.qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+  pointer-events: none;
+  opacity: .65
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+</style>
+<script type="module">// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Determine if we need to install R packages
+var installRPackagesList = [''];
+// Check to see if we have an empty array, if we do set to skip the installation.
+var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+var autoloadRPackages = true;
+
+// Display a startup message?
+var showStartupMessage = true;
+var showHeaderMessage = false;
+if (showStartupMessage) {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  var startupMessageWebR = document.createElement("p");
+  startupMessageWebR.innerText = "🟡 Loading...";
+  startupMessageWebR.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  startupMessageWebR.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(startupMessageWebR);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML) {
+    // Append to the existing "title-block-header" element
+    headerHTML.appendChild(quartoTitleMeta);
+  } else if (headerRevealJS) {
+    // If using RevealJS, add to the "title-slide" div
+    headerRevealJS.appendChild(firstInnerDiv);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+// Retrieve the webr.mjs
+import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.2/webr.mjs";
+
+// Populate WebR options with defaults or new values based on 
+// webr meta
+globalThis.webR = new WebR({
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": ChannelType.Automatic
+});
+
+// Initialization WebR
+await webR.init();
+
+// Setup a shelter
+globalThis.webRCodeShelter = await new webR.Shelter();
+
+// Setup a pager to allow processing help documentation 
+await webR.evalRVoid('webr::pager_install()'); 
+
+// Function to set the button text
+function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message
+function qwebrUpdateStatusHeader(message) {
+  startupMessageWebR.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await globalThis.webR.installPackages([packageName]);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await globalThis.webR.evalRVoid(`library(${packageName});`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+    
+    // Display the update
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await globalThis.webR.flush();
+  }
+}
+
+
+// Check to see if any packages need to be installed
+if (setupRPackages) {
+  // Obtain only a unique list of packages
+  const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+  // Install R packages one at a time (either silently or with a status update)
+  await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+  if(autoloadRPackages) {
+    // Load R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+  }
+}
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+// Release document status as ready
+if (showStartupMessage) {
+  startupMessageWebR.innerText = "🟢 Ready!"
+}
+
+qwebrSetInteractiveButtonState(
+  `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+  true
+);
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};</script>
+<script type="module">// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+    Interactive: 'interactive',
+    Setup: 'setup',
+    Output: 'output',
+});
+
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await webR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await webR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // ---- 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid(`webr::canvas(width=${options["fig-width"]}, height=${options["fig-height"]})`);
+
+    const result = await webRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    try {
+
+        // Stop creating images
+        await webR.evalRVoid("dev.off()");
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${qwebrEscapeHTMLCharacters(evt.data)}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await webR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * options["fig-width"]);
+                canvas.setAttribute("height", 2 * options["fig-height"]);
+                canvas.style.width = "700px";
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            elements.outputGraphDiv.appendChild(canvas);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        webRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    evalType = EvalTypes.Interactive,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { "fig-width": 504, "fig-height": 360 };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+</script>
+<script type="module">// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (insertElement,
+  qwebrCounter, 
+  evalType = EvalTypes.Interactive,
+  options = {}) {
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive: 
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter);
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter);
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter);
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  insertElement.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-interactive-area';
+
+  // Create button element
+  var button = document.createElement('button');
+  button.className = 'btn btn-default qwebr-button-run';
+  button.disabled = true;
+  button.type = 'button';
+  button.id = 'qwebr-button-run-' + qwebrCounter;
+  button.textContent = '🟡 Loading webR...';
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(button);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-area';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-setup-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-setup-area';
+
+  return mainDiv;
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -244,11 +900,170 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#interval-estimation-and-quantifying-uncertainty" id="toc-interval-estimation-and-quantifying-uncertainty" class="nav-link active" data-scroll-target="#interval-estimation-and-quantifying-uncertainty"><span class="header-section-number">14.1</span> Interval Estimation and Quantifying Uncertainty</a></li>
+  <li><a href="#confidence-intervals-in-general" id="toc-confidence-intervals-in-general" class="nav-link" data-scroll-target="#confidence-intervals-in-general"><span class="header-section-number">14.2</span> Confidence Intervals in General</a></li>
+  <li><a href="#interpretation-of-confidence-intervals" id="toc-interpretation-of-confidence-intervals" class="nav-link" data-scroll-target="#interpretation-of-confidence-intervals"><span class="header-section-number">14.3</span> Interpretation of Confidence Intervals</a></li>
+  <li><a href="#confidence-intervals-for-the-mean" id="toc-confidence-intervals-for-the-mean" class="nav-link" data-scroll-target="#confidence-intervals-for-the-mean"><span class="header-section-number">14.4</span> Confidence Intervals for the Mean</a>
+  <ul class="collapse">
+  <li><a href="#confidence-intervals-in-normal-populations" id="toc-confidence-intervals-in-normal-populations" class="nav-link" data-scroll-target="#confidence-intervals-in-normal-populations"><span class="header-section-number">14.4.1</span> Confidence Intervals in Normal Populations</a></li>
+  <li><a href="#confidence-intervals-in-non-normal-populations" id="toc-confidence-intervals-in-non-normal-populations" class="nav-link" data-scroll-target="#confidence-intervals-in-non-normal-populations"><span class="header-section-number">14.4.2</span> Confidence Intervals in Non-Normal Populations</a></li>
+  </ul></li>
+  <li><a href="#confidence-intervals-for-the-variance" id="toc-confidence-intervals-for-the-variance" class="nav-link" data-scroll-target="#confidence-intervals-for-the-variance"><span class="header-section-number">14.5</span> Confidence Intervals for the Variance</a></li>
+  <li><a href="#margin-of-error-and-sample-sizing" id="toc-margin-of-error-and-sample-sizing" class="nav-link" data-scroll-target="#margin-of-error-and-sample-sizing"><span class="header-section-number">14.6</span> Margin of Error and Sample Sizing</a></li>
+  <li><a href="#confidence-intervals-in-r" id="toc-confidence-intervals-in-r" class="nav-link" data-scroll-target="#confidence-intervals-in-r"><span class="header-section-number">14.7</span> Confidence Intervals in R</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
+<script type="module">// Global dictionary to store Monaco Editor instances
+const qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (
+    initialCode, 
+    qwebrCounter) {
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value
+    editor.__qwebrinitialCode = initialCode;
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter,
+            EvalTypes.Interactive);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, EvalTypes.Interactive);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, EvalTypes.Interactive);
+  };
+
+}</script>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter10.html">Part 2: Statistics</a></li><li class="breadcrumb-item"><a href="../notes/chapter14.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Confidence Intervals</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -269,8 +1084,758 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="interval-estimation-and-quantifying-uncertainty" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="interval-estimation-and-quantifying-uncertainty"><span class="header-section-number">14.1</span> Interval Estimation and Quantifying Uncertainty</h2>
+<p>The primary concern with point estimation is that, regardless of the procedure we use, we never expect that <span class="math inline">\(\widehat{\theta}\)</span> will equal the true parameter, <span class="math inline">\(\theta\)</span>. Instead, by using statistically valid estimation techniques, we hope to have estimators that are <em>close</em> to the truth. Moreover, using the sampling distribution, or assessing the MSE of an estimator can quantify how <em>close</em> is close. Still, even the most performant estimators are unlikely to exactly equal the truth. What’s more, reporting the estimated value will not, on its own, convey any information about the reliability of the estimator. To solve these issues we can turn to <strong>interval estimation</strong>. Specifically, with interval estimation we form estimators that do not give a single value for a parameter of interest, but rather, a range of plausible values.</p>
+<div id="def-interval-estimator" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 14.1 (Interval Estimator)</strong></span> An interval estimator is a mathematical procedure (function) that takes in observable data (from a sample) and outputs an estimated range for a parameter value. Interval estimators are specific to the parameter that they are attempting to estimate.</p>
+</div>
+<p>There are several different types of interval estimators, including confidence intervals, credible intervals, likelihood intervals, and prediction intervals. Confidence intervals are rooted in frequentist probability theory, the framework we have been exploring throughout, and will serve as the primary focus of this chapter.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> With any interval estimator the goal is to not only provide an estimate of the likely value of a parameter, but also to quantify the uncertainty around this estimate. Providing the interval communicates that, while it is suspected that the parameter is near the point estimate, it is not possible to be entirely sure of exactly where. When reported intervals are more narrow, there is a higher level of precision attributed to the estimate. When reported intervals are wider, there is less certainty ascribed to the estimate. As a result, interval estimates convey a significant amount of information about the parameter, and the estimation procedure that was used.</p>
+</section>
+<section id="confidence-intervals-in-general" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="confidence-intervals-in-general"><span class="header-section-number">14.2</span> Confidence Intervals in General</h2>
+<p>Ideally, we would like to be able to form an interval that has a direct probability statement associated with it. For instance, we may wish to form an interval, <span class="math inline">\((a, b)\)</span>, such that <span class="math inline">\(P(\theta \in (a, b))\)</span> is known explicitly. Unfortunately, in the frequentist paradigm, <span class="math inline">\(\theta\)</span> is not a random quantity. The statement <span class="math inline">\(P(\theta \in (a, b))\)</span> is akin to writing <span class="math inline">\(P(2 \in (4, 6))\)</span>: this probability is either <span class="math inline">\(0\)</span> or it is <span class="math inline">\(1\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> We need to hold in mind that the uncertainty in estimation does not stem from the parameter value, <span class="math inline">\(\theta\)</span>, and instead stems from the estimator, <span class="math inline">\(\widehat{\theta}\)</span> (and its sampling distribution).</p>
+<p>The statement <span class="math inline">\(P(\widehat{\theta} \in (a, b))\)</span> can be interpreted as a sensible probability, where here the probability is taken with respect to the sampling distribution. To form our confidence intervals, we start with this idea. Specifically, we attempt to find values <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> such that <span class="math inline">\(P(a \leq \widehat{\theta} \leq b) = p\)</span> for some suitably high threshold, <span class="math inline">\(p\)</span>. This interval, <span class="math inline">\((a, b)\)</span>, can be thought of as an interval that will contain the estimated value with high probability. If <span class="math inline">\(p=0.95\)</span> then, based on the sampling distribution, there is a <span class="math inline">\(95\%\)</span> chance that the computed estimator will fall between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.</p>
+<p>Note that this interval, <span class="math inline">\((a, b)\)</span> is not yet an interval for the true parameter; it is an interval for our estimator. However, it will almost always be the case that the endpoints of the interval, <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, depend on the parameters of the sampling distribution. Recall that the sampling distribution’s parameters are connected to the population distributions parameters, and so we can view <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> as depending directly on <span class="math inline">\(\theta\)</span>. To emphasize this point, we write <span class="math display">\[P\left(a(\theta) \leq \widehat{\theta} \leq b(\theta)\right) = p.\]</span> It is important to remember that, in this expression, the only random quantity is <span class="math inline">\(\widehat{\theta}\)</span>. However, we have an expression that we know will be true with high probability, that contains both <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\widehat{\theta}\)</span>. We can exploit this to form confidence intervals.</p>
+<p>The lower bound of our interval occurs where <span class="math inline">\(a(\theta) = \widehat{\theta}\)</span>. Note that <span class="math inline">\(a\)</span> is some function of <span class="math inline">\(\theta\)</span>, and so we can think of the <em>inverse function</em> of <span class="math inline">\(a\)</span>, and apply it to both sides.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> That is, <span class="math display">\[a^{-1}(a(\theta)) = a^{-1}(\widehat{\theta}) \implies \theta = a^{-1}(\widehat{\theta}).\]</span> Similarly, applying the same rationale with <span class="math inline">\(b^{-1}\)</span> to the upper bound on the interval provides a secondary bound, <span class="math inline">\(\theta = b^{-1}(\widehat{\theta})\)</span>.</p>
+<div id="exm-equivalence-of-intervals" class="theorem example">
+<p><span class="theorem-title"><strong>Example 14.1 (Car Washes for Charity)</strong></span> Charles and Sadie have decided that, to raise money for the local animal shelter, they will run a car wash. They recognize that the main cost in running the car wash is the water used for it, and that the key variable in terms of throughput of their cash wash is the time it takes for a car to be cleaned. They are trying to determine how to price and time their washes. Charles suggests that they should aim for using between <span class="math inline">\(100\)</span> and <span class="math inline">\(300\)</span> liters to wash a car, and Sadie notes that the amount of water being used is likely <span class="math inline">\(5T + 10\)</span> liters, where <span class="math inline">\(T\)</span> is the time in minutes.</p>
+<p>Given this information, what is the equivalent interval for the time per car through their car wash?</p>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Note that we are told <span class="math display">\[100 \leq 5T + 10 \leq 300.\]</span> We can invert this interval to find an interval for <span class="math inline">\(T\)</span> instead. Thus, we get <span class="math inline">\(100 \leq 5T + 10\)</span> which means <span class="math inline">\(T \geq 18\)</span>. Similarly, <span class="math inline">\(5T + 10 \leq 300\)</span> means that <span class="math inline">\(T \leq 58\)</span>. Thus, if the interval for water use is <span class="math inline">\((100, 300)\)</span>, then the interval for time will be <span class="math inline">\((18, 58)\)</span> minutes.</p>
+</div>
+</div>
+</div>
+</div>
+<p>Taken together this means that whenever <span class="math inline">\(\widehat{\theta}\)</span> falls in the interval with endpoints <span class="math inline">\(a(\theta)\)</span> and <span class="math inline">\(b(\theta)\)</span>, it is equivalent to say that <span class="math inline">\(\theta\)</span> falls in the interval with end points <span class="math inline">\(a^{-1}(\widehat{\theta})\)</span> and <span class="math inline">\(b^{-1}(\widehat{\theta})\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Thus, if we know that <span class="math inline">\(\widehat{\theta}\)</span> falls between <span class="math inline">\(a(\theta)\)</span> and <span class="math inline">\(b(\theta)\)</span> with probability <span class="math inline">\(p\)</span>, this is mathematically equivalent to saying that <span class="math inline">\(\theta\)</span> falls between <span class="math inline">\(a^{-1}(\widehat{\theta})\)</span> and <span class="math inline">\(b^{-1}(\widehat{\theta})\)</span> with probability <span class="math inline">\(p\)</span> as well. This inverted interval gives the confidence interval for <span class="math inline">\(\theta\)</span>.</p>
+<div id="def-confidence-interval" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 14.2 (Confidence Interval)</strong></span> A confidence interval for the parameter <span class="math inline">\(\theta\)</span> is an interval given by <span class="math inline">\((L(\widehat{\theta}), U(\widehat{\theta})\)</span> such that <span class="math display">\[P(L(\widehat{\theta}) \leq \theta \leq U(\widehat{\theta})) = p,\]</span> for some set level of <span class="math inline">\(p\)</span>. Often the confidence interval will be expressed in terms of <span class="math inline">\(p=1-\alpha\)</span>, where <span class="math inline">\(\alpha\)</span> is referred to as the level of significance. It is important to note that in this expression, <span class="math inline">\(L(\widehat{\theta})\)</span> and <span class="math inline">\(U(\widehat{\theta})\)</span> are random quantities, where <span class="math inline">\(\theta\)</span> is fixed. Correspondingly, the confidence probability can be written as <span class="math display">\[P(L(\widehat{\theta}) \leq \theta \leq U(\widehat{\theta})) = P(L(\widehat{\theta}) \leq \theta,  U(\widehat{\theta}) \geq \theta) = p.\]</span></p>
+</div>
+<p>Conceptually, a confidence interval provides an interval that, prior to conducting our estimation, we know there is a set threshold for the probability that the true parameter falls within its bounds. In our framing of the confidence intervals the random variables are <span class="math inline">\(U(\widehat{\theta})\)</span> and <span class="math inline">\(L(\widehat{\theta})\)</span> corresponding to <span class="math inline">\(a^{-1}(\widehat{\theta})\)</span> and <span class="math inline">\(b^{-1}(\widehat{\theta})\)</span>. These can be viewed more generally as <span class="math inline">\(U(X_1, X_2, \dots, X_n)\)</span> and <span class="math inline">\(L(X_1, X_2, \dots, X_n)\)</span>, being functions of the random sample. In this sense, both <span class="math inline">\(U\)</span> and <span class="math inline">\(L\)</span> are point estimators themselves. However, instead of estimating the parameter value directly, they are estimating upper and lower bounds for the parameter value. This is important to keep in mind since, fundamentally, it is the estimator that is random,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> not the parameter.</p>
+<p>It is theoretically possible that there are many estimators, <span class="math inline">\(U\)</span> and <span class="math inline">\(L\)</span>, that would satisfy the given probability statements. We generally need some manner of choosing which interval to use. The most important feature of any confidence interval is the length, which is to say <span class="math inline">\(U(\widehat{\theta}) - L(\widehat{\theta})\)</span>. All else equal, we prefer shorter intervals, since these give a more precise estimate of the true parameter value. We typically constrain our confidence interval definition to be such that <span class="math inline">\(U(\widehat{\theta}) - L(\widehat{\theta})\)</span> is as small as possible, and select estimators that achieve this optimality.</p>
+<div id="exm-multiple-intervals" class="theorem example">
+<p><span class="theorem-title"><strong>Example 14.2 (Charles Tufts a Rug)</strong></span> Charles has become very intrigued by tufting, making rugs using yarn, but is still learning, and has not fully calibrated the amount of yarn required for each project. For the size of rugs that Charles has been making, the internet states that the amount of yarn used per rug (measured in kg) can be thought of as coming from a <span class="math inline">\(N(5, 1)\)</span> distribution.</p>
+<p>Charles wants to use this information to be confident in the average amount of yarn used, per rug, for the next <span class="math inline">\(9\)</span> rugs made. With the help of Sadie, they determine three possible intervals:</p>
+<ol type="1">
+<li><span class="math inline">\((4, 5)\)</span>.</li>
+<li><span class="math inline">\((5, 6)\)</span>.</li>
+<li><span class="math inline">\((4.77596, 5.22404)\)</span>.</li>
+</ol>
+<ol type="a">
+<li>Work out the approximate level of confidence that they should have in each interval. Note that <span class="math inline">\(\Phi(0.67212) \approx 0.7492463\)</span>.</li>
+<li>Which of these intervals is the best to take as the basis of a confidence interval for Charles to use? Explain.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Note that the next <span class="math inline">\(9\)</span> rugs will have a sampling distribution given by <span class="math inline">\(N(5, \frac{1}{9})\)</span>. We can compute the probability of each interval on this basis. Specifically, <span class="math display">\[P(4 \leq \overline{X} \leq 5) = P(\frac{4-5}{1/3} \leq Z \leq 0) = \Phi(0) - \Phi(-3).\]</span> Note that, using the empirical rule we know that this is going to be approximately <span class="math inline">\(\frac{0.997}{2} = 0.4985\)</span>. The calculation for the second interval proceeds exactly the same way, giving <span class="math inline">\(\Phi(3) - \Phi(0) \approx 0.4985\)</span> by the empirical rule. For the third interval we take <span class="math display">\[\begin{split}P(4.77596 \leq \overline{X} \leq 5.22404) = P(\frac{4.77596-5}{1/3} \leq Z \leq \frac{5.22404-5}{1/3}) \\ = \Phi(0.67212) - \Phi(-0.67212).\end{split}\]</span> From the question hint we have that <span class="math inline">\(\Phi(0.67212) \approx 0.7492463\)</span>, and <span class="math inline">\(\Phi(-0.67212) \approx 1 - 0.7492463.\)</span> Thus, taken together the coverage of the third interval is <span class="math display">\[0.7492463 - (1 - 0.7492463) = 0.4984926 \approx 0.4985.\]</span> All three intervals have the same coverage.</li>
+<li>The third interval will be preferred. Each of the intervals gives the same coverage probabilities and the same level of confidence can be placed in all three of them. Thus, the main point of differentiation stems from the width of the intervals. The first two have a width of <span class="math inline">\(1\)</span>, whereas the third is <span class="math inline">\(0.448\)</span> wide. This is less than half the width, with the same overall level of confidence. This will allow Charles to have a much more precise estimate of the amount of yarn used, without sacrificing the level of confidence in that estimate.<br>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="interpretation-of-confidence-intervals" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="interpretation-of-confidence-intervals"><span class="header-section-number">14.3</span> Interpretation of Confidence Intervals</h2>
+<p>The construction of the confidence interval follows a fairly natural idea. We want an interval with a high probability of containing the truth, and so we start with an interval for our estimator and invert this to have an interval for the parameter. This procedure, while intuitive in construction, obscures the nuance in the probability statements that we can make. We must be very careful in the interpretation of a confidence interval.</p>
+<p>Recall that the random component in the interval is the endpoints, <span class="math inline">\(U\)</span> and <span class="math inline">\(L\)</span>. These endpoints are estimators, and so the probability distribution associated with them is the sampling distribution of the estimators. Sampling distributions capture the behaviour of an estimator when we repeatedly draw samples and compute estimates on those samples. Thus, <span class="math inline">\(P(L \leq \theta \leq U) = p\)</span> means that, if we were to repeatedly draw samples from the population, use those samples to compute <span class="math inline">\(L(\widehat{\theta})\)</span> and <span class="math inline">\(U(\widehat{\theta})\)</span>, and then check whether <span class="math inline">\(L(\widehat{\theta}) \leq \theta \leq U(\widehat{\theta})\)</span> holds, in the long-run <span class="math inline">\(p\)</span> proportion of those runs would satisfy this condition. This is how we must interpret the confidence intervals.</p>
+<p>Formally, a <span class="math inline">\(100p\%\)</span> confidence interval interpreted by noting that, were this procedure to be repeated across many, many samples, the proportion of these samples that contain the true parameter will tend towards <span class="math inline">\(p\)</span> as the number of samples tends towards <span class="math inline">\(\infty\)</span>. Note that this is <strong>not</strong> a statement regarding any specific confidence interval, but rather, it is a statement regarding the procedure of constructing the confidence intervals.</p>
+<p>As an alternative framing, we can consider applying the procedure in practice. Suppose that we have yet to take our sample, but we know that we will form the confidence interval as <span class="math inline">\(\left(L(\widehat{\theta}), U(\widehat{\theta})\right)\)</span>. Prior to observing any data, we know that this procedure will have a <span class="math inline">\(p\)</span> probability of containing the true parameter, <span class="math inline">\(\theta\)</span>. However, once we collect data and compute the values, we get <span class="math inline">\(L(\widehat{\theta}) = \ell\)</span> and <span class="math inline">\(U(\widehat{\theta}) = u\)</span> for some fixed values <span class="math inline">\(\ell\)</span> and <span class="math inline">\(u\)</span>. Now, the statement <span class="math inline">\(P(\ell \leq \theta \leq u)\)</span> is either equal to <span class="math inline">\(1\)</span>, if <span class="math inline">\(\ell \leq \theta \leq u\)</span> holds, or it is equal to <span class="math inline">\(0\)</span> otherwise. We do not know whether it is <span class="math inline">\(0\)</span> or it is <span class="math inline">\(1\)</span>, but we do know that the probability is not <span class="math inline">\(p\)</span>.</p>
+<div id="exm-conifdence-interval-interpretation-incorrect" class="theorem example">
+<p><span class="theorem-title"><strong>Example 14.3 (The Probability of Rolling a Six)</strong></span> Charles is working hard to truly understand the valid, and invalid, ways of interpreting confidence intervals. Sadie, who seems to have understood the concepts more thoroughly, is trying to help. Charles is particularly hung up on the idea that the process itself can be interpreted probabilistically, even when the specific interval that is formed cannot. Sadie, recognizing that this is the hang-up, works through the following thought experiment with Charles. Sadie asks the following questions.</p>
+<ol type="a">
+<li>Suppose that I have a fair die in my hand. Before I have rolled it, what is the probability that the die shows a <span class="math inline">\(6\)</span>?</li>
+<li>Once the die is rolled, and the die is showing a <span class="math inline">\(5\)</span>, what is the probability that the die shows a <span class="math inline">\(6\)</span>?</li>
+<li>If instead, after the die were rolled, it showed a <span class="math inline">\(6\)</span>, what is the probability that the die shows a <span class="math inline">\(6\)</span>?</li>
+<li>What can we say about the probability that the die shows a <span class="math inline">\(6\)</span>, in general, after it is rolled?</li>
+<li>How does this relate to the confidence interval interpretation?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Before the die is rolled, because it is a fair die, the probability it shows a <span class="math inline">\(6\)</span> is <span class="math inline">\(\dfrac{1}{6}\)</span>. This is precisely what we mean by the fact that the die is fair.</li>
+<li>If the die is rolled and it shows a <span class="math inline">\(5\)</span>, the probability that it equals <span class="math inline">\(6\)</span> is <span class="math inline">\(0\)</span>. That is, once it does not equal <span class="math inline">\(6\)</span>, we know for certain it is not <span class="math inline">\(6\)</span>.</li>
+<li>If the die is rolled and it shows a <span class="math inline">\(6\)</span>, the probability that it equals <span class="math inline">\(6\)</span> is <span class="math inline">\(1\)</span>. That is, once it does equal <span class="math inline">\(6\)</span>, we know for certain that it is <span class="math inline">\(6\)</span>.</li>
+<li>After the die is rolled, the probability will be either <span class="math inline">\(0\)</span> or it will be <span class="math inline">\(1\)</span>, depending on whether it was a <span class="math inline">\(6\)</span> or not. We do not know until we have observed it whether it is <span class="math inline">\(0\)</span> or it is <span class="math inline">\(1\)</span>, but necessarily one of those probabilities is the truth.</li>
+<li>In a confidence interval, the probability is not attributed to the specific interval, but rather to the process. Relating to the die example, the specific realization that is shown after the die is rolled is analogous to the specific interval. We know that depending on whether we see a <span class="math inline">\(6\)</span> or it is not the probability is <span class="math inline">\(1\)</span> or <span class="math inline">\(0\)</span>. Similarly, once computed, a specific interval has either <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span> probability of containing the truth. Still, the process through which the interval was formed produces a predictable probability of forming intervals with the true value, just as the process of rolling the die produces predictable probabilities of showing <span class="math inline">\(6\)</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>The confidence threshold in a confidence interval relates to the procedure, not to any specific interval produced by that procedure. That is, we can put our confidence in constructing intervals in this way knowing that, if we always follow this procedure, over time our intervals will be correct in a specific proportion of cases. However, we cannot use this to make claims about any specific confidence interval. We do not know in any given sample whether the interval is one that contains the truth, or one that does not. In fact, we cannot know this, without learning what the true parameter value is.</p>
+<p>This makes confidence intervals clunky to interpret. Notably, the interpretation of a confidence interval never makes reference to the specific interval that we have computed. Instead, the interpretation of the confidence interval gives a description of the procedure that created the interval, and ascribes a level of confidence to this underlying procedure.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>Further misconceptions of confidence intervals commonly occur. For instance, individuals will commonly interpret a confidence interval to mean that <span class="math inline">\(p\)</span> proportion of the sample data lie within the interval. This is incorrect for two reasons. First, the confidence interval is a statement regarding an estimator or parameter value, rather than the sample value itself. From the same sample you can calculate different confidence intervals for different parameters.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Second, this interpretation further relies on the thought that a confidence interval is interpreted specific to a particular sample. This is not the case.</p>
+<p>Alternatively, individuals may misinterpret a confidence interval as stating that, were we to repeatedly sample from the population and compute the estimator, in <span class="math inline">\(p\)</span> proportion of these trials the estimated value will be contained in the interval we have computed. This misinterpretation is appealing as it seems to use the repeated draws from the population. However, note two concerns. First, this interpretation also relies on giving interpretation to the specific interval that we have computed, which the correct interpretation cannot. Second, this interpretation makes a probability statement regarding the estimator, rather than the parameter (or the endpoints of the interval). Remember that <span class="math inline">\(U\)</span> and <span class="math inline">\(L\)</span> are the random components, and they are calibrated such that <span class="math inline">\(P(L \leq \theta \leq U) = p\)</span>. This is not a probability statement relating to where the estimate is likely to show up, rather one regarding the true value.</p>
+<div id="exm-ci-interpretation" class="theorem example">
+<p><span class="theorem-title"><strong>Example 14.4 (Bird Watching Confidence)</strong></span> Sadie and Charles have continued their bird watching adventures. As their statistical knowledge has expanded, they have continued to integrate this new found knowledge into their trips. Lately, they have begun to consider confidence intervals, and so with a little help from their friend Garth, they work out the confidence interval for the average number of rare birds at a particular location that they enjoy travelling to. They find that the <span class="math inline">\(90\%\)</span> confidence interval is given by <span class="math inline">\((1.4, 8.5)\)</span>. Seeing as confidence intervals are still new to them, they start trying to work out the interpretation of this statement together. Help them out by answering their questions, with explanations.</p>
+<ol type="a">
+<li>Charles wonders, “Does this mean that, if we go, there is a <span class="math inline">\(90\%\)</span> chance we will see between <span class="math inline">\(1.4\)</span> and <span class="math inline">\(8.5\)</span> rare birds?”</li>
+<li>Sadie responds, questioning “Perhaps it means that, if we go many, many, many times, in <span class="math inline">\(90\%\)</span> of cases we will see in this range?”</li>
+<li>Charles questions, “Could it mean that, from the sample data we have collected, <span class="math inline">\(90\%\)</span> of observations fall between <span class="math inline">\(1.4\)</span> and <span class="math inline">\(8.5\)</span>?”</li>
+<li>Sadie follows up, “Or that, if we were to perform the sampling many times, and calculate the sample average for each of those, then <span class="math inline">\(90\%\)</span> of sample averages should fall between <span class="math inline">\(1.4\)</span> and <span class="math inline">\(8.5\)</span>?”</li>
+<li>What does it actually mean?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>This does not mean that there is a <span class="math inline">\(90\%\)</span> chance we will see between <span class="math inline">\(1.4\)</span> and <span class="math inline">\(8.5\)</span> birds. The concern here is that we cannot apply the interpretation to any specific interval. Instead, we need to be thinking about the procedure generating the interval. There is a <span class="math inline">\(90\%\)</span> chance that the procedure generates an interval that is valid, but we cannot know about any specific interval we are looking at.</li>
+<li>This statement is just a rephrasing of Charles’ first statement. To have a <span class="math inline">\(90\%\)</span> chance of seeing between <span class="math inline">\(1.4\)</span> and <span class="math inline">\(8.5\)</span> rare birds is to say that, if you observe birds many, many times, then in <span class="math inline">\(90\%\)</span> of those cases you observe in that range. It is an incorrect interpretation for the same reason as above.</li>
+<li>No.&nbsp;Confidence intervals are never making comments about what has been observed in the sample, they are instead designed to be inferential about the population at large. We are not capturing information about past samples. The other important note is that, this is a confidence interval for the mean, not for the observations themselves.</li>
+<li>Again, this is a tempting misinterpretation. Here, Sadie has the correct idea of repeatedly performing experiments, however, the idea is not that in repeated experiments the current interval will contain the sample mean. Rather, in repeated experiments, the computed interval will contain the true mean. That is, once again, we need to focus on the population mean not the sample values, and we need to focus on the procedure, not the specific interval.</li>
+<li>This confidence interval is not interpreted on its own. However, we can say that, were we to continue to make observations and use these observations to compute confidence intervals, following the exact same procedure, in <span class="math inline">\(90\%\)</span> of those cases we would find an interval that contains the truth. We can also say, practically, that there is a fair amount of variability in the number of birds that are likely to be seen, and so Charles and Sadie should likely prepare themselves for the possibility of wide swings between different trips. An alternative way of interpreting the interval is to note that, before any data were analyzed, the probability that they would calculate an interval containing the truth was <span class="math inline">\(0.9\)</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>In practice, the utility of reporting a confidence interval is that it conveys a sense of uncertainty. Wider intervals suggest that we should put less assurance in the value of the point estimate than more narrow intervals. Moreover, given a confidence interval, there is little reason to think that one value in this interval is more likely to correspond to the truth than any other value. We can use the intervals to determine whether decisions that are made on the basis of estimation would be made under all scenarios implied by the interval. If conclusions differ assuming that <span class="math inline">\(\theta = U\)</span> compared to <span class="math inline">\(\theta = L\)</span>, care should be put into making more conservative decisions, since based on the sample there is little reason to differentiate between these points.</p>
+</section>
+<section id="confidence-intervals-for-the-mean" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="confidence-intervals-for-the-mean"><span class="header-section-number">14.4</span> Confidence Intervals for the Mean</h2>
+<p>While confidence intervals can be derived for any parameter of interest, as previously discussed, we are very commonly interested in the means of populations. Moreover, owing to the Central Limit Theorem, the sampling distribution of a sample mean is often easy to approximate. We will primarily focus on confidence intervals for the means of distribution. We differentiate the procedure based on whether the population is itself normally distributed or not.</p>
+<section id="confidence-intervals-in-normal-populations" class="level3" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="confidence-intervals-in-normal-populations"><span class="header-section-number">14.4.1</span> Confidence Intervals in Normal Populations</h3>
+<p>If our population is normally distributed then the sample mean is known to be exactly normally distributed as well. The sampling distribution depends on both the population mean, <span class="math inline">\(\mu\)</span>, as well as on the population variance, <span class="math inline">\(\sigma^2\)</span>. Suppose that we wanted to determine <span class="math inline">\(P(a \leq \overline{X} \leq b)\)</span>, for some values <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, then we know that <span class="math display">\[P(a \leq \overline{X} \leq b) = P\left(\frac{a - \mu}{\sigma/\sqrt{n}} \leq Z \leq \frac{b - \mu}{\sigma/\sqrt{n}}\right) = \Phi\left(\frac{b - \mu}{\sigma/\sqrt{n}}\right) - \Phi\left(\frac{a - \mu}{\sigma/\sqrt{n}}\right).\]</span></p>
+<p>If <span class="math inline">\(\sigma^2\)</span> is known then we can use the percentiles of the standard normal distribution to solve for what <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> would have to be. Specifically, if we take the two end points to be symmetric, then we want to solve for <span class="math display">\[\Phi\left(\frac{b - \mu}{\sigma/\sqrt{n}}\right) = 1 - \frac{1-p}{2},\quad\text{and}\quad\Phi\left(\frac{a - \mu}{\sigma/\sqrt{n}}\right) = \frac{1-p}{2}.\]</span> If we did this then we would find that <span class="math display">\[P(a \leq \overline{X} \leq b) = 1 - \frac{1-p}{2} - \frac{1-p}{2} = p,\]</span> as desired.</p>
+<p>To solve for these quantities, we note that these are exactly the quantiles of the standard normal distribution. That is, <span class="math display">\[\begin{align*}\Phi\left(\frac{b - \mu}{\sigma/\sqrt{n}}\right) &amp;= 1 - \frac{1-p}{2} \implies \frac{b - \mu}{\sigma/\sqrt{n}} = Z_{1 - \frac{1-p}{2}}, \\
+\Phi\left(\frac{a - \mu}{\sigma/\sqrt{n}}\right) &amp;= \frac{1-p}{2} \implies \frac{a - \mu}{\sigma/\sqrt{n}} = Z_{\frac{1-p}{2}}.\end{align*}\]</span> Note that, by symmetry, <span class="math inline">\(Z_{(1-p)/2} = -Z_{1 - (1-p)/2}\)</span>, so we take <span class="math display">\[Z_{(1-p)/2}\frac{\sigma}{\sqrt{n}} + \mu \leq \overline{X} \leq Z_{1-(1-p)/2}\dfrac{\sigma}{\sqrt{n}} + \mu.\]</span> This interval can then be inverted to give an interval for <span class="math inline">\(\mu\)</span>. Namely, <span class="math display">\[\begin{align*}
+Z_{(1-p)/2}\frac{\sigma}{\sqrt{n}} + \mu &amp;\leq \overline{X} \\
+\implies \mu &amp;\leq \overline{X} - Z_{(1-p)/2}\frac{\sigma}{\sqrt{n}} \\
+&amp;= \overline{X} + Z_{1 - (1-p)/2}\frac{\sigma}{\sqrt{n}} \\
+\overline{X} \leq Z_{1-(1-p)/2}\dfrac{\sigma}{\sqrt{n}} + \mu \\
+\implies \overline{X} - \leq Z_{1-(1-p)/2}\dfrac{\sigma}{\sqrt{n}} &amp;\leq \mu.
+\end{align*}\]</span></p>
+<p>These two bounds give rise to the confidence intervals for the mean of a normal population, when <span class="math inline">\(\sigma\)</span> is known.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Confidence Intervals for the Mean (Known <span class="math inline">\(\sigma\)</span> in a Normal Population)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If a population is known to be normally distributed, with a known population standard deviation, <span class="math inline">\(\sigma\)</span>, then a <span class="math inline">\(100p\%\)</span> confidence interval for the mean is given by <span class="math display">\[(\overline{X} - \leq Z_{1-(1-p)/2}\dfrac{\sigma}{\sqrt{n}}, \overline{X} + Z_{1 - (1-p)/2}\frac{\sigma}{\sqrt{n}}).\]</span> This is often expressed as <span class="math display">\[\overline{X} \pm Z_{(1-p)/2}\frac{\sigma}{\sqrt{n}}.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Common Normal Critical Values
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When introducing the normal distribution, we discussed the percentiles of the normal as normal critical values. We discussed how these can be found using the <code>qnorm</code> function in R. In most introductory statistics references, they will contain tables of normal critical values, giving the mappings between the <span class="math inline">\(Z\)</span> values and their probabilities. The following are commonly used <span class="math inline">\(Z\)</span> values, provided for reference.</p>
+<div class="cell" data-tbl-colwidths="[5,5,5,5]">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\alpha\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Z_{\alpha}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\alpha\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Z_{\alpha}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.005</td>
+<td style="text-align: center;">-2.58</td>
+<td style="text-align: center;">0.995</td>
+<td style="text-align: center;">2.58</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.010</td>
+<td style="text-align: center;">-2.33</td>
+<td style="text-align: center;">0.990</td>
+<td style="text-align: center;">2.33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.025</td>
+<td style="text-align: center;">-1.96</td>
+<td style="text-align: center;">0.975</td>
+<td style="text-align: center;">1.96</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.050</td>
+<td style="text-align: center;">-1.64</td>
+<td style="text-align: center;">0.950</td>
+<td style="text-align: center;">1.64</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.100</td>
+<td style="text-align: center;">-1.28</td>
+<td style="text-align: center;">0.900</td>
+<td style="text-align: center;">1.28</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="exm-mean-ci-known-variance" class="theorem example">
+<p><span class="theorem-title"><strong>Example 14.5 (Charle’s Nap Times)</strong></span> Charles is a frequent napper. Sadie, on the other hand, cannot take naps at all. Sadie often has a significant amount of boredom while Charles naps away, and so Sadie starts to record the length of the naps that Charles takes, in minutes. Over the last <span class="math inline">\(5\)</span> days, Charles’ naps have been: <span class="math display">\[33.2, \ 29.6, \ 29.7, \ 31.7, \ 29.1.\]</span></p>
+<ol type="a">
+<li>What is an estimate for the average length of Charles’ naps?</li>
+<li>Sadie assumes that Charles’ naps are normally distributed, with a variance of <span class="math inline">\(4\)</span>. Find a <span class="math inline">\(90\%\)</span> confidence interval for the average nap length.</li>
+<li>Using the same assumptions, find a <span class="math inline">\(95\%\)</span> confidence interval for the average nap length.</li>
+<li>How would an <span class="math inline">\(80\%\)</span> confidence interval compare? A <span class="math inline">\(99.9\%\)</span> interval? Explain.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>We can use the sample average to estimate the population average. This is given by <span class="math display">\[\frac{1}{5}\left(33.2 + 29.6 + 29.7 + 31.7 + 29.1\right) = 30.66\]</span></li>
+<li>Assuming normality and with known variance, we can take <span class="math display">\[\overline{X} \pm Z_{(1-p)/2}\frac{\sigma}{\sqrt{n}}.\]</span> Here, <span class="math inline">\(\sigma = 2\)</span>, <span class="math inline">\(\sqrt{n} = \sqrt{5}\)</span>, <span class="math inline">\(\overline{X} = 30.66\)</span>. For a <span class="math inline">\(90\%\)</span> confidence interval, we have <span class="math inline">\((1 - 0.9) / 2 = 0.05\)</span>, and thus <span class="math inline">\(Z_{(1-p)/2} = -1.64\)</span>. We get <span class="math display">\[30.66 \pm 1.64\frac{2}{\sqrt{5}} = (29.19, 32.13).\]</span></li>
+<li>For a <span class="math inline">\(95\%\)</span> confidence interval, we change the critical value to be given by <span class="math inline">\(Z_{(1-0.95)/2} = -1.96\)</span>. Thus, <span class="math display">\[30.66 \pm 1.96\frac{2}{\sqrt{5}} = (28.91, 32.41).\]</span></li>
+<li>As the confidence level increases, the width of the confidence level must also increase. Thus, we should find that an <span class="math inline">\(80\%\)</span> confidence interval is more tightly centered around <span class="math inline">\(30.66\)</span> and a <span class="math inline">\(99.9\%\)</span> confidence interval is more widely spread out. Indeed, using <code>R</code> we can find these to be <span class="math inline">\((29.51, 31.81)\)</span> for the <span class="math inline">\(80\%\)</span> interval, and <span class="math inline">\((27.72, 33.6)\)</span> for the <span class="math inline">\(99.9\%\)</span> interval.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>If the variance is not known, then this procedure cannot be followed directly. An obvious alteration to make is to substitute <span class="math inline">\(s^2\)</span> for <span class="math inline">\(\sigma^2\)</span> in the expression for the confidence interval. However, if we consider the quantity <span class="math display">\[\frac{\overline{X} - \mu}{s/\sqrt{n}},\]</span> this will no longer follow a normal distribution. Instead, assuming that <span class="math inline">\(\overline{X}\)</span> is normally distributed, this ratio follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom. Otherwise, the same procedure can be followed, this time needing the critical values from the <span class="math inline">\(t_{n-1}\)</span> distribution rather than the standard normal distribution.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Confidence Intervals for the Mean (Unknown <span class="math inline">\(\sigma\)</span> in a Normal Population)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If a population is known to be normally distributed, with an unknown population standard deviation, then a <span class="math inline">\(100p\%\)</span> confidence interval for the mean is given by <span class="math display">\[(\overline{X} - \leq t_{n-1, 1-(1-p)/2}\dfrac{s}{\sqrt{n}}, \overline{X} + t_{n-1, 1 - (1-p)/2}\frac{s}{\sqrt{n}}).\]</span> This is often expressed as <span class="math display">\[\overline{X} \pm t_{n-1, (1-p)/2}\frac{s}{\sqrt{n}}.\]</span></p>
+</div>
+</div>
+<div id="exm-mean-ci-unknown-variance" class="theorem example">
+<p><span class="theorem-title"><strong>Example 14.6 (Charle’s Continues Napping)</strong></span> Charles has maintained the pattern of daily naps. Sadie, understanding more about confidence intervals, decides to revisit the intervals for the length of Charles’ naps. This time, instead of assuming that the variance is known to be <span class="math inline">\(4\)</span>, Sadie wants to leverage the same data as was used to find the mean. Specifically, Sadie has recorded that over a <span class="math inline">\(5\)</span> day stretch, the length of Charles’ naps have been: <span class="math display">\[33.2, \ 29.6, \ 29.7, \ 31.7, \ 29.1.\]</span> While Sadie does not want to presume that the variance is known, for now, the assumption of normality still feels reasonable.</p>
+<ol type="a">
+<li>What is the sample variance?</li>
+<li>Using the sample variance, how could Sadie construct a <span class="math inline">\(90\%\)</span> confidence interval for the mean?</li>
+<li>What critical value would need to be used to calculate a <span class="math inline">\(95\%\)</span> confidence interval in this case? A <span class="math inline">\(99\%\)</span> one?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>For the sampel variance, we calculate <span class="math display">\[\begin{split}\frac{1}{5-1}\left((33.2 - 30.66)^2 + (29.6-30.66)^2 + (29.7 - 30.66)^2 \right.\\
+\left. + (31.7 - 30.66)^2 + (29.1 - 30.66)^2\right) = 3.003.\end{split}\]</span></li>
+<li>Since the population is normally distributed, with an unknown variance, Sadie can use the form <span class="math display">\[\overline{X} \pm t_{n-1,(1-p)/2}\frac{s}{\sqrt{n}},\]</span> to form confidence intervals. Here, <span class="math inline">\(\overline{X} = 30.66\)</span>, <span class="math inline">\(n = 5\)</span>, <span class="math inline">\(s = \sqrt{3.003}\)</span>, and <span class="math inline">\(p=0.9\)</span>. Thus, the critical value to use is the <span class="math inline">\(t_{4, 0.05}\)</span> value, and the form of the interval will be <span class="math display">\[30.66 \pm t_{4, 0.05}\sqrt{\frac{3.003}{5}} = 30.66 \pm t_{4, 0.05}\sqrt{0.6006}.\]</span> Using <code>R</code>, we can call <code>qt(0.05, 4)</code> to determine that the critical value is approximately -2.13, to fill in for the specific value of <span class="math inline">\(t_{4, 0.05}\)</span>.</li>
+<li>Here we would still reference the <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(4\)</span> degrees of freedom, but now instead of the <span class="math inline">\(0.05\)</span> perecentile, we would need to look at either the <span class="math inline">\(0.025\)</span> or <span class="math inline">\(0.005\)</span> percentiles. This would give, <span class="math inline">\(t_{4, 0.025} \approx -2.78\)</span> and <span class="math inline">\(t_{4, 0.005} \approx -4.6\)</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>In both scenarios, the confidence interval forms a symmetric interval around the estimated mean, <span class="math inline">\(\overline{X}\)</span>, and is based on critical values from the relevant sampling distribution. If <span class="math inline">\(n\)</span> is sufficiently large than <span class="math inline">\(t_{n-1, \alpha} \approx Z_{\alpha}\)</span>, and so in these cases it is sometimes acceptable to use the <span class="math inline">\(Z\)</span>-based intervals, as though <span class="math inline">\(\sigma\)</span> were known. These intervals are justified on the basis of the population being normally distributed. What if this is not an assumption we can make?</p>
+</section>
+<section id="confidence-intervals-in-non-normal-populations" class="level3" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="confidence-intervals-in-non-normal-populations"><span class="header-section-number">14.4.2</span> Confidence Intervals in Non-Normal Populations</h3>
+<p>When populations are non-normal, there are two possible techniques for forming confidence intervals for the mean. In the first, we can attempt to use the assumed population distribution to derive an exact confidence interval for the mean, based on the true sampling distribution. This would need to be worked out for every individual population distribution, and would be valid only for that distribution. Alternatively, if our sample sizes are large enough, then we can use the Central Limit Theorem to indicate that <span class="math inline">\(\overline{X}\)</span> will be approximately normally distributed. In this case, we can follow the same procedures outlined above. Note that doing so will not give <strong>exact</strong> confidence intervals, instead settling for <strong>approximate</strong> confidence intervals. These are often reliable enough in practice.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Approximate Confidence Intervals for the Mean
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a sufficiently large sample size, such that Central Limit Theorem applies, a a <span class="math inline">\(100p\%\)</span> confidence interval for the mean is given by <span class="math display">\[(\overline{X} - \leq t_{n-1, 1-(1-p)/2}\dfrac{s}{\sqrt{n}}, \overline{X} + t_{n-1, 1 - (1-p)/2}\frac{s}{\sqrt{n}}).\]</span> This is often expressed as <span class="math display">\[\overline{X} \pm t_{n-1, (1-p)/2}\frac{s}{\sqrt{n}}.\]</span></p>
+</div>
+</div>
+<div id="exm-mean-ci-non-normal" class="theorem example">
+<p><span class="theorem-title"><strong>Example 14.7 (Charles’ Naps are Not Normal)</strong></span> Sadie realizes that the assumption that Charles’ nap lengths are normally distributed may not be correct, and begins to wonder how this may impact the calculations that have been done before. Recall that previously Sadie had recorded <span class="math inline">\(5\)</span> nap lengths for Charles, giving <span class="math display">\[33.2, \ 29.6, \ 29.7, \ 31.7, \ 29.1.\]</span></p>
+<ol type="a">
+<li>Can Sadie use these data, assuming that they are not normal, to compute a confidence interval for the mean length of Charles’ naps? Explain.</li>
+<li>Suppose that Sadie records data over two months, giving <span class="math inline">\(n=60\)</span>. Over this time, the mean nap length is <span class="math inline">\(31.10\)</span> and the standard deviation is <span class="math inline">\(8.61\)</span>. How may Sadie use this information to construct a <span class="math inline">\(100p\%\)</span> confidence interval for the length of the nap.</li>
+<li>Given that <span class="math inline">\(n\)</span> is fairly large, what will be the approximate value of the critical value needed for a <span class="math inline">\(95\%\)</span> confidence interval. Use this to write down an approximate <span class="math inline">\(95\%\)</span> confidence interval.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>No.&nbsp;The issue is that, without normality, we rely on the Central Limit Theorem to form the confidence intervals. However, in order for the CLT to apply, we must have a large enough sample. A sample of size <span class="math inline">\(5\)</span> is not going to be large enough to invoke the CLT, and as a result, we either need to make other assumptions about the population, or else collect more data.</li>
+<li>In this case, we can use the CLT to form the confidence interval. Namely we get <span class="math display">\[\overline{X} \pm t_{n-1, (1-p)/2}\frac{s}{\sqrt{n}} = 31.10 \pm t_{59, (1-p)/2}\frac{8.61}{\sqrt{60}}.\]</span> Here the critical values come from the <span class="math inline">\(t_{59}\)</span> distribution, and could be computed for any level of interest.</li>
+<li>When <span class="math inline">\(n\)</span> is large, we get that <span class="math inline">\(t_{n, \alpha} \approx Z_{\alpha}\)</span>. Because of this, we can take the critical value to be approximately <span class="math inline">\(Z_{0.025} = -1.96\)</span>.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> Using this value we get <span class="math display">\[31.10 \pm 1.96\frac{8.61}{\sqrt{60}} = (30.92, 35.28).\]</span></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>We previously discussed how, in the event of having data from a binomial experiment, we can view the estimator of the success probability, <span class="math inline">\(\widehat{p}\)</span> as a sample mean. This means that, supposing that we wish to find a confidence interval for a proportion, we can follow fundamentally the same procedure. A key distinction here is that, in the case of binomial data, the estimated variance is not <span class="math inline">\(s^2\)</span> but rather <span class="math inline">\(n\widehat{p}(1 - \widehat{p})\)</span>. Practically, this means that we can use the standard normal critical values for our confidence intervals, rather than the <span class="math inline">\(t\)</span> values.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Approximate Confidence Intervals for a Proportion
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a sufficiently large sample size, such that Central Limit Theorem applies, a a <span class="math inline">\(100p\%\)</span> confidence interval for a proportion is given by <span class="math display">\[(\widehat{p} - \leq Z_{1-(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}, \overline{X} + Z_{1 - (1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}).\]</span> This is often expressed as <span class="math display">\[\widehat{p} \pm Z_{(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}.\]</span></p>
+</div>
+</div>
+</section>
+</section>
+<section id="confidence-intervals-for-the-variance" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="confidence-intervals-for-the-variance"><span class="header-section-number">14.5</span> Confidence Intervals for the Variance</h2>
+<p>It is important to recognize that, while the formulae for confidence intervals for the means are used frequently, the process of forming a confidence interval is equivalent regardless of the parameter that is under consideration. Generally, a confidence interval can be found by first finding an interval around the estimator, and then inverting this interval to form one around the parameter value. The key step in this process is determining the sampling distribution for the relevant statistic. As such, when learning confidence intervals, it is best to focus on the overarching procedure and understand where each formula is coming from, rather than specifically pattern matching to find which formula to use. When considering the mean, we use the <span class="math inline">\(Z\)</span> or <span class="math inline">\(t\)</span> critical values depending on whether the sampling distribution follows a normal or a <span class="math inline">\(t\)</span> distribution. Recognizing this enables confidence intervals for any parameters for which the sampling distribution is known.</p>
+<p>As an example of how this procedure can be applied, consider taking a normal population, and forming a confidence interval for the variance. In order to do so, we would first want to find an interval around <span class="math inline">\(S^2\)</span> that would hold with probability <span class="math inline">\(p\)</span>, and then invert this interval. This relies on knowledge of the sampling distribution of <span class="math inline">\(S^2\)</span>.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Sampling Distribution of <span class="math inline">\(S^2\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the population is normally distributed, with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>, then the sampling distribution of <span class="math display">\[S^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \overline{x})^2,\]</span> can be derived by noting that <span class="math display">\[\frac{(n-1)}{\sigma^2}S^2 \sim \chi^2_{n-1}.\]</span> This is, notably, not precisely the sampling distribution of <span class="math inline">\(S^2\)</span> directly, however, it can be manipulated to give probability statements regarding <span class="math inline">\(S^2\)</span>.</p>
+</div>
+</div>
+<p>Using this result, we can then form a confidence interval for <span class="math inline">\(S^2\)</span>. We start by finding constants, <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, such that <span class="math display">\[P(a \leq S^2 \leq b) = p \implies P\left(\frac{(n-1)a}{\sigma^2} \leq \frac{(n-1)S^2}{\sigma^2} \leq \frac{(n-1)b}{\sigma^2}\right) = p.\]</span> Noting the sampling distribution, we require <span class="math display">\[\frac{(n-1)a}{\sigma^2} = \chi^2_{n-1,(1-p)/2} \quad\text{and}\quad \frac{(n-1)b}{\sigma^2} = \chi^2_{n-1,1-(1-p)/2}.\]</span> Unlike the normal distribution, the chi-squared distribution is not symmetric, and the critical values will not be equal in magnitude. We can take this interval for <span class="math inline">\(S^2\)</span>, and solve it for <span class="math inline">\(\sigma^2\)</span> instead. Doing so gives <span class="math display">\[\chi^2_{n-1,(1-p)/2} \leq \frac{(n-1)S^2}{\sigma^2} \implies \sigma^2 \leq \frac{(n-1)S^2}{\chi^2_{n-1,(1-p)/2}} = U(S^2),\]</span> as the upper bound on the confidence interval, and <span class="math display">\[\frac{(n-1)S^2}{\sigma^2} \leq \chi^2_{n-1,1-(1-p)/2} \implies L(S^2) = \frac{(n-1)S^2}{\chi^2_{n-1,1-(1-p)/2}} \leq \sigma^2,\]</span> as the lower bound.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Confidence Intervals for the Sample Variance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a normally distributed population, a confidence interval for the variance is formed by taking <span class="math display">\[\left(\frac{(n-1)S^2}{\chi^2_{n-1,1-(1-p)/2}}, \frac{(n-1)S^2}{\chi^2_{n-1,(1-p)/2}}\right).\]</span> Here, the critical values from the <span class="math inline">\(\chi^2\)</span> distribution are given by the <span class="math inline">\(1-(1-p)/2\)</span> and <span class="math inline">\((1-p)/2\)</span> quantiles, respectively. This is sometimes expressed using a different definition for the critical values.</p>
+</div>
+</div>
+<p>Note that this derivation follows directly from knowledge of the sampling distribution of <span class="math inline">\(S^2\)</span>. Had we been given a different result, we could have worked through the same procedure, resulting in different interval formula with the same underlying process. This specific result importantly relies on the assumption that the population is normally distributed. Were we in a situation where this is not the case, the formula do not hold, regardless of the size of the sample. To find confidence intervals for sample variances in non-normal populations, we require results regarding their sampling distributions.</p>
+<p>It is also worth considering how we may use this result to form confidence intervals for standard deviations. Generally speaking, confidence intervals are <strong>not</strong> invariant to transformations. By this we mean that, even though <span class="math inline">\(\sigma = \sqrt{\sigma^2}\)</span>, taking the confidence interval <span class="math inline">\((\sqrt{L(S^2)}, \sqrt{U(S^2)})\)</span> will not result in an exact confidence interval for <span class="math inline">\(\sigma\)</span>. Despite the fact that this will not generally be exactly correct, this is the procedure we tend to use. That is, if we have a confidence interval for a parameter, <span class="math inline">\(\theta\)</span>, given by <span class="math display">\[(L(\widehat{\theta}), U(\widehat{\theta})),\]</span> and we wish to have a confidence interval for some transformation, <span class="math inline">\(g(\theta)\)</span>, we will typically use <span class="math display">\[\left(g(L(\widehat{\theta})), g(U(\widehat{\theta}))\right).\]</span> As long as <span class="math inline">\(g\)</span> is a nicely behaved function, this will typically result in an acceptably close approximation.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> Supposing that we have a confidence interval for <span class="math inline">\(\sigma^2\)</span>, then we can form a confidence interval for <span class="math inline">\(\sigma\)</span> simply by taking the square root of the end points.</p>
+<div id="exm-variance-ci" class="theorem example">
+<p><span class="theorem-title"><strong>Example 14.8 (Charles’ Tufting Supplier Variability)</strong></span> Charles has been continuing to learn to tuft. One issue that has been coming up is in the variability of the durability of the yarn across different batches from the same supplier. Charles has found that it is important to approximately match the tensile strength of yarns on the same rug, otherwise it can lead to suboptimal results. Curious about how much variability there truly is in the tensile strength from the main supplier, Charles takes the following measurements: <span class="math display">\[20.29, 14.78, 13.9, 15.5, 20.05, 14.72.\]</span></p>
+<ol type="a">
+<li>What is the estimated variance of the yarn strength from this supplier?</li>
+<li>How can Charles use this information to form a <span class="math inline">\(95\%\)</span> confidence interval for the strength of the yarn?</li>
+<li>Supposing that a confidence interval is found for the variance as <span class="math inline">\((3.24, 49.0)\)</span>, what is a confidence interval for the standard deviation? Is this exact? Explain.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>For the sample variance, we first need to get the sample mean. This is given by <span class="math display">\[\frac{1}{6}\left(20.29 + 14.78 + 13.9 + 15.5 + 20.05 + 14.72\right) = 16.54.\]</span> Then, we take <span class="math display">\[\begin{split}\frac{1}{6-1}\left((20.29 - 16.54)^2 + (14.78 - 16.54)^2 + (13.9 - 16.54)^2 \right. \\ \left. + (15.5 - 16.54)^2 + (20.05 - 16.54)^2\right) = 8.16876.\end{split}\]</span></li>
+<li>To form the confidence interval in this setting we note that, assuming the observations are normally distributed, then the scaled sample mean will follow a <span class="math inline">\(\chi^2_{n-1}\)</span> distribution, where <span class="math inline">\(n=6\)</span>. Thus, we take <span class="math display">\[\left(\frac{(n-1)S^2}{\chi^2_{n-1,1-(1-p)/2}}, \frac{(n-1)S^2}{\chi^2_{n-1,(1-p)/2}}\right)\]</span> where <span class="math inline">\(s^2 = 8.16876\)</span>, <span class="math inline">\(n=6\)</span>, and <span class="math inline">\(p=0.95\)</span>. Plugging in, this gives <span class="math display">\[\left(\frac{(5)(8.16876)}{\chi^2_{5,0.975}}, \frac{(5)(8.16876)}{\chi^2_{5,0.025}}\right).\]</span> If we use <code>R</code> to compute the critical values, this gives <span class="math inline">\((3.1828399, 49.1376676)\)</span>.</li>
+<li>Given the interval <span class="math inline">\((3.24, 49.0)\)</span>, we can approximate a confidence interval for the standard deviation by square rooting the end points. This gives <span class="math inline">\((1.8, 7)\)</span>. This is not exact, since confidence intervals are not typically invariant to transformations. Instead, this will be approximate, but will typically be close enough in practice.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="margin-of-error-and-sample-sizing" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="margin-of-error-and-sample-sizing"><span class="header-section-number">14.6</span> Margin of Error and Sample Sizing</h2>
+<p>When communicating the results of a scientific study, it is typically considered best practice to report confidence intervals alongside point estimates. This conveys the uncertainty in the estimate, and it gives the individual consuming the results the ability to make decisions based on the sensitivity of these results to the reported values. Knowing that you are likely to report a confidence interval, you can use the form of the confidence interval to make planning decisions regarding the study.</p>
+<p>When forming confidence intervals for the mean, all of the intervals we considered took the form <span class="math inline">\(\overline{X} \pm \Omega\)</span>, where <span class="math inline">\(\Omega\)</span> depended on the underlying variability, the sampling distribution, the degree of confidence, as well as the sample size. We call this term, the <strong>margin of error</strong>.</p>
+<div id="def-margin-of-error" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 14.3 (Margin of Error)</strong></span> In a symmetric confidence interval, the margin of error is defined to be the distance from the point estimate to the upper or lower confidence bounds. That is, a confidence interval for <span class="math inline">\(\theta\)</span> can be expressed as <span class="math display">\[\widehat{\theta} \pm \text{M.E.}(\widehat{\theta}),\]</span> where <span class="math inline">\(\text{M.E}(\widehat{\theta})\)</span> corresponds to the margin of error. The width of a confidence interval is always <span class="math inline">\(2\times\text{M.E.}\)</span>.</p>
+</div>
+<p>As noted previously, all else equal we would prefer a confidence interval that is less wide. This is equivalent to saying that we prefer a smaller margin of error. We can consider how the various choices that we make may influence the overall width of the confidence interval. Consider a normal population, with known variance. In this setting <span class="math display">\[\text{M.E.}(\overline{X}) = Z_{1-(1-p)/2}\frac{\sigma}{\sqrt{n}}.\]</span> The three components of this formula are <span class="math inline">\(p\)</span>, <span class="math inline">\(\sigma\)</span>, and <span class="math inline">\(n\)</span>. Note that, as <span class="math inline">\(p\)</span> increases, <span class="math inline">\(1-(1-p)/2\)</span> also increases, and so <span class="math inline">\(Z_{1-(1-p)/2}\)</span> will also increase. This means that if we want a higher <span class="math inline">\(p\)</span>, the confidence interval must get wider.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> Similarly, if <span class="math inline">\(\sigma\)</span> is larger, then the confidence interval will also be wider. This is not under control of the researcher, but it is to say that in more varied populations, confidence intervals will tend to be wider.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> Finally, we see that as <span class="math inline">\(n\)</span> increases, the width of the confidence interval will decrease. This is a choice that the researcher gets to make.</p>
+<p>Noting that as the sample size increases the width of the confidence interval decreases, we can use this relationship to decide what sample size our study should rely on. Specifically, if a researcher knows the variance (or has an estimated value for the sample variance), then they can determine what <span class="math inline">\(n\)</span> is required in order to achieve a set margin of error. For instance, perhaps you want to have a <span class="math inline">\(99\%\)</span> confidence interval that will give a margin of error of no more than <span class="math inline">\(0.01\)</span>. By setting the margin of error equal to <span class="math inline">\(0.01\)</span>, and taking <span class="math inline">\(p = 0.99\)</span>, you can determine that <span class="math display">\[n \geq \left(Z_{0.995}\frac{\sigma}{0.01}\right)^2.\]</span> As long as the value for <span class="math inline">\(\sigma\)</span> is correct, this will guarantee the desired result.</p>
+<div id="exm-sample-sizing-for-ci" class="theorem example">
+<p><span class="theorem-title"><strong>Example 14.9 (Tensile Strength Averages)</strong></span> Charles has been continuing to deal with high variability in the tensile strength of the main yarn supplier. There is another possible supplier to use, however, Charles wants to be very sure that the average tensile strength of the new supplier’s yarn is acceptable as well. Charles will be happy if a <span class="math inline">\(90\%\)</span> confidence interval is within <span class="math inline">\(0.1\)</span> of the true average tensile strength. From experience and word-of-mouth, Charles suspects that the new supplier has a tensile strength variability of approximately <span class="math inline">\(4\)</span>.</p>
+<ol type="a">
+<li>How many balls of yarn should Charles buy in order to form the desired confidence interval?</li>
+<li>What if Charles were content with being within <span class="math inline">\(1\)</span> of the true average?</li>
+<li>Suppose that instead of estimating the average, Charles wants to estimate the proportion of balls of yarn from the new supplier with a strength that exceeds that of the old supplier. To do so, Charles buys pairs of balls of yarn, and compares the strength of each of them, reporting whether the new supplier is higher or lower. Approximately how many pairs of balls of yarn would be required so that the proportion can be estimated to within <span class="math inline">\(0.01\)</span> of the true proportion, with <span class="math inline">\(95\%\)</span> confidence?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Here, Charles wants a margin of error equal to <span class="math inline">\(0.1\)</span>. We know that, in this case, the approximate value for the margin of error will be <span class="math display">\[Z_{1-(1-p)/2}\frac{\sigma}{\sqrt{n}} = 1.64\frac{2}{\sqrt{n}}.\]</span> Thus, we solve <span class="math display">\[\begin{align*}
+1.64\frac{2}{\sqrt{n}} &amp;\leq 0.1 \\
+\frac{3.28}{0.1} \leq \sqrt{n} \\
+32.8^2 \leq n \\
+1075.84 \leq n.
+\end{align*}\]</span> Therefore, Charles would need to buy at least <span class="math inline">\(1076\)</span> balls of yarn to have the level of confidence desired in the tensile strength.</li>
+<li>To be within <span class="math inline">\(1\)</span>, we solve the same expression as in (a) but for a margin of error of <span class="math inline">\(1\)</span>. This results in <span class="math inline">\(n \geq 3.28^2 = 10.8\)</span>, and so in this case Charles would need to purchase <span class="math inline">\(11\)</span> balls of yarn.</li>
+<li>Here, we wish to estimate a proportion within <span class="math inline">\(0.01\)</span> of the truth. To do so, recognize that we can take the normal approximation for the confidence interval, which gives a margin of error equal to <span class="math display">\[Z_{1-(1-p)/2}\sqrt{\frac{p(1-p)}{n}}.\]</span> In principle, we can solve for this equal to <span class="math inline">\(0.01\)</span>. However, it is important to note that we should take a conservative approach to <span class="math inline">\(p\)</span> here. The most variability will come when <span class="math inline">\(p=0.5\)</span>, and so we should estimate the population variance to be based on <span class="math inline">\(p=0.5\)</span>. This gives <span class="math display">\[\begin{align*}
+Z_{0.975}\sqrt{\frac{0.5^2}{n}} &amp;\leq 0.01 \\
+\frac{1.96(0.5)}{0.01} &amp;\leq \sqrt{n} \\
+9.8^2 &amp;\leq n \\
+96.04 \leq n.
+\end{align*}\]</span> There should be at least <span class="math inline">\(97\)</span> pairs of balls of yarn purchased to have this degree of confidence in the proportion estimate.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="confidence-intervals-in-r" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="confidence-intervals-in-r"><span class="header-section-number">14.7</span> Confidence Intervals in R</h2>
+<p>The primary utility of <code>R</code> in terms of forming confidence intervals is in making it easy to determine the critical values for the required distribution. Recall from earlier chapters that the critical values for distributions are typically given by <code>q{distname}</code>, where <code>distname</code> is the relevant distribution. That is, should you want the critical values for a normally distributed population, you can use <code>qnorm(1 - (1-p)/2)</code>, where <code>p</code> is the relevant level. This can then be supplemented with relevant calls to <code>mean</code>, <code>sd</code>, and <code>var</code> to form the various intervals.</p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `set.seed(31415) 
+p <- 0.95
+
+# Suppose we observe data from a normal
+observations <- rnorm(100, 5, 2)
+
+# We can form confidence intervals depending on our assumptions
+Xbar <- mean(observations)
+s <- sd(observations)
+Z_crit <- qnorm(1 - (1-p)/2)
+t_crit <- qt(1 - (1-p)/2, df = 99)
+
+# Assume sigma = 2 is known
+c(Xbar - Z_crit * 2/sqrt(100), Xbar + Z_crit * 2/sqrt(100))
+
+# Assume sigma is not known
+c(Xbar - t_crit * s/sqrt(100), Xbar + t_crit * s/sqrt(100))`, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>In the coming modules we will see ways of calculating confidence intervals less directly, however, these procedures are designed for alternative purposes and thus are unnecessary when all that is desired is a confidence interval.</p>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-14.01" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.1</strong></span> Derive the confidence interval for <span class="math inline">\(\mu\)</span> in a normal population assuming that <span class="math inline">\(\sigma^2\)</span> is unknown. You may use the fact that <span class="math display">\[\frac{\overline{X} - \mu}{s/\sqrt{n}} \sim t_{n-1}.\]</span></p>
+</div>
+<div id="exr-14.02" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.2</strong></span> Consider the following questions regarding the interpretation of confidence intervals.</p>
+<ol type="a">
+<li>The 99% confidence interval for the average heart rate after a workout is [110 bpm, 120 bpm]. What does this mean?</li>
+<li>An automotive company calculates a 99% confidence interval for the fuel efficiency of a new model as [25 mpg, 28 mpg]. How confident are they that the true mean falls within this interval?</li>
+<li>A software development team establishes an 80% confidence interval for the response time of a new application as [150 ms, 180 ms]. Explain the implications of this interval for user experience.</li>
+<li>A clinical trial calculates a 95% confidence interval for the reduction in blood pressure due to a new drug as [8 mmHg, 12 mmHg]. Interpret this interval in the context of the drug’s effectiveness.</li>
+<li>A study examines the impact of social media advertising on consumer purchasing behavior by randomly assigning participants to view different ads and measuring their subsequent purchases. Is this study observational or experimental?</li>
+<li>A civil engineering project calculates a 99% confidence interval for the lifespan of a particular bridge as [50 years, 70 years]. How confident are the engineers that the bridge’s true lifespan falls within this range?</li>
+<li>In a historical study, a historian calculates an 80% confidence interval for the birth year of a famous artist as [1650, 1680]. What does this interval suggest about the artist’s birth year?</li>
+<li>An electronic component manufacturer determines a 95% confidence interval for the failure rate of a product as [0.8%, 1.2%]. Interpret this interval in terms of product reliability.</li>
+<li>A medical study calculates a 90% confidence interval for the reduction in symptoms due to a treatment as [30%, 40%]. How should healthcare practitioners interpret this interval?</li>
+<li>A manufacturing process is being tested for its efficiency. The 90% confidence interval for the defect rate is [2.5%, 3.2%]. Explain what this interval means in the context of the process.</li>
+<li>A psychological study establishes an 99% confidence interval for the decrease in anxiety scores after a therapeutic intervention as [12 points, 20 points]. Explain what this interval conveys about the intervention’s impact.</li>
+<li>A survey on music preferences establishes a 90% confidence interval for the percentage of individuals who enjoy classical music as [15%, 20%]. Explain how confident we are in the accuracy of this interval.</li>
+<li>In a structural engineering study, a 95% confidence interval for the tensile strength of a certain material is calculated as [40 MPa, 45 MPa]. Interpret this interval.</li>
+<li>A survey on travel habits finds that a 95% confidence interval for the average number of vacations people take per year is [1.8, 2.5]. Interpret this interval in the context of the survey results.</li>
+<li>The 95% confidence interval for the survival rate of patients post-surgery is [85%, 90%]. What does this interval suggest about the effectiveness of the surgical procedure?</li>
+</ol>
+</div>
+<div id="exr-14.03" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.3</strong></span> Consider a normal population distribution with the value of <span class="math inline">\(\sigma\)</span> known.</p>
+<ol type="a">
+<li>What is the confidence level for the interval <span class="math inline">\(\overline{x} \pm 2.81\frac{\sigma}{\sqrt{n}}\)</span>?</li>
+<li>What is the confidence level for the interval <span class="math inline">\(\overline{x} \pm 1.44\frac{\sigma}{\sqrt{n}}\)</span>?</li>
+<li>What is the value for <span class="math inline">\(Z_{\alpha/2}\)</span> to form a <span class="math inline">\(99.7\%\)</span> confidence interval?</li>
+<li>What is the value for <span class="math inline">\(Z_{\alpha/2}\)</span> to form a <span class="math inline">\(75\%\)</span> confidence interval?</li>
+</ol>
+</div>
+<div id="exr-14.04" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.4</strong></span> The following are two confidence intervals for <span class="math inline">\(\mu\)</span>, the true average resonance frequency (in Hz) for tennis rackets of a certain type, computed on the same sample. <span class="math inline">\(A = (114.4, 115.6)\)</span> and <span class="math inline">\(B = (114.1, 115.9)\)</span>.</p>
+<ol type="a">
+<li>What is the value of the sample mean?</li>
+<li>One of these confidence intervals is a <span class="math inline">\(90\%\)</span> interval, the other is a <span class="math inline">\(99\%\)</span> interval. Which is which? Why?</li>
+</ol>
+</div>
+<div id="exr-14.05" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.5</strong></span> A random sample of <span class="math inline">\(50\)</span> bottles of a brand of cough syrup are selected and have their alcohol content determined. If <span class="math inline">\(\mu\)</span> is the average alcohol content for the population of all bottles under study, then suppose that a <span class="math inline">\(95\%\)</span> confidence interval for <span class="math inline">\(\mu\)</span> is computed as <span class="math inline">\((7.8, 9.4)\)</span>.</p>
+<ol type="a">
+<li>Would a <span class="math inline">\(90\%\)</span> confidence interval calculated from this sample have been narrower or wider than the given interval? Why?</li>
+<li>Is the following statement correct? Why? ``There is a <span class="math inline">\(95\%\)</span> chance that <span class="math inline">\(\mu\)</span> is between <span class="math inline">\(7.8\)</span> and <span class="math inline">\(9.4\)</span>.’’</li>
+<li>Is the following statement correct? Why? ``We can be highly confident that <span class="math inline">\(95\%\)</span> of bottles of this type of cough syrup have an alcohol content that is between <span class="math inline">\(7.8\)</span> and <span class="math inline">\(9.4\)</span>.’’</li>
+<li>Is the following statement correct? Why? ``If the process of selecting a sample of size <span class="math inline">\(50\)</span> then computing the corresponding <span class="math inline">\(95\%\)</span> interval is repeated <span class="math inline">\(100\)</span> times, <span class="math inline">\(95\)</span> of the resulting intervals will include <span class="math inline">\(\mu\)</span>.’’</li>
+</ol>
+</div>
+<div id="exr-14.06" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.6</strong></span> Suppose that the true standard deviation for helium porosity of coal samples is <span class="math inline">\(0.75\)</span>, and the measurements are assumed to be normally distributed.</p>
+<ol type="a">
+<li>Construct a <span class="math inline">\(95\%\)</span> confidence interval assuming a sample of size <span class="math inline">\(20\)</span> resulted in a sample mean of <span class="math inline">\(4.85\)</span>.</li>
+<li>How many observations are necessary to estimate the true average within <span class="math inline">\(0.2\)</span> with <span class="math inline">\(99\%\)</span> confidence?</li>
+<li>What if <span class="math inline">\(s = 0.75\)</span> rather than <span class="math inline">\(\sigma = 0.75\)</span>: can you still answer the previous questions?</li>
+</ol>
+</div>
+<div id="exr-14.07" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.7</strong></span> In a sample of <span class="math inline">\(100\)</span> steel wires, the average breaking strength is <span class="math inline">\(50\)</span> kN. The population standard deviation is <span class="math inline">\(2\)</span> kN.</p>
+<ol type="a">
+<li>Find a <span class="math inline">\(95\%\)</span> confidence interval for the mean breaking strength of this wire.</li>
+<li>Find a <span class="math inline">\(99\%\)</span> confidence interval for the mean breaking strength of this wire.</li>
+<li>If an engineer claims that the mean breaking strength is <span class="math inline">\(49.7\)</span> to <span class="math inline">\(50.3\)</span>, what level of confidence is the engineer using?</li>
+<li>How many wires must be sampled so that a <span class="math inline">\(95\%\)</span> confidence interval specifies the mean breaking strength to within <span class="math inline">\(\pm 0.3\)</span> kN?</li>
+<li>What if <span class="math inline">\(s = 2\)</span> rather than <span class="math inline">\(\sigma = 2\)</span>?: can you still answer the previous questions?</li>
+</ol>
+</div>
+<div id="exr-14.08" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.8</strong></span> In a random sample of <span class="math inline">\(53\)</span> concrete specimens, the average porosity was <span class="math inline">\(21.6\)</span>. The population standard deviation is <span class="math inline">\(3.2\)</span>.</p>
+<ol type="a">
+<li>Find a <span class="math inline">\(90\%\)</span> confidence interval for the mean porosity.</li>
+<li>Find a <span class="math inline">\(95\%\)</span> confidence interval for the mean porosity.</li>
+<li>How many specimens must be sampled so that the <span class="math inline">\(95\%\)</span> confidence interval specifies the mean to within <span class="math inline">\(\pm 0.3\)</span>?</li>
+<li>What if <span class="math inline">\(s = 3\)</span> rather than <span class="math inline">\(\sigma = 3\)</span>: can you still answer the previous questions?</li>
+</ol>
+</div>
+<div id="exr-14.09" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.9</strong></span> &nbsp;</p>
+<ol type="a">
+<li>By how much must the sample size <span class="math inline">\(n\)</span> be increased if the width of a CI is to be halved?</li>
+<li>What impact will increasing the sample size by a factor of <span class="math inline">\(25\)</span> have on the width of the CI?</li>
+</ol>
+</div>
+<div id="exr-14.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.10</strong></span> Consider a <span class="math inline">\(100\times(1-\alpha)\%\)</span> confidence interval for the mean of a normal distribution with known variance, <span class="math inline">\(\sigma^2\)</span>, based on a random sample of <span class="math inline">\(n\)</span> observations. How does the width of the interval change as</p>
+<ol type="a">
+<li><span class="math inline">\(n\)</span> is increased, holding everything else constant.</li>
+<li><span class="math inline">\(\sigma^2\)</span> is increased, holding everything else constant.</li>
+<li><span class="math inline">\(\alpha\)</span> is decreased, holding everything else constant.</li>
+<li>Suppose the standard deviation of a certain electrical component is <span class="math inline">\(144\)</span> hours: how large of a sample must be taken to be <span class="math inline">\(95\%\)</span> confident that the error in the estimated mean lifetime of such components will not exceed <span class="math inline">\(15\)</span> hours?</li>
+</ol>
+</div>
+<div id="exr-14.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.11</strong></span> Can you answer Problems 170, 171, and 172 assuming that the given values were sample standard deviations? If so, how do the answers change? If not, why not?</p>
+</div>
+<div id="exr-14.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.12</strong></span> In measuring reaction times, a psychologist estimates that the standard deviation is <span class="math inline">\(0.05\)</span> seconds. How large of a sample of measurements must be taken in order to be confident that the error in their estimates of mean reaction time will not exceed <span class="math inline">\(0.01\)</span> seconds, assuming:</p>
+<ol type="a">
+<li>They want to be <span class="math inline">\(95\%\)</span> confident?</li>
+<li>They want to be <span class="math inline">\(99\%\)</span> confident?</li>
+</ol>
+</div>
+<div id="exr-14.13" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.13</strong></span> A company wishes to understand whether its recruiting practices are disproportionately aimed at men; to do so, they wish to understand the proportion, <span class="math inline">\(p\)</span>, of applicants to their positions who do not identify as male. In a random sample of <span class="math inline">\(80\)</span> applications, it found that <span class="math inline">\(22\)</span> were from non-male identified individuals.</p>
+<ol type="a">
+<li>Find an approximate <span class="math inline">\(90\%\)</span> confidence interval for <span class="math inline">\(p\)</span>, and indicate what assumptions are necessary for the approximation to be valid.</li>
+<li>If the company wishes to estimate the true proportion with a precision of <span class="math inline">\(\pm0.02\)</span>, at a <span class="math inline">\(90\%\)</span> level of confidence, how many more applications must they look at to achieve this result?</li>
+</ol>
+</div>
+<div id="exr-14.14" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.14</strong></span> In an experiment to test whether final digits of telephone numbers are random, a random sample of <span class="math inline">\(40\)</span> digits is selected from a large telephone directory. The null hypothesis of randomness will fail to be rejected if there are at least <span class="math inline">\(17\)</span> but not more than <span class="math inline">\(22\)</span> even digits in the sample, and will be rejected otherwise.</p>
+<ol type="a">
+<li>Using a suitable approximation, find the probability of a Type I error.</li>
+<li>A friend of yours claims that in fact more telephone numbers are odd than even. How would you check whether this is true, using a <span class="math inline">\(5\%\)</span> test based on a random sample of size <span class="math inline">\(50\)</span>?</li>
+</ol>
+</div>
+<div id="exr-14.15" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.15</strong></span> &nbsp;</p>
+Suppose that the following output was obtained from a sample of tensile strength observations. Using these statistics, compute a <span class="math inline">\(99\%\)</span> confidence interval for the true average tensile strength, and interpret the result.
+</div>
+<div id="exr-14.16" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.16</strong></span> An investigator computes a <span class="math inline">\(95\%\)</span> confidence interval for a population mean on the basis of a sample of size <span class="math inline">\(70\)</span>. If they wish to compute a <span class="math inline">\(95\%\)</span> confidence interval that is half as wide, how large of a sample is required?</p>
+</div>
+<div id="exr-14.17" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.17</strong></span> A <span class="math inline">\(95\%\)</span> confidence interval for a population mean is computed from a sample of size <span class="math inline">\(400\)</span>. Another <span class="math inline">\(95\%\)</span> confidence interval will be computed from a sample of size <span class="math inline">\(100\)</span> drawn from the sample population. What will be the approximate ratio of the length of the first interval to the length of the second?</p>
+</div>
+<div id="exr-14.18" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.18</strong></span> Based on a large sample of capacitors of a certain type, a <span class="math inline">\(95\%\)</span> confidence interval for the mean capacitance was computed to be <span class="math inline">\((0.213, 0.241)\)</span>. Find a <span class="math inline">\(90\%\)</span> confidence interval for the mean capacitance of this type of capacitor.</p>
+</div>
+<div id="exr-14.19" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.19</strong></span> Based on a sample of repair records, an engineer calculates a <span class="math inline">\(95\%\)</span> confidence interval for the mean cost to repair a fiber-optic component to be <span class="math inline">\((140, 160)\)</span>. A supervisor summarizes this result saying ``We are <span class="math inline">\(95\%\)</span> confident that the mean cost of repairs is less than $160.’’ Is the supervisor underestimating, overestimating, or getting the confidence of this statement correct? Why?</p>
+</div>
+<div id="exr-14.20" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.20</strong></span> A random sample of <span class="math inline">\(400\)</span> electronic components manufactured by a certain process are tested, and <span class="math inline">\(30\)</span> are found to be defective.</p>
+<ol type="a">
+<li>Let <span class="math inline">\(p\)</span> represent the proportion of components manufactured by this process that are defective. Find a <span class="math inline">\(95\%\)</span> confidence interval for <span class="math inline">\(p\)</span>.</li>
+<li>How many components must be sampled so that the <span class="math inline">\(95\%\)</span> confidence interval will specify the proportion to within <span class="math inline">\(\pm 0.02\)</span>?</li>
+<li>A device will be manufactured in which two components are connected in series. The components function independent and the device functions only if both components function. Let <span class="math inline">\(q\)</span> be the probability that the device functions. Find a <span class="math inline">\(95\%\)</span> confidence interval for <span class="math inline">\(q\)</span>.</li>
+<li><strong>Challenge:</strong> The company ships the components in lots of <span class="math inline">\(200\)</span>. Lots containing more than <span class="math inline">\(20\)</span> defective components are returned. Find a <span class="math inline">\(95\%\)</span> confidence interval for the proportion of lots that will be returned.</li>
+</ol>
+</div>
+<div id="exr-14.21" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.21</strong></span> A stock market analyst notices that in a certain year, the price of IBM stock increased on <span class="math inline">\(131\)</span> of <span class="math inline">\(252\)</span> trading days. Can these data be used to find a <span class="math inline">\(95\%\)</span> confidence interval for the proportion of days that IBM stock increases? Explain.</p>
+</div>
+<div id="exr-14.22" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.22</strong></span> Measurements of the diameters of a random sample of <span class="math inline">\(200\)</span> ball bearings made by a certain machine during one week showed a mean of <span class="math inline">\(0.84\)</span> inches and a standard deviation of <span class="math inline">\(0.042\)</span> inches. Find <span class="math inline">\(95\%\)</span> and <span class="math inline">\(99\%\)</span> confidence intervals for the diameter of all the ball bearings.</p>
+</div>
+<div id="exr-14.23" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.23</strong></span> What are the values for each of the following quantities?</p>
+<ol type="a">
+<li><span class="math inline">\(t_{0.1, 15}\)</span>;</li>
+<li><span class="math inline">\(t_{0.05, 15}\)</span>;</li>
+<li><span class="math inline">\(t_{0.05, 25}\)</span>;</li>
+<li><span class="math inline">\(t_{0.05, 40}\)</span>;</li>
+<li><span class="math inline">\(t_{0.005, 40}\)</span>.</li>
+</ol>
+</div>
+<div id="exr-14.24" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.24</strong></span> A sample of <span class="math inline">\(14\)</span> joint specimens of a particular type gave a sample mean proportional limit stress of <span class="math inline">\(8.48\)</span> MPa and a sample standard deviation of <span class="math inline">\(0.79\)</span> MPa. Calculate and interpret a <span class="math inline">\(95\%\)</span> confidence interval for the true average proportional limit stress.</p>
+</div>
+<div id="exr-14.25" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.25</strong></span> A normal probability plot of <span class="math inline">\(n=26\)</span> observations shows a substantial linear pattern. The sample mean and sample standard deviation are <span class="math inline">\(370.69\)</span> and <span class="math inline">\(24.36\)</span>, respectively. Compute a <span class="math inline">\(95\%\)</span> confidence interval for the population mean.</p>
+</div>
+<div id="exr-14.26" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.26</strong></span> A colleague computes a <span class="math inline">\(95\%\)</span> confidence interval using a normal approximation in a sample of <span class="math inline">\(n \ll 30\)</span>, where the standard deviation was estimated as <span class="math inline">\(s\)</span>.</p>
+</div>
+<div id="exr-14.27" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.27</strong></span> A sample of <span class="math inline">\(10\)</span> measurements of the diameter of a sphere gave a mean of <span class="math inline">\(\overline{x} = 4.38\)</span> inches and a standard deviation <span class="math inline">\(s=0.06\)</span> inches. Find <span class="math inline">\(95\%\)</span> and <span class="math inline">\(99\%\)</span> confidence intervals for the actual diameter.</p>
+</div>
+<div id="exr-14.28" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.28</strong></span> Measurements for the chemical analysis of runoff water from sawmills in British Columbia are taken. Six measurements for the waters pH are recorded as: <span class="math inline">\(5.9\)</span>, <span class="math inline">\(5.0\)</span>, <span class="math inline">\(6.5\)</span>, <span class="math inline">\(5.6\)</span>, <span class="math inline">\(5.9\)</span>, and <span class="math inline">\(6.5\)</span>. If these are a random sample from an approximately normally distributed population, find a <span class="math inline">\(95\%\)</span> confidence interval for the true pH.</p>
+</div>
+<div id="exr-14.29" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.29</strong></span> Fission tracks are trails found in uranium-bearing minerals, left by fragments released during fission events. Fifteen tracks on one rock specimen had an average track length of <span class="math inline">\(13\)</span> <span class="math inline">\(\mu\)</span>m with a standard deviation of <span class="math inline">\(2\)</span> <span class="math inline">\(\mu\)</span>m. If the population is approximately normal, find a <span class="math inline">\(99\%\)</span> confidence interval for the mean track length for this rock specimen.</p>
+</div>
+<div id="exr-14.30" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.30</strong></span> The following output is generated from statistical software computing the confidence interval for a population mean.</p>
+<ol type="a">
+<li>How many degrees of freedom does the <span class="math inline">\(t\)</span> distribution have?</li>
+<li>Using the information in the table, find a <span class="math inline">\(99\%\)</span> confidence interval for the mean.</li>
+</ol>
+</div>
+<div id="exr-14.31" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.31</strong></span> The concentration of carbon monoxide in a gas sample is measured by a spectrophotometer and found to be <span class="math inline">\(85\)</span>ppm. Through long experience with this instrument it is believed that its measurements are unbiased and normally distributed, with a standard deviation of <span class="math inline">\(8\)</span>ppm. Find a <span class="math inline">\(95\%\)</span> confidence interval for the concentration of CO in this sample.</p>
+</div>
+<div id="exr-14.32" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.32</strong></span> Determine the values for the following quantities</p>
+<ol type="a">
+<li><span class="math inline">\(\chi^2_{0.1, 15}\)</span>;</li>
+<li><span class="math inline">\(\chi^2_{0.1, 25}\)</span>;</li>
+<li><span class="math inline">\(\chi^2_{0.01, 25}\)</span>;</li>
+<li><span class="math inline">\(\chi^2_{0.005, 25}\)</span>;</li>
+<li><span class="math inline">\(\chi^2_{0.99, 25}\)</span>;</li>
+<li><span class="math inline">\(\chi^2_{0.995, 25}\)</span>.</li>
+</ol>
+</div>
+<div id="exr-14.33" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.33</strong></span> The amount of lateral expansion was determined for a sample of <span class="math inline">\(n=9\)</span> pulsed-power gas metal arc welds used in LNG ship containment tanks. The resulting sample standard deviation was <span class="math inline">\(2.81\)</span>. Assuming normality, derive a <span class="math inline">\(95\%\)</span> confidence interval for <span class="math inline">\(\sigma^2\)</span> and <span class="math inline">\(\sigma\)</span>.</p>
+</div>
+<div id="exr-14.34" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 14.34</strong></span> Wire electrical-discharge machining (WEDM) is a process used to manufacture conductive hard metal components. IT uses a continuously moving wire that serves as an electrode. Coating on the wire electrode allows for cooling of the wire electrode core and provides an improved cutting performance. A sample of eight wire electrodes used had a coating layer thickness measured as: <span class="math inline">\(21\)</span>, <span class="math inline">\(16\)</span>, <span class="math inline">\(29\)</span>, <span class="math inline">\(35\)</span>, <span class="math inline">\(42\)</span>, <span class="math inline">\(24\)</span>, <span class="math inline">\(24\)</span>, and <span class="math inline">\(25\)</span>. Find a <span class="math inline">\(99\%\)</span> CI for the standard deviation of the coating layer thickness. Is this a valid interval?</p>
+</div>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Credible intervals are similar to confidence intervals, but approached through the Bayesian paradigm. Likelihood intervals are related to maximum likelihood estimation, and provide a rather interpretable framework for interval estimation. Prediction intervals, as the name suggests, are related to predictive statistics and allow the uncertainty of predictions to be quantified.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In this case, it is zero since <span class="math inline">\(2\)</span> is not in the interval <span class="math inline">\((4, 6)\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Recall that an inverse function is the function, <span class="math inline">\(f^{-1}\)</span> such that <span class="math inline">\(f^{-1}(f(x)) = x\)</span>. So if <span class="math inline">\(f(x) = \log(x)\)</span>, then <span class="math inline">\(f^{-1}(x) = \exp(x)\)</span>. If <span class="math inline">\(f(x) = x\)</span> then <span class="math inline">\(f^{-1} = \frac{1}{x}\)</span> and so forth.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Note that very often we will find that <span class="math inline">\(a^{-1}(\widehat{\theta}) \geq b^{-1}(\widehat{\theta})\)</span>, and so the endpoints <em>switch</em>. This is not always the case, but frequently occurs.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>With its randomness endowed thanks to the random sampling<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Note that it is not uncommon to see that an interval is interpretable as “We are <span class="math inline">\(100p\%\)</span> confident that the parameter is in the interval.” This confidence is, importantly, not a probability, and this is taken as short hand to mean that, if we were to repeatedly find confidence intervals following this practice, in <span class="math inline">\(100p\%\)</span> of them we would find the truth. I think that this statement tends to lead to more confusion, and as such, I would advise against this interpretation until you are <em>very</em> confident in your understanding.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>For instance, we will see how to calculate confidence intervals for both the mean and the variance of a random sample. These will be different and are disconnected from the sample values.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Note, in this case, the true value would be <span class="math inline">\(-2\)</span>, which is fairly close.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Note that, for large <span class="math inline">\(n\)</span> these two sets of values are essentially equivalent. This means that if you had used the <span class="math inline">\(t\)</span> values, it would not result in meaningfully different results, however, the <span class="math inline">\(Z\)</span> values are justified in this setting.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>By nicely behaved, we mean monotonic. That is, if <span class="math inline">\(a \leq b\)</span>, then <span class="math inline">\(g(a) \leq g(b)\)</span> or <span class="math inline">\(g(a) \geq g(b)\)</span> should hold. This means that taking <span class="math inline">\(g(x) = \sqrt{x}\)</span> is nicely behaved, but taking <span class="math inline">\(g(x) = x^2\)</span> is not. The concern with a function like <span class="math inline">\(g(x) = x^2\)</span> comes from what would happen if, for instance, our initial interval were <span class="math inline">\((-2, 2)\)</span>. Then transforming this interval gives <span class="math inline">\((4, 4)\)</span> which is clearly incorrect. There are ways of working around this, however, considerations of more complex transformations are beyond the scope of these notes.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>This should make intuitive sense. If you want to have a <span class="math inline">\(80\%\)</span> chance of containing the truth you can afford to give a narrower interval than if you wanted to have a <span class="math inline">\(99\%\)</span> chance of containing the truth.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>This should also make intuitive sense. If we are trying to understand the center of a distribution, the more spread out our data are, the less certain we will be of our results. The less spread out, the more certain we can be.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
