@@ -485,11 +485,6 @@ a. $\alpha$ is decreased, holding everything else constant.
 a. Suppose the standard deviation of a certain electrical component is $144$ hours: how large of a sample must be taken to be $95\%$ confident that the error in the estimated mean lifetime of such components will not exceed $15$ hours?
 :::
 
-
-:::{#exr-14.11}
-Can you answer Problems 170, 171, and 172 assuming that the given values were sample standard deviations? If so, how do the answers change? If not, why not?
-:::
-
 :::{#exr-14.12}
 In measuring reaction times, a psychologist estimates that the standard deviation is $0.05$ seconds. How large of a sample of measurements must be taken in order to be confident that the error in their estimates of mean reaction time will not exceed $0.01$ seconds, assuming:
 
