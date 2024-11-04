@@ -1,5 +1,5 @@
 {
     "typewriterScrollMode.enable": true,
-    "typewriterAutoScroll.enable": false,
+    "typewriterAutoScroll.enable": true,
     "typewriterAutoScroll.offset": 10
 }

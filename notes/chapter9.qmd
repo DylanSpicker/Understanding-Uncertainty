@@ -60,7 +60,7 @@ e. Note that, longer than $13$ is the complement to less than $13$. Thus, $$P(X 
 
 The centrality of events of the form $X \leq a$ prompts further consideration the **cumulative distribution function** (introduced in @def-cumulative-distribution-function).
 
-:::{#def-cumulative distribution function}
+:::{#def-cumulative-distribution-function}
 ## Cumulative Distribution Function
 The cumulative distribution function of a random variable $X$, typically denoted as $F(x)$ or $F_X(x)$, is defined as the function that gives the probability that the random variable is less than or equal to some threshold. 
 
@@ -71,7 +71,7 @@ Once we have defined the distribution function for a random variable, using the 
 
 Suppose that, for a random variable $X$, we know the cumulative distribution function. This knowledge permits the computation of *any* probability associated with the random variable. Consider some event defined in terms of $X$ which we may wish to determine the probability of. We know that events are subsets of the sample space. Every one of these events can be written using our basic set operations (unions, intersections, and complements) applied to intervals of the form $(a,b)$ and sets of the form $\{x\}$.^[These are called singletons. We addressed these in terms of probability assignment using the language of singletons above. As a general rule, when working with continuous quantities, we simply ignore all of the singletons.] The axioms of probability allow us to compute probabilities across the set operations. Further, our knowledge of the cumulative distribution function, the conversion of $P(X \in (a,b))$ into $F_X(b) - F_X(a)$, and the fact that $P(X=x) = 0$ for all $x$ gives all of the results we need to derive probabilities for these events.
 
-:::{#exm-lightbulb-cumulative distribution function}
+:::{#exm-lightbulb-cumulative-distribution-function}
 ## Charles and Sadie's Light Bulbs
 
 Charles and Sadie decide that they need to replace some light bulbs. In their research online, a particular manufacturer of light bulbs, *Bayesian Brights*, lists the cumulative distribution function for the lifetime of their bulbs, in hours. The model Charles and Sadie are considering is said to have a lifetime (in hours) governed by $$F_X(x) = 1 - \exp\left(-\frac{x}{10000}\right).$$
@@ -215,7 +215,7 @@ These properties are analogous to the properties for a probability mass function
 
 Given that the density function is the first derivative of the cumulative distribution function, we can apply the Fundamental Theorem of Calculus to conclude that the cumulative distribution function must be derived by integrating the density function. We can see this by noting that $F(x) = P(X \in (-\infty, x))$, which we stated was given by integrating the density over $(-\infty, x)$. 
 
-:::{#def-cumulative distribution function-calculus}
+:::{#def-cumulative-distribution-function-calculus}
 ## The Cumulative Distribution Function (Calculus)
 The cumulative distribution function of a continuous random variable, $X$, computes the probability that $X$ is less than or equal to a threshold value $x$. This can be computed as $$F(x) = \int_{-\infty}^x f(t)dt.$$
 :::
@@ -1160,7 +1160,7 @@ a. Find the median resistance.
 Suppose that a random variable $X$ is defined on $[1,\infty)$. We know that $E[X] = 5$ and $\text{var}(X) = 3$. 
 
 a. Give a bound on $P(X \geq 10)$.
-b. Find a value, $a$, such that $P(X \geq a).
+b. Find a value, $a$, such that $P(X \geq a)$.
 :::
 
 :::{#exr-9.10}

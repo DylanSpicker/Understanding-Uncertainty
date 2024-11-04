@@ -1,1 +1,300 @@
 # The Basics of Null Hypothesis Significance Testing
+
+## The Framework of Null Hypothesis Significance Testing
+Over the past two chapters the focus has been on *estimation procedures* for parameters of interest. Point estimation gives us methods to make inferences regarding the specific value of a particular parameter, while interval estimation permits the discussion of the uncertainty of these estimates. Taken together these estimation techniques allow for a deep understanding of the value of parameters, based on observed samples. We know that each sample is likely to result in different estimates based on sampling variability. Correspondingly, the specific inferences that are made regarding the parameter values will depend on the specific sample that is observed. Using interval estimates we hope to capture how uncertain our knowledge is, however, it is an unavoidable truth that any conclusions we draw are subject to the whims of the sample. A fundamental question we can ask, in light of this truth, is "how are we able to draw specific conclusions or make decisions on the basis of our estimated values?"
+
+The framework of **null hypothesis significance testing (NHST)**, often referred to as simply **hypothesis testing** provides one mechanism for making decisions regarding the value(s) of parameter(s) using observed samples. In a hypothesis test the observed sample is used to weigh evidence against competing explanations for what is true in the population. We make educated guesses regarding the likely value of a population parameter and then determine how likely it would be to observe the sample that we have observed, if those guesses are actually true. If the sample is likely to be produced under our specified version of truth, then the sample provides no evidence against it. If, on the other hand, the sample is unlikely given our specified version of the truth, this serves as evidence against it. 
+
+:::{#exm-the-weight-die}
+## Sadie and the Weighted Die
+Sadie has been playing a board game that was borrowed from Garth, and has been feeling particularly unlucky based on dice rolls. Uncertain if the die provided in the game is actually fair, Sadie decides to test it. Specifically, in the game it benefits the player to roll high numbers and is a detriment to rolling low numbers. Sadie decides to roll the die many times, recording whether each roll is high (greater than or equal to $3$) or low (less than or equal to $3$).
+
+a. Suppose Sadie rolls the die $50$ times and observes $21$ high values and $29$ low values. If the die were fair, approximately how likely is it that $21$ or fewer high values would be rolled in $50$ rolls? 
+b. Suppose Sadie continues rolling, and in $100$ rolls of the die, observes $35$ high values and $65$ low values. If the die were fair, approximately how likely is it that $35$ or fewer high values would be rolled in $100$ rolls?
+c. In light of these probabilities, what is your conclusion about the die?
+
+::::{.callout .solution collapse='true'}
+## Solution
+.... 
+::::
+:::
+
+:::{#def-hypothesis-testing}
+## Hypothesis Testing
+**Hypothesis testing** is a statistical framework through which data are assessed to determine whether they sufficiently support a particular hypothesis regarding a population parameter. Under an assumed hypothesis regarding the true population parameter, the likelihood of observing the present sample is computed. From this conclusions are drawn with regards to the statistical validity of the hypothesis. 
+:::
+
+At the core of the hypothesis testing framework is the idea of a statistical hypothesis. A statistical hypothesis is a specification of a plausible parameter value made on the basis of subject-matter expertise, rather than through the data itself. Alongside the statistical hypothesis, subject-matter expertise is required to define the evidentiary requirements of the test. Specifically, we must consider how certain we want be regarding conclusions that we draw, a decision that is ultimately based on the stakes of drawing an incorrect conclusion. With the specification of a hypothesis and a required level of significance, we turn to the data that have been observed and summarize it using a test statistic. The test statistic is a statistic that has a known sampling distribution under the assumption that our hypothesis is correct. Using this test statistic and the knowledge of its sampling distribution, we can assess the likelihood of having observed this specific statistic if the assumption were true. Based on our assessment, and the level of significance we desire, we can then draw conclusions and interpret the results.
+
+This high-level description summarizes the procedure of hypothesis testing as a five-step procedure:
+
+1. Determine the **null** and **alternative hypotheses**.
+2. Determine the **significance level** for the test.
+3. Compute the **test statistic** using the observed data.
+4. Find the **$p$-value** based on the null sampling distribution.
+5. Make a comparison, draw conclusions, and interpret the results. 
+
+Each of these steps is outlined in general in the following sections. 
+
+### The Null and Alternative Hypothesis
+At the core of the framework of hypothesis testing is the concept of statistical hypotheses. Specifically, hypothesis testing is fundamentally a procedure wherein evidence within a sample is assessed to determine whether or not it contradicts a particular hypothesis. 
+
+:::{#def-statistical-hypothesis}
+## Statistical Hypothesis
+A **statistical hypothesis** is a statement regarding the value of an (unknown) population parameter, informed via outside knowledge rather than through estimation. For instance, we may state that $\theta = 0$ or $\theta \geq 10$.
+:::
+
+In the framework of null hypothesis significance testing, we focus on the specification of two distinct hypotheses. First, and most importantly, we specify the **null hypothesis**. The null hypothesis corresponds to our underlying belief about the world prior to conducting statistical tests. The null hypothesis will capture how we will act without strong evidence to the contrary. In contrast to the null hypothesis, we also a specify an **alternative hypothesis**. The alternative gives an *alternative* explanation compared to the null. That is, if the null is not true, then the alternative should be. 
+
+:::{#def-null-hypothesis}
+## Null Hypothesis
+The **null hypothesis** is a statistical hypothesis that is meant to capture the assumed state of the world that would be believed without contradictory evidence. That is, the null hypothesis captures the value of a parameter that is assumed to hold by default. Often, the null hypothesis captures the idea of *no effect* or *no difference*, such as taking $\theta = 0$. The null hypothesis is typically denoted $H_0$, such that we would write, for instance, $H_0: \theta = 0$ or $H_0: \theta \geq 10$.
+:::
+
+:::{#def-alternative-hypothesis}
+## Alternative Hypothesis
+The **alternative hypothesis** is a statistical hypothesis that is defined in contrast to a stated null hypothesis. Generally, we take the alternative hypothesis to be *not* the null. That is, if the null hypothesis states $\theta = 0$ then the alternative will be $\theta \neq 0$. We denote the alternative as either $H_1$ or $H_A$. If the null hypothesis is not true, the alternative hypothesis will be. 
+:::
+
+When framing the null and the alternative hypothesis it is important to keep in mind that we are seeking evidence *against* the null hypothesis. We will never seek to positively confirm that the null hypothesis actually holds. Instead, we want to see the observed data allow us to conclude that it certainly does not hold. For this reason, the hypotheses we are considering should be determined prior to data collection and should be informed by a subject-matter understanding, rather than for statistical convenience. To determine your null hypothesis, you should ask what you would continue to believe without evidence to the contrary, and take that as the null. If you have no such prior beliefs, then it is best to take the most conservative statement as the null hypothesis.^[That is, if you are considering a treatment, you should assume that the treatment has no effect. This way, without strong evidence suggesting that there is an effect, you will not use the treatment. The same idea applies more broadly.] 
+
+A hypothesis test is outlined by the collective statement of the null and alternative hypotheses. When deciding on the null and alternative, there is the possibility of considering either a **one-tailed** or a **two-tailed** hypothesis test. These refer to the number of tails of the distribution that would be considered evidence *against* the null hypothesis, or put differently, the number of tails captured by the alternative hypothesis. 
+
+:::{#def-one-tailed-test}
+## One Tailed Hypothesis Test
+In a **one tailed hypothesis test**, the alternative hypothesis will take the form $H_A: \theta > \theta_0$, or $H_A: \theta < \theta_0$, for some constant value $\theta_0$. In this sense, only one tail (either the **upper tail** in terms of $\theta > \theta_0$ or the **lower tail** in terms of $\theta < \theta_0$) will be considered as evidence against the null hypothesis. In a one tailed test, the null hypothesis is given as either $H_0: \theta \leq \theta_0$ or $H_0: \theta \geq \theta_0$.^[Note, many sources will list the null hypothesis as simply $H_0: \theta = \theta_0$ and control the tail behaviour exclusively via the alternative. This results in the same test mechanism but is, in my opinion, less clear as to the actual hypotheses that are being tested.]
+:::
+
+:::{#def-two-tailed-test}
+## Two Tailed Hypothesis Test
+In a **two tailed hypothesis test**, the alternative hypothesis will take the form $H_A: \theta \neq \theta_0$, for some constant value $\theta_0$. In this sense, both the upper and lower tails will be considered as evidence against the null hypothesis. In a two tailed test, the null hypothesis is given as $H_0: \theta = \theta_0$. 
+:::
+
+As we continue to discuss the implementation of a hypothesis test and the practicalities in testing a particular hypothesis, we will discuss the implications in using one versus two tailed tests. The general guidance is that, unless there is a very strong, scientific rationale for considering a one tailed test, two tailed tests ought to be preferred. If a one tailed test is to be suggested, the null and alternative should still be specified prior to doing any analysis of the experiment, and which tail is tested should be informed through subject-matter expertise.^[The use of a one tailed test should be reserved for cases where there is no real possibility of contradicting the null in both directions.] Once the hypotheses have been selected, we need to make a choice regarding the levels of significance. 
+
+### Significance Levels 
+In addition to specifying the hypotheses on the basis of subject-matter knowledge, to perform a hypothesis test we must also decide on the **level of significance** that we are considering. Generally, the level of significance refers to the amount of evidence that we would need *against* the null hypothesis in order to reject it (in favour of the alternative). This decision should be informed based on the stakes of the decisions that we are making. When the stakes are high, or it is very important to not reject the null hypothesis incorrectly, we should increase the amount of evidence we are looking for. 
+
+:::{#def-level-of-significance}
+## Level of Significance
+The **level of significance**, denoted $\alpha$, is a measure of how much evidence is required to reject the null hypothesis in favour of the alternative. Formally, the level of significance specifies the probability of rejecting the null hypothesis, if it were actually true. In this sense, the lower the value of $\alpha$, the **stronger** the evidence required against the null hypothesis. Typically, $\alpha \leq 0.1$ is selected, with the specific value dependent on the context.
+:::
+
+A fundamental truth of hypothesis testing^[and, indeed, of any procedure that deals with randomness and uncertainty] is that we can never be certain in our conclusions. Owing to the inherent random nature of data, there is always the possibility that mistakes occur. The level of significance provides us with the capacity to control the likelihood of one class of these mistakes. Specifically, it controls how likely it is to conclude that the null hypothesis is not true when it is. In a perfect world, free of randomness and uncertainty, we would take $\alpha = 0$. This way, we would never conclude that the null hypothesis should be rejected when it is actually true. Unfortunately, the only way to ensure that we never make this mistake is to never reject the null hypothesis.^[Uncertainty ensures us that there is always a *chance* that the null hypothesis was incorrectly rejected.] Instead, we take $\alpha$ to be a small value greater than $0$. 
+
+To decide what value specifically, we have to consider the question "What if we are wrong?" If you incorrectly reject the null hypothesis, what are the stakes of that error. Consider a scenario where we are testing a new treatment for a severe illness, and we want to test whether the treatment has an effect on survival rates. In this case, we would typically take $H_0: \theta = 0$ versus the alternative, $H_A: \theta \neq 0$. This way, by default we are assuming that the treatment does not have any impact, and are looking for evidence to the contrary. Now, suppose that there already exists a treatment for the illness that is moderately effective. In this setting, it is far more costly to make a mistake stating that the new treatment is also effective, if it turns out that it is not. The reason being that if we conclude the treatment is effective it may be prescribed to individuals, and this may happen in place of the existing effective treatment. If it turns out that the new treatment does not have a positive impact, this would mean that real people will receive treatments that are ineffective, when they could receive treatments that actually help. Conversely, if there does not exist any treatment at all for the illness now, we likely are willing to take a slightly higher risk. In this case, if we are wrong and the treatment does not meaningfully help, there is no alternative for the patient anyways. As a result, in the first case we should take a lower value of $\alpha$ compared to the second. 
+
+:::{.callout-warning icon="false"}
+## The Historical Case for $\alpha = 0.05$
+There is a long tradition, one which persists across many fields today, of taking $\alpha = 0.05$, regardless of the situation. This tendency owes itself to early work by Ronald Fisher (a statistician largely responsible for our approach to statistical inference). In *Statistical Methods for Research Workers*, published in 1925, Fisher wrote "It is convenient to take this point as a limit in judging whether a deviation is to be considered significant or not. Deviations exceeding twice the standard deviation are thus formally regarded as significant." In 1926, Fisher further wrote "If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty (the $2$ per cent point), or one in a hundred (the $1$ per cent point). Personally, teh writer prefers to set a low standard of significance at the $5$ per cent point, and ignore entirely all results which fail to reach this level. A scientific fact should be regarded as experimentally established only if a properly designed experiment *rarely fails* to give this level of significance." 
+
+Fisher largely worked in well-designed experiments applied to the study of agriculture. It is probably prudent to read Fisher's advice of the $5\%$ level of significance as existing in this context. Even as the originator of taking $\alpha = 0.05$, Fisher acknowledged the importance of selecting a line based on the needs of the particular context. It is a somewhat unfortunate historical artefact that his declarative statements of $\alpha = 0.05$ took far stronger hold on the scientific world at large, as compared to his more contextual statements. Still, with our present understanding of hypothesis testing, we should always keep in mind the context of the question we are asking, and determine an appropriate level of significance within this context.
+:::
+
+Once a level of significance has been decided upon, we need to determine a method for establishing how we can assess whether the evidence in the sample achieves the level of significance or not. To do so, we rely on test statistics.
+
+### Test Statistics 
+Test statistics are statistics^[Recall that statistics are any quantities that can be computed given a sample of data.] with a special property. Notably, if the null hypothesis is true, a test statistic must have a known distribution, with all parameter values known as well. That is, if the sampling distribution of a statistic is fully specified assuming that the null hypothesis holds, this statistic is a test statistic.
+
+:::{#def-test-statistic}
+## Test Statistic
+A **test statistic** is any statistic, which is to a say a quantity computable given a specific sample, used for hypothesis testing. Test statistics must have the property that, supposing the null hypothesis is true, the sampling distribution of the statistic is completely specified. Often, the exact sampling distribution will not be known, but a statistic can still be regarded as a test statistic if an approximate distribution is available.
+:::
+
+:::{#def-null-distribution}
+## Null Distribution
+The sampling distribution of a test statistic, assuming the null hypothesis holds, is referred to as **the null distribution**. We may also say that the statistic follows a particular distribution, *under the null*. Suppose that $\widehat{\theta}$ is a test statistic with a null distribution $F$, then we can write $\widehat{\theta} \stackrel{H_0}{\sim} F$, to mean that, under the null, the statistic follows the distribution given by $F$.
+:::
+
+Because the null distribution is fully specified, it is possible to calculate probabilities associated with test statistics assuming that the null hypothesis holds. These probabilities will ultimately be assessed as evidence in relation to the level of significance. Typically, a test statistic can be derived by first considering a statistic, and then introducing dependence on the unknown parameters that are being tested. While these parameter values are unknown, generally speaking, if the null hypothesis is assumed to be true this will specify concretely the value of the parameter. For instance, suppose that we have a sample from a normal distribution, with a known variance ($\sigma^2$) but an unknown mean ($\mu$). We know that the sample mean will have a normal sampling distribution, giving $\overline{X} \sim N(\mu,\sigma^2)$. If we wish to test the null hypothesis $H_0: \mu = \mu_0$, for some constant $\mu_0$, then the null distribution of $\overline{X}$ becomes $N(\mu_0, \sigma^2)$. This stands as a test statistic since we exactly know the distribution under the null. More commonly we may take $\overline{X} - \mu_0$, resulting in $N(0, \sigma^2)$, or even $$\frac{\overline{X} - \mu_0}{\sigma} \stackrel{H_0}{\sim} N(0,1).$$ 
+
+In each case, the statistic has a known null distribution. As a result, we can solve for probabilities assuming that the null hypothesis were true. These probabilities are most commonly codified through the use of p-values. 
+
+### $p$-values and Critical Values
+To determine whether there is sufficient evidence to contradict the assumed null hypothesis, we must be able to translate statements regarding our test statistic into probability values. Specifically, we can "ask what values for our test statistic could we have observed that would have been at least as contradictory to the null hypothesis as the value that we *did* observe?". Then, using the null distribution, we can ask, "assuming the null hypothesis were true, how likely would it have been to observe an outcome of the test statistic at least as contradictory as the outcome we did observe?". The probability associated with this is called the $p$-value.
+
+:::{#def-p-value}
+## $p$-value
+The **$p$-value**, (or probability value), is a measure of how likely the observed data is assuming that the null hypothesis is true. Specifically, the $p$-value measures the probability of observing an outcome at least as extreme^[Here, extreme means contradictory to the null hypothesis. Note that the extremity of an observation depends on whether we have a one-tailed or two-tailed alternative. With a two-tailed alternative, we need to consider extreme values in both tails, with a one-tailed alternative, we simply need to consider values that are further away from the null value.] as the outcome that was observed, based on the test statistic. This probability indicates how likely the data were to be observed by random chance, assuming the null hypothesis holds.
+:::
+
+Suppose, for sake of example, we observe a value of a test statistic, $t=-2$. Under the null hypothesis, we know that $t$ should equal $0$. Then, we ask "what could we have observed that would have been *more* contradictory than what we did observe?" Suppose that we are considering a two-tailed alternative. Note that if we had observed any value of $t < -2$, this would have been more extreme. On the other hand, had we observed any value of $t \geq 2$, this also would have been more extreme. Thus, any value outside of the interval $(-2, 2)$ would have been more extreme. Thus, to work out the $p$-value in this case we would find $$P(\{T \leq -2\}\cup\{T \geq 2\}) = P(T \leq -2) + P(T \geq 2).$$ Had this been a one-tailed test, the $p$-value would have been only $P(T \leq -2)$. 
+
+Intuitively, the smaller the $p$-value, the moe evidence *against* the null hypothesis based on the sample. If the $p$-value were sufficiently low, then it would be the case that the observation we made would be sufficiently rare, assuming the null hypothesis were true. With a small enough probability, it is more reasonable to assume that the null hypothesis is not accurate, rather than assuming that we happened to make a particularly rare observation. To decide how small of a probability is small enough, we turn to our level of significance. If the $p$-value is below the selected level of significance, then we can conclude that the results are unlikely to have been observed due to chance, and instead, it is more likely to be observed as the alternative is a better explanation of the underlying reality. On the flip side, if the $p$-value is larger than the level of significance, then we did not see sufficient evidence in the sample to reject the null hypothesis. 
+
+The $p$-value can be interpreted as the level of significance at which the observed data contradict the null hypothesis. In this sense, the $p$-value serves as a measure of how strong the evidence against the null hypothesis will be. An alternative method for the same mathematical approach is to determine how large of a test statistic value would need to be observed in order to achieve a $p$-value equal to the level of significance. If we observe a test statistic that is larger than this value that is then equivalent to observing a $p$-value which is smaller (and vice versa). This value is known as a **critical value**.
+
+:::{#def-critical-value}
+## Critical Value
+A **critical value** is the value, derived through a null distribution, at which the corresponding $p$-value coincides with the significance level. That is, the critical value is the value, $t^*$, such that $$P(T \leq -t^*) + P(T \geq t^*) = \alpha,$$ assuming a two-tailed hypothesis test, where $T$ is the statistic of interest, and the probability is taken with respect to the null distribution. 
+:::
+
+The critical values are related to the percentiles of a distribution. Specifically, if $T$ has a symmetric distribution^[Such as the normal, or the $t$ distributions, which are both quite common.] then the critical value for a significance level $\alpha$ exactly coincides with the $1-\alpha/2$ percentile of the distribution. We saw these critical values being used when discussing confidence intervals, if we substitute the confidence level $p=1-\alpha$. If a critical value of $t^*$ is found then if we observe $t$ such that $|t| > t^*$, this is equivalent to observing a $p$-value that is less than $\alpha$. The $p$-value provides more information than a comparison to a critical value, however, the critical value technique can be easier to leverage for quick calculations, particularly when you are away from a computer. 
+
+With either the $p$-value calculated or the critical value for comparison, it is possible to draw scientific conclusions from the hypothesis test. 
+
+### Drawing Conclusions and Interpretation
+By comparing the calculated $p$-value to the level of significance, or the calculated test statistic to the critical value, we are able to draw conclusions from the hypothesis test. Our conclusion will provide an answer to whether we reject or fail to reject the null hypothesis. Specifically, if the $p$-value is less than the critical value^[Or, equivalently, if the test statistic is larger in magnitude than the critical value.] then we can reject the null hypothesis, in favour of the alternative. Practically this means that the level of evidence contradicting the null hypothesis in the observed data exceeds the level of evidence we needed to see, in the given context, in order to act as though the null hypothesis is not true. If the $p$-value is larger than the level of significance^[Or, equivalently, if the test statistic is smaller in magnitude than the critical value.] then we fail to reject the null hypothesis. This means that our sample did not contain sufficient contradictory evidence to the null hypothesis, based on the context of the situation. 
+
+Note, it is not possible in the hypothesis testing framework to accept the null hypothesis. This is because our level of evidence is always assessed for the degree to which it contradicts the null hypothesis. If our observations would be unlikely assuming that the null hypothesis were true, it is reasonable for us to act as though the null hypothesis were not true. If, on the other hand, our observations do not contradict the null hypothesis, we will continue to act as though it were true, even though we have not built up positive evidence in its favour. 
+
+When we reject the null hypothesis, we often say that the result is statistically significant at the $\alpha$ significance level. Statistical significance is a measure of strength of evidence against the null hypothesis. 
+
+:::{#def-statistical-significance}
+## Statistical Significance
+A result is said to be **statistically significant** if the null hypothesis is rejected. Specifically, the result is said to be statistically significant at a set level of significance, though, this is often implied from context. A result is said to be not statistically significant if the null hypothesis is not rejected.
+:::
+
+Statistical significance is the foundational language of scientific inquiry. Specifically, results that are statistically significant are typically held up as *actual results*, where those that are not statistically significant are treated as though they are the result of random noise. In order for a claim to be scientifically justified, it must be statistically significant. However, it is important to note that statistical significance is not a measure of how big or meaningful a particular effect will be. Instead, it is a measure of how strong the evidence for believing a result is. That is, you can have statistically significant findings that are not particularly meaningful. For instance, suppose that the parameter of interest is the effect of a medical treatment on life expectancy. If we find that the treatment improves the life expectancy for patients, and that this result is **statistically significant** we do not know whether the treatment improves the life expectancy by a lot or a little. All we know, in this context, is that there was strong evidence in the sample that the treatment actually did improve the outcome in this case.
+
+## Errors in Hypothesis Testing 
+When conducting a hypothesis test we are still dealing with uncertainty. As a result it is always possible that the conclusions that are drawn will be incorrect. By selecting an appropriate level of significance, and by selecting a test statistic with a known null distribution, we hope to minimize the possibility of errors. However, random variation can still lead to incorrect conclusions. When considering errors in the conclusions of a hypothesis test, there are two types of errors that can be made. We can either reject a null hypothesis that is actually true, or else we can fail to reject a null hypothesis that is actually false. These are^[Unhelpfully...] referred to as Type I and Type II errors, respectively.
+
+:::{#def-type-1-error}
+## Type I Error
+A **type I** error is a false positive. This occurs when a the null hypothesis is rejected, but the null hypothesis is actually true.
+:::
+
+:::{#def-type-2-error}
+## Type II Error
+A **type II** error is a false negative. This occurs when the null hypothesis is not rejected, but the null hypothesis is actually false. 
+:::
+
+Both type I and type II errors are problematic, and test procedures are preferable when they minimize the probabilities of each error type. Focusing on the probability that a type I error occurs, we can determine how likely this is by asking what the probability of rejecting the null hypothesis is, assuming that the null is true. That is, under the null hypothesis, what is the probability that we observe a statistic beyond the critical value. By definition, this is given by the level of significance. That is, the probability of a type I error is exactly equal to the level of significance, $\alpha$. 
+
+This gives an alternative method of interpreting the value of $\alpha$. Specifically, the value of $\alpha$ is the probability of making a false positive claim. Intuitively, we want this to be as small as possible, and so taking $\alpha$ to be smaller seems reasonable. Unfortunately, the probability of making a type I error tends to be inversely correlated with the probability of making a type II error. The probability of a type II error is, typically, less straightforward to determine. For it, we need to determine the probability, assuming that the null hypothesis is actually false, that we fail to reject the null. That is, under the alternative hypothesis, what is the probability that we observe a statistic value that is less than the critical value. While this is a challenging probability to determine^[This is challenging for several reasons. One is that the test statistic is defined so that it has a well-defined null distribution. Unfortunately, to work out the type II error probability, the null distribution is not helpful. Instead, we need to work out the distribution of the test statistic assuming the null is not true. Unfortunately, the alternative is typically a **composite hypothesis**. That is, the alternative is specified as a range of possible values, rather than a single point. If the alternative is $H_A: \mu \neq 0$, should we take $\mu = 1$ or $\mu = -1$ or $\mu = \pi$? It is not always clear. As a result, we tend to define the probability of a type II error on the basis of a function, say $\pi'(\theta)$ that gives the probability of a false negative for any given value $\theta$.] explicitly, we give this the label $\beta$. If we consider the probability $1-\beta$, this gives the probability of rejecting the null hypothesis when it is actually false, a *true* rejection. This is a quantity of particular interest in hypothesis testing, and as such, we refer to it as **the power** of a hypothesis test.
+
+:::{#def-power}
+## Power
+The **power** of a hypothesis test is the probability of rejecting the null hypothesis when the null hypothesis is, in fact, false. That is it gives the probability of a true rejection. The power of a test generally gives a measure of how well a test is able to detect true effects. Typically, the power of a test is denoted by $1-\beta$, where $\beta$ gives the probability of a type II error. 
+:::
+
+A hypothesis test would ideally have a low probability of a type I error, which is to say a low level of significance, and a corresponding high power. Unfortunately, typically as the level of significance of a test decreases, so too does the power, and vice versa. As a result, in any hypothesis testing scenario there is a need to make a deliberate trade-off between the level of significance and the power. Typically, hypothesis testing proceeds by selecting an appropriate level of significance for the given setting, and then among tests that achieve this level of significance, searching for a test with the highest power. This way the type I errors are controlled at a set level, and the type II errors are minimized. By recognizing that the probabilities of type I and type II errors need to be balanced against one another, it is possible to more intentionally select an appropriate level of significance. Specifically, it is worth thinking through, in any given setting, whether the prospect of a false positive or a false negative is a worse outcome, and then balancing the selected rates accordingly. 
+
+
++-----------------------------+---------------------+-------------------+
+|                             | $H_0$ is True       | $H_0$ is False    |
++=============================+:===================:+:=================:+
+| **$H_0$ is Rejected**       | False Positive <br> |  <br>             |
+|                             | Type I Error   <br> |  True Positive    |
+|                             | ($\alpha$)          |                   |
++-----------------------------+---------------------+-------------------+
+| **$H_0$ is Not Rejected**   |                     | False Negative<br>|
+|                             | True Negative  <br> | Type II Error <br>|
+|                             | Power ($1-\beta$)   | ($\beta$)         |
++-----------------------------+---------------------+-------------------+
+
+: Conclusions and errors of hypothesis testing. {.borderless tbl-colwidths="[20,20,20]"}
+
+## Hypothesis Testing for Population Means
+
+The general procedure for hypothesis testing is versatile and applies in a wide range of scenarios. Whenever there is a need to test a particular parameter, the outlined steps can be followed and, supposing that an appropriate test statistic is found, a valid hypothesis test will be derived. With that said, there are several parameters that are tested with enough frequency that the corresponding hypothesis testing procedures are worth studying specifically. In the following sections, we outline the specific procedures for testing hypotheses relating to population means and proportions. These procedures are specific instantiations of the previously outlined procedures, and serve as example use cases for the overarching framework of hypothesis testing.
+
+### $Z$ Tests for Population Means in Normal Populations
+Suppose that we are interested in testing hypotheses relating to the mean of a normal distribution, with a known variance. In this context, we have that $X_1,\dots,X_n \sim N(\mu, \sigma^2)$, where $\mu$ is unknown. We have seen that the sample mean, $\overline{X}$, has a sampling distribution given by $N(\mu,\dfrac{\sigma^2}{n})$. As a result, suppose that we wish to test the null hypothesis $H_0: \mu = \mu_0$. Then, assuming the null hypothesis holds, we must have that $E[\overline{X}] = \mu_0$, and more specifically, $$T = \frac{\overline{X} - \mu_0}{\sigma/\sqrt{n}} \stackrel{H_0}{\sim} N(0, 1).$$ Suppose that we observe $T = t$, then owing to symmetry we can compute the relevant $p$-value as $$P(T \leq -|t|) + P(T \geq |t|) = P(Z \leq |t|) + (1 - P(Z \leq -|t|)) = 2\Phi(-|t|).$$ If, instead, we had wished to use the critical value method, then we would need to solve $$2\Phi(-t^*) = \alpha \iff t^* = Z_{1-\alpha/2},$$ where $Z_{1-\alpha/2}$ is the critical value of the standard normal. If instead a one-tailed hypothesis test were run, we would take the $p$-value to be $\Phi(t)$ (or $1-\Phi(t)$), and the critical value as either $Z_{\alpha}$ or $Z_{1-\alpha}$, depending on whether the upper or lower tail test is being run. 
+
+```{r}
+#| echo: false
+#| label: z-test-plot
+#| fig.height: 3
+#| fig.cap: Illustration of the $Z$-test, depicting the observed statistic (solid line), area for the $p$-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at $1.96$, and the observed statistic is at $-2.473$. Thus, it falls outside of the critical value. Additionally, the shaded area gives the p-value, $0.013$, which is less than the implied significance level of $0.05$. Consider where the critical values would fall had $\alpha = 0.01$ been used instead. 
+
+library(ggplot2)
+library(ggthemes)
+
+# Define the value of t
+t <- 2.473
+
+# Create a sequence of x values for plotting the density curve
+x <- seq(-4, 4, length.out = 5000)
+
+# Calculate the normal density function
+y <- dnorm(x)
+
+# Create the ggplot
+ggplot() +
+  geom_area(data = data.frame(x = x[x <= -t], y = y[x <= -t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_area(data = data.frame(x = x[x >= t], y = y[x >= t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_line(aes(x = x, y = y), linewidth = 1.5, color = "#00BFC4") +
+  geom_vline(xintercept = -1.96, linetype = 2) + geom_vline(xintercept = 1.96, linetype = 2) + 
+  geom_vline(xintercept = -t, color = "#F8766D") + 
+  labs(x = "T", y = "") +
+  theme_clean() + 
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) + 
+  theme(plot.background = element_blank(), legend.position="none")
+```
+
+:::{.callout-tip icon="false"}
+## $Z$ Tests for Population Means in Normal Populations with Known Variances
+If data are selected from a normal population, with a known variance, then the **$Z$ test** is the most common test to apply for hypotheses surrounding the population mean. Specifically, the test statistic is $$T = \frac{\overline{X} - \mu_0}{\sigma/\sqrt{n}},$$ where $\mu_0$ is the value of the mean under the null hypothesis. Then, supposing $T=t$ is observed:
+
+1. If $H_0: \mu = \mu_0$ versus $H_A: \mu \neq \mu_0$, the $p$-value is $2\Phi(-|t|) = 2(1 - \Phi(|t|))$. The corresponding critical value is $Z_{1-\alpha/2}$.
+2. If $H_0: \mu \geq \mu_0$ versus $H_A: \mu < \mu_0$, the $p$-value is $\Phi(t)$. The corresponding critical value is $Z_{\alpha}$. 
+3. If $H_0: \mu \leq \mu_0$ versus $H_A: \mu > \mu_0$, the $p$-value is $1 - \Phi(t)$. The corresponding critical value is $Z_{1-\alpha}$.
+:::
+
+### One Sample $t$ Tests for Population Means
+Suppose instead that we are dealing with a population with an unknown variance, but we are still only interested in the mean of the population. If the population is either normally distributed, or else if the sample size is large enough so as to justify the use of the Central Limit Theorem, then we know that $\overline{X} \sim N(\mu, \sigma^2)$, however, $\sigma^2$ is unknown. We have seen that we can replace $\sigma$ with $s$, the sample standard deviation, and update the corresponding sampling distribution to a $t_{n-1}$. This result suggests that we run a $t$-test, taking $$T = \frac{\overline{X} - \mu_0}{s/\sqrt{n}} \stackrel{H_0}{\sim} t_{n-1}.$$ Suppose that we observe $T=t$, then owing to symmetry we can compute the relevant $p$-value as $$P(T \leq -|t|) + P(T \geq |t|) = 2F(-|t|),$$ where $F(t)$ is the cumulative distribution function for the $t_{n-1}$ distribution. If instead we wish to use the critical value method, then we would need to solve $$2F(-t^*) = \alpha \iff t^* = t_{n-1, 1-\alpha/2},$$ where $t_{n-1,1-\alpha/2}$ is the critical value from the $t_{n-1}$ distribution. If instead a one-tailed hypothesis test were run, we would take the $p$-value to be $F(t)$ (or $1-F(t)$), and the critical value as either $t_{n-1, \alpha}$ or $t_{n-1, 1-\alpha}$.
+
+```{r}
+#| echo: false
+#| label: t-test-plot
+#| fig.height: 3
+#| fig.cap: Illustration of the $t$-test, based on $n=32$, depicting the observed statistic (solid line), area for the $p$-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at $2.04$, and the observed statistic is at $1.81$. Thus, it falls inside of the critical value. Additionally, the shaded area gives the p-value, $0.080$, which is greater than the implied significance level of $0.05$. Consider where the critical values would fall had a one tailed hypothesis test been used instead.
+
+library(ggplot2)
+library(ggthemes)
+
+# Define the value of t
+t <- 1.81
+
+# Create a sequence of x values for plotting the density curve
+x <- seq(-4, 4, length.out = 5000)
+
+# Calculate the normal density function
+y <- dt(x, 31)
+
+# Create the ggplot
+ggplot() +
+  geom_area(data = data.frame(x = x[x <= -t], y = y[x <= -t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_area(data = data.frame(x = x[x >= t], y = y[x >= t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_line(aes(x = x, y = y), linewidth = 1.5, color = "#00BFC4") +
+  geom_vline(xintercept = -2.04, linetype = 2) + geom_vline(xintercept = 2.04, linetype = 2) + 
+  geom_vline(xintercept = -t, color = "#F8766D") + 
+  labs(x = "T", y = "") +
+  theme_clean() + 
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) + 
+  theme(plot.background = element_blank(), legend.position="none")
+```
+
+:::{.callout-tip icon="false"}
+## $t$ Tests for Population Means in Normal Populations or Large Samples
+If data are selected from a normal population, or from a non-normal population with a sufficiently large sample size, with an unknown variance, then the **$t$ test** is the most common test to apply for hypotheses surrounding the population mean. Specifically, the test statistic is $$T = \frac{\overline{X} - \mu_0}{s/\sqrt{n}},$$ where $\mu_0$ is the value of the mean under the null hypothesis. Define the sample size to be $n$. Then, supposing $T=t$ is observed, and taking $F(t)$ to be the cumulative distribution function for the $t_{n-1}$ distribution:
+
+1. If $H_0: \mu = \mu_0$ versus $H_A: \mu \neq \mu_0$, the $p$-value is $2F(-|t|) = 2(1 - F(|t|))$. The corresponding critical value is $t_{n-1, 1-\alpha/2}$.
+2. If $H_0: \mu \geq \mu_0$ versus $H_A: \mu < \mu_0$, the $p$-value is $F(t)$. The corresponding critical value is $t_{n-1, \alpha}$. 
+3. If $H_0: \mu \leq \mu_0$ versus $H_A: \mu > \mu_0$, the $p$-value is $1 - F(t)$. The corresponding critical value is $t_{n-1, 1-\alpha}$.
+:::
+
+### Hypothesis Tests for Population Proportions
+Suppose that instead of concern with a population mean, we are instead concerned with a population proportion. We can either view the data as coming from a sample of $n$ independent and identically distributed Bernoulli random variables, with success probability $p$, or, equivalently, we can view these data as a single realization from a $\text{Bin}(n, p)$ distribution. In the first case, take $$\widehat{p} = \frac{1}{n}\sum_{i=1}^n X_i = \overline{X},$$ and so through the Central Limit Theorem, as long as $n$ is sufficiently large, $\widehat{p}$ will be approximately normal.^[From the binomial we can justify the equivalent conclusion by first considering the normal approximation to the binomial, and then scaling the results as required.] As this point, supposing we are testing a hypothesis of $p$ as it relates to $p_0$, then under the null $\widehat{p} \sim N(p_0, p_0(1-p_0)/n)$. As such, $$T = \frac{\widehat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} \stackrel{H_0}{\sim} N(0, 1).$$ Correspondingly, we can apply a $Z$-test for the population proportions, following exactly the same procedure outlined above.
+
+Note that in the case of a population proportion, the specification of the proportion under the null hypothesis also specifies the population variance. This is because in a Bernoulli distribution, the mean and variance are governed by a single parameter. This means that we need not estimate the variance from the sample, nor consider the $t$ distribution. If the null hypothesis holds, then the population mean will be exactly $p_0$ and the variance $p_0(1-p_0)/n$. However, this is still an approximate hypothesis test since it relies on the use of the Central Limit Theorem to justify normality. 
+
+## Further Considerations of Hypothesis Testing
+
+The process of hypothesis testing is used extensively across a wide variety of scenarios. It is quite flexible, and can accommodate any types of data or any hypotheses of interest, so long as a suitable test statistic and null distribution can be derived. With that said, hypothesis testing is not a panacea for scientific inquiry. It needs to be carefully and critically applied, informed by the context of the situation and driven by our underlying subject-matter expertise. We saw the importance of this when informing the hypothesis to test, whether to use a one-sided or two-sided alternative, and in selecting a threshold for the level of significance. At every stage of the process care is required in order to ensure that the results of our hypothesis tests are useful and valid.
+
+### Practical Significance versus Statistical Significance
+
+### The Connection Between Hypothesis Testing and Confidence Levels
+
+### Critiques of Null Hypothesis Significance Testing
+
+## Hypothesis Testing in `R`
+
+## Exercises {.unnumbered}

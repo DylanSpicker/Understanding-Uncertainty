@@ -1,5 +1,4 @@
 ```{r, echo = FALSE, warning = FALSE}
-library(webexercises)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 

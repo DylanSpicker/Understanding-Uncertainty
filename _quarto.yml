@@ -5,8 +5,8 @@ project:
     - "webex.js"
   preview:
     port: 9123
-    browser: false
-    host: 0.0.0.0
+    host: 127.0.0.1
+    watch-inputs: true
   
 book:
   title: "Understanding Uncertainty"
