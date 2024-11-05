@@ -511,11 +511,11 @@ a. A friend of yours claims that in fact more telephone numbers are odd than eve
 :::
 
 :::{#exr-14.15}
-Suppose that the following output was obtained from a sample of tensile strength observations. Using these statistics, compute a $99\%$ confidence interval for the true average tensile strength, and interpret the result. \begin{verbatim}
-N    Mean    Median  Std. Dev  SE. Mean    Minimum     Maximum
-153   135.39   135.40    4.59      0.37       122.20      147.70
-\end{verbatim}
+Suppose that the following output was obtained from a sample of tensile strength observations. Using these statistics, compute a $99\%$ confidence interval for the true average tensile strength, and interpret the result. 
 
+|   N   |   Mean   |  Median  | Std. Dev | SE. Mean | Minimum  | Maximum  |
+| :---: | :------: | :------: | :------: | :------: | :------: | :------: |
+| $153$ | $135.39$ | $135.40$ |  $4.59$  |  $0.37$  | $122.20$ | $147.70$ |
 :::
 
 :::{#exr-14.16}

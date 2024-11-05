@@ -15,7 +15,9 @@ c. In light of these probabilities, what is your conclusion about the die?
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-.... 
+a. If the die were actually fair, then we know the number of high values should follow a $\text{Bin}(50, 0.5)$. Thus, we want $P(X \leq 21)$. We can compute this directly from the binomial (for instance, using `R`), which would given `r round(pbinom(21, size = 50, prob = 0.5), 3)`. Alternatively, we can use the normal approximation to the binomial. In this case, we would find that $X$ share an approximate distribution with $W \sim N(25, 12.5)$, and $P(X \leq 21) \approx P(W \leq 21.5)$. Then, $$P(W \leq 21.5) = P(Z \leq \frac{21.5-25}{\sqrt{12.5}}) = \Phi(-0.99) \approx \Phi(-1).$$ This can be approximated via the empirical rule as $$1 - (0.5 + \frac{0.68}{2}) = 0.16,$$ which is near the value calculated directly from the binomial. Thus, there is about a $16\%$ chance that the die would produce this few high numbers, if it were fair.
+b. Using the exact same procedure as above, we get $X \sim \text{Bin}(100, 0.5)$ approximated by $W \sim N(50, 25)$. This gives either a direct binomial probability of approximately `r round(pbinom(35, size = 100, prob = 0.5),3)`. For the approximation, we get $$P(W \leq 35.5) = P(Z \leq \frac{35.5 - 50}{5}) = \Phi(-2.9) \approx \Phi(-3).$$ This is, from the empirical rule, approximately $$1 - (0.5 + \frac{0.997}{2}) = 0.0015.$$
+c. Based on the $100$ rolls of the die, it seems very unlikely that the die is actually fair. Sadie could be getting very unlucky, however, if the die is fair there is about a $1$ in $1000$ chance that this few high rolls would be seen. Thus, it is more reasonable to assume that the die is not actually fair than it is to assume that Sadie has just been very unlucky. The evidence after $50$ rolls is far less strong, being approximately $1$ in $5$. 
 ::::
 :::
 
@@ -375,3 +377,217 @@ t.test(X, conf.level = 0.9)
 
 
 ## Exercises {.unnumbered}
+
+:::{#exr-15.1}
+To test the hypothesis that a coin is fair, the following decision rule is adopted: 
+Reject $H_0$ if the number of heads in a sample of size $100$ is not at least $40$ and at most $60$ and fail to reject $H_0$ otherwise.
+
+a. Find the Type I error probability.
+a. What conclusion would you draw if the sample of $100$ tosses yielded $53$ heads? $60$ heads? 
+a. Could your conclusions in (b) be wrong? Explain.
+
+:::
+
+:::{#exr-15.2}
+a. Design a decision rule, based on counting the number of heads, to test the hypothesis that a coin is fair if a sample of $64$ tosses of the coin is taken, assuming $\alpha=0.05$. 
+a. Does your proposed decision rule have significance of exactly $\alpha$? If yes, explain. If not, how could the rule be modified to achieve this?
+a. How could you design the decision rule to completely avoid a Type II error?
+:::
+
+:::{#exr-15.3}
+For the following scenarios, indicate a reasonable $\alpha$ level for a significance test, assuming that the results of a significance test will translate into decisions. Justify your answer. 
+
+a. A new drug is being developed for a common condition with multiple treatment options available. Safety tests have been completed, and the current study aims to evaluate its effectiveness.
+a. In the field of civil engineering, a new construction method is being tested for building stability. The cost of potential failure is high. 
+a. A clinical trial is conducted to determine whether a new medical device is more effective than the current standard of care for a common health condition.
+a. A software development team is testing a new algorithm for data compression. The current compression method is widely accepted and used. 
+a. An environmental study is conducted to assess the impact of a new manufacturing process on air quality in a city.
+a. A pharmaceutical company is conducting a study to evaluate the effectiveness of a new vaccine against a highly contagious disease. Safety data is available.
+a. A new dietary supplement is being tested for its potential to improve cognitive function in adults. Safety data is limited.
+a. In the context of transportation engineering, a new traffic management system is being evaluated for its impact on reducing congestion.
+a. A study is conducted to determine whether a new teaching method improves student performance in mathematics compared to the traditional method.
+a. A marketing team is testing the effectiveness of two different advertising campaigns for a popular consumer product.
+a. A public health study examines the association between a specific lifestyle factor and the risk of a common chronic disease. a. A survey is conducted to assess public opinion on a proposed policy change in a democratic society. 
+a. In the context of entertainment and media, a study aims to determine whether a new type of streaming service subscription increases customer satisfaction compared to traditional cable TV. 
+a. An architectural firm is testing a new building material for its energy efficiency in construction. The current material is well-established.
+a. A study investigates whether a new social media platform leads to increased user engagement compared to existing platforms.
+a. A new drug is being trialled to treat a rare disease which does not currently have any viable treatment pathways. The drug has been proven to be safe and the current testing is simply around efficacy.
+a. A new drug is being trialled to treat a rare disease which currently has a moderately effective treatment. The drug has been proven to be safe and the current testing is simply around the efficacy in comparison to the existing treatment.
+a. A new drug is being trialled to treat a rare disease which currently has a moderately effective treatment. The drug has not been tested for safety. The current testing is around the efficacy is comparison to the existing treatment. 
+a. You have a bet with a friend, with no wager beyond ``bragging rights'', over whether green skittles appear less frequently than red skittles in bags. 
+:::
+
+:::{#exr-15.4}
+For each of the following, indicate whether it is a valid statistical hypothesis or not, and why. 
+
+a. $H: \sigma > 100$;
+a. $H: s^2 \leq 0.2$;
+a. $H: \overline{X} - \overline{Y} = 5$;
+a. $H: \lambda \leq 2$;
+a. $H: \theta = 10$;
+a. $H: \frac{\sigma_1}{\sigma_2} < 1$.
+:::
+
+:::{#exr-15.5}
+For each of the following, draw the correct conclusion (with statement) regarding the test of the hypothesis with the associated p-value. Suppose that each test is for $H_0: \theta = 0$, where $\theta$ represents the average error in length from a manufacturing process. 
+
+a. $p = 0.084$, $\alpha = 0.05$;
+a. $p = 0.003$, $\alpha = 0.001$;
+a. $p = 0.498$, $\alpha = 0.05$;
+a. $p = 0.084$, $\alpha = 0.10$;
+a. $p = 0.039$, $\alpha = 0.01$;
+a. $p = 0.218$, $\alpha = 0.10$.
+:::
+
+:::{#exr-15.6}
+To determine whether the pipe welds in a nuclear power plant meet specifications, a random sample of welds is selected, and tests are conducted on each weld in the sample. Weld strength is measured as the force required to break the weld. Suppose the specifications state that mean strength of welds should exceed $100$ pounds per square inch. The inspection team decides to test $H_0: \mu \leq 100$ versus $H_1: \mu > 100$. Explain why it might be preferable to use this $H_1$ rather than $\mu < 100$.
+:::
+
+:::{#exr-15.7}
+Let $\mu$ denote the true average radioactivity level. The value $5$ is considered the dividing line between safe and unsafe water. Would you recommend testing $H_0: \mu \leq 5$ or $H_0: \mu \geq 5$? Why?
+:::
+
+:::{#exr-15.8}
+Before agreeing to purchase a large order of a material, a company wants to see conclusive evidence that the true standard deviation of the material thickness is less than $.05$mm. What hypotheses should be tested, and why? In this context, what are the type I and type II errors?
+:::
+
+:::{#exr-15.9}
+Many older homes have electrical systems that use fuses rather than circuit breakers. A manufacturer of $40$-amp fuses wants to make sure that the mean amperage at which its fuses burn out is in fact 40. To verify the amperage of the fuses, a sample of fuses is to be selected and inspected. If a hypothesis test were to be performed on the resulting data, what null and alternative hypotheses would be of interest to the manufacturer? Describe type I and type II errors in the context of this problem situation.
+:::
+
+:::{#exr-15.10}
+Water samples are taken from water used for cooling as it is being discharged from a power plant into a river. It has been determined that as long as the mean temperature of the discharged water is at most $150$F, there will be no negative effects on the river's ecosystem. To investigate whether the plant is in compliance with regulations, $50$ water samples will be taken at randomly selected times and the temperature of each sample recorded. The resulting data will be used to test the hypotheses $H_0: \mu \leq 150$ versus $H_1: \mu > 150$. In the context of this situation, describe type I and type II errors. Which type of error would you consider more serious? Explain.
+:::
+
+:::{#exr-15.11}
+A regular type of laminate is currently being used by a manufacturer of circuit boards. A special laminate has been developed to reduce warpage. The regular laminate will be used on one sample of specimens and the special laminate on another sample, and the amount of warpage will then be determined for each specimen. The manufacturer will then switch to the special laminate only if it can be demonstrated that the true average amount of warpage for that laminate is less than for the regular laminate. State the relevant hypotheses, and describe the type I and type II errors in the context of this situation.
+:::
+
+
+:::{#exr-15.12}
+The breaking strength of cables produced by a manufacturer have mean $1800$ lbs and standard deviation of $100$ lbs. By a new technique in the manufacturing process it is claimed that the breaking strength can be increased. To test this claim a sample of $50$ cables is tested and it is found that the mean breaking strength is $1850$. Can we support the claim with a a $0.01$ level of significance?
+:::
+
+:::{#exr-15.13}
+Recently, many companies have been experimenting with telecommuting. One possible benefit from the company's perspective is to reduce the number of sick days taken. Suppose that it is known that at one company employees have taken a mean of $5.4$ sick days over the past year. A sample of $80$ employees is taken after the policy change, and these employees average $4.5$ sick days with a standard deviation of $2.7$. Let $\mu$ represent the mean number of sick days for all employees. Test the hypothesis $H_0: \mu \geq 5.4$.
+:::
+
+:::{#exr-15.14}
+A certain type of stainless steel powder is supposed to have a mean particle diameter of $\mu = 15\nu$m. A random sample of $87$ particles had a mean diameter of $15.2\mu$m, with standard deviation of $1.8\mu$m. Test the hypothesis $H_0: \mu = 15$. 
+:::
+
+:::{#exr-15.15}
+An engineer takes a large number of independent measurements of the length of a component and obtains $\overline{X} = 5.2$mm and standard deviation $0.1$mm. Use this information to find the p-value for testing $H_0: \mu = 5.0$.
+:::
+
+:::{#exr-15.16}
+Consider the following output from statistical software. Using this information: 
+
+a. State the details of the test that was performed, along with the conclusion.
+a. Use the output to test $H_0: \mu \geq 73.6$. 
+a. Use the output to compute a $99\%$ confidence interval for $\mu$.
+
+> **One-sample:**
+> 
+> $H_0: \mu = 73.5$. 
+
+| Variable |   N   |   Mean    | Std. Dev | S.E. Mean |        95% CI        |    Z    |    P    |
+| :------- | :---: | :-------: | :------: | :-------: | :------------------: | :-----: | :-----: |
+| X        | $145$ | $73.2461$ | $2.364$  | $0.1963$  | $(72.8614, 73.6308)$ | $-1.29$ | $0.196$ |
+
+:::
+
+:::{#exr-15.17}
+In the past a machine has produced washers having a mean thickness of $0.05$ inches. To determine whether the machine is in proper working order, a sample of $10$ washers is chosen for which the mean thickness is $0.053$ inches and the standard deviation is $0.003$ inches. Test the hypothesis that the machine is in proper working order using a level of significance of $0.05$.
+:::
+
+:::{#exr-15.18}
+A test of the breaking strengths of $6$ ropes manufactured by a company showed a mean breaking strength of $7750$ lb and a standard deviation of $145$ lb, whereas the manufacturer claimed a mean breaking strength of $8000$ lb. Do the data contradict the manufacturers claim?
+:::
+
+:::{#exr-15.19}
+A machine produces marbles whose diameters are normally distributed with mean $12.00$mm. After modification of the machine, the diameters of a random sample of $105$ marbles produced were found to have a mean of $12.010$mm and a standard deviation of $0.05$mm. Would you conclude that the change has affected the mean diameter produced by the machine?
+:::
+
+:::{#exr-15.20}
+The following hypothetical data sets represent the weighings of a standard weight that is known to have a mass of $100$g. Assume that the readings are a random sample from a population that follows the normal curve. For each of the following perform a hypothesis test indicating whether the scale is properly calibrated, or explain why it is not possible to do so. 
+
+a. $\{100.02, 99.98, 100.03\}$;
+a. $\{100.01\}$.
+
+:::
+
+:::{#exr-15.21}
+A certain manufactured product is supposed to contain $23\%$ potassium by weight. A sample of $10$ specimens of this product have an average percentage of $23.2\%$ with a standard deviation of $0.2\%$. Run a hypothesis test to determine whether the process is correctly calibrated or not. 
+:::
+
+:::{#exr-15.22}
+Consider the following output from statistical software. Using this information: 
+
+a. State the details of the test that was performed, along with the conclusion.
+a. Use the output to test $H_0: \mu \geq 6.5$. 
+a. Use the output to compute a $99\%$ confidence interval for $\mu$.
+
+> **One-sample:**
+> 
+> $H_0: \mu \leq 5.5$. 
+
+| Variable |  N  |   Mean    | Std. Dev  | S.E. Mean | 95% Lower Bound |   Z    |    P    |
+| :------- | :-: | :-------: | :-------: | :-------: | :-------------: | :----: | :-----: |
+| X        | $5$ | $5.92563$ | $0.15755$ | $0.07046$ |    $5.77542$    | $6.04$ | $0.002$ |
+:::
+
+:::{#exr-15.23}
+A random sample of $300$ electronic components manufactured by a certain process are tested, and $25$ are found to be defective. Let $p$ represent the proportion of components manufactured by this process that are defective. The process engineer claims that $p \leq 0.05$. Does the sample provide enough evidence to reject this claim?
+:::
+
+:::{#exr-15.24}
+A survey of $444$ HIV-positive smokers was taken, with $281$ male and $163$ female respondents. Consider this to be a simple random sample. Can you conclude that more than $60\%$ of HIV-positive smokers are male?
+:::
+
+:::{#exr-15.25}
+A weight that was known to be $150$g was placed on each of $50$ kitchen scales. The readings on $29$ of the scales were too light, and the remaining $21$ were too heavy. Can you conclude that more than half of kitchen scales underestimate weight?
+:::
+
+:::{#exr-15.26}
+A study of $304$ individuals were asked to choose a physician based on hypothetical descriptions. One was described as having high technical skills, while the other was described as having high interpersonal skills. $62\%$ of the people chose the physician with high technical skills. Can you conclude that more than half of patients prefer a physician with high technical skills?
+:::
+
+:::{#exr-15.27}
+In a survey of $500$ residents in a certain town, $274$ said they were opposed to the construction of a new mall. Test whether more than half of the residents are opposed to the construction.
+:::
+
+:::{#exr-15.28}
+Of $113$ people undergoing a certain hip procedure, $65$ had surgery on their right hip. Can you conclude that there is a difference in frequency of this procedure between the right and left hips?
+:::
+
+:::{#exr-15.29}
+A grinding machine will be qualified for a particular task if it can be shown to produce less than $8\%$ defective parts. In a random sample of $300$ parts, $12$ were defective. Can the machine be qualified?
+:::
+
+:::{#exr-15.30}
+The manufacturer for a patented medicine claimed that it was $90\%$ effective in relieving an allergy for a period of $8$ hours. In a sample of $200$ people who had the allergy, the medicine provided relief for $160$ people. Determine the legitimacy of the manufacturers claim.
+:::
+
+:::{#exr-15.31}
+Describe the difference between practical significance and statistical significance.
+:::
+
+:::{#exr-15.32}
+Give an example of something which is statistically significant but not practically significant.
+:::
+
+:::{#exr-15.33}
+Can you find a result which is practically significant but not statistically significant? Explain.
+:::
+
+:::{#exr-15.34}
+Consider carrying out $m$ tests of hypotheses, independently, based on a significance level of $0.01$. 
+
+a. What is the probability of committing at least $1$ type I error with $m=5$? With $m=10$?
+a. How many tests would need to be performed until the probability of a type I error exceeds $0.5$?
+:::
+
+:::{#exr-15.35}
+Suppose that a $90\%$ confidence interval for $\theta$ is found to be $(a, b)$. Describe how this can be used to test the hypothesis $H_0:\theta = c$. 
+:::
