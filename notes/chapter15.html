@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -37,10 +37,13 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9cf7f73ae95708c47935cfd4a35bc870.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -68,7 +71,663 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">.monaco-editor pre {
+  background-color: unset !important;
+}
 
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-button-run {
+  background-color: #EEEEEE;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; /* Extra styling for consistency */
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration: none;
+  /* vertical-align: middle; */ /* Prevents a space from appearing between the code cell and button */
+  -webkit-user-select: none;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button-run:hover {
+  color: #000;
+  background-color: #e3e6ea;
+  border-color: #e1e5e9;
+}
+
+.qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+  pointer-events: none;
+  opacity: .65
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+</style>
+<script type="module">// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Determine if we need to install R packages
+var installRPackagesList = [''];
+// Check to see if we have an empty array, if we do set to skip the installation.
+var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+var autoloadRPackages = true;
+
+// Display a startup message?
+var showStartupMessage = true;
+var showHeaderMessage = false;
+if (showStartupMessage) {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  var startupMessageWebR = document.createElement("p");
+  startupMessageWebR.innerText = "🟡 Loading...";
+  startupMessageWebR.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  startupMessageWebR.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(startupMessageWebR);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML) {
+    // Append to the existing "title-block-header" element
+    headerHTML.appendChild(quartoTitleMeta);
+  } else if (headerRevealJS) {
+    // If using RevealJS, add to the "title-slide" div
+    headerRevealJS.appendChild(firstInnerDiv);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+// Retrieve the webr.mjs
+import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.2/webr.mjs";
+
+// Populate WebR options with defaults or new values based on 
+// webr meta
+globalThis.webR = new WebR({
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": ChannelType.Automatic
+});
+
+// Initialization WebR
+await webR.init();
+
+// Setup a shelter
+globalThis.webRCodeShelter = await new webR.Shelter();
+
+// Setup a pager to allow processing help documentation 
+await webR.evalRVoid('webr::pager_install()'); 
+
+// Function to set the button text
+function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message
+function qwebrUpdateStatusHeader(message) {
+  startupMessageWebR.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await globalThis.webR.installPackages([packageName]);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await globalThis.webR.evalRVoid(`library(${packageName});`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+    
+    // Display the update
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await globalThis.webR.flush();
+  }
+}
+
+
+// Check to see if any packages need to be installed
+if (setupRPackages) {
+  // Obtain only a unique list of packages
+  const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+  // Install R packages one at a time (either silently or with a status update)
+  await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+  if(autoloadRPackages) {
+    // Load R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+  }
+}
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+// Release document status as ready
+if (showStartupMessage) {
+  startupMessageWebR.innerText = "🟢 Ready!"
+}
+
+qwebrSetInteractiveButtonState(
+  `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+  true
+);
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};</script>
+<script type="module">// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+    Interactive: 'interactive',
+    Setup: 'setup',
+    Output: 'output',
+});
+
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await webR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await webR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // ---- 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid(`webr::canvas(width=${options["fig-width"]}, height=${options["fig-height"]})`);
+
+    const result = await webRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    try {
+
+        // Stop creating images
+        await webR.evalRVoid("dev.off()");
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${qwebrEscapeHTMLCharacters(evt.data)}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await webR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * options["fig-width"]);
+                canvas.setAttribute("height", 2 * options["fig-height"]);
+                canvas.style.width = "700px";
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            elements.outputGraphDiv.appendChild(canvas);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        webRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    evalType = EvalTypes.Interactive,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { "fig-width": 504, "fig-height": 360 };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+</script>
+<script type="module">// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (insertElement,
+  qwebrCounter, 
+  evalType = EvalTypes.Interactive,
+  options = {}) {
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive: 
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter);
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter);
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter);
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  insertElement.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-interactive-area';
+
+  // Create button element
+  var button = document.createElement('button');
+  button.className = 'btn btn-default qwebr-button-run';
+  button.disabled = true;
+  button.type = 'button';
+  button.id = 'qwebr-button-run-' + qwebrCounter;
+  button.textContent = '🟡 Loading webR...';
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(button);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-area';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-setup-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-setup-area';
+
+  return mainDiv;
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -244,11 +903,181 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-framework-of-null-hypothesis-significance-testing" id="toc-the-framework-of-null-hypothesis-significance-testing" class="nav-link active" data-scroll-target="#the-framework-of-null-hypothesis-significance-testing"><span class="header-section-number">15.1</span> The Framework of Null Hypothesis Significance Testing</a>
+  <ul class="collapse">
+  <li><a href="#the-null-and-alternative-hypothesis" id="toc-the-null-and-alternative-hypothesis" class="nav-link" data-scroll-target="#the-null-and-alternative-hypothesis"><span class="header-section-number">15.1.1</span> The Null and Alternative Hypothesis</a></li>
+  <li><a href="#significance-levels" id="toc-significance-levels" class="nav-link" data-scroll-target="#significance-levels"><span class="header-section-number">15.1.2</span> Significance Levels</a></li>
+  <li><a href="#test-statistics" id="toc-test-statistics" class="nav-link" data-scroll-target="#test-statistics"><span class="header-section-number">15.1.3</span> Test Statistics</a></li>
+  <li><a href="#p-values-and-critical-values" id="toc-p-values-and-critical-values" class="nav-link" data-scroll-target="#p-values-and-critical-values"><span class="header-section-number">15.1.4</span> <span class="math inline">\(p\)</span>-values and Critical Values</a></li>
+  <li><a href="#drawing-conclusions-and-interpretation" id="toc-drawing-conclusions-and-interpretation" class="nav-link" data-scroll-target="#drawing-conclusions-and-interpretation"><span class="header-section-number">15.1.5</span> Drawing Conclusions and Interpretation</a></li>
+  </ul></li>
+  <li><a href="#errors-in-hypothesis-testing" id="toc-errors-in-hypothesis-testing" class="nav-link" data-scroll-target="#errors-in-hypothesis-testing"><span class="header-section-number">15.2</span> Errors in Hypothesis Testing</a></li>
+  <li><a href="#hypothesis-testing-for-population-means" id="toc-hypothesis-testing-for-population-means" class="nav-link" data-scroll-target="#hypothesis-testing-for-population-means"><span class="header-section-number">15.3</span> Hypothesis Testing for Population Means</a>
+  <ul class="collapse">
+  <li><a href="#z-tests-for-population-means-in-normal-populations" id="toc-z-tests-for-population-means-in-normal-populations" class="nav-link" data-scroll-target="#z-tests-for-population-means-in-normal-populations"><span class="header-section-number">15.3.1</span> <span class="math inline">\(Z\)</span> Tests for Population Means in Normal Populations</a></li>
+  <li><a href="#one-sample-t-tests-for-population-means" id="toc-one-sample-t-tests-for-population-means" class="nav-link" data-scroll-target="#one-sample-t-tests-for-population-means"><span class="header-section-number">15.3.2</span> One Sample <span class="math inline">\(t\)</span> Tests for Population Means</a></li>
+  <li><a href="#hypothesis-tests-for-population-proportions" id="toc-hypothesis-tests-for-population-proportions" class="nav-link" data-scroll-target="#hypothesis-tests-for-population-proportions"><span class="header-section-number">15.3.3</span> Hypothesis Tests for Population Proportions</a></li>
+  </ul></li>
+  <li><a href="#further-considerations-of-hypothesis-testing" id="toc-further-considerations-of-hypothesis-testing" class="nav-link" data-scroll-target="#further-considerations-of-hypothesis-testing"><span class="header-section-number">15.4</span> Further Considerations of Hypothesis Testing</a>
+  <ul class="collapse">
+  <li><a href="#practical-significance-versus-statistical-significance" id="toc-practical-significance-versus-statistical-significance" class="nav-link" data-scroll-target="#practical-significance-versus-statistical-significance"><span class="header-section-number">15.4.1</span> Practical Significance versus Statistical Significance</a></li>
+  <li><a href="#the-connection-between-hypothesis-testing-and-confidence-levels" id="toc-the-connection-between-hypothesis-testing-and-confidence-levels" class="nav-link" data-scroll-target="#the-connection-between-hypothesis-testing-and-confidence-levels"><span class="header-section-number">15.4.2</span> The Connection Between Hypothesis Testing and Confidence Levels</a></li>
+  <li><a href="#critiques-of-null-hypothesis-significance-testing" id="toc-critiques-of-null-hypothesis-significance-testing" class="nav-link" data-scroll-target="#critiques-of-null-hypothesis-significance-testing"><span class="header-section-number">15.4.3</span> Critiques of Null Hypothesis Significance Testing</a></li>
+  </ul></li>
+  <li><a href="#hypothesis-testing-in-r" id="toc-hypothesis-testing-in-r" class="nav-link" data-scroll-target="#hypothesis-testing-in-r"><span class="header-section-number">15.5</span> Hypothesis Testing in <code>R</code></a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
+<script type="module">// Global dictionary to store Monaco Editor instances
+const qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (
+    initialCode, 
+    qwebrCounter) {
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value
+    editor.__qwebrinitialCode = initialCode;
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter,
+            EvalTypes.Interactive);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, EvalTypes.Interactive);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, EvalTypes.Interactive);
+  };
+
+}</script>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter10.html">Part 2: Statistics</a></li><li class="breadcrumb-item"><a href="../notes/chapter15.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">The Basics of Null Hypothesis Significance Testing</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -269,8 +1098,793 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="the-framework-of-null-hypothesis-significance-testing" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="the-framework-of-null-hypothesis-significance-testing"><span class="header-section-number">15.1</span> The Framework of Null Hypothesis Significance Testing</h2>
+<p>Over the past two chapters the focus has been on <em>estimation procedures</em> for parameters of interest. Point estimation gives us methods to make inferences regarding the specific value of a particular parameter, while interval estimation permits the discussion of the uncertainty of these estimates. Taken together these estimation techniques allow for a deep understanding of the value of parameters, based on observed samples. We know that every sample we take is likely to result in different estimates based on sampling variability. Correspondingly, the specific inferences that are made regarding the parameter values will depend on the specific sample that is observed. Using interval estimates we hope to capture how uncertain our knowledge is, however, it is an unavoidable truth that any conclusions we draw are subject to the whims of the sample. A fundamental question we can ask, in light of this truth, is “how are we able to draw specific conclusions or make decisions on the basis of our estimated values?”</p>
+<p>The framework of <strong>null hypothesis significance testing (NHST)</strong>, often referred to as simply <strong>hypothesis testing</strong>, provides one mechanism for making decisions regarding the value(s) of parameter(s) using observed samples. In a hypothesis test the observed sample is used to weigh evidence against competing explanations for what is true in the population. We make educated guesses regarding the likely value of a population parameter and then determine how likely it would be to observe the sample that we have actually observed, if our guesses are actually true. If the sample is likely to be produced under our specified version of truth, then the sample provides no evidence against the guesses. If, on the other hand, the sample is unlikely given our specified version of the truth, this serves as evidence against our guesses.</p>
+<div id="exm-the-weight-die" class="theorem example">
+<p><span class="theorem-title"><strong>Example 15.1 (Sadie and the Weighted Die)</strong></span> Sadie has been playing a board game that was borrowed from Garth, and has been feeling particularly unlucky based on dice rolls. Uncertain if the die provided in the game is actually fair, Sadie decides to test it. Specifically, in the game it benefits the player to roll high numbers and is a detriment to rolling low numbers. Sadie decides to roll the die many times, recording whether each roll is high (greater than or equal to <span class="math inline">\(3\)</span>) or low (less than or equal to <span class="math inline">\(3\)</span>).</p>
+<ol type="a">
+<li>Suppose Sadie rolls the die <span class="math inline">\(50\)</span> times and observes <span class="math inline">\(21\)</span> high values and <span class="math inline">\(29\)</span> low values. If the die were fair, approximately how likely is it that <span class="math inline">\(21\)</span> or fewer high values would be rolled in <span class="math inline">\(50\)</span> rolls?</li>
+<li>Suppose Sadie continues rolling, and in <span class="math inline">\(100\)</span> rolls of the die, observes <span class="math inline">\(35\)</span> high values and <span class="math inline">\(65\)</span> low values. If the die were fair, approximately how likely is it that <span class="math inline">\(35\)</span> or fewer high values would be rolled in <span class="math inline">\(100\)</span> rolls?</li>
+<li>In light of these probabilities, what is your conclusion about the die?</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>If the die were actually fair, then we know the number of high values should follow a <span class="math inline">\(\text{Bin}(50, 0.5)\)</span>. Thus, we want <span class="math inline">\(P(X \leq 21)\)</span>. We can compute this directly from the binomial (for instance, using <code>R</code>), which would given 0.161. Alternatively, we can use the normal approximation to the binomial. In this case, we would find that <span class="math inline">\(X\)</span> share an approximate distribution with <span class="math inline">\(W \sim N(25, 12.5)\)</span>, and <span class="math inline">\(P(X \leq 21) \approx P(W \leq 21.5)\)</span>. Then, <span class="math display">\[P(W \leq 21.5) = P(Z \leq \frac{21.5-25}{\sqrt{12.5}}) = \Phi(-0.99) \approx \Phi(-1).\]</span> This can be approximated via the empirical rule as <span class="math display">\[1 - (0.5 + \frac{0.68}{2}) = 0.16,\]</span> which is near the value calculated directly from the binomial. Thus, there is about a <span class="math inline">\(16\%\)</span> chance that the die would produce this few high numbers, if it were fair.</li>
+<li>Using the exact same procedure as above, we get <span class="math inline">\(X \sim \text{Bin}(100, 0.5)\)</span> approximated by <span class="math inline">\(W \sim N(50, 25)\)</span>. This gives either a direct binomial probability of approximately 0.002. For the approximation, we get <span class="math display">\[P(W \leq 35.5) = P(Z \leq \frac{35.5 - 50}{5}) = \Phi(-2.9) \approx \Phi(-3).\]</span> This is, from the empirical rule, approximately <span class="math display">\[1 - (0.5 + \frac{0.997}{2}) = 0.0015.\]</span></li>
+<li>Based on the <span class="math inline">\(100\)</span> rolls of the die, it seems very unlikely that the die is actually fair. Sadie could be getting very unlucky, however, if the die is fair there is about a <span class="math inline">\(1\)</span> in <span class="math inline">\(1000\)</span> chance that this few high rolls would be seen. Thus, it is more reasonable to assume that the die is not actually fair than it is to assume that Sadie has just been very unlucky. The evidence after <span class="math inline">\(50\)</span> rolls is far less strong, being approximately <span class="math inline">\(1\)</span> in <span class="math inline">\(5\)</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="def-hypothesis-testing" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.1 (Hypothesis Testing)</strong></span> <strong>Hypothesis testing</strong> is a statistical framework through which data are assessed to determine whether they sufficiently support a particular hypothesis regarding a population parameter. Under an assumed hypothesis regarding the true population parameter, the likelihood of observing the present sample is computed. From this conclusions are drawn with regards to the statistical validity of the hypothesis.</p>
+</div>
+<p>At the core of the hypothesis testing framework is the idea of a statistical hypothesis. A statistical hypothesis is a specification of a plausible parameter value made on the basis of subject-matter expertise, rather than through the data themselves. Alongside the statistical hypothesis, subject-matter expertise is required to define the evidentiary requirements of the test. Specifically, we must consider how certain we want be regarding conclusions that we draw, a decision that is ultimately based on the stakes of drawing an incorrect conclusion. With the specification of a hypothesis and a required level of significance, we turn to the data that have been observed and summarize them using a test statistic. A test statistic is a statistic that has a known sampling distribution under the assumption that our hypothesis is correct. Using this test statistic, and the knowledge of its sampling distribution, we can assess the likelihood of having observed this specific statistic if the hypothesis were true. Based on our assessment, and the level of significance we desire, we can then draw conclusions and interpret the results.</p>
+<p>This high-level description summarizes the procedure of hypothesis testing as a five-step procedure:</p>
+<ol type="1">
+<li>Determine the <strong>null</strong> and <strong>alternative hypotheses</strong>.</li>
+<li>Determine the <strong>significance level</strong> for the test.</li>
+<li>Compute the <strong>test statistic</strong> using the observed data.</li>
+<li>Find the <strong><span class="math inline">\(p\)</span>-value</strong> based on the null sampling distribution.</li>
+<li>Make a comparison, draw conclusions, and interpret the results.</li>
+</ol>
+<p>Each of these steps is outlined in general in the following sections.</p>
+<section id="the-null-and-alternative-hypothesis" class="level3" data-number="15.1.1">
+<h3 data-number="15.1.1" class="anchored" data-anchor-id="the-null-and-alternative-hypothesis"><span class="header-section-number">15.1.1</span> The Null and Alternative Hypothesis</h3>
+<p>At the core of the framework of hypothesis testing is the concept of statistical hypotheses. Specifically, hypothesis testing is fundamentally a procedure wherein evidence within a sample is assessed to determine whether or not it contradicts a particular hypothesis.</p>
+<div id="def-statistical-hypothesis" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.2 (Statistical Hypothesis)</strong></span> A <strong>statistical hypothesis</strong> is a statement regarding the value of an (unknown) population parameter, informed via outside knowledge rather than through estimation. For instance, we may state that <span class="math inline">\(\theta = 0\)</span> or <span class="math inline">\(\theta \geq 10\)</span>.</p>
+</div>
+<p>In the framework of null hypothesis significance testing, we focus on the specification of two distinct hypotheses. First, and most importantly, we specify the <strong>null hypothesis</strong>. The null hypothesis corresponds to our underlying belief about the world prior to conducting statistical tests. The null hypothesis will capture how we will act without strong evidence to the contrary. In contrast to the null hypothesis, we also a specify an <strong>alternative hypothesis</strong>. The alternative gives an <em>alternative</em> explanation compared to the null. That is, if the null is not true, then the alternative should be.</p>
+<div id="def-null-hypothesis" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.3 (Null Hypothesis)</strong></span> The <strong>null hypothesis</strong> is a statistical hypothesis that is meant to capture the assumed state of the world that would be believed without contradictory evidence. The null hypothesis captures the value of a parameter that is assumed to hold by default. Often, the null hypothesis captures the idea of <em>no effect</em> or <em>no difference</em>, such as taking <span class="math inline">\(\theta = 0\)</span>. The null hypothesis is typically denoted <span class="math inline">\(H_0\)</span>, so we write, for instance, <span class="math inline">\(H_0: \theta = 0\)</span> or <span class="math inline">\(H_0: \theta \geq 10\)</span>.</p>
+</div>
+<div id="def-alternative-hypothesis" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.4 (Alternative Hypothesis)</strong></span> The <strong>alternative hypothesis</strong> is a statistical hypothesis that is defined in contrast to a stated null hypothesis. Generally, we take the alternative hypothesis to be <em>not</em> the null. If the null hypothesis states <span class="math inline">\(\theta = 0\)</span> then the alternative will be <span class="math inline">\(\theta \neq 0\)</span>. We denote the alternative as either <span class="math inline">\(H_1\)</span> or <span class="math inline">\(H_A\)</span>. If the null hypothesis is not true, the alternative hypothesis will be.</p>
+</div>
+<p>When framing the null and the alternative hypothesis it is important to keep in mind that we are seeking evidence <em>against</em> the null hypothesis. We will never seek to positively confirm that the null hypothesis actually holds. Instead, we want to see if the observed data allow us to conclude that it certainly does not hold. For this reason, the hypotheses we are considering should be determined prior to data collection and should be informed by a subject-matter understanding, rather than for statistical convenience. To determine your null hypothesis, you should ask what you would continue to believe without evidence to the contrary, and take that as the null. If you have no such prior beliefs, then it is best to take the most conservative statement as the null hypothesis.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div id="exm-determine-hypotheses" class="theorem example">
+<p><span class="theorem-title"><strong>Example 15.2 (Sadie and Charles Care for Trees: Identifying Hypotheses)</strong></span> Sadie and Charles have, after watching a new documentary, become quite interested in caring for trees. They have started a small tree nursery, and are interested in how statistics may be used to inform their progress through this adventure. For each of the following questions, they are looking to identify what null and alternative hypotheses may be reasonable for the following questions.</p>
+<ol type="a">
+<li>They have found a pouch of aspen seeds, but are not sure where they came from. Aspens typically grow to be a total of about <span class="math inline">\(50\)</span> feet tall, with a diameter of <span class="math inline">\(10.5\)</span> inches. They want to know whether these aspens seeds are similar to common aspens, or not.</li>
+<li>They have many different fertilizer options. They want to know whether a particular blend of their fertilizers influences the height to which the trees grow, or not.</li>
+<li>They understand that bark beetles are a problem that can often impact pine trees. Before they help reforest in a certain area, they want to know whether more than <span class="math inline">\(10\%\)</span> of pine trees are infested with bark beetles, or not, to understand whether new plants are likely to survive.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Here, we could think of running two separate hypothesis tests. If we take <span class="math inline">\(\theta_1\)</span> to represent the average height of an aspen grown from the seed, we may test <span class="math inline">\(H_0: \theta_1 = 50\)</span> versus the alternative <span class="math inline">\(H_A: \theta_1 \neq 50\)</span>. If <span class="math inline">\(\theta_2\)</span> represents the average diameter of the grown aspens, then we can test <span class="math inline">\(H_1: \theta_2 = 10.5\)</span> versus the alternative <span class="math inline">\(H_A: \theta_2 \neq 10.5\)</span>.</li>
+<li>Here, we require to take a parameter, say <span class="math inline">\(\theta_3\)</span>, to represent the effect of the fertilizer on tree growth. Specifically, we may take <span class="math inline">\(\theta_3\)</span> to represent the average change in height that a tree receiving the fertilizer has (compared to if the tree had not received the fertilizer). Then, it is most sensible to assume by default that there is no effect, and thus <span class="math inline">\(H_0: \theta_3 = 0\)</span> versus <span class="math inline">\(H_A: \theta_3 \neq 0\)</span>.</li>
+<li>Here, the parameter of interest is <span class="math inline">\(\theta_4\)</span>, the proportion of trees in a particular area that are infected with bark beetles. We may consider <span class="math inline">\(H_0: \theta = 0.1\)</span> versus the alternative <span class="math inline">\(H_A: \theta \neq 0.1\)</span>. However, in this case, it may be more prudent to actually use a <strong>one-sided hypothesis</strong>, taking <span class="math inline">\(H_0: \theta \geq 0.1\)</span> versus <span class="math inline">\(H_A: \theta \leq 0.1\)</span>. The rationale would be that, since the decision to act would only be influenced by a small value of <span class="math inline">\(\theta_4\)</span>, the true interest is in whether it is smaller than <span class="math inline">\(0.1\)</span>, not simply whether it is different than <span class="math inline">\(0.1\)</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>A hypothesis test is outlined by the collective statement of the null and alternative hypotheses. When deciding on the null and alternative, there is the possibility of considering either a <strong>one-tailed</strong> or a <strong>two-tailed</strong> hypothesis test. These refer to the number of tails of the distribution that would be considered evidence <em>against</em> the null hypothesis, or put differently, the number of tails captured by the alternative hypothesis.</p>
+<div id="def-one-tailed-test" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.5 (One Tailed Hypothesis Test)</strong></span> In a <strong>one tailed hypothesis test</strong>, the alternative hypothesis will take the form <span class="math inline">\(H_A: \theta &gt; \theta_0\)</span>, or <span class="math inline">\(H_A: \theta &lt; \theta_0\)</span>, for some constant value <span class="math inline">\(\theta_0\)</span>. In this sense, only one tail (either the <strong>upper tail</strong> in terms of <span class="math inline">\(\theta &gt; \theta_0\)</span> or the <strong>lower tail</strong> in terms of <span class="math inline">\(\theta &lt; \theta_0\)</span>) will be considered as evidence against the null hypothesis. In a one tailed test, the null hypothesis is given as either <span class="math inline">\(H_0: \theta \leq \theta_0\)</span> or <span class="math inline">\(H_0: \theta \geq \theta_0\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+</div>
+<div id="def-two-tailed-test" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.6 (Two Tailed Hypothesis Test)</strong></span> In a <strong>two tailed hypothesis test</strong>, the alternative hypothesis will take the form <span class="math inline">\(H_A: \theta \neq \theta_0\)</span>, for some constant value <span class="math inline">\(\theta_0\)</span>. In this sense, both the upper and lower tails will be considered as evidence against the null hypothesis. In a two tailed test, the null hypothesis is given as <span class="math inline">\(H_0: \theta = \theta_0\)</span>.</p>
+</div>
+<p>As we continue to discuss the implementation of a hypothesis test and the practicalities in testing a particular hypothesis, we will discuss the implications in using one versus two tailed tests. The general guidance is that, unless there is a very strong, scientific rationale for considering a one tailed test, two tailed tests ought to be preferred. If a one tailed test is to be suggested, the null and alternative should still be specified prior to doing any analysis of the experiment, and which tail is tested should be informed through subject-matter expertise.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Once the hypotheses have been selected, we need to make a choice regarding the levels of significance.</p>
+</section>
+<section id="significance-levels" class="level3" data-number="15.1.2">
+<h3 data-number="15.1.2" class="anchored" data-anchor-id="significance-levels"><span class="header-section-number">15.1.2</span> Significance Levels</h3>
+<p>In addition to specifying the hypotheses on the basis of subject-matter knowledge, to perform a hypothesis test we must also decide on the <strong>level of significance</strong> that we are considering. Generally, the level of significance refers to the amount of evidence that we would need <em>against</em> the null hypothesis in order to reject it (in favour of the alternative). This decision should be informed based on the stakes of the decisions that we are making. When the stakes are high, or it is very important to not reject the null hypothesis incorrectly, we should increase the amount of evidence we are looking for.</p>
+<div id="def-level-of-significance" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.7 (Level of Significance)</strong></span> The <strong>level of significance</strong>, denoted <span class="math inline">\(\alpha\)</span>, is a measure of how much evidence is required to reject the null hypothesis in favour of the alternative. Formally, the level of significance specifies the probability of rejecting the null hypothesis, if it were actually true. In this sense, the lower the value of <span class="math inline">\(\alpha\)</span>, the <strong>stronger</strong> the evidence required against the null hypothesis. Typically, <span class="math inline">\(\alpha \leq 0.1\)</span> is selected, with the specific value dependent on the context.</p>
+</div>
+<p>A fundamental truth of hypothesis testing<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is that we can never be certain in our conclusions. Owing to the inherent random nature of data, there is always the possibility that mistakes occur. The level of significance provides us with the capacity to control the likelihood of one class of these mistakes. Specifically, it controls how likely it is to conclude that the null hypothesis is not true when it is. In a perfect world, free of randomness and uncertainty, we would take <span class="math inline">\(\alpha = 0\)</span>. This way, we would never conclude that the null hypothesis should be rejected when it is actually true. Unfortunately, the only way to ensure that we never make this mistake is to never reject the null hypothesis.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Instead, we take <span class="math inline">\(\alpha\)</span> to be a small value greater than <span class="math inline">\(0\)</span>.</p>
+<p>To decide what value specifically, we have to consider the question “What if we are wrong?” If you incorrectly reject the null hypothesis, what are the stakes of that error. Consider a scenario where we are testing a new treatment for a severe illness, and we want to test whether the treatment has an effect on survival rates. In this case, we would typically take <span class="math inline">\(H_0: \theta = 0\)</span> versus the alternative, <span class="math inline">\(H_A: \theta \neq 0\)</span>; by default we are assuming that the treatment does not have any impact, and are looking for evidence to the contrary. Now, suppose that there already exists a treatment for the illness that is moderately effective. In this setting, it is far more costly to make a mistake stating that the new treatment is also effective, if it turns out that it is not. The reason being that if we conclude the treatment is effective it may be prescribed to individuals, and this may happen in place of the existing effective treatment. If it turns out that the new treatment does not have a positive impact, this would mean that real people will receive treatments that are ineffective, when they could receive treatments that actually help. Conversely, if there does not exist any treatment at all for the illness now, we likely are willing to take a slightly higher risk. In this case, if we are wrong and the treatment does not meaningfully help, there is no alternative for the patient anyways. As a result, in the first case we should take a lower value of <span class="math inline">\(\alpha\)</span> compared to the second.</p>
+<div id="exm-determine-significance-levels" class="theorem example">
+<p><span class="theorem-title"><strong>Example 15.3 (Sadie and Charles Care for Trees: Identifying Hypotheses)</strong></span> With the statistical hypotheses identified for their tree planting hobby, Charles and Sadie are now trying to determine what level of significance they should pick in running these hypotheses. Specifically, they are looking to rank the following hypotheses in order of required significance levels, and justify these choices to one another.</p>
+<ol type="a">
+<li>They have found a pouch of aspen seeds, but are not sure where they came from. Aspens typically grow to be a total of about <span class="math inline">\(50\)</span> feet tall, with a diameter of <span class="math inline">\(10.5\)</span> inches. They want to know whether these aspens seeds are similar to common aspens, or not. Importantly, they have decided that they will plant the aspens no matter what they find, and care for them all the same. Because they do not know where the seeds came from, they cannot change suppliers even if they wanted to.</li>
+<li>They have many different fertilizer options. They want to know whether a particular blend of their fertilizers influences the height to which the trees grow, or not. The mix of fertilizer that they are considering here is cheaper than their current fertilizer choice, and so they have a desire to switch if possible. However, they know that the current fertilizer they use is effective at increasing growth.</li>
+<li>They understand that bark beetles are a problem that can often impact pine trees. Before they help reforest in a certain area, they want to know whether more than <span class="math inline">\(10\%\)</span> of pine trees are infested with bark beetles, or not, to understand whether new plants are likely to survive. If they plant trees into an infested area, these trees will likely all die relatively young, wasting resources and the ability to help revitalize the ecosystem.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>These hypotheses require evidence in the order that they are currently written. Namely, hypothesis (a) requires less than (b) which requires less than (c).</p>
+<ul>
+<li>For (a), the hypothesis test is mostly for intrigue. It will not alter the way that Sadie and Charles act in any way, nor are there any stakes to the decision. As a result, if they are wrong, that is okay – the only impact of this is that they may tell people they found aspen seeds that grow differently compared to regular, when they have not actually done so.</li>
+<li>Next, is (b). The stakes here are higher since there currently exists a fertilizer that works well. If Sadie and Charles conclude that the new fertilizer also improves growth, but it does not, then they will end up with plants that are worse off than they otherwise would be had they not made the same conclusion. Fortunately, however, the fertilizer is less costly than the current one. As a result, the mistake, while impacting the growth of their trees, will not have cascading negative outcomes.</li>
+<li>Finally, hypothesis (c) is the hypothesis with the largest stakes. If they draw the wrong conclusion in this case, they are risking resources and opportunity. Additionally, if they find that the infestation is bad, they have remedies for this, and as such, it is important to draw the correct conclusion here.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Historical Case for <span class="math inline">\(\alpha = 0.05\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is a long tradition, one which persists across many fields today, of taking <span class="math inline">\(\alpha = 0.05\)</span>, regardless of the situation. This tendency owes itself to early work by Ronald Fisher (a statistician largely responsible for our approach to statistical inference). In <em>Statistical Methods for Research Workers</em>, published in 1925, Fisher wrote “It is convenient to take this point as a limit in judging whether a deviation is to be considered significant or not. Deviations exceeding twice the standard deviation are thus formally regarded as significant.” In 1926, Fisher further wrote “If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty (the <span class="math inline">\(2\)</span> per cent point), or one in a hundred (the <span class="math inline">\(1\)</span> per cent point). Personally, teh writer prefers to set a low standard of significance at the <span class="math inline">\(5\)</span> per cent point, and ignore entirely all results which fail to reach this level. A scientific fact should be regarded as experimentally established only if a properly designed experiment <em>rarely fails</em> to give this level of significance.”</p>
+<p>Fisher largely worked in well-designed experiments applied to the study of agriculture. It is probably prudent to read Fisher’s advice of the <span class="math inline">\(5\%\)</span> level of significance as existing in this context. Even as the originator of taking <span class="math inline">\(\alpha = 0.05\)</span>, Fisher acknowledged the importance of selecting a line based on the needs of the particular context. It is a somewhat unfortunate historical artefact that his declarative statements of <span class="math inline">\(\alpha = 0.05\)</span> took far stronger hold on the scientific world at large, as compared to his more contextual statements. Still, with our present understanding of hypothesis testing, we should always keep in mind the context of the question we are asking, and determine an appropriate level of significance within this context.</p>
+</div>
+</div>
+<p>Once a level of significance has been decided upon, we need to determine a method for establishing how we can assess whether the evidence in the sample achieves the level of significance or not. To do so, we rely on test statistics.</p>
+</section>
+<section id="test-statistics" class="level3" data-number="15.1.3">
+<h3 data-number="15.1.3" class="anchored" data-anchor-id="test-statistics"><span class="header-section-number">15.1.3</span> Test Statistics</h3>
+<p>Test statistics are statistics<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> with a special property. Notably, if the null hypothesis is true, a test statistic must have a known distribution, with all parameter values known as well. That is, if the sampling distribution of a statistic is fully specified assuming that the null hypothesis holds, this statistic is a test statistic.</p>
+<div id="def-test-statistic" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.8 (Test Statistic)</strong></span> A <strong>test statistic</strong> is any statistic, which is to a say a quantity computable given a specific sample, used for hypothesis testing. Test statistics must have the property that, supposing the null hypothesis is true, the sampling distribution of the statistic is completely specified. Often, the exact sampling distribution will not be known, but a statistic can still be regarded as a test statistic if an approximate distribution is available.</p>
+</div>
+<div id="def-null-distribution" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.9 (Null Distribution)</strong></span> The sampling distribution of a test statistic, assuming the null hypothesis holds, is referred to as <strong>the null distribution</strong>. We may also say that the statistic follows a particular distribution, <em>under the null</em>. Suppose that <span class="math inline">\(\widehat{\theta}\)</span> is a test statistic with a null distribution <span class="math inline">\(F\)</span>, then we can write <span class="math inline">\(\widehat{\theta} \stackrel{H_0}{\sim} F\)</span>, to mean that, under the null, the statistic follows the distribution given by <span class="math inline">\(F\)</span>.</p>
+</div>
+<p>Because the null distribution is fully specified, it is possible to calculate probabilities associated with test statistics assuming that the null hypothesis holds. These probabilities will ultimately be assessed as evidence in relation to the level of significance. Typically, a test statistic can be derived by first considering a statistic, and then introducing dependence on the unknown parameters that are being tested. While these parameter values are unknown, generally speaking, if the null hypothesis is assumed to be true this will specify concretely the value of the parameter. For instance, suppose that we have a sample from a normal distribution, with a known variance (<span class="math inline">\(\sigma^2\)</span>) but an unknown mean (<span class="math inline">\(\mu\)</span>). We know that the sample mean will have a normal sampling distribution, giving <span class="math inline">\(\overline{X} \sim N(\mu,\sigma^2)\)</span>. If we wish to test the null hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span>, for some constant <span class="math inline">\(\mu_0\)</span>, then the null distribution of <span class="math inline">\(\overline{X}\)</span> becomes <span class="math inline">\(N(\mu_0, \sigma^2)\)</span>. This stands as a test statistic since we exactly know the distribution under the null. More commonly we may take <span class="math inline">\(\overline{X} - \mu_0\)</span>, resulting in <span class="math inline">\(N(0, \sigma^2)\)</span>, or even <span class="math display">\[\frac{\overline{X} - \mu_0}{\sigma} \stackrel{H_0}{\sim} N(0,1).\]</span></p>
+<p>In each case, the statistic has a known null distribution. As a result, we can solve for probabilities assuming that the null hypothesis were true. These probabilities are most commonly codified through the use of p-values.</p>
+</section>
+<section id="p-values-and-critical-values" class="level3" data-number="15.1.4">
+<h3 data-number="15.1.4" class="anchored" data-anchor-id="p-values-and-critical-values"><span class="header-section-number">15.1.4</span> <span class="math inline">\(p\)</span>-values and Critical Values</h3>
+<p>To determine whether there is sufficient evidence to contradict the assumed null hypothesis, we must be able to translate statements regarding our test statistic into probability values. Specifically, we can “ask what values for our test statistic could we have observed that would have been at least as contradictory to the null hypothesis as the value that we <em>did</em> observe?”. Then, using the null distribution, we can ask, “assuming the null hypothesis were true, how likely would it have been to observe an outcome of the test statistic at least as contradictory as the outcome we did observe?”. The probability associated with this is called the <span class="math inline">\(p\)</span>-value.</p>
+<div id="def-p-value" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.10 (<span class="math inline">\(p\)</span>-value)</strong></span> The <strong><span class="math inline">\(p\)</span>-value</strong>, (or probability value), is a measure of how likely the observed data is assuming that the null hypothesis is true. Specifically, the <span class="math inline">\(p\)</span>-value measures the probability of observing an outcome at least as extreme<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> as the outcome that was observed, based on the test statistic. This probability indicates how likely the data were to be observed by random chance, assuming the null hypothesis holds.</p>
+</div>
+<p>Suppose, for sake of example, we observe a value of a test statistic, <span class="math inline">\(t=-2\)</span>. Under the null hypothesis, we know that <span class="math inline">\(t\)</span> should equal <span class="math inline">\(0\)</span>. Then, we ask “what could we have observed that would have been <em>more</em> contradictory than what we did observe?” Suppose that we are considering a two-tailed alternative. Note that if we had observed any value of <span class="math inline">\(t &lt; -2\)</span>, this would have been more extreme. On the other hand, had we observed any value of <span class="math inline">\(t \geq 2\)</span>, this also would have been more extreme. Thus, any value outside of the interval <span class="math inline">\((-2, 2)\)</span> would have been more extreme. Thus, to work out the <span class="math inline">\(p\)</span>-value in this case we would find <span class="math display">\[P(\{T \leq -2\}\cup\{T \geq 2\}) = P(T \leq -2) + P(T \geq 2).\]</span> Had this been a one-tailed test, the <span class="math inline">\(p\)</span>-value would have been only <span class="math inline">\(P(T \leq -2)\)</span>.</p>
+<p>Intuitively, the smaller the <span class="math inline">\(p\)</span>-value, the moe evidence <em>against</em> the null hypothesis based on the sample. If the <span class="math inline">\(p\)</span>-value were sufficiently low, then it would be the case that the observation we made would be sufficiently rare, assuming the null hypothesis were true. With a small enough probability, it is more reasonable to assume that the null hypothesis is not accurate, rather than assuming that we happened to make a particularly rare observation. To decide how small of a probability is small enough, we turn to our level of significance. If the <span class="math inline">\(p\)</span>-value is below the selected level of significance, then we can conclude that the results are unlikely to have been observed due to chance, and instead, it is more likely to be observed as the alternative is a better explanation of the underlying reality. On the flip side, if the <span class="math inline">\(p\)</span>-value is larger than the level of significance, then we did not see sufficient evidence in the sample to reject the null hypothesis.</p>
+<div id="exm-finding-p-values" class="theorem example">
+<p><span class="theorem-title"><strong>Example 15.4 (Sadie and Charles Care for Trees: Identifying <span class="math inline">\(p\)</span>-Values)</strong></span> Charles and Sadie are feeling quite confident in their application of hypothesis testing for tree care. They have decided on hypotheses, significance levels, and have even worked out what test statistics they will use. Now, they are hoping to practice calculating <span class="math inline">\(p\)</span>-values before the data collection actually begins, to ensure that they will be able to do it later on, when it matters. Determine the <span class="math inline">\(p\)</span>-values based on the given information in the following.</p>
+<ol type="a">
+<li>For the pouch of aspen seeds, they are planning to test <span class="math inline">\(H_0: \theta_1 = 50\)</span> versus <span class="math inline">\(H_A: \theta_1 \neq 50\)</span>. This will be done using the test statistic <span class="math display">\[T_1 = \frac{\overline{X} - 50}{10/\sqrt{n}} \stackrel{H_0}{\sim} N(0,1).\]</span> Suppose than in a sample of size <span class="math inline">\(4\)</span> they find <span class="math inline">\(\overline{x} = 60\)</span>. For the diameters, testing <span class="math inline">\(H_0: \theta_2 = 10.5\)</span> versus <span class="math inline">\(H_A: \theta_2 \neq 10.5\)</span>, they will take <span class="math display">\[T_2 = \frac{\overline{X} - 10.5}{3/\sqrt{n}} \stackrel{H_0}{\sim} N(0,1).\]</span> Suppose in a sample of size <span class="math inline">\(9\)</span> they observe <span class="math inline">\(\overline{x} = 8.5\)</span>.</li>
+<li>To understand the effects of their fertilizer types, they will test <span class="math inline">\(H_0: \theta_3 = 0\)</span> versus <span class="math inline">\(H_A: \theta_3 \neq 0\)</span>. They will use the statistic <span class="math display">\[T = \frac{\overline{X}}{s/\sqrt{n}} \stackrel{H_0}{\sim} t_{n-1}.\]</span> In a sample of <span class="math inline">\(49\)</span> trees, they observe <span class="math inline">\(\overline{x} = 3\)</span>, with a sample standard deviation of <span class="math inline">\(14\)</span>.</li>
+<li>To investigate the extent of the bark beetle infestation, they will test <span class="math inline">\(H_0: \theta_4 \leq 0.1\)</span> versus <span class="math inline">\(H_A: \theta_4 &gt; 0.1\)</span>. This can be done via <span class="math display">\[T=\frac{\widehat{p} - 0.1}{\sqrt{0.1(0.9)/n}} \stackrel{H_0}{\sim} N(0,1).\]</span> In a sample of size <span class="math inline">\(100\)</span> they observe <span class="math inline">\(14\)</span> trees that are infected.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Using <span class="math inline">\(T_1\)</span>, we find an observed value, <span class="math inline">\(t_1\)</span> by plugging in <span class="math inline">\(n=4\)</span> and <span class="math inline">\(\overline{x} = 60\)</span>. This gives <span class="math inline">\(t_1 = 10/5 = 2\)</span>. As a result, the <span class="math inline">\(p\)</span>-value is given by <span class="math display">\[P(Z \geq 2) + P(Z \leq -2) = 1 - \Phi(2) + \Phi(-2) = 2(1 - \Phi(2)) \approx 0.046.\]</span> Alternatively, we could have used the empirical rule to conclude that this will be approximately <span class="math inline">\(0.05\)</span>. For <span class="math inline">\(T_2\)</span>, plugging in <span class="math inline">\(n=9\)</span> and <span class="math inline">\(\overline{x} = 8.5\)</span> gives <span class="math inline">\(t_2 = -2/1 = -2\)</span>. Thus, for the <span class="math inline">\(p\)</span>-value we would get the exact same quantity, since we need <span class="math inline">\(P(Z \leq -2) + P(Z &gt; 2)\)</span>. Consider the following plot that shades the area needed to calculate the <span class="math inline">\(p\)</span>-value, with <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span> each labelled.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="chapter15_files/figure-html/unnamed-chunk-1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="chapter15_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Here, taking <span class="math inline">\(n=49\)</span>, <span class="math inline">\(\overline{x} = 3\)</span>, and <span class="math inline">\(s = 14\)</span>. Thus, <span class="math display">\[t = \frac{3}{14/\sqrt{49}} = \frac{3}{2} = 1.5.\]</span> To calculate a <span class="math inline">\(p\)</span>-value, we make reference to the <span class="math inline">\(t_{48}\)</span> distribution, taking <span class="math inline">\(F\)</span> to be its CDF, this gives <span class="math display">\[P(T \leq -1.5) + P(T &gt; 1.5) = F(-1.5) + (1 - F(1.5)) = 2F(-1.5) \approx 0.14.\]</span> The corresponding area is identified in the following figure.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="chapter15_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="chapter15_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="3" type="a">
+<li>Here, the observation has been <span class="math inline">\(\widehat{p} = 14/100 = 0.14\)</span>, with <span class="math inline">\(n=100\)</span>. Thus, <span class="math inline">\(t = 0.04/0.03 = 4/3\)</span>. The <span class="math inline">\(p\)</span>-value here is given by <span class="math display">\[P\left(Z \leq \frac{-4}{3}\right) + P\left(Z \geq \frac{4}{3}\right) = \Phi\left(\frac{-4}{3}\right) + \left(1 - \Phi\left(\frac{4}{3}\right)\right) = 2\Phi\left(\frac{-4}{3}\right) \approx 0.182.\]</span> The following plot shades the relevant region.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="chapter15_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="chapter15_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The <span class="math inline">\(p\)</span>-value can be interpreted as the level of significance at which the observed data contradict the null hypothesis. In this sense, the <span class="math inline">\(p\)</span>-value serves as a measure of how strong the evidence against the null hypothesis will be. An alternative method for the same mathematical approach is to determine how large of a test statistic value would need to be observed in order to achieve a <span class="math inline">\(p\)</span>-value equal to the level of significance. If we observe a test statistic that is larger than this value that is then equivalent to observing a <span class="math inline">\(p\)</span>-value which is smaller (and vice versa). This value is known as a <strong>critical value</strong>.</p>
+<div id="def-critical-value" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.11 (Critical Value)</strong></span> A <strong>critical value</strong> is the value, derived through a null distribution, at which the corresponding <span class="math inline">\(p\)</span>-value coincides with the significance level. That is, the critical value is the value, <span class="math inline">\(t^*\)</span>, such that <span class="math display">\[P(T \leq -t^*) + P(T \geq t^*) = \alpha,\]</span> assuming a two-tailed hypothesis test, where <span class="math inline">\(T\)</span> is the statistic of interest, and the probability is taken with respect to the null distribution.</p>
+</div>
+<p>The critical values are related to the percentiles of a distribution. Specifically, if <span class="math inline">\(T\)</span> has a symmetric distribution<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> then the critical value for a significance level <span class="math inline">\(\alpha\)</span> exactly coincides with the <span class="math inline">\(1-\alpha/2\)</span> percentile of the distribution. We saw these critical values being used when discussing confidence intervals, if we substitute the confidence level <span class="math inline">\(p=1-\alpha\)</span>. If a critical value of <span class="math inline">\(t^*\)</span> is found then if we observe <span class="math inline">\(t\)</span> such that <span class="math inline">\(|t| &gt; t^*\)</span>, this is equivalent to observing a <span class="math inline">\(p\)</span>-value that is less than <span class="math inline">\(\alpha\)</span>. The <span class="math inline">\(p\)</span>-value provides more information than a comparison to a critical value, however, the critical value technique can be easier to leverage for quick calculations, particularly when you are away from a computer.</p>
+<div id="exm-finding-critical-values" class="theorem example">
+<p><span class="theorem-title"><strong>Example 15.5 (Sadie and Charles Care for Trees: Identifying Critical Values)</strong></span> While they had some success identifying the <span class="math inline">\(p\)</span>-values, Charles and Sadie realize that the conclusions that the calculations for the <span class="math inline">\(p\)</span>-values are highly dependent on what values they assumed they would see. However, if they approached the problems via critical values, this will be relevant as long as the null distributions are correct. For each scenario, they wish to identify the critical value associated with the given hypothesis test.</p>
+<ol type="a">
+<li>For the pouch of aspen seeds, they are planning to test <span class="math inline">\(H_0: \theta_1 = 50\)</span> versus <span class="math inline">\(H_A: \theta_1 \neq 50\)</span>. This will be done using a test statistic with a null distribution of <span class="math inline">\(N(0,1)\)</span>, at <span class="math inline">\(\alpha = 0.1\)</span>. For the diameters, testing <span class="math inline">\(H_0: \theta_2 = 10.5\)</span> versus <span class="math inline">\(H_A: \theta_2 \neq 10.5\)</span>, they will use the same null distribution and significance level.</li>
+<li>To understand the effects of their fertilizer types, they will test <span class="math inline">\(H_0: \theta_3 = 0\)</span> versus <span class="math inline">\(H_A: \theta_3 \neq 0\)</span>. They wish to take <span class="math inline">\(\alpha = 0.05\)</span>, and use a test statistic with <span class="math inline">\(t_{n-1}\)</span> degrees of freedom. They suspect the sample size will be <span class="math inline">\(49\)</span>.</li>
+<li>To investigate the extent of the bark beetle infestation, they will test <span class="math inline">\(H_0: \theta_4 \leq 0.1\)</span> versus <span class="math inline">\(H_A: \theta_4 &gt; 0.1\)</span>. Here, they require a significance level of <span class="math inline">\(\alpha = 0.01\)</span>.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Since these tests use the same significance levels, they will have the same critical values. Notably, we require <span class="math inline">\(\Phi(-t^*) + 1-\Phi(t^*) = \alpha\)</span>, which is equivalent to saying <span class="math display">\[\Phi(-t^*) = \frac{\alpha}{2} \implies t^* = -Z_{0.1/2} \approx 1.64.\]</span></li>
+<li>For this test, taking <span class="math inline">\(F(t)\)</span> to represent the cumulative distribution function for a <span class="math inline">\(t_{48}\)</span> distribution, we require <span class="math inline">\(F(-t^*) + 1 - F(t^*) = \alpha\)</span>, which is equivalent to saying <span class="math display">\[F(-t^*) = \frac{\alpha}{2} \implies t^* = -F^{-1}(\frac{0.05}{2}) = -t_{n-1,0.025} \approx 2.01.\]</span></li>
+<li>For this test, the critical value must satisfy <span class="math inline">\(1 - \Phi(t^*) = \alpha\)</span>, which is equivalent to <span class="math display">\[\Phi(-t^*) = \alpha \implies t^* = -Z_{0.01} \approx 2.33.\]</span></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>With either the <span class="math inline">\(p\)</span>-value calculated or the critical value for comparison, it is possible to draw scientific conclusions from the hypothesis test.</p>
+</section>
+<section id="drawing-conclusions-and-interpretation" class="level3" data-number="15.1.5">
+<h3 data-number="15.1.5" class="anchored" data-anchor-id="drawing-conclusions-and-interpretation"><span class="header-section-number">15.1.5</span> Drawing Conclusions and Interpretation</h3>
+<p>By comparing the calculated <span class="math inline">\(p\)</span>-value to the level of significance, or the calculated test statistic to the critical value, we are able to draw conclusions from the hypothesis test. Our conclusion will provide an answer to whether we reject or fail to reject the null hypothesis. Specifically, if the <span class="math inline">\(p\)</span>-value is less than the level of significance, or the observed test statistic is less than the critical value<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> then we can reject the null hypothesis, in favour of the alternative. We call the region of observations where we reject the null hypothesis the <strong>rejection region</strong> (see <a href="#fig-rejection-region-plot" class="quarto-xref">Figure&nbsp;<span>15.1</span></a>). Practically this means that the level of evidence contradicting the null hypothesis in the observed data exceeds the level of evidence we needed to see, in the given context, in order to act as though the null hypothesis is not true. If the <span class="math inline">\(p\)</span>-value is larger than the level of significance (or equivalently, if the critical value does not fall into the rejection region) then we fail to reject the null hypothesis. This means that our sample did not contain sufficient contradictory evidence to the null hypothesis, based on the context of the situation.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-rejection-region-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-rejection-region-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.1: The labelled components of a hypothesis test. The observed test statistic is either compared to the critical values to see whether it falls into the rejection region or not. In a one-sided hypothesis test, the rejection region is one-sided as well. Alternatively, the area under the null distribution outside of the observed test statistic (in both tails, as depicted here, for a two-sided hypothesis test; in a single tail for a one-sided hypothesis test) can be computed as the <span class="math inline">\(p\)</span>-value. The <span class="math inline">\(p\)</span>-value is then compared to the level of significance.
+</figcaption>
+<div aria-describedby="fig-rejection-region-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter15_files/figure-html/fig-rejection-region-plot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;15.1: The labelled components of a hypothesis test. The observed test statistic is either compared to the critical values to see whether it falls into the rejection region or not. In a one-sided hypothesis test, the rejection region is one-sided as well. Alternatively, the area under the null distribution outside of the observed test statistic (in both tails, as depicted here, for a two-sided hypothesis test; in a single tail for a one-sided hypothesis test) can be computed as the p-value. The p-value is then compared to the level of significance."><img src="chapter15_files/figure-html/fig-rejection-region-plot-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>Note, it is not possible in the hypothesis testing framework to accept the null hypothesis. This is because our level of evidence is always assessed for the degree to which it contradicts the null hypothesis. If our observations would be unlikely assuming that the null hypothesis were true, it is reasonable for us to act as though the null hypothesis were not true. If, on the other hand, our observations do not contradict the null hypothesis, we will continue to act as though it were true, even though we have not built up positive evidence in its favour.</p>
+<p>When we reject the null hypothesis, we often say that the result is statistically significant at the <span class="math inline">\(\alpha\)</span> significance level. Statistical significance is a measure of strength of evidence against the null hypothesis.</p>
+<div id="def-statistical-significance" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.12 (Statistical Significance)</strong></span> A result is said to be <strong>statistically significant</strong> if the null hypothesis is rejected. Specifically, the result is said to be statistically significant at a set level of significance, though, this is often implied from context. A result is said to be not statistically significant if the null hypothesis is not rejected.</p>
+</div>
+<div id="exm-drawing-conclusions" class="theorem example">
+<p><span class="theorem-title"><strong>Example 15.6 (Sadie and Charles Care for Trees: Drawing Conclusions)</strong></span> Charles and Sadie have managed to calculate test statistics, <span class="math inline">\(p\)</span>-values, and critical values for the hypothesis tests that they established. All that is left is for them to interpret what these test results actually mean. They are looking to draw and interpret conclusions, based on the following information, and ideally, they would do this both using <span class="math inline">\(p\)</span>-values and critical values.</p>
+<ol type="a">
+<li>For the pouch of aspen seeds, they are testing <span class="math inline">\(H_0: \theta_1 = 50\)</span> versus <span class="math inline">\(H_A: \theta_1 \neq 50\)</span>, using <span class="math display">\[T_1 = \frac{\overline{X} - 50}{10/\sqrt{n}} \stackrel{H_0}{\sim} N(0,1).\]</span> In a sample of size <span class="math inline">\(4\)</span> they find <span class="math inline">\(\overline{x} = 60\)</span>. For the diameters, they test <span class="math inline">\(H_0: \theta_2 = 10.5\)</span> versus <span class="math inline">\(H_A: \theta_2 \neq 10.5\)</span>, using <span class="math display">\[T_2 = \frac{\overline{X} - 10.5}{3/\sqrt{n}} \stackrel{H_0}{\sim} N(0,1).\]</span> In a sample of size <span class="math inline">\(9\)</span> they observe <span class="math inline">\(\overline{x} = 8.5\)</span>. They wish to use <span class="math inline">\(\alpha = 0.1\)</span> level of significance.</li>
+<li>To understand the effects of their fertilizer types, they test <span class="math inline">\(H_0: \theta_3 = 0\)</span> versus <span class="math inline">\(H_A: \theta_3 \neq 0\)</span> using <span class="math display">\[T = \frac{\overline{X}}{s/\sqrt{n}} \stackrel{H_0}{\sim} t_{n-1}.\]</span> In a sample of <span class="math inline">\(49\)</span> trees, they observe <span class="math inline">\(\overline{x} = 3\)</span>, with a sample standard deviation of <span class="math inline">\(14\)</span>. They wish to use <span class="math inline">\(\alpha = 0.05\)</span> level of significance.</li>
+<li>To investigate the extent of the bark beetle infestation, they test <span class="math inline">\(H_0: \theta_4 \leq 0.1\)</span> versus <span class="math inline">\(H_A: \theta_4 &gt; 0.1\)</span> using <span class="math display">\[T=\frac{\widehat{p} - 0.1}{\sqrt{0.1(0.9)/n}} \stackrel{H_0}{\sim} N(0,1).\]</span> In a sample of size <span class="math inline">\(100\)</span> they observe <span class="math inline">\(14\)</span> trees that are infected. They wish to use <span class="math inline">\(\alpha = 0.01\)</span> level of significance.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>From the previous examples we found that the <span class="math inline">\(p\)</span>-value was approximately <span class="math inline">\(0.046\)</span> for both tests. Since <span class="math inline">\(p &lt; \alpha\)</span>, we can <strong>reject the null hypothesis</strong> and we conclude that, based on the sample, there is sufficient evidence to conclude that the heights and diameters of the found aspen seeds are different than average aspen seeds. These results are statistically significant at the <span class="math inline">\(0.1\)</span> level of significance. Alternatively, we could used the critical value of <span class="math inline">\(1.64\)</span>. Since <span class="math inline">\(t_1 = 2 &gt; 1.64\)</span>, and since <span class="math inline">\(t_2 = -2\)</span>, so <span class="math inline">\(|t_2| &gt; 1.64\)</span>, both statistics fall into the <strong>rejection region</strong> and we reject the null hypothesis at the <span class="math inline">\(0.1\)</span> level of significance.</p></li>
+<li><p>Here we find <span class="math inline">\(p = 0.14\)</span>. Since <span class="math inline">\(p &gt; \alpha\)</span>, we <strong>fail to reject the null hypothesis</strong> at the <span class="math inline">\(\alpha = 0.05\)</span> level of significance. Thus, we conclude that there is insufficient evidence in the sample to conclude that the fertilizer has a non-zero effect on growth. Alternatively, we can consider that <span class="math inline">\(t = 1.5\)</span>, compared to a critical value of <span class="math inline">\(2.01\)</span>. Since <span class="math inline">\(t &lt; 2.01\)</span>, the statistic does not fall in the rejection region, and we fail to reject the null hypothesis.</p></li>
+<li><p>The <span class="math inline">\(p\)</span>-value was found to be <span class="math inline">\(0.182\)</span>. Since we are testing at a <span class="math inline">\(0.01\)</span> level of significance, <span class="math inline">\(p &gt; \alpha\)</span>, and so we <strong>fail to reject the null hypothesis</strong>. As a result, there is insufficient evidence, based on the sample, to conclude that more than <span class="math inline">\(10\%\)</span> of the pine trees are infected by bark beetles. Alternatively, we consider the critical value to be <span class="math inline">\(2.33\)</span>. Here, note that since this is a one-tailed test, the rejection region is only the values of <span class="math inline">\(t\)</span>, such that <span class="math inline">\(t &gt; 2.33\)</span>. Because <span class="math inline">\(t &lt; 2.33\)</span> we fail to reject the null hypothesis.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>Statistical significance is the foundational language of scientific inquiry. Specifically, results that are statistically significant are typically held up as <em>actual results</em>, where those that are not statistically significant are treated as though they are the result of random noise. In order for a claim to be scientifically justified, it must be statistically significant. However, it is important to note that statistical significance is not a measure of how big or meaningful a particular effect will be. Instead, it is a measure of how strong the evidence for believing a result is. That is, you can have statistically significant findings that are not particularly meaningful. For instance, suppose that the parameter of interest is the effect of a medical treatment on life expectancy. If we find that the treatment improves the life expectancy for patients, and that this result is <strong>statistically significant</strong> we do not know whether the treatment improves the life expectancy by a lot or a little. All we know, in this context, is that there was strong evidence in the sample that the treatment actually did improve the outcome in this case.</p>
+</section>
+</section>
+<section id="errors-in-hypothesis-testing" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="errors-in-hypothesis-testing"><span class="header-section-number">15.2</span> Errors in Hypothesis Testing</h2>
+<p>When conducting a hypothesis test we are still dealing with uncertainty. As a result it is always possible that the conclusions that are drawn will be incorrect. By selecting an appropriate level of significance, and by selecting a test statistic with a known null distribution, we hope to minimize the possibility of errors. However, random variation can still lead to incorrect conclusions. When considering errors in the conclusions of a hypothesis test, there are two types of errors that can be made. We can either reject a null hypothesis that is actually true, or else we can fail to reject a null hypothesis that is actually false. These are<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> referred to as Type I and Type II errors, respectively.</p>
+<div id="def-type-1-error" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.13 (Type I Error)</strong></span> A <strong>type I</strong> error is a false positive. This occurs when a the null hypothesis is rejected, but the null hypothesis is actually true.</p>
+</div>
+<div id="def-type-2-error" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.14 (Type II Error)</strong></span> A <strong>type II</strong> error is a false negative. This occurs when the null hypothesis is not rejected, but the null hypothesis is actually false.</p>
+</div>
+<p>Both type I and type II errors are problematic, and test procedures are preferable when they minimize the probabilities of each error type. Focusing on the probability that a type I error occurs, we can determine how likely this is by asking what the probability of rejecting the null hypothesis is, assuming that the null is true. That is, under the null hypothesis, what is the probability that we observe a statistic beyond the critical value. By definition, this is given by the level of significance. That is, the probability of a type I error is exactly equal to the level of significance, <span class="math inline">\(\alpha\)</span>.</p>
+<p>This gives an alternative method of interpreting the value of <span class="math inline">\(\alpha\)</span>. Specifically, the value of <span class="math inline">\(\alpha\)</span> is the probability of making a false positive claim. Intuitively, we want this to be as small as possible, and so taking <span class="math inline">\(\alpha\)</span> to be smaller seems reasonable. Unfortunately, the probability of making a type I error tends to be inversely correlated with the probability of making a type II error. The probability of a type II error is, typically, less straightforward to determine. For it, we need to determine the probability, assuming that the null hypothesis is actually false, that we fail to reject the null. That is, under the alternative hypothesis, what is the probability that we observe a statistic value that is less than the critical value. While this is a challenging probability to determine<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> explicitly, we give this the label <span class="math inline">\(\beta\)</span>. If we consider the probability <span class="math inline">\(1-\beta\)</span>, this gives the probability of rejecting the null hypothesis when it is actually false, a <em>true</em> rejection. This is a quantity of particular interest in hypothesis testing, and as such, we refer to it as <strong>the power</strong> of a hypothesis test.</p>
+<div id="def-power" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.15 (Power)</strong></span> The <strong>power</strong> of a hypothesis test is the probability of rejecting the null hypothesis when the null hypothesis is, in fact, false. That is it gives the probability of a true rejection. The power of a test generally gives a measure of how well a test is able to detect true effects. Typically, the power of a test is denoted by <span class="math inline">\(1-\beta\)</span>, where <span class="math inline">\(\beta\)</span> gives the probability of a type II error.</p>
+</div>
+<p>A hypothesis test would ideally have a low probability of a type I error, which is to say a low level of significance, and a corresponding high power. Unfortunately, typically as the level of significance of a test decreases, so too does the power, and vice versa. As a result, in any hypothesis testing scenario there is a need to make a deliberate trade-off between the level of significance and the power. Typically, hypothesis testing proceeds by selecting an appropriate level of significance for the given setting, and then among tests that achieve this level of significance, searching for a test with the highest power. This way the type I errors are controlled at a set level, and the type II errors are minimized. By recognizing that the probabilities of type I and type II errors need to be balanced against one another, it is possible to more intentionally select an appropriate level of significance. Specifically, it is worth thinking through, in any given setting, whether the prospect of a false positive or a false negative is a worse outcome, and then balancing the selected rates accordingly.</p>
+<table class="table-borderless caption-top table">
+<caption>Conclusions and errors of hypothesis testing.</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><span class="math inline">\(H_0\)</span> is True</th>
+<th style="text-align: center;"><span class="math inline">\(H_0\)</span> is False</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><span class="math inline">\(H_0\)</span> is Rejected</strong></td>
+<td style="text-align: center;">False Positive <br> Type I Error <br> (<span class="math inline">\(\alpha\)</span>)</td>
+<td style="text-align: center;"><br> True Positive</td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\(H_0\)</span> is Not Rejected</strong></td>
+<td style="text-align: center;">True Negative <br> Power (<span class="math inline">\(1-\beta\)</span>)</td>
+<td style="text-align: center;">False Negative<br> Type II Error <br> (<span class="math inline">\(\beta\)</span>)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="hypothesis-testing-for-population-means" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="hypothesis-testing-for-population-means"><span class="header-section-number">15.3</span> Hypothesis Testing for Population Means</h2>
+<p>The general procedure for hypothesis testing is versatile and applies in a wide range of scenarios. Whenever there is a need to test a particular parameter, the outlined steps can be followed and, supposing that an appropriate test statistic is found, a valid hypothesis test will be derived. With that said, there are several parameters that are tested with enough frequency that the corresponding hypothesis testing procedures are worth studying specifically. In the following sections, we outline the specific procedures for testing hypotheses relating to population means and proportions. These procedures are specific instantiations of the previously outlined procedures, and serve as example use cases for the overarching framework of hypothesis testing.</p>
+<section id="z-tests-for-population-means-in-normal-populations" class="level3" data-number="15.3.1">
+<h3 data-number="15.3.1" class="anchored" data-anchor-id="z-tests-for-population-means-in-normal-populations"><span class="header-section-number">15.3.1</span> <span class="math inline">\(Z\)</span> Tests for Population Means in Normal Populations</h3>
+<p>Suppose that we are interested in testing hypotheses relating to the mean of a normal distribution, with a known variance. In this context, we have that <span class="math inline">\(X_1,\dots,X_n \sim N(\mu, \sigma^2)\)</span>, where <span class="math inline">\(\mu\)</span> is unknown. We have seen that the sample mean, <span class="math inline">\(\overline{X}\)</span>, has a sampling distribution given by <span class="math inline">\(N(\mu,\dfrac{\sigma^2}{n})\)</span>. As a result, suppose that we wish to test the null hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span>. Then, assuming the null hypothesis holds, we must have that <span class="math inline">\(E[\overline{X}] = \mu_0\)</span>, and more specifically, <span class="math display">\[T = \frac{\overline{X} - \mu_0}{\sigma/\sqrt{n}} \stackrel{H_0}{\sim} N(0, 1).\]</span> Suppose that we observe <span class="math inline">\(T = t\)</span>, then owing to symmetry we can compute the relevant <span class="math inline">\(p\)</span>-value as <span class="math display">\[P(T \leq -|t|) + P(T \geq |t|) = P(Z \leq |t|) + (1 - P(Z \leq -|t|)) = 2\Phi(-|t|).\]</span> If, instead, we had wished to use the critical value method, then we would need to solve <span class="math display">\[2\Phi(-t^*) = \alpha \iff t^* = Z_{1-\alpha/2},\]</span> where <span class="math inline">\(Z_{1-\alpha/2}\)</span> is the critical value of the standard normal. If instead a one-tailed hypothesis test were run, we would take the <span class="math inline">\(p\)</span>-value to be <span class="math inline">\(\Phi(t)\)</span> (or <span class="math inline">\(1-\Phi(t)\)</span>), and the critical value as either <span class="math inline">\(Z_{\alpha}\)</span> or <span class="math inline">\(Z_{1-\alpha}\)</span>, depending on whether the upper or lower tail test is being run.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-z-test-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-z-test-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.2: Illustration of the <span class="math inline">\(Z\)</span>-test, depicting the observed statistic (solid line), area for the <span class="math inline">\(p\)</span>-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at <span class="math inline">\(1.96\)</span>, and the observed statistic is at <span class="math inline">\(-2.473\)</span>. Thus, it falls outside of the critical value. Additionally, the shaded area gives the p-value, <span class="math inline">\(0.013\)</span>, which is less than the implied significance level of <span class="math inline">\(0.05\)</span>. Consider where the critical values would fall had <span class="math inline">\(\alpha = 0.01\)</span> been used instead.
+</figcaption>
+<div aria-describedby="fig-z-test-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter15_files/figure-html/fig-z-test-plot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;15.2: Illustration of the Z-test, depicting the observed statistic (solid line), area for the p-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at 1.96, and the observed statistic is at -2.473. Thus, it falls outside of the critical value. Additionally, the shaded area gives the p-value, 0.013, which is less than the implied significance level of 0.05. Consider where the critical values would fall had \alpha = 0.01 been used instead."><img src="chapter15_files/figure-html/fig-z-test-plot-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="math inline">\(Z\)</span> Tests for Population Means in Normal Populations with Known Variances
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If data are selected from a normal population, with a known variance, then the <strong><span class="math inline">\(Z\)</span> test</strong> is the most common test to apply for hypotheses surrounding the population mean. Specifically, the test statistic is <span class="math display">\[T = \frac{\overline{X} - \mu_0}{\sigma/\sqrt{n}},\]</span> where <span class="math inline">\(\mu_0\)</span> is the value of the mean under the null hypothesis. Then, supposing <span class="math inline">\(T=t\)</span> is observed:</p>
+<ol type="1">
+<li>If <span class="math inline">\(H_0: \mu = \mu_0\)</span> versus <span class="math inline">\(H_A: \mu \neq \mu_0\)</span>, the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(2\Phi(-|t|) = 2(1 - \Phi(|t|))\)</span>. The corresponding critical value is <span class="math inline">\(Z_{1-\alpha/2}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: \mu \geq \mu_0\)</span> versus <span class="math inline">\(H_A: \mu &lt; \mu_0\)</span>, the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(\Phi(t)\)</span>. The corresponding critical value is <span class="math inline">\(Z_{\alpha}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: \mu \leq \mu_0\)</span> versus <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span>, the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(1 - \Phi(t)\)</span>. The corresponding critical value is <span class="math inline">\(Z_{1-\alpha}\)</span>.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="one-sample-t-tests-for-population-means" class="level3" data-number="15.3.2">
+<h3 data-number="15.3.2" class="anchored" data-anchor-id="one-sample-t-tests-for-population-means"><span class="header-section-number">15.3.2</span> One Sample <span class="math inline">\(t\)</span> Tests for Population Means</h3>
+<p>Suppose instead that we are dealing with a population with an unknown variance, but we are still only interested in the mean of the population. If the population is either normally distributed, or else if the sample size is large enough so as to justify the use of the Central Limit Theorem, then we know that <span class="math inline">\(\overline{X} \sim N(\mu, \sigma^2)\)</span>, however, <span class="math inline">\(\sigma^2\)</span> is unknown. We have seen that we can replace <span class="math inline">\(\sigma\)</span> with <span class="math inline">\(s\)</span>, the sample standard deviation, and update the corresponding sampling distribution to a <span class="math inline">\(t_{n-1}\)</span>. This result suggests that we run a <span class="math inline">\(t\)</span>-test, taking <span class="math display">\[T = \frac{\overline{X} - \mu_0}{s/\sqrt{n}} \stackrel{H_0}{\sim} t_{n-1}.\]</span> Suppose that we observe <span class="math inline">\(T=t\)</span>, then owing to symmetry we can compute the relevant <span class="math inline">\(p\)</span>-value as <span class="math display">\[P(T \leq -|t|) + P(T \geq |t|) = 2F(-|t|),\]</span> where <span class="math inline">\(F(t)\)</span> is the cumulative distribution function for the <span class="math inline">\(t_{n-1}\)</span> distribution. If instead we wish to use the critical value method, then we would need to solve <span class="math display">\[2F(-t^*) = \alpha \iff t^* = t_{n-1, 1-\alpha/2},\]</span> where <span class="math inline">\(t_{n-1,1-\alpha/2}\)</span> is the critical value from the <span class="math inline">\(t_{n-1}\)</span> distribution. If instead a one-tailed hypothesis test were run, we would take the <span class="math inline">\(p\)</span>-value to be <span class="math inline">\(F(t)\)</span> (or <span class="math inline">\(1-F(t)\)</span>), and the critical value as either <span class="math inline">\(t_{n-1, \alpha}\)</span> or <span class="math inline">\(t_{n-1, 1-\alpha}\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-t-test-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-t-test-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.3: Illustration of the <span class="math inline">\(t\)</span>-test, based on <span class="math inline">\(n=32\)</span>, depicting the observed statistic (solid line), area for the <span class="math inline">\(p\)</span>-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at <span class="math inline">\(2.04\)</span>, and the observed statistic is at <span class="math inline">\(1.81\)</span>. Thus, it falls inside of the critical value. Additionally, the shaded area gives the p-value, <span class="math inline">\(0.080\)</span>, which is greater than the implied significance level of <span class="math inline">\(0.05\)</span>. Consider where the critical values would fall had a one tailed hypothesis test been used instead.
+</figcaption>
+<div aria-describedby="fig-t-test-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter15_files/figure-html/fig-t-test-plot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;15.3: Illustration of the t-test, based on n=32, depicting the observed statistic (solid line), area for the p-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at 2.04, and the observed statistic is at 1.81. Thus, it falls inside of the critical value. Additionally, the shaded area gives the p-value, 0.080, which is greater than the implied significance level of 0.05. Consider where the critical values would fall had a one tailed hypothesis test been used instead."><img src="chapter15_files/figure-html/fig-t-test-plot-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="math inline">\(t\)</span> Tests for Population Means in Normal Populations or Large Samples
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If data are selected from a normal population, or from a non-normal population with a sufficiently large sample size, with an unknown variance, then the <strong><span class="math inline">\(t\)</span> test</strong> is the most common test to apply for hypotheses surrounding the population mean. Specifically, the test statistic is <span class="math display">\[T = \frac{\overline{X} - \mu_0}{s/\sqrt{n}},\]</span> where <span class="math inline">\(\mu_0\)</span> is the value of the mean under the null hypothesis. Define the sample size to be <span class="math inline">\(n\)</span>. Then, supposing <span class="math inline">\(T=t\)</span> is observed, and taking <span class="math inline">\(F(t)\)</span> to be the cumulative distribution function for the <span class="math inline">\(t_{n-1}\)</span> distribution:</p>
+<ol type="1">
+<li>If <span class="math inline">\(H_0: \mu = \mu_0\)</span> versus <span class="math inline">\(H_A: \mu \neq \mu_0\)</span>, the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(2F(-|t|) = 2(1 - F(|t|))\)</span>. The corresponding critical value is <span class="math inline">\(t_{n-1, 1-\alpha/2}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: \mu \geq \mu_0\)</span> versus <span class="math inline">\(H_A: \mu &lt; \mu_0\)</span>, the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(F(t)\)</span>. The corresponding critical value is <span class="math inline">\(t_{n-1, \alpha}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: \mu \leq \mu_0\)</span> versus <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span>, the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(1 - F(t)\)</span>. The corresponding critical value is <span class="math inline">\(t_{n-1, 1-\alpha}\)</span>.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="hypothesis-tests-for-population-proportions" class="level3" data-number="15.3.3">
+<h3 data-number="15.3.3" class="anchored" data-anchor-id="hypothesis-tests-for-population-proportions"><span class="header-section-number">15.3.3</span> Hypothesis Tests for Population Proportions</h3>
+<p>Suppose that instead of concern with a population mean, we are instead concerned with a population proportion. We can either view the data as coming from a sample of <span class="math inline">\(n\)</span> independent and identically distributed Bernoulli random variables, with success probability <span class="math inline">\(p\)</span>, or, equivalently, we can view these data as a single realization from a <span class="math inline">\(\text{Bin}(n, p)\)</span> distribution. In the first case, take <span class="math display">\[\widehat{p} = \frac{1}{n}\sum_{i=1}^n X_i = \overline{X},\]</span> and so through the Central Limit Theorem, as long as <span class="math inline">\(n\)</span> is sufficiently large, <span class="math inline">\(\widehat{p}\)</span> will be approximately normal.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> At this point, supposing we are testing a hypothesis of <span class="math inline">\(p\)</span> as it relates to <span class="math inline">\(p_0\)</span>, then under the null <span class="math inline">\(\widehat{p} \sim N(p_0, p_0(1-p_0)/n)\)</span>. As such, <span class="math display">\[T = \frac{\widehat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} \stackrel{H_0}{\sim} N(0, 1).\]</span> Correspondingly, we can apply a <span class="math inline">\(Z\)</span>-test for the population proportions, following exactly the same procedure outlined above.</p>
+<p>Note that in the case of a population proportion, the specification of the proportion under the null hypothesis also specifies the population variance. This is because in a Bernoulli distribution, the mean and variance are governed by a single parameter. This means that we need not estimate the variance from the sample, nor consider the <span class="math inline">\(t\)</span> distribution. If the null hypothesis holds, then the population mean will be exactly <span class="math inline">\(p_0\)</span> and the variance <span class="math inline">\(p_0(1-p_0)/n\)</span>. However, this is still an approximate hypothesis test since it relies on the use of the Central Limit Theorem to justify normality.</p>
+</section>
+</section>
+<section id="further-considerations-of-hypothesis-testing" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="further-considerations-of-hypothesis-testing"><span class="header-section-number">15.4</span> Further Considerations of Hypothesis Testing</h2>
+<p>The process of hypothesis testing is used extensively across a wide variety of scenarios. It is quite flexible, and can accommodate any types of data or any hypotheses of interest, so long as a suitable test statistic and null distribution can be derived. With that said, hypothesis testing is not a panacea for scientific inquiry. It needs to be carefully and critically applied, informed by the context of the situation and driven by our underlying subject-matter expertise. We saw the importance of this when informing the hypothesis to test, whether to use a one-sided or two-sided alternative, and in selecting a threshold for the level of significance. At every stage of the process care is required in order to ensure that the results of our hypothesis tests are useful and valid.</p>
+<section id="practical-significance-versus-statistical-significance" class="level3" data-number="15.4.1">
+<h3 data-number="15.4.1" class="anchored" data-anchor-id="practical-significance-versus-statistical-significance"><span class="header-section-number">15.4.1</span> Practical Significance versus Statistical Significance</h3>
+<p>A key consideration in the application of hypothesis testing is differentiating between those results that are statistically significant<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> and those results that are <strong>practically significant</strong>. Practical significance, broadly speaking, indicates whether a particularly effect actually matters given the underlying context.</p>
+<div id="def-practical-significance" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 15.16 (Practical Significance)</strong></span> A result is said to be <strong>practically significant</strong> if the effect is large enough to be meaningful in the real-world. Practical significance is not achieved on the basis of statistical analyses, but rather, on the basis of the subject-matter expertise. The degree of practical significance is somewhat subjective, and will depend on the particular context.</p>
+</div>
+<p>To assess practical significance in practice we should ask ourselves, supposing that the observed effects are real, do we even care? Consider a lifestyle intervention that, in medical studies, is found to increase an individual’s life expectancy by <span class="math inline">\(1\)</span> day. This result may or may not be statistically significant, depending on the degree of evidence in the observed sample. However, this result is almost certainly <em>not</em> practically significant. That is because, even if it were found to be a strong statistical result, it is likely not a result that is large enough to care about it in practice. On the flipside, a lifestyle intervention that increases life expectancy by <span class="math inline">\(10\)</span> years is likely to be very practically significant.</p>
+<p>A result is only meaningful if it achieves both statistical significance <em>and</em> practical significance. Without statistical significance, we do not have strong enough evidence to believe that the observed result is really different from our null hypothesis. Without practical significance, we do not care about the existence of the result broadly. The combined statistical and practical significance means that, not only is there good evidence for the result, but there is also value in considering the result.</p>
+<p>Critically, the degree of statistical significance is not a measure of practical significance. That is, a smaller <span class="math inline">\(p\)</span>-value does not necessarily mean that the result is more practically significant. The measure of statistical significance is orthogonal to the measure of practical significance. Instead, to assess practical significance, we consider the size of the effect directly. The measure of effect size will be dependent on the given scenario and the specific parameter that is being assessed. This should be measured relative to known information in the field. Thus, if we are interested in the mean result, perhaps the effect size is given by the mean difference between the sample mean and the value under the null hypothesis. If we are interested in a proportion, we may take the absolute size of the proportion to measure the effect. Whatever value we can compare to our existing experience will serve as a basis for assessing the degree of practical significance that has been attained.</p>
+</section>
+<section id="the-connection-between-hypothesis-testing-and-confidence-levels" class="level3" data-number="15.4.2">
+<h3 data-number="15.4.2" class="anchored" data-anchor-id="the-connection-between-hypothesis-testing-and-confidence-levels"><span class="header-section-number">15.4.2</span> The Connection Between Hypothesis Testing and Confidence Levels</h3>
+<p>In discussing hypothesis testing we reintroduced many of the same concepts that were introduced during our discussions of confidence intervals as well. This is not coincidental, and it is not merely an aesthetic similarity. There is a fundamental connection between confidence intervals and hypothesis testing, one that renders them to be equivalent, in a sense, mathematically. More concretely, a confidence interval and a hypothesis test that are based on the same underlying statistic will always agree with one another.</p>
+<p>Suppose that a hypothesis test is run, testing <span class="math inline">\(H_0: \theta = \theta_0\)</span>, and the computed <span class="math inline">\(p\)</span>-value is <span class="math inline">\(0.01\)</span>. This means that, assuming that the null hypothesis is true, there is a probability of <span class="math inline">\(0.01\)</span> that we would observe a result as extreme as the one we actually did. Now, recall that a confidence interval gives a range of values that, prior to actually conducting the sample, achieves some set probability of containing the true value. Suppose we construct a <span class="math inline">\(95\%\)</span> confidence interval. This interval will have a probability of <span class="math inline">\(0.95\)</span> of containing the truth, or put differently, there is a probability of <span class="math inline">\(0.05\)</span> that the truth does not fall inside this interval. If we construct the interval on the same data for which we found a <span class="math inline">\(p\)</span>-value of <span class="math inline">\(0.01\)</span>, where should we expect <span class="math inline">\(\theta_0\)</span> to fall relative to our interval? The probability, assuming <span class="math inline">\(\theta = \theta_0\)</span>, that we observe a statistic as extreme as we did is <span class="math inline">\(0.01\)</span>. This is notably smaller than the <span class="math inline">\(0.05\)</span> probability that the truth would fall outside of the interval, and as such, we should not expect to see <span class="math inline">\(\theta_0\)</span> in the interval.</p>
+<p>Concretely, if a <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval is formed and it contains the null value <span class="math inline">\(\theta_0\)</span>, then the <span class="math inline">\(p\)</span>-value for a hypothesis test of <span class="math inline">\(H_0: \theta = \theta_0\)</span> will have a <span class="math inline">\(p\)</span>-value that is greater than or equal to <span class="math inline">\(\alpha\)</span>. If the <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval is formed and does not contain the null value <span class="math inline">\(\theta_0\)</span>, then the <span class="math inline">\(p\)</span>-value for the hypothesis test will be less than <span class="math inline">\(\alpha\)</span>. Equivalently, if the <span class="math inline">\(p\)</span>-value when testing <span class="math inline">\(H_0: \theta = \theta_0\)</span> is found to be <span class="math inline">\(\alpha\)</span>, then every confidence interval that is at least as wide as <span class="math inline">\(100(1-\alpha)\%\)</span> will contain <span class="math inline">\(\theta_0\)</span>, and every interval that is more narrow than this will not contain the null value.</p>
+<p>One way to conceptualize this more concretely is to consider that a confidence interval is effectively giving you the set of values that, based on your sample, you have no evidence to differentiate between. Any value in your confidence interval is justified by the sample in being considered the true value. This justification stems from the fact that, prior to the construction of the interval, there was only an <span class="math inline">\(\alpha\)</span> probability that the true value would not be in the interval, and so the values in this interval remain plausible based on the evidence. In a hypothesis test, we are trying to assess whether our sample contradicts a particular value for the truth, at a given threshold for evidence. If the value we are trying to reject is contained within our confidence interval, the logic of the confidence interval suggests that we should not reject it as possible. On the flipside, if the value we are interested in falls outside of the confidence interval, our sample seems to reject its plausiblity.</p>
+</section>
+<section id="critiques-of-null-hypothesis-significance-testing" class="level3" data-number="15.4.3">
+<h3 data-number="15.4.3" class="anchored" data-anchor-id="critiques-of-null-hypothesis-significance-testing"><span class="header-section-number">15.4.3</span> Critiques of Null Hypothesis Significance Testing</h3>
+<p>Despite the prevalence of hypothesis testing and the seemingly intuitive derivation of the procedure it is not without its faults, and it is not free of detractors. There are many critiques of hypothesis testing that are valid, and that should be seriously considered before an uncritical application of the procedures. The critiques of hypothesis tests tend to fall into two categories: there are the critiques about the application of hypothesis testing in practice, and there are critiques about the underlying foundation of hypothesis testing. The first can be remedied through careful application of the procedures we have discussed. The second represents a more philosophical debate, one in which competing sources of evidence need to be weighed against one another. Statisticians who are particularly critical of hypothesis testing, as it has been outlined here, often propose alternative procedures to accomplish similar goals. These frameworks are often rooted in fundamentally different approaches to the understanding of uncertainty, such as those emerging from the Bayesian paradigm. Such approaches to scientific knowledge and inquiry can be quite useful, but will not pursued further in these notes.</p>
+<p>While there are many critiques of hypothesis testing, we focus on four foundational concerns.</p>
+<ol type="1">
+<li><strong>Effects are (basically) never truly zero</strong>. Most of the time, hypothesis testing is setup with a null hypothesis of <span class="math inline">\(H_0: \theta = 0\)</span>. This typically refers to the effect of some intervention (such as a medical treatment), or the difference in outcomes achieved after making some change, or similar. The hypothesis test then seeks to determine, based on the observed evidence, is the effect of interest really different from zero. Many individuals critique this framing since, in practice, we should not expect any effect to be exactly zero. Every factor likely exerts some influence, no matter how small, on any related factors. It may not be practically significant in terms of its effect size, but the only quantities that will truly have no effect on eachother are quantities that are not likely to be tested against one another. As a result, for many hypothesis tests, the framework is setup to disprove a statement that no one actually believes. We are not seeking evidence of effect size, just that it is different from zero, but likely we should approach every situation expecting the effects to be different from zero.</li>
+<li><strong>In hypothesis testing, <span class="math inline">\(p\)</span>-values are prioritized above all else.</strong> <span class="math inline">\(p\)</span>-values are, at their core, a statistic computed based on a particular sample that provide a measure of the level of evidence against a null hypothesis. This is a continuous measure of evidence, with any value <span class="math inline">\((0,1)\)</span> being theoretically possible. The process of hypothesis testing takes this continuous measures and expresses it discretely as either “statistically significant” or else “not statistically significant”, treating this discretization as the sole arbiter of whether an effect is real or not. Not only is there information lost by moving from a continuous measure to a discrete one based on only two categories, but this process also ignores other important sources of information that should likely be considered alongside a <span class="math inline">\(p\)</span>-value. For instance, alongside a <span class="math inline">\(p\)</span>-value we may wish to consider whatever prior evidence of the claim we may have, the scientific validity or plausibility of the underlying finding, the quality of the data or the study, the practical significance, and so forth. The critique in this context is not so much that <span class="math inline">\(p\)</span>-values are not useful, but rather, that a sole reliance on <span class="math inline">\(p\)</span>-values ignores many important factors.</li>
+<li><strong>The null hypothesis is often a <em>strawman</em></strong>. This is related to the first point, but is more broad than the idea that we can typically assume that effects are non-zero. Recall that the null hypothesis is meant to be the default belief about the world, the state of affairs that we ought to believe without sufficient evidence contradicting it. A null hypothesis that actually satisfies this critieria is required for the utility of the hypothesis testing framework. Often, however, the null hypothesis that is selected is one that effectively noone would actually believe. This is a <em>strawman</em>.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> If the null hypothesis is not truly believed by anyone, or if it is so unlikely as to be irrelevant, then refuting it with a hypothesis test tells us nothing. At the heart of the hypothesis testing framework is the concept of <em>falsification</em>. We are not looking for positive, confirmatory support in favour of a particular hypothesis, but rather looking to falsify the null hypothesis. If the idea that we are falsifying is not particularly relevant, then the fact that we have falsified it is also not particularly relevant. Unfortunately, in practice, irrelevant null hypotheses are often used.</li>
+<li><strong>The hypothesis testing framework is ripe for abuse.</strong> In any statistical analysis there are many choices that need to be made by individual conducting the analysis. Often there are many reasonable sounding choices that could lead to valid results, if those choices are guided by substantive considerations. Different choices which may be reasonable in different settings can, if applied to the same analysis, lead to very different conclusions. This is a reality in any statistical analysis, but is particularly concerning in the hypothesis testing framework where there is often a single goal for the researcher, namely, find a result that is statistically significant. A researcher that is setting out to achieve statistical significance at all costs is able to make many choices that aid in this attempt, if so desired. This process, known as <em>p-hacking</em>, can be intentional or unintentional, and can involve decisions that are reasonable from the outside or deisions that are explicitly fraudulent. For instance, an investigator may consider using a one-sided hypothesis test, a choice that, while reasonable in some settings, has the effect of halving the observed <span class="math inline">\(p\)</span>-value. Researchers may throw out certain data that they deem to be <em>outliers</em> because they do not follow the underlying trend they are looking for. Researchers may perform many different analyses, and only report those that happened to be statistically significant.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> The arbitrary nature of the level of significance is another area of choice for the researchers – if they calculate a <span class="math inline">\(p\)</span>-value and find it to be <span class="math inline">\(0.08\)</span>, taking <span class="math inline">\(\alpha = 0.1\)</span> allows them to report a statistically significant effect. The sum total of these choices means that any particular analysis, even if well-intentioned, may be subject to an artificially deflated <span class="math inline">\(p\)</span>-value, achieving the moniker of statistical significance unfairly.</li>
+</ol>
+<p>These critiques are not just theoretical. There has been, in recent years, major concerns over the replicability of research in a wide range of fields. While there are many aspects that drive this so-called replication crisis, the inappropriate use of hypothesis testing is certainly among the explanations. In light of these critiques, it is worth questioning whether the framework of hypothesis testing is worthy of pursuit. Generally, it is reasonable to answer this with a cautious “yes”. However, it is critically important to take seriously these criticisms. Hypothesis teseting should not be used to the exclusion of other forms of evidence. The hypothesis tests should not be dichotomized as “significant” or “not significant” where all results that are “significant” are treated as gospel and those that are “not significant” are treated as false. The selected null hypothesis should be a genuine null hypothesis, and the choices made in the analysis should be made prior to collecting or analyzing data on the basis of the context of the situation, rather than on the basis of what happens to be observed. Hypothesis testing should be used to support scientific inquiry, not as the sole tool of scientific inquiry. In short, the process of hypothesis testing provides a useful, statistical framework for assessing the degree of evidence that exists within a sample, however, it should never be applied uncritically.</p>
+</section>
+</section>
+<section id="hypothesis-testing-in-r" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="hypothesis-testing-in-r"><span class="header-section-number">15.5</span> Hypothesis Testing in <code>R</code></h2>
+<p>Hypothesis testing in R can proceed in one of two ways. First, test statistics can be directly computed, and then functions (such as <code>pnorm</code> or similar) can be used to compute <span class="math inline">\(p\)</span>-values according to the null distribution. Alternatively, many common hypothesis tests are built into <code>R</code> to begin. The most relevant function, given the tests that were discussed throughout this chapter, is the <code>t.test</code> function. This will perform a <span class="math inline">\(t\)</span>-test, based on a sample of data, contrasting the mean against a particular value. Moreover, the <code>t.test</code> function will, by default, produce confidence intervals for the mean, allowing both to be reported alongside one another. If you wish to perform a hypothesis test that is not built-in, then this can be accomplished using the same procedures outlined for confidence intervals.</p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `set.seed(31415)
+
+n <- 50
+X <- rnorm(n, 1, 1)
+
+# H0: mu = 0, based on a Z-test
+T <- (mean(X) - 0) / (1 / sqrt(n))
+p <- 2 * pnorm(-1 * abs(T))
+
+# H0: mu = 1, based on a t-test
+t.test(X, mu = 1, alternative = "two.sided")
+
+# t.test used for a 90% confidence interval
+t.test(X, conf.level = 0.9)
+
+# For alternative tests, you can consider:
+#   - var.test, which provides a test for the variance
+#   - prop.test, which provides a test of proportions`, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-15.1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.1</strong></span> To test the hypothesis that a coin is fair, the following decision rule is adopted: Reject <span class="math inline">\(H_0\)</span> if the number of heads in a sample of size <span class="math inline">\(100\)</span> is not at least <span class="math inline">\(40\)</span> and at most <span class="math inline">\(60\)</span> and fail to reject <span class="math inline">\(H_0\)</span> otherwise.</p>
+<ol type="a">
+<li>Find the Type I error probability.</li>
+<li>What conclusion would you draw if the sample of <span class="math inline">\(100\)</span> tosses yielded <span class="math inline">\(53\)</span> heads? <span class="math inline">\(60\)</span> heads?</li>
+<li>Could your conclusions in (b) be wrong? Explain.</li>
+</ol>
+</div>
+<div id="exr-15.2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.2</strong></span> &nbsp;</p>
+<ol type="a">
+<li>Design a decision rule, based on counting the number of heads, to test the hypothesis that a coin is fair if a sample of <span class="math inline">\(64\)</span> tosses of the coin is taken, assuming <span class="math inline">\(\alpha=0.05\)</span>.</li>
+<li>Does your proposed decision rule have significance of exactly <span class="math inline">\(\alpha\)</span>? If yes, explain. If not, how could the rule be modified to achieve this?</li>
+<li>How could you design the decision rule to completely avoid a Type II error?</li>
+</ol>
+</div>
+<div id="exr-15.3" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.3</strong></span> For the following scenarios, indicate a reasonable <span class="math inline">\(\alpha\)</span> level for a significance test, assuming that the results of a significance test will translate into decisions. Justify your answer.</p>
+<ol type="a">
+<li>A new drug is being developed for a common condition with multiple treatment options available. Safety tests have been completed, and the current study aims to evaluate its effectiveness.</li>
+<li>In the field of civil engineering, a new construction method is being tested for building stability. The cost of potential failure is high.</li>
+<li>A clinical trial is conducted to determine whether a new medical device is more effective than the current standard of care for a common health condition.</li>
+<li>A software development team is testing a new algorithm for data compression. The current compression method is widely accepted and used.</li>
+<li>An environmental study is conducted to assess the impact of a new manufacturing process on air quality in a city.</li>
+<li>A pharmaceutical company is conducting a study to evaluate the effectiveness of a new vaccine against a highly contagious disease. Safety data is available.</li>
+<li>A new dietary supplement is being tested for its potential to improve cognitive function in adults. Safety data is limited.</li>
+<li>In the context of transportation engineering, a new traffic management system is being evaluated for its impact on reducing congestion.</li>
+<li>A study is conducted to determine whether a new teaching method improves student performance in mathematics compared to the traditional method.</li>
+<li>A marketing team is testing the effectiveness of two different advertising campaigns for a popular consumer product.</li>
+<li>A public health study examines the association between a specific lifestyle factor and the risk of a common chronic disease. a. A survey is conducted to assess public opinion on a proposed policy change in a democratic society.</li>
+<li>In the context of entertainment and media, a study aims to determine whether a new type of streaming service subscription increases customer satisfaction compared to traditional cable TV.</li>
+<li>An architectural firm is testing a new building material for its energy efficiency in construction. The current material is well-established.</li>
+<li>A study investigates whether a new social media platform leads to increased user engagement compared to existing platforms.</li>
+<li>A new drug is being trialled to treat a rare disease which does not currently have any viable treatment pathways. The drug has been proven to be safe and the current testing is simply around efficacy.</li>
+<li>A new drug is being trialled to treat a rare disease which currently has a moderately effective treatment. The drug has been proven to be safe and the current testing is simply around the efficacy in comparison to the existing treatment.</li>
+<li>A new drug is being trialled to treat a rare disease which currently has a moderately effective treatment. The drug has not been tested for safety. The current testing is around the efficacy is comparison to the existing treatment.</li>
+<li>You have a bet with a friend, with no wager beyond ``bragging rights’’, over whether green skittles appear less frequently than red skittles in bags.</li>
+</ol>
+</div>
+<div id="exr-15.4" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.4</strong></span> For each of the following, indicate whether it is a valid statistical hypothesis or not, and why.</p>
+<ol type="a">
+<li><span class="math inline">\(H: \sigma &gt; 100\)</span>;</li>
+<li><span class="math inline">\(H: s^2 \leq 0.2\)</span>;</li>
+<li><span class="math inline">\(H: \overline{X} - \overline{Y} = 5\)</span>;</li>
+<li><span class="math inline">\(H: \lambda \leq 2\)</span>;</li>
+<li><span class="math inline">\(H: \theta = 10\)</span>;</li>
+<li><span class="math inline">\(H: \frac{\sigma_1}{\sigma_2} &lt; 1\)</span>.</li>
+</ol>
+</div>
+<div id="exr-15.5" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.5</strong></span> For each of the following, draw the correct conclusion (with statement) regarding the test of the hypothesis with the associated p-value. Suppose that each test is for <span class="math inline">\(H_0: \theta = 0\)</span>, where <span class="math inline">\(\theta\)</span> represents the average error in length from a manufacturing process.</p>
+<ol type="a">
+<li><span class="math inline">\(p = 0.084\)</span>, <span class="math inline">\(\alpha = 0.05\)</span>;</li>
+<li><span class="math inline">\(p = 0.003\)</span>, <span class="math inline">\(\alpha = 0.001\)</span>;</li>
+<li><span class="math inline">\(p = 0.498\)</span>, <span class="math inline">\(\alpha = 0.05\)</span>;</li>
+<li><span class="math inline">\(p = 0.084\)</span>, <span class="math inline">\(\alpha = 0.10\)</span>;</li>
+<li><span class="math inline">\(p = 0.039\)</span>, <span class="math inline">\(\alpha = 0.01\)</span>;</li>
+<li><span class="math inline">\(p = 0.218\)</span>, <span class="math inline">\(\alpha = 0.10\)</span>.</li>
+</ol>
+</div>
+<div id="exr-15.6" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.6</strong></span> To determine whether the pipe welds in a nuclear power plant meet specifications, a random sample of welds is selected, and tests are conducted on each weld in the sample. Weld strength is measured as the force required to break the weld. Suppose the specifications state that mean strength of welds should exceed <span class="math inline">\(100\)</span> pounds per square inch. The inspection team decides to test <span class="math inline">\(H_0: \mu \leq 100\)</span> versus <span class="math inline">\(H_1: \mu &gt; 100\)</span>. Explain why it might be preferable to use this <span class="math inline">\(H_1\)</span> rather than <span class="math inline">\(\mu &lt; 100\)</span>.</p>
+</div>
+<div id="exr-15.7" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.7</strong></span> Let <span class="math inline">\(\mu\)</span> denote the true average radioactivity level. The value <span class="math inline">\(5\)</span> is considered the dividing line between safe and unsafe water. Would you recommend testing <span class="math inline">\(H_0: \mu \leq 5\)</span> or <span class="math inline">\(H_0: \mu \geq 5\)</span>? Why?</p>
+</div>
+<div id="exr-15.8" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.8</strong></span> Before agreeing to purchase a large order of a material, a company wants to see conclusive evidence that the true standard deviation of the material thickness is less than <span class="math inline">\(.05\)</span>mm. What hypotheses should be tested, and why? In this context, what are the type I and type II errors?</p>
+</div>
+<div id="exr-15.9" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.9</strong></span> Many older homes have electrical systems that use fuses rather than circuit breakers. A manufacturer of <span class="math inline">\(40\)</span>-amp fuses wants to make sure that the mean amperage at which its fuses burn out is in fact 40. To verify the amperage of the fuses, a sample of fuses is to be selected and inspected. If a hypothesis test were to be performed on the resulting data, what null and alternative hypotheses would be of interest to the manufacturer? Describe type I and type II errors in the context of this problem situation.</p>
+</div>
+<div id="exr-15.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.10</strong></span> Water samples are taken from water used for cooling as it is being discharged from a power plant into a river. It has been determined that as long as the mean temperature of the discharged water is at most <span class="math inline">\(150\)</span>F, there will be no negative effects on the river’s ecosystem. To investigate whether the plant is in compliance with regulations, <span class="math inline">\(50\)</span> water samples will be taken at randomly selected times and the temperature of each sample recorded. The resulting data will be used to test the hypotheses <span class="math inline">\(H_0: \mu \leq 150\)</span> versus <span class="math inline">\(H_1: \mu &gt; 150\)</span>. In the context of this situation, describe type I and type II errors. Which type of error would you consider more serious? Explain.</p>
+</div>
+<div id="exr-15.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.11</strong></span> A regular type of laminate is currently being used by a manufacturer of circuit boards. A special laminate has been developed to reduce warpage. The regular laminate will be used on one sample of specimens and the special laminate on another sample, and the amount of warpage will then be determined for each specimen. The manufacturer will then switch to the special laminate only if it can be demonstrated that the true average amount of warpage for that laminate is less than for the regular laminate. State the relevant hypotheses, and describe the type I and type II errors in the context of this situation.</p>
+</div>
+<div id="exr-15.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.12</strong></span> The breaking strength of cables produced by a manufacturer have mean <span class="math inline">\(1800\)</span> lbs and standard deviation of <span class="math inline">\(100\)</span> lbs. By a new technique in the manufacturing process it is claimed that the breaking strength can be increased. To test this claim a sample of <span class="math inline">\(50\)</span> cables is tested and it is found that the mean breaking strength is <span class="math inline">\(1850\)</span>. Can we support the claim with a a <span class="math inline">\(0.01\)</span> level of significance?</p>
+</div>
+<div id="exr-15.13" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.13</strong></span> Recently, many companies have been experimenting with telecommuting. One possible benefit from the company’s perspective is to reduce the number of sick days taken. Suppose that it is known that at one company employees have taken a mean of <span class="math inline">\(5.4\)</span> sick days over the past year. A sample of <span class="math inline">\(80\)</span> employees is taken after the policy change, and these employees average <span class="math inline">\(4.5\)</span> sick days with a standard deviation of <span class="math inline">\(2.7\)</span>. Let <span class="math inline">\(\mu\)</span> represent the mean number of sick days for all employees. Test the hypothesis <span class="math inline">\(H_0: \mu \geq 5.4\)</span>.</p>
+</div>
+<div id="exr-15.14" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.14</strong></span> A certain type of stainless steel powder is supposed to have a mean particle diameter of <span class="math inline">\(\mu = 15\nu\)</span>m. A random sample of <span class="math inline">\(87\)</span> particles had a mean diameter of <span class="math inline">\(15.2\mu\)</span>m, with standard deviation of <span class="math inline">\(1.8\mu\)</span>m. Test the hypothesis <span class="math inline">\(H_0: \mu = 15\)</span>.</p>
+</div>
+<div id="exr-15.15" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.15</strong></span> An engineer takes a large number of independent measurements of the length of a component and obtains <span class="math inline">\(\overline{X} = 5.2\)</span>mm and standard deviation <span class="math inline">\(0.1\)</span>mm. Use this information to find the p-value for testing <span class="math inline">\(H_0: \mu = 5.0\)</span>.</p>
+</div>
+<div id="exr-15.16" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.16</strong></span> Consider the following output from statistical software. Using this information:</p>
+<ol type="a">
+<li>State the details of the test that was performed, along with the conclusion.</li>
+<li>Use the output to test <span class="math inline">\(H_0: \mu \geq 73.6\)</span>.</li>
+<li>Use the output to compute a <span class="math inline">\(99\%\)</span> confidence interval for <span class="math inline">\(\mu\)</span>.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>One-sample:</strong></p>
+<p><span class="math inline">\(H_0: \mu = 73.5\)</span>.</p>
+</blockquote>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 6%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 27%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: center;">N</th>
+<th style="text-align: center;">Mean</th>
+<th style="text-align: center;">Std. Dev</th>
+<th style="text-align: center;">S.E. Mean</th>
+<th style="text-align: center;">95% CI</th>
+<th style="text-align: center;">Z</th>
+<th style="text-align: center;">P</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X</td>
+<td style="text-align: center;"><span class="math inline">\(145\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(73.2461\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2.364\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.1963\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((72.8614, 73.6308)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(-1.29\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.196\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="exr-15.17" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.17</strong></span> In the past a machine has produced washers having a mean thickness of <span class="math inline">\(0.05\)</span> inches. To determine whether the machine is in proper working order, a sample of <span class="math inline">\(10\)</span> washers is chosen for which the mean thickness is <span class="math inline">\(0.053\)</span> inches and the standard deviation is <span class="math inline">\(0.003\)</span> inches. Test the hypothesis that the machine is in proper working order using a level of significance of <span class="math inline">\(0.05\)</span>.</p>
+</div>
+<div id="exr-15.18" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.18</strong></span> A test of the breaking strengths of <span class="math inline">\(6\)</span> ropes manufactured by a company showed a mean breaking strength of <span class="math inline">\(7750\)</span> lb and a standard deviation of <span class="math inline">\(145\)</span> lb, whereas the manufacturer claimed a mean breaking strength of <span class="math inline">\(8000\)</span> lb. Do the data contradict the manufacturers claim?</p>
+</div>
+<div id="exr-15.19" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.19</strong></span> A machine produces marbles whose diameters are normally distributed with mean <span class="math inline">\(12.00\)</span>mm. After modification of the machine, the diameters of a random sample of <span class="math inline">\(105\)</span> marbles produced were found to have a mean of <span class="math inline">\(12.010\)</span>mm and a standard deviation of <span class="math inline">\(0.05\)</span>mm. Would you conclude that the change has affected the mean diameter produced by the machine?</p>
+</div>
+<div id="exr-15.20" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.20</strong></span> The following hypothetical data sets represent the weighings of a standard weight that is known to have a mass of <span class="math inline">\(100\)</span>g. Assume that the readings are a random sample from a population that follows the normal curve. For each of the following perform a hypothesis test indicating whether the scale is properly calibrated, or explain why it is not possible to do so.</p>
+<ol type="a">
+<li><span class="math inline">\(\{100.02, 99.98, 100.03\}\)</span>;</li>
+<li><span class="math inline">\(\{100.01\}\)</span>.</li>
+</ol>
+</div>
+<div id="exr-15.21" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.21</strong></span> A certain manufactured product is supposed to contain <span class="math inline">\(23\%\)</span> potassium by weight. A sample of <span class="math inline">\(10\)</span> specimens of this product have an average percentage of <span class="math inline">\(23.2\%\)</span> with a standard deviation of <span class="math inline">\(0.2\%\)</span>. Run a hypothesis test to determine whether the process is correctly calibrated or not.</p>
+</div>
+<div id="exr-15.22" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.22</strong></span> Consider the following output from statistical software. Using this information:</p>
+<ol type="a">
+<li>State the details of the test that was performed, along with the conclusion.</li>
+<li>Use the output to test <span class="math inline">\(H_0: \mu \geq 6.5\)</span>.</li>
+<li>Use the output to compute a <span class="math inline">\(99\%\)</span> confidence interval for <span class="math inline">\(\mu\)</span>.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>One-sample:</strong></p>
+<p><span class="math inline">\(H_0: \mu \leq 5.5\)</span>.</p>
+</blockquote>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 4%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 22%">
+<col style="width: 9%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: center;">N</th>
+<th style="text-align: center;">Mean</th>
+<th style="text-align: center;">Std. Dev</th>
+<th style="text-align: center;">S.E. Mean</th>
+<th style="text-align: center;">95% Lower Bound</th>
+<th style="text-align: center;">Z</th>
+<th style="text-align: center;">P</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X</td>
+<td style="text-align: center;"><span class="math inline">\(5\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(5.92563\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.15755\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.07046\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(5.77542\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(6.04\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.002\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="exr-15.23" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.23</strong></span> A random sample of <span class="math inline">\(300\)</span> electronic components manufactured by a certain process are tested, and <span class="math inline">\(25\)</span> are found to be defective. Let <span class="math inline">\(p\)</span> represent the proportion of components manufactured by this process that are defective. The process engineer claims that <span class="math inline">\(p \leq 0.05\)</span>. Does the sample provide enough evidence to reject this claim?</p>
+</div>
+<div id="exr-15.24" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.24</strong></span> A survey of <span class="math inline">\(444\)</span> HIV-positive smokers was taken, with <span class="math inline">\(281\)</span> male and <span class="math inline">\(163\)</span> female respondents. Consider this to be a simple random sample. Can you conclude that more than <span class="math inline">\(60\%\)</span> of HIV-positive smokers are male?</p>
+</div>
+<div id="exr-15.25" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.25</strong></span> A weight that was known to be <span class="math inline">\(150\)</span>g was placed on each of <span class="math inline">\(50\)</span> kitchen scales. The readings on <span class="math inline">\(29\)</span> of the scales were too light, and the remaining <span class="math inline">\(21\)</span> were too heavy. Can you conclude that more than half of kitchen scales underestimate weight?</p>
+</div>
+<div id="exr-15.26" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.26</strong></span> A study of <span class="math inline">\(304\)</span> individuals were asked to choose a physician based on hypothetical descriptions. One was described as having high technical skills, while the other was described as having high interpersonal skills. <span class="math inline">\(62\%\)</span> of the people chose the physician with high technical skills. Can you conclude that more than half of patients prefer a physician with high technical skills?</p>
+</div>
+<div id="exr-15.27" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.27</strong></span> In a survey of <span class="math inline">\(500\)</span> residents in a certain town, <span class="math inline">\(274\)</span> said they were opposed to the construction of a new mall. Test whether more than half of the residents are opposed to the construction.</p>
+</div>
+<div id="exr-15.28" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.28</strong></span> Of <span class="math inline">\(113\)</span> people undergoing a certain hip procedure, <span class="math inline">\(65\)</span> had surgery on their right hip. Can you conclude that there is a difference in frequency of this procedure between the right and left hips?</p>
+</div>
+<div id="exr-15.29" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.29</strong></span> A grinding machine will be qualified for a particular task if it can be shown to produce less than <span class="math inline">\(8\%\)</span> defective parts. In a random sample of <span class="math inline">\(300\)</span> parts, <span class="math inline">\(12\)</span> were defective. Can the machine be qualified?</p>
+</div>
+<div id="exr-15.30" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.30</strong></span> The manufacturer for a patented medicine claimed that it was <span class="math inline">\(90\%\)</span> effective in relieving an allergy for a period of <span class="math inline">\(8\)</span> hours. In a sample of <span class="math inline">\(200\)</span> people who had the allergy, the medicine provided relief for <span class="math inline">\(160\)</span> people. Determine the legitimacy of the manufacturers claim.</p>
+</div>
+<div id="exr-15.31" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.31</strong></span> Describe the difference between practical significance and statistical significance.</p>
+</div>
+<div id="exr-15.32" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.32</strong></span> Give an example of something which is statistically significant but not practically significant.</p>
+</div>
+<div id="exr-15.33" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.33</strong></span> Can you find a result which is practically significant but not statistically significant? Explain.</p>
+</div>
+<div id="exr-15.34" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.34</strong></span> Consider carrying out <span class="math inline">\(m\)</span> tests of hypotheses, independently, based on a significance level of <span class="math inline">\(0.01\)</span>.</p>
+<ol type="a">
+<li>What is the probability of committing at least <span class="math inline">\(1\)</span> type I error with <span class="math inline">\(m=5\)</span>? With <span class="math inline">\(m=10\)</span>?</li>
+<li>How many tests would need to be performed until the probability of a type I error exceeds <span class="math inline">\(0.5\)</span>?</li>
+</ol>
+</div>
+<div id="exr-15.35" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 15.35</strong></span> Suppose that a <span class="math inline">\(90\%\)</span> confidence interval for <span class="math inline">\(\theta\)</span> is found to be <span class="math inline">\((a, b)\)</span>. Describe how this can be used to test the hypothesis <span class="math inline">\(H_0:\theta = c\)</span>.</p>
+</div>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>For instance, if you are considering a treatment, you should assume that the treatment has no effect. This way, without strong evidence suggesting that there is an effect, you will not use the treatment. The same ideas apply more broadly.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Note, many sources will list the null hypothesis as simply <span class="math inline">\(H_0: \theta = \theta_0\)</span> and control the tail behaviour exclusively via the alternative. This results in the same test mechanism but is, in my opinion, less clear as to the actual hypotheses that are being tested.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The use of a one tailed test should be reserved for cases where there is no real possibility of contradicting the null in both directions.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>and, indeed, of any procedure that deals with randomness and uncertainty<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Uncertainty ensures us that there is always a <em>chance</em> that the null hypothesis was incorrectly rejected.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Recall that statistics are any quantities that can be computed given a sample of data.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Here, extreme means contradictory to the null hypothesis. Note that the extremity of an observation depends on whether we have a one-tailed or two-tailed alternative. With a two-tailed alternative, we need to consider extreme values in both tails, with a one-tailed alternative, we simply need to consider values that are further away from the null value.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Such as the normal, or the <span class="math inline">\(t\)</span> distributions, which are both quite common.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Or, equivalently, if the test statistic is larger in magnitude than the critical value.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>Unhelpfully…<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>This is challenging for several reasons. One is that the test statistic is defined so that it has a well-defined null distribution. Unfortunately, to work out the type II error probability, the null distribution is not helpful. Instead, we need to work out the distribution of the test statistic assuming the null is not true. Unfortunately, the alternative is typically a <strong>composite hypothesis</strong>. That is, the alternative is specified as a range of possible values, rather than a single point. If the alternative is <span class="math inline">\(H_A: \mu \neq 0\)</span>, should we take <span class="math inline">\(\mu = 1\)</span> or <span class="math inline">\(\mu = -1\)</span> or <span class="math inline">\(\mu = \pi\)</span>? It is not always clear. As a result, we tend to define the probability of a type II error on the basis of a function, say <span class="math inline">\(\pi'(\theta)\)</span> that gives the probability of a false negative for any given value <span class="math inline">\(\theta\)</span>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>From the binomial we can justify the equivalent conclusion by first considering the normal approximation to the binomial, and then scaling the results as required.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>For some significance level, <span class="math inline">\(\alpha\)</span>.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>The concept of a strawman stems from the world of debate wherein sometimes individuals argue against a position that others do not really hold. The idea is that there is a position that is constructed that appears to be the one up for debate, but that is actually different in important ways. The person is then said to be attacking a strawman, as in, a human figure made of straw that would be easy to knock over or destroy.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>Consider a researcher performing <span class="math inline">\(n\)</span> independent hypothesis tests, each at a significance level of <span class="math inline">\(p\)</span>. Note that the number of results they would expect to find as statistically significant, even if none of them truly are, follows a <span class="math inline">\(\text{Bin}(n, p)\)</span> distribution. If <span class="math inline">\(p = 0.05\)</span>, then after <span class="math inline">\(n=14\)</span> tests there is a greater than <span class="math inline">\(50\%\)</span> chance that at least one of them returns a statistically significant result, despite none being true.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -748,6 +2362,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </nav>
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

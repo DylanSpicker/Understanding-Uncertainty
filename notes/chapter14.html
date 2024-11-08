@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -37,10 +37,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9cf7f73ae95708c47935cfd4a35bc870.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1458,7 +1458,7 @@ Approximate Confidence Intervals for a Proportion
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For a sufficiently large sample size, such that Central Limit Theorem applies, a a <span class="math inline">\(100p\%\)</span> confidence interval for a proportion is given by <span class="math display">\[(\widehat{p} - \leq Z_{1-(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}, \overline{X} + Z_{1 - (1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}).\]</span> This is often expressed as <span class="math display">\[\widehat{p} \pm Z_{(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}.\]</span></p>
+<p>For a sufficiently large sample size, such that Central Limit Theorem applies, a a <span class="math inline">\(100p\%\)</span> confidence interval for a proportion is given by <span class="math display">\[(\widehat{p} - Z_{1-(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}, \overline{X} + Z_{1 - (1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}).\]</span> This is often expressed as <span class="math display">\[\widehat{p} \pm Z_{(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}.\]</span></p>
 </div>
 </div>
 </section>
@@ -1728,8 +1728,40 @@ c(Xbar - t_crit * s/sqrt(100), Xbar + t_crit * s/sqrt(100))`,
 </ol>
 </div>
 <div id="exr-14.15" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 14.14</strong></span> &nbsp;</p>
-Suppose that the following output was obtained from a sample of tensile strength observations. Using these statistics, compute a <span class="math inline">\(99\%\)</span> confidence interval for the true average tensile strength, and interpret the result.
+<p><span class="theorem-title"><strong>Exercise 14.14</strong></span> Suppose that the following output was obtained from a sample of tensile strength observations. Using these statistics, compute a <span class="math inline">\(99\%\)</span> confidence interval for the true average tensile strength, and interpret the result.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">N</th>
+<th style="text-align: center;">Mean</th>
+<th style="text-align: center;">Median</th>
+<th style="text-align: center;">Std. Dev</th>
+<th style="text-align: center;">SE. Mean</th>
+<th style="text-align: center;">Minimum</th>
+<th style="text-align: center;">Maximum</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(153\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(135.39\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(135.40\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(4.59\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.37\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(122.20\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(147.70\)</span></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="exr-14.16" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 14.15</strong></span> An investigator computes a <span class="math inline">\(95\%\)</span> confidence interval for a population mean on the basis of a sample of size <span class="math inline">\(70\)</span>. If they wish to compute a <span class="math inline">\(95\%\)</span> confidence interval that is half as wide, how large of a sample is required?</p>
