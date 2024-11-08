@@ -254,7 +254,7 @@ We previously discussed how, in the event of having data from a binomial experim
 
 :::{.callout-tip icon="false"}
 ## Approximate Confidence Intervals for a Proportion
-For a sufficiently large sample size, such that Central Limit Theorem applies, a a $100p\%$ confidence interval for a proportion is given by $$(\widehat{p} - \leq Z_{1-(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}, \overline{X} + Z_{1 - (1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}).$$ This is often expressed as $$\widehat{p} \pm Z_{(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}.$$
+For a sufficiently large sample size, such that Central Limit Theorem applies, a a $100p\%$ confidence interval for a proportion is given by $$(\widehat{p} - Z_{1-(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}, \overline{X} + Z_{1 - (1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}).$$ This is often expressed as $$\widehat{p} \pm Z_{(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}.$$
 :::
 
 ## Confidence Intervals for the Variance

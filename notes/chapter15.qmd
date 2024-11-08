@@ -1,9 +1,9 @@
 # The Basics of Null Hypothesis Significance Testing
 
 ## The Framework of Null Hypothesis Significance Testing
-Over the past two chapters the focus has been on *estimation procedures* for parameters of interest. Point estimation gives us methods to make inferences regarding the specific value of a particular parameter, while interval estimation permits the discussion of the uncertainty of these estimates. Taken together these estimation techniques allow for a deep understanding of the value of parameters, based on observed samples. We know that each sample is likely to result in different estimates based on sampling variability. Correspondingly, the specific inferences that are made regarding the parameter values will depend on the specific sample that is observed. Using interval estimates we hope to capture how uncertain our knowledge is, however, it is an unavoidable truth that any conclusions we draw are subject to the whims of the sample. A fundamental question we can ask, in light of this truth, is "how are we able to draw specific conclusions or make decisions on the basis of our estimated values?"
+Over the past two chapters the focus has been on *estimation procedures* for parameters of interest. Point estimation gives us methods to make inferences regarding the specific value of a particular parameter, while interval estimation permits the discussion of the uncertainty of these estimates. Taken together these estimation techniques allow for a deep understanding of the value of parameters, based on observed samples. We know that every sample we take is likely to result in different estimates based on sampling variability. Correspondingly, the specific inferences that are made regarding the parameter values will depend on the specific sample that is observed. Using interval estimates we hope to capture how uncertain our knowledge is, however, it is an unavoidable truth that any conclusions we draw are subject to the whims of the sample. A fundamental question we can ask, in light of this truth, is "how are we able to draw specific conclusions or make decisions on the basis of our estimated values?"
 
-The framework of **null hypothesis significance testing (NHST)**, often referred to as simply **hypothesis testing** provides one mechanism for making decisions regarding the value(s) of parameter(s) using observed samples. In a hypothesis test the observed sample is used to weigh evidence against competing explanations for what is true in the population. We make educated guesses regarding the likely value of a population parameter and then determine how likely it would be to observe the sample that we have observed, if those guesses are actually true. If the sample is likely to be produced under our specified version of truth, then the sample provides no evidence against it. If, on the other hand, the sample is unlikely given our specified version of the truth, this serves as evidence against it. 
+The framework of **null hypothesis significance testing (NHST)**, often referred to as simply **hypothesis testing**, provides one mechanism for making decisions regarding the value(s) of parameter(s) using observed samples. In a hypothesis test the observed sample is used to weigh evidence against competing explanations for what is true in the population. We make educated guesses regarding the likely value of a population parameter and then determine how likely it would be to observe the sample that we have actually observed, if our guesses are actually true. If the sample is likely to be produced under our specified version of truth, then the sample provides no evidence against the guesses. If, on the other hand, the sample is unlikely given our specified version of the truth, this serves as evidence against our guesses. 
 
 :::{#exm-the-weight-die}
 ## Sadie and the Weighted Die
@@ -26,7 +26,7 @@ c. Based on the $100$ rolls of the die, it seems very unlikely that the die is a
 **Hypothesis testing** is a statistical framework through which data are assessed to determine whether they sufficiently support a particular hypothesis regarding a population parameter. Under an assumed hypothesis regarding the true population parameter, the likelihood of observing the present sample is computed. From this conclusions are drawn with regards to the statistical validity of the hypothesis. 
 :::
 
-At the core of the hypothesis testing framework is the idea of a statistical hypothesis. A statistical hypothesis is a specification of a plausible parameter value made on the basis of subject-matter expertise, rather than through the data itself. Alongside the statistical hypothesis, subject-matter expertise is required to define the evidentiary requirements of the test. Specifically, we must consider how certain we want be regarding conclusions that we draw, a decision that is ultimately based on the stakes of drawing an incorrect conclusion. With the specification of a hypothesis and a required level of significance, we turn to the data that have been observed and summarize it using a test statistic. The test statistic is a statistic that has a known sampling distribution under the assumption that our hypothesis is correct. Using this test statistic and the knowledge of its sampling distribution, we can assess the likelihood of having observed this specific statistic if the assumption were true. Based on our assessment, and the level of significance we desire, we can then draw conclusions and interpret the results.
+At the core of the hypothesis testing framework is the idea of a statistical hypothesis. A statistical hypothesis is a specification of a plausible parameter value made on the basis of subject-matter expertise, rather than through the data themselves. Alongside the statistical hypothesis, subject-matter expertise is required to define the evidentiary requirements of the test. Specifically, we must consider how certain we want be regarding conclusions that we draw, a decision that is ultimately based on the stakes of drawing an incorrect conclusion. With the specification of a hypothesis and a required level of significance, we turn to the data that have been observed and summarize them using a test statistic. A test statistic is a statistic that has a known sampling distribution under the assumption that our hypothesis is correct. Using this test statistic, and the knowledge of its sampling distribution, we can assess the likelihood of having observed this specific statistic if the hypothesis were true. Based on our assessment, and the level of significance we desire, we can then draw conclusions and interpret the results.
 
 This high-level description summarizes the procedure of hypothesis testing as a five-step procedure:
 
@@ -50,15 +50,32 @@ In the framework of null hypothesis significance testing, we focus on the specif
 
 :::{#def-null-hypothesis}
 ## Null Hypothesis
-The **null hypothesis** is a statistical hypothesis that is meant to capture the assumed state of the world that would be believed without contradictory evidence. That is, the null hypothesis captures the value of a parameter that is assumed to hold by default. Often, the null hypothesis captures the idea of *no effect* or *no difference*, such as taking $\theta = 0$. The null hypothesis is typically denoted $H_0$, such that we would write, for instance, $H_0: \theta = 0$ or $H_0: \theta \geq 10$.
+The **null hypothesis** is a statistical hypothesis that is meant to capture the assumed state of the world that would be believed without contradictory evidence. The null hypothesis captures the value of a parameter that is assumed to hold by default. Often, the null hypothesis captures the idea of *no effect* or *no difference*, such as taking $\theta = 0$. The null hypothesis is typically denoted $H_0$, so we write, for instance, $H_0: \theta = 0$ or $H_0: \theta \geq 10$.
 :::
 
 :::{#def-alternative-hypothesis}
 ## Alternative Hypothesis
-The **alternative hypothesis** is a statistical hypothesis that is defined in contrast to a stated null hypothesis. Generally, we take the alternative hypothesis to be *not* the null. That is, if the null hypothesis states $\theta = 0$ then the alternative will be $\theta \neq 0$. We denote the alternative as either $H_1$ or $H_A$. If the null hypothesis is not true, the alternative hypothesis will be. 
+The **alternative hypothesis** is a statistical hypothesis that is defined in contrast to a stated null hypothesis. Generally, we take the alternative hypothesis to be *not* the null. If the null hypothesis states $\theta = 0$ then the alternative will be $\theta \neq 0$. We denote the alternative as either $H_1$ or $H_A$. If the null hypothesis is not true, the alternative hypothesis will be. 
 :::
 
-When framing the null and the alternative hypothesis it is important to keep in mind that we are seeking evidence *against* the null hypothesis. We will never seek to positively confirm that the null hypothesis actually holds. Instead, we want to see the observed data allow us to conclude that it certainly does not hold. For this reason, the hypotheses we are considering should be determined prior to data collection and should be informed by a subject-matter understanding, rather than for statistical convenience. To determine your null hypothesis, you should ask what you would continue to believe without evidence to the contrary, and take that as the null. If you have no such prior beliefs, then it is best to take the most conservative statement as the null hypothesis.^[That is, if you are considering a treatment, you should assume that the treatment has no effect. This way, without strong evidence suggesting that there is an effect, you will not use the treatment. The same idea applies more broadly.] 
+When framing the null and the alternative hypothesis it is important to keep in mind that we are seeking evidence *against* the null hypothesis. We will never seek to positively confirm that the null hypothesis actually holds. Instead, we want to see if the observed data allow us to conclude that it certainly does not hold. For this reason, the hypotheses we are considering should be determined prior to data collection and should be informed by a subject-matter understanding, rather than for statistical convenience. To determine your null hypothesis, you should ask what you would continue to believe without evidence to the contrary, and take that as the null. If you have no such prior beliefs, then it is best to take the most conservative statement as the null hypothesis.^[For instance, if you are considering a treatment, you should assume that the treatment has no effect. This way, without strong evidence suggesting that there is an effect, you will not use the treatment. The same ideas apply more broadly.]
+
+:::{#exm-determine-hypotheses}
+## Sadie and Charles Care for Trees: Identifying Hypotheses
+Sadie and Charles have, after watching a new documentary, become quite interested in caring for trees. They have started a small tree nursery, and are interested in how statistics may be used to inform their progress through this adventure. For each of the following questions, they are looking to identify what null and alternative hypotheses may be reasonable for the following questions. 
+
+a. They have found a pouch of aspen seeds, but are not sure where they came from. Aspens typically grow to be a total of about $50$ feet tall, with a diameter of $10.5$ inches. They want to know whether these aspens seeds are similar to common aspens, or not.
+b. They have many different fertilizer options. They want to know whether a particular blend of their fertilizers influences the height to which the trees grow, or not. 
+c. They understand that bark beetles are a problem that can often impact pine trees. Before they help reforest in a certain area, they want to know whether more than $10\%$ of pine trees are infested with bark beetles, or not, to understand whether new plants are likely to survive. 
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. Here, we could think of running two separate hypothesis tests. If we take $\theta_1$ to represent the average height of an aspen grown from the seed, we may test $H_0: \theta_1 = 50$ versus the alternative $H_A: \theta_1 \neq 50$. If $\theta_2$ represents the average diameter of the grown aspens, then we can test $H_1: \theta_2 = 10.5$ versus the alternative $H_A: \theta_2 \neq 10.5$. 
+b. Here, we require to take a parameter, say $\theta_3$, to represent the effect of the fertilizer on tree growth. Specifically, we may take $\theta_3$ to represent the average change in height that a tree receiving the fertilizer has (compared to if the tree had not received the fertilizer). Then, it is most sensible to assume by default that there is no effect, and thus $H_0: \theta_3 = 0$ versus $H_A: \theta_3 \neq 0$.
+c. Here, the parameter of interest is $\theta_4$, the proportion of trees in a particular area that are infected with bark beetles. We may consider $H_0: \theta = 0.1$ versus the alternative $H_A: \theta \neq 0.1$. However, in this case, it may be more prudent to actually use a **one-sided hypothesis**, taking $H_0: \theta \geq 0.1$ versus $H_A: \theta \leq 0.1$. The rationale would be that, since the decision to act would only be influenced by a small value of $\theta_4$, the true interest is in whether it is smaller than $0.1$, not simply whether it is different than $0.1$.
+::::
+:::
 
 A hypothesis test is outlined by the collective statement of the null and alternative hypotheses. When deciding on the null and alternative, there is the possibility of considering either a **one-tailed** or a **two-tailed** hypothesis test. These refer to the number of tails of the distribution that would be considered evidence *against* the null hypothesis, or put differently, the number of tails captured by the alternative hypothesis. 
 
@@ -84,7 +101,27 @@ The **level of significance**, denoted $\alpha$, is a measure of how much eviden
 
 A fundamental truth of hypothesis testing^[and, indeed, of any procedure that deals with randomness and uncertainty] is that we can never be certain in our conclusions. Owing to the inherent random nature of data, there is always the possibility that mistakes occur. The level of significance provides us with the capacity to control the likelihood of one class of these mistakes. Specifically, it controls how likely it is to conclude that the null hypothesis is not true when it is. In a perfect world, free of randomness and uncertainty, we would take $\alpha = 0$. This way, we would never conclude that the null hypothesis should be rejected when it is actually true. Unfortunately, the only way to ensure that we never make this mistake is to never reject the null hypothesis.^[Uncertainty ensures us that there is always a *chance* that the null hypothesis was incorrectly rejected.] Instead, we take $\alpha$ to be a small value greater than $0$. 
 
-To decide what value specifically, we have to consider the question "What if we are wrong?" If you incorrectly reject the null hypothesis, what are the stakes of that error. Consider a scenario where we are testing a new treatment for a severe illness, and we want to test whether the treatment has an effect on survival rates. In this case, we would typically take $H_0: \theta = 0$ versus the alternative, $H_A: \theta \neq 0$. This way, by default we are assuming that the treatment does not have any impact, and are looking for evidence to the contrary. Now, suppose that there already exists a treatment for the illness that is moderately effective. In this setting, it is far more costly to make a mistake stating that the new treatment is also effective, if it turns out that it is not. The reason being that if we conclude the treatment is effective it may be prescribed to individuals, and this may happen in place of the existing effective treatment. If it turns out that the new treatment does not have a positive impact, this would mean that real people will receive treatments that are ineffective, when they could receive treatments that actually help. Conversely, if there does not exist any treatment at all for the illness now, we likely are willing to take a slightly higher risk. In this case, if we are wrong and the treatment does not meaningfully help, there is no alternative for the patient anyways. As a result, in the first case we should take a lower value of $\alpha$ compared to the second. 
+To decide what value specifically, we have to consider the question "What if we are wrong?" If you incorrectly reject the null hypothesis, what are the stakes of that error. Consider a scenario where we are testing a new treatment for a severe illness, and we want to test whether the treatment has an effect on survival rates. In this case, we would typically take $H_0: \theta = 0$ versus the alternative, $H_A: \theta \neq 0$; by default we are assuming that the treatment does not have any impact, and are looking for evidence to the contrary. Now, suppose that there already exists a treatment for the illness that is moderately effective. In this setting, it is far more costly to make a mistake stating that the new treatment is also effective, if it turns out that it is not. The reason being that if we conclude the treatment is effective it may be prescribed to individuals, and this may happen in place of the existing effective treatment. If it turns out that the new treatment does not have a positive impact, this would mean that real people will receive treatments that are ineffective, when they could receive treatments that actually help. Conversely, if there does not exist any treatment at all for the illness now, we likely are willing to take a slightly higher risk. In this case, if we are wrong and the treatment does not meaningfully help, there is no alternative for the patient anyways. As a result, in the first case we should take a lower value of $\alpha$ compared to the second. 
+
+:::{#exm-determine-significance-levels}
+## Sadie and Charles Care for Trees: Identifying Hypotheses
+With the statistical hypotheses identified for their tree planting hobby, Charles and Sadie are now trying to determine what level of significance they should pick in running these hypotheses. Specifically, they are looking to rank the following hypotheses in order of required significance levels, and justify these choices to one another. 
+
+a. They have found a pouch of aspen seeds, but are not sure where they came from. Aspens typically grow to be a total of about $50$ feet tall, with a diameter of $10.5$ inches. They want to know whether these aspens seeds are similar to common aspens, or not. Importantly, they have decided that they will plant the aspens no matter what they find, and care for them all the same. Because they do not know where the seeds came from, they cannot change suppliers even if they wanted to. 
+b. They have many different fertilizer options. They want to know whether a particular blend of their fertilizers influences the height to which the trees grow, or not. The mix of fertilizer that they are considering here is cheaper than their current fertilizer choice, and so they have a desire to switch if possible. However, they know that the current fertilizer they use is effective at increasing growth.
+c. They understand that bark beetles are a problem that can often impact pine trees. Before they help reforest in a certain area, they want to know whether more than $10\%$ of pine trees are infested with bark beetles, or not, to understand whether new plants are likely to survive. If they plant trees into an infested area, these trees will likely all die relatively young, wasting resources and the ability to help revitalize the ecosystem. 
+
+
+::::{.callout .solution collapse='true'}
+## Solution
+These hypotheses require evidence in the order that they are currently written. Namely, hypothesis (a) requires less than (b) which requires less than (c). 
+
+- For (a), the hypothesis test is mostly for intrigue. It will not alter the way that Sadie and Charles act in any way, nor are there any stakes to the decision. As a result, if they are wrong, that is okay -- the only impact of this is that they may tell people they found aspen seeds that grow differently compared to regular, when they have not actually done so. 
+- Next, is (b). The stakes here are higher since there currently exists a fertilizer that works well. If Sadie and Charles conclude that the new fertilizer also improves growth, but it does not, then they will end up with plants that are worse off than they otherwise would be had they not made the same conclusion. Fortunately, however, the fertilizer is less costly than the current one. As a result, the mistake, while impacting the growth of their trees, will not have cascading negative outcomes. 
+- Finally, hypothesis (c) is the hypothesis with the largest stakes. If they draw the wrong conclusion in this case, they are risking resources and opportunity. Additionally, if they find that the infestation is bad, they have remedies for this, and as such, it is important to draw the correct conclusion here. 
+
+::::
+:::
 
 :::{.callout-warning icon="false"}
 ## The Historical Case for $\alpha = 0.05$
@@ -124,6 +161,121 @@ Suppose, for sake of example, we observe a value of a test statistic, $t=-2$. Un
 
 Intuitively, the smaller the $p$-value, the moe evidence *against* the null hypothesis based on the sample. If the $p$-value were sufficiently low, then it would be the case that the observation we made would be sufficiently rare, assuming the null hypothesis were true. With a small enough probability, it is more reasonable to assume that the null hypothesis is not accurate, rather than assuming that we happened to make a particularly rare observation. To decide how small of a probability is small enough, we turn to our level of significance. If the $p$-value is below the selected level of significance, then we can conclude that the results are unlikely to have been observed due to chance, and instead, it is more likely to be observed as the alternative is a better explanation of the underlying reality. On the flip side, if the $p$-value is larger than the level of significance, then we did not see sufficient evidence in the sample to reject the null hypothesis. 
 
+:::{#exm-finding-p-values}
+## Sadie and Charles Care for Trees: Identifying $p$-Values
+Charles and Sadie are feeling quite confident in their application of hypothesis testing for tree care. They have decided on hypotheses, significance levels, and have even worked out what test statistics they will use. Now, they are hoping to practice calculating $p$-values before the data collection actually begins, to ensure that they will be able to do it later on, when it matters. Determine the $p$-values based on the given information in the following. 
+
+a. For the pouch of aspen seeds, they are planning to test $H_0: \theta_1 = 50$ versus $H_A: \theta_1 \neq 50$. This will be done using the test statistic $$T_1 = \frac{\overline{X} - 50}{10/\sqrt{n}} \stackrel{H_0}{\sim} N(0,1).$$ Suppose than in a sample of size $4$ they find $\overline{x} = 60$. For the diameters, testing $H_0: \theta_2 = 10.5$ versus $H_A: \theta_2 \neq 10.5$, they will take $$T_2 = \frac{\overline{X} - 10.5}{3/\sqrt{n}} \stackrel{H_0}{\sim} N(0,1).$$ Suppose in a sample of size $9$ they observe $\overline{x} = 8.5$. 
+b. To understand the effects of their fertilizer types, they will test $H_0: \theta_3 = 0$ versus $H_A: \theta_3 \neq 0$. They will use the statistic $$T = \frac{\overline{X}}{s/\sqrt{n}} \stackrel{H_0}{\sim} t_{n-1}.$$ In a sample of $49$ trees, they observe $\overline{x} = 3$, with a sample standard deviation of $14$. 
+c. To investigate the extent of the bark beetle infestation, they will test $H_0: \theta_4 \leq 0.1$ versus $H_A: \theta_4 > 0.1$. This can be done via $$T=\frac{\widehat{p} - 0.1}{\sqrt{0.1(0.9)/n}} \stackrel{H_0}{\sim} N(0,1).$$ In a sample of size $100$ they observe $14$ trees that are infected. 
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. Using $T_1$, we find an observed value, $t_1$ by plugging in $n=4$ and $\overline{x} = 60$. This gives $t_1 = 10/5 = 2$. As a result, the $p$-value is given by $$P(Z \geq 2) + P(Z \leq -2) = 1 - \Phi(2) + \Phi(-2) = 2(1 - \Phi(2)) \approx `r round(2 * pnorm(-2), 3)`.$$ Alternatively, we could have used the empirical rule to conclude that this will be approximately $0.05$. For $T_2$, plugging in $n=9$ and $\overline{x} = 8.5$ gives $t_2 = -2/1 = -2$. Thus, for the $p$-value we would get the exact same quantity, since we need $P(Z \leq -2) + P(Z > 2)$. Consider the following plot that shades the area needed to calculate the $p$-value, with $t_1$ and $t_2$ each labelled. 
+
+```{r}
+#| echo: false
+#| fig.height: 3
+
+library(ggplot2)
+library(ggthemes)
+
+# Define the value of t
+t <- 2
+
+# Create a sequence of x values for plotting the density curve
+x <- seq(-4, 4, length.out = 5000)
+
+# Calculate the normal density function
+y <- dnorm(x)
+
+# Create the ggplot
+ggplot() +
+  geom_area(data = data.frame(x = x[x <= -t], y = y[x <= -t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_area(data = data.frame(x = x[x >= t], y = y[x >= t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_line(aes(x = x, y = y), linewidth = 1.5, color = "#00BFC4") +
+#   geom_vline(xintercept = -1.96, linetype = 2) + geom_vline(xintercept = 1.96, linetype = 2) + 
+  geom_vline(xintercept = -t, color = "#F8766D") + 
+  annotate("text", x = -t + 0.15, y = 0.3, label = "t[2]", parse = TRUE, size = 8) + 
+  geom_vline(xintercept = t, color = "#F8766D") + 
+  annotate("text", x = t + 0.15, y = 0.3, label = "t[1]", parse = TRUE, size = 8) + 
+  labs(x = "T", y = "") +
+  theme_clean() + 
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) + 
+  theme(plot.background = element_blank(), legend.position="none")
+```
+
+b. Here, taking $n=49$, $\overline{x} = 3$, and $s = 14$. Thus, $$t = \frac{3}{14/\sqrt{49}} = \frac{3}{2} = 1.5.$$ To calculate a $p$-value, we make reference to the $t_{48}$ distribution, taking $F$ to be its CDF, this gives $$P(T \leq -1.5) + P(T > 1.5) = F(-1.5) + (1 - F(1.5)) = 2F(-1.5) \approx `r round(2 * pt(-1.5, df = 48), 3)`.$$ The corresponding area is identified in the following figure. 
+```{r}
+#| echo: false
+#| fig.height: 3
+
+library(ggplot2)
+library(ggthemes)
+
+# Define the value of t
+t <- 1.5
+
+# Create a sequence of x values for plotting the density curve
+x <- seq(-4, 4, length.out = 5000)
+
+# Calculate the normal density function
+y <- dt(x, df = 48)
+
+# Create the ggplot
+ggplot() +
+  geom_area(data = data.frame(x = x[x <= -t], y = y[x <= -t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_area(data = data.frame(x = x[x >= t], y = y[x >= t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_line(aes(x = x, y = y), linewidth = 1.5, color = "#00BFC4") +
+#   geom_vline(xintercept = -1.96, linetype = 2) + geom_vline(xintercept = 1.96, linetype = 2) + 
+  geom_vline(xintercept = t, color = "#F8766D") + 
+  annotate("text", x = t + 0.1, y = 0.3, label = "t", parse = TRUE, size = 8) + 
+  labs(x = "T", y = "") +
+  theme_clean() + 
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) + 
+  theme(plot.background = element_blank(), legend.position="none")
+```
+
+c. Here, the observation has been $\widehat{p} = 14/100 = 0.14$, with $n=100$. Thus, $t = 0.04/0.03 = 4/3$. The $p$-value here is given by $$P\left(Z \leq \frac{-4}{3}\right) + P\left(Z \geq \frac{4}{3}\right) = \Phi\left(\frac{-4}{3}\right) + \left(1 - \Phi\left(\frac{4}{3}\right)\right) = 2\Phi\left(\frac{-4}{3}\right) \approx `r round(2 * pnorm(-4/3), 3)`.$$ The following plot shades the relevant region. 
+```{r}
+#| echo: false
+#| fig.height: 3
+
+library(ggplot2)
+library(ggthemes)
+
+# Define the value of t
+t <- 4/3
+
+# Create a sequence of x values for plotting the density curve
+x <- seq(-4, 4, length.out = 5000)
+
+# Calculate the normal density function
+y <- dnorm(x)
+
+# Create the ggplot
+ggplot() +
+  geom_area(data = data.frame(x = x[x <= -t], y = y[x <= -t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_area(data = data.frame(x = x[x >= t], y = y[x >= t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_line(aes(x = x, y = y), linewidth = 1.5, color = "#00BFC4") +
+#   geom_vline(xintercept = -1.96, linetype = 2) + geom_vline(xintercept = 1.96, linetype = 2) + 
+  geom_vline(xintercept = t, color = "#F8766D") + 
+  annotate("text", x = t + 0.1, y = 0.3, label = "t", parse = TRUE, size = 8) + 
+  labs(x = "T", y = "") +
+  theme_clean() + 
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) + 
+  theme(plot.background = element_blank(), legend.position="none")
+```
+::::
+:::
+
 The $p$-value can be interpreted as the level of significance at which the observed data contradict the null hypothesis. In this sense, the $p$-value serves as a measure of how strong the evidence against the null hypothesis will be. An alternative method for the same mathematical approach is to determine how large of a test statistic value would need to be observed in order to achieve a $p$-value equal to the level of significance. If we observe a test statistic that is larger than this value that is then equivalent to observing a $p$-value which is smaller (and vice versa). This value is known as a **critical value**.
 
 :::{#def-critical-value}
@@ -133,10 +285,72 @@ A **critical value** is the value, derived through a null distribution, at which
 
 The critical values are related to the percentiles of a distribution. Specifically, if $T$ has a symmetric distribution^[Such as the normal, or the $t$ distributions, which are both quite common.] then the critical value for a significance level $\alpha$ exactly coincides with the $1-\alpha/2$ percentile of the distribution. We saw these critical values being used when discussing confidence intervals, if we substitute the confidence level $p=1-\alpha$. If a critical value of $t^*$ is found then if we observe $t$ such that $|t| > t^*$, this is equivalent to observing a $p$-value that is less than $\alpha$. The $p$-value provides more information than a comparison to a critical value, however, the critical value technique can be easier to leverage for quick calculations, particularly when you are away from a computer. 
 
+:::{#exm-finding-critical-values}
+## Sadie and Charles Care for Trees: Identifying Critical Values
+While they had some success identifying the $p$-values, Charles and Sadie realize that the conclusions that the calculations for the $p$-values are highly dependent on what values they assumed they would see. However, if they approached the problems via critical values, this will be relevant as long as the null distributions are correct. For each scenario, they wish to identify the critical value associated with the given hypothesis test. 
+
+a. For the pouch of aspen seeds, they are planning to test $H_0: \theta_1 = 50$ versus $H_A: \theta_1 \neq 50$. This will be done using a test statistic with a null distribution of $N(0,1)$, at $\alpha = 0.1$. For the diameters, testing $H_0: \theta_2 = 10.5$ versus $H_A: \theta_2 \neq 10.5$, they will use the same null distribution and significance level. 
+b. To understand the effects of their fertilizer types, they will test $H_0: \theta_3 = 0$ versus $H_A: \theta_3 \neq 0$. They wish to take $\alpha = 0.05$, and use a test statistic with $t_{n-1}$ degrees of freedom. They suspect the sample size will be $49$. 
+c. To investigate the extent of the bark beetle infestation, they will test $H_0: \theta_4 \leq 0.1$ versus $H_A: \theta_4 > 0.1$. Here, they require a significance level of $\alpha = 0.01$.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. Since these tests use the same significance levels, they will have the same critical values. Notably, we require $\Phi(-t^*) + 1-\Phi(t^*) = \alpha$, which is equivalent to saying $$\Phi(-t^*) = \frac{\alpha}{2} \implies t^* = -Z_{0.1/2} \approx `r round(-1 * qnorm(0.05), 2)`.$$
+b. For this test, taking $F(t)$ to represent the cumulative distribution function for a $t_{48}$ distribution, we require $F(-t^*) + 1 - F(t^*) = \alpha$, which is equivalent to saying $$F(-t^*) = \frac{\alpha}{2} \implies t^* = -F^{-1}(\frac{0.05}{2}) = -t_{n-1,0.025} \approx `r round(-1 * qt(0.025, df = 48), 2)`.$$
+c. For this test, the critical value must satisfy $1 - \Phi(t^*) = \alpha$, which is equivalent to $$\Phi(-t^*) = \alpha \implies t^* = -Z_{0.01} \approx `r round(-1 * qnorm(0.01),2)`.$$
+
+::::
+:::
+
 With either the $p$-value calculated or the critical value for comparison, it is possible to draw scientific conclusions from the hypothesis test. 
 
 ### Drawing Conclusions and Interpretation
-By comparing the calculated $p$-value to the level of significance, or the calculated test statistic to the critical value, we are able to draw conclusions from the hypothesis test. Our conclusion will provide an answer to whether we reject or fail to reject the null hypothesis. Specifically, if the $p$-value is less than the critical value^[Or, equivalently, if the test statistic is larger in magnitude than the critical value.] then we can reject the null hypothesis, in favour of the alternative. Practically this means that the level of evidence contradicting the null hypothesis in the observed data exceeds the level of evidence we needed to see, in the given context, in order to act as though the null hypothesis is not true. If the $p$-value is larger than the level of significance^[Or, equivalently, if the test statistic is smaller in magnitude than the critical value.] then we fail to reject the null hypothesis. This means that our sample did not contain sufficient contradictory evidence to the null hypothesis, based on the context of the situation. 
+By comparing the calculated $p$-value to the level of significance, or the calculated test statistic to the critical value, we are able to draw conclusions from the hypothesis test. Our conclusion will provide an answer to whether we reject or fail to reject the null hypothesis. Specifically, if the $p$-value is less than the level of significance, or the observed test statistic is less than the critical value^[Or, equivalently, if the test statistic is larger in magnitude than the critical value.] then we can reject the null hypothesis, in favour of the alternative. We call the region of observations where we reject the null hypothesis the **rejection region** (see @fig-rejection-region-plot). Practically this means that the level of evidence contradicting the null hypothesis in the observed data exceeds the level of evidence we needed to see, in the given context, in order to act as though the null hypothesis is not true. If the $p$-value is larger than the level of significance (or equivalently, if the critical value does not fall into the rejection region) then we fail to reject the null hypothesis. This means that our sample did not contain sufficient contradictory evidence to the null hypothesis, based on the context of the situation. 
+
+
+```{r}
+#| echo: false
+#| label: fig-rejection-region-plot
+#| fig.height: 3
+#| fig.cap: The labelled components of a hypothesis test. The observed test statistic is either compared to the critical values to see whether it falls into the rejection region or not. In a one-sided hypothesis test, the rejection region is one-sided as well. Alternatively, the area under the null distribution outside of the observed test statistic (in both tails, as depicted here, for a two-sided hypothesis test; in a single tail for a one-sided hypothesis test) can be computed as the $p$-value. The $p$-value is then compared to the level of significance.
+
+library(ggplot2)
+library(ggthemes)
+
+# Define the value of t
+t <- 2.2
+
+# Create a sequence of x values for plotting the density curve
+x <- seq(-3, 3, length.out = 5000)
+
+# Calculate the normal density function
+y <- dnorm(x)
+
+# Create the ggplot
+ggplot() +
+  geom_area(data = data.frame(x = x[x <= -t], y = y[x <= -t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_area(data = data.frame(x = x[x >= t], y = y[x >= t], fill = as.factor(1)),
+            aes(x = x, y = y), fill = "#F8766D") +
+  geom_line(aes(x = x, y = y), linewidth = 1.1, color = "#00BFC4") +
+  geom_vline(xintercept = -1.96, linetype = 2) + geom_vline(xintercept = 1.96, linetype = 2) + 
+  geom_vline(xintercept = -t, color = "#F8766D") + 
+  annotate(geom = "text", x = -t-0.1, y = 0.18, label = "Observed Test Statistic", color = "#F8766D", angle = 90) + 
+  annotate(geom = "text", x = 0, y = 0.09, label = "p-value", color = "#F8766D") + 
+  annotate(geom = "text", x = 1.88, y = 0.18, label = "Critical Value", angle = 90) + 
+  annotate(geom = "text", x = -1.88, y = 0.18, label = "Critical Value", angle = 270) + 
+  labs(x = "T", y = "") +
+  theme_clean() + 
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) + 
+  theme(plot.background = element_blank(), legend.position="none") + 
+  annotate("segment", x = 1.96, y = 0.36, xend = 3, yend = 0.36, linewidth = 1.5, arrow = arrow(type = "closed", length = unit(0.04, "npc"))) + 
+  annotate("text", x = 2.6, y = 0.39, label = "Rejection Region") + 
+  annotate("segment", x = -1.96, y = 0.36, xend = -3, yend = 0.36, linewidth = 1.5, arrow = arrow(type = "closed", length = unit(0.04, "npc"))) + 
+  annotate("text", x = -2.6, y = 0.39, label = "Rejection Region") + 
+  annotate("segment",  x = 0, y = 0.075, xend = -t, yend = 0.02, arrow = arrow(type = "closed", length = unit(0.04, "npc")), color = "#F8766D") + 
+  annotate("segment",  x = 0, y = 0.075, xend = t, yend = 0.02, arrow = arrow(type = "closed", length = unit(0.04, "npc")), color = "#F8766D")
+```
 
 Note, it is not possible in the hypothesis testing framework to accept the null hypothesis. This is because our level of evidence is always assessed for the degree to which it contradicts the null hypothesis. If our observations would be unlikely assuming that the null hypothesis were true, it is reasonable for us to act as though the null hypothesis were not true. If, on the other hand, our observations do not contradict the null hypothesis, we will continue to act as though it were true, even though we have not built up positive evidence in its favour. 
 
@@ -145,6 +359,25 @@ When we reject the null hypothesis, we often say that the result is statisticall
 :::{#def-statistical-significance}
 ## Statistical Significance
 A result is said to be **statistically significant** if the null hypothesis is rejected. Specifically, the result is said to be statistically significant at a set level of significance, though, this is often implied from context. A result is said to be not statistically significant if the null hypothesis is not rejected.
+:::
+
+:::{#exm-drawing-conclusions}
+## Sadie and Charles Care for Trees: Drawing Conclusions
+Charles and Sadie have managed to calculate test statistics, $p$-values, and critical values for the hypothesis tests that they established. All that is left is for them to interpret what these test results actually mean. They are looking to draw and interpret conclusions, based on the following information, and ideally, they would do this both using $p$-values and critical values. 
+
+a. For the pouch of aspen seeds, they are testing $H_0: \theta_1 = 50$ versus $H_A: \theta_1 \neq 50$, using $$T_1 = \frac{\overline{X} - 50}{10/\sqrt{n}} \stackrel{H_0}{\sim} N(0,1).$$ In a sample of size $4$ they find $\overline{x} = 60$. For the diameters, they test $H_0: \theta_2 = 10.5$ versus $H_A: \theta_2 \neq 10.5$, using $$T_2 = \frac{\overline{X} - 10.5}{3/\sqrt{n}} \stackrel{H_0}{\sim} N(0,1).$$ In a sample of size $9$ they observe $\overline{x} = 8.5$. They wish to use $\alpha = 0.1$ level of significance.
+b. To understand the effects of their fertilizer types, they test $H_0: \theta_3 = 0$ versus $H_A: \theta_3 \neq 0$ using $$T = \frac{\overline{X}}{s/\sqrt{n}} \stackrel{H_0}{\sim} t_{n-1}.$$ In a sample of $49$ trees, they observe $\overline{x} = 3$, with a sample standard deviation of $14$.  They wish to use $\alpha = 0.05$ level of significance.
+c. To investigate the extent of the bark beetle infestation, they test $H_0: \theta_4 \leq 0.1$ versus $H_A: \theta_4 > 0.1$ using $$T=\frac{\widehat{p} - 0.1}{\sqrt{0.1(0.9)/n}} \stackrel{H_0}{\sim} N(0,1).$$ In a sample of size $100$ they observe $14$ trees that are infected. They wish to use $\alpha = 0.01$ level of significance. 
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. From the previous examples we found that the $p$-value was approximately $0.046$ for both tests. Since $p < \alpha$, we can **reject the null hypothesis** and we conclude that, based on the sample, there is sufficient evidence to conclude that the heights and diameters of the found aspen seeds are different than average aspen seeds. These results are statistically significant at the $0.1$ level of significance. Alternatively, we could used the critical value of $1.64$. Since $t_1 = 2 > 1.64$, and since $t_2 = -2$, so $|t_2| > 1.64$, both statistics fall into the **rejection region** and we reject the null hypothesis at the $0.1$ level of significance. 
+
+b. Here we find $p = 0.14$. Since $p > \alpha$, we **fail to reject the null hypothesis** at the $\alpha = 0.05$ level of significance. Thus, we conclude that there is insufficient evidence in the sample to conclude that the fertilizer has a non-zero effect on growth. Alternatively, we can consider that $t = 1.5$, compared to a critical value of $2.01$. Since $t < 2.01$, the statistic does not fall in the rejection region, and we fail to reject the null hypothesis. 
+
+c. The $p$-value was found to be $0.182$. Since we are testing at a $0.01$ level of significance, $p > \alpha$, and so we **fail to reject the null hypothesis**. As a result, there is insufficient evidence, based on the sample, to conclude that more than $10\%$ of the pine trees are infected by bark beetles. Alternatively, we consider the critical value to be $2.33$. Here, note that since this is a one-tailed test, the rejection region is only the values of $t$, such that $t > 2.33$. Because $t < 2.33$ we fail to reject the null hypothesis.
+::::
 :::
 
 Statistical significance is the foundational language of scientific inquiry. Specifically, results that are statistically significant are typically held up as *actual results*, where those that are not statistically significant are treated as though they are the result of random noise. In order for a claim to be scientifically justified, it must be statistically significant. However, it is important to note that statistical significance is not a measure of how big or meaningful a particular effect will be. Instead, it is a measure of how strong the evidence for believing a result is. That is, you can have statistically significant findings that are not particularly meaningful. For instance, suppose that the parameter of interest is the effect of a medical treatment on life expectancy. If we find that the treatment improves the life expectancy for patients, and that this result is **statistically significant** we do not know whether the treatment improves the life expectancy by a lot or a little. All we know, in this context, is that there was strong evidence in the sample that the treatment actually did improve the outcome in this case.
@@ -197,7 +430,7 @@ Suppose that we are interested in testing hypotheses relating to the mean of a n
 
 ```{r}
 #| echo: false
-#| label: z-test-plot
+#| label: fig-z-test-plot
 #| fig.height: 3
 #| fig.cap: Illustration of the $Z$-test, depicting the observed statistic (solid line), area for the $p$-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at $1.96$, and the observed statistic is at $-2.473$. Thus, it falls outside of the critical value. Additionally, the shaded area gives the p-value, $0.013$, which is less than the implied significance level of $0.05$. Consider where the critical values would fall had $\alpha = 0.01$ been used instead. 
 
@@ -242,7 +475,7 @@ Suppose instead that we are dealing with a population with an unknown variance, 
 
 ```{r}
 #| echo: false
-#| label: t-test-plot
+#| label: fig-t-test-plot
 #| fig.height: 3
 #| fig.cap: Illustration of the $t$-test, based on $n=32$, depicting the observed statistic (solid line), area for the $p$-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at $2.04$, and the observed statistic is at $1.81$. Thus, it falls inside of the critical value. Additionally, the shaded area gives the p-value, $0.080$, which is greater than the implied significance level of $0.05$. Consider where the critical values would fall had a one tailed hypothesis test been used instead.
 
