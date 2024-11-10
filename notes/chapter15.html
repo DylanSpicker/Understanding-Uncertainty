@@ -1429,8 +1429,13 @@ Solution
 <p><span class="theorem-title"><strong>Definition 15.15 (Power)</strong></span> The <strong>power</strong> of a hypothesis test is the probability of rejecting the null hypothesis when the null hypothesis is, in fact, false. That is it gives the probability of a true rejection. The power of a test generally gives a measure of how well a test is able to detect true effects. Typically, the power of a test is denoted by <span class="math inline">\(1-\beta\)</span>, where <span class="math inline">\(\beta\)</span> gives the probability of a type II error.</p>
 </div>
 <p>A hypothesis test would ideally have a low probability of a type I error, which is to say a low level of significance, and a corresponding high power. Unfortunately, typically as the level of significance of a test decreases, so too does the power, and vice versa. As a result, in any hypothesis testing scenario there is a need to make a deliberate trade-off between the level of significance and the power. Typically, hypothesis testing proceeds by selecting an appropriate level of significance for the given setting, and then among tests that achieve this level of significance, searching for a test with the highest power. This way the type I errors are controlled at a set level, and the type II errors are minimized. By recognizing that the probabilities of type I and type II errors need to be balanced against one another, it is possible to more intentionally select an appropriate level of significance. Specifically, it is worth thinking through, in any given setting, whether the prospect of a false positive or a false negative is a worse outcome, and then balancing the selected rates accordingly.</p>
+<div id="tbl-error-types" class="borderless quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,20,20]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-error-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;15.1: Conclusions and errors of hypothesis testing.
+</figcaption>
+<div aria-describedby="tbl-error-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-borderless caption-top table">
-<caption>Conclusions and errors of hypothesis testing.</caption>
 <colgroup>
 <col style="width: 20%">
 <col style="width: 20%">
@@ -1456,6 +1461,39 @@ Solution
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
+<div id="exm-types-of-errors" class="theorem example">
+<p><span class="theorem-title"><strong>Example 15.7 (Charles and Sadie Care for Trees: Possible Errors)</strong></span> With an understanding of how they can draw conclusions using null hypothesis significance testing, Charles and Sadie turn to questioning “what if we are wrong?” Specifically, they want to think about different hypothesis tests that they can run as they continue their tree nursery, with a focus on understanding what a type I or type II error would refer to in each case, and whether they should prioritize a low level of significance or a high power for the corresponding tests.</p>
+<ol type="a">
+<li>Charles and Sadie wish to consider whether the germination rate of a new seed variety is any different from the historical average. The new seed is more expensive than historical seeds, and they are not currently displeased with the seeds that they have been using.</li>
+<li>They wish to investigate whether a new fertilizer that is substantially cheaper than their current fertilizer is offered. They wish to test whether there is an improvement of the new fertilizer, compared with the old one.</li>
+<li>Charles is told of a new treatment that promises to increase the disease resistance in seedlings. The treatment is relatively affordable, and does not seem to have any negative impacts, but they are concerned that it may not actually work.</li>
+<li>Sadie has been researching techniques for protecting plants through the winter. Their current strategy works reasonably well, but Sadie thinks that with a little more investment, they may be able to improve this dramatically.</li>
+</ol>
+<div class="solution callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>In this case, a Type I error represents the conclusion that the new seed variety differs from the historical average when, in fact, it does not. A type II error would occur if Sadie and Charles fail to reject the null hypothesis, concluding that there is no evidence of a difference between the current and historical seeds, when such a difference really does exist. Because they are currently happy with their current seeds, and because the new seeds more expensive, they would want to be very certain that the new seeds are in fact different if they are going to switch. As a result, they should be considering a <strong>lower level of significance</strong> here, reducing the probability of type I error.</p></li>
+<li><p>In this case, a Type I error occurs if they conclude the new fertilizer is improved, if it really is not an improvement, where the type II error occurs if they see no evidence of improvement when there really is. Because the fertilizer is cheaper, they would save money if they managed to switch, and thus it is important for them to identify if there really is an improvement. Missing an improvement that exists is a costly mistake, and so they should prioritize <strong>higher power</strong> in order to minimize the negative consequences associated with missing out.</p></li>
+<li><p>In this case, a Type I error occurs if they conclude that the treatment actually does increase the resistance to diseases in plants, when it does not in actual fact. A type II error would occur if they conclude that there is no evidence for suggesting that the treatment reduces diseases, but it actually does. Here, because the treatment is affordable and seems otherwise harmless, it is worse to conclude that it does nothing if it actually works compared to concluding that it does nothing if it does not. As a result, a <strong>higher power</strong> is preferable.</p></li>
+<li><p>In this case, a Type I error occurs if they conclude that the new strategy works better than the old strategy, when it does not actually. Type II errors occur if the new strategy works better, but they do not find sufficient evidence to conclude this in the sample. Here, they currently have a functioning strategy, and it would cost more to move to a new one. As a result, they need to make sure that if they do move, it is an improvement. This corresponds to a <strong>lower level of significance</strong>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="hypothesis-testing-for-population-means" class="level2" data-number="15.3">
 <h2 data-number="15.3" class="anchored" data-anchor-id="hypothesis-testing-for-population-means"><span class="header-section-number">15.3</span> Hypothesis Testing for Population Means</h2>
