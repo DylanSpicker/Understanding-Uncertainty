@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -244,8 +273,21 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#two-populations-rather-than-one" id="toc-two-populations-rather-than-one" class="nav-link active" data-scroll-target="#two-populations-rather-than-one"><span class="header-section-number">16.1</span> Two Populations Rather than One</a></li>
+  <li><a href="#hypothesis-tests-and-confidence-intervals-for-mean-differences-in-independent-populations" id="toc-hypothesis-tests-and-confidence-intervals-for-mean-differences-in-independent-populations" class="nav-link" data-scroll-target="#hypothesis-tests-and-confidence-intervals-for-mean-differences-in-independent-populations"><span class="header-section-number">16.2</span> Hypothesis Tests and Confidence Intervals for Mean Differences in Independent Populations</a>
+  <ul class="collapse">
+  <li><a href="#pooled-variance-estimation" id="toc-pooled-variance-estimation" class="nav-link" data-scroll-target="#pooled-variance-estimation"><span class="header-section-number">16.2.1</span> Pooled Variance Estimation</a></li>
+  <li><a href="#confidence-intervals-and-hypothesis-tests-for-multiple-proportions" id="toc-confidence-intervals-and-hypothesis-tests-for-multiple-proportions" class="nav-link" data-scroll-target="#confidence-intervals-and-hypothesis-tests-for-multiple-proportions"><span class="header-section-number">16.2.2</span> Confidence Intervals and Hypothesis Tests for Multiple Proportions</a></li>
+  </ul></li>
+  <li><a href="#the-analysis-of-paired-data" id="toc-the-analysis-of-paired-data" class="nav-link" data-scroll-target="#the-analysis-of-paired-data"><span class="header-section-number">16.3</span> The Analysis of Paired Data</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -269,8 +311,394 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>With confidence intervals and hypothesis tests we began to make inferences regarding populations by quantifying our levels of uncertainty. Quantifying uncertainty sits at the core of inferential statistics, and through this we are able to effectively draw conclusions and learn about populations. With that said, the procedures discussed so far have focused on individual parameters from individual populations. While there are many scientific questions relating to a single parameter from a single population, it is perhaps more common to consider the comparison between two populations.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> To answer questions relating to the comparison of multiple populations, we must extend the ideas of hypothesis testing and confidence intervals to the setting where we have samples from two (or more) populations.</p>
+<section id="two-populations-rather-than-one" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="two-populations-rather-than-one"><span class="header-section-number">16.1</span> Two Populations Rather than One</h2>
+<p>In the one population setting we supposed that we observed <span class="math inline">\(X_1,\dots,X_n\)</span> as an independent and identically distributed sample from some population. We then considered parameters of this population<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and addressed questions relating to these parameters. In the two population setting, we introduce a second independent and identically distributed sample, <span class="math inline">\(Y_1,\dots,Y_m\)</span>, from a second population. The distribution for the <span class="math inline">\(Y\)</span>s may or may not be the same distribution as the distribution for the <span class="math inline">\(X\)</span>s. Moreover, the distribution of <span class="math inline">\(X\)</span> and of <span class="math inline">\(Y\)</span> may be independent of one another, or they may be related to one another. We will take <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Y\)</span> to represent the distribution of <span class="math inline">\(X\)</span> and the distribution of <span class="math inline">\(Y\)</span>, respectively, and we will use the same notational conventions for the parameters of these distributions. So, for instance, we may take <span class="math inline">\(\mu_X\)</span> and <span class="math inline">\(\mu_Y\)</span> to represent the population means, or <span class="math inline">\(\sigma_X^2\)</span> and <span class="math inline">\(\sigma_Y^2\)</span> to represent the population variances. The size of the samples we draw may be equal, or not. We assume that there are <span class="math inline">\(n\)</span> observations taken from <span class="math inline">\(F_X\)</span> and there are <span class="math inline">\(m\)</span> observations take from <span class="math inline">\(F_Y\)</span>. Each of these samples could be used for individual hypothesis testing or estimation, using the procedures that we have previously seen.</p>
+<p>We will typically be concerned with the same parameters and estimators we have been considering previously. For instance, it is common to consider the population means. To this end we have <span class="math inline">\(\mu_X\)</span>, which can be estimated by <span class="math inline">\(\overline{X}\)</span>, and we have <span class="math inline">\(\mu_Y\)</span>, which can be estimated by <span class="math inline">\(\overline{Y}\)</span>. Even if <span class="math inline">\(\mu_X = \mu_Y\)</span> in practice, it is unlikely that we will observe <span class="math inline">\(\overline{X} = \overline{Y}\)</span>, exactly. This may lead us to consider whether we can perform a hypothesis test that asks whether, based on the observed information, the two populations have exactly the same mean.</p>
+<p>To do this, we want to test <span class="math inline">\(H_0: \mu_X = \mu_Y\)</span> versus the alternative, <span class="math inline">\(H_A: \mu_X \neq \mu_Y\)</span>. In order to determine how to test this hypothesis, it is helpful to re-express it as a single parameter. Notice that if <span class="math inline">\(\mu_X = \mu_Y\)</span>, then <span class="math inline">\(\mu_X - \mu_Y = 0\)</span>. We can rewrite the previous hypotheses as <span class="math inline">\(H_0: \mu_X - \mu_Y = 0\)</span> and <span class="math inline">\(H_A: \mu_X - \mu_Y \neq 0\)</span>. If we define a new parameter, <span class="math inline">\(\Delta = \mu_X - \mu_Y\)</span>, such that <span class="math inline">\(\Delta\)</span> represents the difference in mean values for the two distributions,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> then we can state our hypothesis test as <span class="math inline">\(H_0: \Delta = 0\)</span> versus <span class="math inline">\(H_A: \Delta \neq 0\)</span>.</p>
+<p>This test is no different from any of the tests we have seen before. If we can work out an estimator for <span class="math inline">\(\Delta\)</span>, and work out the null distribution for this estimator, we can use the procedures outlined for null hypothesis significance testing to assess how much evidence exists against the hypothesis that the means are equal. Similarly, if we are able to work out an estimator for <span class="math inline">\(\Delta\)</span>, and we can identify the sampling distribution of this estimator, then we can form confidence intervals for <span class="math inline">\(\Delta\)</span>, allowing both point and interval estimation to proceed for the difference in population means.</p>
+<p>In order to estimate <span class="math inline">\(\Delta\)</span>, it is helpful to consider that <span class="math inline">\(\Delta = \mu_X - \mu_Y\)</span>. We know that <span class="math inline">\(\overline{X}\)</span> is an effective estimator for <span class="math inline">\(\mu_X\)</span> and that <span class="math inline">\(\overline{Y}\)</span> is an effective estimator for <span class="math inline">\(\mu_Y\)</span>. Taken together, it is reasonable to suggest that an estimator for <span class="math inline">\(\Delta\)</span> is given by <span class="math display">\[\widehat{\Delta} = \overline{X} - \overline{Y}.\]</span> Since both <span class="math inline">\(\overline{X}\)</span> and <span class="math inline">\(\overline{Y}\)</span> are unbiased for <span class="math inline">\(\mu_X\)</span> and <span class="math inline">\(\mu_Y\)</span>, then <span class="math inline">\(\widehat{\Delta}\)</span> will also be unbiased for <span class="math inline">\(\Delta\)</span>. If we are able to assess the null and sampling distributions of <span class="math inline">\(\widehat{\Delta}\)</span>, we can leverage the same procedures for confidence intervals and hypothesis tests we have already discussed. Determining these distributions depends on the assumptions made regarding the distributions <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Y\)</span>, as well as the relationship between them.</p>
+<p>Note that the same general approach could have been used to test hypotheses beyond the equality of the population means. For instance, suppose we wanted to know whether the mean of <span class="math inline">\(X\)</span> was <span class="math inline">\(10\)</span> units larger than the mean of <span class="math inline">\(Y\)</span>. This corresponds to <span class="math inline">\(\mu_X = \mu_Y + 10\)</span>, or <span class="math inline">\(\mu_X - \mu_Y = 10\)</span>, and so we can test it using <span class="math inline">\(H_0: \Delta = 10\)</span> versus the alternative <span class="math inline">\(H_0: \Delta \neq 10\)</span>. Alternatively, what if we had hypothesized that <span class="math inline">\(\mu_X\)</span> was really half as large as <span class="math inline">\(\mu_Y\)</span>? In this case, we get that <span class="math inline">\(2\mu_X = \mu_Y\)</span>, or <span class="math inline">\(2\mu_X - \mu_Y = 0\)</span>. Now, if we introduce <span class="math inline">\(\Delta_{2} = 2\mu_X - \mu_Y\)</span> then we can test <span class="math inline">\(H_0: \Delta_2 = 0\)</span> versus <span class="math inline">\(H_A: \Delta_2 \neq 0\)</span>. To estimate <span class="math inline">\(\Delta_2\)</span>, we can note that <span class="math inline">\(2\mu_X\)</span> is estimated well by <span class="math inline">\(2\overline{X}\)</span>, and so <span class="math display">\[\widehat{\Delta}_2 = 2\overline{X} - \overline{Y},\]</span> is a reasonable estimator.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>Beyond testing additional hypotheses related to the mean difference, we can also test alternative parameters in the distribution using a similar approach. Suppose we have two separate binomial distributions. Here we may have <span class="math inline">\(p_X\)</span> and <span class="math inline">\(p_Y\)</span> as the relevant proportions, and we may be interested in testing whether <span class="math inline">\(p_X = p_Y\)</span> or not. To do so, we can use the exact same procedure, taking <span class="math inline">\(\Delta = p_X - p_Y\)</span>, and testing <span class="math inline">\(H_0: \Delta = 0\)</span> versus <span class="math inline">\(H_A: \Delta \neq 0\)</span>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Because <span class="math inline">\(\widehat{p} = \overline{X}\)</span>, we can use the exact same estimator, <span class="math inline">\(\widehat{\Delta}\)</span>, and continue in the same process outlined above. Alternatively, we may consider the variances of the population. By framing <span class="math inline">\(\sigma_X^2 = \sigma_Y^2\)</span>, we can follow a similar procedure, either taking the difference <span class="math inline">\(\Delta = \sigma_X^2 - \sigma_Y^2\)</span>, or, more commonly, the ratio, <span class="math inline">\(\rho = \dfrac{\sigma_X^2}{\sigma_Y^2}\)</span>, and then testing hypothesis such as <span class="math inline">\(H_0: \Delta = 0\)</span> or <span class="math inline">\(H_0: \rho = 1\)</span>, versus the alternatives <span class="math inline">\(H_A: \Delta \neq 0\)</span> or <span class="math inline">\(H_A: \rho \neq 1\)</span>.</p>
+<p>The key idea when dealing with two samples from two populations is to frame the question in terms of a parameter of the joint distribution. Then, estimation (point and interval), and hypothesis testing can proceed on the basis of the single parameter that has been identified. At this point, it is a matter of working out the sampling distribution, and implementing the same procedures explored in the one sample case. The difficulty lies in determining the sampling and null distributions of these estimators.</p>
+</section>
+<section id="hypothesis-tests-and-confidence-intervals-for-mean-differences-in-independent-populations" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="hypothesis-tests-and-confidence-intervals-for-mean-differences-in-independent-populations"><span class="header-section-number">16.2</span> Hypothesis Tests and Confidence Intervals for Mean Differences in Independent Populations</h2>
+<p>In order to determine the sampling and null distribution when dealing with two samples of data, a key assumption that needs to be clarified is whether or not the populations are independent of one another. If we know that <span class="math inline">\(X \perp Y\)</span>, then it is typically more straightforward to derive the sampling and null distributions. Consider, specifically, <span class="math inline">\(\Delta = \mu_X - \mu_Y\)</span>. As discussed, we can estimate <span class="math inline">\(\Delta\)</span> using <span class="math inline">\(\widehat{\Delta} = \overline{X} - \overline{Y}\)</span>. We have seen that <span class="math display">\[\overline{X} \sim N(\mu_X, \sigma_X^2) \quad\text{ and }\quad \overline{Y} \sim N(\mu_Y, \sigma_Y^2),\]</span> where these are the exact distributions if the populations are normal, and these hold approximately in large samples otherwise. Note that, regardless of the dependence or independence of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, it will always be the case that <span class="math display">\[E[\widehat{\Delta}] = E[\overline{X}] - E[\overline{Y}] = \mu_X - \mu_Y = \Delta.\]</span> That is, <span class="math inline">\(\widehat{\Delta}\)</span> is unbiased for <span class="math inline">\(\Delta\)</span>. If we are willing to assume that <span class="math inline">\(X \perp Y\)</span>, then <span class="math display">\[\text{var}(\widehat{\Delta}) = \text{var}(\overline{X}) + \text{var}(\overline{Y}) = \frac{\sigma_X^2}{n} + \frac{\sigma_Y^2}{m}.\]</span></p>
+<p>If the two samples we take are independent of one another, then we can conclude that <span class="math display">\[\widehat{\Delta} \sim N(\Delta, \frac{\sigma_X^2}{n} + \frac{\sigma_Y^2}{m}).\]</span> This result immediately allows for the calculation of confidence intervals, using the normal based confidence intervals previously investigated, whenever the variance terms, <span class="math inline">\(\sigma_X^2\)</span> and <span class="math inline">\(\sigma_Y^2\)</span> are known. If these variances are unknown, then the variance can be estimated using the individual sample variances, <span class="math inline">\(S_X^2\)</span> and <span class="math inline">\(S_Y^2\)</span>. Replacing <span class="math inline">\(\sigma_X^2\)</span> and <span class="math inline">\(\sigma_Y^2\)</span> with these results in an underlying <span class="math inline">\(t\)</span> distribution, with <span class="math inline">\(\nu\)</span> degrees of freedom, where <span class="math display">\[\nu = \frac{\frac{S_X^2}{n} + \frac{S_Y^2}{m}}{\frac{(S_X^2/n)^2}{n-1} + \frac{(S_Y^2/m)^2}{m-1}}.\]</span> Note that this is typically a fairly complicated expression, and so instead we will often take <span class="math inline">\(\nu = \min\{n-1,m-1\}\)</span>. Then, confidence intervals for <span class="math inline">\(\widehat{\Delta}\)</span> can be formed using the <span class="math inline">\(t\)</span> distribution, following the same procedure as our other <span class="math inline">\(t\)</span> distribution confidence intervals.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Confidence Intervals for Differences of Means in Independent Populations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If we wish to estimate the difference of two population means, <span class="math inline">\(\mu_X - \mu_Y\)</span>, from populations that are independent of one another, then we can form confidence <span class="math inline">\(Z\)</span>- or <span class="math inline">\(t\)</span>-based confidence intervals, depending on whether the variances are known or not.</p>
+<ol type="1">
+<li>If <span class="math inline">\(\sigma_X^2\)</span> and <span class="math inline">\(\sigma_Y^2\)</span> are known, then <span class="math display">\[\overline{X} - \overline{Y} \pm Z_{\alpha/2}\sqrt{\frac{\sigma_X^2}{n} + \frac{\sigma_Y^2}{m}}.\]</span></li>
+<li>If <span class="math inline">\(\sigma_X^2\)</span> and <span class="math inline">\(\sigma_Y^2\)</span> are unknown, then <span class="math display">\[\overline{X} - \overline{Y} \pm t_{\nu, \alpha/2}\sqrt{\frac{S_X^2}{n} + \frac{S_Y^2}{m}} \quad\text{where}\quad \nu = \frac{\frac{S_X^2}{n} + \frac{S_Y^2}{m}}{\frac{(S_X^2/n)^2}{n-1} + \frac{(S_Y^2/m)^2}{m-1}}.\]</span> Here, <span class="math inline">\(\nu\)</span> is often taken to be <span class="math inline">\(\min\{n-1, m-1\}\)</span> instead.</li>
+</ol>
+</div>
+</div>
+<p>Under the null hypothesis that <span class="math inline">\(\Delta = \Delta_0\)</span>, for some constant <span class="math inline">\(\Delta_0\)</span>, we can transform the sampling distribution to the null distribution by noting that the mean will be <span class="math inline">\(\Delta_0\)</span>, and the variance will remain unchanged. Then, depending on whether the variances are assumed to be known, or not, we can use a <span class="math inline">\(Z\)</span>-test or a <span class="math inline">\(t\)</span>-test for hypothesis testing.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hypothesis Tests for Differences of Means in Independent Populations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If we have data selected from two, independent populations (denoted <span class="math inline">\(X_1,\dots,X_n\)</span> and <span class="math inline">\(Y_1,\dots,Y_m\)</span>), and we wish to test hypotheses relating to the relationship in population means, we can use a <span class="math inline">\(Z\)</span>- or <span class="math inline">\(t\)</span>-test, based on our knowledge of the population variances.</p>
+<ol type="1">
+<li>If <span class="math inline">\(\sigma_X^2\)</span> and <span class="math inline">\(\sigma_Y^2\)</span> are known, then <span class="math display">\[T = \frac{\overline{X} - \overline{Y} - \Delta_0}{\sqrt{\frac{\sigma_X^2}{n} + \frac{\sigma_Y^2}{m}}} \stackrel{H_0}{\sim} N(0, 1).\]</span> Assuming that we observe <span class="math inline">\(T=t\)</span>,
+<ol type="i">
+<li>If <span class="math inline">\(H_0: \Delta = \Delta_0\)</span> versus <span class="math inline">\(H_A: \Delta \neq \Delta_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(2\Phi(-|t|)\)</span>. The critical value is <span class="math inline">\(Z_{1-\alpha/2}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: \Delta \geq \Delta_0\)</span> versus <span class="math inline">\(H_A: \Delta &lt; \Delta_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(\Phi(t)\)</span>. The corresponding critical value is <span class="math inline">\(Z_{\alpha}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: \Delta \leq \Delta_0\)</span> versus <span class="math inline">\(H_A: \Delta &gt; \Delta_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(1 - \Phi(t)\)</span>. The corresponding critical value is <span class="math inline">\(Z_{1-\alpha}\)</span>.</li>
+</ol></li>
+<li>If the variances are unknown, then we take <span class="math display">\[T = \frac{\overline{X} - \overline{Y} - \Delta_0}{\sqrt{\frac{S_X^2}{n} + \frac{S_Y^2}{m}}} \stackrel{H_0}{\sim} t_\nu,\quad\text{with}\quad\nu = \frac{\frac{S_X^2}{n} + \frac{S_Y^2}{m}}{\frac{(S_X^2/n)^2}{n-1} + \frac{(S_Y^2/m)^2}{m-1}}.\]</span> Taking <span class="math inline">\(F(t)\)</span> to be the cumulative distribution function for the <span class="math inline">\(t_\nu\)</span> distribution, and assuming we observe <span class="math inline">\(T=t\)</span>,
+<ol type="i">
+<li>If <span class="math inline">\(H_0: \Delta = \Delta_0\)</span> versus <span class="math inline">\(H_A: \Delta \neq \Delta_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(2F(-|t|)\)</span>. The critical value is <span class="math inline">\(t_{\nu, 1-\alpha/2}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: \Delta \geq \Delta_0\)</span> v ersus <span class="math inline">\(H_A: \Delta &lt; \Delta_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(F(t)\)</span>. The corresponding critical value is <span class="math inline">\(t_{\nu, \alpha}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: \Delta \leq \Delta_0\)</span> versus <span class="math inline">\(H_A: \Delta &gt; \Delta_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(1 - F(t)\)</span>. The corresponding critical value is <span class="math inline">\(t_{\nu, 1-\alpha}\)</span>.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+<section id="pooled-variance-estimation" class="level3" data-number="16.2.1">
+<h3 data-number="16.2.1" class="anchored" data-anchor-id="pooled-variance-estimation"><span class="header-section-number">16.2.1</span> Pooled Variance Estimation</h3>
+<p>Sometimes, even when <span class="math inline">\(\sigma_X^2\)</span> and <span class="math inline">\(\sigma_Y^2\)</span> are unknown, it is reasonable to assume that the variances of the two populations will be equal. That is, we may have good reason to suspect that <span class="math inline">\(\sigma_X^2 = \sigma_Y^2\)</span>, even if we do not know the value of <span class="math inline">\(\sigma_X^2\)</span>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> In these settings, instead of taking two separate variances, we ultimately have a single parameter, <span class="math inline">\(\sigma^2\)</span>. When this happens, we can revisit the sampling distribution, noting that <span class="math display">\[\overline{X} - \overline{Y} \sim N\left(\Delta, \sigma^2\left[\frac{1}{n}+\frac{1}{m}\right]\right).\]</span> If <span class="math inline">\(\sigma^2\)</span> is known, then the previously discussed sampling and null distributions are valid, taking <span class="math display">\[\frac{\sigma_X^2}{n} + \frac{\sigma_Y^2}{m} = \sigma^2\left(\frac{1}{n} + \frac{1}{m}\right).\]</span></p>
+<p>If the variance is unknown, it still needs to be estimated using the data. This can be done using the <strong>pooled variance estimator</strong>, <span class="math inline">\(S_p^2\)</span>. Namely, <span class="math display">\[S_p^2 = \frac{(n-1)S_X^2 + (m-1)S_Y^2}{n+m-2}.\]</span> Leveraging this pooled variance estimator gives <span class="math display">\[\frac{\overline{X} - \overline{Y} - \Delta}{S_p\sqrt{\frac{1}{n} + \frac{1}{m}}} \sim t_{n+m-2},\]</span> and the equivalent null distribution when <span class="math inline">\(\Delta\)</span> is replaced by <span class="math inline">\(\Delta_0\)</span>. Note that here there are <span class="math inline">\(n+m-2\)</span> degrees of freedom. Otherwise, the same procedures – either using the <span class="math inline">\(Z\)</span>-based or <span class="math inline">\(t\)</span>-based intervals or tests – can proceed with the pooled variance in place of the independent variances.</p>
+<p>The pooled variance estimator represents an anti-conservative approach to quantifying uncertainty. That is, if the same analysis is done with the pooled variance and with the unpooled variances, you should expect narrower confidence intervals and smaller <span class="math inline">\(p\)</span>-values if the pooled variance is used. This can be an effective way of making complete use of prior knowledge, when the variances of the populations are actually equal. However, in the event that the variances are not actually equal, using the pooled variances will lead to erroneous conclusions. For this reason, you should rely on subject-matter guidance to determine whether equal variances should be assumed. If there is a strong scientific basis for the equality of the variances, and the data do not seem to dramatically contradict this assumption, then using pooled variances may be reasonable. Otherwise, you should estimate the variances separately.</p>
+</section>
+<section id="confidence-intervals-and-hypothesis-tests-for-multiple-proportions" class="level3" data-number="16.2.2">
+<h3 data-number="16.2.2" class="anchored" data-anchor-id="confidence-intervals-and-hypothesis-tests-for-multiple-proportions"><span class="header-section-number">16.2.2</span> Confidence Intervals and Hypothesis Tests for Multiple Proportions</h3>
+<p>The previous discussions centered around testing population means. Implicitly, this investigated populations that are continuous, where the mean is the primary measure of interest. The same techniques apply equally well to considering two population proportions. Namely, if <span class="math inline">\(X \sim \text{Bin}(n, p_X)\)</span>, and <span class="math inline">\(Y \sim \text{Bin}(m, p_Y)\)</span>, it may be of interest to us to determine the relationship between <span class="math inline">\(p_X\)</span> and <span class="math inline">\(p_Y\)</span>. We may wish to proceed either with the estimation (point and interval) of the difference between <span class="math inline">\(p_X\)</span> and <span class="math inline">\(p_Y\)</span>, or else to test hypotheses regarding the relationship of <span class="math inline">\(p_X\)</span> and <span class="math inline">\(p_Y\)</span>. Recall that in the case of a single proportion we made use of the fact that, for large samples, the sample proportion will be approximately normally distributed. The same general technique applies in the case of two populations.</p>
+<p>Since both <span class="math inline">\(\widehat{p}_X\)</span> and <span class="math inline">\(\widehat{p}_Y\)</span> are approximately normally distributed, their difference will also be approximately normally distributed. Supposing that we are willing to assume that <span class="math inline">\(X\perp Y\)</span>, then <span class="math display">\[\widehat{p}_X - \widehat{p}_Y \sim N\left(p_X - p_Y, \frac{p_X(1-p_X)}{n} + \frac{p_Y(1-p_Y)}{m}\right).\]</span> This sampling distribution allows for the construction of approximate confidence intervals for the difference in proportions.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Confidence Intervals for Differences of Proportions in Independent Populations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To estimate the difference of two population proportions, <span class="math inline">\(p_X - p_Y\)</span>, from populations that are independent of one another, we can form confidence <span class="math inline">\(Z\)</span>-based confidence intervals. Supposing that <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> are both sufficiently large, take <span class="math display">\[\widehat{p}_X - \widehat{p}_Y \pm Z_{\alpha/2}\sqrt{\frac{\widehat{p}_X(1-\widehat{p}_X)}{n} + \frac{\widehat{p}_Y(1-\widehat{p}_Y)}{m}}.\]</span></p>
+<p>If there is a desire to ensure that the computed interval is conservative, then <span class="math inline">\(\widehat{p}_X\)</span> and <span class="math inline">\(\widehat{p}_Y\)</span> can both be replaced by <span class="math inline">\(0.5\)</span>. This will maximize the standard error, and will ensure coverage of the interval even if the estimated proportion is off in the current sample.</p>
+</div>
+</div>
+<p>The same approach can be extended to test hypotheses relating to the population differences. If we consider the hypothesis <span class="math inline">\(H_0: p_X - p_Y = 0\)</span>, then assuming the null hypothesis holds we know that <span class="math inline">\(p_X = p_Y = p\)</span>, for some value <span class="math inline">\(p\)</span>. If this is the case then the variance of <span class="math inline">\(\widehat{p}_X - \widehat{p}_Y\)</span> can be expressed as <span class="math display">\[\text{var}(\widehat{p}_X - \widehat{p}_Y) = p(1-p)\left(\frac{1}{n} + \frac{1}{m}\right).\]</span> This variance is maximized by taking <span class="math inline">\(p = 0.5\)</span>, and so we can ensure conservative hypothesis tests of the hypothesis <span class="math inline">\(H_0: p_X - p_Y = 0\)</span> (or the one-sided alternatives). On the other hand, suppose that the null hypothesis was given by <span class="math inline">\(p_X - p_Y = c\)</span>, for <span class="math inline">\(c \neq 0\)</span>. Then, <span class="math inline">\(p_X = p + c\)</span> and <span class="math inline">\(p_Y = p\)</span>, for some proportion <span class="math inline">\(p\)</span>. In this setting, <span class="math display">\[\text{var}(\widehat{p}_X - \widehat{p}_Y) = \frac{(p+c)(1-(p+c))}{n} + \frac{p(1-p)}{m}.\]</span> This does not simplify in the way that the variance expression simplifies under the null hypothesis of equality. Further, this expression is not easily maximized over <span class="math inline">\(p\)</span>. Without careful choice of <span class="math inline">\(p\)</span> this approximation tends to perform rather poorly. As a result, if we wish to test <span class="math inline">\(H_0: p_X - p_Y = c\)</span>, for any <span class="math inline">\(c \neq 0\)</span>, then we require alternative procedures, not relying on the normal approximation.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hypothesis Tests for Equality of Proportions in Two Independent Populations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To test <span class="math inline">\(H_0: p_X - p_Y = 0\)</span> versus the alternative <span class="math inline">\(H_A: p_X - p_Y \neq 0\)</span>, using data from two independent populations, with success proportions <span class="math inline">\(p_X\)</span> and <span class="math inline">\(p_Y\)</span> respectively, we can use a <span class="math inline">\(Z\)</span>-test based on <span class="math display">\[T = \frac{\widehat{p}_X - \widehat{p}_Y}{0.5\sqrt{\frac{1}{n} + \frac{1}{m}}} \stackrel{H_0}{\sim} N(0,1).\]</span> Then, the two-tailed <span class="math inline">\(p\)</span>-value can be computed as <span class="math inline">\(2\times\Phi(-|t|)\)</span>, when <span class="math inline">\(T=t\)</span>.</p>
+<ul>
+<li>To test <span class="math inline">\(H_0: p_X - p_Y \geq 0\)</span> versus the alternative <span class="math inline">\(H_A: p_X - p_Y &lt; 0\)</span>, the <span class="math inline">\(p\)</span>-value will be given by <span class="math inline">\(\Phi(t)\)</span>.</li>
+<li>To test <span class="math inline">\(H_0: p_X - p_Y \leq 0\)</span> versus the alternative <span class="math inline">\(H_A: p_X - p_Y &gt; 0\)</span>, the <span class="math inline">\(p\)</span>-value will be given by <span class="math inline">\(1 - \Phi(t)\)</span>.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="the-analysis-of-paired-data" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="the-analysis-of-paired-data"><span class="header-section-number">16.3</span> The Analysis of Paired Data</h2>
+<p>When the populations are independent from one another, regardless of whether a common variance is assumed or not, the two-population problem can be transformed into a question regarding a single parameter by adequately adjusting the sampling and the null distributions. Ultimately, this results in the same <span class="math inline">\(Z\)</span>- and <span class="math inline">\(t\)</span>-based procedures introduced previously. It will often be the case, however, that we cannot assume independence between the populations. If we cannot assume independence between the two populations, there will not be a single method of proceeding with investigating mean differences. Instead, our results will depend on the manner in which the populations are dependent. While many different forms of dependence may be of interest, a common assumption is that the populations are <strong>paired</strong>. By paired we mean that <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y_i\)</span> are observations that are naturally connected to one another, for instance, by being measurements of different quantities on the same unit, or measurements of the same unit overtime, or similar. When data are paired, it will always be the case that the samples are of the same size, taking <span class="math inline">\(n=m\)</span>.</p>
+<div id="def-paired-data" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 16.1 (Paired Data)</strong></span> Paired data refer to observations in a dataset that are linked to one another through some underlying, natural connection. Data may be paired because they are taken on the same unit, or because the observations are connected in another meaningful way. In paired data, there is an obvious and meaningful one-to-one correspondence between measurements of one variable and another.</p>
+</div>
+<p>Suppose, for instance, that we measure the same trait at two different points in time, for all the same units. Then <span class="math inline">\(X_1,\dots,X_n\)</span> correspond to the first measurements that are taken, and <span class="math inline">\(Y_1,\dots,Y_n\)</span> correspond to the second. Here, <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y_1\)</span> are naturally paired since they are the same unit observed at two points in time. We expect that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y_1\)</span> will be related to one another, though, not exactly the same. The same can be said for <span class="math inline">\(X_2\)</span> and <span class="math inline">\(Y_2\)</span>, and more generally for <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y_i\)</span>. When data are paired they are not independent.</p>
+<p>Suppose that, with paired data, we concerned with hypotheses regarding mean differences, considering for instance <span class="math inline">\(H_0: \mu_X - \mu_Y = 0\)</span>. In independent samples we considered the difference of sample means as an estimator, <span class="math inline">\(\overline{X} - \overline{Y}\)</span>, where the samples of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> could have been of possibly different sizes. If we consider the same quantities when data are paired, we can rewrite the expression as follows: <span class="math display">\[\begin{align*}
+\overline{X} - \overline{Y} &amp;= \frac{1}{n}\sum_{i=1}^n X_i - \frac{1}{n}\sum_{i=1}^n Y_i \\
+&amp;= \frac{1}{n}\sum_{i=1}^n (X_i - Y_i) \\
+&amp;= \frac{1}{n}\sum_{i=1}^n D_i.
+\end{align*}\]</span> Here, <span class="math inline">\(D_i = X_i - Y_i\)</span> is the difference between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> within each pair. In other words, when data are paired, we can first consider the differences between observations, giving a set of <span class="math inline">\(n\)</span> observations, <span class="math inline">\(D_1, \dots, D_n\)</span>. Then, using this single sample, we can construct confidence intervals or perform hypothesis tests.</p>
+<p>Once the sample of differences is formed, the problem of interval estimation or hypothesis testing is no different from the one sample procedures outlined. The sampling distribution of <span class="math inline">\(\overline{D}\)</span> is exactly normal if both <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y_i\)</span> are exactly normal, and it will be approximately normal using the Central Limit Theorem if <span class="math inline">\(n\)</span> is sufficiently large. The expected value, <span class="math inline">\(E[\overline{D}] = \mu_X - \mu_Y\)</span>, according to the exact same logic applied for the independent case. The only slight difficulty is with the variance, where notably <span class="math display">\[\text{var}(\overline{D}) = \frac{\sigma_X^2 + \sigma_Y^2 - 2\sigma_{XY}}{n}.\]</span> Here <span class="math inline">\(\sigma_{XY}\)</span> is the <strong>covariance</strong> between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> (<a href="chapter7.html#def-covariance" class="quarto-xref">Definition&nbsp;<span>7.4</span></a>).<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Typically, for paired data, <span class="math inline">\(\sigma_{XY} &gt; 0\)</span> and so the variance will be <strong>smaller</strong> than when it is assumed that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent of one another. Because of this, making the assumption that the data are paired is an anti-conservative assumption. There needs to be good reason to suppose that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> really are paired, and that they should be analyzed in this manner, as otherwise the <span class="math inline">\(p\)</span>-values may be artificially deflated.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Confidence Intervals for Differences of Means in Paired Populations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To estimate the difference of two population means, <span class="math inline">\(\mu_X - \mu_Y\)</span>, from populations that are paired with one another, we can form confidence <span class="math inline">\(Z\)</span>- or <span class="math inline">\(t\)</span>-based confidence intervals, depending on whether the variances are known or not. First, we find the paired differences, <span class="math inline">\(D_i = X_i - Y_i\)</span>, and then consider the sample <span class="math inline">\(D_1, \dots, D_n\)</span> as a single sample. The variance of <span class="math inline">\(D_i\)</span> is given by <span class="math display">\[\text{var}(D_i) = \sigma_D^2 = \sigma_X^2 + \sigma^2 - 2\sigma_{XY}.\]</span></p>
+<ol type="1">
+<li>If <span class="math inline">\(\sigma_D^2\)</span> is known, take <span class="math display">\[\overline{D} \pm Z_{\alpha/2}\frac{\sigma_D}{\sqrt{n}}.\]</span></li>
+<li>If <span class="math inline">\(\sigma_D^2\)</span> is unknown, take <span class="math display">\[\overline{D} \pm t_{n-1, \alpha/2}\frac{S_D^2}{\sqrt{n}}.\]</span></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hypothesis Tests for Differences of Means in Paired Populations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If we have data selected from two, paired populations (denoted <span class="math inline">\(X_1,\dots,X_n\)</span> and <span class="math inline">\(Y_1,\dots,Y_m\)</span>), to test hypotheses relating to the relationship in population means, we can use a <span class="math inline">\(Z\)</span>- or <span class="math inline">\(t\)</span>-test, based on our knowledge of the population variances. First, we find the paired differences, <span class="math inline">\(D_i = X_i - Y_i\)</span>, and then consider the sample <span class="math inline">\(D_1, \dots, D_n\)</span> as a single sample. The variance of <span class="math inline">\(D_i\)</span> is given by <span class="math display">\[\text{var}(D_i) = \sigma_D^2 = \sigma_X^2 + \sigma^2 - 2\sigma_{XY}.\]</span></p>
+<ol type="1">
+<li>If <span class="math inline">\(\sigma_D^2\)</span> is known, then we take <span class="math display">\[T = \frac{\overline{D} - D_0}{\sigma_D/\sqrt{n}} \stackrel{H_0}{\sim} N(0, 1).\]</span> If we observe <span class="math inline">\(T=t\)</span>,
+<ol type="i">
+<li>If <span class="math inline">\(H_0: D = D_0\)</span> versus <span class="math inline">\(H_A: D \neq D_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(2\Phi(-|t|)\)</span>. The critical value is <span class="math inline">\(Z_{1-\alpha/2}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: D \geq D_0\)</span> versus <span class="math inline">\(H_A: D &lt; D_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(\Phi(t)\)</span>. The corresponding critical value is <span class="math inline">\(Z_{\alpha}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: D \leq D_0\)</span> versus <span class="math inline">\(H_A: D &gt; D_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(1 - \Phi(t)\)</span>. The corresponding critical value is <span class="math inline">\(Z_{1-\alpha}\)</span>.</li>
+</ol></li>
+<li>If <span class="math inline">\(\sigma_D^2\)</span> is unknown, then we take <span class="math display">\[T = \frac{\overline{D} - D_0}{S_D/\sqrt{n}} \stackrel{H_0}{\sim} t_{n-1}.\]</span> Taking <span class="math inline">\(F(t)\)</span> to be the cumulative distribution function for the <span class="math inline">\(t_{n-1}\)</span> distribution, and assuming we observe <span class="math inline">\(T=t\)</span>,
+<ol type="i">
+<li>If <span class="math inline">\(H_0: D = D_0\)</span> versus <span class="math inline">\(H_A: D \neq D_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(2F(-|t|)\)</span>. The critical value is <span class="math inline">\(t_{\nu, 1-\alpha/2}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: D \geq D_0\)</span> versus <span class="math inline">\(H_A: D &lt; D_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(F(t)\)</span>. The corresponding critical value is <span class="math inline">\(t_{\nu, \alpha}\)</span>.</li>
+<li>If <span class="math inline">\(H_0: D \leq D_0\)</span> versus <span class="math inline">\(H_A: D &gt; D_0\)</span> then the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(1 - F(t)\)</span>. The corresponding critical value is <span class="math inline">\(t_{\nu, 1-\alpha}\)</span>.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-16.01" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.1</strong></span> The electric lightbulbs of manufacturer <span class="math inline">\(A\)</span> have mean lifetime of <span class="math inline">\(1400\)</span> hours with a standard deviation of <span class="math inline">\(200\)</span> hours, while those from manufacturer <span class="math inline">\(B\)</span> have mean lifetime <span class="math inline">\(1200\)</span> hours with a standard deviation of <span class="math inline">\(100\)</span> hours. If random samples of <span class="math inline">\(125\)</span> bulbs of each brand are tested, what is the probability that the brand <span class="math inline">\(A\)</span> bulbs will have mean lifetime which is:</p>
+<ol type="a">
+<li><span class="math inline">\(160\)</span> hours more than brand <span class="math inline">\(B\)</span>?</li>
+<li><span class="math inline">\(250\)</span> hours more than brand <span class="math inline">\(B\)</span>?</li>
+</ol>
+</div>
+<div id="exr-16.02" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.2</strong></span> A study of the effectiveness of giving blood plasma containing complement component C4A to pediatric cardiopulmonary bypass patients measured the average stay of patients. Of the <span class="math inline">\(58\)</span> receiving the plasma the average length was <span class="math inline">\(8.5\)</span> days, with a standard deviation of <span class="math inline">\(1.9\)</span>. Of the <span class="math inline">\(58\)</span> not receiving the plasma, the average length was <span class="math inline">\(11.9\)</span> days with a standard deviation of <span class="math inline">\(3.6\)</span> days. Is there a statistically significant difference here?</p>
+</div>
+<div id="exr-16.03" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.3</strong></span> In a sample of <span class="math inline">\(482\)</span> female spotted flounder, the average weight was <span class="math inline">\(20.95\)</span>g with a standard deviation of <span class="math inline">\(14.5\)</span>g. A sample of <span class="math inline">\(614\)</span> males had an average weight of <span class="math inline">\(22.79\)</span>g with a standard deviation of <span class="math inline">\(15.6\)</span>g. Can you conclude that the mean weight of the males is greater than that of the females?</p>
+</div>
+<div id="exr-16.04" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.4</strong></span> In a sample with <span class="math inline">\(413\)</span> male identified college students and <span class="math inline">\(382\)</span> female identified college students, the average number of energy drinks consumed by the males per month was <span class="math inline">\(2.49\)</span> with a standard deviation of <span class="math inline">\(4.87\)</span>. Females on average consumed <span class="math inline">\(1.22\)</span> with a standard deviation of <span class="math inline">\(3.24\)</span>. Can you conclude that there is a difference in energy drink consumption between males and females?</p>
+</div>
+<div id="exr-16.05" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.5</strong></span> In a test to compare the effectiveness of two drugs designed to lower cholesterol levels, <span class="math inline">\(75\)</span> randomly selected patients were given drug <span class="math inline">\(A\)</span> and <span class="math inline">\(100\)</span> were given drug <span class="math inline">\(B\)</span>. Those given drug <span class="math inline">\(A\)</span> reduced their levels by an average of <span class="math inline">\(40\)</span> with a standard deviation of <span class="math inline">\(12\)</span>, while those given <span class="math inline">\(B\)</span> reduced their levels by an average of <span class="math inline">\(42\)</span> with a standard deviation of <span class="math inline">\(15\)</span>. Can you conclude that the reduction is greater with drug <span class="math inline">\(B\)</span> than with drug <span class="math inline">\(A\)</span>?</p>
+</div>
+<div id="exr-16.06" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.6</strong></span> The National Opinion Research Center polled a sample of <span class="math inline">\(92\)</span> people aged <span class="math inline">\(18-22\)</span> in the year <span class="math inline">\(2002\)</span>, asking them how many hours per week they spent on the internet. The sample mean was <span class="math inline">\(7.38\)</span> with a standard deviation of <span class="math inline">\(12.83\)</span>. A second sample of <span class="math inline">\(123\)</span> was taken <span class="math inline">\(2\)</span> years later. For this sample the mean was <span class="math inline">\(8.20\)</span> and the standard deviation was <span class="math inline">\(9.84\)</span>. Can you conclude that the mean number changed between <span class="math inline">\(2002\)</span> and <span class="math inline">\(2004\)</span>?</p>
+</div>
+<div id="exr-16.07" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.7</strong></span> A crayon manufacturer is comparing the effects of two kinds of yellow dye on the brittleness of crayons. Four crayons are tested with each dye <span class="math inline">\(A\)</span> and dye <span class="math inline">\(B\)</span>. The measured results are <span class="math inline">\(\{1.0, 2.0, 1.2, 3.0\}\)</span> for dye <span class="math inline">\(A\)</span>, and <span class="math inline">\(\{3.0, 3.2, 2.6, 3.4\}\)</span> for dye <span class="math inline">\(B\)</span>.</p>
+<ol type="a">
+<li>Can you conclude the mean strength of dye <span class="math inline">\(B\)</span> exceeds that of dye <span class="math inline">\(A\)</span>?</li>
+<li>Can you conclude the mean strength of dye <span class="math inline">\(B\)</span> exceeds that of dye <span class="math inline">\(A\)</span> by <span class="math inline">\(1\)</span> or more?</li>
+</ol>
+</div>
+<div id="exr-16.08" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.8</strong></span> In a study of the relationship of the shape of a tablet to its dissolution time, <span class="math inline">\(6\)</span> disk- and <span class="math inline">\(8\)</span> oval-shaped tablets were dissolved. The dissolve times in seconds for the disk were <span class="math inline">\(\{269.0, 249.3, 255.2, 252.7, 247.0, 261.6\}\)</span>, and for the ovals they were <span class="math inline">\(\{268.8, 260.0, 273.5, 253.9, 278.5, 289.4, 261.6, 280.2\}\)</span>. Is there a difference between the mean dissolve time of each shape?</p>
+</div>
+<div id="exr-16.09" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.9</strong></span> Two weights, each labeled as <span class="math inline">\(100\)</span>g, are weighed several times on the same scale. The results of excess weight, in <span class="math inline">\(\mu\)</span>g, were <span class="math inline">\(\{53, 88, 89, 62, 39, 66\}\)</span> for the first weight, and <span class="math inline">\(\{23, 39, 28, 2, 49\}\)</span> for the second. Since the same scale was used for each weight and since the weights are similar, a common variance can be used. Can you conclude that the weights differ?</p>
+</div>
+<div id="exr-16.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.10</strong></span> Measurements of ultimate compressive stress for green mixed oak is compared between two grades of lumber. For <span class="math inline">\(11\)</span> specimens of no. <span class="math inline">\(1\)</span> grade lumber, the average compressive stress was <span class="math inline">\(22.1\)</span> with a standard deviation of <span class="math inline">\(4.09\)</span>. For <span class="math inline">\(7\)</span> specimens of no. <span class="math inline">\(2\)</span> grade lumber, the average was <span class="math inline">\(20.4\)</span> with a standard deviation of <span class="math inline">\(3.08\)</span>. Can you conclude that the mean compressive stress is different between the two grades?</p>
+</div>
+<div id="exr-16.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.11</strong></span> In an experiment to test the effectiveness of a new sleeping aid, a sample of <span class="math inline">\(12\)</span> patients took the new drug and a sample of <span class="math inline">\(14\)</span> took an existing drug. Of the patients taking the new drug, the average time to fall asleep was <span class="math inline">\(27.3\)</span> minutes with a standard deviation of <span class="math inline">\(5.2\)</span>, while the average time for the common drug was <span class="math inline">\(32.7\)</span> with a standard deviation of <span class="math inline">\(4.1\)</span> minutes. Can you conclude that the new drug is better than the previous in terms of mean time to sleep?</p>
+</div>
+<div id="exr-16.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.12</strong></span> The following data corresponds to measurements of latency time in milliseconds to muscle flexing when an electric impulse stimulated either the motor points or the nerves. Is there a difference in latency period between these two techniques?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Subject</th>
+<th style="text-align: center;">Nerve</th>
+<th style="text-align: center;">Motor Point</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">59</td>
+<td style="text-align: center;">56</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">57</td>
+<td style="text-align: center;">52</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">58</td>
+<td style="text-align: center;">56</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">38</td>
+<td style="text-align: center;">32</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">53</td>
+<td style="text-align: center;">47</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">47</td>
+<td style="text-align: center;">42</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">51</td>
+<td style="text-align: center;">48</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="exr-16.13" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.13</strong></span> Cardiac function is assessed via impedance cardiography while performing the Valsalva maneuver. A set of <span class="math inline">\(11\)</span> subjects perform the measure both standing and reclining, and the mean impedance ratio is reported in the following table. Is there a difference in the mean impedance ratio between the two positions?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Subject</th>
+<th style="text-align: center;">Standing</th>
+<th style="text-align: center;">Reclining</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1.45</td>
+<td style="text-align: center;">0.98</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1.71</td>
+<td style="text-align: center;">1.42</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1.81</td>
+<td style="text-align: center;">0.70</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1.01</td>
+<td style="text-align: center;">1.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.96</td>
+<td style="text-align: center;">0.78</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">0.83</td>
+<td style="text-align: center;">0.54</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">1.23</td>
+<td style="text-align: center;">1.34</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">1.00</td>
+<td style="text-align: center;">0.72</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">0.80</td>
+<td style="text-align: center;">0.75</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">1.03</td>
+<td style="text-align: center;">0.82</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">1.39</td>
+<td style="text-align: center;">0.60</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="exr-16.14" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.14</strong></span> The amount of surface deflection caused by aircrafts landing on an airport runway is assessed between two landing gears, one simulating a Boeing 747 and the other simulating a Boeing 777, with measurements contained in the following table. Can you conclude that the mean deflection differs between the two gears?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Test</th>
+<th style="text-align: center;">747</th>
+<th style="text-align: center;">777</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4.01</td>
+<td style="text-align: center;">4.57</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3.87</td>
+<td style="text-align: center;">4.48</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3.72</td>
+<td style="text-align: center;">4.36</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3.76</td>
+<td style="text-align: center;">4.43</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="exr-16.15" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.15</strong></span> Two extrusion machines that manufacture steel rods are being compared. In a sample of <span class="math inline">\(1000\)</span> rods taken from machine <span class="math inline">\(1\)</span>, <span class="math inline">\(960\)</span> met specifications. In a sample of <span class="math inline">\(600\)</span> rods from machine <span class="math inline">\(2\)</span>, <span class="math inline">\(582\)</span> met specifications. Machine <span class="math inline">\(1\)</span> is less costly to run and so it is preferable, unless machine <span class="math inline">\(2\)</span> is substantially better. Test the hypothesis that machine <span class="math inline">\(2\)</span> is better and draw a conclusion about which machine to use.</p>
+</div>
+<div id="exr-16.16" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.16</strong></span> Resistors labeled as <span class="math inline">\(100\Omega\)</span> are purchased from two vendors. The specification of this type of resistor is that its actual resistance must be within <span class="math inline">\(5\%\)</span> of the labeled resistance. In a sample of <span class="math inline">\(180\)</span> from vendor <span class="math inline">\(A\)</span>, <span class="math inline">\(150\)</span> met specification; in a sample of <span class="math inline">\(270\)</span> from vendor <span class="math inline">\(B\)</span>, <span class="math inline">\(233\)</span> met specification. Test whether there should be a change in supplier from vendor <span class="math inline">\(A\)</span> to vendor <span class="math inline">\(B\)</span>, and draw a conclusion.</p>
+</div>
+<div id="exr-16.17" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.17</strong></span> To test the effectiveness of protective packaging, a firm shipped out <span class="math inline">\(1200\)</span> orders in regular light packaging and <span class="math inline">\(1500\)</span> orders in heavy-duty packaging. Of the orders shipped in light packaging, <span class="math inline">\(20\)</span> arrived damaged while of those shipped in heavy-duty packaging, <span class="math inline">\(15\)</span> arrived damaged. Can you conclude that heavy-duty packaging reduces the proportion of damaged shipments?</p>
+</div>
+<div id="exr-16.18" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.18</strong></span> In order to determine whether to pitch a new advertising campaign more toward men or women, an advertiser provided each couple in a random sample of <span class="math inline">\(500\)</span> married couples with a new type of TV remote control that is supposed to be easier to find when needed. Of the <span class="math inline">\(500\)</span> men, <span class="math inline">\(62\%\)</span> said that the new remote was easier to find; of the <span class="math inline">\(500\)</span> women, <span class="math inline">\(54\%\)</span> said it was easier to find. Let <span class="math inline">\(p_1\)</span> be the population proportion of married men who think that the remote is easier to find and <span class="math inline">\(p_2\)</span> be the proportion of married women. Can we use <span class="math inline">\(0.62 - 0.54\)</span> to test <span class="math inline">\(H_0: p_1 - p_2 = 0\)</span>? If so, perform the test. If not, explain.</p>
+</div>
+<div id="exr-16.19" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 16.19</strong></span> Two groups <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, each consisting of <span class="math inline">\(100\)</span> people who have a disease, are enrolled in a trial to test the efficacy of a newly developed serum. Group <span class="math inline">\(A\)</span> receives the serum, and group <span class="math inline">\(B\)</span> receives a fake treatment, known as a placebo. It is found that in group <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> there were <span class="math inline">\(75\)</span> and <span class="math inline">\(65\)</span> people who recovered from the disease, respectively. Test the hypothesis that the serum is effective for treatment of the disease. Draw a conclusion as to whether the serum should be used.</p>
+</div>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>For instance, we may wish to compare two different treatments or two different interventions; we may wish to consider whether one group is different from another, or whether one process performs the same as another; etc.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Such as <span class="math inline">\(\mu\)</span> or <span class="math inline">\(\sigma^2\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Note, <span class="math inline">\(\Delta = E[X] - E[Y]\)</span> is a population parameter, one that depends on the joint distribution of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>It will be unbiased for the same reasons that <span class="math inline">\(\widehat{\Delta}\)</span> was.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Or any of the other variations on this test.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>This can happen, for instance, when you are measuring the same trait in two different populations, but where the variability of the trait is quite well understood.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>As a reminder, the covariance between two random variables is a measure of their relationship. A positive covariance means that there is a positive relationship between the quantities, where <span class="math inline">\(Y\)</span> increases as <span class="math inline">\(X\)</span> increases. A negative has the opposite effect. If two random variables are independent, then they have covariance <span class="math inline">\(0\)</span>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
