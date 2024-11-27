@@ -40,6 +40,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-9cf7f73ae95708c47935cfd4a35bc870.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -67,7 +70,663 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">.monaco-editor pre {
+  background-color: unset !important;
+}
 
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-button-run {
+  background-color: #EEEEEE;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; /* Extra styling for consistency */
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration: none;
+  /* vertical-align: middle; */ /* Prevents a space from appearing between the code cell and button */
+  -webkit-user-select: none;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button-run:hover {
+  color: #000;
+  background-color: #e3e6ea;
+  border-color: #e1e5e9;
+}
+
+.qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+  pointer-events: none;
+  opacity: .65
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+</style>
+<script type="module">// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Determine if we need to install R packages
+var installRPackagesList = [''];
+// Check to see if we have an empty array, if we do set to skip the installation.
+var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+var autoloadRPackages = true;
+
+// Display a startup message?
+var showStartupMessage = true;
+var showHeaderMessage = false;
+if (showStartupMessage) {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  var startupMessageWebR = document.createElement("p");
+  startupMessageWebR.innerText = "🟡 Loading...";
+  startupMessageWebR.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  startupMessageWebR.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(startupMessageWebR);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML) {
+    // Append to the existing "title-block-header" element
+    headerHTML.appendChild(quartoTitleMeta);
+  } else if (headerRevealJS) {
+    // If using RevealJS, add to the "title-slide" div
+    headerRevealJS.appendChild(firstInnerDiv);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+// Retrieve the webr.mjs
+import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.2/webr.mjs";
+
+// Populate WebR options with defaults or new values based on 
+// webr meta
+globalThis.webR = new WebR({
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": ChannelType.Automatic
+});
+
+// Initialization WebR
+await webR.init();
+
+// Setup a shelter
+globalThis.webRCodeShelter = await new webR.Shelter();
+
+// Setup a pager to allow processing help documentation 
+await webR.evalRVoid('webr::pager_install()'); 
+
+// Function to set the button text
+function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message
+function qwebrUpdateStatusHeader(message) {
+  startupMessageWebR.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await globalThis.webR.installPackages([packageName]);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await globalThis.webR.evalRVoid(`library(${packageName});`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+    
+    // Display the update
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await globalThis.webR.flush();
+  }
+}
+
+
+// Check to see if any packages need to be installed
+if (setupRPackages) {
+  // Obtain only a unique list of packages
+  const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+  // Install R packages one at a time (either silently or with a status update)
+  await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+  if(autoloadRPackages) {
+    // Load R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+  }
+}
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+// Release document status as ready
+if (showStartupMessage) {
+  startupMessageWebR.innerText = "🟢 Ready!"
+}
+
+qwebrSetInteractiveButtonState(
+  `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+  true
+);
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};</script>
+<script type="module">// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+    Interactive: 'interactive',
+    Setup: 'setup',
+    Output: 'output',
+});
+
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await webR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await webR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // ---- 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid(`webr::canvas(width=${options["fig-width"]}, height=${options["fig-height"]})`);
+
+    const result = await webRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    try {
+
+        // Stop creating images
+        await webR.evalRVoid("dev.off()");
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${qwebrEscapeHTMLCharacters(evt.data)}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await webR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * options["fig-width"]);
+                canvas.setAttribute("height", 2 * options["fig-height"]);
+                canvas.style.width = "700px";
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            elements.outputGraphDiv.appendChild(canvas);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        webRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    evalType = EvalTypes.Interactive,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { "fig-width": 504, "fig-height": 360 };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+</script>
+<script type="module">// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (insertElement,
+  qwebrCounter, 
+  evalType = EvalTypes.Interactive,
+  options = {}) {
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive: 
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter);
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter);
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter);
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  insertElement.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-interactive-area';
+
+  // Create button element
+  var button = document.createElement('button');
+  button.className = 'btn btn-default qwebr-button-run';
+  button.disabled = true;
+  button.type = 'button';
+  button.id = 'qwebr-button-run-' + qwebrCounter;
+  button.textContent = '🟡 Loading webR...';
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(button);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-area';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-setup-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-setup-area';
+
+  return mainDiv;
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -243,11 +902,171 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#linear-relationships-and-lines-of-best-fit" id="toc-linear-relationships-and-lines-of-best-fit" class="nav-link active" data-scroll-target="#linear-relationships-and-lines-of-best-fit"><span class="header-section-number">17.1</span> Linear Relationships and Lines of Best Fit</a></li>
+  <li><a href="#the-simple-linear-regression-model" id="toc-the-simple-linear-regression-model" class="nav-link" data-scroll-target="#the-simple-linear-regression-model"><span class="header-section-number">17.2</span> The Simple Linear Regression Model</a>
+  <ul class="collapse">
+  <li><a href="#approximating-linear-relationships" id="toc-approximating-linear-relationships" class="nav-link" data-scroll-target="#approximating-linear-relationships"><span class="header-section-number">17.2.1</span> Approximating Linear Relationships</a></li>
+  <li><a href="#the-model-and-assumptions" id="toc-the-model-and-assumptions" class="nav-link" data-scroll-target="#the-model-and-assumptions"><span class="header-section-number">17.2.2</span> The Model and Assumptions</a></li>
+  <li><a href="#estimation-of-model-parameters" id="toc-estimation-of-model-parameters" class="nav-link" data-scroll-target="#estimation-of-model-parameters"><span class="header-section-number">17.2.3</span> Estimation of Model Parameters</a></li>
+  <li><a href="#interpretation-and-inference-regarding-model-parameters" id="toc-interpretation-and-inference-regarding-model-parameters" class="nav-link" data-scroll-target="#interpretation-and-inference-regarding-model-parameters"><span class="header-section-number">17.2.4</span> Interpretation and Inference Regarding Model Parameters</a></li>
+  </ul></li>
+  <li><a href="#sources-of-variation-in-simple-linear-regression" id="toc-sources-of-variation-in-simple-linear-regression" class="nav-link" data-scroll-target="#sources-of-variation-in-simple-linear-regression"><span class="header-section-number">17.3</span> Sources of Variation in Simple Linear Regression</a></li>
+  <li><a href="#prediction-using-linear-regression" id="toc-prediction-using-linear-regression" class="nav-link" data-scroll-target="#prediction-using-linear-regression"><span class="header-section-number">17.4</span> Prediction using Linear Regression</a></li>
+  <li><a href="#beyond-simple-linear-regression" id="toc-beyond-simple-linear-regression" class="nav-link" data-scroll-target="#beyond-simple-linear-regression"><span class="header-section-number">17.5</span> Beyond Simple Linear Regression</a></li>
+  <li><a href="#linear-regression-in-r" id="toc-linear-regression-in-r" class="nav-link" data-scroll-target="#linear-regression-in-r"><span class="header-section-number">17.6</span> Linear Regression in <code>R</code></a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
+<script type="module">// Global dictionary to store Monaco Editor instances
+const qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (
+    initialCode, 
+    qwebrCounter) {
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value
+    editor.__qwebrinitialCode = initialCode;
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter,
+            EvalTypes.Interactive);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, EvalTypes.Interactive);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, EvalTypes.Interactive);
+  };
+
+}</script>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter10.html">Part 2: Statistics</a></li><li class="breadcrumb-item"><a href="../notes/chapter17.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -268,8 +1087,2003 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>So far, we have only considered individual estimation and inference (for single parameters) or else the comparison between single parameters. While these estimation and comparison procedures are widely applicable and a powerful basis for inquiry, they fail to capture an important type of statistical analysis. Specifically, the forms of estimation and hypothesis testing considered thus far have not provided a means of capturing the relationship between two (or more) variables. Regression models generally provide on method for accomplishing this task.</p>
+<section id="linear-relationships-and-lines-of-best-fit" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="linear-relationships-and-lines-of-best-fit"><span class="header-section-number">17.1</span> Linear Relationships and Lines of Best Fit</h2>
+<p>The most basic mathematical function that we can conceive of is a straight line. We can consider the equation of a line, <span class="math display">\[y = mx + b,\]</span> where <span class="math inline">\(y\)</span> is the <strong>dependent variable</strong> and <span class="math inline">\(x\)</span> is the <strong>independent variable</strong>. In this equation, <span class="math inline">\(m\)</span> represents the <strong>slope</strong> of the line,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> a quantity that indicates how much the value of <span class="math inline">\(y\)</span> changes as the value of <span class="math inline">\(x\)</span> changes. The term <span class="math inline">\(b\)</span> represents the <strong>intercept</strong> of the line,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> which corresponds to the value of <span class="math inline">\(y\)</span> when <span class="math inline">\(x=0\)</span>. This relationship is <strong>deterministic</strong> in that, if <span class="math inline">\(y = mx + b\)</span> actually holds, then we can perfectly know the value of <span class="math inline">\(y\)</span> for any value of <span class="math inline">\(x\)</span>, simply by specifying the values <span class="math inline">\(m\)</span> and <span class="math inline">\(b\)</span>.</p>
+<p>Despite the simplicity of the linear relationship, it remains a very powerful model for investigating the relationship between two variables. There are many quantities that follow a deterministic linear relationship, and we can exploit this simple pattern to understand their joint behaviour. For instance, if we have a vehicle that is traveling at a constant speed, then the distance traveled, <span class="math inline">\(d\)</span>, is given by the linear relationship <span class="math inline">\(d = mt\)</span>, where <span class="math inline">\(m\)</span> is the speed and <span class="math inline">\(t\)</span> is the time of travel. If you have an investment that will pay simple interest, then the total payout <span class="math inline">\(P\)</span>, is given by the linear relationship <span class="math inline">\(P = mx + x\)</span>, where <span class="math inline">\(m\)</span> is the rate of return, and <span class="math inline">\(x\)</span> is the initial investment. As a final example, the temperature measured in Fahrenheit, <span class="math inline">\(F\)</span>, is given by <span class="math inline">\(F = 1.8C + 32\)</span>, where <span class="math inline">\(C\)</span> is the temperature measured in Celsius.</p>
+<p>In each of these cases the dependent variable, also called the <strong>response variable</strong>, can be exactly explained by constants as well as the <strong>independent variable</strong>, also known as the <strong>predictor</strong> or <strong>explanatory variable</strong>. While there are many other situations that can be exactly described using linear relationships, there are even more settings in which an approximate linear relationship between the predictor and the response will hold. These are the situations that we are concerned with in the simple linear regression model.</p>
+<div id="def-response-variable" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.1 (Response Variable (Dependent Variable))</strong></span> The <strong>response variable</strong> is the variable that is treated as the outcome when considering a relationship between two or more variables. The response variable is treated as being <em>dependent</em> on the other variables being considered. It is the variable that the model is attempting to explain.</p>
+</div>
+<div id="def-explanatory-variable" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.2 (Predictor Variable (Explanatory Variable; Independent Variable))</strong></span> The <strong>predictor variable</strong> (or predictor variables, if using more than one) are the variables that are used to predict or explain the variation in the response. These are variables that are treated as input to the relationship, and where the primary consideration of these variables is through their influence on the outcome.</p>
+</div>
+</section>
+<section id="the-simple-linear-regression-model" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="the-simple-linear-regression-model"><span class="header-section-number">17.2</span> The Simple Linear Regression Model</h2>
+<section id="approximating-linear-relationships" class="level3" data-number="17.2.1">
+<h3 data-number="17.2.1" class="anchored" data-anchor-id="approximating-linear-relationships"><span class="header-section-number">17.2.1</span> Approximating Linear Relationships</h3>
+<p>In the case of modelling the relationship between two or more variables, we need to consider data collection as consisting of two or more records on the same unit. For simplicity, suppose we observe one outcome (<span class="math inline">\(y\)</span>) and one predictor (<span class="math inline">\(x\)</span>). Then, if we wanted to take a sample of <span class="math inline">\(n\)</span> units from the population, the data we collected would consist of pairs, <span class="math inline">\((x_i, y_i)\)</span> for <span class="math inline">\(i=1,\dots,n\)</span>. That is, we would take <span class="math inline">\(\{(x_1,y_1), (x_2, y_2), \dots, (x_n, y_n)\}\)</span>. In this case, <span class="math inline">\(x_1\)</span> is the predictor for the first unit, and <span class="math inline">\(y_1\)</span> is the outcome for the first unit; <span class="math inline">\(x_2\)</span> is the predictor for the second unit, and <span class="math inline">\(y_2\)</span> is the predictor for the second unit; and so forth. We can conceive of this data collection procedure in much the same way that we have conceived of all data collection procedures to date. Namely, <span class="math inline">\(x_1,\dots,x_n\)</span> are realizations of some random variable, <span class="math inline">\(X\)</span>, that has some population distribution, and <span class="math inline">\(y_1,\dots,y_n\)</span> are realizations of <span class="math inline">\(Y\)</span> with some other population distribution. If we are concerned with the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, then we are working from the assumption that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent of one another. It is also convention to use <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> to describe the explanatory and response variables, respectively.</p>
+<p>Even in settings where a perfect linear relationship between two or more variable is theoretically justified, in collected data we will not often observe an exact linear relationship. Suppose we are measuring the distance traveled, when traveling at a constant speed, across multiple points in time. There will be some level of uncertainty in our measures of the distance traveled, either because we have made mistakes, or because our instruments for measuring distance are not perfect, or because there is a finite amount of precision that can actually be detected by the tools. The same issues are likely to impact our measures of time. Moreover, it is likely not possible to travel at exactly constant speeds, and so the underlying assumptions generating the exact linear model will likely not hold, precisely. However, we should still find that, in this case, a linear model will do a fairly good job of capturing the relationship between distance and speed.</p>
+<p>When we have other quantities, specifically quantities where there may not be a theoretically justified linear relationship between the response and predictor, it may still be the case that a linear relationship can approximate the dependence between the variables. One technique for assessing the appropriateness of a linear relationship is through the use of <strong>scatter plots</strong>. Scatter plots are plots of bivariate data, where the values of one variable are plotted along the <span class="math inline">\(x\)</span>-axis and values of a second variable are plotted along the <span class="math inline">\(y\)</span>-axis. Each observation, <span class="math inline">\((x_i, y_i)\)</span> is then plotted as a single point at the corresponding location on the plane. By investigating the relationship displayed in the plot, we can observe whether or not a linear relationship appears appropriate. By convention we will place the outcome on the <span class="math inline">\(y\)</span>-axis and the predictors on the <span class="math inline">\(x\)</span>-axis.</p>
+<div id="def-scatterplot" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.3 (Scatter Plot)</strong></span> A <strong>scatter plot</strong> is a visual display of bivariate data in which observations are plotted at the Cartesian coordinates of their observed location. Typically, the <span class="math inline">\(x\)</span>-axis will be used for the independent factors, and the <span class="math inline">\(y\)</span>-axis will be used for the dependent factors.</p>
+</div>
+<div id="fig-scatterplot-examples" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-scatterplot-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17.1: A demonstration of three scatter plots.
+</figcaption>
+<div aria-describedby="fig-scatterplot-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-scatterplot-examples" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-scatterplot-examples-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-scatterplot-examples-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Approximate linear relationship.
+</figcaption>
+<div aria-describedby="fig-scatterplot-examples-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter17_files/figure-html/fig-scatterplot-examples-1.png" class="lightbox" data-gallery="fig-scatterplot-examples" title="Figure&nbsp;17.1&nbsp;(a): Approximate linear relationship."><img src="chapter17_files/figure-html/fig-scatterplot-examples-1.png" class="img-fluid figure-img" data-ref-parent="fig-scatterplot-examples" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-scatterplot-examples" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-scatterplot-examples-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-scatterplot-examples-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Nonlinear relationship.
+</figcaption>
+<div aria-describedby="fig-scatterplot-examples-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter17_files/figure-html/fig-scatterplot-examples-2.png" class="lightbox" data-gallery="fig-scatterplot-examples" title="Figure&nbsp;17.1&nbsp;(b): Nonlinear relationship."><img src="chapter17_files/figure-html/fig-scatterplot-examples-2.png" class="img-fluid figure-img" data-ref-parent="fig-scatterplot-examples" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-scatterplot-examples" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-scatterplot-examples-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-scatterplot-examples-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) No relationship.
+</figcaption>
+<div aria-describedby="fig-scatterplot-examples-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter17_files/figure-html/fig-scatterplot-examples-3.png" class="lightbox" data-gallery="fig-scatterplot-examples" title="Figure&nbsp;17.1&nbsp;(c): No relationship."><img src="chapter17_files/figure-html/fig-scatterplot-examples-3.png" class="img-fluid figure-img" data-ref-parent="fig-scatterplot-examples" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+<p>By considering the scatter plot, we can determine whether there appears to be an approximate linear relationship between the response and the predictors. Recognizing the sampling variability that is inherent to all data, we need not observe a perfect linear relationship. As long as a straight line appears to capture a dominant component of the trend, it is possible to use a linear model to represent the relationship between the variables. In cases where a linear relationship is entirely inappropriate, it may be the case that we observe patterns that appear to follow some other functional, non-linear relationship. For instance, it is common to see data that appear to exhibit the relationship <span class="math inline">\(y \approx e^x\)</span>, or <span class="math inline">\(y \approx \log(x)\)</span>, or perhaps <span class="math inline">\(y = x^2\)</span>. In each of these cases, we may still be able to present the data as having an approximately linear relationship if we <strong>transform</strong> the outcome. In the above examples, this corresponds to stating that <span class="math inline">\(\log(y) \approx x\)</span>, or <span class="math inline">\(e^y \approx x\)</span>, or <span class="math inline">\(\sqrt{y} \approx x\)</span> (see <a href="#fig-transformation-of-outcomes" class="quarto-xref">Figure&nbsp;<span>17.2</span></a>).<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div id="fig-transformation-of-outcomes" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-transformation-of-outcomes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17.2: A demonstration of three scatter plots.
+</figcaption>
+<div aria-describedby="fig-transformation-of-outcomes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-transformation-of-outcomes" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-transformation-of-outcomes-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-transformation-of-outcomes-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Exponential relationship, transformed via logarithm.
+</figcaption>
+<div aria-describedby="fig-transformation-of-outcomes-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter17_files/figure-html/fig-transformation-of-outcomes-1.png" class="lightbox" data-gallery="fig-transformation-of-outcomes" title="Figure&nbsp;17.2&nbsp;(a): Exponential relationship, transformed via logarithm."><img src="chapter17_files/figure-html/fig-transformation-of-outcomes-1.png" class="img-fluid figure-img" data-ref-parent="fig-transformation-of-outcomes" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-transformation-of-outcomes" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-transformation-of-outcomes-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-transformation-of-outcomes-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Logarithmic relationship, transformed via exponential.
+</figcaption>
+<div aria-describedby="fig-transformation-of-outcomes-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter17_files/figure-html/fig-transformation-of-outcomes-2.png" class="lightbox" data-gallery="fig-transformation-of-outcomes" title="Figure&nbsp;17.2&nbsp;(b): Logarithmic relationship, transformed via exponential."><img src="chapter17_files/figure-html/fig-transformation-of-outcomes-2.png" class="img-fluid figure-img" data-ref-parent="fig-transformation-of-outcomes" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-transformation-of-outcomes" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-transformation-of-outcomes-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-transformation-of-outcomes-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Quadratic relationship, transformed via square root.
+</figcaption>
+<div aria-describedby="fig-transformation-of-outcomes-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter17_files/figure-html/fig-transformation-of-outcomes-3.png" class="lightbox" data-gallery="fig-transformation-of-outcomes" title="Figure&nbsp;17.2&nbsp;(c): Quadratic relationship, transformed via square root."><img src="chapter17_files/figure-html/fig-transformation-of-outcomes-3.png" class="img-fluid figure-img" data-ref-parent="fig-transformation-of-outcomes" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+<p>If you have established that the relationship between a response and a predictor appears to follow an (approximately) linear relationship, the natural follow-up question is how we determine specifically what that relationship is. Naturally, given a plot that demonstrates an approximately linear relationship, we can likely draw-in the <strong>line of best fit</strong> using our intuition. Informally, the line of best fit will be the straight line that best explains the pattern we see in the data. That means it will get as close to as many of the points as possible, while not exhibiting a systematic bias, trying to balance the points that are over- and under-estimated. To find this line, formally, we can leverage <strong>simple linear regression</strong>.</p>
+</section>
+<section id="the-model-and-assumptions" class="level3" data-number="17.2.2">
+<h3 data-number="17.2.2" class="anchored" data-anchor-id="the-model-and-assumptions"><span class="header-section-number">17.2.2</span> The Model and Assumptions</h3>
+<p>At its core, a linear regression model is a mathematical model for the <strong>conditional mean</strong> of the response variable. Namely, with simple linear regression we stipulate that <span class="math display">\[E[Y|X=x] = \beta_0 + \beta_1 x.\]</span> Here, <span class="math inline">\(\beta_0\)</span> takes the role of the intercept parameter, and <span class="math inline">\(\beta_1\)</span> takes the role of the slope parameter. That is, instead of indicating that <span class="math inline">\(Y\)</span> follows an exactly linear relationship, we say that <em>on average</em> <span class="math inline">\(Y\)</span> will be linear (in <span class="math inline">\(x\)</span>). Because the average of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X=x\)</span> is linear, we know that the actual observations of <span class="math inline">\(Y\)</span> will fall around this line, either higher or lower depending on sampling variability. We also know that they should not be biased towards one side or the other, as on average, they will sit on the line. As a result, we will typically postulate that <span class="math display">\[Y = \beta_0 + \beta_1 X + \epsilon,\]</span> where <span class="math inline">\(\epsilon\)</span> is a random variable, not dependent on the value of <span class="math inline">\(x\)</span>, such that <span class="math inline">\(E[\epsilon] = 0\)</span> and labeling <span class="math inline">\(\text{var}(\epsilon) = \sigma^2\)</span>. We will typically refer to <span class="math inline">\(\epsilon\)</span> as the <strong>error term</strong>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-labeled-linear-regression" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-labeled-linear-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17.3: The linear regression model, wth the labeled mean and two separate error terms. Each of the points is comprised of the mean component (blue line) plus or minus some error term that deviates in the <span class="math inline">\(y\)</span> direction. Each of these errors could be labeled in the same way. These errors are taken to have a constant variance, and a mean of <span class="math inline">\(0\)</span>, when considered across the full population.
+</figcaption>
+<div aria-describedby="fig-labeled-linear-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter17_files/figure-html/fig-labeled-linear-regression-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;17.3: The linear regression model, wth the labeled mean and two separate error terms. Each of the points is comprised of the mean component (blue line) plus or minus some error term that deviates in the y direction. Each of these errors could be labeled in the same way. These errors are taken to have a constant variance, and a mean of 0, when considered across the full population."><img src="chapter17_files/figure-html/fig-labeled-linear-regression-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>From this assumption, we can re-derive that <span class="math inline">\(E[Y|X=x] = \beta_0 + \beta_1 x\)</span>. Note that this model is referred to as the <strong>simple</strong> linear regression model, since it has only a single predictor variable. If we specify multiple predictor variables in otherwise the same form, this remains a linear regression model, however, it is no longer labeled “simple”.</p>
+<div id="def-simple-linear-regression" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.4 (Simple Linear Regression Model)</strong></span> A <strong>simple linear regression model</strong> is a statistical model specified for the conditional mean of a response variable, conditioned on a single explanatory variable. The model postulates that the conditional mean of the response is a linear function of predictor, such that <span class="math inline">\(E[Y|X=x] = \beta_0 + \beta_1 x\)</span>.</p>
+</div>
+<p>The key assumption when using linear regression is that this mean relationship, that <span class="math inline">\(E[Y|X=x] = \beta_0 + \beta_1 x\)</span>, is a good representation of the truth. Without linearity of the mean, using a linear regression will provide misleading results. Implicitly, this also means that we are taking <span class="math inline">\(Y\)</span> to be a continuous variable.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> A secondary assumption that we have made implicitly in the specification of this model is that the amount of variability in the error term does not depend on <span class="math inline">\(X\)</span>. This assumption is called <strong>homogeneity</strong> and is typically summarized as being an assumption of constant variance.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Mathematically, we can frame this as assuming that <span class="math inline">\(\text{var}(\epsilon|X=x) = \sigma^2\)</span>, for any value <span class="math inline">\(x\)</span>.</p>
+<div id="def-homogeneity" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.5 (Homogeneity (assumption))</strong></span> The assumption of <strong>homogeneity</strong> (often expressed as saying that the data are <em>homogeneous</em>), requires that the variance of the error terms in a model do not depend on the predictors in that model. That is, there is a constant variance across all observations in the model.</p>
+</div>
+<p>By assuming that <span class="math inline">\(E[Y|X=x] = \beta_0 + \beta_1 x\)</span>, and that otherwise, <span class="math inline">\(Y = E[Y|X=x] + \epsilon\)</span>, where <span class="math inline">\(\epsilon\)</span> has mean <span class="math inline">\(0\)</span> and does not depend on the value of <span class="math inline">\(X\)</span>, then this model has specified the parametric form for <span class="math inline">\(Y|X=x\)</span>. Namely, <span class="math display">\[E[Y|X=x] = \beta_0 + \beta_1 x \quad\text{ and }\quad \text{var}(Y|X=x) = \sigma^2.\]</span> It is this random variable, <span class="math inline">\(Y\)</span>, that we are primarily concerned with, conditional on <span class="math inline">\(X\)</span>. Note that sometimes it will be convenient to make further assumptions regarding <span class="math inline">\(\epsilon\)</span>. Most commonly, we may assume that <span class="math inline">\(\epsilon \sim N(0, \sigma^2)\)</span>. Under this assumption, we end up further assuming that <span class="math display">\[Y|X=x \sim N(\beta_0 + \beta_1 x, \sigma^2).\]</span> This assumption is <strong>not</strong> necessary for the estimation of the regression parameters, <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, but it will be useful if we wish to conduct inference regarding the parameters.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A Note on the Randomness of <span class="math inline">\(X\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Many authors will discuss linear regression under the assumption that <span class="math inline">\(X\)</span> is nonrandom. That is, they suppose that <span class="math inline">\(Y\)</span> is a random variable, and that <span class="math inline">\(X\)</span> is simply a set of fixed values. They then discuss the relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>. Mathematically, this convention is entirely equivalent to the one that we are exploring, since we are considering the value of <span class="math inline">\(Y\)</span> conditional on <span class="math inline">\(X\)</span>. In some settings, it is far more sensible to take one approach or the other. For instance, if you are running a designed experiment, then <span class="math inline">\(X\)</span> will typically denote the level of the treatment variable that you are modifying. In this setting, the level of the treatment variable is decided upon by yourself, and so there is no randomness there at all: you have picked the values of <span class="math inline">\(X\)</span>, and then measured the random <span class="math inline">\(Y\)</span>. Conversely, if you are considering observational data, then typically we treat every observation as random since none of it was directly controlled.</p>
+<p>Even when <span class="math inline">\(X\)</span> is treated as random, as it is in our discussion, it is important to note that we never make assumptions regarding the distribution of <span class="math inline">\(X\)</span>, except insofar as it relates to the distribution of <span class="math inline">\(Y\)</span> and <span class="math inline">\(\epsilon\)</span>. That is, our predictors can be drawn from any population distribution, and our discussion holds as written. If this is a deterministic distribution, that does not cause any issue. Whether you approach linear regression from the viewpoint of a random <span class="math inline">\(X\)</span> quantity, where we are doing everything conditioned on the variable, or if you take <span class="math inline">\(X\)</span> to be fixed and <span class="math inline">\(Y\)</span> depends on the fixed value, the interpretation and estimation is equivalent.</p>
+</div>
+</div>
+</section>
+<section id="estimation-of-model-parameters" class="level3" data-number="17.2.3">
+<h3 data-number="17.2.3" class="anchored" data-anchor-id="estimation-of-model-parameters"><span class="header-section-number">17.2.3</span> Estimation of Model Parameters</h3>
+<p>Estimation in the simple linear regression refers specifically to estimation of the parameters, <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. Under the specified model, with estimates for both the intercept and the slope, the procedure provides an estimate of the line of best fit, and equivalently, for the conditional mean of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X=x\)</span>. Denote the estimators for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> as <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span>, respectively. Then, if estimates for these quantities were worked out, we could also write <span class="math display">\[\widehat{E}[Y|X=x] = \widehat{\beta}_0 + \widehat{\beta}_1x.\]</span> That is, the estimated conditional mean, given some value of <span class="math inline">\(x\)</span>, can be derived through these estimators.</p>
+<p>In the data that we have observed, we will have <span class="math inline">\(\{(x_1, y_1), \dots, (x_n, y_n)\}\)</span> observed in pairs. If we apply our estimated relationship, <span class="math inline">\(\widehat{\beta}_0 + \widehat{\beta}_1x_i\)</span> to any specific individual, if the estimators are well-behaved then this should be close to the true value, <span class="math inline">\(y_i\)</span>. We will typically write <span class="math display">\[\widehat{y}_i = \widehat{E}[Y|X=x] = \widehat{\beta}_0 + \widehat{\beta}_1x.\]</span> In a sense, the difference between <span class="math inline">\(y_i\)</span> and <span class="math inline">\(\widehat{y}_i\)</span> is the “mistake” that the estimated regression line makes on the specific individual. It is the amount of the outcome that is <em>not</em> captured by the regression model. We refer to these quantities as the <strong>residuals</strong>.</p>
+<div id="def-residuals" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.6 (Residuals (Regression Model))</strong></span> Broadly speaking <strong>residuals</strong> refer to the difference between the true value of an outcome, and the value of the outcome that is implied by the estimated model. For simple linear regression, the residuals for an individual with predictor <span class="math inline">\(x_i\)</span> and outcome <span class="math inline">\(y_i\)</span> are given by <span class="math display">\[e_i = y_i - (\widehat{\beta}_0 + \widehat{\beta}_1x_i) = y_i - \widehat{y}_i.\]</span> The residuals can be viewed as estimated values for the errors, <span class="math inline">\(\epsilon_i\)</span>, since if <span class="math inline">\(\widehat{\beta}_0 = \beta_0\)</span> and <span class="math inline">\(\widehat{\beta}_1 = \beta_1\)</span>, then <span class="math inline">\(e_i = \epsilon_i\)</span>.</p>
+</div>
+<p>Intuitively, in order to have the <strong>line of best fit</strong>, we want to have the residuals be as small as possible across the entire dataset. Importantly, however, we want to consider both positive and negative residuals as being equally far from the truth. If the value implied by the model is <span class="math inline">\(10\)</span> units larger than the truth, or if the value implied by the model is <span class="math inline">\(10\)</span> units larger than the truth, these both constitute an error of <span class="math inline">\(10\)</span> units. As a result, instead of consider <span class="math inline">\(e_i\)</span> alone, we will instead consider the <strong>squared residuals</strong>, <span class="math inline">\(e_i^2\)</span>. Specifically, the line of best fit, the estimated regression line, will be defined by the parameters that minimize the sum of the squared residuals.</p>
+<div id="def-regression-line" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.7 (Estimated Regression Line (Line of Best Fit))</strong></span> The <strong>estimated regression line</strong>, also referred to as the line of best fit, is the line that is estimated from a set of data based on <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span>. This line is taken to be the line that minimizes the sum of squared residuals. Namely, the estimated regression line is defined by finding <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> such that <span class="math display">\[\sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i)^2,\]</span> is minimized. This procedure is referred to as the <strong>least squares</strong> procedure, or sometimes, <strong>ordinary least squares</strong>.</p>
+</div>
+<p>Through the least squares procedure, the line of best fit can be derived. In the case of linear regression, the estimators <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> take on a specific form, based on the observed data.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Ordinary Least Squares Estimators for Simple Linear Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In a simple linear regression, based on observed data <span class="math inline">\(\{(x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)\}\)</span>, the ordinary least squares estimators, <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span>, are given by <span class="math display">\[\widehat{\beta}_0 = \overline{Y} - \widehat{\beta}_1\overline{X} \quad\text{and}\quad \widehat{\beta}_1 = \frac{\sum_{i=1}^n (X_i - \overline{X})(Y_i - \overline{Y})}{\sum_{i=1}^n (X_i - \overline{X})^2}.\]</span> Note that the estimator for <span class="math inline">\(\widehat{\beta}_1\)</span> can be viewed as taking the <em>sample covariance</em> between <span class="math inline">\(x_i\)</span> and <span class="math inline">\(y_i\)</span>, divided by the <em>sample variance</em> of <span class="math inline">\(x\)</span>. Namely, the sample covariance is <span class="math display">\[S_{XY} = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X})(Y_i - \overline{Y}) \implies \widehat{\beta}_1 = \frac{S_{XY}}{S_{XX}}.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="math inline">\(\int\)</span>: The Least Squares Derivation for the Simple Linear Regression
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In order to derive the least squares estimator for the simple linear regression, we require the use of multivariate differential calculus. Specifically, if we wish to find the parameters that minimize <span class="math inline">\(\sum_{i=1}^n e_i^2\)</span>, then we can proceed by first solving for the partial derivatives of this quantity, with respect to the parameters of interest, and then jointly solving for these equations equal to <span class="math inline">\(0\)</span>. This gives <span class="math display">\[\begin{align*}
+\frac{\partial}{\partial\widehat{\beta}_0}\sum_{i=1}^n e_i^2 &amp;= \sum_{i=1}^n \frac{\partial}{\partial\widehat{\beta}_0} (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i)^2 \\
+&amp;= -2\sum_{i=1}^n (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i) \\
+\frac{\partial}{\partial\widehat{\beta}_1}\sum_{i=1}^n e_i^2 &amp;= \sum_{i=1}^n \frac{\partial}{\partial\widehat{\beta}_1} (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i)^2 \\
+&amp;= -2\sum_{i=1}^n (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i)x_i.
+\end{align*}\]</span> Next, we need to jointly set these two quantities equal to <span class="math inline">\(0\)</span>, solving for the parameters. Rearranging the first gives <span class="math display">\[\begin{align*}
+0 &amp;= -2\sum_{i=1}^n y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i \\
+0 &amp;= \sum_{i=1}^n y_i - n\widehat{\beta}_0 - \widehat{\beta}_1\sum_{i=1}^n x_i \\
+\widehat{\beta}_0 &amp;= \frac{1}{n}\sum_{i=1}^n y_i - \widehat{\beta}_1\frac{1}{n}\sum_{i=1}^n x_i \\
+\widehat{\beta}_0 &amp;= \overline{y} - \widehat{\beta}_1\overline{x}.
+\end{align*}\]</span> The same general procedure can be applied to the second expression, giving <span class="math display">\[\begin{align*}
+0 &amp;= -2\sum_{i=1}^n (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i)x_i \\
+&amp;= \sum_{i=1}^n (y_i - \overline{y} - \widehat{\beta}_1\overline{x} - \widehat{\beta}_1x_i)x_i \\
+&amp;= \sum_{i=1}^n (y_i - \overline{y})x_i - \widehat{\beta}_1(x_i - \overline{x})x_i.
+\end{align*}\]</span> Note that <span class="math inline">\(\sum_{i=1}^n (x_i - \overline{x}) = \sum_{i=1}^n (y_i - \overline{y})= 0\)</span>, and so we can subtract off <span class="math inline">\(\sum_{i=1}^n \overline{x}(y_i - \overline{y})\)</span> and <span class="math inline">\(\sum_{i=1}^n \widehat{\beta}_1(x_i - \overline{x})\overline{x}\)</span>, and not change the overall expression. This gives the required result, <span class="math display">\[\begin{align*}
+0 &amp;= \sum_{i=1}^n (y_i - \overline{y})(x_i - \overline{x}) - \widehat{\beta}_1(x_i - \overline{x})(x_i - \overline{x}) \\
+\widehat{\beta}_1 &amp;= \frac{\sum_{i=1}^n (y_i - \overline{y})(x_i - \overline{x})}{\sum_{i=1}^n (x_i - \overline{x})^2}.
+\end{align*}\]</span></p>
+</div>
+</div>
+</div>
+<p>The line of best fit, in the simple linear regression, then depends on only the sample means of both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, as well as on the sample variance of <span class="math inline">\(x\)</span> and the sample covariance of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. From these quantities, we are able to derive the closed form estimators for the intercept and slope parameters, which in turn define the estimated regression line. The estimated regression is as such taken to be the best line in the sense that the sums of the squared residuals will be minimized among all possible linear relationships.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> With the estimated linear relationship found, we can turn towards considering interpretation and inference for the parameters and overall relationship.</p>
+</section>
+<section id="interpretation-and-inference-regarding-model-parameters" class="level3" data-number="17.2.4">
+<h3 data-number="17.2.4" class="anchored" data-anchor-id="interpretation-and-inference-regarding-model-parameters"><span class="header-section-number">17.2.4</span> Interpretation and Inference Regarding Model Parameters</h3>
+<p>In the deterministic linear relationship, <span class="math inline">\(y = mx + b\)</span>, <span class="math inline">\(b\)</span> was interpreted as the <span class="math inline">\(y\)</span>-intercept, which is to say the value of <span class="math inline">\(y\)</span> when <span class="math inline">\(x=0\)</span>, and <span class="math inline">\(m\)</span> was interpreted as the slope, which is to say the change in <span class="math inline">\(y\)</span> for a <span class="math inline">\(1\)</span> unit change in <span class="math inline">\(x\)</span>. These interpretations carry over to the <em>coefficients</em> in the linear regression model. The key distinction is that in the deterministic relationship these are exact. For the linear regression model we must remember that <span class="math inline">\(\beta_0 + \beta_1 x\)</span> is a model for the <strong>mean</strong> of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X=x\)</span>. That is, our interpretations will not center on the values of <span class="math inline">\(Y\)</span> specifically, but rather on the average values of <span class="math inline">\(Y\)</span>.</p>
+<p>To understand the interpretation of the parameters, we can consider separate points that isolate the parameters themselves. First, consider what happens for a data point that has <span class="math inline">\(X = 0\)</span>. In this case we find, <span class="math display">\[E[Y|X=0] = \beta_0 + \beta_1(0) = \beta_0.\]</span> Thus, the expected value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X\)</span> is <span class="math inline">\(0\)</span> is exactly equal to the intercept, <span class="math inline">\(\beta_0\)</span>. As a result, in order to interpret <span class="math inline">\(\beta_0\)</span>, we can suggest that it is the mean of the outcome when the predictor is <span class="math inline">\(0\)</span>. Next, consider two different points. If we first take <span class="math inline">\(X=x\)</span>, and then consider a second point with <span class="math inline">\(X=x+1\)</span>, then we can take the difference between these two quantities. This gives <span class="math display">\[\begin{align*}
+E[Y|X=x] &amp;= \beta_0 + \beta_1x \\
+E[Y|X=x+1] &amp;= \beta_0 + \beta_1(x + 1) \\
+&amp;= \beta_0 + \beta_1x + \beta_1 \\
+E[Y|X=x+1] - E[Y|X=x] &amp;= \beta_0 + \beta_1x + \beta_1 - (\beta_0 + \beta_1 x) \\
+&amp;= \beta_1.
+\end{align*}\]</span> Thus, <span class="math inline">\(\beta_1\)</span> represents the change in the expected outcome when <span class="math inline">\(X\)</span> increases by a single unit. In practice, we will not have the values of the parameters exactly, and so our interpretation will rely on estimates of these parameters. This means that we interpret <span class="math inline">\(\widehat{\beta}_0\)</span> as an estimate of the average value of the outcome when the predictor is <span class="math inline">\(0\)</span>, and we interpret <span class="math inline">\(\widehat{\beta}_1\)</span> as an estimate of the average change in the outcome for a <span class="math inline">\(1\)</span> unit increase in the predictor.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretations of the Parameters in a Simple Linear Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider a simple linear regression model, specified by <span class="math display">\[E[Y|X=x] = \beta_0 + \beta_1 x.\]</span></p>
+<ol type="a">
+<li>In this model, <span class="math inline">\(\beta_0\)</span> corresponds to the average outcome when the predictor is <span class="math inline">\(0\)</span>.</li>
+<li>In this model, <span class="math inline">\(\beta_1\)</span> corresponds to the average change in the outcome when the predictor increases by <span class="math inline">\(1\)</span>.</li>
+</ol>
+<p>The estimates for these parameters, <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span>, correspond to estimates of these quantities.</p>
+</div>
+</div>
+<p>It is important to note that whether the parameters have interpretations that are substantively interesting depends on the specific context. For instance, it may be the case that <span class="math inline">\(X=0\)</span> is not a meaningful quantity, depending on what <span class="math inline">\(X\)</span> measures. Consider if the regression model is predicting some health outcome using blood pressure as the predictor, <span class="math inline">\(X\)</span>. In this case, it is not particularly meaningful to predict the health outcome if <span class="math inline">\(X=0\)</span>. There are other cases where the prediction may be reasonably assumed to equal <span class="math inline">\(0\)</span>, but that this is not an interesting case. Consider, for instance, if <span class="math inline">\(Y\)</span> represents the revenue that a company will earn based on the amount that they spend on advertising (<span class="math inline">\(X\)</span>). It is unlikely that the company will spend <span class="math inline">\(0\)</span> on advertising in any situation, and as a result, the intercept becomes of little interest. Similar considerations can occur for the slope parameter as well. In particular, if a <span class="math inline">\(1\)</span> unit change in the predictor is unrealistic or uninteresting, then the slope parameter does not have a particularly interesting meaning. Consider, for instance, any regression model that relies on a proportion as a predictor. In this case, <span class="math inline">\(X \in [0,1]\)</span>, and so most changes of <span class="math inline">\(X\)</span> will not be of size <span class="math inline">\(1\)</span>. Alternatively, consider a regression model that relies on annual income as a predictor, measured in dollars. In this case, a <span class="math inline">\(\$1\)</span> change in income is not likely a sizable enough effect to care deeply about.</p>
+<p>To avoid concerns with the scale of the predictor being off, either because <span class="math inline">\(1\)</span> unit change is too large or too small, we can adjust the linear regression model in one of two ways. First, we can transform the predictors so that they are measured on a scale where a <span class="math inline">\(1\)</span> unit change <em>is</em> meaningful. This relies on multiplying or dividing all of the observations of <span class="math inline">\(X\)</span> by some constant. Consider, for instance, the proportions example. Measured as a value between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>, a <span class="math inline">\(1\)</span> unit change is unreasonable. However, if we multiply all of the proportions by <span class="math inline">\(100\)</span>, then our predictors are measured as percentages instead. In this case, a <span class="math inline">\(1\)</span> unit change corresponds to a <span class="math inline">\(1\%\)</span> change, which is more likely to be relevant. Similarly, in the income example, we could perhaps measure income in thousands of dollars. To do so, we would divide <span class="math inline">\(X\)</span> by <span class="math inline">\(1000\)</span>. Then, a <span class="math inline">\(1\)</span> unit change in the predictor corresponds to a <span class="math inline">\(\$1000\)</span> change in income, which is more likely to be relevant. If we scale the predictors up or down, the estimated parameter values for the intercept will not change. Moreover, the slope value will be scaled by the same constant, in the opposite way. If we multiply <span class="math inline">\(X\)</span> by <span class="math inline">\(100\)</span>, the newly estimated <span class="math inline">\(\beta_1\)</span> will be <span class="math display">\[\widehat{\beta}_1^\text{new} = \dfrac{\widehat{\beta}_1}{100}.\]</span> Similarly, if we divide <span class="math inline">\(X\)</span> by <span class="math inline">\(1000\)</span>, then the newly estimated <span class="math inline">\(\beta_1\)</span> will be <span class="math inline">\(\widehat{\beta}_1^\text{new} = 1000\times\widehat{\beta}_1\)</span>. As a result, we need not actually refit the regression model with the transformed predictors. Instead, we can scale up or down the estimate to operate on a scale that is more relevant.</p>
+<p>A mathematically equivalent, but conceptually distinct, method of reinterpreting the slope coefficient returns to the initial method used to determine the meaning of the parameters. Recall that we considered two separate data points, one with <span class="math inline">\(X=x\)</span> and one with <span class="math inline">\(X=x+1\)</span>. If a difference of <span class="math inline">\(1\)</span> is not meaningful, then we could have instead considered a difference of <span class="math inline">\(\delta\)</span>, for some <span class="math inline">\(\delta\)</span> that is meaningful. For instance, in the proportion example perhaps <span class="math inline">\(\delta = 0.01\)</span>, and in the income example perhaps <span class="math inline">\(\delta = 1000\)</span>. Then, using the same strategy as before, <span class="math display">\[\begin{align*}
+E[Y|X=x] &amp;= \beta_0 + \beta_1x \\
+E[Y|X=x+\delta] &amp;= \beta_0 + \beta_1(x + \delta) \\
+&amp;= \beta_0 + \beta_1x + \delta\beta_1 \\
+E[Y|X=x+1] - E[Y|X=x] &amp;= \beta_0 + \beta_1x + \delta\beta_1 - (\beta_0 + \beta_1 x) \\
+&amp;= \delta\beta_1.
+\end{align*}\]</span> As a result, we can say that <span class="math inline">\(\delta\beta_1\)</span> is the expected change in the outcome for a <span class="math inline">\(\delta\)</span> unit increase in the predictor. This results in the same scaling as before, but in certain settings, it may be more clear to envision.</p>
+<p>The interpretations of the parameter estimates does not explicitly account for the uncertainty in estimation. If we had access to the true parameter values, <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, we would be able to directly interpret the values as outlined. Unfortunately, the estimators are subject to the same uncertainty that all estimators are. As such, it is important to consider the sampling distribution of the parameters, and use this to quantify our uncertainty in the values of the parameters.</p>
+<p>Without assuming normality, we can derive the expected value and variance of the two estimators. Importantly, both <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> are <strong>unbiased</strong> estimators of the truth, meaning <span class="math display">\[E[\widehat{\beta}_0] = \beta_0 \quad\text{ and }\quad E[\widehat{\beta}_1] = \beta_1.\]</span> For the variances, each of them depends on the overarching variance of the error terms, <span class="math inline">\(\sigma^2\)</span>. Specifically, <span class="math display">\[\text{var}(\widehat{\beta}_0) = \sigma^2\left(\frac{\sum_{i=1}^nX_i^2}{n\sum_{i=1}^n(X_i - \overline{X})^2}\right) \quad\text{and}\quad \text{var}(\widehat{\beta}_1) = \sigma^2\left(\frac{1}{\sum_{i=1}^n(X_i - \overline{X})^2}\right).\]</span> Under the assumption that the errors are normal<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> then regardless of the sample size, the sampling distribution of the parameters will also be normal. In the case of a <strong>large sample</strong> then the sampling distributions will be approximately normal, regardless of the distribution of the errors. These sampling distributions can be used to construct confidence intervals for the parameters, or to conduct hypothesis tests regarding their values.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Sampling Distribution for Simple Linear Regression Estimators
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Assuming the linear model for a simple linear regression holds, and that the error variances are homogenous with a variance of <span class="math inline">\(\sigma^2\)</span>, then so long as the sample size (<span class="math inline">\(n\)</span>) is large, or that the errors can be assumed to be normally distributed, both the estimators for the intercept and slope parameters will have normal sampling distributions. Specifically, <span class="math display">\[\begin{align*}
+\widehat{\beta}_0 &amp;\sim N\left(\beta_0, \ \sigma^2\left(\frac{\sum_{i=1}^n X_i^2}{n\sum_{i=1}^n (X_i - \overline{X})^2}\right)\right); \ \text{and}\\
+\widehat{\beta}_1 &amp;\sim N\left(\beta_1, \ \sigma^2\left(\frac{1}{\sum_{i=1}^n (X_i - \overline{X})^2}\right)\right). \\
+\end{align*}\]</span></p>
+</div>
+</div>
+<p>Because the parameters are normally distributed, statistical inference from the normal distribution applies. Specifically, both confidence intervals and hypothesis tests can be conducted using a normal distribution, when <span class="math inline">\(\sigma^2\)</span> is assumed to be known, and using a <span class="math inline">\(t\)</span> distribution if <span class="math inline">\(\sigma^2\)</span> is replace by its estimated value. Specifically, if we denote the standard errors of <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> as <span class="math inline">\(SE(\widehat{\beta}_0)\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span>,<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> then a <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval is given by <span class="math display">\[\widehat{\beta}_j \pm Z_{\alpha/2}SE(\widehat{\beta}_j),\]</span> if <span class="math inline">\(\sigma^2\)</span> is known, and otherwise, by <span class="math display">\[\widehat{\beta}_j \pm t_{n-2,\alpha/2}\widehat{SE}(\widehat{\beta}_j).\]</span> These results also directly permit the use of <span class="math inline">\(Z\)</span>-tests or <span class="math inline">\(t\)</span>-tests for the values of the parameters. Notably, if the null hypothesis is <span class="math inline">\(H_0: \beta_j = c\)</span>, then <span class="math display">\[\frac{\widehat{\beta}_j - c}{SE(\widehat{\beta}_j)} \stackrel{H_0}{\sim} N(0, 1) \quad\text{and}\quad \frac{\widehat{\beta}_j - c}{\widehat{SE}(\widehat{\beta}_j)} \stackrel{H_0}{\sim} t_{n-2}.\]</span></p>
+<p>These results are powerful as they permit the entirety of our study on <span class="math inline">\(t\)</span>-tests and <span class="math inline">\(Z\)</span>-tests, as well as on the relevant confidence intervals, to apply directly to the regression parameters. Conceptually, it is no different to find the confidence interval for the slope (or intercept) in a regression, as it is to find the confidence interval for a sample mean. Similarly, the test procedure for the regression procedures is equivalent, once the parameters have been estimated, as it is for the sample mean. When considering hypothesis tests we will typically focus on tests of the slope parameter, rather than tests of the intercept. Moreover, it is most typical to see tests of the null hypothesis <span class="math inline">\(H_0: \beta_1 = 0\)</span>, versus the two-sided alternative. If <span class="math inline">\(\beta_1 = 0\)</span>, then the conclusion that we would draw is that there is no relationship<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> between the outcome and the predictor. This is typically interpreted as saying that the predictor does not have an effect on the outcome, though, we must be cautious with such language as a hypothesis test in a regression does not <em>necessarily</em> constitute an assessment of causality.</p>
+<p>In the case of an unknown error variance<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> then there are two important considerations to make. The first is that the sampling distribution is given by a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-2\)</span> degrees of freedom. This differs from the case of the sample mean, where we considered a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom. The second is that, in order to estimate the standard error of either estimator, we require an estimator for the variance of the error terms, <span class="math inline">\(\widehat{\sigma}^2\)</span>. In order to estimate the error variance, we turn towards considering a breakdown of the sources of errors in the regression model as a whole.</p>
+</section>
+</section>
+<section id="sources-of-variation-in-simple-linear-regression" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="sources-of-variation-in-simple-linear-regression"><span class="header-section-number">17.3</span> Sources of Variation in Simple Linear Regression</h2>
+<p>One way to view a regression model is as an attempt to explain the variability in the outcome variable using the predictor. Since <span class="math inline">\(Y\)</span> is a random quantity, we know that there is inherent variability in <span class="math inline">\(Y\)</span>, say, captured through its variance. In the sample that we obtain, we have estimated this variability using the sample variance before. An alternative method of representing the variability in the sample is to use the total variation, <span class="math display">\[\text{SST} = \sum_{i=1}^n (y_i - \overline{y})^2.\]</span> This is the same as the sample variance, except we are not scaling amount of variability by <span class="math inline">\(n-1\)</span>. We refer to this as the <strong>sum of squares total</strong> or the <strong>total sum of squares</strong>, and it represents the total variability in the outcome within our sample.</p>
+<div id="def-SST" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.8 (Sum of Squares Total (SST))</strong></span> The <strong>total sum of squares</strong> is the sum of all squared differences between the observations of the outcome, and the overall mean of the outcome, within a sample. It measures the complete variability within a sample, and is calculated as <span class="math display">\[\text{SST} = \sum_{i=1}^n (y_i - \overline{y})^2.\]</span></p>
+</div>
+<p>The goal with the regression model is then to explain as much variability in the outcome as is possible, using the explanatory factor. Assuming that the linear regression model is the correct expression of the conditional mean then this will explain some portion of the differences between various observations of <span class="math inline">\(Y\)</span>. That is, if we take two observations in our data, <span class="math inline">\((x_i, y_i)\)</span> and <span class="math inline">\((x_j, y_j)\)</span>, then we expect that <span class="math inline">\(y_i \neq y_j\)</span>. In part this occurs if <span class="math inline">\(x_i \neq x_j\)</span>, since <span class="math inline">\(E[Y|X=x] = \beta_0 + \beta_1x\)</span>, and so there is an expected difference of <span class="math inline">\(\beta_1(x_i - x_j)\)</span>. These differences can be <em>explained</em> by the regression model. Beyond these differences, however, there is likely to be further differences between the observations. These come from the errors in the model.</p>
+<p>Consider, <span class="math inline">\(y_i - y_j\)</span>, if we do not take expectations, this will give <span class="math inline">\(\beta_1(x_i - x_j) + (\epsilon_i - \epsilon_j)\)</span>. Thus, even if <span class="math inline">\(x_i = x_j\)</span>, we will likely not observe <span class="math inline">\(y_i = y_j\)</span> because of the error terms. The variability owing to the errors cannot be explained by the model, since the errors are purely random and not dependent on the explanatory factors. Recall that we defined the residuals to be <span class="math inline">\(e_i = y_i - \widehat{y}_i\)</span>. Notice that, if <span class="math inline">\(\widehat{\beta}_0 = \beta_0\)</span> and <span class="math inline">\(\widehat{\beta}_1 = \beta_1\)</span>, we have that <span class="math inline">\(e_i = \epsilon_i\)</span>. In a sense then, the residuals can then be seen as estimates of the errors. As a result, if we take the sum of squared residuals, this gives an estimate of the total variation from the errors, resulting in <span class="math display">\[\text{SSE} = \sum_{i=1}^n e_i^2.\]</span> This is referred to as either the <strong>residual sum of squares</strong>, or the <strong>error sum of squares</strong>, or sometimes the <strong>sum of squared errors</strong>.</p>
+<div id="def-SSE" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.9 (Residual Sum of Squares (Sum of Squared Errors; SSE))</strong></span> The <strong>residual sum of squares</strong> is a measure of the amount of variability in the outcomes of a linear regression model that is <strong>not</strong> explained by the model itself. That is, it is the residual variability, after accounting for the explanatory factors. The residual sum of squares of computed as <span class="math display">\[\text{SSE} = \sum_{i=1}^n e_i^2.\]</span></p>
+</div>
+<p>If the total sum of squares, <span class="math inline">\(\text{SST}\)</span>, gives the complete variability in the outcome, and the residual sum of squares, <span class="math inline">\(\text{SSE}\)</span>, gives the variability in the outcome that is left unexplained by teh model, then the difference between these two quantities gives the amount of variability that <em>is</em> explained by the model. That is, <span class="math inline">\(\text{SSR} = \text{SST} - \text{SSE}\)</span>, where <span class="math inline">\(\text{SSR}\)</span> refers to the <strong>regression sum of squares</strong>. The regression sum of squares gives a measure of the explainable component of the variability in the outcome.</p>
+<div id="def-SSR" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.10 (Regression Sum of Squares (SSR))</strong></span> The <strong>regression sum of squares</strong> is the amount of variability in the outcome that can be explained by the regression model. This captures how much variability is described by the explanatory factors. The total variability is made up of the regression sum of squares and the residual sum of squares, so that <span class="math inline">\(\text{SST} = \text{SSE} + \text{SSR}\)</span>, and this relationship can be used to write <span class="math display">\[\text{SSR} = \text{SST} - \text{SSE}.\]</span></p>
+</div>
+<p>With the framing of regression as breaking down the source of variation, we are able to both estimate variance components that are of interest for inferential purposes, as well as diagnose how well the model seems to fit or explain the our observations. In order to conduct statistical inference in the event of an unknown error variance, we required an estimator for the variance of the error terms, denoted <span class="math inline">\(\sigma^2\)</span>. Noting that the residual sum of squares approximates the total variability within the error terms, we can scale this to give an estimate of the error variance. Namely, we take <span class="math display">\[\widehat{\sigma}^2 = \text{MSE} = \frac{SSE}{n - 2}.\]</span> Here, <span class="math inline">\(\text{MSE}\)</span> refers to the <strong>mean squared errors</strong>.</p>
+<div id="def-MSE" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.11 (Mean Squared Error (MSE))</strong></span> The <strong>mean squared error</strong> refers to an estimate of the residuals of the error terms. This estimate is derived as a scaled version of the sum of squared errors, where the <span class="math inline">\(\text{SSE}\)</span> is scaled by the total sample size less the number of estimated parameters in the model. In the case of a simple linear regression model there are <span class="math inline">\(2\)</span> estimated parameters and so <span class="math display">\[\text{MSE} = \frac{\text{SSE}}{n-2}.\]</span></p>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Sampling Distribution for Simple Linear Regression Estimators (Estimated Variance)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Assuming the linear model for a simple linear regression holds, and that the error variances are homogenous with a variance of <span class="math inline">\(\sigma^2\)</span> that is unknown, then so long as the sample size (<span class="math inline">\(n\)</span>) is large, or that the errors can be assumed to be normally distributed, both the estimators for the intercept and slope parameters can be scaled by the mean squared error to result in a <span class="math inline">\(t\)</span> distribution. Specifically, <span class="math display">\[\begin{align*}
+\frac{\widehat{\beta}_0 - \beta_0}{\sqrt{\text{MSE}\left.\sum_{i=1}^n X_i^2\right/\left(n\sum_{i=1}^n (X_i - \overline{X})^2\right)}} &amp;\sim t_{n-2}; \ \text{and}\\
+\frac{\widehat{\beta}_1 - \beta_1}{\sqrt{\text{MSE}\left/\sum_{i=1}^n (X_i - \overline{X})^2\right.}} &amp;\sim t_{n-2}. \\
+\end{align*}\]</span></p>
+</div>
+</div>
+<p>The breakdown of sources of variance can also provide a method of understanding the overall quality of the regression model. One common technique for doing this is through the use of the <strong>coefficient of determination</strong> or the <span class="math inline">\(R^2\)</span> value. The coefficient of determination gives a measure of the proportion of variation that is explained by the regression model, with the idea that generally speaking, it is preferable when a model explains more variation than less.</p>
+<div id="def-coefficient-of-determination" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.12 (Coefficient of Determination (<span class="math inline">\(R^2\)</span>))</strong></span> The <strong>coefficient of determination</strong> is a measure of the proportion of the variation in the outcome that is attributed to the regression sum of squares. This measure is typically denoted <span class="math inline">\(R^2\)</span>, such that <span class="math display">\[R^2 = \frac{\text{SSR}}{\text{SST}}.\]</span> Note that <span class="math inline">\(0 \leq R^2 \leq 1\)</span>, and as <span class="math inline">\(R^2\)</span> nears <span class="math inline">\(1\)</span>, the model explains more of the variability in the outcomes.</p>
+</div>
+<p>The <span class="math inline">\(R^2\)</span> is an incredibly popular measure to be reported alongside the results of a linear regression model. The prominence makes it important to understand. With that said, the <span class="math inline">\(R^2\)</span> is often misused or misinterpreted, and as a result, great care should be taken when encountering the <span class="math inline">\(R^2\)</span> values. What follows are some frequent misinterpretations or mistakes regarding the <span class="math inline">\(R^2\)</span> value, and an attempt to illustrate why these are mistake.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<ol type="1">
+<li><strong><span class="math inline">\(R^2\)</span> is often used a measure of goodness of fit</strong>. It is not. Note that goodness of fit refers to a measure of how well the model tracks with reality. We know that in practice the mean of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X=x\)</span> is unlikely to be precisely <span class="math inline">\(\beta_0 + \beta_1x\)</span>, however, we hope that it is close. Measures of goodness of fit tell us whether the model appears to fit or not. Many individuals use <span class="math inline">\(R^2\)</span> as a measure of the goodness of fit, however, this is inappropriate. The <span class="math inline">\(R^2\)</span> value can be made to be arbitrarily small for a model that is exactly correct, for instance, by increasing the variability of the error terms. On the flip side, there is no upper bound on how high the <span class="math inline">\(R^2\)</span> value can be when the model is entirely wrong – it can be arbitrarily close to <span class="math inline">\(1\)</span>.</li>
+<li><strong>The <span class="math inline">\(R^2\)</span> is often used to compare across different datasets.</strong> It cannot be. The <span class="math inline">\(R^2\)</span> is a data-dependent measure. If you take two different sources of data and compare regression models fit on each of them, the <span class="math inline">\(R^2\)</span> values are entirely incomparable. If you are comparing two different models fit to the same data, then in this case, <span class="math inline">\(R^2\)</span> <em>can</em> be compared, however, any conclusions could also be derived at by comparing (say) the <span class="math inline">\(\text{MSE}\)</span> (a more useful measure).</li>
+<li><strong>The <span class="math inline">\(R^2\)</span> value is often thought to describe causality</strong>. It does not. The phrasing “the fraction of variance explained” is a misleading phrase at best. When this language is used, it is meant to say that the <span class="math inline">\(R^2\)</span> gives the proportion of the total variation that is made up by the variation in the regression model. This is not to say that a high <span class="math inline">\(R^2\)</span> means that the explanatory factor is a good explanatory factor of the outcome, nor to say that there is some causal connection between these components. In fact, if we fit two regression models, one where <span class="math inline">\(Y\)</span> is treated as the outcome and <span class="math inline">\(X\)</span> as the explanatory factor, and then a second where the roles are reversed (<span class="math inline">\(X\)</span> is treated as the outcome and <span class="math inline">\(Y\)</span> the explanatory variable), the <span class="math inline">\(R^2\)</span> in each of these models will be exactly equivalent. As such, <span class="math inline">\(R^2\)</span> can certainly not capture any “explanation” in a scientific sense of the word.</li>
+</ol>
+<p>The <span class="math inline">\(R^2\)</span> will not typically be a particularly useful quantity to report. However, its prominence is not likely to be minimized at any point in the near future. Correspondingly, it is important to understand what <span class="math inline">\(R^2\)</span> is, and also critically, what it is not.</p>
+</section>
+<section id="prediction-using-linear-regression" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="prediction-using-linear-regression"><span class="header-section-number">17.4</span> Prediction using Linear Regression</h2>
+<p>To define the residuals, we introduced <span class="math inline">\(\widehat{y} = \widehat{\beta}_0 + \widehat{\beta}_1x\)</span>. This was thought of as the <strong>estimated</strong> expected value of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X = x\)</span>. Expressed in this way, this is an estimation procedure like any other that we have seen. That is, we are estimating the parameter of a population distribution<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> using observed data. However, the notation is suggestive of an alternative perspective. Notably, suppose that beyond our sample we make a new observation with <span class="math inline">\(X=x\)</span>, but we do not observe the corresponding value of <span class="math inline">\(Y\)</span>. In this case, we can use the same relationship, <span class="math inline">\(\widehat{\beta}_0 + \widehat{\beta}_1x\)</span> to make a guess as to the unobserved value for the outcome. Notice that this framing of the estimation problem is distinct from estimation problems we have previously seen. In this case, we are attempting to use data to guess the value of a variable outside of the data that we have collected. When we use estimation in this context, we no longer refer to it as estimation but instead as <strong>prediction</strong>.</p>
+<div id="def-prediction" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.13 (Prediction)</strong></span> In statistics, <strong>prediction</strong> refers to the process of using data to guess the value of a random quantity that was not observed in the sample. The specific values are typically informed through observed data. The numeric values themselves are referred to as <em>predictions</em>, while the functions that generate the predictions can be referred to as <em>predictors</em>.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
+</div>
+<p>One of the most useful features of linear regression is the ability to generate predictions from the estimated regression function. The process of prediction is a very important application of statistics. Critically, with prediction, we are able to make guesses beyond the samples that we have actually recorded. This allows data in the present to inform our understanding of the future, helping to make decisions or guide action. With prediction we must be cautious, however, as we are relying on the past to be a good representation of the future. If the patterns from the past fail to hold moving forward then prediction will be invalid. Moreover, if the value of the dependent variable is far from values that were actually seen in the data, there is no way to assess the quality of prediction. These types of predictions are known as <strong>extrapolations</strong>.</p>
+<div id="def-extrapolation" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.14 (Extrapolation)</strong></span> When prediction occurs beyond the scope of the model, this is known as <strong>extrapolation</strong>. Specifically, extrapolation refers to predictions that are made for values of the explanatory factors that were not observed, or which are far from values that were observed, in the initial data used to fit the model. Extrapolation is typically ill-advised, as its use cannot be supported via statistical theory.</p>
+</div>
+<p>The concern with extrapolation is that there is no way to determine whether the pattern over the observed range of the explanatory factors will continue beyond the current range. It is possible that what appears to be a linear relationship over the observed data ends up looking nonlinear over a wider range. Alternatively, perhaps there is a value of the explanatory variable after which a fundamentally new pattern emerges. Extrapolation relies on the thought that the observed trends will continue indefinitely, and this assumption tends to be fairly strong. In order to responsibly extrapolate beyond the scope of a model, the extrapolation should be supported by the subject-matter theory. If there are good theoretical reasons to believe that the same pattern will continue, or that the relationship will remain linear over the entire range of the explanatory factors, then extrapolation is better supported. Critically, however, these arguments do not come from statistical observation and instead rely on subject-matter knowledge.</p>
+<p>As long as the use of prediction is supported, then we can view the regression function as providing the best guess as to the value of new, unobserved data. There is uncertainty in the predictions that we make. Just as with estimation, we should never expect the predicted values to exactly equal the unobserved values. Instead, we hope that we are close to the truth. With estimation, when faced with the reality of never exactly getting the value correct, we supplemented point estimation with interval estimation. The same general concept applies for prediction. We can find <strong>prediction intervals</strong> that give a range of values that are, in some sense, equally well-supported by the observed data.</p>
+<div id="def-prediction-interval" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 17.15 (Prediction Interval)</strong></span> A <strong>prediction interval</strong> is an interval estimator calibrated to contain the value of an unobserved response, based on observed explanatory factors, with a set probability. The prediction interval supports the use of (point) prediction, giving a range of plausible values for the unobserved response.</p>
+</div>
+<p>To form the prediction interval for simple linear regression, we need to consider the variability of the prediction itself. Namely, if we take <span class="math display">\[\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1X,\]</span> for a set value of <span class="math inline">\(X\)</span>, then notice that the variance of this quantity is given by <span class="math display">\[\begin{align*}
+    \text{var}\left[\widehat{\beta}_0 + X\widehat{\beta}_1\right] &amp;= \text{var}(\widehat{\beta}_0) + X^2\text{var}(\widehat{\beta}_1)) + 2X\text{cov}(\widehat{\beta}_0, \widehat{\beta}_1) \\
+    &amp;= \frac{\sigma^2\sum_{i=1}^nX_i^2}{n\sum_{i=1}^n(X_i - \overline{X})^2} + \frac{X^2\sigma^2}{\sum_{i=1}^n(X_i - \overline{X})^2} - \frac{2\sigma^2X\overline{X}}{\sum_{i=1}^n(X_i - \overline{X})^2} \\
+    &amp;= \sigma^2\left(\frac{1}{n} + \frac{(X - \overline{X})^2}{\sum_{i=1}^n (X_i - \overline{X})^2}\right).
+\end{align*}\]</span> If we wished to form confidence intervals around the estimated conditional mean of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X=x\)</span>, we could use the square root of this quantity as the variance, either using the true variance when known<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> or else using the MSE as an estimate of the variance<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>. For the prediction interval, however, we are not looking to quantify the mean directly, but rather the actual observed outcome. Recall that <span class="math inline">\(Y = E[Y|X=x] + \epsilon\)</span>, where <span class="math inline">\(\epsilon\)</span> is an error term, with variance given by <span class="math inline">\(\sigma^2\)</span>. As a result, the actual outcome should fall near <span class="math inline">\(E[Y|X=x]\)</span>, but will be perturbed by a noise term, <span class="math inline">\(\epsilon\)</span>, with variance <span class="math inline">\(\sigma^2\)</span>. Thus, to capture the variance of the predicted outcome, we ought to add an extra <span class="math inline">\(\sigma^2\)</span> to the variability, <span class="math display">\[\sigma^2 + \sigma^2\left(\frac{1}{n} + \frac{(X - \overline{X})^2}{\sum_{i=1}^n (X_i - \overline{X})^2}\right) = \sigma^2\left(1 + \frac{1}{n} + \frac{(X - \overline{X})^2}{\sum_{i=1}^n (X_i - \overline{X})^2}\right).\]</span></p>
+<p>The relevant sampling distribution will still be normal, supposing that <span class="math inline">\(\sigma^2\)</span> is known, or else a <span class="math inline">\(t_{n-2}\)</span> if the MSE is used as an estimate for <span class="math inline">\(\sigma^2\)</span>.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Prediction Interval for an Estimated Outcome
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When estimating the value of an outcome, <span class="math inline">\(y\)</span>, based on an observed predictor, <span class="math inline">\(x\)</span>, the <span class="math inline">\(100(1-\alpha)\%\)</span> prediction interval, taking <span class="math inline">\(\widehat{y} = \widehat{\beta}_0 + \widehat{\beta}_1x\)</span>, is given by <span class="math display">\[\widehat{y} \pm t_{n-2, \alpha/2}\sqrt{\text{MSE}\left(1 + \frac{1}{n} + \frac{(x - \overline{X})^2}{\sum_{i=1}^n (X_i - \overline{X})^2}\right)}.\]</span></p>
+</div>
+</div>
+</section>
+<section id="beyond-simple-linear-regression" class="level2" data-number="17.5">
+<h2 data-number="17.5" class="anchored" data-anchor-id="beyond-simple-linear-regression"><span class="header-section-number">17.5</span> Beyond Simple Linear Regression</h2>
+<p>Simple linear regression is characterized by the use of a single predictor to explain the outcome. The framework of linear regression, however, is far more broad. The most natural extension to simple linear regression is that of multiple linear regression, where in place of a single predictor, multiple predictors are used. In this setting the relationship between the outcome and the predictors remains linear, however, each predictor has its own slope coefficient. For instance, we may write <span class="math display">\[E[Y|X_1=x_1, X_2=x_2, X_3=x_3] = \beta_0 + \beta_1x_1 + \beta_2x_2 + \beta_3x_3,\]</span> and so forth. The same estimation procedure<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> can apply to give estimates of the various parameters, and the same types of distributional results apply for inference, giving both confidence and prediction intervals. Statistical software will readily estimate regression lines with large numbers of predictors, and by including increasing numbers of explanatory factors, the model fit will correspondingly improve. The main difficulty with multiple regression, compared to simple linear regression, is that the parameters need to be interpreted with more care: by considering multiple factors at the same time, our interpretations also need to do so.</p>
+<p>Other extensions to the framework of regression modeling exist as well. For instance, there are <strong>generalized linear models</strong>, that can take outcome variables that are not continuous, and fit them using linear functions. This is particularly useful if the outcome is, for instance, a binary indicator<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> or count data.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> These generalized linear models require an expansion of the theory, but are based on many of the same underlying principles. Regression models can also move beyond linear functions of the predictors. There are nonlinear forms of regression that capture more complex relationships, whether the outcome is continuous or otherwise.</p>
+<p>Fundamentally, regression modelling specifies a model for the conditional mean of an outcome, given some number of predictors. This is a very general problem, and there has correspondingly been a tremendous amount of development of techniques for addressing this concern. Many procedures in statistics, and questions in science more broadly, can be formulated through a regression framework. For this reason, regression remains an incredibly powerful tool to make use of, for both inference and prediction. Simple linear regression is useful in certain contexts, however, it can also be viewed as an approachable first-step towards understanding the broader world of regression modelling.</p>
+</section>
+<section id="linear-regression-in-r" class="level2" data-number="17.6">
+<h2 data-number="17.6" class="anchored" data-anchor-id="linear-regression-in-r"><span class="header-section-number">17.6</span> Linear Regression in <code>R</code></h2>
+<p>Fortunately, <code>R</code> makes the computation of a linear regression – along with the testing of hypotheses surrounding the regression, straightforward to complete. The primary function of interest is the <code>lm</code> function, standing for a <strong>l</strong>inear <strong>m</strong>odel. The <code>lm</code> function can take in many different parameters, however, the primary argument that is required is the model formula. In R, a formula is a special arrangement of variables which define a particular mathematical relationship. For instance, we may write <code>lm(y ~ x)</code>. Here, <code>y ~ x</code> is the formula.</p>
+<p>To read this formula we consider the left-hand side (to the left of <code>~</code>) and the right-hand side (to the right of <code>~</code>) separately. The left-hand side specifies the dependent variable, or the outcome. In this case, we are saying that the variable <code>y</code> contains the dependent observations. On the right-hand side, we include any explanatory factors of interest, so in this case, there is a single predictor, <code>x</code>. If <code>R</code> is to be used beyond simple linear regression, we may write, for instance, <code>lm(y ~ x1 + x2 + x3)</code>, to fit a model where <code>y</code> is explained by <code>x1</code>, <code>x2</code>, and <code>x3</code>. Note that, by default, a formula in <code>R</code> will include an intercept. That is, we do not need to include an explicit term specifying to fit <span class="math inline">\(\beta_0\)</span>, as <code>R</code> will do this by default.</p>
+<p>The variables passed into the formula can be variables that exist in the environment broadly, or, they can be columns of a dataframe. If we have defined a dataframe with a column, <code>my_df$outcome</code> and another, <code>my_df$predictor</code> then the linear model can be fit using the call <code>lm(outcome ~ predictor, data = my_df)</code>. Here, the variables in the formula will be drawn from the dataframe passed in as the <code>data</code> argument, but otherwise they are read the same way. This is particularly useful as it enables us to collect and store data in one location, and then fit the regression model directly to these data.</p>
+<p>Once a regression model has been fit, the object itself contains a great deal of information. Most of this can be read via the <code>summary</code> function. This will output a thorough summary of the regression, including the coefficients, their standard errors, <span class="math inline">\(t\)</span>-tests of the hypotheses that they are actually equal to <span class="math inline">\(0\)</span>, as well as the mean squared error, degrees of freedom, and <span class="math inline">\(R^2\)</span> value (among other reported quantities). When it is only the estimated coefficients that are of interest, <code>coef</code> will return a named vector of the parameters in the model. Beyond <code>summary</code>, the <code>predict</code> function can be useful. The <code>predict</code> function takes in the fitted linear model, as well as the <code>newdata</code> and <code>interval</code> arguments. The <code>newdata</code> is a dataframe that has a column for each of the predictor variables used in the model (the outcome is not required). It will then use the fitted model to predict the outcome (or expected conditional mean) based on the input. The <code>interval</code> parameter is optional, and can be set to either <code>"prediction"</code> or <code>"confidence"</code>, in order to automatically compute a prediction or confidence interval around the predicted value. By default this will be at the <span class="math inline">\(95\%\)</span> level of confidence, but this can be controlled using the <code>level</code> argument.</p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `set.seed(31415) # Seed for Consistency
+
+# Generate some Data
+n <- 100
+X <- runif(n, 2, 10) # Predictors between 2 and 10
+Y <- 2 - 3 * X + rnorm(n) # Outcomes E[Y|X=x] = 2 - 3x
+
+# Since the variables are not in a dataframe, we can use
+# the more simple format
+linear.model1 <- lm(Y ~ X)
+
+# Consider the model summary
+summary(linear.model1)
+
+# Predict some new values of 'X'
+new_X <- data.frame(X = 2:15) 
+predict(linear.model1, newdata = new_X, interval = "prediction")
+
+# The iris dataframe is built into R and contains
+# information surrounding different measurements for
+# the growth of flowers. Specifically, it contains
+# information on their sepal length and width, their
+# petal length and width, and the species of flower.
+linear.model2 <- lm(Sepal.Length ~ Sepal.Width, data = iris)
+summary(linear.model2) 
+
+# Note that in R we can also easily fit multiple linear regression
+# models and use the same functions to investigate them
+mlr.1 <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, 
+            data = iris)
+summary(mlr.1)
+
+predict(mlr.1, newdata = data.frame(
+    Sepal.Width = 3.5,
+    Petal.Length = 1.4,
+    Petal.Width = 0.2
+), interval = "prediction")`, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>When reading the <code>summary</code> output, the table of Coefficients gives the estimated value (<code>Estimate</code>), standard error (<code>Std. Error</code>), <span class="math inline">\(t\)</span>-test statistic (<code>t value</code>), and the <span class="math inline">\(p\)</span>-value (<code>Pr(&gt;|t|)</code>). Beneath, the mean-squared error is listed as the <code>Residual standard error</code>, with the relevant number of degrees of freedom specified for the <span class="math inline">\(t\)</span>-distribution. The <span class="math inline">\(R^2\)</span> is given as <code>Multiple R-squared</code> beneath that. The output from the <code>predict</code> function is a matrix, with a column of the predicted point estimated (<code>fit</code>), followed by the lower and upper bounds on the interval (<code>lwr</code> and <code>upr</code>, respectively).</p>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-17.1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.1</strong></span> Write down and explain the components of the linear regression model.</p>
+</div>
+<div id="exr-17.2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.2</strong></span> Each month for several months, the average temperature (<span class="math inline">\(x\)</span>) and the number of pounds of steam consumed by a certain chemical plant (<span class="math inline">\(y\)</span>) were measured. Suppose that the least squares line is fit and found to be <span class="math inline">\(y = 245.82 + 1.13x\)</span>.</p>
+<ol type="a">
+<li>Predict the number of pounds of steam consumed in a month where the average temperature is <span class="math inline">\(65\)</span>.</li>
+<li>If two months differ in their average temperatures by <span class="math inline">\(5\)</span> degrees, by how much do you predict the number of pounds of steam to differ?</li>
+</ol>
+</div>
+<div id="exr-17.3" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.3</strong></span> A least squares line is fit to a set of points. If the total sum of squares is <span class="math inline">\(9615\)</span> and the error sum of squares is <span class="math inline">\(1450\)</span>, compute the coefficient of determination, <span class="math inline">\(R^2\)</span>.</p>
+</div>
+<div id="exr-17.4" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.4</strong></span> A simple random sample of <span class="math inline">\(100\)</span> men aged <span class="math inline">\(25-34\)</span> averaged <span class="math inline">\(70\)</span> inches in height, with a standard deviation of <span class="math inline">\(3\)</span> inches. Their incomes average <span class="math inline">\(34,900\)</span> and had a standard deviation of <span class="math inline">\(17,200\)</span>. From the least-square line, suppose that we predict the income of a man who is <span class="math inline">\(70\)</span> inches tall. Can we tell whether this prediction is less than, equal to, or above <span class="math inline">\(34,900\)</span>? If so, which response is it. If not, what information is missing?</p>
+</div>
+<div id="exr-17.5" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.5</strong></span> In a study of copper bars, the relationship between shear stress in ksi (<span class="math inline">\(x\)</span>) and shear strain in <span class="math inline">\(\%\)</span> (<span class="math inline">\(y\)</span>) was summarized by the least-squares line, <span class="math inline">\(y= - 20.00 + 2.56x\)</span>. There were a total of <span class="math inline">\(n=17\)</span> observations, and the coefficient of determination was <span class="math inline">\(R^2 = 0.9111\)</span>. If the total sum of squares was <span class="math inline">\(234.19\)</span>, compute the estimated error variance, <span class="math inline">\(s^2\)</span>.</p>
+</div>
+<div id="exr-17.6" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.6</strong></span> If we treated the independent variables, <span class="math inline">\(X_i\)</span>, as fixed, show that the estimators for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are unbiased.</p>
+</div>
+<div id="exr-17.7" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.7</strong></span> Suppose that the regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> is estimated as <span class="math inline">\(35.82 + 0.476x\)</span>, that the sum of square errors is <span class="math inline">\(19.70\)</span>, the regression sum of squares is <span class="math inline">\(19.22\)</span>, that sample standard deviation of <span class="math inline">\(x\)</span> was <span class="math inline">\(2.77\)</span>, with a sample size was <span class="math inline">\(12\)</span>.</p>
+<p>Is the slope parameter significant at a <span class="math inline">\(0.05\)</span> significance level?</p>
+</div>
+<div id="exr-17.8" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.8</strong></span> Show that the point of averages, <span class="math inline">\((\overline{x}, \overline{y})\)</span> lies on the regression line.</p>
+</div>
+<div id="exr-17.9" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.9</strong></span> Consider the following output for a linear regression that considers explaining the cost of a diamond (<span class="math inline">\(y\)</span>) based on the carat of the diamond (<span class="math inline">\(x\)</span>).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="qaoqygopgt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qaoqygopgt table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#qaoqygopgt thead, #qaoqygopgt tbody, #qaoqygopgt tfoot, #qaoqygopgt tr, #qaoqygopgt td, #qaoqygopgt th {
+  border-style: none;
+}
+
+#qaoqygopgt p {
+  margin: 0;
+  padding: 0;
+}
+
+#qaoqygopgt .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#qaoqygopgt .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#qaoqygopgt .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#qaoqygopgt .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#qaoqygopgt .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qaoqygopgt .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qaoqygopgt .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qaoqygopgt .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#qaoqygopgt .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#qaoqygopgt .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#qaoqygopgt .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#qaoqygopgt .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#qaoqygopgt .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#qaoqygopgt .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#qaoqygopgt .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#qaoqygopgt .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#qaoqygopgt .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#qaoqygopgt .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#qaoqygopgt .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qaoqygopgt .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#qaoqygopgt .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#qaoqygopgt .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#qaoqygopgt .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qaoqygopgt .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#qaoqygopgt .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#qaoqygopgt .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qaoqygopgt .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qaoqygopgt .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#qaoqygopgt .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qaoqygopgt .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#qaoqygopgt .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qaoqygopgt .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qaoqygopgt .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qaoqygopgt .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qaoqygopgt .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qaoqygopgt .gt_left {
+  text-align: left;
+}
+
+#qaoqygopgt .gt_center {
+  text-align: center;
+}
+
+#qaoqygopgt .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#qaoqygopgt .gt_font_normal {
+  font-weight: normal;
+}
+
+#qaoqygopgt .gt_font_bold {
+  font-weight: bold;
+}
+
+#qaoqygopgt .gt_font_italic {
+  font-style: italic;
+}
+
+#qaoqygopgt .gt_super {
+  font-size: 65%;
+}
+
+#qaoqygopgt .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#qaoqygopgt .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#qaoqygopgt .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#qaoqygopgt .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#qaoqygopgt .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#qaoqygopgt .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#qaoqygopgt .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#qaoqygopgt .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#qaoqygopgt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"><span data-qmd-base64="PHN0cm9uZz5DaGFyYWN0ZXJpc3RpYzwvc3Ryb25nPg=="><span class="gt_from_md"><strong>Characteristic</strong></span></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="estimate"><span data-qmd-base64="PHN0cm9uZz5CZXRhPC9zdHJvbmc+"><span class="gt_from_md"><strong>Beta</strong></span></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="std.error"><span data-qmd-base64="PHN0cm9uZz5TRTwvc3Ryb25nPg=="><span class="gt_from_md"><strong>SE</strong></span></span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value"><span data-qmd-base64="PHN0cm9uZz5wLXZhbHVlPC9zdHJvbmc+"><span class="gt_from_md"><strong>p-value</strong></span></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_center">-2,256</td>
+<td headers="std.error" class="gt_row gt_center">13.1</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">carat</td>
+<td headers="estimate" class="gt_row gt_center">7,756</td>
+<td headers="std.error" class="gt_row gt_center">14.1</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="4"><span data-qmd-base64="Tm8uIE9icy4gPSA1Myw5NDA7IFNpZ21hID0gMSw1NDk7IFLCsiA9IDAuODQ5"><span class="gt_from_md">No. Obs. = 53,940; Sigma = 1,549; R² = 0.849</span></span></td>
+    </tr>
+  </tfoot>
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span data-qmd-base64="U0UgPSBTdGFuZGFyZCBFcnJvcg=="><span class="gt_from_md">SE = Standard Error</span></span></td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+<ol type="a">
+<li>Explain the meaning of the coefficients in this model.</li>
+<li>Draw a rough sketch of the represented linear relationship.</li>
+<li>What is the predicted value of a <span class="math inline">\(1\)</span> carat diamond?</li>
+<li>What is the test statistic for testing <span class="math inline">\(H_0: \beta_1 = 7500\)</span>? What is the null distribution of this test?</li>
+<li>Give a <span class="math inline">\(95\%\)</span> confidence interval for the coefficient on carat.</li>
+<li>Explain the reported <span class="math inline">\(R^2\)</span> value.</li>
+<li>If the overall mean of the carat in the dataset is 0.7979397, give a <span class="math inline">\(95\%\)</span> prediction interval for the value of a diamond that is <span class="math inline">\(1.5\)</span> carats.</li>
+<li>If the overall mean of the carat in the dataset is 0.7979397, give a <span class="math inline">\(95\%\)</span> confidence interval for the value of a diamond that is <span class="math inline">\(1.5\)</span> carats.</li>
+</ol>
+</div>
+<div id="exr-17.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.10</strong></span> Consider the following output for a linear regression that considers explaining the heart weight of cats (<span class="math inline">\(y\)</span>) based on their measured body weight (<span class="math inline">\(x\)</span>).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="rurdupyjxz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rurdupyjxz table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#rurdupyjxz thead, #rurdupyjxz tbody, #rurdupyjxz tfoot, #rurdupyjxz tr, #rurdupyjxz td, #rurdupyjxz th {
+  border-style: none;
+}
+
+#rurdupyjxz p {
+  margin: 0;
+  padding: 0;
+}
+
+#rurdupyjxz .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#rurdupyjxz .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#rurdupyjxz .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#rurdupyjxz .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#rurdupyjxz .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rurdupyjxz .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rurdupyjxz .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rurdupyjxz .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#rurdupyjxz .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#rurdupyjxz .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#rurdupyjxz .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#rurdupyjxz .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#rurdupyjxz .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#rurdupyjxz .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#rurdupyjxz .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rurdupyjxz .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#rurdupyjxz .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#rurdupyjxz .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#rurdupyjxz .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rurdupyjxz .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#rurdupyjxz .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#rurdupyjxz .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#rurdupyjxz .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rurdupyjxz .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#rurdupyjxz .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#rurdupyjxz .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rurdupyjxz .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rurdupyjxz .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#rurdupyjxz .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rurdupyjxz .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#rurdupyjxz .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rurdupyjxz .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rurdupyjxz .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rurdupyjxz .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rurdupyjxz .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rurdupyjxz .gt_left {
+  text-align: left;
+}
+
+#rurdupyjxz .gt_center {
+  text-align: center;
+}
+
+#rurdupyjxz .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#rurdupyjxz .gt_font_normal {
+  font-weight: normal;
+}
+
+#rurdupyjxz .gt_font_bold {
+  font-weight: bold;
+}
+
+#rurdupyjxz .gt_font_italic {
+  font-style: italic;
+}
+
+#rurdupyjxz .gt_super {
+  font-size: 65%;
+}
+
+#rurdupyjxz .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#rurdupyjxz .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#rurdupyjxz .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#rurdupyjxz .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#rurdupyjxz .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#rurdupyjxz .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#rurdupyjxz .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#rurdupyjxz .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#rurdupyjxz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"><span data-qmd-base64="PHN0cm9uZz5DaGFyYWN0ZXJpc3RpYzwvc3Ryb25nPg=="><span class="gt_from_md"><strong>Characteristic</strong></span></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="estimate"><span data-qmd-base64="PHN0cm9uZz5CZXRhPC9zdHJvbmc+"><span class="gt_from_md"><strong>Beta</strong></span></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="std.error"><span data-qmd-base64="PHN0cm9uZz5TRTwvc3Ryb25nPg=="><span class="gt_from_md"><strong>SE</strong></span></span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value"><span data-qmd-base64="PHN0cm9uZz5wLXZhbHVlPC9zdHJvbmc+"><span class="gt_from_md"><strong>p-value</strong></span></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_center">-0.36</td>
+<td headers="std.error" class="gt_row gt_center">0.692</td>
+<td headers="p.value" class="gt_row gt_center">0.6</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Bwt</td>
+<td headers="estimate" class="gt_row gt_center">4.0</td>
+<td headers="std.error" class="gt_row gt_center">0.250</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="4"><span data-qmd-base64="Tm8uIE9icy4gPSAxNDQ7IFNpZ21hID0gMS40NTsgUsKyID0gMC42NDc="><span class="gt_from_md">No. Obs. = 144; Sigma = 1.45; R² = 0.647</span></span></td>
+    </tr>
+  </tfoot>
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span data-qmd-base64="U0UgPSBTdGFuZGFyZCBFcnJvcg=="><span class="gt_from_md">SE = Standard Error</span></span></td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+<ol type="a">
+<li>Explain the meaning of the coefficients in this model.</li>
+<li>Draw a rough sketch of the represented linear relationship.</li>
+<li>What is the predicted heart weight of a <span class="math inline">\(2.5\)</span>kg cat?</li>
+<li>What is the test statistic for testing <span class="math inline">\(H_0: \beta_1 = 0\)</span>? What is the null distribution of this test?</li>
+<li>Give a <span class="math inline">\(95\%\)</span> confidence interval for the coefficient on Bwt.</li>
+<li>Explain the reported <span class="math inline">\(R^2\)</span> value.</li>
+<li>If the overall mean body weight in the dataset is 2.7236111, give a <span class="math inline">\(95\%\)</span> prediction interval for the heart weight of a cat that is <span class="math inline">\(3\)</span>kg.</li>
+<li>If the overall mean body weight in the dataset is 2.7236111, give a <span class="math inline">\(95\%\)</span> confidence interval for the heart weight of a cat that is <span class="math inline">\(3\)</span>kg.</li>
+</ol>
+</div>
+<div id="exr-17.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.11</strong></span> Consider the following output for a linear regression that considers explaining the distance it took for a car to come to a complete stop (<span class="math inline">\(y\)</span>) based on the measured speed it was traveling (<span class="math inline">\(x\)</span>).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="wpauuodsvs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wpauuodsvs table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#wpauuodsvs thead, #wpauuodsvs tbody, #wpauuodsvs tfoot, #wpauuodsvs tr, #wpauuodsvs td, #wpauuodsvs th {
+  border-style: none;
+}
+
+#wpauuodsvs p {
+  margin: 0;
+  padding: 0;
+}
+
+#wpauuodsvs .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#wpauuodsvs .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#wpauuodsvs .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#wpauuodsvs .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#wpauuodsvs .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wpauuodsvs .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wpauuodsvs .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wpauuodsvs .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#wpauuodsvs .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#wpauuodsvs .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#wpauuodsvs .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#wpauuodsvs .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#wpauuodsvs .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#wpauuodsvs .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#wpauuodsvs .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wpauuodsvs .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#wpauuodsvs .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#wpauuodsvs .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#wpauuodsvs .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wpauuodsvs .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#wpauuodsvs .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#wpauuodsvs .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#wpauuodsvs .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wpauuodsvs .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#wpauuodsvs .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#wpauuodsvs .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wpauuodsvs .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wpauuodsvs .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#wpauuodsvs .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wpauuodsvs .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#wpauuodsvs .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wpauuodsvs .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wpauuodsvs .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wpauuodsvs .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wpauuodsvs .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wpauuodsvs .gt_left {
+  text-align: left;
+}
+
+#wpauuodsvs .gt_center {
+  text-align: center;
+}
+
+#wpauuodsvs .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#wpauuodsvs .gt_font_normal {
+  font-weight: normal;
+}
+
+#wpauuodsvs .gt_font_bold {
+  font-weight: bold;
+}
+
+#wpauuodsvs .gt_font_italic {
+  font-style: italic;
+}
+
+#wpauuodsvs .gt_super {
+  font-size: 65%;
+}
+
+#wpauuodsvs .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#wpauuodsvs .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#wpauuodsvs .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#wpauuodsvs .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#wpauuodsvs .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#wpauuodsvs .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#wpauuodsvs .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#wpauuodsvs .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#wpauuodsvs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"><span data-qmd-base64="PHN0cm9uZz5DaGFyYWN0ZXJpc3RpYzwvc3Ryb25nPg=="><span class="gt_from_md"><strong>Characteristic</strong></span></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="estimate"><span data-qmd-base64="PHN0cm9uZz5CZXRhPC9zdHJvbmc+"><span class="gt_from_md"><strong>Beta</strong></span></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="std.error"><span data-qmd-base64="PHN0cm9uZz5TRTwvc3Ryb25nPg=="><span class="gt_from_md"><strong>SE</strong></span></span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value"><span data-qmd-base64="PHN0cm9uZz5wLXZhbHVlPC9zdHJvbmc+"><span class="gt_from_md"><strong>p-value</strong></span></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_center">-18</td>
+<td headers="std.error" class="gt_row gt_center">6.76</td>
+<td headers="p.value" class="gt_row gt_center">0.012</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">speed</td>
+<td headers="estimate" class="gt_row gt_center">3.9</td>
+<td headers="std.error" class="gt_row gt_center">0.416</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="4"><span data-qmd-base64="Tm8uIE9icy4gPSA1MDsgU2lnbWEgPSAxNS40OyBSwrIgPSAwLjY1MQ=="><span class="gt_from_md">No. Obs. = 50; Sigma = 15.4; R² = 0.651</span></span></td>
+    </tr>
+  </tfoot>
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span data-qmd-base64="U0UgPSBTdGFuZGFyZCBFcnJvcg=="><span class="gt_from_md">SE = Standard Error</span></span></td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+<ol type="a">
+<li>Explain the meaning of the coefficients in this model.</li>
+<li>Draw a rough sketch of the represented linear relationship.</li>
+<li>What is the predicted distance to stop for a car traveling <span class="math inline">\(18\)</span>mph?</li>
+<li>What is the test statistic for testing <span class="math inline">\(H_0: \beta_1 = 5\)</span>? What is the null distribution of this test?</li>
+<li>Give a <span class="math inline">\(95\%\)</span> confidence interval for the coefficient on speed.</li>
+<li>Explain the reported <span class="math inline">\(R^2\)</span> value.</li>
+<li>If the overall mean speed in the dataset is 15.4, give a <span class="math inline">\(95\%\)</span> prediction interval for the distance to stop for a car traveling <span class="math inline">\(15\)</span>mph.</li>
+<li>If the overall mean speed in the dataset is 15.4, give a <span class="math inline">\(95\%\)</span> confidence interval for the distance to stop for a car traveling <span class="math inline">\(15\)</span>mph.</li>
+</ol>
+</div>
+<div id="exr-17.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.12</strong></span> Consider the following plot demonstrating the relationship between pressure (<span class="math inline">\(y\)</span>) and the temperature (<span class="math inline">\(x\)</span>) of the vapor pressure of mercury.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="chapter17_files/figure-html/unnamed-chunk-8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="chapter17_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li>Is a linear regression appropriate to explain the pressure of the mercury from the temperature? If not, how may this be improved? If so, explain.</li>
+<li>If a linear regression were fit to these data, what would be the sign of the slope?</li>
+<li>Suppose that it is determined that the sample covariance between temperature and slope is <span class="math inline">\(19157.32\)</span>, that the sample variance of <span class="math inline">\(x\)</span> is <span class="math inline">\(12666.67\)</span>, and that the sample means of temperature and pressure are <span class="math inline">\(180\)</span> and <span class="math inline">\(124.3367\)</span>, respectively. Write down the estimated ordinary least squares equation.</li>
+</ol>
+</div>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Remember, the slope is the “rise” over the “run”.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Technically, the <span class="math inline">\(y\)</span>-intercept, though, we predominantly discuss only the <span class="math inline">\(y\)</span>-intercept.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Note, in the case of <span class="math inline">\(y = x^2\)</span>, we would need this to be for only positive (or only negative) <span class="math inline">\(x\)</span>. The problem with the transformation <span class="math inline">\(\sqrt{y}\)</span> is that it is not <strong>one-to-one</strong>. For every value of <span class="math inline">\(y\)</span>, there are two values of <span class="math inline">\(\sqrt{y}\)</span> (namely, the positive and negative roots). If our data existed over <span class="math inline">\(x\)</span> values that were both positive and negative, we would end-up considering a graph that resembles <span class="math inline">\(y \approx |x|\)</span> rather than <span class="math inline">\(y \approx x\)</span>. This is technically two separate linear relationships, stuck together.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>There are regression-type methods for non-continuous outcomes. These require more advanced techniques, but the same underlying ideas will hold.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Note, there are more advanced regression techniques that allow for the relaxation of the homogeneity assumption.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Note, it is conceptually possible to define other “best” lines. You could have thought to take <span class="math inline">\(|y_i - \widehat{y}_i|\)</span> or similar instead. Doing this results in alternative forms of the regression relationship, forms that exhibit slightly different properties. The least squares regression tends to be the most common in use, is the most well-studied, and is in many ways the most mathematically convenient.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>As well as, more critically, the assumption that the regression model is correct and the assumption that variances are homogenous.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Recall that the standard errors are given by the square root of the variance terms. It is convenient when the variance of estimator is a fairly involved expression (as is the case for the regression parameters), to use the shorthand notation.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Linear relationship.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>This case is of course far more common in practice<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Note, a more thorough, theoretical account of these issues is available <a href="https://www.stat.cmu.edu/~cshalizi/mreg/15/lectures/10/lecture-10.pdf">here</a>. This requires a deeper understanding of regression more broadly.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Namely, the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X=x\)</span>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>This distinction is analogous to the <em>estimates</em> and <em>estimators</em> distinction.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>With a normal distribution.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>With a <span class="math inline">\(t\)</span> distribution<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Using ordinary least squares.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>Perhaps a <span class="math inline">\(1\)</span> if an individual has a particular disease, and a <span class="math inline">\(0\)</span> otherwise.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>Maybe the number of defective products produced in a shift by a manufacturing plant.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -744,6 +3558,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </nav>
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
