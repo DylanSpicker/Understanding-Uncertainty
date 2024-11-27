@@ -176,7 +176,7 @@ a. Using $T_1$, we find an observed value, $t_1$ by plugging in $n=4$ and $\over
 
 ```{r}
 #| echo: false
-#| fig.height: 3
+#| fig-height: 3
 
 library(ggplot2)
 library(ggthemes)
@@ -211,7 +211,7 @@ ggplot() +
 b. Here, taking $n=49$, $\overline{x} = 3$, and $s = 14$. Thus, $$t = \frac{3}{14/\sqrt{49}} = \frac{3}{2} = 1.5.$$ To calculate a $p$-value, we make reference to the $t_{48}$ distribution, taking $F$ to be its CDF, this gives $$P(T \leq -1.5) + P(T > 1.5) = F(-1.5) + (1 - F(1.5)) = 2F(-1.5) \approx `r round(2 * pt(-1.5, df = 48), 3)`.$$ The corresponding area is identified in the following figure. 
 ```{r}
 #| echo: false
-#| fig.height: 3
+#| fig-height: 3
 
 library(ggplot2)
 library(ggthemes)
@@ -244,7 +244,7 @@ ggplot() +
 c. Here, the observation has been $\widehat{p} = 14/100 = 0.14$, with $n=100$. Thus, $t = 0.04/0.03 = 4/3$. The $p$-value here is given by $$P\left(Z \leq \frac{-4}{3}\right) + P\left(Z \geq \frac{4}{3}\right) = \Phi\left(\frac{-4}{3}\right) + \left(1 - \Phi\left(\frac{4}{3}\right)\right) = 2\Phi\left(\frac{-4}{3}\right) \approx `r round(2 * pnorm(-4/3), 3)`.$$ The following plot shades the relevant region. 
 ```{r}
 #| echo: false
-#| fig.height: 3
+#| fig-height: 3
 
 library(ggplot2)
 library(ggthemes)
@@ -308,12 +308,11 @@ With either the $p$-value calculated or the critical value for comparison, it is
 ### Drawing Conclusions and Interpretation
 By comparing the calculated $p$-value to the level of significance, or the calculated test statistic to the critical value, we are able to draw conclusions from the hypothesis test. Our conclusion will provide an answer to whether we reject or fail to reject the null hypothesis. Specifically, if the $p$-value is less than the level of significance, or the observed test statistic is less than the critical value^[Or, equivalently, if the test statistic is larger in magnitude than the critical value.] then we can reject the null hypothesis, in favour of the alternative. We call the region of observations where we reject the null hypothesis the **rejection region** (see @fig-rejection-region-plot). Practically this means that the level of evidence contradicting the null hypothesis in the observed data exceeds the level of evidence we needed to see, in the given context, in order to act as though the null hypothesis is not true. If the $p$-value is larger than the level of significance (or equivalently, if the critical value does not fall into the rejection region) then we fail to reject the null hypothesis. This means that our sample did not contain sufficient contradictory evidence to the null hypothesis, based on the context of the situation. 
 
-
 ```{r}
 #| echo: false
 #| label: fig-rejection-region-plot
-#| fig.height: 3
-#| fig.cap: The labelled components of a hypothesis test. The observed test statistic is either compared to the critical values to see whether it falls into the rejection region or not. In a one-sided hypothesis test, the rejection region is one-sided as well. Alternatively, the area under the null distribution outside of the observed test statistic (in both tails, as depicted here, for a two-sided hypothesis test; in a single tail for a one-sided hypothesis test) can be computed as the $p$-value. The $p$-value is then compared to the level of significance.
+#| fig-height: 3
+#| fig-cap: The labelled components of a hypothesis test. The observed test statistic is either compared to the critical values to see whether it falls into the rejection region or not. In a one-sided hypothesis test, the rejection region is one-sided as well. Alternatively, the area under the null distribution outside of the observed test statistic (in both tails, as depicted here, for a two-sided hypothesis test; in a single tail for a one-sided hypothesis test) can be computed as the $p$-value. The $p$-value is then compared to the level of significance.
 
 library(ggplot2)
 library(ggthemes)
@@ -453,8 +452,8 @@ Suppose that we are interested in testing hypotheses relating to the mean of a n
 ```{r}
 #| echo: false
 #| label: fig-z-test-plot
-#| fig.height: 3
-#| fig.cap: Illustration of the $Z$-test, depicting the observed statistic (solid line), area for the $p$-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at $1.96$, and the observed statistic is at $-2.473$. Thus, it falls outside of the critical value. Additionally, the shaded area gives the p-value, $0.013$, which is less than the implied significance level of $0.05$. Consider where the critical values would fall had $\alpha = 0.01$ been used instead. 
+#| fig-height: 3
+#| fig-cap: Illustration of the $Z$-test, depicting the observed statistic (solid line), area for the $p$-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at $1.96$, and the observed statistic is at $-2.473$. Thus, it falls outside of the critical value. Additionally, the shaded area gives the p-value, $0.013$, which is less than the implied significance level of $0.05$. Consider where the critical values would fall had $\alpha = 0.01$ been used instead. 
 
 library(ggplot2)
 library(ggthemes)
@@ -498,8 +497,8 @@ Suppose instead that we are dealing with a population with an unknown variance, 
 ```{r}
 #| echo: false
 #| label: fig-t-test-plot
-#| fig.height: 3
-#| fig.cap: Illustration of the $t$-test, based on $n=32$, depicting the observed statistic (solid line), area for the $p$-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at $2.04$, and the observed statistic is at $1.81$. Thus, it falls inside of the critical value. Additionally, the shaded area gives the p-value, $0.080$, which is greater than the implied significance level of $0.05$. Consider where the critical values would fall had a one tailed hypothesis test been used instead.
+#| fig-height: 3
+#| fig-cap: Illustration of the $t$-test, based on $n=32$, depicting the observed statistic (solid line), area for the $p$-values (shaded areas), and locations of the critical value (dotted lines). In this example, the critical value is at $2.04$, and the observed statistic is at $1.81$. Thus, it falls inside of the critical value. Additionally, the shaded area gives the p-value, $0.080$, which is greater than the implied significance level of $0.05$. Consider where the critical values would fall had a one tailed hypothesis test been used instead.
 
 library(ggplot2)
 library(ggthemes)

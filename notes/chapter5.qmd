@@ -1,4 +1,5 @@
 # Summarizing Statistical Experiments with Random Variables
+
 ## The Need for Random Variables
 When introducing probability originally we worked from a sample space and then corresponding events. This is a very general framework which allows us to effectively analyze any statistical experiment. Sample spaces are not restricted to be numeric, for instance, and events are simply subsets of the sample space. As a result, this framework provides the tools for capturing uncertainty quantification in almost any setting. Still, the need to enumerate sample spaces and events over complex sets of arbitrary items is cumbersome and may prevent succinct representations of the underlying phenomena. Often, rather than caring about the entire space of outcomes from an experiment of interest, we are primarily concerned we a summary of the experiment. When we can summarize the experiment using a numerical quantity, we are able to define a random variable. 
 
