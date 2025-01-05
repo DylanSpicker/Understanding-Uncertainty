@@ -411,11 +411,11 @@ A hypothesis test would ideally have a low probability of a type I error, which 
 +=============================+:===================:+:=================:+
 | **$H_0$ is Rejected**       | False Positive <br> |  <br>             |
 |                             | Type I Error   <br> |  True Positive    |
-|                             | ($\alpha$)          |                   |
+|                             | ($\alpha$)          |  Power ($1-\beta$)|
 +-----------------------------+---------------------+-------------------+
 | **$H_0$ is Not Rejected**   |                     | False Negative<br>|
 |                             | True Negative  <br> | Type II Error <br>|
-|                             | Power ($1-\beta$)   | ($\beta$)         |
+|                             |                     | ($\beta$)         |
 +-----------------------------+---------------------+-------------------+
 
 : Conclusions and errors of hypothesis testing. {#tbl-error-types .borderless tbl-colwidths="[20,20,20]"}

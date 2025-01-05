@@ -1,0 +1,3 @@
+# The Analysis of Categorical Data
+
+Currently in progress.

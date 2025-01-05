@@ -38,6 +38,9 @@ book:
       - notes/chapter15.qmd
       - notes/chapter16.qmd
       - notes/chapter17.qmd
+      - notes/chapter18.qmd
+      - notes/chapter19.qmd
+      - notes/chapter20.qmd
 engine: knitr
 
 filters: 

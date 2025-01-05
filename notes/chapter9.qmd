@@ -1131,7 +1131,7 @@ b. Approximate the same probability using the normal approximation. How close is
 :::
 
 :::{#exr-9.6}
-Suppose that the cumulative distribution function of $T$ is $$f(t) = 1 - e^{-0.45t}.$$
+Suppose that the cumulative distribution function of $T$ is $$F(t) = 1 - e^{-0.45t}.$$
 
 a. Find $P(T > 3)$.
 b. Find the median of $T$.
