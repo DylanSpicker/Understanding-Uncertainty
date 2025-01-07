@@ -233,7 +233,7 @@ Since every single event in the sample space belongs to exactly one of our parti
 Given a partition, $B_1, B_2, \dots$, and an event $A$, the law of total probability states that $$P(A) = \sum_i P(A, B_i) = \sum_i P(A|B_i)P(B_i).$$
 :::
 
-Intuitively, since the whole sample space is divided into the different $B_i$s, this rule breaks down the calculation of $A$ happening into manageable chunks. Each term in the summation is "the probability that $A$ happens, given $B_i$ happening" weighted by how likely it is that $B_i$ happens. Then by summing over all possible $B_i$, we know that we must be capturing all possible ways that $A$ can occur since all parts of the sample space are contained in exactly one of the sets of our partition. The law of total probability is an indispensible tool for computing probabilities in practice. 
+Intuitively, since the whole sample space is divided into the different $B_i$s, this rule breaks down the calculation of $A$ happening into manageable chunks. Each term in the summation is "the probability that $A$ happens, given $B_i$ happening" weighted by how likely it is that $B_i$ happens. Then by summing over all possible $B_i$, we know that we must be capturing all possible ways that $A$ can occur since all parts of the sample space are contained in exactly one of the sets of our partition. The law of total probability is an indispensable tool for computing probabilities in practice. 
 
 :::{#exm-lotp-example}
 ## Sadie's Possibly Late Package

@@ -47,7 +47,7 @@ If we have data selected from two, independent populations (denoted $X_1,\dots,X
     iii. If $H_0: \Delta \leq \Delta_0$ versus $H_A: \Delta > \Delta_0$ then the $p$-value is $1 - \Phi(t)$. The corresponding critical value is $Z_{1-\alpha}$.
 2. If the variances are unknown, then we take $$T = \frac{\overline{X} - \overline{Y} - \Delta_0}{\sqrt{\frac{S_X^2}{n} + \frac{S_Y^2}{m}}} \stackrel{H_0}{\sim} t_\nu,\quad\text{with}\quad\nu = \frac{\left(\frac{S_X^2}{n} + \frac{S_Y^2}{m}\right)^2}{\frac{(S_X^2/n)^2}{n-1} + \frac{(S_Y^2/m)^2}{m-1}}.$$ Taking $F(t)$ to be the cumulative distribution function for the $t_\nu$ distribution, and assuming we observe $T=t$,
     i. If $H_0: \Delta = \Delta_0$ versus $H_A: \Delta \neq \Delta_0$ then the $p$-value is $2F(-|t|)$. The critical value is $t_{\nu, 1-\alpha/2}$.
-    ii. If $H_0: \Delta \geq \Delta_0$ v    ersus $H_A: \Delta < \Delta_0$ then the $p$-value is $F(t)$. The corresponding critical value is $t_{\nu, \alpha}$.
+    ii. If $H_0: \Delta \geq \Delta_0$ versus $H_A: \Delta < \Delta_0$ then the $p$-value is $F(t)$. The corresponding critical value is $t_{\nu, \alpha}$.
     iii. If $H_0: \Delta \leq \Delta_0$ versus $H_A: \Delta > \Delta_0$ then the $p$-value is $1 - F(t)$. The corresponding critical value is $t_{\nu, 1-\alpha}$.
 :::
 
@@ -210,7 +210,7 @@ Cardiac function is assessed via impedance cardiography while performing the Val
 :::
 
 :::{#exr-16.14}
-The amount of surface deflection caused by aircrafts landing on an airport runway is assessed between two landing gears, one simulating a Boeing 747 and the other simulating a Boeing 777, with measurements contained in the following table. Can you conclude that the mean deflection differs between the two gears?
+The amount of surface deflection caused by air crafts landing on an airport runway is assessed between two landing gears, one simulating a Boeing 747 and the other simulating a Boeing 777, with measurements contained in the following table. Can you conclude that the mean deflection differs between the two gears?
 
 | Test | 747  | 777  |
 | :--: | :--: | :--: |

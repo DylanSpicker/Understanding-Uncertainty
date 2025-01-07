@@ -59,7 +59,7 @@ To formalize this mathematically, we first define several important terms.
 
 :::{#def-experiment}
 ## Experiment 
-Any action to be performed whose outcome is not (or cannot) be known with certainty, before it is perfo rmed. 
+Any action to be performed whose outcome is not (or cannot) be known with certainty, before it is performed. 
 :::
 :::{#def-event-inf}
 ## Event [Informally]

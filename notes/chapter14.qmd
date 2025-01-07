@@ -75,7 +75,7 @@ Formally, a $100p\%$ confidence interval interpreted by noting that, were this p
 
 As an alternative framing, we can consider applying the procedure in practice. Suppose that we have yet to take our sample, but we know that we will form the confidence interval as $\left(L(\widehat{\theta}), U(\widehat{\theta})\right)$. Prior to observing any data, we know that this procedure will have a $p$ probability of containing the true parameter, $\theta$. However, once we collect data and compute the values, we get $L(\widehat{\theta}) = \ell$ and $U(\widehat{\theta}) = u$ for some fixed values $\ell$ and $u$. Now, the statement $P(\ell \leq \theta \leq u)$ is either equal to $1$, if $\ell \leq \theta \leq u$ holds, or it is equal to $0$ otherwise. We do not know whether it is $0$ or it is $1$, but we do know that the probability is not $p$. 
 
-:::{#exm-conifdence-interval-interpretation-incorrect}
+:::{#exm-confidence-interval-interpretation-incorrect}
 ## The Probability of Rolling a Six
 Charles is working hard to truly understand the valid, and invalid, ways of interpreting confidence intervals. Sadie, who seems to have understood the concepts more thoroughly, is trying to help. Charles is particularly hung up on the idea that the process itself can be interpreted probabilistically, even when the specific interval that is formed cannot. Sadie, recognizing that this is the hang-up, works through the following thought experiment with Charles. Sadie asks the following questions.
 
@@ -107,7 +107,7 @@ Alternatively, individuals may misinterpret a confidence interval as stating tha
 :::{#exm-ci-interpretation}
 ## Bird Watching Confidence
 
-Sadie and Charles have continued their bird watching adventures. As their statistical knowledge has expanded, they have continued to integrate this new found knowledge into their trips. Lately, they have begun to consider confidence intervals, and so with a little help from their friend Garth, they work out the confidence interval for the average number of rare birds at a particular location that they enjoy travelling to. They find that the $90\%$ confidence interval is given by $(1.4, 8.5)$. Seeing as confidence intervals are still new to them, they start trying to work out the interpretation of this statement together. Help them out by answering their questions, with explanations.
+Sadie and Charles have continued their bird watching adventures. As their statistical knowledge has expanded, they have continued to integrate this new found knowledge into their trips. Lately, they have begun to consider confidence intervals, and so with a little help from their friend Garth, they work out the confidence interval for the average number of rare birds at a particular location that they enjoy traveling to. They find that the $90\%$ confidence interval is given by $(1.4, 8.5)$. Seeing as confidence intervals are still new to them, they start trying to work out the interpretation of this statement together. Help them out by answering their questions, with explanations.
 
 a. Charles wonders, "Does this mean that, if we go, there is a $90\%$ chance we will see between $1.4$ and $8.5$ rare birds?"
 b. Sadie responds, questioning "Perhaps it means that, if we go many, many, many times, in $90\%$ of cases we will see in this range?"
@@ -215,10 +215,10 @@ c. What critical value would need to be used to calculate a $95\%$ confidence in
 ::::{.callout .solution collapse='true'}
 ## Solution
 
-a. For the sampel variance, we calculate $$\begin{split}\frac{1}{5-1}\left((33.2 - 30.66)^2 + (29.6-30.66)^2 + (29.7 - 30.66)^2 \right.\\
+a. For the sample variance, we calculate $$\begin{split}\frac{1}{5-1}\left((33.2 - 30.66)^2 + (29.6-30.66)^2 + (29.7 - 30.66)^2 \right.\\
 \left. + (31.7 - 30.66)^2 + (29.1 - 30.66)^2\right) = 3.003.\end{split}$$
 b. Since the population is normally distributed, with an unknown variance, Sadie can use the form $$\overline{X} \pm t_{n-1,(1-p)/2}\frac{s}{\sqrt{n}},$$ to form confidence intervals. Here, $\overline{X} = 30.66$, $n = 5$, $s = \sqrt{3.003}$, and $p=0.9$. Thus, the critical value to use is the $t_{4, 0.05}$ value, and the form of the interval will be $$30.66 \pm t_{4, 0.05}\sqrt{\frac{3.003}{5}} = 30.66 \pm t_{4, 0.05}\sqrt{0.6006}.$$ Using `R`, we can call `qt(0.05, 4)` to determine that the critical value is approximately `r round(qt(0.05, 4), 2)`, to fill in for the specific value of $t_{4, 0.05}$. 
-c. Here we would still reference the $t$ distribution with $4$ degrees of freedom, but now instead of the $0.05$ perecentile, we would need to look at either the $0.025$ or $0.005$ percentiles. This would give, $t_{4, 0.025} \approx `r round(qt(0.025, 4), 2)`$ and $t_{4, 0.005} \approx `r round(qt(0.005, 4), 2)`$.
+c. Here we would still reference the $t$ distribution with $4$ degrees of freedom, but now instead of the $0.05$ percentile, we would need to look at either the $0.025$ or $0.005$ percentiles. This would give, $t_{4, 0.025} \approx `r round(qt(0.025, 4), 2)`$ and $t_{4, 0.005} \approx `r round(qt(0.005, 4), 2)`$.
 
 ::::
 :::
