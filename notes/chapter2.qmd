@@ -133,7 +133,7 @@ The union encodes the use of "or" in reference to two or more sets. Formally, wi
 
 :::{#def-intersection}
 ## Intersection
-The intersection captures the use of "and" in reference to two or more sets. Formally, the intersection of two sets, $A$, and $B$, is the set that contains all elements that belong to both $A$ and $B$. We write $A \cap B$, and say "$A$ intersect $B$." When we wish to take the union of many sets, $A_1,A_2,\dots,A_n$, we write $$A_1 \cap A_2 \cap \cdots \cap A_n = \bigcap_{i=1}^n A_i.$$
+The intersection captures the use of "and" in reference to two or more sets. Formally, the intersection of two sets, $A$, and $B$, is the set that contains all elements that belong to both $A$ and $B$. We write $A \cap B$, and say "$A$ intersect $B$." When we wish to take the intersection of many sets, $A_1,A_2,\dots,A_n$, we write $$A_1 \cap A_2 \cap \cdots \cap A_n = \bigcap_{i=1}^n A_i.$$
 :::
 
 :::{#def-complement}
