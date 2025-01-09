@@ -94,7 +94,7 @@ An example of a simple event would be $E_1 = \{(\text{H},\text{H},\text{H})\}$ s
 ::::
 :::
 
-We say that an event "occurs" if any of the outcomes comprising the event occur. As a result we can have more than one event occurring as the result of a run of a statistical experimental. Suppose that we are rolling a fair, six-sided die. Consider the events "an even number was rolled" and "a number greater than or equal to four was rolled." If a four or a six are rolled, both of these events happen simultaneously. Our goal when working with probability will be to assign probability values to different events. We will talk about how likely, or unlikely, events of interest are, given the underlying statistical experiment.
+We say that an event "occurs" if any of the outcomes comprising the event occur. As a result we can have more than one event occurring as the result of a run of a statistical experiment. Suppose that we are rolling a fair, six-sided die. Consider the events "an even number was rolled" and "a number greater than or equal to four was rolled." If a four or a six are rolled, both of these events happen simultaneously. Our goal when working with probability will be to assign probability values to different events. We will talk about how likely, or unlikely, events of interest are, given the underlying statistical experiment.
 
 Above, we defined $E_3$ to be equal to $\mathcal{S}$. As a result, we can say that $\mathcal{S}$ *is* an event since $\mathcal{S} \subseteq \mathcal{S}$. This is the event that any outcome is observed, which is certain to happen. Since it is certain to happen, we know it happens with probability $1$. There is another "special" event which is important to consider. We call this the *null event*. Denoted $\emptyset$, the null event is an event that corresponds to "nothing in the sample space". We know that every time an experiment is run something in the sample space occurs, and so the null event is assigned probability zero.
 
@@ -259,7 +259,7 @@ The sample space is partitioned into outcomes, and the outcomes can be grouped t
 
 On the Venn diagram then, the overlap between circles represents their intersection, the combined area of two (or more) circles represents their union, and everything outside of a given circle represents the complement. This can be a fairly useful method for representing sample spaces, and for visualizing the basic set operations that we use to manipulate events inside the sample spaces. 
 
-A word of caution: Venn diagrams are useful tools, but they are not suitable as mathematical proofs directly. It is possible to convince yourself of false truths if the wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than asa rigorous tool in and of themselves.^[This is a general principle in mathematics. Coming up with one example that makes something *seem* true does not form an argument demonstrating that it *is* true. Venn Diagrams should largely be thought of as specific examples of the underlying phenomena, which are great if you're a visual learner!]
+A word of caution: Venn diagrams are useful tools, but they are not suitable as mathematical proofs directly. It is possible to convince yourself of false truths if the wrong diagrams are used, and as a result, Venn diagrams should be thought of as aids to understanding, rather than as a rigorous tool in and of themselves.^[This is a general principle in mathematics. Coming up with one example that makes something *seem* true does not form an argument demonstrating that it *is* true. Venn Diagrams should largely be thought of as specific examples of the underlying phenomena, which are great if you're a visual learner!]
 
 ![**Union:** The union of events A and B is shaded here in red. The union of two sets is all of the contents of both sets, including the overlap between the two.](/graphics/ch2-venn-diagram-union){#fig-venn-diagram-union}
 
@@ -330,7 +330,7 @@ Suppose that a $20$ sided die is rolled. The events of interest are: $A$ the out
 a. Draw a Venn Diagram representing the sample space and events.
 a. Identify the event $A \cup B$. What does this correspond to in words?
 a. Identify the event $A \cap B^C$. What does this correspond to in words?
-a. How would you denote the event ``neither a multiple of $4$ nor $5$.'' using this notation?
+a. How would you denote the event ``neither a multiple of $4$ nor $5$.'' in terms of $A$ and $B$?
 :::
 
 :::{#exr-2.6}
