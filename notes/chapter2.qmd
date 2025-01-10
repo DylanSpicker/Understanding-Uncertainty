@@ -29,7 +29,7 @@ With the sample space formally defined, we can revisit @def-event-inf, and forma
 An event is any collection of outcomes from a sample space for a statistical experiment. Mathematically, an event, $E$, is a subset of $\mathcal{S}$, and we write $E\subset\mathcal{S}$.
 :::
 
-Take for instance the experiment of a single coin. In this case, we may define $E_1 = \{\text{H}\}$, $E_2 = \{\text{T}\}$, and $E_3 = \{\text{H},\text{T}\}$ as examples of possible events. Here, $E_1$ corresponds to the event that a head is observed, $E_2$ corresponds to the event that a tail is observed, and $E_3$ corresponds to the event that either a tails or a heads was observed. Note that for each event we have $E_1 \subset \mathcal{S}$, $E_2 \subset \mathcal{S}$, and $E_3 \subseteq \mathcal{S}$.
+Take for instance the experiment of a single coin. In this case, we may define $E_1 = \{\text{H}\}$, $E_2 = \{\text{T}\}$, and $E_3 = \{\text{H},\text{T}\}$ as examples of possible events. Here, $E_1$ corresponds to the event that a head is observed, $E_2$ corresponds to the event that a tail is observed, and $E_3$ corresponds to the event that either a tails or a heads was observed. Note that for each event we have $E_1 \subset \mathcal{S}$, $E_2 \subset \mathcal{S}$, and $E_3 \subseteq \mathcal{S}$.^[Note that the symbol $\subseteq$ is the *subset or equal* symbol. If we write $A \subseteq B$, then $A$ is either a subset of $B$ or else $A$ is equal to $B$. The distinction is analogous to the difference between writing $x < y$ versus $x \leq y$.]
 
 :::{#exm-basic-events}
 ## Basic Event Listing
