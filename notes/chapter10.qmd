@@ -3,8 +3,6 @@
 ## From Probability to Statistics
 Until this point we have focused on the study of probability. At its core, probability is a subject which seeks to quantify the uncertainty present in statistical experiments. In the study of probability we begin by first making assumptions about the state of the world^[For instance, we assume that particular probability mass functions hold, that certain distributions are present, that random quantities are independent] and from there we draw conclusions about what must be true about the state of uncertainty in the world. In this regard, probability answers questions of the form "if this is true about the world, what should we see?" For instance, if a fair coin is tossed $100$ times, what is the likelihood that more than half of the tosses come up heads? We have made the assumption that we have a fair coin, tossed independently, and we wish to quantify our degree of uncertainty about this scenario.
 
-Wgat tge fuck>
-
 This is not the only way that we could frame problems related to uncertainty. For instance, what if we asked "given the results from $100$ tosses of this coin, do we believe that the coin is fair?" This inversion of the previous question starts from the observation of information from an experiment and asks questions about the underlying mechanisms that generated these data.^[Note, the word *data* is a plural noun in english. That is, we say "The observed data are ..." rather than "The observed data is ..." Some statisticians care deeply about correcting this misconception, and forget how weird those types of sentences to non-statisticians. I promise it will eventually sound more familiar!] This type of question is addressed by the field of **statistics**.
 
 :::{#def-statistics}
