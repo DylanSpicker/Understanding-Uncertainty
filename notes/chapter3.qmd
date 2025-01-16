@@ -126,7 +126,7 @@ Using the previously indicated axioms of probability we are able to derive many 
 2. **Null Event:** $P(\emptyset) = 0$.
 3. **Arbitrary Unions (Two Events):** $P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1\cap E_2)$.
 4. **Arbitrary Unions (Three Events):** \begin{multline*}P(E_1 \cup E_2 \cup E_3) = P(E_1) + P(E_2) + P(E_3) - P(E_1\cap E_2) - P(E_1 \cap E_3) \\ - P(E_2 \cap E_3) + P(E_1 \cap E_2 \cap E_3).\end{multline*}
-5. **Containment:** If $E_1 \subseteqE_2$ then $P(E_1) \leq P(E_2)$. 
+5. **Containment:** If $E_1 \subseteq E_2$ then $P(E_1) \leq P(E_2)$. 
 
 :::{.callout-warning icon="false" collapse="true"}
 ## Proofs of the Secondary Properties of Probability

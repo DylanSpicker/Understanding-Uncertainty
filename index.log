@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (MiKTeX 24.4) (preloaded format=xelatex 2024.11.3)  16 JAN 2025 12:24
+This is XeTeX, Version 3.141592653-2.6-0.999996 (MiKTeX 24.4) (preloaded format=xelatex 2024.11.3)  16 JAN 2025 12:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1151,9 +1151,9 @@ Package: amsthm 2020/05/29 v2.20.6
 Package: xpatch 2020/03/25 v0.3a Extending etoolbox patching commands
 )
 Class scrreprt Info: amsthm's \deferred@thm@head patched.
-\c@exercise=\count364
-\c@definition=\count365
-\c@example=\count366
+\c@example=\count364
+\c@exercise=\count365
+\c@definition=\count366
 \c@refremark=\count367
 \c@refsolution=\count368
 (C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/caption\subcaption.sty
@@ -1614,18 +1614,45 @@ chapter 2.
 LaTeX Warning: Reference `def-event-inf' on page 27 undefined on input line 163
 2.
 
-! Undefined control sequence.
-<argument> ...in contrast to using \(A \subseteqB 
-                                                  \) which suggests that \(A...
-l.1658   \(\subseteq\).}
-                         
-Here is how much of TeX's memory you used:
- 40810 strings out of 409443
- 816611 string characters out of 5769547
- 1937559 words of memory out of 5000000
- 62502 multiletter control sequences out of 15000+600000
- 567583 words of font info for 115 fonts, out of 8000000 for 9000
- 1348 hyphenation exceptions out of 8191
- 108i,9n,123p,10902b,1039s stack positions out of 10000i,1000n,20000p,200000b,200000s
+[27
 
-Output written on index.pdf (26 pages).
+]
+
+LaTeX Warning: Reference `exm-sample-space-basic' on page 28 undefined on input
+ line 1671.
+
+[28] [29] [30] [31] [32] [33] [34]
+File: graphics/ch2-venn-diagram-basic.png Graphic file (type bmp)
+<graphics/ch2-venn-diagram-basic.png>
+[35]
+File: graphics/ch2-venn-diagram-union.png Graphic file (type bmp)
+<graphics/ch2-venn-diagram-union.png>
+File: graphics/ch2-venn-diagram-intersection.png Graphic file (type bmp)
+<graphics/ch2-venn-diagram-intersection.png>
+[36]
+File: graphics/ch2-venn-diagram-complement.png Graphic file (type bmp)
+<graphics/ch2-venn-diagram-complement.png>
+[37] [38]
+File: graphics/ch2-venn-diagram-example.png Graphic file (type bmp)
+<graphics/ch2-venn-diagram-example.png>
+[39] [40] [41]
+chapter 3.
+[42
+
+] [43] [44] [45]
+Overfull \vbox (1.01532pt too high) has occurred while \output is active []
+
+[46] [47]
+! Undefined control sequence.
+l.2814   \textbf{Containment:} If \(E_1 \subseteqE
+                                                  _2\) then 
+Here is how much of TeX's memory you used:
+ 40914 strings out of 409443
+ 819676 string characters out of 5769547
+ 1945559 words of memory out of 5000000
+ 62595 multiletter control sequences out of 15000+600000
+ 567599 words of font info for 117 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 108i,9n,123p,10902b,1115s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on index.pdf (47 pages).

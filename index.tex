@@ -248,11 +248,11 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
 \newtheorem{exercise}{Exercise}[chapter]
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -680,7 +680,7 @@ three tosses of a coin, and Charles pays otherwise. If Charles leaves
 after the first coin is tossed, showing heads, what is the probability
 that Sadie would have had to pay?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -811,7 +811,7 @@ have had to pay, given a head on the first toss, is \(0.25\)''? Recall
 that in the game, they toss three coins, and Sadie pays if two of them
 show tails.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -1614,7 +1614,7 @@ Write down the complete sample space, \(\mathcal{S}\) for the game that
 Sadie and Charles play, based on flipping and observing a coin three
 times in sequence.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -1651,10 +1651,10 @@ Note that for each event we have \(E_1 \subseteq\mathcal{S}\),
 \(E_3 \subseteq \mathcal{S}\).\footnote{Note that the symbol
   \(\subseteq\) is the \emph{subset or equal} symbol. If we write
   \(A \subseteq B\), then \(A\) is either a subset of \(B\) or else
-  \(A\) is equal to \(B\). This is in contrast to using \(A \subseteqB\)
-  which suggests that \(A\) is not equal to \(B\). The distinction is
-  analogous to the difference between writing \(x < y\) versus
-  \(x \leq y\). Throughout these notes we will predominantly use
+  \(A\) is equal to \(B\). This is in contrast to using
+  \(A \subseteq B\) which suggests that \(A\) is not equal to \(B\). The
+  distinction is analogous to the difference between writing \(x < y\)
+  versus \(x \leq y\). Throughout these notes we will predominantly use
   \(\subseteq\).}
 
 \begin{example}[Basic Event
@@ -1663,7 +1663,7 @@ Listing]\protect\hypertarget{exm-basic-events}{}\label{exm-basic-events}
 List several events from the game that Charles and Sadie are playing.
 Indicate why these are events.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -1688,7 +1688,7 @@ Identification]\protect\hypertarget{exm-event-identification}{}\label{exm-event-
 Is ``Charles has to pay'' an event from the game that Charles and Sadie
 are playing? Why? Explain.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -1722,7 +1722,7 @@ game that Charles and Sadie are playing? Recall that they flip a coin
 three times, and Charles will pay if at least two heads come up, while
 Sadie will pay if at least two tails come up.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -1789,7 +1789,7 @@ Events]\protect\hypertarget{exm-simple-versus-compound}{}\label{exm-simple-versu
 List an example of (at least) one simple and one compound event from the
 game that Charles and Sadie are playing.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -1884,7 +1884,7 @@ a coin, one time using ``or'', one time using ``and'', and one time
 using ``not''.\footnote{It may be helpful to notice that you can mix and
   match these terms to your hearts content!}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -1968,7 +1968,7 @@ events.
   \(E_1 \cup E_2 \cup E_3\).
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -1998,10 +1998,10 @@ Directly from definitions we can write down each of the following sets:
 \end{tcolorbox}
 
 \footnotetext{Note that whenever we have two events, \(A\) and \(B\),
-with \(A\subseteqB\), then \(A\cup B = B\).}
+with \(A\subseteq B\), then \(A\cup B = B\).}
 
 \footnotetext{Note that whenever we have two events, \(A\) and \(B\),
-with \(A\subseteqB\) then \(A \cap B = A\).}
+with \(A\subseteq B\) then \(A \cap B = A\).}
 
 \end{example}
 
@@ -2068,7 +2068,7 @@ form events corresponding to:
   The ace of spades is observed.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -2268,7 +2268,7 @@ one head \textbf{and} one tail are observed'', and ``Sadie won the
 game''. Recall that three coins are tossed, and Sadie wins if at least
 two of them show heads.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -2471,7 +2471,7 @@ Probabilities]\protect\hypertarget{exm-coin-toss}{}\label{exm-coin-toss}
 Suppose that the fair coin used by Charles and Sadie is tossed one time.
 Write down the probability assignments relating to this experiment.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -2688,7 +2688,7 @@ valid probabilities. With three fairly basic properties, we can
 completely specify what must be true in order for a set of probabilities
 to be ``valid'', and to in turn align with our intuitions.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Axioms of Probability}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Axioms of Probability}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -2753,7 +2753,7 @@ drawn (\(j\) ranging from ace with \(1\) through King with \(13\)). If
 they consider the union of any two (or more) of these events when can
 they leverage properties of additivity? When can't they?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -2815,7 +2815,7 @@ events on some well defined sample space.
   \(P(E_1) \leq P(E_2)\).
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Proofs of the Secondary Properties of Probability}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Proofs of the Secondary Properties of Probability}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 It may be instructive to see how these properties are derived. Doing so
 generates added familiarity with manipulating probability expressions
@@ -2937,7 +2937,7 @@ two, fair, six-sided dice. They are interested in the probability that
 the two dice show different numbers when they are rolled. What is this
 probability?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -3073,7 +3073,7 @@ and the second has \(d_2\) sides, and that both dice are otherwise fair.
 They are interested in the probability that the two dice show different
 numbers when they are rolled. What is this probability?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -3166,7 +3166,7 @@ and a snack. If there are \(10\) different drinks, \(8\) possible
 add-ins, and \(12\) different snacks, how many trips to the coffee shop
 will it take until Charles has tried it all?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -3195,7 +3195,7 @@ They are not sure if \(10\) is the correct number of rolls to use. What
 is the probability that they lose on any given set of \(10\) rolls of
 the die in this game?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -3331,7 +3331,7 @@ question.
   seats, with each of these ten drinks, and each of these ten snacks?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -3479,7 +3479,7 @@ themselves, there are only \(7\) patrons in the store, and still the
   previous total change?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -3575,7 +3575,7 @@ were sold.
   selected from the \(10\) total possibilities?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -3632,7 +3632,7 @@ They are curious how these two scenarios differ statistically.
   different between the two versions? Explain.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -3830,7 +3830,7 @@ flushes.
   straights, how do the probabilities of either hand change?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -4355,7 +4355,7 @@ there is a six showing.
   player will be correct.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -4435,7 +4435,7 @@ so \(P(B) < 1\). Instead of the conditional probability being ``out of''
 \(1\), it will instead be ``out of'' \(P(B)\), which gives
 \(P(A|B) = \dfrac{P(A\cap B)}{P(B)}\).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Computing Conditional Probabilities}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Computing Conditional Probabilities}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 For an event \(A\), and an event \(B\) with probability \(P(B) > 0\),
 the conditional probability of \(A\) given \(B\) is
@@ -4486,7 +4486,7 @@ correct conditional probability, and use the formula to show that the
 probabilities worked out in
 Example~\ref{exm-basic-conditional-probability} are correct.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -4604,7 +4604,7 @@ following table.
   each colour?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -4691,7 +4691,7 @@ probability, to solve for the quantities of interest. Because of the
 importance of this procedure, we actually give this mostly
 straightforward rearrangement a special name.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Multiplication Rule}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Multiplication Rule}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 The multiplication rule states that, for two events \(A\) and \(B\)
 where \(P(B) > 0\), \[P(A\cap B) = P(A|B)P(B).\]
@@ -4723,7 +4723,7 @@ with company \(A\), and the rest with company \(B\), which is more
 likely: that the package is late and was sent with \(A\), or that the
 package was late and sent with \(B\)?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -4804,7 +4804,7 @@ To help them reminisce, write down three different partitions of the
 sample space, each with a different number of partitioning sets.
 Describe your partitions using words.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -4880,7 +4880,7 @@ partitioning set, namely \(A \cap B_1\), \(A \cap B_2\), and so forth.}
 
 \end{figure}%
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Law of Total Probability}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Law of Total Probability}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Given a partition, \(B_1, B_2, \dots\), and an event \(A\), the law of
 total probability states that
@@ -4911,7 +4911,7 @@ likely.
 
 What is the probability that the package arrives late?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -4987,7 +4987,7 @@ table.
   with probability \(8/35\), and so forth).
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -5068,7 +5068,7 @@ Taken together this gives a result known as Bayes' Theorem.\footnote{Bayes'
   Frequentist view of statistics accept the math of Bayes' Theorem, and
   use it frequently.}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Bayes' Theorem}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Bayes' Theorem}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that there are two events, \(A\) and \(B\), with \(P(B) > 0\).
 Moreover, suppose that \(A\) taken with \(A_2, A_3, \dots\) forms a
@@ -5168,7 +5168,7 @@ store that Charles ordered from sends out \(10\%\) of packages with
 company \(A\), and the rest with company \(B\), what is the probability
 that the package was delivered by each of the two companies?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -5282,7 +5282,7 @@ independent of \(B\), then \(B\) is independent of \(A\). To check
 whether two events are independent, we check whether their joint
 probability is equal to the product of their marginal probabilities.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Properties of Independence}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Properties of Independence}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Note that if \(A\perp B\), then \(A^C\perp B\), \(A^C\perp B^C\), and
 vice versa. To see this note \[P(A^C, B) + P(A, B) = P(B),\] by the Law
@@ -5440,7 +5440,7 @@ collection. Suppose that Garth has \(100\) games, of which:
   Is it possible that competitive games are independent of heavy games?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -5530,7 +5530,7 @@ that the two of them order in, or that they go out to eat. If we take
 these to be four events, \(A\), \(B\), \(C\), and \(D\), then are any of
 these events independent? Mutually exclusive? Explain.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -5742,7 +5742,7 @@ substitute for direct manipulation of the mathematical objects, but they
 can present insight into the underlying processes where it may be hard
 to derive that insight otherwise.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Law of Total Probability: Contingency Table's Version}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={The Law of Total Probability: Contingency Table's Version}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Recall that the law of total probability states that, if
 \(B_1,\dots,B_n\) forms a partition of the sample space, then
@@ -5820,7 +5820,7 @@ what values were written in for the cells marked \(A\), \(B\), \(C\),
   pyramid.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -5947,7 +5947,7 @@ which are independent, or if any are mutually exclusive.
   independent?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -6468,7 +6468,7 @@ they start.
 Name several distinct random variables which could be observed via the
 described statistical experiment.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -6588,7 +6588,7 @@ Choose a random variable identified in Example~\ref{exm-random-var} and
 indicate its support, as well as possible simple and compound events
 that could be observed in terms of it.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -6637,7 +6637,7 @@ uncountably infinite.
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Countable and Uncountable Sets}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-note-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, title={Countable and Uncountable Sets}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 We say that a set is \textbf{countable} whenever we can enumerate the
 elements of the set using the positive integers. If we have a set with a
@@ -6697,7 +6697,7 @@ List at least one discrete and one continuous random variable that could
 arise via the statistical experiment of watching the cashier at a coffee
 shop over time (as described in Example~\ref{exm-random-var}).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -6801,7 +6801,7 @@ Help to simplify this statistical experiment by first defining a random
 variable, \(X\) which can be used to encode this game and then record
 the probability mass function of \(X\).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -6869,7 +6869,7 @@ actually have all the information required to solve the problem.
 What is the probability mass function, assuming Charles is reading it
 correctly.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -6942,7 +6942,7 @@ by \[p(x) = \dfrac{e^{-3}3^x}{x!},\] where \(x\geq 0\).\footnote{How
 What is the probability that during their bird watching adventure,
 Charles and Sadie see at least \(1\) rare bird?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -7011,7 +7011,7 @@ probability mass function for \(X\) is given by
   one another.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -7076,7 +7076,7 @@ different distributions. In either event, frequently our main concern is
 in summarizing the probabilistic behaviour of two or more random
 quantities.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={A Discussion of Distributional Language}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-note-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, title={A Discussion of Distributional Language}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Note that when we talk of a random variable ``following'' a particular
 distribution, we are saying that the probability mass function of the
@@ -7177,7 +7177,7 @@ with \(0 \leq x \leq 10y\), and \(y \geq 0\).
   and two birds seen?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -7244,7 +7244,7 @@ paper, and scissors respectively, and they take \(Y = -1\), \(Y=0\), and
 What is the joint probability mass function that corresponds to this
 contingency table?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -7327,7 +7327,7 @@ number of scores in the game. Suppose that
   variables independent?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -7363,7 +7363,7 @@ Who is correct, and why? Recall that
 \[p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!},\]
 with \(0 \leq x \leq 10y\), and \(y \geq 0\)
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -7379,7 +7379,7 @@ any pictures.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Equivalent Definition of Independence}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Equivalent Definition of Independence}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 There is an equivalence between the described definition, and a slightly
 more intuitive definition for independence.
@@ -7469,7 +7469,7 @@ conditional distribution of \(X|Y\) can be computed.
   photos are taken?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -7546,7 +7546,7 @@ quantities are likely to be independent (and why).
   by Sadie (\(Y\)).
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -7593,7 +7593,7 @@ theorem to the framework of probability functions. Indeed, each of these
 relationships continues to hold for random variables in much the way
 that would be expected.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Multiplication Rule (with Probability Mass Functions)}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Multiplication Rule (with Probability Mass Functions)}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Translating the multiplication rule to use probability mass functions
 gives \[p_{X,Y}(x,y) = p_{X|Y}(x|y)p_Y(y) = p_{Y|X}(y|x)p_X(x).\] This
@@ -7602,7 +7602,7 @@ probabilities.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Bayes' Theorem (with Probability Mass Functions)}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Bayes' Theorem (with Probability Mass Functions)}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Bayes' Theorem can be rewritten using probability mass functions as
 well. Specifically,
@@ -7656,7 +7656,7 @@ p_Y(y) &= .85\times(0.9)^y(0.1)^{1-y} + 0.075.
   responsible for the late chores. Is that accurate?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -7703,7 +7703,7 @@ law of total probability is frequently cited when manipulating
 probability mass functions. It is a process which is important enough so
 as to warrant its own name: marginalization.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Marginalization}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Marginalization}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 The idea with marginalization is that we are going to take a joint
 probability mass function and \emph{marginalize it}, turning it into a
@@ -7809,7 +7809,7 @@ with \(0 \leq x \leq 10y\), and \(y \geq 0\).
   of \(Y\).
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -7909,7 +7909,7 @@ number of good pictures taken of each bird.
   probability mass function of \((X_1,\dots,X_y)\)?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -8430,7 +8430,7 @@ They find the following
 
 What is the mode for the number of sprinkles on the cupcakes?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -8488,7 +8488,7 @@ mass function for the number of happiness points.
   Is the mode an accurate depiction of the distribution in this setting?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -8560,7 +8560,7 @@ sprinkles on top of the cupcakes, is
 
 What is the median number of sprinkles on the cupcakes?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -8666,7 +8666,7 @@ p_Y(y) &= \begin{cases}
   of the world? Why or why not?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -8758,7 +8758,7 @@ top of the cupcakes, is
 
 What is the mean number of sprinkles?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -8817,7 +8817,7 @@ provided, and so the expected value can be thought of as the expected
 payout of a game of chance where the outcomes are payouts corresponding
 to each probability.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Cost for a Game of Chance}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Cost for a Game of Chance}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that a game of chance is being run. It will cost \(\$m\) to
 play, and the game will pay out values from \(\mathcal{X}\), according
@@ -8942,7 +8942,7 @@ ensure that distributions are always summarized fairly.
   is the mean, median, or mode the best measure of central tendency?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -9014,7 +9014,7 @@ may be aggressive enough to help remember the correct way to compute the
 expectation.\footnote{Some statisticians dislike this name. I find it to
   be rather cute.}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Law of the Unconscious Statistician}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Law of the Unconscious Statistician}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 The law of the unconscious statistician (LOTUS) states that, for a
 random variable \(X\), if we wish to find \(E[g(X)]\), then we compute
@@ -9049,7 +9049,7 @@ specifically, \(Z = 1/X\).
   What is the expected value of \(Z\)?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -9124,7 +9124,7 @@ The distribution Charles provides is \[p_X(x) = \begin{cases}
   \(Y = 1.8X + 32\), what is the expected temperature in Fahrenheit?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -9174,7 +9174,7 @@ captures the complete probabilistic behaviour of a discrete random
 variable, it is only intuitive that some information would be lost with
 a single numeric summary.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Equal Location Across Different Distributions}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Equal Location Across Different Distributions}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Consider the following three distributions for three random variables,
 \(X\), \(Y\), and \(Z\): \begin{align*}
@@ -9280,7 +9280,7 @@ p_Y(y) = \begin{cases}
 What is the range of the random variable \(Y\), representing the number
 of unique ice cream flavors a customer selects at Scoops Galore?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -9325,7 +9325,7 @@ p_Y(y) = \begin{cases}
 What is the range of the random variable \(Y\) now? Does this accurately
 represent the dispersion we expect from \(Y\)?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -9403,7 +9403,7 @@ Using this probability mass function, find \(\zeta(0.25)\),
 \(\zeta(0.5)\), \(\zeta(0.75)\), and \(\zeta(0.99)\). What do each of
 these values mean?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -9508,7 +9508,7 @@ p_Y(y) = \begin{cases}
 What is the interquartile range for this population? How does this
 compare to the range?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -9635,7 +9635,7 @@ p_Y(y) = \begin{cases}
 
 Find the variance and the mean absolute variation for this distribution.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -9743,7 +9743,7 @@ p_Y(y) = \begin{cases}
 
 What is the standard deviation of this random variable?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -9772,7 +9772,7 @@ flips was \(2.56\), greater than the variability in the heights!''
 
 Is Charles correct? Why or why not?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -9796,7 +9796,7 @@ ways that it can be used. Typically, when a variance is needed to be
 calculated the process is to simply compute \(E[X]\) and \(E[X^2]\), and
 then apply this relationship.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Proof of the Variance Identity}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Proof of the Variance Identity}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 To determine the variance identity, we need only remember the definition
 of the variance (being \(E[(X-E[X])^2]\)), and then use summation
@@ -9824,7 +9824,7 @@ the first time seeing their chosen number from throws \(3\) through
 
 What is the expected value and variance of a player playing this game?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -9892,7 +9892,7 @@ perspective, there is no variation around the mean of a constant. It is
 always the same value. As a result, when taking the variance, we know
 that it should be \(0\).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Proof of the Variance of Linear Transformations}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Proof of the Variance of Linear Transformations}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 To calculate the variance of a linear transformation of a random
 variable we can apply the standard identity for the variance, giving
@@ -9944,7 +9944,7 @@ variances. The distribution of daily temperatures, in Celsius, is
   \(Y = 1.8X + 32\), what is the variance of temperatures in Fahrenheit?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -10352,7 +10352,7 @@ works out that
   What is the variance of \(Y\), when \(X=3\)?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -10446,7 +10446,7 @@ this fact, specifically, \(E_Y[E_{X|Y}[X|Y]] = E_X[X]\). This notation
 is not necessary, but it can clarify when there is much going on, and is
 a useful technique to fallback on.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Law of Total Expectation}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Law of Total Expectation}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 For any random quantities, \(X\) and \(Y\), the Law of Total Expectation
 states that \[E[X] = E[E[X|Y]].\] That is, if we first compute the
@@ -10461,7 +10461,7 @@ of the law of total probability, so too can it be easier to first work
 out conditional expectations, and then take the expected value of the
 resulting expression.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Proof of the Law of Total Expectation}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Proof of the Law of Total Expectation}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 To prove that law of total expectation, we note that \(E[X|Y]\) is a
 random function of \(Y\). As a result, we can apply the LOTUS to
@@ -10489,7 +10489,7 @@ for \(x \in \{1,2,3,\dots,10\}\) and \(y \in\{0,1,2,\dots,y\}\), that
 \[p_X(x) = \frac{44800}{854769} \frac{3^x}{x!}, \quad x\in\{1,2,3,\dots,10\},\]
 and that \(E[Y|X] = \frac{3X}{10}\), what is \(E[Y]\)?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -10521,7 +10521,7 @@ This means that we can consider the distribution, and critically the
 expected value of, \(\text{var}(X|Y)\). A core result relating to
 conditional expectations and variances connects these concepts.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Law of Total Variance}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Law of Total Variance}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 For any random variables \(X\) and \(Y\), we can write
 \[\text{var}(X) = E[\text{var}(X|Y)] + \text{var}(E[X|Y]).\] This result
@@ -10542,7 +10542,7 @@ by \(\text{var}(Y|X) = 0.21X\). Sadie has worked hard to find out that
 \[E[X] = \frac{898840}{284923} \quad\text{ and }\quad \text{var}(X) = \frac{214410323010}{81181115929}.\]
 Can Charles use this information to understand \(\text{var}(Y)\)?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -10610,7 +10610,7 @@ probability mass function of \(X\) and \(Y\) is given by
 
 What is the expected number of chocolate bars per house that the visit?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -10669,7 +10669,7 @@ probability distribution of \(X\) given \(Y\).
   sold per visited house.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -10726,8 +10726,8 @@ These make covariances somewhat nicer to deal with than variances, and
 on occasion it may be easier to think of variances as covariances with
 themselves.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Proofs for the Expectation and Variance of Linear Combinations of Random
-Variables}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Proofs for the Expectation and Variance of Linear Combinations of Random
+Variables}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 With \(g(X,Y) = X+Y\), we can consider applying the defining
 relationship for joint expectations. That is \begin{align*}
@@ -10779,7 +10779,7 @@ the probability mass function
   and Sadie?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -10876,7 +10876,7 @@ happens in expectation, and the variability of these trials.
   \(Z\times \sum_{i=1}^n X_i\)?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -11137,7 +11137,7 @@ discrete uniform distribution we also immediately know\footnote{Or, if
   we forget, can lookup.} any of the properties that we have discussed
 up until this point.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Mean and Variance of Discrete Uniform}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Mean and Variance of Discrete Uniform}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Recall that \(E[X]\) is given by
 \[E[X] = \sum_{x\in\mathcal{X}} xp_X(x).\] Thus, if we take \(X\) to be
@@ -11211,7 +11211,7 @@ appropriate, including a description of the parameters.
   exciting!
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -11382,7 +11382,7 @@ appropriate, including a description of the parameter.
   whether it is available.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -11455,7 +11455,7 @@ they got very unlucky.
   \(11\) losses, they would have been present for \(7\) or fewer wins?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -11528,7 +11528,7 @@ appropriate, including a description of the parameters.
   their score will be randomly guessing on those questions.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -11587,7 +11587,7 @@ Once we know this construction, we can use the properties we have
 previously seen about independent random variables to work out the mean
 and variance for the distribution.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Construction of Binomial Random Variables}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Construction of Binomial Random Variables}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that we take
 \(X_1,\dots,X_n \stackrel{iid}{\sim} \text{Bern}(p)\). Then, if we
@@ -11657,7 +11657,7 @@ understand why a Binomial distribution would not be appropriate.
   total number of heads.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -11737,7 +11737,7 @@ darts are going to be needed to be thrown until a triple twenty is hit.
   throws to get a triple twenty?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -11819,7 +11819,7 @@ appropriate, including a description of the parameter.
   they need to visit before they find it in stock.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -11916,7 +11916,7 @@ out \(r\) to make the game fair.
   What is the probability that Sadie wins on the first available turn?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -11998,7 +11998,7 @@ not be) appropriate, including a description of the parameters.
   in order to achieve this.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -12115,7 +12115,7 @@ party, however, it is dark when the socks are being selected.
   at least \(2\) black socks?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -12167,8 +12167,8 @@ though, recall our way of interpreting the expected value.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Hypergeometric Distribution, Binomial Distribution, and Survey
-Sampling}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-note-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, title={The Hypergeometric Distribution, Binomial Distribution, and Survey
+Sampling}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 The hypergeometric is closely linked to the binomial distribution. If we
 consider the population described in the hypergeometric setup then the
@@ -12254,7 +12254,7 @@ be) appropriate, including a description of the parameters.
   investments into transit infrastructure.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -12353,7 +12353,7 @@ just how bad the situation is likely to be.
   first page?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -12435,7 +12435,7 @@ appropriate, including a description of the parameter.
   each day.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -12487,7 +12487,7 @@ overtime, we can find a relevant Poisson distribution to describe these
 occurrences. When we model events in this manner, we refer to it as a
 \textbf{Poisson process}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Poisson Process}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Poisson Process}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that \(X\) counts the number events over a period of time of
 length \(t\). Further suppose that:
@@ -12552,7 +12552,7 @@ needs would be. Based on Sadie's market research, it is expected that
   on average.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -12638,7 +12638,7 @@ This intuition turns out to be correct. The Poisson distribution can be
 thought of as the limiting distribution to the binomial distribution.
 This can be formalized mathematically in the following manner.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Limiting Case of the Binomial}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Limiting Case of the Binomial}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that \(X \sim \text{Bin}(n, \dfrac{\lambda}{n})\), with
 \(E[X] = \lambda\), and probability mass function
@@ -12715,7 +12715,7 @@ shot is \(0.01\).
   truth? Explain.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -13355,7 +13355,7 @@ random variables do not have probability mass functions, and to
 understand the behaviour of these random variables we must us other
 quantities.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Singleton Probabilities with Continuous Random Variables}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-note-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, title={Singleton Probabilities with Continuous Random Variables}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 While the fact that \(P(X=x) = 0\) may seem unintuitive at first glance,
 it is worth exploring this even further. The nature of a continuous
@@ -13501,7 +13501,7 @@ any point during this interval.
   than \(13\) minutes for the bus?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -13611,7 +13611,7 @@ considering is said to have a lifetime (in hours) governed by
   \(8000\) hours?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -13753,7 +13753,7 @@ giving the probability density function for three different busses.
   Describe the behaviour of each of the three buses.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -13832,7 +13832,7 @@ draws a rough sketch of the density function that is expected.
   minutes?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -13901,7 +13901,7 @@ be, but does not itself give probabilities. In order to get specific
 probabilities from the probability density function, we need to use the
 area under the curve.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Calculating Probabilities with Probability Density Functions}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Calculating Probabilities with Probability Density Functions}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that we wish to calculate \(P(X \in (a, b))\) for a continuous
 random variable \(X\) with probability density function \(f(x)\). This
@@ -13923,7 +13923,7 @@ properties stem, fundamentally, from the requirements (under the axioms
 of probability) that \(P(E) \geq 0\) for all events and
 \(P(\mathcal{S}) = 1\).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Properties of a Probability Density Function}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Properties of a Probability Density Function}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -13991,7 +13991,7 @@ arrivals.
   minutes?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -14135,7 +14135,7 @@ are otherwise interpreted in the same manner as well. Notably, this
 means that the Law of the Unconscious Statistician holds in the
 continuous case.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Law of the Unconscious Statistician}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Law of the Unconscious Statistician}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 The law of the unconscious statistician (LOTUS) states that, for a
 random variable \(X\), if we wish to find \(E[g(X)]\), then we compute
@@ -14146,7 +14146,7 @@ random variable \(X\), if we wish to find \(E[g(X)]\), then we compute
 Using the continuous version of the LOTUS, we can define the following
 quantities which parallel their discrete counterparts.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Expected Value of a Linear Transformation}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Expected Value of a Linear Transformation}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 If \(a\) and \(b\) are arbitrary real numbers then,
 \[E[aX + b] = aE[X] + b.\]
@@ -14162,14 +14162,14 @@ variable from its mean. That is,
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Computing the Variance}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Computing the Variance}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 The variance of a random variable, \(X\), can be computed as
 \[\text{var}(X) = E[(X - E[X])^2] = E[X^2] - E[X]^2.\]
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Variance of a Linear Transformation}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Variance of a Linear Transformation}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 If \(a\) and \(b\) are arbitrary real numbers then,
 \[\text{var}[aX + b] = a^2\text{var}(X).\]
@@ -14213,7 +14213,7 @@ yield (in pounds) is given by
   in kilograms (note, \(1\) kilogram is \(2.2\) pounds).
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -14336,7 +14336,7 @@ density function for single plant potato yield (in pounds) is given by
   plant?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -14425,7 +14425,7 @@ conclusions about the process!\footnote{In
   What is the variance for the amount of time that they will be waiting?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -14623,7 +14623,7 @@ cumulative distribution function of a standard normal random variable.
   \(90\)cm. What is the probability that plant \(D\) will work?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -14699,7 +14699,7 @@ the family remain quite similar. This enables the derivation of an easy,
 approximate result, to help intuitively gauge the probabilities of
 normal events.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Empirical Rule}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Empirical Rule}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 The empirical rule is a mathematical result regarding the probability of
 a normally distributed random variable. If \(X\) has a normal
@@ -14761,7 +14761,7 @@ cannot make direct calculations using \(\Phi(z)\). Can you help them,
 without using a normal probability calculator, determine which plant has
 the highest probability of being acceptable?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -14826,7 +14826,7 @@ weaker result is Chebyshev's Inequality. This will hold for \emph{any}
 distribution, and can be seen as a useful extension to the empirical
 rule.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Chebyshev's Inequality}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Chebyshev's Inequality}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Chebyshev's Inequality provides probabilistic bounds on the likelihood
 of deviating from the mean for any random variable. In words, there is a
@@ -14869,7 +14869,7 @@ certain that the plant will fit. If they are, they will buy it!
   distributed, should they buy the plant?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -14920,7 +14920,7 @@ variables will also be normally distributed. This extends beyond two in
 the natural way, simply by applying and reapplying the rule (as many
 times as is required).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Closure of the Normal Distribution}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Closure of the Normal Distribution}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that \(X_1, \dots, X_n\) are all independent, with each
 \(X_i \sim N(\mu_i, \sigma_i^2)\). Then the summation
@@ -15066,7 +15066,7 @@ approximation to the binomial.
   bound is \(0.95\)).
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -15233,7 +15233,7 @@ They begin to investigate these errors.
   greater than \(2\) grams, compared with (a)? Explain.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -15329,7 +15329,7 @@ years.
   before needing to be replaced?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -15369,7 +15369,7 @@ exponentially distributed with the same parameter, with the current time
 being counted as zero. That is, the process seems to not have any memory
 of the elapsed duration.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Memoryless Property of an Exponential}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Memoryless Property of an Exponential}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that \(X \sim \text{Exp}(\lambda)\). Then, for any real numbers
 \(t \geq s \geq 0\), \[P(X \geq t | X \geq s) = P(X \geq t - s).\] In
@@ -15390,7 +15390,7 @@ Thus, if we know the component has been in service for \(10\) years and
 is still functioning, then it will be equally likely that it will last
 to \(18\) years as it was to have lasted to \(10\) from the start.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Proof of the Memoryless Property}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Proof of the Memoryless Property}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Note that the memoryless property can be proved using our standard
 notions of joint and conditional probabilities. Specifically, suppose
@@ -15431,7 +15431,7 @@ functioning) for a total of \(12\) years so far.
   setting? Explain.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -15482,7 +15482,7 @@ a Poisson distribution, however, the time between any two consecutive
 events will follow an exponential distribution, with the same rate
 parameter.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Interarrival Times for a Poisson Process}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Interarrival Times for a Poisson Process}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that \(X\) follows a Poisson process with rate \(\alpha\). Then
 the time between any two successive events will be distributed according
@@ -15514,7 +15514,7 @@ was open \(8\) hours a day, \(7\) days a week.
   one finally arrives?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -16445,7 +16445,7 @@ prescriptive statistical techniques.
   grow the royalty program faster.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -16587,7 +16587,7 @@ conceptual population.
   Commuters in Metropolitan Areas in Canada''
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -16750,7 +16750,7 @@ the relevant statistic.
   students at the local school, each day.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -16951,7 +16951,7 @@ simple random sample of possible orders.
   orders included in the simple random sample?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -17117,7 +17117,7 @@ arriving in a day, and they wish to sample \(10\) of them.
   What is a risk of this sampling design?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -17229,7 +17229,7 @@ city is made up of \(947\) blocks, each with \(20\) homes on it.
   What issues may arise using clustered sampling in this way?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -17373,7 +17373,7 @@ approximately \(75\) from this population.
   natural strata?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -17548,7 +17548,7 @@ the plants.
   be relevant to Sadie's question of interest.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -17674,7 +17674,7 @@ design.
 
 Describe how this experiment can proceed as outlined by Sadie.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -17778,7 +17778,7 @@ exposure (direct sun exposure, versus indirect sun exposure, versus
 artificial light exposure), how can a randomized block design to perform
 this experiment?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -17945,7 +17945,7 @@ and specify whether the quantitative are discrete or continuous.
   might measure the quality of food.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -18876,7 +18876,7 @@ it is done so in a way to highlight the key features of the larger
 dataset. The other alternative is to use graphical displays of
 information.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Connection between Data and Random Variables}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-note-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, title={The Connection between Data and Random Variables}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 We previously thought of the collection and generation of data through
 both sampling and experimental design. The idea was that there was a
@@ -18991,7 +18991,7 @@ these plots essentially out-of-use. Rather than spend time learning or
 constructing these, we will instead focus on plots which remain in
 frequent use.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Historic Utility of Data Visualizations}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={The Historic Utility of Data Visualizations}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Throughout history there have been many prominent illustrations of the
 utility of data visualizations. Two prominent examples that come to mind
@@ -19222,7 +19222,7 @@ Based on these data:
   What is the most common order in the population?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -19322,7 +19322,7 @@ Based on this plot, answer the following questions.
   Describe the overall frequency distribution.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -19406,7 +19406,7 @@ Using these data\footnote{Horst AM, Hill AP, Gorman KB (2020).
   distributions.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -19609,7 +19609,7 @@ Based on these data, answer the following questions.
   Is data binning required for this frequency distribution? Describe.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -19727,7 +19727,7 @@ Based on these data, answer the following questions.
   Write down the frequency distribution.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -19847,7 +19847,7 @@ produce histograms for the totals, as seen here.
   these data? Explain.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -20058,7 +20058,7 @@ a good reason to do so. If you envision drawing a smooth line over the
 full distribution of data, the modal points will come where you draw the
 crests of the hills.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Identifying the Modality of Distributions}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Identifying the Modality of Distributions}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 \subsection*{Unimodal}\label{unimodal}
 \addcontentsline{toc}{subsection}{Unimodal}
@@ -20150,7 +20150,7 @@ whether the lack of symmetry (or skewness) can be explained based on
 some particular values, and if the remaining data exhibit a more
 predictable pattern.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Identifying the Skewness of a Distribution}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Identifying the Skewness of a Distribution}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 To identify whether data are symmetric, right-skewed, or left-skewed,
 you consider the beahviour of the tails.
@@ -20224,7 +20224,7 @@ histograms are provided below.
   Indicate any difficulties in describing these distributions.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -20460,7 +20460,7 @@ these points, considering the measures of central tendency of them.
   Explain.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -20553,7 +20553,7 @@ describe why it is not possible to tell.
   \pandocbounded{\includegraphics[keepaspectratio]{graphics/ch11-heart-rate.png}}
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -20750,7 +20750,7 @@ Sadie decides to help out by computing measures of sample variability.
   What is the variance of the bill lengths? Explain.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -20930,7 +20930,7 @@ Sample & Min & Q1 & Median & Q3 & Max \\
   possible.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -21051,7 +21051,7 @@ following boxplots are given for:
 
 \end{figure}%
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -21892,7 +21892,7 @@ they go around asking each individual their thoughts on ketchup.
   dislike ketchup? Explain.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -22067,7 +22067,7 @@ the following chart.
   What conclusions can be drawn?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -22161,7 +22161,7 @@ whether it is possible to determine \(E[\overline{X}]\) and
 the sampling distribution and the latter are the parameters of the
 population distribution.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Mean and Variance for the Sampling Distribution of the Sample Mean}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Mean and Variance for the Sampling Distribution of the Sample Mean}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Using the properties of expectation and variance of independent and
 identically distributed samples discussed in
@@ -22297,7 +22297,7 @@ species in the wild.
   same standard error of the sample mean?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -22334,8 +22334,8 @@ species in the wild.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Chebyshev's Inequality and Bounds on the Sampling Distribution of the
-Sample Mean}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Chebyshev's Inequality and Bounds on the Sampling Distribution of the
+Sample Mean}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that the population variance is known but that the population
 mean is unknown. Moreover, the population distribution is unknown. In
@@ -22408,7 +22408,7 @@ result, will be normally distributed itself. That is, whenever the
 population distribution is normally distributed, the sampling
 distribution of the sample mean will also be normally distributed.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Sampling Distribution of the Sample Mean in Normal Populations}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Sampling Distribution of the Sample Mean in Normal Populations}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that a population is normally distributed with mean \(\mu\) and
 variance \(\sigma^2\). Then, supposing a random sample is taken
@@ -22480,7 +22480,7 @@ the population.
   \(1020.375\) and \(1051.625\)?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -22537,7 +22537,7 @@ have a distribution that is approximately normal. This statement is
 known as the \textbf{Central Limit Theorem}, and it sits at the heart of
 many of the results we will leverage for inferential statistics.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Central Limit Theorem (CLT)}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Central Limit Theorem (CLT)}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that \(X\) is drawn from a population with mean \(\mu\) and
 variance \(\sigma^2\), but an otherwise unspecified distribution. If a
@@ -22639,7 +22639,7 @@ Instead, they learn that
   are no longer justified? Why?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -23268,7 +23268,7 @@ pounds.
   function for the sampling distribution of the estimator.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -23398,7 +23398,7 @@ this population through the use of samples.
   the sampling distribution and the population distribution.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -23583,7 +23583,7 @@ determine which estimator is preferable based on the bias alone.
   \(\overline{X}^2\).
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -23641,7 +23641,7 @@ In a normal population, Charles and Sadie both want to estimate
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={A Note on Variance Estimation}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-note-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, title={A Note on Variance Estimation}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 The standard technique for computing the sample variance is to take
 \[\widehat{\sigma}^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X})^2.\]
@@ -23767,7 +23767,7 @@ distribution.
   this general estimator compare to the sample mean?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -23901,7 +23901,7 @@ variance. However, even when the bias of the estimator is non-zero, the
 MSE still balances the bias and the variance of the estimator. This is
 best seen through the bias-variance decomposition.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Bias-Variance Decomposition}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Bias-Variance Decomposition}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 The mean squared error of an estimator can be decomposed such that
 \[\text{MSE}(\widehat{\theta}) = \text{Bias}(\widehat{\theta})^2 + \text{var}(\widehat{\theta}).\]
@@ -23954,7 +23954,7 @@ somewhere that, in a normal population, the variance of \(S^2\) is
   Which of the three estimators is quantitatively the best?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -24123,7 +24123,7 @@ estimators that they have been studying, \(S^2\), \(S_{n}^2\), and,
 
 What may the arguments include?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -24242,7 +24242,7 @@ corresponding population moments, and that the corresponding population
 moments are functions of the unknown parameter \(\theta\). This
 motivates the method of moments estimation procedure.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Method of Moments Procedure}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Method of Moments Procedure}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Suppose that a population is characterized by an unknown parameter,
 \(\theta\). Suppose that \(\theta\) has \(L\) components. The goal is to
@@ -24294,7 +24294,7 @@ sample of \(5\) observations.
   estimated values for \(\mu\) and \(\sigma^2\)?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -24352,7 +24352,7 @@ will be reported.
   moments estimate?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -25008,7 +25008,7 @@ in minutes.
 Given this information, what is the equivalent interval for the time per
 car through their car wash?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -25115,7 +25115,7 @@ help of Sadie, they determine three possible intervals:
   confidence interval for Charles to use? Explain.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -25231,7 +25231,7 @@ following questions.
   How does this relate to the confidence interval interpretation?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -25361,7 +25361,7 @@ together. Help them out by answering their questions, with explanations.
   What does it actually mean?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -25475,8 +25475,8 @@ Z_{(1-p)/2}\frac{\sigma}{\sqrt{n}} + \mu &\leq \overline{X} \\
 These two bounds give rise to the confidence intervals for the mean of a
 normal population, when \(\sigma\) is known.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Confidence Intervals for the Mean (Known \(\sigma\) in a Normal
-Population)}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Confidence Intervals for the Mean (Known \(\sigma\) in a Normal
+Population)}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 If a population is known to be normally distributed, with a known
 population standard deviation, \(\sigma\), then a \(100p\%\) confidence
@@ -25487,7 +25487,7 @@ This is often expressed as
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Common Normal Critical Values}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={Common Normal Critical Values}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 When introducing the normal distribution, we discussed the percentiles
 of the normal as normal critical values. We discussed how these can be
@@ -25551,7 +25551,7 @@ been: \[33.2, \ 29.6, \ 29.7, \ 31.7, \ 29.1.\]
   interval? Explain.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -25597,8 +25597,8 @@ procedure can be followed, this time needing the critical values from
 the \(t_{n-1}\) distribution rather than the standard normal
 distribution.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Confidence Intervals for the Mean (Unknown \(\sigma\) in a Normal
-Population)}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Confidence Intervals for the Mean (Unknown \(\sigma\) in a Normal
+Population)}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 If a population is known to be normally distributed, with an unknown
 population standard deviation, then a \(100p\%\) confidence interval for
@@ -25635,7 +25635,7 @@ still feels reasonable.
   confidence interval in this case? A \(99\%\) one?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -25695,7 +25695,7 @@ procedures outlined above. Note that doing so will not give
 \textbf{approximate} confidence intervals. These are often reliable
 enough in practice.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Approximate Confidence Intervals for the Mean}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Approximate Confidence Intervals for the Mean}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 For a sufficiently large sample size, such that Central Limit Theorem
 applies, a a \(100p\%\) confidence interval for the mean is given by
@@ -25732,7 +25732,7 @@ previously Sadie had recorded \(5\) nap lengths for Charles, giving
   this to write down an approximate \(95\%\) confidence interval.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -25780,7 +25780,7 @@ rather than the \(t\) values.\footnote{Note that, for large \(n\) these
   different results, however, the \(Z\) values are justified in this
   setting.}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Approximate Confidence Intervals for a Proportion}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Approximate Confidence Intervals for a Proportion}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 For a sufficiently large sample size, such that Central Limit Theorem
 applies, a a \(100p\%\) confidence interval for a proportion is given by
@@ -25816,7 +25816,7 @@ In order to do so, we would first want to find an interval around
 interval. This relies on knowledge of the sampling distribution of
 \(S^2\).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Sampling Distribution of \(S^2\)}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-note-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, title={The Sampling Distribution of \(S^2\)}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 If the population is normally distributed, with mean \(\mu\) and
 variance \(\sigma^2\), then the sampling distribution of
@@ -25842,7 +25842,7 @@ as the upper bound on the confidence interval, and
 \[\frac{(n-1)S^2}{\sigma^2} \leq \chi^2_{n-1,1-(1-p)/2} \implies L(S^2) = \frac{(n-1)S^2}{\chi^2_{n-1,1-(1-p)/2}} \leq \sigma^2,\]
 as the lower bound.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Confidence Intervals for the Sample Variance}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Confidence Intervals for the Sample Variance}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 For a normally distributed population, a confidence interval for the
 variance is formed by taking
@@ -25917,7 +25917,7 @@ supplier, Charles takes the following measurements:
   deviation? Is this exact? Explain.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -26049,7 +26049,7 @@ approximately \(4\).
   with \(95\%\) confidence?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -26872,7 +26872,7 @@ to \(3\)) or low (less than or equal to \(3\)).
   die?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -27066,7 +27066,7 @@ reasonable for the following questions.
   survive.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -27261,7 +27261,7 @@ significance levels, and justify these choices to one another.
   help revitalize the ecosystem.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -27299,7 +27299,7 @@ less than (c).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Historical Case for \(\alpha = 0.05\)}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={The Historical Case for \(\alpha = 0.05\)}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 There is a long tradition, one which persists across many fields today,
 of taking \(\alpha = 0.05\), regardless of the situation. This tendency
@@ -27500,7 +27500,7 @@ based on the given information in the following.
   infected.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -27625,7 +27625,7 @@ given hypothesis test.
   they require a significance level of \(\alpha = 0.01\).
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -27762,7 +27762,7 @@ do this both using \(p\)-values and critical values.
   infected. They wish to use \(\alpha = 0.01\) level of significance.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -27991,7 +27991,7 @@ level of significance or a high power for the corresponding tests.
   this dramatically.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, rightrule=.15mm, breakable, bottomrule=.15mm, left=2mm, toprule=.15mm, leftrule=.75mm, opacityback=0, colback=white, colframe=quarto-callout-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-color-frame, left=2mm, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, colback=white, opacityback=0, breakable]
 
 \vspace{-3mm}\textbf{Solution}\vspace{3mm}
 
@@ -28101,8 +28101,8 @@ the critical values would fall had \(\alpha = 0.01\) been used instead.}
 
 \end{figure}%
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={\(Z\) Tests for Population Means in Normal Populations with Known
-Variances}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={\(Z\) Tests for Population Means in Normal Populations with Known
+Variances}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 If data are selected from a normal population, with a known variance,
 then the \textbf{\(Z\) test} is the most common test to apply for
@@ -28174,7 +28174,7 @@ been used instead.}
 
 \end{figure}%
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={\(t\) Tests for Population Means in Normal Populations or Large Samples}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={\(t\) Tests for Population Means in Normal Populations or Large Samples}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 If data are selected from a normal population, or from a non-normal
 population with a sufficiently large sample size, with an unknown
@@ -29355,7 +29355,7 @@ intervals for \(\widehat{\Delta}\) can be formed using the \(t\)
 distribution, following the same procedure as our other \(t\)
 distribution confidence intervals.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Confidence Intervals for Differences of Means in Independent Populations}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Confidence Intervals for Differences of Means in Independent Populations}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 If we wish to estimate the difference of two population means,
 \(\mu_X - \mu_Y\), from populations that are independent of one another,
@@ -29383,7 +29383,7 @@ variance will remain unchanged. Then, depending on whether the variances
 are assumed to be known, or not, we can use a \(Z\)-test or a \(t\)-test
 for hypothesis testing.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Hypothesis Tests for Differences of Means in Independent Populations}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Hypothesis Tests for Differences of Means in Independent Populations}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 If we have data selected from two, independent populations (denoted
 \(X_1,\dots,X_n\) and \(Y_1,\dots,Y_m\)), and we wish to test hypotheses
@@ -29508,8 +29508,8 @@ normally distributed. Supposing that we are willing to assume that
 This sampling distribution allows for the construction of approximate
 confidence intervals for the difference in proportions.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Confidence Intervals for Differences of Proportions in Independent
-Populations}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Confidence Intervals for Differences of Proportions in Independent
+Populations}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 To estimate the difference of two population proportions, \(p_X - p_Y\),
 from populations that are independent of one another, we can form
@@ -29545,8 +29545,8 @@ expression is not easily maximized over \(p\). Without careful choice of
 we wish to test \(H_0: p_X - p_Y = c\), for any \(c \neq 0\), then we
 require alternative procedures, not relying on the normal approximation.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Hypothesis Tests for Equality of Proportions in Two Independent
-Populations}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Hypothesis Tests for Equality of Proportions in Two Independent
+Populations}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 To test \(H_0: p_X - p_Y = 0\) versus the alternative
 \(H_A: p_X - p_Y \neq 0\), using data from two independent populations,
@@ -29652,7 +29652,7 @@ be good reason to suppose that \(X\) and \(Y\) really are paired, and
 that they should be analyzed in this manner, as otherwise the
 \(p\)-values may be artificially deflated.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Confidence Intervals for Differences of Means in Paired Populations}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Confidence Intervals for Differences of Means in Paired Populations}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 To estimate the difference of two population means, \(\mu_X - \mu_Y\),
 from populations that are paired with one another, we can form
@@ -29676,7 +29676,7 @@ by
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Hypothesis Tests for Differences of Means in Paired Populations}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Hypothesis Tests for Differences of Means in Paired Populations}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 If we have data selected from two, paired populations (denoted
 \(X_1,\dots,X_n\) and \(Y_1,\dots,Y_m\)), to test hypotheses relating to
@@ -30396,7 +30396,7 @@ This assumption is \textbf{not} necessary for the estimation of the
 regression parameters, \(\beta_0\) and \(\beta_1\), but it will be
 useful if we wish to conduct inference regarding the parameters.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={A Note on the Randomness of \(X\)}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={A Note on the Randomness of \(X\)}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Many authors will discuss linear regression under the assumption that
 \(X\) is nonrandom. That is, they suppose that \(Y\) is a random
@@ -30500,7 +30500,7 @@ derived. In the case of linear regression, the estimators
 \(\widehat{\beta}_0\) and \(\widehat{\beta}_1\) take on a specific form,
 based on the observed data.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Ordinary Least Squares Estimators for Simple Linear Regression}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Ordinary Least Squares Estimators for Simple Linear Regression}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 In a simple linear regression, based on observed data
 \(\{(x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)\}\), the ordinary least
@@ -30514,7 +30514,7 @@ by the \emph{sample variance} of \(x\). Namely, the sample covariance is
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={\(\int\): The Least Squares Derivation for the Simple Linear Regression}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-warning-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, title={\(\int\): The Least Squares Derivation for the Simple Linear Regression}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 In order to derive the least squares estimator for the simple linear
 regression, we require the use of multivariate differential calculus.
@@ -30609,7 +30609,7 @@ when the predictor is \(0\), and we interpret \(\widehat{\beta}_1\) as
 an estimate of the average change in the outcome for a \(1\) unit
 increase in the predictor.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Interpretations of the Parameters in a Simple Linear Regression}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Interpretations of the Parameters in a Simple Linear Regression}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Consider a simple linear regression model, specified by
 \[E[Y|X=x] = \beta_0 + \beta_1 x.\]
@@ -30726,7 +30726,7 @@ distribution of the errors. These sampling distributions can be used to
 construct confidence intervals for the parameters, or to conduct
 hypothesis tests regarding their values.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Sampling Distribution for Simple Linear Regression Estimators}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Sampling Distribution for Simple Linear Regression Estimators}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Assuming the linear model for a simple linear regression holds, and that
 the error variances are homogenous with a variance of \(\sigma^2\), then
@@ -30903,8 +30903,8 @@ parameters and so \[\text{MSE} = \frac{\text{SSE}}{n-2}.\]
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={The Sampling Distribution for Simple Linear Regression Estimators
-(Estimated Variance)}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={The Sampling Distribution for Simple Linear Regression Estimators
+(Estimated Variance)}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 Assuming the linear model for a simple linear regression holds, and that
 the error variances are homogenous with a variance of \(\sigma^2\) that
@@ -31120,7 +31120,7 @@ The relevant sampling distribution will still be normal, supposing that
 \(\sigma^2\) is known, or else a \(t_{n-2}\) if the MSE is used as an
 estimate for \(\sigma^2\).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title={Prediction Interval for an Estimated Outcome}, rightrule=.15mm, coltitle=black, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colback=white, breakable, titlerule=0mm, toptitle=1mm, bottomtitle=1mm, bottomrule=.15mm, toprule=.15mm, opacityback=0, left=2mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, toprule=.15mm, arc=.35mm, bottomrule=.15mm, rightrule=.15mm, coltitle=black, opacityback=0, breakable, left=2mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, title={Prediction Interval for an Estimated Outcome}, bottomtitle=1mm, colback=white, opacitybacktitle=0.6, toptitle=1mm]
 
 When estimating the value of an outcome, \(y\), based on an observed
 predictor, \(x\), the \(100(1-\alpha)\%\) prediction interval, taking
