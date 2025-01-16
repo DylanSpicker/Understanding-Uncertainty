@@ -1167,7 +1167,7 @@ Solution
 <p>A core goal is then bridging the gap between the probability of an outcome<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and the probability of an event. In order to do so, we will next consider the rules of probability, introducing properties that are required for valid probability assignments, and the techniques for manipulating probabilities to calculate the probabilities of quantities of interest.</p>
 <section id="using-r-for-the-equally-likely-probability-model" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="using-r-for-the-equally-likely-probability-model"><span class="header-section-number">3.1.1</span> Using R for the Equally Likely Probability Model</h3>
-<p>In the previous chapter we saw how we can codify sample spaces and events using vectors in R. In the introduction we actually saw how can sample from a sample space using the equally likely outcome framework. Specifically, an application of the <code>sample</code> function will draw a set number of values from a sample space, giving each value an equal probability to be drawn.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>In the previous chapter we saw how we can codify sample spaces and events using vectors in R. In the introduction we actually saw how we can sample from a sample space using the equally likely outcome framework. Specifically, an application of the <code>sample</code> function will draw a set number of values from a sample space, giving each value an equal probability to be drawn.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <div id="qwebr-insertion-location-1"></div>
 <script type="module">
 // Retrieve the insertion point
@@ -1259,7 +1259,7 @@ Solution
 <li><strong>Null Event:</strong> <span class="math inline">\(P(\emptyset) = 0\)</span>.</li>
 <li><strong>Arbitrary Unions (Two Events):</strong> <span class="math inline">\(P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1\cap E_2)\)</span>.</li>
 <li><strong>Arbitrary Unions (Three Events):</strong> <span class="math display">\[\begin{multline*}P(E_1 \cup E_2 \cup E_3) = P(E_1) + P(E_2) + P(E_3) - P(E_1\cap E_2) - P(E_1 \cap E_3) \\ - P(E_2 \cap E_3) + P(E_1 \cap E_2 \cap E_3).\end{multline*}\]</span></li>
-<li><strong>Containment:</strong> If <span class="math inline">\(E_1 \subset E_2\)</span> then <span class="math inline">\(P(E_1) \leq P(E_2)\)</span>.</li>
+<li><strong>Containment:</strong> If <span class="math inline">\(E_1 \subseteq E_2\)</span> then <span class="math inline">\(P(E_1) \leq P(E_2)\)</span>.</li>
 </ol>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
