@@ -34,7 +34,7 @@ It is critically important to recognize that the equal probability model assigns
 A core goal is then bridging the gap between the probability of an outcome^[A quantity which in the equally likely outcome framework, we know exactly.] and the probability of an event. In order to do so, we will next consider the rules of probability, introducing properties that are required for valid probability assignments, and the techniques for manipulating probabilities to calculate the probabilities of quantities of interest.
 
 ### Using R for the Equally Likely Probability Model
-In the previous chapter we saw how we can codify sample spaces and events using vectors in R. In the introduction we actually saw how can sample from a sample space using the equally likely outcome framework. Specifically, an application of the `sample` function will draw a set number of values from a sample space, giving each value an equal probability to be drawn.^[The `sample` function can also be used without equally likely events by specifying a vector of probabilities, however, this is a less common use case.] 
+In the previous chapter we saw how we can codify sample spaces and events using vectors in R. In the introduction we actually saw how we can sample from a sample space using the equally likely outcome framework. Specifically, an application of the `sample` function will draw a set number of values from a sample space, giving each value an equal probability to be drawn.^[The `sample` function can also be used without equally likely events by specifying a vector of probabilities, however, this is a less common use case.] 
 
 
 ::: {.content-visible when-format='pdf'}
@@ -126,7 +126,7 @@ Using the previously indicated axioms of probability we are able to derive many 
 2. **Null Event:** $P(\emptyset) = 0$.
 3. **Arbitrary Unions (Two Events):** $P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1\cap E_2)$.
 4. **Arbitrary Unions (Three Events):** \begin{multline*}P(E_1 \cup E_2 \cup E_3) = P(E_1) + P(E_2) + P(E_3) - P(E_1\cap E_2) - P(E_1 \cap E_3) \\ - P(E_2 \cap E_3) + P(E_1 \cap E_2 \cap E_3).\end{multline*}
-5. **Containment:** If $E_1 \subset E_2$ then $P(E_1) \leq P(E_2)$. 
+5. **Containment:** If $E_1 \subseteqE_2$ then $P(E_1) \leq P(E_2)$. 
 
 :::{.callout-warning icon="false" collapse="true"}
 ## Proofs of the Secondary Properties of Probability

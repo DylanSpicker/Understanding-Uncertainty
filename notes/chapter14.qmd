@@ -569,7 +569,10 @@ a. $t_{0.005, 40}$.
 :::
 
 :::{#exr-14.24}
-A sample of $14$ joint specimens of a particular type gave a sample mean proportional limit stress of $8.48$ MPa and a sample standard deviation of $0.79$ MPa. Calculate and interpret a $95\%$ confidence interval for the true average proportional limit stress. 
+A sample of $14$ joint specimens of a particular type gave a sample mean proportional limit stress of $8.48$ MPa and a sample standard deviation of $0.79$ MPa. 
+
+a. Calculate and interpret a $95\%$ confidence interval for the true average proportional limit stress. 
+b. Suppose that it is later determined that the true, population standard deviation is $3.1804$ MPa. What is the coverage probability of an interval formed using the interval estimator in (a)?
 
 :::
 
@@ -603,7 +606,8 @@ The following output is generated from statistical software computing the confid
 | $X$ | $10$ | $6.59635$ | $0.11213$ | $0.03546$ | $(6.51513, 6.67656)$ |
 
 a. How many degrees of freedom does the $t$ distribution have?
-a. Using the information in the table, find a $99\%$ confidence interval for the mean.
+b. Using the information in the table, find a $99\%$ confidence interval for the mean.
+c. Suppose that the population standard deviation is determined to be $0.3$. What is the coverage probability of the interval estimator from part (b)?
 :::
 
 :::{#exr-14.31}
@@ -627,4 +631,8 @@ The amount of lateral expansion was determined for a sample of $n=9$ pulsed-powe
 
 :::{#exr-14.34}
 Wire electrical-discharge machining (WEDM) is a process used to manufacture conductive hard metal components. IT uses a continuously moving wire that serves as an electrode. Coating on the wire electrode allows for cooling of the wire electrode core and provides an improved cutting performance. A sample of eight wire electrodes used had a coating layer thickness measured as: $21$, $16$, $29$, $35$, $42$, $24$, $24$, and $25$. Find a $99\%$ CI for the standard deviation of the coating layer thickness. Is this a valid interval? 
+:::
+
+:::{#exr-14.35}
+Suppose that a group of researchers decides to estimate the interval for a population proportion by taking $\widehat{p} \pm \frac{1}{n}$. If the sample size is large enough to use the normal approximation, what is the approximate coverage probability of this interval?
 :::
