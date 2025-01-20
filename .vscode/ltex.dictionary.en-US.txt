@@ -12,3 +12,4 @@ frequentism
 subjectivist
 Bayesians
 logicals
+nonparametric

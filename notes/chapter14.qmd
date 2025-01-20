@@ -8,7 +8,7 @@ The primary concern with point estimation is that, regardless of the procedure w
 An interval estimator is a mathematical procedure (function) that takes in observable data (from a sample) and outputs an estimated range for a parameter value. Interval estimators are specific to the parameter that they are attempting to estimate.
 :::
 
-There are several different types of interval estimators, including confidence intervals, credible intervals, likelihood intervals, and prediction intervals. Confidence intervals are rooted in frequentist probability theory, the framework we have been exploring throughout, and will serve as the primary focus of this chapter.^[Credible intervals are similar to confidence intervals, but approached through the Bayesian paradigm. Likelihood intervals are related to maximum likelihood estimation, and provide a rather interpretable framework for interval estimation. Prediction intervals, as the name suggests, are related to predictive statistics and allow the uncertainty of predictions to be quantified.] With any interval estimator the goal is to not only provide an estimate of the likely value of a parameter, but also to quantify the uncertainty around this estimate. Providing the interval communicates that, while it is suspected that the parameter is near the point estimate, it is not possible to be entirely sure of exactly where. When reported intervals are more narrow, there is a higher level of precision attributed to the estimate. When reported intervals are wider, there is less certainty ascribed to the estimate. As a result, interval estimates convey a significant amount of information about the parameter, and the estimation procedure that was used.
+There are several types of interval estimators, including confidence intervals, credible intervals, likelihood intervals, and prediction intervals. Confidence intervals are rooted in frequentist probability theory, the framework we have been exploring throughout, and will serve as the primary focus of this chapter.^[Credible intervals are similar to confidence intervals, but approached through the Bayesian paradigm. Likelihood intervals are related to maximum likelihood estimation, and provide a rather interpretable framework for interval estimation. Prediction intervals, as the name suggests, are related to predictive statistics and allow the uncertainty of predictions to be quantified.] With any interval estimator the goal is to not only provide an estimate of the likely value of a parameter, but also to quantify the uncertainty around this estimate. Providing the interval communicates that, while it is suspected that the parameter is near the point estimate, it is not possible to be entirely sure of exactly where. When reported intervals are more narrow, there is a higher level of precision attributed to the estimate. When reported intervals are wider, there is less certainty ascribed to the estimate. As a result, interval estimates convey a significant amount of information about the parameter, and the estimation procedure that was used.
 
 ## Confidence Intervals in General
 Ideally, we would like to be able to form an interval that has a direct probability statement associated with it. For instance, we may wish to form an interval, $(a, b)$, such that $P(\theta \in (a, b))$ is known explicitly. Unfortunately, in the frequentist paradigm, $\theta$ is not a random quantity. The statement $P(\theta \in (a, b))$ is akin to writing $P(2 \in (4, 6))$: this probability is either $0$ or it is $1$.^[In this case, it is zero since $2$ is not in the interval $(4, 6)$.] We need to hold in mind that the uncertainty in estimation does not stem from the parameter value, $\theta$, and instead stems from the estimator, $\widehat{\theta}$ (and its sampling distribution).
@@ -62,7 +62,7 @@ b. Which of these intervals is the best to take as the basis of a confidence int
 ## Solution
 
 a. Note that the next $9$ rugs will have a sampling distribution given by $N(5, \frac{1}{9})$. We can compute the probability of each interval on this basis. Specifically, $$P(4 \leq \overline{X} \leq 5) = P(\frac{4-5}{1/3} \leq Z \leq 0) = \Phi(0) - \Phi(-3).$$ Note that, using the empirical rule we know that this is going to be approximately $\frac{0.997}{2} = 0.4985$. The calculation for the second interval proceeds exactly the same way, giving $\Phi(3) - \Phi(0) \approx 0.4985$ by the empirical rule. For the third interval we take $$\begin{split}P(4.77596 \leq \overline{X} \leq 5.22404) = P(\frac{4.77596-5}{1/3} \leq Z \leq \frac{5.22404-5}{1/3}) \\ = \Phi(0.67212) - \Phi(-0.67212).\end{split}$$ From the question hint we have that $\Phi(0.67212) \approx 0.7492463$, and $\Phi(-0.67212) \approx 1 - 0.7492463.$ Thus, taken together the coverage of the third interval is $$0.7492463 - (1 - 0.7492463) = 0.4984926 \approx 0.4985.$$ All three intervals have the same coverage. 
-b. The third interval will be preferred. Each of the intervals gives the same coverage probabilities and the same level of confidence can be placed in all three of them. Thus, the main point of differentiation stems from the width of the intervals. The first two have a width of $1$, whereas the third is $0.448$ wide. This is less than half the width, with the same overall level of confidence. This will allow Charles to have a much more precise estimate of the amount of yarn used, without sacrificing the level of confidence in that estimate.  
+b. The third interval will be preferred. Each of the intervals gives the same coverage probabilities and the same level of confidence can be placed in all three of them. Thus, the main point of differentiation stems from the width of the intervals. The first two have a width of $1$, whereas the third is $0.448$ wide. This is less than half the width, with the same overall level of confidence. This allows Charles to have a more precise estimate of the amount of yarn used, without sacrificing the level of confidence in that estimate.  
 ::::
 :::
 
@@ -88,8 +88,8 @@ e. How does this relate to the confidence interval interpretation?
 ::::{.callout .solution collapse='true'}
 ## Solution
 a. Before the die is rolled, because it is a fair die, the probability it shows a $6$ is $\dfrac{1}{6}$. This is precisely what we mean by the fact that the die is fair. 
-b. If the die is rolled and it shows a $5$, the probability that it equals $6$ is $0$. That is, once it does not equal $6$, we know for certain it is not $6$.
-c. If the die is rolled and it shows a $6$, the probability that it equals $6$ is $1$. That is, once it does equal $6$, we know for certain that it is $6$. 
+b. If the die is rolled, and it shows a $5$, the probability that it equals $6$ is $0$. That is, once it does not equal $6$, we know for certain it is not $6$.
+c. If the die is rolled, and it shows a $6$, the probability that it equals $6$ is $1$. That is, once it does equal $6$, we know for certain that it is $6$. 
 d. After the die is rolled, the probability will be either $0$ or it will be $1$, depending on whether it was a $6$ or not. We do not know until we have observed it whether it is $0$ or it is $1$, but necessarily one of those probabilities is the truth. 
 e. In a confidence interval, the probability is not attributed to the specific interval, but rather to the process. Relating to the die example, the specific realization that is shown after the die is rolled is analogous to the specific interval. We know that depending on whether we see a $6$ or it is not the probability is $1$ or $0$. Similarly, once computed, a specific interval has either $0$ or $1$ probability of containing the truth. Still, the process through which the interval was formed produces a predictable probability of forming intervals with the true value, just as the process of rolling the die produces predictable probabilities of showing $6$. 
 
@@ -98,7 +98,7 @@ e. In a confidence interval, the probability is not attributed to the specific i
 
 The confidence threshold in a confidence interval relates to the procedure, not to any specific interval produced by that procedure. That is, we can put our confidence in constructing intervals in this way knowing that, if we always follow this procedure, over time our intervals will be correct in a specific proportion of cases. However, we cannot use this to make claims about any specific confidence interval. We do not know in any given sample whether the interval is one that contains the truth, or one that does not. In fact, we cannot know this, without learning what the true parameter value is. 
 
-This makes confidence intervals clunky to interpret. Notably, the interpretation of a confidence interval never makes reference to the specific interval that we have computed. Instead, the interpretation of the confidence interval gives a description of the procedure that created the interval, and ascribes a level of confidence to this underlying procedure.^[Note that it is not uncommon to see that an interval is interpretable as "We are $100p\%$ confident that the parameter is in the interval." This confidence is, importantly, not a probability, and this is taken as short hand to mean that, if we were to repeatedly find confidence intervals following this practice, in $100p\%$ of them we would find the truth. I think that this statement tends to lead to more confusion, and as such, I would advise against this interpretation until you are *very* confident in your understanding.]
+This makes confidence intervals clunky to interpret. Notably, the interpretation of a confidence interval never makes reference to the specific interval that we have computed. Instead, the interpretation of the confidence interval gives a description of the procedure that created the interval, and ascribes a level of confidence to this underlying procedure.^[Note that it is not uncommon to see that an interval is interpretable as "We are $100p\%$ confident that the parameter is in the interval." This confidence is, importantly, not a probability, and this is taken as shorthand to mean that, if we were to repeatedly find confidence intervals following this practice, in $100p\%$ of them we would find the truth. I think that this statement tends to lead to more confusion, and as such, I would advise against this interpretation until you are *very* confident in your understanding.]
 
 Further misconceptions of confidence intervals commonly occur. For instance, individuals will commonly interpret a confidence interval to mean that $p$ proportion of the sample data lie within the interval. This is incorrect for two reasons. First, the confidence interval is a statement regarding an estimator or parameter value, rather than the sample value itself. From the same sample you can calculate different confidence intervals for different parameters.^[For instance, we will see how to calculate confidence intervals for both the mean and the variance of a random sample. These will be different and are disconnected from the sample values.] Second, this interpretation further relies on the thought that a confidence interval is interpreted specific to a particular sample. This is not the case.
 
@@ -107,7 +107,7 @@ Alternatively, individuals may misinterpret a confidence interval as stating tha
 :::{#exm-ci-interpretation}
 ## Bird Watching Confidence
 
-Sadie and Charles have continued their bird watching adventures. As their statistical knowledge has expanded, they have continued to integrate this new found knowledge into their trips. Lately, they have begun to consider confidence intervals, and so with a little help from their friend Garth, they work out the confidence interval for the average number of rare birds at a particular location that they enjoy traveling to. They find that the $90\%$ confidence interval is given by $(1.4, 8.5)$. Seeing as confidence intervals are still new to them, they start trying to work out the interpretation of this statement together. Help them out by answering their questions, with explanations.
+Sadie and Charles have continued their bird watching adventures. As their statistical knowledge has expanded, they have continued to integrate this new-found knowledge into their trips. Lately, they have begun to consider confidence intervals, and so with a little help from their friend Garth, they work out the confidence interval for the average number of rare birds at a particular location that they enjoy traveling to. They find that the $90\%$ confidence interval is given by $(1.4, 8.5)$. Seeing as confidence intervals are still new to them, they start trying to work out the interpretation of this statement together. Help them out by answering their questions, with explanations.
 
 a. Charles wonders, "Does this mean that, if we go, there is a $90\%$ chance we will see between $1.4$ and $8.5$ rare birds?"
 b. Sadie responds, questioning "Perhaps it means that, if we go many, many, many times, in $90\%$ of cases we will see in this range?"
@@ -134,7 +134,7 @@ In practice, the utility of reporting a confidence interval is that it conveys a
 While confidence intervals can be derived for any parameter of interest, as previously discussed, we are very commonly interested in the means of populations. Moreover, owing to the Central Limit Theorem, the sampling distribution of a sample mean is often easy to approximate. We will primarily focus on confidence intervals for the means of distribution. We differentiate the procedure based on whether the population is itself normally distributed or not.
 
 ### Confidence Intervals in Normal Populations
-If our population is normally distributed then the sample mean is known to be exactly normally distributed as well. The sampling distribution depends on both the population mean, $\mu$, as well as on the population variance, $\sigma^2$. Suppose that we wanted to determine $P(a \leq \overline{X} \leq b)$, for some values $a$ and $b$, then we know that $$P(a \leq \overline{X} \leq b) = P\left(\frac{a - \mu}{\sigma/\sqrt{n}} \leq Z \leq \frac{b - \mu}{\sigma/\sqrt{n}}\right) = \Phi\left(\frac{b - \mu}{\sigma/\sqrt{n}}\right) - \Phi\left(\frac{a - \mu}{\sigma/\sqrt{n}}\right).$$
+If our population is normally distributed then the sample mean is known to be exactly normally distributed as well. The sampling distribution depends on both the population mean, $\mu$, and on the population variance, $\sigma^2$. Suppose that we wanted to determine $P(a \leq \overline{X} \leq b)$, for some values $a$ and $b$, then we know that $$P(a \leq \overline{X} \leq b) = P\left(\frac{a - \mu}{\sigma/\sqrt{n}} \leq Z \leq \frac{b - \mu}{\sigma/\sqrt{n}}\right) = \Phi\left(\frac{b - \mu}{\sigma/\sqrt{n}}\right) - \Phi\left(\frac{a - \mu}{\sigma/\sqrt{n}}\right).$$
 
 If $\sigma^2$ is known then we can use the percentiles of the standard normal distribution to solve for what $a$ and $b$ would have to be. Specifically, if we take the two end points to be symmetric, then we want to solve for $$\Phi\left(\frac{b - \mu}{\sigma/\sqrt{n}}\right) = 1 - \frac{1-p}{2},\quad\text{and}\quad\Phi\left(\frac{a - \mu}{\sigma/\sqrt{n}}\right) = \frac{1-p}{2}.$$ If we did this then we would find that $$P(a \leq \overline{X} \leq b) = 1 - \frac{1-p}{2} - \frac{1-p}{2} = p,$$ as desired.
 
@@ -178,7 +178,7 @@ knitr::kable(
 
 
 :::{#exm-mean-ci-known-variance}
-## Charle's Nap Times
+## Charles' Nap Times
 Charles is a frequent napper. Sadie, on the other hand, cannot take naps at all. Sadie often has a significant amount of boredom while Charles naps away, and so Sadie starts to record the length of the naps that Charles takes, in minutes. Over the last $5$ days, Charles' naps have been: $$33.2, \ 29.6, \ 29.7, \ 31.7, \ 29.1.$$
 
 a. What is an estimate for the average length of Charles' naps?
@@ -205,7 +205,7 @@ If a population is known to be normally distributed, with an unknown population 
 :::
 
 :::{#exm-mean-ci-unknown-variance}
-## Charle's Continues Napping
+## Charles Continues Napping
 Charles has maintained the pattern of daily naps. Sadie, understanding more about confidence intervals, decides to revisit the intervals for the length of Charles' naps. This time, instead of assuming that the variance is known to be $4$, Sadie wants to leverage the same data as was used to find the mean. Specifically, Sadie has recorded that over a $5$ day stretch, the length of Charles' naps have been: $$33.2, \ 29.6, \ 29.7, \ 31.7, \ 29.1.$$ While Sadie does not want to presume that the variance is known, for now, the assumption of normality still feels reasonable.
 
 a. What is the sample variance?
@@ -223,14 +223,14 @@ c. Here we would still reference the $t$ distribution with $4$ degrees of freedo
 ::::
 :::
 
-In both scenarios, the confidence interval forms a symmetric interval around the estimated mean, $\overline{X}$, and is based on critical values from the relevant sampling distribution. If $n$ is sufficiently large than $t_{n-1, \alpha} \approx Z_{\alpha}$, and so in these cases it is sometimes acceptable to use the $Z$-based intervals, as though $\sigma$ were known. These intervals are justified on the basis of the population being normally distributed. What if this is not an assumption we can make?
+In both scenarios, the confidence interval forms a symmetric interval around the estimated mean, $\overline{X}$, and is based on critical values from the relevant sampling distribution. If $n$ is sufficiently larger than $t_{n-1, \alpha} \approx Z_{\alpha}$, and so in these cases it is sometimes acceptable to use the $Z$-based intervals, as though $\sigma$ were known. These intervals are justified on the basis of the population being normally distributed. What if this is not an assumption we can make?
 
 ### Confidence Intervals in Non-Normal Populations
 When populations are non-normal, there are two possible techniques for forming confidence intervals for the mean. In the first, we can attempt to use the assumed population distribution to derive an exact confidence interval for the mean, based on the true sampling distribution. This would need to be worked out for every individual population distribution, and would be valid only for that distribution. Alternatively, if our sample sizes are large enough, then we can use the Central Limit Theorem to indicate that $\overline{X}$ will be approximately normally distributed. In this case, we can follow the same procedures outlined above. Note that doing so will not give **exact** confidence intervals, instead settling for **approximate** confidence intervals. These are often reliable enough in practice. 
 
 :::{.callout-tip icon="false"}
 ## Approximate Confidence Intervals for the Mean
-For a sufficiently large sample size, such that Central Limit Theorem applies, a a $100p\%$ confidence interval for the mean is given by $$(\overline{X} - \leq t_{n-1, 1-(1-p)/2}\dfrac{s}{\sqrt{n}}, \overline{X} + t_{n-1, 1 - (1-p)/2}\frac{s}{\sqrt{n}}).$$ This is often expressed as $$\overline{X} \pm t_{n-1, (1-p)/2}\frac{s}{\sqrt{n}}.$$
+For a sufficiently large sample size, such that Central Limit Theorem applies, a $100p\%$ confidence interval for the mean is given by $$(\overline{X} - \leq t_{n-1, 1-(1-p)/2}\dfrac{s}{\sqrt{n}}, \overline{X} + t_{n-1, 1 - (1-p)/2}\frac{s}{\sqrt{n}}).$$ This is often expressed as $$\overline{X} \pm t_{n-1, (1-p)/2}\frac{s}{\sqrt{n}}.$$
 :::
 
 :::{#exm-mean-ci-non-normal}
@@ -245,7 +245,7 @@ c. Given that $n$ is fairly large, what will be the approximate value of the cri
 ## Solution
 
 a. No. The issue is that, without normality, we rely on the Central Limit Theorem to form the confidence intervals. However, in order for the CLT to apply, we must have a large enough sample. A sample of size $5$ is not going to be large enough to invoke the CLT, and as a result, we either need to make other assumptions about the population, or else collect more data. 
-b. In this case, we can use the CLT to form the confidence interval. Namely we get $$\overline{X} \pm t_{n-1, (1-p)/2}\frac{s}{\sqrt{n}} = 31.10 \pm t_{59, (1-p)/2}\frac{8.61}{\sqrt{60}}.$$ Here the critical values come from the $t_{59}$ distribution, and could be computed for any level of interest. 
+b. In this case, we can use the CLT to form the confidence interval. Namely, we get $$\overline{X} \pm t_{n-1, (1-p)/2}\frac{s}{\sqrt{n}} = 31.10 \pm t_{59, (1-p)/2}\frac{8.61}{\sqrt{60}}.$$ Here the critical values come from the $t_{59}$ distribution, and could be computed for any level of interest. 
 c. When $n$ is large, we get that $t_{n, \alpha} \approx Z_{\alpha}$. Because of this, we can take the critical value to be approximately $Z_{0.025} = -1.96$.^[Note, in this case, the true value would be $`r round(qt(0.025, 59), 2)`$, which is fairly close.] Using this value we get $$31.10 \pm 1.96\frac{8.61}{\sqrt{60}} = (`r round(c(33.1 - 1.96*8.61/sqrt(60), 33.1 + 1.96*8.61/sqrt(60)), 2)`).$$
 ::::
 :::
@@ -254,7 +254,7 @@ We previously discussed how, in the event of having data from a binomial experim
 
 :::{.callout-tip icon="false"}
 ## Approximate Confidence Intervals for a Proportion
-For a sufficiently large sample size, such that Central Limit Theorem applies, a a $100p\%$ confidence interval for a proportion is given by $$(\widehat{p} - Z_{1-(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}, \overline{X} + Z_{1 - (1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}).$$ This is often expressed as $$\widehat{p} \pm Z_{(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}.$$
+For a sufficiently large sample size, such that Central Limit Theorem applies, a $100p\%$ confidence interval for a proportion is given by $$(\widehat{p} - Z_{1-(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}, \overline{X} + Z_{1 - (1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}).$$ This is often expressed as $$\widehat{p} \pm Z_{(1-p)/2}\sqrt{\dfrac{\widehat{p}(1-\widehat{p})}{n}}.$$
 :::
 
 ## Confidence Intervals for the Variance
@@ -275,7 +275,7 @@ Using this result, we can then form a confidence interval for $S^2$. We start by
 For a normally distributed population, a confidence interval for the variance is formed by taking $$\left(\frac{(n-1)S^2}{\chi^2_{n-1,1-(1-p)/2}}, \frac{(n-1)S^2}{\chi^2_{n-1,(1-p)/2}}\right).$$ Here, the critical values from the $\chi^2$ distribution are given by the $1-(1-p)/2$ and $(1-p)/2$ quantiles, respectively. This is sometimes expressed using a different definition for the critical values. 
 :::
 
-Note that this derivation follows directly from knowledge of the sampling distribution of $S^2$. Had we been given a different result, we could have worked through the same procedure, resulting in different interval formula with the same underlying process. This specific result importantly relies on the assumption that the population is normally distributed. Were we in a situation where this is not the case, the formula do not hold, regardless of the size of the sample. To find confidence intervals for sample variances in non-normal populations, we require results regarding their sampling distributions.
+Note that this derivation follows directly from knowledge of the sampling distribution of $S^2$. Had we been given a different result, we could have worked through the same procedure, resulting in different interval formula with the same underlying process. This specific result importantly relies on the assumption that the population is normally distributed. Were we in a situation where this is not the case, the formula does not hold, regardless of the size of the sample. To find confidence intervals for sample variances in non-normal populations, we require results regarding their sampling distributions.
 
 It is also worth considering how we may use this result to form confidence intervals for standard deviations. Generally speaking, confidence intervals are **not** invariant to transformations. By this we mean that, even though $\sigma = \sqrt{\sigma^2}$, taking the confidence interval $(\sqrt{L(S^2)}, \sqrt{U(S^2)})$ will not result in an exact confidence interval for $\sigma$. Despite the fact that this will not generally be exactly correct, this is the procedure we tend to use. That is, if we have a confidence interval for a parameter, $\theta$, given by $$(L(\widehat{\theta}), U(\widehat{\theta})),$$ and we wish to have a confidence interval for some transformation, $g(\theta)$, we will typically use $$\left(g(L(\widehat{\theta})), g(U(\widehat{\theta}))\right).$$ As long as $g$ is a nicely behaved function, this will typically result in an acceptably close approximation.^[By nicely behaved, we mean monotonic. That is, if $a \leq b$, then $g(a) \leq g(b)$ or $g(a) \geq g(b)$ should hold. This means that taking $g(x) = \sqrt{x}$ is nicely behaved, but taking $g(x) = x^2$ is not. The concern with a function like $g(x) = x^2$ comes from what would happen if, for instance, our initial interval were $(-2, 2)$. Then transforming this interval gives $(4, 4)$ which is clearly incorrect. There are ways of working around this, however, considerations of more complex transformations are beyond the scope of these notes.] Supposing that we have a confidence interval for $\sigma^2$, then we can form a confidence interval for $\sigma$ simply by taking the square root of the end points. 
 
@@ -304,7 +304,7 @@ c. Given the interval $(3.24, 49.0)$, we can approximate a confidence interval f
 ## Margin of Error and Sample Sizing
 When communicating the results of a scientific study, it is typically considered best practice to report confidence intervals alongside point estimates. This conveys the uncertainty in the estimate, and it gives the individual consuming the results the ability to make decisions based on the sensitivity of these results to the reported values. Knowing that you are likely to report a confidence interval, you can use the form of the confidence interval to make planning decisions regarding the study. 
 
-When forming confidence intervals for the mean, all of the intervals we considered took the form $\overline{X} \pm \Omega$, where $\Omega$ depended on the underlying variability, the sampling distribution, the degree of confidence, as well as the sample size. We call this term, the **margin of error**. 
+When forming confidence intervals for the mean, all the intervals we considered took the form $\overline{X} \pm \Omega$, where $\Omega$ depended on the underlying variability, the sampling distribution, the degree of confidence, as well as the sample size. We call this term, the **margin of error**. 
 
 :::{#def-margin-of-error}
 ## Margin of Error
@@ -473,7 +473,7 @@ a. What if $s = 3$ rather than $\sigma = 3$: can you still answer the previous q
 
 :::{#exr-14.09}
 a. By how much must the sample size $n$ be increased if the width of a CI is to be halved? 
-a. What impact will increasing the sample size by a factor of $25$ have on the width of the CI?
+a. Increasing the sample size by a factor of $25$ will have what impact on the width of the CI?
 :::
 
 :::{#exr-14.10}

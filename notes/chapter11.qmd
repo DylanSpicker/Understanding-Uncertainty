@@ -488,7 +488,7 @@ The skewness corresponds to how symmetric (or not) a distribution is. If a distr
 
 To describe the shape of a frequency distribution, we describe the modality and the skewness of it. These two features combine to give a good sense of the general picture of the distribution, such that someone should be able to sketch a reasonable approximation to the frequency distribution from the description. However, there are many distributions with the same modality and skewness, which are otherwise quite distinct. To understand these differences, it is useful to turn towards measures of location, or central tendency, and measures of spread, or variability. 
 
-:::{#def-location}
+:::{#def-location-descriptive}
 ## Location (Central Tendency)
 
 The location of data, also referred to as the central tendency, is a description of where observations in the dataset tended to fall around. This can be measured as the sample mode, the sample median, or the sample mean, and is typically summarized using all three. Measures of central tendency give a sense as to where the middle of the data were, where various definitions of middle can be used. 
