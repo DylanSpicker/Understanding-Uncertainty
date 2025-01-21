@@ -41,9 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-9cf7f73ae95708c47935cfd4a35bc870.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -70,6 +67,633 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
+}</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">.monaco-editor pre {
+  background-color: unset !important;
+}
+
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-button-run {
+  background-color: #EEEEEE;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; /* Extra styling for consistency */
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration: none;
+  /* vertical-align: middle; */ /* Prevents a space from appearing between the code cell and button */
+  -webkit-user-select: none;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button-run:hover {
+  color: #000;
+  background-color: #e3e6ea;
+  border-color: #e1e5e9;
+}
+
+.qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+  pointer-events: none;
+  opacity: .65
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+</style>
+<script type="module">// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Determine if we need to install R packages
+var installRPackagesList = [''];
+// Check to see if we have an empty array, if we do set to skip the installation.
+var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+var autoloadRPackages = true;
+
+// Display a startup message?
+var showStartupMessage = true;
+var showHeaderMessage = false;
+if (showStartupMessage) {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  var startupMessageWebR = document.createElement("p");
+  startupMessageWebR.innerText = "🟡 Loading...";
+  startupMessageWebR.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  startupMessageWebR.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(startupMessageWebR);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML) {
+    // Append to the existing "title-block-header" element
+    headerHTML.appendChild(quartoTitleMeta);
+  } else if (headerRevealJS) {
+    // If using RevealJS, add to the "title-slide" div
+    headerRevealJS.appendChild(firstInnerDiv);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+// Retrieve the webr.mjs
+import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.2/webr.mjs";
+
+// Populate WebR options with defaults or new values based on 
+// webr meta
+globalThis.webR = new WebR({
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": ChannelType.Automatic
+});
+
+// Initialization WebR
+await webR.init();
+
+// Setup a shelter
+globalThis.webRCodeShelter = await new webR.Shelter();
+
+// Setup a pager to allow processing help documentation 
+await webR.evalRVoid('webr::pager_install()'); 
+
+// Function to set the button text
+function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message
+function qwebrUpdateStatusHeader(message) {
+  startupMessageWebR.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await globalThis.webR.installPackages([packageName]);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await globalThis.webR.evalRVoid(`library(${packageName});`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+    
+    // Display the update
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await globalThis.webR.flush();
+  }
+}
+
+
+// Check to see if any packages need to be installed
+if (setupRPackages) {
+  // Obtain only a unique list of packages
+  const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+  // Install R packages one at a time (either silently or with a status update)
+  await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+  if(autoloadRPackages) {
+    // Load R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+  }
+}
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+// Release document status as ready
+if (showStartupMessage) {
+  startupMessageWebR.innerText = "🟢 Ready!"
+}
+
+qwebrSetInteractiveButtonState(
+  `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+  true
+);
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};</script>
+<script type="module">// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+    Interactive: 'interactive',
+    Setup: 'setup',
+    Output: 'output',
+});
+
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await webR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await webR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // ---- 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid(`webr::canvas(width=${options["fig-width"]}, height=${options["fig-height"]})`);
+
+    const result = await webRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    try {
+
+        // Stop creating images
+        await webR.evalRVoid("dev.off()");
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${qwebrEscapeHTMLCharacters(evt.data)}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await webR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * options["fig-width"]);
+                canvas.setAttribute("height", 2 * options["fig-height"]);
+                canvas.style.width = "700px";
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            elements.outputGraphDiv.appendChild(canvas);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        webRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    evalType = EvalTypes.Interactive,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { "fig-width": 504, "fig-height": 360 };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (evalType == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+</script>
+<script type="module">// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (insertElement,
+  qwebrCounter, 
+  evalType = EvalTypes.Interactive,
+  options = {}) {
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive: 
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter);
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter);
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter);
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  insertElement.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-interactive-area';
+
+  // Create button element
+  var button = document.createElement('button');
+  button.className = 'btn btn-default qwebr-button-run';
+  button.disabled = true;
+  button.type = 'button';
+  button.id = 'qwebr-button-run-' + qwebrCounter;
+  button.textContent = '🟡 Loading webR...';
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(button);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-area';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-setup-area-' + qwebrCounter;
+  mainDiv.className = 'qwebr-noninteractive-setup-area';
+
+  return mainDiv;
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -309,14 +933,160 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#the-mann-whitney-u-test-for-location-shift-distributions" id="toc-the-mann-whitney-u-test-for-location-shift-distributions" class="nav-link" data-scroll-target="#the-mann-whitney-u-test-for-location-shift-distributions"><span class="header-section-number">17.4.1</span> The Mann-Whitney <span class="math inline">\(U\)</span>-Test for Location Shift Distributions</a></li>
   </ul></li>
-  <li><a href="#the-wilcoxon-signed-rank-test-for-paired-data" id="toc-the-wilcoxon-signed-rank-test-for-paired-data" class="nav-link" data-scroll-target="#the-wilcoxon-signed-rank-test-for-paired-data"><span class="header-section-number">17.5</span> The Wilcoxon Signed-Rank Test (for Paired Data)</a></li>
-  <li><a href="#the-true-value-of-nonparametric-tests" id="toc-the-true-value-of-nonparametric-tests" class="nav-link" data-scroll-target="#the-true-value-of-nonparametric-tests"><span class="header-section-number">17.6</span> The True Value of Nonparametric Tests</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">17.7</span> Exercises</a></li>
+  <li><a href="#the-wilcoxon-signed-rank-test-for-paired-data" id="toc-the-wilcoxon-signed-rank-test-for-paired-data" class="nav-link" data-scroll-target="#the-wilcoxon-signed-rank-test-for-paired-data"><span class="header-section-number">17.5</span> The Wilcoxon Signed-Rank Test (for Paired Data)</a>
+  <ul class="collapse">
+  <li><a href="#non-centered-data-ties-and-zeroes-1" id="toc-non-centered-data-ties-and-zeroes-1" class="nav-link" data-scroll-target="#non-centered-data-ties-and-zeroes-1"><span class="header-section-number">17.5.1</span> Non-Centered Data, Ties, and Zeroes</a></li>
+  </ul></li>
+  <li><a href="#the-intuition-of-rank-based-tests" id="toc-the-intuition-of-rank-based-tests" class="nav-link" data-scroll-target="#the-intuition-of-rank-based-tests"><span class="header-section-number">17.6</span> The Intuition of Rank-Based Tests</a></li>
+  <li><a href="#non-parametric-tests-procedures-in-r" id="toc-non-parametric-tests-procedures-in-r" class="nav-link" data-scroll-target="#non-parametric-tests-procedures-in-r"><span class="header-section-number">17.7</span> Non-Parametric Tests Procedures in <code>R</code></a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
+<script type="module">// Global dictionary to store Monaco Editor instances
+const qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (
+    initialCode, 
+    qwebrCounter) {
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value
+    editor.__qwebrinitialCode = initialCode;
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter,
+            EvalTypes.Interactive);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, EvalTypes.Interactive);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, EvalTypes.Interactive);
+  };
+
+}</script>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/chapter10.html">Part 2: Statistics</a></li><li class="breadcrumb-item"><a href="../notes/chapter17.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Nonparametric Hypothesis Testing</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -343,7 +1113,7 @@ window.Quarto = {
 <p>Ultimately, hypothesis testing procedures for the mean that rely on <span class="math inline">\(Z\)</span> or <span class="math inline">\(t\)</span> statistics have theory that is founded upon normality assumptions. The standardized test statistic, <span class="math display">\[T = \frac{\overline{X} - \mu_0}{S/\sqrt{n}},\]</span> has a <span class="math inline">\(t_{n-1}\)</span> distribution under the null whenever <span class="math inline">\(\overline{X}\)</span> is normally distributed. This is typically justified in one of two ways. First, many quantities that arise in practice are very close to being normally distributed. As a result, many physical quantities that we are interested in will have a population that is conducive to this testing in this manner. Alternatively, by appealing to the Central Limit Theorem, whenever the sample size is large enough, regardless of the population distribution, <span class="math inline">\(\overline{X}\)</span> should be approximately normally distributed. As a result, in large samples, these <span class="math inline">\(t\)</span> and <span class="math inline">\(Z\)</span> procedures can be justified. Depending on how strongly you desire rigorous justifications for mathematical procedures, these justifications may feel inadequate to support the widespread use of <span class="math inline">\(t\)</span>-tests. In both cases, the theory that has been developed is only <em>approximately</em> justified. This may lead one to question whether there are alternative procedures to perform the same types of hypothesis testing, but which do not rely on assuming that the estimator follows a normal distribution.</p>
 <p>This question goes beyond the setting of hypothesis testing. Many statistical procedures rely either explicitly or implicitly on assumptions regarding the population distribution, at least for their theoretical justifications. These procedures are referred to as <strong>parametric methods</strong> since they rely on assumptions regarding the <em>parametric form</em> of the distribution.</p>
 <div id="def-parametric-method" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 17.1 (Parametric Method)</strong></span> A <strong>parametric method</strong> or <strong>parametric technique</strong> is a statistical procedure that relies on assumptions regarding the specific structure of the distributions of the random variables of interest. Typically this will come in the form of assuming that the data follow some specific distribution, even if the values of the parameters are left unspecified.</p>
+<p><span class="theorem-title"><strong>Definition 17.1 (Parametric Method)</strong></span> A <strong>parametric method</strong> or <strong>parametric technique</strong> is a statistical procedure that relies on assumptions regarding the specific structure of the distributions of the random variables of interest. Typically, this will come in the form of assuming that the data follow some specific distribution, even if the values of the parameters are left unspecified.</p>
 </div>
 <p>Parametric methods are incredibly useful, and largely serve as the foundation for the most widely applied statistical methods. The concern with parametric methods, as discussed for the specific case of hypothesis testing, is that these methods are theoretically justified only when the parametric assumptions hold. If a population is assumed to follow a normal distribution, and it does not in fact follow the normal distribution, the theory can no longer provide guarantees as to the performance of the procedure. This does not necessarily mean that the procedure will not perform well, however, it does mean that justification for the application of the procedure is lacking. There are secondary approaches in statistics that remedy this, broadly referred to as <strong>nonparametric methods</strong>.</p>
 <div id="def-nonparametric-method" class="theorem definition">
@@ -416,7 +1186,7 @@ The Mann-Whitney <span class="math inline">\(U\)</span>-Test (General)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Suppose that two independent samples are drawn from two separate populations, denoted <span class="math inline">\(X_1,\dots,X_n\)</span> from the first and <span class="math inline">\(Y_1,\dots,Y_m\)</span> from the second. The distribution function for <span class="math inline">\(X_i\)</span> is <span class="math inline">\(F_X\)</span> and the distribution function for <span class="math inline">\(Y_i\)</span> is <span class="math inline">\(F_Y\)</span>. To test the null hypothesis that the distributions are equivalent, <span class="math inline">\(H_0: F_X = F_Y\)</span>, versus the alternative that they differ, <span class="math inline">\(H_A: F_X \neq F_Y\)</span>, the Mann-Whtiney <span class="math inline">\(U\)</span>-test can be run. First, all data from the two samples are combined and ranked. Then, the rank-sum statistics are computed for both samples, giving <span class="math inline">\(R_X\)</span> and <span class="math inline">\(R_Y\)</span>. Using these statistics, the <span class="math inline">\(U\)</span>-statistics for each sample are computed as <span class="math display">\[U_X = nm + \frac{n(n+1)}{2} - R_X \quad\text{and}\quad U_Y = nm + \frac{m(m+1)}{2} - R_Y.\]</span> Finally, <span class="math inline">\(U = \min\{U_X, U_Y\}\)</span> is calculated as the <span class="math inline">\(U\)</span> statistic.</p>
+<p>Suppose that two independent samples are drawn from two separate populations, denoted <span class="math inline">\(X_1,\dots,X_n\)</span> from the first and <span class="math inline">\(Y_1,\dots,Y_m\)</span> from the second. The distribution function for <span class="math inline">\(X_i\)</span> is <span class="math inline">\(F_X\)</span> and the distribution function for <span class="math inline">\(Y_i\)</span> is <span class="math inline">\(F_Y\)</span>. To test the null hypothesis that the distributions are equivalent, <span class="math inline">\(H_0: F_X = F_Y\)</span>, versus the alternative that they differ, <span class="math inline">\(H_A: F_X \neq F_Y\)</span>, the Mann-Whitney <span class="math inline">\(U\)</span>-test can be run. First, all data from the two samples are combined and ranked. Then, the rank-sum statistics are computed for both samples, giving <span class="math inline">\(R_X\)</span> and <span class="math inline">\(R_Y\)</span>. Using these statistics, the <span class="math inline">\(U\)</span>-statistics for each sample are computed as <span class="math display">\[U_X = nm + \frac{n(n+1)}{2} - R_X \quad\text{and}\quad U_Y = nm + \frac{m(m+1)}{2} - R_Y.\]</span> Finally, <span class="math inline">\(U = \min\{U_X, U_Y\}\)</span> is calculated as the <span class="math inline">\(U\)</span> statistic.</p>
 <p>Under the null hypothesis, <span class="math inline">\(U\)</span> follows a rank-sum distribution with size parameters <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span>. Taking <span class="math inline">\(U = u\)</span> based on the observed sample, the <span class="math inline">\(p\)</span>-value can be computed as: <span class="math display">\[p = 2\times\min\{F_{n,m}(u), 1 - F_{n,m}(u)\} \approx 2\times\Phi\left(-\frac{|U - nm/2|}{\sqrt{nm(n+m+1)/12}}\right).\]</span></p>
 </div>
 </div>
@@ -430,7 +1200,7 @@ Formality Under the Alternative
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In order for the <span class="math inline">\(U\)</span>-test to give consistent,<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> accurate results, then a further assumption is required under the alternative hypothesis. Namely, it must be the case that <span class="math inline">\(P(X &gt; Y) \neq P(Y &gt; X)\)</span> if the <span class="fg highlight">alternative hypothesis</span> holds. Thus, if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> both have symmetric distributions, centered on the same value, then the <span class="math inline">\(U\)</span>-test will not reliably conclude that the distributions are different, even when sample sizes grow indefinitely. This is a fairly technical consideration, but it is important when applying the <span class="math inline">\(U\)</span>-test in practice. If you suspect that the two distributions are symmetric, and centered on the same value, the hypothesis test is no longer correctly regarded as testing <span class="math inline">\(F_X = F_Y\)</span>. To do so, alternative test procedures would be required.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>In order for the <span class="math inline">\(U\)</span>-test to give consistent,<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> accurate results, then a further assumption is required under the alternative hypothesis. Namely, it must be the case that <span class="math inline">\(P(X &gt; Y) \neq P(Y &gt; X)\)</span> if the <strong>alternative hypothesis</strong> holds. Thus, if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> both have symmetric distributions, centered on the same value, then the <span class="math inline">\(U\)</span>-test will not reliably conclude that the distributions are different, even when sample sizes grow indefinitely. This is a fairly technical consideration, but it is important when applying the <span class="math inline">\(U\)</span>-test in practice. If you suspect that the two distributions are symmetric, and centered on the same value, the hypothesis test is no longer correctly regarded as testing <span class="math inline">\(F_X = F_Y\)</span>. To do so, alternative test procedures would be required.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 </div>
 </div>
 <section id="the-mann-whitney-u-test-for-location-shift-distributions" class="level3" data-number="17.4.1">
@@ -442,21 +1212,107 @@ Formality Under the Alternative
 </section>
 <section id="the-wilcoxon-signed-rank-test-for-paired-data" class="level2" data-number="17.5">
 <h2 data-number="17.5" class="anchored" data-anchor-id="the-wilcoxon-signed-rank-test-for-paired-data"><span class="header-section-number">17.5</span> The Wilcoxon Signed-Rank Test (for Paired Data)</h2>
+<p>The Wilcoxon signed-rank test can be applied to test hypotheses regarding the location of a single population distribution. The Mann-Whitney <span class="math inline">\(U\)</span>-test applies to test<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> for the equality of locations of two independent populations. A third scenario that is useful to consider is testing of the location of two dependent distributions, specifically when observations from these distributions are paired.</p>
+<p>Suppose that <span class="math inline">\(X_1,\dots,X_n\)</span> are observed from the first population, with some location measure, <span class="math inline">\(\mu_X\)</span>. Then, <span class="math inline">\(Y_1, \dots, Y_n\)</span> are observed from the second population, with some (possibly different) location measure, <span class="math inline">\(\mu_Y\)</span>. Further, suppose that the data are paired such that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y_1\)</span> are naturally linked, <span class="math inline">\(X_2\)</span> and <span class="math inline">\(Y_2\)</span> are naturally linked, and so forth. Then, this sample can be converted into a single sample of <strong>paired differences</strong> by taking, <span class="math inline">\(D_i = X_i - Y_i\)</span> giving <span class="math display">\[(D_1, D_2, \dots, D_n) = (X_1 - Y_1, X_2 - Y_2, \dots, X_n - Y_n).\]</span></p>
+<p>The location of the population <span class="math inline">\(D\)</span>, <span class="math inline">\(\mu_D\)</span>, will be equal to the difference in locations for the <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> populations. That is, <span class="math inline">\(\mu_D = \mu_X - \mu_Y\)</span>. As a result, should we wish to test <span class="math inline">\(H_0: \mu_X - \mu_Y = \Delta_0\)</span>, this is equivalent to testing <span class="math inline">\(H_0: \mu_D = \Delta_0\)</span>. Further, supposing that the distributions for both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are symmetric, then the distribution of <span class="math inline">\(D\)</span> must also be symmetric. As a result, in this case, the Wilcoxon signed-rank test can be conducted on <span class="math inline">\((D_1, \dots, D_n)\)</span>. Specifically, the signed-rank sum can be computed based on the ranks of <span class="math inline">\((|D_1|, |D_2|, \dots, |D_n|)\)</span>, and the resulting statistic can be compared to the signed-rank distribution with size parameter <span class="math inline">\(n\)</span>.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Wilcoxon Signed-Rank Tests for Paired Populations (Without Ties)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that data are selected from two symmetric populations, such that the observations are paired. First, compute the paired differences, taking <span class="math display">\[(D_1, D_2, \dots, D_n) = (X_1 - Y_1, X_2 - Y_2, \dots, X_n - Y_n).\]</span></p>
+<p>Further, suppose that the paired differences are such that the absolute values of all differences are unique. Then the Wilcoxon Signed-Rank test can be used to test <span class="math inline">\(H_0: \mu_D = 0\)</span> versus <span class="math inline">\(H_0: \mu_D \neq 0\)</span>, or the one-tailed alternatives, where <span class="math inline">\(\mu_D = \mu_X - \mu_Y\)</span> is the difference in population locations. To do so, the <strong>signed-rank sum</strong> test statistic is computed, <span class="math display">\[T = \sum_{i=1}^n \text{sgn}(D_i)R_i,\]</span> where <span class="math inline">\(R_i\)</span> is the rank order (smallest to largest) of <span class="math inline">\(|D_i|\)</span>.</p>
+<p>Under the null hypothesis, <span class="math inline">\(T\)</span> follows a signed-rank distribution with size parameter <span class="math inline">\(n\)</span>. Taking <span class="math inline">\(T = t\)</span> based on the observed sample, the <span class="math inline">\(p\)</span>-value can be computed as:</p>
+<ol type="1">
+<li>If <span class="math inline">\(H_0: \mu_D = 0\)</span> versus <span class="math inline">\(H_A: \mu_D \neq 0\)</span>, then <span class="math display">\[p = F_n(-|t|) + 1 - F_n(|t|) \approx 2\Phi\left(-|t|/\sqrt{n(n+1)(2n+1)/6}\right).\]</span></li>
+<li>If <span class="math inline">\(H_0: \mu_D \leq 0\)</span> versus <span class="math inline">\(H_A: \mu_D &gt; 0\)</span>, then <span class="math display">\[p = 1 - F_n(t) \approx 1 - \Phi\left(t/\sqrt{n(n+1)(2n+1)/6}\right).\]</span></li>
+<li>If <span class="math inline">\(H_0: \mu_D \geq 0\)</span> versus <span class="math inline">\(H_A: \mu_D &lt; 0\)</span>, then <span class="math display">\[p = F_n(t) \approx \Phi\left(t/\sqrt{n(n+1)(2n+1)/6}\right).\]</span></li>
+</ol>
+</div>
+</div>
+<section id="non-centered-data-ties-and-zeroes-1" class="level3" data-number="17.5.1">
+<h3 data-number="17.5.1" class="anchored" data-anchor-id="non-centered-data-ties-and-zeroes-1"><span class="header-section-number">17.5.1</span> Non-Centered Data, Ties, and Zeroes</h3>
+<p>Just as in the single sample case, the signed-rank test for paired data can be adjusted to accommodate ties, zeroes, and non-centered data. The same considerations can be applied to the single sample of paired differences, <span class="math inline">\((D_1,\dots,D_n)\)</span>. Shifting the observed differences by a constant allows for testing for non-zero differences. The average rank or random rank procedures can be used to accommodate ties in the differences. The reduced sample procedure or signed-rank zero procedure can both be used to accommodate zeroes in the sample. Just as was the case with the one sample procedure, any of these choices will likely produce satisfactory results when data have only a few ties or a few zeroes. When ties or zeroes are abundant, it is unlikely that the signed-rank test is the best choice for testing the location.</p>
 </section>
-<section id="the-true-value-of-nonparametric-tests" class="level2" data-number="17.6">
-<h2 data-number="17.6" class="anchored" data-anchor-id="the-true-value-of-nonparametric-tests"><span class="header-section-number">17.6</span> The True Value of Nonparametric Tests</h2>
 </section>
-<section id="exercises" class="level2" data-number="17.7">
-<h2 data-number="17.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">17.7</span> Exercises</h2>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="chapter17_files/figure-html/unnamed-chunk-1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="chapter17_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></a></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="the-intuition-of-rank-based-tests" class="level2" data-number="17.6">
+<h2 data-number="17.6" class="anchored" data-anchor-id="the-intuition-of-rank-based-tests"><span class="header-section-number">17.6</span> The Intuition of Rank-Based Tests</h2>
+<p>Both the Wilcoxon signed-rank test, and the Mann-Whitney <span class="math inline">\(U\)</span>-test, often called the rank-sum test, are known as rank-based test procedures. The rationale is that these are tests on statistics derived from the ranks of the data. It is worth considering the intuition between how the test statistics connect to the hypotheses of interest.</p>
+<p>Consider first the signed-rank sum. For this, the data (from a single sample) are ranked from smallest to largest, and then these ranks are signed. If we add up all the signed ranks then we can think about this equivalently as adding all the ranks for points observed above <span class="math inline">\(0\)</span> and subtracting from that all ranks that were below <span class="math inline">\(0\)</span>. Under the null hypothesis, the location of the distribution is <span class="math inline">\(0\)</span>. In order for this to hold, it must be the case that it is about as likely for observations below zero to occur as it is for observations above zero. In connect this to ranks, we may suggest that there should be roughly as many small values above zero and below zero, and the same with large values. As a result, in a distribution with <span class="math inline">\(\mu = 0\)</span>, we should expect that <span class="math inline">\(T\)</span> will be approximately <span class="math inline">\(0\)</span>. If the values of this statistic are much larger or much smaller than zero, then it is likely that the true location is above or below zero as well.</p>
+<p>For the Mann-Whitney <span class="math inline">\(U\)</span>-statistic, a similar intuition takes place. Here, all the data are ranked together. If it is the case that the distributions are the same as one another, we should expect that the data will all be mixed in together in terms of ranks. If the distributions differ substantially from one another then there will likely be a biasing of one distribution being more likely to be large or small compared to the other. Reflected in ranks this means that, if the null hypothesis holds, the ranks should be roughly evenly distributed between the two populations and the rank-sums should be approximately equal. Otherwise, we would expect that one of the rank sums would be substantially larger than the other. The <span class="math inline">\(U\)</span>-statistic is then computed simply be shifting the rank sums so that it sits between <span class="math inline">\(0\)</span> and <span class="math inline">\(nm\)</span>. Values near the middle of this range are likely, and occur when the rank-sums are nearly equal.</p>
+<p>In this way, whether we are considering a single population or multiple populations, the ranks of the data can be used to connect to the location of those populations.</p>
+</section>
+<section id="non-parametric-tests-procedures-in-r" class="level2" data-number="17.7">
+<h2 data-number="17.7" class="anchored" data-anchor-id="non-parametric-tests-procedures-in-r"><span class="header-section-number">17.7</span> Non-Parametric Tests Procedures in <code>R</code></h2>
+<p>In <code>R</code> there is an implementation of both the signed-rank distribution for the signed-rank test and the rank-sum distribution for the <span class="math inline">\(U\)</span>-test. Moreover, both procedures are available through a single function call on data.</p>
+<p>The signed-rank distribution is accessible via the <code>{r, p, d, q}signrank</code> calls. These are analogous to the <code>rnorm</code>, <code>pnorm</code>, <code>dnorm</code>, and <code>qnorm</code> calls. An important caveat on the signed-rank distribution in <code>R</code>, however, is that it is computed not for the full signed-rank sum (as presented in this chapter), but instead, for the <em>positive-rank</em> sum. That is, in the test procedures built into <code>R</code>, the relevant test statistic is given by <span class="math display">\[T^{+} = \sum_{i=1}^n \psi(X_i)R_i,\]</span> where <span class="math inline">\(\psi(X_i) = 1\)</span> if <span class="math inline">\(X_i &gt; 0\)</span> and <span class="math inline">\(\psi(X_i) = 0\)</span> otherwise. This positive-rank sum statistic is connected to the signed-rank sum statistic by noting that <span class="math display">\[T = 2T^{+} - \frac{n(n+1)}{2}.\]</span></p>
+<p>This presents two important considerations. First, if we wish to compute <span class="math inline">\(P(T \leq t)\)</span> then we can make the translation to using <span class="math display">\[P(T \leq t) = P(2T^{+} - \frac{n(n+1)}{2} \leq t) = P(T^{+} \leq \frac{t}{2} + \frac{n(n+1)}{4}).\]</span> Thus, to directly compute <span class="math inline">\(p\)</span>-values in <code>R</code>, we need to modify the values we are passing to <code>psignrank</code>. Second, if we use the direct test function, the reported statistic will correspond to the positive ranks only. The resulting <span class="math inline">\(p\)</span>-values and conclusions will be equivalent, but it is important to recognize that the output is not identical to what we would compute by hand.</p>
+<div id="qwebr-insertion-location-1"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-1");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    1
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `#########################################
+# Signed-Rank Test
+###################
+# Suppose that we observe T = 8 with n = 30
+tstar <- 8/2 + 30*(30 + 1)/4 # Adjust t
+psignrank(tstar, n = 30)
+
+# To get the p-value:
+2 * min(psignrank(tstar, n = 30), 1-psignrank(tstar, n = 30))
+
+########################################
+# U-Test
+##################
+# Suppose that we observe U = 800 with n=50, m=40
+pwilcox(800, n = 50, m = 40)
+
+# To get the p-value:
+2 * min(pwilcox(800, n=50, m=40), 1 - pwilcox(800, n=50, m=40))
+
+#########################################
+# Test Procedures for Observed Data
+###################
+# We generate random data for X and Y
+X <- runif(100,-50, 50)
+Y <- rt(200,df=3)
+Z <- X + rnorm(100, 0, 1) # Paired with X
+
+# To test individual samples use wilcox.test with only X 
+wilcox.test(x = X, alternative = "two.sided", mu = 0)
+wilcox.test(x = Y, alternative = "less", mu = 1)
+wilcox.test(x = Z, alternative = "greater", mu = -3)
+
+# To test two independent samples, provide X and Y, and 
+# specify paired = FALSE
+wilcox.test(x = X, y = Y, paired = FALSE)
+wilcox.test(x = Y, y = Z, paired = FALSE)
+
+# To test two paired samples, provide X and Y, and 
+# specify paired = TRUE
+wilcox.test(x = X, y = Z, paired = TRUE)`, 
+  1);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
 
 
 </section>
@@ -471,6 +1327,8 @@ Formality Under the Alternative
 <li id="fn6"><p>In the case of <span class="math inline">\(Z\)</span>-tests, <span class="math inline">\(t\)</span>-tests, and the presented version of the signed-rank test, the null distribution has always been symmetric around <span class="math inline">\(0\)</span>. In this case we must have that <span class="math inline">\(F(-|t|) = 1-F(|t|)\)</span> and as such, we can express the <span class="math inline">\(p\)</span>-value as the sum of the two tails. For non-symmetric null distributions, we still wish to understand the probability of observing something at least as extreme as what was actually observed. Here, however, that is not as simple as saying less than <span class="math inline">\(-|t|\)</span> or above <span class="math inline">\(|t|\)</span>, since the distribution is not centered on <span class="math inline">\(0\)</span>. In fact, in the case of the <span class="math inline">\(U\)</span>-statistic, the null distribution is strictly positive. This form, <span class="math inline">\(2\times\min\{F(u), 1-F(u)\}\)</span> is broadly applicable across many hypothesis tests, however, it tends to be less informative compared to the sum of the tail probabilities.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>Note that here, consistency refers to a specific statistical idea. Namely, consistency represents the idea that, as sample sizes increase larger and larger, the resulting statistical procedure will approach the correct results.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>For instance, the Kolmogorov-Smirnov test is a nonparametric test that considers the equality (or lack thereof) of continuous distributions, without making the same assumptions under the null hypothesis.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Under somewhat rigorous assumptions<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>This procedure is analogous to the <span class="math inline">\(t\)</span>-test for paired data. In the <span class="math inline">\(t\)</span>-test for paired data we first consider the single sample that arises from differencing the observations. Then, a single sample <span class="math inline">\(t\)</span>-test is conducted on the sample of paired differences. To do so nonparametrically, we first consider the single sample of paired differences, and then conduct a Wilcoxon signed-rank test on this sample of paired differences.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -950,38 +1808,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </nav>
 </div> <!-- /content -->
 <script type="application/javascript" src="../webex.js"></script>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
-(function() {
-  let previousOnload = window.onload;
-  window.onload = () => {
-    if (previousOnload) {
-      previousOnload();
-    }
-    lightboxQuarto.on('slide_before_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      const href = trigger.getAttribute('href');
-      if (href !== null) {
-        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-        if (imgEl !== null) {
-          const srcAttr = imgEl.getAttribute("src");
-          if (srcAttr && srcAttr.startsWith("data:")) {
-            slideConfig.href = srcAttr;
-          }
-        }
-      } 
-    });
-  
-    lightboxQuarto.on('slide_after_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(slideNode);
-      }
-    });
-  
-  };
-  
-})();
-          </script>
 
 
 
