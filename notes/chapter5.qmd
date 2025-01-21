@@ -1,7 +1,7 @@
 # Summarizing Statistical Experiments with Random Variables
 
 ## The Need for Random Variables
-When introducing probability originally we worked from a sample space and then corresponding events. This is a very general framework which allows us to effectively analyze any statistical experiment. Sample spaces are not restricted to be numeric, for instance, and events are simply subsets of the sample space. As a result, this framework provides the tools for capturing uncertainty quantification in almost any setting. Still, the need to enumerate sample spaces and events over complex sets of arbitrary items is cumbersome and may prevent succinct representations of the underlying phenomena. Often, rather than caring about the entire space of outcomes from an experiment of interest, we are primarily concerned we a summary of the experiment. When we can summarize the experiment using a numerical quantity, we are able to define a random variable. 
+When introducing probability originally we worked from a sample space and then corresponding events. This is a very general framework which allows us to effectively analyze any statistical experiment. Sample spaces are not restricted to be numeric, for instance, and events are simply subsets of the sample space. As a result, this framework provides the tools for capturing uncertainty quantification in almost any setting. Still, the need to enumerate sample spaces and events over complex sets of arbitrary items is cumbersome and may prevent succinct representations of the underlying phenomena. Often, rather than caring about the entire space of outcomes from an experiment of interest, we are primarily concerned with a summary of the experiment. When we can summarize the experiment using a numerical quantity, we are able to define a random variable. 
 
 :::{#def-random-variable}
 ## Random Variable
@@ -14,11 +14,11 @@ For instance, suppose that we are repeatedly tossing a coin. If we toss the coin
 
 It is important to recognize that information *is* lost when we define this random variable. If $X$ summarizes the number of heads in $100$ tosses of a coin, then provided $X$ you are not able to answer the question "what was the 23rd toss of the coin?" As a result, random variables smooth over the unnecessary information, summarizing the parts of the statistical experiment that we care for. For any statistical experiment, however, we need to carefully define the random variables which are truly of interest to us. 
 
-For instance, if the $23$rd toss of the coin was integral to our decision-making, then perhaps we define a random variable $Y$ which counts the number of heads that show up on the $100$ tosses of the coin, but does so with negative numbers if the $23$rd toss was a tail, and with positive numbers if it was a head. Then, provided $Y$ you can answer "how many heads showed up in the tosses of the coin? by calculating $|Y|$, and you can answer "what was the $23$rd toss of the coin?" by looking at $\text{sign}(Y)$.
+For instance, if the $23$rd toss of the coin was integral to our decision-making, then perhaps we define a random variable $Y$ which counts the number of heads that show up on the $100$ tosses of the coin, but does so with negative numbers if the $23$rd toss was a tail, and with positive numbers if it was a head. Then, provided $Y$ you can answer "how many heads showed up in the tosses of the coin?" by calculating $|Y|$, and you can answer "what was the $23$rd toss of the coin?" by looking at $\text{sign}(Y)$.
 
 :::{#exm-random-var}
 ## Random Variables at the Coffee Shop
-Back at their favourite coffee shop, Charles and Sadie are sitting in their favourite chairs, discussing random variables and watching the cash register for the inevitable sequence of customers who will arrive there. Charles suggests playing a game together, which is creatively called "how many random variables can we name that have to do with the statistical experiment of watching for customers at a cash register?" Seeing as how catchy the name is, Sadie is excited to play along, and so they start.
+Back at their favourite coffee shop, Charles and Sadie are sitting in their favourite chairs, discussing random variables and watching the cash register for the inevitable sequence of customers who will arrive there. Charles suggests playing a game together, which is creatively called "how many random variables can we name that have to do with the statistical experiment of watching for customers at a cash register?". Seeing as how catchy the name is, Sadie is excited to play along, and so they start.
 
 Name several distinct random variables which could be observed via the described statistical experiment.
 
@@ -40,15 +40,15 @@ Because of their ability to summarize effectively and flexibly the pertinent com
 
 The importance of this notation is merely to emphasize what values are unknown and random, and what values are known numeric quantities. Because $x$ is a known value taking on some set number we will not often speak of probabilities involving $x$.^[We can actually discuss probabilities revolving around $x$, but they are all deeply uninteresting. Every probability will either be $1$, or $0$. If I tell you that $x = 5$, then $P(x=5) = 1$ and $P(x = 2) = 0$. While this is not a particularly *interesting* probability statement, it is true, and somewhat surprisingly, can arise in meaningful ways.] Instead, we wish to translate the language of probability that we have built to statements regarding the random variable $X$.
 
-The random variable $X$ has a corresponding "sample space" of possible values that it can take on. We will typically refer to this as the *support* of the random variable, though borrowing other terms from math courses (such as *range*) will work also. This support, which we can think of as directly analogous to the sample space of arbitrary elements from before, will depend on the possible realizations from the underlying experiment. We typically will denote the support of a random variable $X$ as $\mathcal{X}$. After the experiment has been performed the random variable will take on a single value from this set.^[The support of a random variable is directly analogous to the sample space from the statistical experiment. That is, it is the set of possible observations which can be made of the random variable. As a result, it is *sometimes* permissible to call the support the "sample space of the random variable", in an informal manner. The informality here is important. Formally, a random variable $X$ is a function which maps from the sample space to its support, which is to say $X \colon \mathcal{S}\to\mathcal{X}$.] We can sometimes compactly describe the set of possible values for a random variable, for instance, by stating all of the integers, or integers between $5$ and $10$, or even values less than $1000$. This allows for compact descriptions of $\mathcal{X}$ even when the set $\mathcal{S}$ is challenging to describe. The probability of realizing any outcome in $\mathcal{X}$ is dictated by the underlying probability model.
+The random variable $X$ has a corresponding "sample space" of possible values that it can take on. We will typically refer to this as the *support* of the random variable, though borrowing other terms from math courses (such as *range*) will work also. This support, which we can think of as directly analogous to the sample space of arbitrary elements from before, will depend on the possible realizations from the underlying experiment. We typically will denote the support of a random variable $X$ as $\mathcal{X}$. After the experiment has been performed the random variable will take on a single value from this set.^[The support of a random variable is directly analogous to the sample space from the statistical experiment. That is, it is the set of possible observations which can be made of the random variable. As a result, it is *sometimes* permissible to call the support the "sample space of the random variable", informally. The informality here is important. Formally, a random variable $X$ is a function which maps from the sample space to its support, which is to say $X \colon \mathcal{S}\to\mathcal{X}$.] We can sometimes compactly describe the set of possible values for a random variable, for instance, by stating all the integers, or integers between $5$ and $10$, or even values less than $1000$. This allows for compact descriptions of $\mathcal{X}$ even when the set $\mathcal{S}$ is challenging to describe. The probability of realizing any outcome in $\mathcal{X}$ is dictated by the underlying probability model.
 
 When introducing the concepts of probability we indicated that probability was assigned to events. With random variables, this remains true. As a result we need to define events in terms of random variables. When we have a random variable, $X$, an event is defined as any set of values that it can take on. For instance, we may have the event $X=4$, or the event $X \geq 18$, or the event $2 \leq X \leq 93$, or the event $X \in \{2,4,6,8,10\}$. In each case these are subsets of the possible values that the random variable can take on, based on the outcome of the experiment.^[That is to say, events in the case of random variables are subsets of $\mathcal{X}$.]
 
-Just as before these events can be simple events (comprised of a single outcome) or compound events (comprising of multiple outcomes). The event $\{X=5\}$ is a simple event, whereas the event $\{X \geq 25\}$ is a compound event. With events defined in this way, we can translate the other concepts from the explicit event-based probability. Specifically, we think of the experiment producing a numerical outcome, and then use the same sets of tools as before applied to numeric events.
+Just as before these events can be simple events (comprised of a single outcome) or compound events (consisting of multiple outcomes). The event $\{X=5\}$ is a simple event, whereas the event $\{X \geq 25\}$ is a compound event. With events defined in this way, we can translate the other concepts from the explicit event-based probability. Specifically, we think of the experiment producing a numerical outcome, and then use the same sets of tools as before applied to numeric events.
 
 :::{#exm-rv-recap}
 ## Expanding on Random Variables at the Coffee Shop
-After tiring of their game of "how many random variables can we name that have to do with the statistical experiment of watching for customers at a cash register?", Charles and Sadie fall into a deeper discussion of some of the some of their favourite random variables named during the play through. They take turns describing the support of a chosen random variable, as well as listing examples of simple and compound events that can be translated into the language of random variables.
+After tiring of their game of "how many random variables can we name that have to do with the statistical experiment of watching for customers at a cash register?", Charles and Sadie fall into a deeper discussion of some of their favourite random variables named during the play through. They take turns describing the support of a chosen random variable, as well as listing examples of simple and compound events that can be translated into the language of random variables.
 
 Choose a random variable identified in @exm-random-var and indicate its support, as well as possible simple and compound events that could be observed in terms of it.
 
@@ -80,7 +80,7 @@ We say that a set is **countable** whenever we can enumerate the elements of the
 
 If we take a set like the positive integers, $\{1,2,3,\dots\}$, then this is an infinitely large set. However, it is still countable because we can assign each element of the set an integer value (just use the same integer it is corresponding to!). What if we have the set of positive, even integers (\{2,4,6,8,\dots\})? Each of these is just $2$ times one of the counting numbers, in order, and so these too are countable. 
 
-What if we took the set of real numbers^[Recall that "real numbers" are just all of the standard numbers that we think of (decimals, whole numbers, fractions, negative values, etc.).] in the interval $[0,1]$? In this case there is **no way** to map each of these values to the values $\{1,2,3,4,\dots\}$ and as a result the interval $[0,1]$ is **not countable**. It is infinitely large, but it remains infinitely large even after we have enumerated an infinite set of the items in it.
+What if we took the set of real numbers^[Recall that "real numbers" are just all the standard numbers that we think of (decimals, whole numbers, fractions, negative values, etc.).] in the interval $[0,1]$? In this case there is **no way** to map each of these values to the values $\{1,2,3,4,\dots\}$ and as a result the interval $[0,1]$ is **not countable**. It is infinitely large, but it remains infinitely large even after we have enumerated an infinite set of the items in it.
 
 A key difference between countable and uncountable sets is that, with a countable set, we can^[(in principle)] sum over the elements of the set. We cannot sum over the elements of an uncountable set, as there would be no way to actually order and enumerate the items. In these notes, the detailed mathematics of countable versus non-countable sets is tangential to the main point which is in distinguishing between discrete and continuous random variables.
 :::
@@ -89,7 +89,7 @@ Typically, discrete random variables will take on some collection of the integer
 
 :::{#exm-discrete-vs-continuous-rv}
 ## The Countability of Coffee Shop Random Variables
-Charles and Sadie have been discussing the features of all of the random variables they identified at the coffee shop for a long time when Sadie points out that they have not been differentiating between discrete and continuous random variables. Charles thinks "how could we have overlooked this?" and seeks to remedy the situation, immediately!
+Charles and Sadie have been discussing the features of all the random variables they identified at the coffee shop for a long time when Sadie points out that they have not been differentiating between discrete and continuous random variables. Charles thinks "how could we have overlooked this?" and seeks to remedy the situation, immediately!
 
 List at least one discrete and one continuous random variable that could arise via the statistical experiment of watching the cashier at a coffee shop over time (as described in @exm-random-var).
 
@@ -130,11 +130,11 @@ Distributions capture the underlying random behaviour of the random variables of
 A probability mass function is a function, $p(x)$, which maps possible values for a discrete random variable (the set $\mathcal{X}$) to the probabilities corresponding to those events.^[That is, $p(x)$ is a function, $p\colon\mathcal{X}\to[0,1]$.]
 :::
 
-If a random variable $X$ has support $\mathcal{X} = \{x_1,x_2,\dots,x_k\}$, then a probability mass function is a function $p(x)$ such that $p(x_1) = P(X = x_1)$, $p(x_2) = P(X = x_2)$, and so on through to $p(x_k) = P(X=x_k)$. Once a probability mass function is known, all of the probabilistic behaviour of the random variable is fully described.
+If a random variable $X$ has support $\mathcal{X} = \{x_1,x_2,\dots,x_k\}$, then a probability mass function is a function $p(x)$ such that $p(x_1) = P(X = x_1)$, $p(x_2) = P(X = x_2)$, and so on through to $p(x_k) = P(X=x_k)$. Once a probability mass function is known, all the probabilistic behaviour of the random variable is fully described.
 
 :::{#exm-probability-mass-function}
 ## The Coin Game for Three
-Sometimes Charlie and Sadie are joined by their friend Garth on their trips to the coffee shop. Also a probability aficionado, Garth contently joins in the game with Charles and Sadie where three coins are flipped, and depending on the results, one friend pays for the group. Garth's order is typically less than Charles and Sadie and so Sadie proposes the following modified game. 
+Sometimes Charlie and Sadie are joined by their friend Garth on their trips to the coffee shop. Also, a probability aficionado, Garth contently joins in the game with Charles and Sadie where three coins are flipped, and depending on the results, one friend pays for the group. Garth's order is typically less than Charles and Sadie and so Sadie proposes the following modified game. 
 
 > A fair coin is tossed three times. If all tosses of the coin show the same symbol, Garth pays. Otherwise, if there are more heads than tails, Charles pays. Finally, if there are more tails than heads, Sadie pays.
 
@@ -161,11 +161,11 @@ What is the probability mass function, assuming Charles is reading it correctly.
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-We know that two properties must be true of all probability mass functions. First $0 \leq p(x) \leq 1$. Second, $\sum_{x\in\mathcal{X}} p(x) = 1$. The first property tells us that $0 < 3c < 1$ and that $0 < 7c < 1$. This means that $c > 0$, and that $c < 1/3$ and $c < 1/7$. Using the second property we get that $$1 = 3c + 0.6 + 7c \implies 0.4 = 10c.$$ This tells us that $c = 0.04$, which satisfies all of the previous properties. Taking $c = 0.04$ gives a probability mass function of $$p(x) = \begin{cases} 0.12 & x = 0 \\ 0.6 & x = 1 \\ 0.28 & x = 2.\end{cases}$$ 
+We know that two properties must be true of all probability mass functions. First $0 \leq p(x) \leq 1$. Second, $\sum_{x\in\mathcal{X}} p(x) = 1$. The first property tells us that $0 < 3c < 1$ and that $0 < 7c < 1$. This means that $c > 0$, and that $c < 1/3$ and $c < 1/7$. Using the second property we get that $$1 = 3c + 0.6 + 7c \implies 0.4 = 10c.$$ This tells us that $c = 0.04$, which satisfies all the previous properties. Taking $c = 0.04$ gives a probability mass function of $$p(x) = \begin{cases} 0.12 & x = 0 \\ 0.6 & x = 1 \\ 0.28 & x = 2.\end{cases}$$ 
 ::::
 :::
 
-When solving questions related to probabilities using a probability mass function, the same secondary properties apply. Notably, if we want to know $P(X\in A)$, for some set of possible values $A$, then we can write $$P(X\in A) = \sum_{x\in A}p(x).$$ This can be particularly helpful, for instance, if we want to know $P(X \leq c)$ for some constant value $c$. In this case we know that the possible values range from the smallest value $X$ can take on, through to $c$, giving for instance, $$P(X\leq c) = \sum_{x=0}^c p(x),$$ if $X \geq 0$. These probabilities that consider the cumulative likelihood of $X$ taking on a value up to (or including) some number arise frequently in probability, and correspondingly, are themselves named. 
+When solving questions related to probabilities using a probability mass function, the same secondary properties apply. Notably, if we want to know $P(X\in A)$, for some set of possible values $A$, then we can write $$P(X\in A) = \sum_{x\in A}p(x).$$ This can be particularly helpful, for instance, if we want to know $P(X \leq c)$ for some constant value $c$. In this case we know that the possible values range from the smallest value $X$ can take on, through to $c$, giving for instance, $$P(X\leq c) = \sum_{x=0}^c p(x),$$ if $X \geq 0$. These probabilities, that consider the cumulative likelihood of $X$ taking on a value up to (or including) some number, arise frequently and correspondingly, are themselves named. 
 
 :::{#def-cumulative-distribution-function}
 ## Cumulative Distribution Function (Discrete)
@@ -174,7 +174,7 @@ The cumulative distribution function of a discrete random variable, $X$, is deno
 
 :::
 
-The cumulative distribution function will be explored more thoroughly in @sec-continuous-rv. Generally, for discrete random variables, the cumulative distribution function is more complex than the probability mass function, and it often is only expressible directly through a summation. Despite this, you can always convert between the probability mass function and the cumulative distribution function, with each uniquely specifying the distribution of the random variable.
+The cumulative distribution function will be explored more thoroughly in @sec-continuous-rv. Generally, for discrete random variables, the cumulative distribution function is more complex than the probability mass function, and it is often only expressible directly through a summation. Despite this, you can always convert between the probability mass function and the cumulative distribution function, with each uniquely specifying the distribution of the random variable.
 
 The same rules regarding the complements of events continue to hold when working with probability mass functions and cumulative distribution functions. For instance, $$P(X > c) = 1 - P(X\leq c) = 1 - F_X(c),$$ giving a useful avenue for simplifying probability calculations. 
 
@@ -186,7 +186,7 @@ What is the probability that during their bird watching adventure, Charles and S
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-We are interesting in the probability $P(X \geq 1)$, which we can write down explicitly as $$P(X \geq 1) = \sum_{x=1}^\infty \dfrac{e^{-3}3^x}{x!}.$$ While, strictly speaking, it is possible to solve this infinite summation, it is an infinite summation and we would rather not. Instead we can realize that, if we take the event $A = \{X \geq 1\}$ then $A^C$ is the event $\{X < 1\} = \{X = 0\}$. As a result, using our elementary rules of probability we get that $$P(X \geq 1) = 1 - P(X = 0) = 1 - \dfrac{e^{-3}3^{0}}{0!} = 1 - e^{-3} \approx 0.95.$$ As a result, there is an approximately $0.95$ probability that they see a rare bird while bird watching for five hours.
+We are interesting in the probability $P(X \geq 1)$, which we can write down explicitly as $$P(X \geq 1) = \sum_{x=1}^\infty \dfrac{e^{-3}3^x}{x!}.$$ While, strictly speaking, it is possible to solve this infinite summation, it is an infinite summation, and we would rather not. Instead, we can realize that, if we take the event $A = \{X \geq 1\}$ then $A^C$ is the event $\{X < 1\} = \{X = 0\}$. As a result, using our elementary rules of probability we get that $$P(X \geq 1) = 1 - P(X = 0) = 1 - \dfrac{e^{-3}3^{0}}{0!} = 1 - e^{-3} \approx 0.95.$$ As a result, there is an approximately $0.95$ probability that they see a rare bird while bird watching for five hours.
 ::::
 :::
 
@@ -197,7 +197,7 @@ With events defined in terms of random variables, we can talk about events as be
 After a single time bird watching Charles is hooked! The next time that they go out, Charles brings a camera to snag some beautiful memories of the majesty they are witnessing. The only trouble is that Charles is not particularly good at taking photographs of still subjects, let alone of creatures that can fly. Charles is not yet certain, but suspects that every time a photograph is snapped, there is a $0.1$ probability that it turns out good. Because the camera is a film camera, the number of photos taken is a key metric, and Charles works out that, if $X$ is the number of bad photographs taken for every good photograph, the probability mass function for $X$ is given by $$p(x) = (0.1)\times (0.9)^{x},$$ where $x \geq 0$ is an integer.
 
 a. What is the probability that Charles takes exactly three bad photos before the first good one?
-b. If $A$ is the event that Charles takes three bad photos before the first good one, and $B$ is the event that Charles takes more than four photos before the first good one, what is $P(A,B)$? What does this means about $A$ and $B$?
+b. If $A$ is the event that Charles takes three bad photos before the first good one, and $B$ is the event that Charles takes more than four photos before the first good one, what is $P(A,B)$? What does this mean about $A$ and $B$?
 c. Suppose that Charles has taken $2$ photos, both of which are bad. What is the probability that at least two more bad photos are taken before a good one?
 d. What is the probability that at least $2$ bad photos are taken?
 e. Do the results of (c) and (d) suggest an independence?
@@ -219,7 +219,7 @@ c. Here, we can frame this probability as $$P(X \geq 4 | X \geq 2)$$ This can be
 
 d. Through direct calculation we get $$P(X \geq 2) = 1 - P(X < 2) = 1 - (0.1 + 0.1\times 0.9) = 0.81.$$
 
-e. Combining (c) and (d) we find that the probability that an additional two photos are required, given that two have already been taken, is the same as the probability that two photos are required, without knowing that any have been taken. While this feels like an independence type of property, it is not precisely independence. Note that the event $\{X \geq 4\}$ immediately gives the event $\{X \geq 2\}$ and so they cannot be independent of one another.^[Instead of independence, we may describe this distribution as being "memoryless". If you know that you have been waiting a certain amount of time for something to happen (a good picture to get taken) that does not change your belief about how much longer you have to wait; the process "forgets" that it has been ongoing for sometime.] For this to be independent we would require $P(A,B) = P(A)P(B)$ which is not true of any of the events discussed.
+e. Combining (c) and (d) we find that the probability that an additional two photos are required, given that two have already been taken, is the same as the probability that two photos are required, without knowing that any have been taken. While this feels like an independence type of property, it is not precisely independence. Note that the event $\{X \geq 4\}$ immediately gives the event $\{X \geq 2\}$, and so they cannot be independent of one another.^[Instead of independence, we may describe this distribution as being "memoryless". If you know that you have been waiting a certain amount of time for something to happen (a good picture to get taken) that does not change your belief about how much longer you have to wait; the process "forgets" that it has been ongoing for some time.] For this to be independent we would require $P(A,B) = P(A)P(B)$ which is not true of any of the events discussed.
 
 f. One option is to consider the event $X \geq 0$ with any other event. Because $\{X \geq 0\} = \mathcal{X}$, no information can be gained conditioning on this event. 
 ::::
@@ -338,7 +338,7 @@ b. Using the joint probability mass function found in (a), $$p_{X,Y}(0, 15) = \d
 
 :::{#exm-independence-arg}
 ## The Independence Argument
-Charles and Sadie are having a disagreement about the nature of the probabilities on their bird outings. Charles claims that, without knowing the marginal probability mass functions of the number of good pictures taken, and the number of rare birds that are seen, there is no way to tell whether the the two random quantities are independent or not. Sadie cannot say exactly why this argument feels wrong, but insists that the two quantities must not be independent. 
+Charles and Sadie are having a disagreement about the nature of the probabilities on their bird outings. Charles claims that, without knowing the marginal probability mass functions of the number of good pictures taken, and the number of rare birds that are seen, there is no way to tell whether the two random quantities are independent or not. Sadie cannot say exactly why this argument feels wrong, but insists that the two quantities must not be independent. 
 
 Who is correct, and why? Recall that $$p_{X,Y}(x, y) = \binom{10y}{x}\times(0.25)^{x}\times(0.75)^{10y - x}\times\dfrac{e^{-3}3^y}{y!},$$ with $0 \leq x \leq 10y$, and $y \geq 0$
 
@@ -401,7 +401,7 @@ We saw that this was true for events, and the same reasoning applies here. This 
 
 :::{#exm-independence-via-pmfs}
 ## Charles Exploration of Independence
-A little shaken after the previous independence mishap, Charles is committed to better understanding independence at an intuitive level. As a result, every time a pair of random quantities are seen together Charles has taken to deciding whether or not the underlying random variables would be independent. 
+A little shaken after the previous independence mishap, Charles is committed to better understanding independence at an intuitive level. As a result, every time a pair of random quantities are seen together Charles has taken to deciding whether the underlying random variables would be independent. 
 
 For each of the following, indicate whether the pairs of random quantities are likely to be independent (and why).
 
@@ -465,7 +465,7 @@ d. Two things are true with the given probabilities. First, if a chore was done 
 ::::
 :::
 
-Unlike the multiplication rule and Bayes' theorem, the extension of the law of total probability is frequently cited when manipulating probability mass functions. It is a process which is important enough so as to warrant its own name: marginalization.
+Unlike the multiplication rule and Bayes' theorem, the extension of the law of total probability is frequently cited when manipulating probability mass functions. It is a process which is important enough to warrant its own name: marginalization.
 
 :::{.callout-tip icon="false"}
 ## Marginalization
@@ -482,7 +482,7 @@ Taking this argument and encoding it with mathematical notation we get that $$P(
 To complete the analogy to the law of total probability, recall that the multiplication rule tells us that $p_{X,Y}(x,y) = p_{X|Y}(x|y)p_Y(y)$, and so we may also marginalize by taking $$p_X(x) = \sum_{y\in\mathcal{Y}} p_{X|Y}(x|y)p_Y(y).$$ This makes it clear that marginalization is often accomplished via arguments based on conditioning.
 :::
 
-When confronted with questions from statistics and probability, it will often be the case that the natural answer to the question is "it depends." For instance, if asked "what is the probability that a student passes their next exam?" the likely response is "it depends." One very useful technique for solving these questions in a satisfactory way is to continue that line of thought and explicitly specify "on what." In the previous example, you may say "it depends on how much they study." The conceit here is that, if you knew how much the student studied, then you would better understand the outcomes of the student's exam. 
+When confronted with questions from statistics and probability, it will often be the case that the natural answer to the question is "it depends." For instance, if asked "what is the probability that a student passes their next exam?" the likely response is "it depends." One very useful technique for solving these questions satisfactorily is to continue that line of thought and explicitly specify "on what." In the previous example, you may say "it depends on how much they study." The conceit here is that, if you knew how much the student studied, then you would better understand the outcomes of the student's exam. 
 
 In mathematical terms this means you have a firm belief about the conditional distribution between the random quantities of *exam performance* and *study time*. The process of marginalization, and the law of total probability before that, provide useful ways of being able to translate these "it depends" statements into concrete beliefs about the marginal probabilities. Recall that marginal distributions are distributions which do not depend on any other quantity, and instead, thy capture the overall behaviour of a random variable. They have, in some sense, averaged out all other factors and give you the beliefs which do not depend on anything else at all. The technique for accomplishing this is marginalization.^[We shall see other forms of these "conditioning arguments" in the next chapter, where we try to summarize the behaviour of a random variable.]
 
@@ -534,7 +534,7 @@ b. Supposing that this description is accurate, and that the probability mass fu
 ## Solution
 a. Yes, this is a reasonable explanation. In this case, if Charles is willing to assume that good photos for one bird do not impact the chances of good photos of another bird, then this is a perfectly valid way to frame the setting. Note that in this case, $Y=y$ is still random, so this whole description is conditioning on knowing $Y=y$. In the real world, it is likely that photos may not actually be independent. If Charles takes some really bad photos of one bird, that may impact the chances of taking good photos of the next. However, it is likely close enough to correct in order to be true.
 
-b. Recall that for independent random variables, the joint probability mass function is given by the product of the marginal probability mass functions. To simplify the notation, we will define $T(X) = \sum_{i=1}^y x_i$. Thus the probability mass function of $X_1,\dots,X_y$ is given by \begin{align*}
+b. Recall that for independent random variables, the joint probability mass function is given by the product of the marginal probability mass functions. To simplify the notation, we will define $T(X) = \sum_{i=1}^y x_i$. Thus, the probability mass function of $X_1,\dots,X_y$ is given by \begin{align*}
     p_{X_1,X_2,\dots,X_y}(x_1,\dots,x_y) &= \prod_{i=1}^y \binom{10}{x_i}(0.25)^{x_i}(0.75)^{10-x_i} \\
     &= \left(\prod_{i=1}^y\binom{10}{x_i}\right)\times(0.25)^{\sum_{i=1}^y x_i}(0.75)^{10y - \sum_{i=1}^yx_i} \\
     &= \left(\prod_{i=1}^y \dfrac{10!}{x_i!(10-x_i)!}\right)\times 0.25^{T(X)}\times 0.75^{10y - T(X)} \\
