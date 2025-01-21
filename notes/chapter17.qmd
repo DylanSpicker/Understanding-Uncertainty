@@ -10,7 +10,7 @@ This question goes beyond the setting of hypothesis testing. Many statistical pr
 :::{#def-parametric-method}
 ## Parametric Method
 
-A **parametric method** or **parametric technique** is a statistical procedure that relies on assumptions regarding the specific structure of the distributions of the random variables of interest. Typically this will come in the form of assuming that the data follow some specific distribution, even if the values of the parameters are left unspecified. 
+A **parametric method** or **parametric technique** is a statistical procedure that relies on assumptions regarding the specific structure of the distributions of the random variables of interest. Typically, this will come in the form of assuming that the data follow some specific distribution, even if the values of the parameters are left unspecified. 
 :::
 
 Parametric methods are incredibly useful, and largely serve as the foundation for the most widely applied statistical methods. The concern with parametric methods, as discussed for the specific case of hypothesis testing, is that these methods are theoretically justified only when the parametric assumptions hold. If a population is assumed to follow a normal distribution, and it does not in fact follow the normal distribution, the theory can no longer provide guarantees as to the performance of the procedure. This does not necessarily mean that the procedure will not perform well, however, it does mean that justification for the application of the procedure is lacking. There are secondary approaches in statistics that remedy this, broadly referred to as **nonparametric methods**.
@@ -90,7 +90,7 @@ The **Mann-Whitney $U$-Statistic** is then given by $U = \min\{U_X, U_Y\}$. Unde
 
 :::{.callout-tip icon="false"}
 ## The Mann-Whitney $U$-Test (General)
-Suppose that two independent samples are drawn from two separate populations, denoted $X_1,\dots,X_n$ from the first and $Y_1,\dots,Y_m$ from the second. The distribution function for $X_i$ is $F_X$ and the distribution function for $Y_i$ is $F_Y$. To test the null hypothesis that the distributions are equivalent, $H_0: F_X = F_Y$, versus the alternative that they differ, $H_A: F_X \neq F_Y$, the Mann-Whtiney $U$-test can be run. First, all data from the two samples are combined and ranked. Then, the rank-sum statistics are computed for both samples, giving $R_X$ and $R_Y$. Using these statistics, the $U$-statistics for each sample are computed as $$U_X = nm + \frac{n(n+1)}{2} - R_X \quad\text{and}\quad U_Y = nm + \frac{m(m+1)}{2} - R_Y.$$ Finally, $U = \min\{U_X, U_Y\}$ is calculated as the $U$ statistic. 
+Suppose that two independent samples are drawn from two separate populations, denoted $X_1,\dots,X_n$ from the first and $Y_1,\dots,Y_m$ from the second. The distribution function for $X_i$ is $F_X$ and the distribution function for $Y_i$ is $F_Y$. To test the null hypothesis that the distributions are equivalent, $H_0: F_X = F_Y$, versus the alternative that they differ, $H_A: F_X \neq F_Y$, the Mann-Whitney $U$-test can be run. First, all data from the two samples are combined and ranked. Then, the rank-sum statistics are computed for both samples, giving $R_X$ and $R_Y$. Using these statistics, the $U$-statistics for each sample are computed as $$U_X = nm + \frac{n(n+1)}{2} - R_X \quad\text{and}\quad U_Y = nm + \frac{m(m+1)}{2} - R_Y.$$ Finally, $U = \min\{U_X, U_Y\}$ is calculated as the $U$ statistic. 
 
 Under the null hypothesis, $U$ follows a rank-sum distribution with size parameters $n$ and $m$. Taking $U = u$ based on the observed sample, the $p$-value can be computed as: 
 $$p = 2\times\min\{F_{n,m}(u), 1 - F_{n,m}(u)\} \approx 2\times\Phi\left(-\frac{|U - nm/2|}{\sqrt{nm(n+m+1)/12}}\right).$$
@@ -100,7 +100,7 @@ $$p = 2\times\min\{F_{n,m}(u), 1 - F_{n,m}(u)\} \approx 2\times\Phi\left(-\frac{
 :::{.callout-warning icon="false"}
 ## Formality Under the Alternative
 
-In order for the $U$-test to give consistent,^[Note that here, consistency refers to a specific statistical idea. Namely, consistency represents the idea that, as sample sizes increase larger and larger, the resulting statistical procedure will approach the correct results.] accurate results, then a further assumption is required under the alternative hypothesis. Namely, it must be the case that $P(X > Y) \neq P(Y > X)$ if the [alternative hypothesis]{.fg .highlight} holds. Thus, if $X$ and $Y$ both have symmetric distributions, centered on the same value, then the $U$-test will not reliably conclude that the distributions are different, even when sample sizes grow indefinitely. This is a fairly technical consideration, but it is important when applying the $U$-test in practice. If you suspect that the two distributions are symmetric, and centered on the same value, the hypothesis test is no longer correctly regarded as testing $F_X = F_Y$. To do so, alternative test procedures would be required.^[For instance, the Kolmogorov-Smirnov test is a nonparametric test that considers the equality (or lack thereof) of continuous distributions, without making the same assumptions under the null hypothesis.]
+In order for the $U$-test to give consistent,^[Note that here, consistency refers to a specific statistical idea. Namely, consistency represents the idea that, as sample sizes increase larger and larger, the resulting statistical procedure will approach the correct results.] accurate results, then a further assumption is required under the alternative hypothesis. Namely, it must be the case that $P(X > Y) \neq P(Y > X)$ if the **alternative hypothesis** holds. Thus, if $X$ and $Y$ both have symmetric distributions, centered on the same value, then the $U$-test will not reliably conclude that the distributions are different, even when sample sizes grow indefinitely. This is a fairly technical consideration, but it is important when applying the $U$-test in practice. If you suspect that the two distributions are symmetric, and centered on the same value, the hypothesis test is no longer correctly regarded as testing $F_X = F_Y$. To do so, alternative test procedures would be required.^[For instance, the Kolmogorov-Smirnov test is a nonparametric test that considers the equality (or lack thereof) of continuous distributions, without making the same assumptions under the null hypothesis.]
 :::
 
 ### The Mann-Whitney $U$-Test for Location Shift Distributions
@@ -112,6 +112,131 @@ When this assumption is made, in order to test $H_0: \mu_X - \mu_Y = \Delta_0$, 
 
 ## The Wilcoxon Signed-Rank Test (for Paired Data)
 
-## The True Value of Nonparametric Tests
+The Wilcoxon signed-rank test can be applied to test hypotheses regarding the location of a single population distribution. The Mann-Whitney $U$-test applies to test^[Under somewhat rigorous assumptions] for the equality of locations of two independent populations. A third scenario that is useful to consider is testing of the location of two dependent distributions, specifically when observations from these distributions are paired. 
 
-## Exercises
+Suppose that $X_1,\dots,X_n$ are observed from the first population, with some location measure, $\mu_X$. Then, $Y_1, \dots, Y_n$ are observed from the second population, with some (possibly different) location measure, $\mu_Y$. Further, suppose that the data are paired such that $X_1$ and $Y_1$ are naturally linked, $X_2$ and $Y_2$ are naturally linked, and so forth. Then, this sample can be converted into a single sample of **paired differences** by taking, $D_i = X_i - Y_i$ giving $$(D_1, D_2, \dots, D_n) = (X_1 - Y_1, X_2 - Y_2, \dots, X_n - Y_n).$$
+
+The location of the population $D$, $\mu_D$, will be equal to the difference in locations for the $X$ and $Y$ populations. That is, $\mu_D = \mu_X - \mu_Y$. As a result, should we wish to test $H_0: \mu_X - \mu_Y = \Delta_0$, this is equivalent to testing $H_0: \mu_D = \Delta_0$. Further, supposing that the distributions for both $X$ and $Y$ are symmetric, then the distribution of $D$ must also be symmetric. As a result, in this case, the Wilcoxon signed-rank test can be conducted on $(D_1, \dots, D_n)$. Specifically, the signed-rank sum can be computed based on the ranks of $(|D_1|, |D_2|, \dots, |D_n|)$, and the resulting statistic can be compared to the signed-rank distribution with size parameter $n$.^[This procedure is analogous to the $t$-test for paired data. In the $t$-test for paired data we first consider the single sample that arises from differencing the observations. Then, a single sample $t$-test is conducted on the sample of paired differences. To do so nonparametrically, we first consider the single sample of paired differences, and then conduct a Wilcoxon signed-rank test on this sample of paired differences.]
+
+:::{.callout-tip icon="false"}
+## Wilcoxon Signed-Rank Tests for Paired Populations (Without Ties)
+Suppose that data are selected from two symmetric populations, such that the observations are paired. First, compute the paired differences, taking $$(D_1, D_2, \dots, D_n) = (X_1 - Y_1, X_2 - Y_2, \dots, X_n - Y_n).$$
+
+Further, suppose that the paired differences are such that the absolute values of all differences are unique. Then the Wilcoxon Signed-Rank test can be used to test $H_0: \mu_D = 0$ versus $H_0: \mu_D \neq 0$, or the one-tailed alternatives, where $\mu_D = \mu_X - \mu_Y$ is the difference in population locations. To do so, the **signed-rank sum** test statistic is computed, $$T = \sum_{i=1}^n \text{sgn}(D_i)R_i,$$ where $R_i$ is the rank order (smallest to largest) of $|D_i|$. 
+
+Under the null hypothesis, $T$ follows a signed-rank distribution with size parameter $n$. Taking $T = t$ based on the observed sample, the $p$-value can be computed as: 
+
+1. If $H_0: \mu_D = 0$ versus $H_A: \mu_D \neq 0$, then $$p = F_n(-|t|) + 1 - F_n(|t|) \approx 2\Phi\left(-|t|/\sqrt{n(n+1)(2n+1)/6}\right).$$
+2. If $H_0: \mu_D \leq 0$ versus $H_A: \mu_D > 0$, then $$p = 1 - F_n(t) \approx 1 - \Phi\left(t/\sqrt{n(n+1)(2n+1)/6}\right).$$
+3. If $H_0: \mu_D \geq 0$ versus $H_A: \mu_D < 0$, then $$p = F_n(t) \approx \Phi\left(t/\sqrt{n(n+1)(2n+1)/6}\right).$$
+:::
+
+### Non-Centered Data, Ties, and Zeroes
+Just as in the single sample case, the signed-rank test for paired data can be adjusted to accommodate ties, zeroes, and non-centered data. The same considerations can be applied to the single sample of paired differences, $(D_1,\dots,D_n)$. Shifting the observed differences by a constant allows for testing for non-zero differences. The average rank or random rank procedures can be used to accommodate ties in the differences. The reduced sample procedure or signed-rank zero procedure can both be used to accommodate zeroes in the sample. Just as was the case with the one sample procedure, any of these choices will likely produce satisfactory results when data have only a few ties or a few zeroes. When ties or zeroes are abundant, it is unlikely that the signed-rank test is the best choice for testing the location.
+
+## The Intuition of Rank-Based Tests
+Both the Wilcoxon signed-rank test, and the Mann-Whitney $U$-test, often called the rank-sum test, are known as rank-based test procedures. The rationale is that these are tests on statistics derived from the ranks of the data. It is worth considering the intuition between how the test statistics connect to the hypotheses of interest.
+
+Consider first the signed-rank sum. For this, the data (from a single sample) are ranked from smallest to largest, and then these ranks are signed. If we add up all the signed ranks then we can think about this equivalently as adding all the ranks for points observed above $0$ and subtracting from that all ranks that were below $0$. Under the null hypothesis, the location of the distribution is $0$. In order for this to hold, it must be the case that it is about as likely for observations below zero to occur as it is for observations above zero. In connect this to ranks, we may suggest that there should be roughly as many small values above zero and below zero, and the same with large values. As a result, in a distribution with $\mu = 0$, we should expect that $T$ will be approximately $0$. If the values of this statistic are much larger or much smaller than zero, then it is likely that the true location is above or below zero as well.
+
+For the Mann-Whitney $U$-statistic, a similar intuition takes place. Here, all the data are ranked together. If it is the case that the distributions are the same as one another, we should expect that the data will all be mixed in together in terms of ranks. If the distributions differ substantially from one another then there will likely be a biasing of one distribution being more likely to be large or small compared to the other. Reflected in ranks this means that, if the null hypothesis holds, the ranks should be roughly evenly distributed between the two populations and the rank-sums should be approximately equal. Otherwise, we would expect that one of the rank sums would be substantially larger than the other. The $U$-statistic is then computed simply be shifting the rank sums so that it sits between $0$ and $nm$. Values near the middle of this range are likely, and occur when the rank-sums are nearly equal.
+
+In this way, whether we are considering a single population or multiple populations, the ranks of the data can be used to connect to the location of those populations. 
+
+## Non-Parametric Tests Procedures in `R`
+In `R` there is an implementation of both the signed-rank distribution for the signed-rank test and the rank-sum distribution for the $U$-test. Moreover, both procedures are available through a single function call on data. 
+
+The signed-rank distribution is accessible via the `{r, p, d, q}signrank` calls. These are analogous to the `rnorm`, `pnorm`, `dnorm`, and `qnorm` calls. An important caveat on the signed-rank distribution in `R`, however, is that it is computed not for the full signed-rank sum (as presented in this chapter), but instead, for the *positive-rank* sum. That is, in the test procedures built into `R`, the relevant test statistic is given by $$T^{+} = \sum_{i=1}^n \psi(X_i)R_i,$$ where $\psi(X_i) = 1$ if $X_i > 0$ and $\psi(X_i) = 0$ otherwise. This positive-rank sum statistic is connected to the signed-rank sum statistic by noting that $$T = 2T^{+} - \frac{n(n+1)}{2}.$$ 
+
+This presents two important considerations. First, if we wish to compute $P(T \leq t)$ then we can make the translation to using $$P(T \leq t) = P(2T^{+} - \frac{n(n+1)}{2} \leq t) = P(T^{+} \leq \frac{t}{2} + \frac{n(n+1)}{4}).$$ Thus, to directly compute $p$-values in `R`, we need to modify the values we are passing to `psignrank`. Second, if we use the direct test function, the reported statistic will correspond to the positive ranks only. The resulting $p$-values and conclusions will be equivalent, but it is important to recognize that the output is not identical to what we would compute by hand. 
+
+::: {.content-visible when-format='pdf'}
+```{r}
+#########################################
+# Signed-Rank Test
+###################
+# Suppose that we observe T = 8 with n = 30
+tstar <- 8/2 + 30*(30 + 1)/4 # Adjust t
+psignrank(tstar, n = 30)
+
+# To get the p-value:
+2 * min(psignrank(tstar, n = 30), 1-psignrank(tstar, n = 30))
+
+########################################
+# U-Test
+##################
+# Suppose that we observe U = 800 with n=50, m=40
+pwilcox(800, n = 50, m = 40)
+
+# To get the p-value:
+2 * min(pwilcox(800, n=50, m=40), 1 - pwilcox(800, n=50, m=40))
+
+#########################################
+# Test Procedures for Observed Data
+###################
+# We generate random data for X and Y
+X <- runif(100,-50, 50)
+Y <- rt(200,df=3)
+Z <- X + rnorm(100, 0, 1) # Paired with X
+
+# To test individual samples use wilcox.test with only X 
+wilcox.test(x = X, alternative = "two.sided", mu = 0)
+wilcox.test(x = Y, alternative = "less", mu = 1)
+wilcox.test(x = Z, alternative = "greater", mu = -3)
+
+# To test two independent samples, provide X and Y, and 
+# specify paired = FALSE
+wilcox.test(x = X, y = Y, paired = FALSE)
+wilcox.test(x = Y, y = Z, paired = FALSE)
+
+# To test two paired samples, provide X and Y, and 
+# specify paired = TRUE
+wilcox.test(x = X, y = Z, paired = TRUE)
+```
+:::
+::: {.content-visible when-format='html'}
+```{webr-r}
+#########################################
+# Signed-Rank Test
+###################
+# Suppose that we observe T = 8 with n = 30
+tstar <- 8/2 + 30*(30 + 1)/4 # Adjust t
+psignrank(tstar, n = 30)
+
+# To get the p-value:
+2 * min(psignrank(tstar, n = 30), 1-psignrank(tstar, n = 30))
+
+########################################
+# U-Test
+##################
+# Suppose that we observe U = 800 with n=50, m=40
+pwilcox(800, n = 50, m = 40)
+
+# To get the p-value:
+2 * min(pwilcox(800, n=50, m=40), 1 - pwilcox(800, n=50, m=40))
+
+#########################################
+# Test Procedures for Observed Data
+###################
+# We generate random data for X and Y
+X <- runif(100,-50, 50)
+Y <- rt(200,df=3)
+Z <- X + rnorm(100, 0, 1) # Paired with X
+
+# To test individual samples use wilcox.test with only X 
+wilcox.test(x = X, alternative = "two.sided", mu = 0)
+wilcox.test(x = Y, alternative = "less", mu = 1)
+wilcox.test(x = Z, alternative = "greater", mu = -3)
+
+# To test two independent samples, provide X and Y, and 
+# specify paired = FALSE
+wilcox.test(x = X, y = Y, paired = FALSE)
+wilcox.test(x = Y, y = Z, paired = FALSE)
+
+# To test two paired samples, provide X and Y, and 
+# specify paired = TRUE
+wilcox.test(x = X, y = Z, paired = TRUE)
+```
+:::
+
+## Exercises {.unnumbered}

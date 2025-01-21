@@ -13,3 +13,6 @@ subjectivist
 Bayesians
 logicals
 nonparametric
+Nonparametric
+nonparametrically
+Wilcoxon
