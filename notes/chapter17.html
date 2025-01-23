@@ -1173,7 +1173,7 @@ Wilcoxon Signed-Rank Tests for Single Populations (Without Ties)
 <h2 data-number="17.4" class="anchored" data-anchor-id="the-mann-whitney-u-test"><span class="header-section-number">17.4</span> The Mann-Whitney <span class="math inline">\(U\)</span>-Test</h2>
 <p>The signed-rank test allowed for nonparametric tests regarding a single population. A simple extension to this setting is the desire to run a hypothesis test comparing two independent populations. Suppose that <span class="math inline">\(X_{1},\dots,X_n\)</span> are drawn from the first population and <span class="math inline">\(Y_1,\dots,Y_m\)</span> are drawn from the second. General interest may be in whether the distribution of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are equivalent to one another, or not.</p>
 <p>Considering the equivalence of the distributions tends to be a stronger requirement than in the parametric case of comparing equality of means. However, it is worth revisiting why this may be reasonable. Specifically, in the nonparametric case, it is not guaranteed that any two distributions can be characterized by the same parameters. One distribution may have a mean, while the other does not. In this setting, it would not be reasonable to compare population means, since there are not two means to compare. If, when running the test comparing the populations, you are willing to make stronger assumptions regarding the distribution, it is possible to convert a test of equality of distributions into a direct test of location measures. For instance, suppose you are willing to assume that the population distributions of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are equivalent except for, perhaps, their location. In this case testing whether the distributions are equivalent is the same as testing whether the locations are equal. In the standard <span class="math inline">\(t\)</span>-test, this is essentially the assumption that is made. For nonparametric testing, it is useful to leave this more broad.</p>
-<p>Denoting the cumulative distribution function of the first population, <span class="math inline">\(F_X\)</span>, and of the second population, <span class="math inline">\(F_Y\)</span>, the process of testing for equality of distributions can be expressed as testing the null hypothesis <span class="math inline">\(H_0: F_X = F_Y\)</span> versus the alternative <span class="math inline">\(H_A: F_X \neq F_Y\)</span>. To do this nonparametrically, we can apply the Mann-Whitney <span class="math inline">\(U\)</span>-test. The Mann-Whitney <span class="math inline">\(U\)</span>-test is also referred to as the rank-sum test, the Mann-Whitney-Wilcoxon test, or the Wilcoxon rank-sum test. To ensure that the test remains clearly distinguished from the signed-rank test, it will be referred to as the <span class="math inline">\(U\)</span>-test. The <span class="math inline">\(U\)</span>-test, like the signed-rank test, relies on the ranks of the data. Unlike the signed-rank test, however, these are not the ranks of the absolute values, but rather the ranks of the data directly. Specifically, consider the combined sample of <span class="math inline">\(\{X_1,X_2,\dots,X_n,Y_1,Y_2,\dots,Y_m\}\)</span>. Within this sample, rank all the observations from smallest to largest, assigning the ranks as <span class="math inline">\(\{R_1,R_2,\dots,R_{n+m}\}\)</span>.</p>
+<p>Denoting the cumulative distribution function of the first population, <span class="math inline">\(F_X\)</span>, and of the second population, <span class="math inline">\(F_Y\)</span>, the process of testing for equality of distributions can be expressed as testing the null hypothesis <span class="math inline">\(H_0: F_X = F_Y\)</span> versus the alternative <span class="math inline">\(H_A: F_X \neq F_Y\)</span>. To do this nonparametrically, we can apply the Mann-Whitney <span class="math inline">\(U\)</span>-test. The Mann-Whitney <span class="math inline">\(U\)</span>-test is also referred to as the rank-sum test, the Mann-Whitney-Wilcoxon test, or the Wilcoxon rank-sum test. To ensure that the test remains clearly distinguished from the signed-rank test, it will be referred to as the <span class="math inline">\(U\)</span>-test. The <span class="math inline">\(U\)</span>-test, like the signed-rank test, relies on the ranks of the data. Unlike the signed-rank test, however, these are not the ranks of the absolute values, but rather the ranks of the data directly. Specifically, consider the combined sample of <span class="math inline">\(\{X_1,X_2,\dots,X_n,Y_1,Y_2,\dots,Y_m\}\)</span>. Within this sample, rank all the observations from smallest to largest, assigning the ranks as <span class="math inline">\(\{R_1,R_2,\dots,R_{n+m}\}\)</span>. If there are any ties, the average-rank procedure is used. That is to say that each observation gets the average rank that would be given if we resolved ties according to every possible reordering.</p>
 <p>With the ranks for each data point computed, we can then compute the <strong>rank-sum</strong> for each sample. Namely, take <span class="math inline">\(R_X\)</span> to be the sum of all the ranks from the observations corresponding to <span class="math inline">\(\{X_1,\dots,X_n\}\)</span> and <span class="math inline">\(R_Y\)</span> to be the sum of all the ranks from the observations corresponding to <span class="math inline">\(\{Y_1,\dots,Y_m\}\)</span>. That is, <span class="math display">\[R_X = \sum_{i=1}^n R_i \quad\text{and}\quad R_Y = \sum_{i=1}^m R_{n+i}.\]</span> Once the rank-sum is calculated for both samples, the <span class="math inline">\(U\)</span>-statistics can be as well. Specifically take <span class="math display">\[U_X = nm + \frac{n(n+1)}{2} - R_X \quad\text{and}\quad U_Y = nm + \frac{m(m+1)}{2} - R_Y.\]</span></p>
 <p>The <strong>Mann-Whitney <span class="math inline">\(U\)</span>-Statistic</strong> is then given by <span class="math inline">\(U = \min\{U_X, U_Y\}\)</span>. Under the null hypothesis, the <span class="math inline">\(U\)</span>-statistic will follow the Wilcoxon rank-sum distribution. This distribution is characterized by both sample sizes, <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span>. Thus, taking <span class="math inline">\(F_{n,m}\)</span> to be the cumulative distribution function for the Wilcoxon rank-sum distribution, then the <span class="math inline">\(p\)</span>-value for the <span class="math inline">\(U\)</span>-test will be <span class="math display">\[p = 2\times\min\{F_{n,m}(u), 1 - F_{n,m}(u)\}.\]</span> The form of this <span class="math inline">\(p\)</span>-value arises since the distribution will not be symmetric around <span class="math inline">\(0\)</span>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> When both <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> are large, then the null distribution is well-approximated by a normal distribution. Specifically, for large <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span>, <span class="math display">\[U \stackrel{\dot H_0}{\sim} N\left(\frac{nm}{2}, \frac{nm(n+m+1)}{12}\right).\]</span> Thus, for the <span class="math inline">\(p\)</span>-value, <span class="math display">\[p \approx 2\times\Phi\left(-\frac{|U - nm/2|}{\sqrt{nm(n+m+1)/12}}\right).\]</span></p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
@@ -1313,6 +1313,141 @@ wilcox.test(x = X, y = Z, paired = TRUE)`,
 </section>
 <section id="exercises" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-17.1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.1</strong></span> For each of the following scenarios, identify what hypothesis test is most appropriate (<span class="math inline">\(Z\)</span>-test, <span class="math inline">\(t\)</span>-test, paired <span class="math inline">\(t\)</span>-test, Wilcoxon signed-rank, Mann-Whitney, or paired signed-rank).</p>
+<ol type="a">
+<li>A researcher wants to compare the average height of male and female students in a college. They sample a very large number of both male and female students.</li>
+<li>A researcher wants to compare the average lifespan of two different breeds of dogs. They sample <span class="math inline">\(23\)</span> dogs of each species, and consider their lifespans.</li>
+<li>A market research firm wants to compare customer satisfaction ratings for two competing products. They record satisfaction ratings from a small sample of customers for each product are available.</li>
+<li>A teacher wants to determine if the average score on a standardized test for students in their class is significantly different from the national average. Standardized grades are normally distributed, with a known variance.</li>
+<li>A company wants to know if a new training program improves employee productivity. They sample productivity scores for <span class="math inline">\(20\)</span> employees both before and after the training program is implemented.</li>
+<li>A psychologist wants to investigate if a new therapy reduces anxiety levels in patients. They take a sample of <span class="math inline">\(100\)</span> patients, recording the anxiety levels before and after therapy for each.</li>
+<li>A company wants to compare the average salaries of male and female employees with the same job title. They consider the <span class="math inline">\(18\)</span> pairs of male and female employees with the same job title that are available.</li>
+<li>A manufacturer claims that their light bulbs last an average of 1000 hours. A consumer group wants to test this claim by taking a sample of <span class="math inline">\(50\)</span> lightbulbs and recording their lifespan.</li>
+<li>A psychologist wants to investigate if the average level of anxiety in a specific population is higher than the national average. They record the anxiety scores for <span class="math inline">\(18\)</span> individual patients from the population.</li>
+</ol>
+</div>
+<div id="exr-17.2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.2</strong></span> A local environmental group claims that the median daily water consumption per household in their city exceeds <span class="math inline">\(570\)</span> liters. Daily water consumption (in liters) for a random sample of <span class="math inline">\(7\)</span> households in the city are taken. The researchers observe <span class="math display">\[608, 551, 684, 494, 665, 589, 722.\]</span></p>
+<p>Calculate the signed-rank test statistic that researchers can use to test this claim.</p>
+</div>
+<div id="exr-17.3" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.3</strong></span> A sports coach hypothesizes that the median number of push-ups that their athletes can perform is <span class="math inline">\(50\)</span>. They randomly sample <span class="math inline">\(8\)</span> athletes, and have them do push-ups. The total number performed are: <span class="math display">\[48, 55, 42, 58, 45, 60, 52, 49.\]</span></p>
+<ol type="a">
+<li>Calculate the signed-rank test statistic that the coach can use to test their claim.</li>
+<li>Perform the Wilcoxon signed-rank test. What conclusions can be drawn?</li>
+</ol>
+</div>
+<div id="exr-17.4" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.4</strong></span> A pharmaceutical company claims that their new pain relief medication provides a median pain reduction of at least <span class="math inline">\(3\)</span> points on a 10-point pain scale. They sample <span class="math inline">\(8\)</span> patients, who report the following pain reduction scores after taking the medication <span class="math display">\[2, 4, 5, 2, 4, 1, 3, 2.\]</span></p>
+<ol type="a">
+<li>What is the signed-rank test statistic, if the average rank procedure is used?</li>
+<li>What is the signed-rank test statistic, if the random tie-breaking procedure is used?</li>
+</ol>
+</div>
+<div id="exr-17.5" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.5</strong></span> A researcher is investigating the effectiveness of a new mindfulness technique in reducing stress levels. Changes in stress levels (measured on a standardized scale) for a sample of <span class="math inline">\(10\)</span> participants after a week of practicing the mindfulness technique: <span class="math display">\[-2, 1, 0, -3, 2, 4, -1, 3, 1, -2.\]</span></p>
+<ol type="a">
+<li>Test the null hypothesis that there is no change in stress levels using mindfulness techniques, using the random tie-breaking procedure.</li>
+<li>Repeat part (a) a second time. Do your results change? Explain.</li>
+</ol>
+</div>
+<div id="exr-17.6" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.6</strong></span> A botanist wants to compare the growth of two different varieties of tomato plants. The heights (in inches) of 5 plants from each variety after two weeks are recorded as:</p>
+<ul>
+<li>Variety A: <span class="math inline">\(3, 5, 4, 6, 10\)</span></li>
+<li>Variety B: <span class="math inline">\(7, 8, 6.5, 9, 2\)</span></li>
+</ul>
+<p>Compute the rank-sum test statistic used to determine whether there is a significant difference between the growth rates of these plants.</p>
+</div>
+<div id="exr-17.7" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.7</strong></span> A teacher wants to determine if there is a significant difference in the exam scores of students who attended a review session and those who did not. The collect exam scores for 6 students who attended the review and 5 who did not.</p>
+<ul>
+<li>Attended: <span class="math inline">\(85, 90, 78, 82, 88, 92\)</span></li>
+<li>Did Not Attend: <span class="math inline">\(75, 80, 72, 79, 70\)</span></li>
+</ul>
+<ol type="a">
+<li>Compute the rank-sum test statistic used to determine whether there is a significant difference between those who attended and those who did not attend the review session.</li>
+<li>What assumptions are required to test this hypothesis using the Mann-Whitney test?</li>
+<li>Perform the Mann-Whitney <span class="math inline">\(U\)</span>-test. What conclusions can be drawn?</li>
+</ol>
+</div>
+<div id="exr-17.8" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.8</strong></span> A researcher wants to compare the reaction times of two groups of participants: one group that has been drinking water and another group that has been drinking caffeine. Past research suggests that the distribution of reaction times in the population may change in location under different conditions, but does not change in shape. They record the following reaction times (in ms):</p>
+<ul>
+<li>Water: <span class="math inline">\(250, 230, 245, 260, 240\)</span></li>
+<li>Caffeine: <span class="math inline">\(220, 215, 235, 205, 225\)</span></li>
+</ul>
+<ol type="a">
+<li>What is required in order to test the null hypothesis that the locations of the two distributions are equivalent?</li>
+<li>Test the hypothesis that the locations of the two distributions are equivalent.</li>
+</ol>
+</div>
+<div id="exr-17.9" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.9</strong></span> A doctor wants to compare the effectiveness of two different pain relievers in reducing headache pain. They record the following data on random patients reporting a pain intensity score (scale of <span class="math inline">\(1\)</span> to <span class="math inline">\(10\)</span>):</p>
+<ul>
+<li>Medication A: <span class="math inline">\(2, 3, 1, 4, 2, 3\)</span></li>
+<li>Medication B: <span class="math inline">\(1, 0, 2, 1\)</span></li>
+</ul>
+<ol type="a">
+<li>Suppose that a Mann-Whitney <span class="math inline">\(U\)</span>-test is run on these data. What is required of the data to run the test, and what is the hypothesis that is actually being tested?</li>
+<li>Run the Mann-Whitney <span class="math inline">\(U\)</span>-test, and draw relevant conclusions.</li>
+</ol>
+</div>
+<div id="exr-17.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.10</strong></span> An educator wants to compare the reading speeds of students who undergo a speed-reading program. A group of <span class="math inline">\(5\)</span> students attend the program, and their reading speeds before and after the program are recorded (in words per minute):</p>
+<ul>
+<li>After program: <span class="math inline">\(250, 280, 262, 275, 240\)</span></li>
+<li>Before Program: <span class="math inline">\(200, 220, 210, 230, 215\)</span></li>
+</ul>
+<ol type="a">
+<li>What is the signed-rank test statistic used to test if the program increases the median reading speed for children?</li>
+<li>What is the signed-rank test statistic used to test if the program increases the median reading speed for children, by at least <span class="math inline">\(50\)</span> words per minute?</li>
+</ol>
+</div>
+<div id="exr-17.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.11</strong></span> A therapist wants to assess the effectiveness of a new therapy for depression. They record the depressive scores (on a standardized scale) for <span class="math inline">\(4\)</span> patients before and after therapy. The results are:</p>
+<ul>
+<li>Patient 1: Before: <span class="math inline">\(30\)</span>, After: <span class="math inline">\(25\)</span></li>
+<li>Patient 2: Before: <span class="math inline">\(28\)</span>, After: <span class="math inline">\(22\)</span></li>
+<li>Patient 3: Before: <span class="math inline">\(32\)</span>, After: <span class="math inline">\(28\)</span></li>
+<li>Patient 4: Before: <span class="math inline">\(21\)</span>, After: <span class="math inline">\(20\)</span></li>
+</ul>
+<ol type="a">
+<li>Test the null hypothesis that therapy changes depressive scores in this population. Indicate what hypothesis test is used, and what needs to be assumed about the populations to use it.</li>
+<li>Test the null hypothesis that therapy changes depressive scores, reducing them by <span class="math inline">\(3\)</span>, in this population. Indicate what hypothesis test is used, and what needs to be assumed about the populations to use it.</li>
+</ol>
+</div>
+<div id="exr-17.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.12</strong></span> A doctor wants to assess the effectiveness of a new medication in lowering blood pressure. Blood pressure readings (systolic) for 7 patients before and after taking the medication are given as:</p>
+<ul>
+<li>Patient 1: Before: <span class="math inline">\(140\)</span>, After: <span class="math inline">\(135\)</span></li>
+<li>Patient 2: Before: <span class="math inline">\(150\)</span>, After: <span class="math inline">\(145\)</span></li>
+<li>Patient 3: Before: <span class="math inline">\(138\)</span>, After: <span class="math inline">\(130\)</span></li>
+<li>Patient 4: Before: <span class="math inline">\(135\)</span>, After: <span class="math inline">\(138\)</span></li>
+<li>Patient 5: Before: <span class="math inline">\(155\)</span>, After: <span class="math inline">\(150\)</span></li>
+<li>Patient 6: Before: <span class="math inline">\(148\)</span>, After: <span class="math inline">\(142\)</span></li>
+<li>Patient 7: Before: <span class="math inline">\(148\)</span>, After: <span class="math inline">\(153\)</span></li>
+</ul>
+<ol type="a">
+<li>What is the relevant signed-rank test statistic if using the average-rank procedure?</li>
+<li>What is the relevant signed-rank test statistic if using the random tie-breaking procedure?</li>
+</ol>
+</div>
+<div id="exr-17.13" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 17.13</strong></span> A researcher wants to evaluate the effectiveness of a new sleep aid. They collect data on <span class="math inline">\(5\)</span> patients, before and after using the sleep aid. The quality scores (on a scale of <span class="math inline">\(1\)</span> to <span class="math inline">\(10\)</span>) for each of the participants are recorded as follows:</p>
+<ul>
+<li>Participant 1: Before: <span class="math inline">\(2\)</span>, After: <span class="math inline">\(7\)</span></li>
+<li>Participant 2: Before: <span class="math inline">\(3\)</span>, After: <span class="math inline">\(6\)</span></li>
+<li>Participant 3: Before: <span class="math inline">\(5\)</span>, After: <span class="math inline">\(3\)</span></li>
+<li>Participant 4: Before: <span class="math inline">\(2\)</span>, After: <span class="math inline">\(4\)</span></li>
+<li>Participant 5: Before: <span class="math inline">\(6\)</span>, After: <span class="math inline">\(1\)</span></li>
+</ul>
+<ol type="a">
+<li>Using the random tie-breaking procedure, assess whether there is a change in sleep quality observed by taking the sleep aid.</li>
+<li>Repeat the procedure in part (a). Are your results the same or different?</li>
+</ol>
+</div>
 
 
 </section>
