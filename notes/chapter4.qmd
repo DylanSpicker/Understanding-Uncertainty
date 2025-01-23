@@ -20,9 +20,9 @@ The joint probability of more than two events extends in the same way. Suppose t
 :::
 
 ## What are Conditional Probabilities?
-Marginal probabilities are often of interest, and frequently are the best tool for summarizing the overall state of the world, or our knowledge regarding the state of the world. Joint probabilities can be useful when working with compound events, or thinking of complex outcomes. However, there are many scenarios which are not covered by either the joint or marginal probabilities. In practice we know that sometimes information that we have will change our understanding of the probability of an event. 
+Marginal probabilities are often of interest, and frequently are the best tool for summarizing the overall state of the world, or our knowledge regarding the state of the world. Joint probabilities can be useful when working with compound events, or thinking of complex outcomes. However, there are many scenarios which are not covered by either the joint or marginal probabilities. In practice, we know that sometimes information that we have will change our understanding of the probability of an event. 
 
-Suppose the event $A$ corresponds to the event that it snows tomorrow, in some particular city. It is possible to think about how often it snows on average, and report a value related to that as $P(A)$. Now, what if we know that it is currently the middle of summer, and the city is in the Norther Hemisphere? In this case, while $P(A)$ does not shrink to $0$, it becomes far less likely than if we did not have that information. Similarly, if we know that it is winter in the same city, the likelihood that it snows tomorrow increases. In order to formally capture this we can introduce the idea of conditional probability. 
+Suppose the event $A$ corresponds to the event that it snows tomorrow, in some particular city. It is possible to think about how often it snows on average, and report a value related to that as $P(A)$. Now, what if we know that it is currently the middle of summer, and the city is in the Northern Hemisphere? In this case, while $P(A)$ does not shrink to $0$, it becomes far less likely than if we did not have that information. Similarly, if we know that it is winter in the same city, the likelihood that it snows tomorrow increases. In order to formally capture this we can introduce the idea of conditional probability. 
 
 :::{#def-conditional-probability}
 ## Conditional Probability
@@ -31,11 +31,11 @@ The conditional probability of an event $A$ given an event $B$, is the probabili
 
 Unlike in the case of marginal probabilities, conditional probabilities allow us to *condition* on extra pieces of information. Instead of asking "what is the probability of this event", we instead ask, "given that we know this piece of information, what is the probability of this event?" Joint probabilities ask "what is the probability that both of these events occur simultaneously" which is distinct in that we do not have any additional information about the state of the world when working with joint probabilities. The subtle distinction becomes quite powerful, both in terms of manipulating and working with probabilities, but also in terms of expressing the correct events of interest for ourselves. 
 
-To make use of conditional probabilities, we will think of the process of *conditioning* on one or more events. We will talk of the probability of $A$ conditional on $B$, where $A$ and $B$ are two events of interest. Intuitively, this it the probability of $A$ happening, supposing that we know that $B$ has already happened. 
+To make use of conditional probabilities, we will think of the process of *conditioning* on one or more events. We will talk of the probability of $A$ conditional on $B$, where $A$ and $B$ are two events of interest. Intuitively, this is the probability of $A$ happening, supposing that we know that $B$ has already happened. 
 
 :::{#exm-basic-conditional-probability}
 ## Six from the Sum
-Charles and Sadie are playing a new game using two dice. In the game they each take turns rolling the two dice into a container that the other player cannot see. They add up the dice and then report this sum to the other player. The other player then has to guess whether or not there is a six showing.
+Charles and Sadie are playing a new game using two dice. In the game they each take turns rolling the two dice into a container that the other player cannot see. They add up the dice and then report this sum to the other player. The other player then has to guess whether there is a six showing.
 
 a. On one round, Charles does not hear the sum that Sadie reports as he was not paying attention. Sadie is strict and insists that she will not repeat herself. What should Charles guess?
 b. Determine a strategy which optimizes the likelihood that the guessing player will be correct.
@@ -136,7 +136,7 @@ b. Assuming that the shape is known, what is the probability of selecting each c
 ## Solution
 a. Note that there are $2+3+2=7$ red, $1+6=7$ blue, $2+2+1+2=7$ green, $4+2+1=7$ yellow, and $3+1+1+2=7$ black objects. As a result, each colour is going to be equally likely, with a probability of $0.2$.
 
-b.  Take $S$, $C$, $P$, $Cn$ to be the events that a sphere, cube, pyramid, or cone are drawn, respectively. Take $R$, $B$, $G$, $Y$, $Bk$ to be the events that a red, blue, green, yellow, or black object is drawn, respectively. We want the probability of each colour, given the corresponding shape. There are a total of $20$ conditional probabilities to solve for here. We walk through, in full, the first conditional probability calculation. Afterwards, the same process follows to get the (provided) answer. 
+b.  Take $S$, $C$, $P$, $Cn$ to be the events that a sphere, cube, pyramid, or cone are drawn, respectively. Take $R$, $B$, $G$, $Y$, $Bk$ to be the events that a red, blue, green, yellow, or black object is drawn, respectively. We want the probability of each colour, given the corresponding shape. There are a total of $20$ conditional probabilities to solve for here. We walk through, in full, the first conditional probability calculation. After, the same process follows to get the (provided) answer. 
 
     First note that there are $8$ spheres, $10$ cubes, $6$ pyramids, and $11$ cones. Thus, the marginal probabilities are $P(S) = 8/35$, $P(C) = 10/35$, $P(P) = 6/35$, and $P(Cn) = 11/35$. Note further that the joint probability between any colour-shape combination is going to be given by the number of that combination that exist, divided by $35$. Thus, suppose we want $P(R|S)$. There are $2$ red spheres, so $P(R \cap S) = 2/35$. The marginal probability $P(S) = 8/35$, so taken together this gives $$P(R|S) = \dfrac{2/35}{8/35} = \dfrac{2}{8} = \dfrac{1}{4}.$$
 
@@ -153,7 +153,7 @@ b.  Take $S$, $C$, $P$, $Cn$ to be the events that a sphere, cube, pyramid, or c
 :::
 
 ### The Multiplication Rule
-While sometimes we will want to work out the conditional probability using our knowledge of the joint and marginal probabilities, there are other times where it is easier to determine the conditional probability directly. In these settings we may wish to understand the marginal or joint probabilities. That is, we may know $P(A|B)$, but we want to make statements regarding $P(A)$ or $P(A,B)$.
+While sometimes we will want to work out the conditional probability using our knowledge of the joint and marginal probabilities, there are other times when it is easier to determine the conditional probability directly. In these settings we may wish to understand the marginal or joint probabilities. That is, we may know $P(A|B)$, but we want to make statements regarding $P(A)$ or $P(A,B)$.
 
 To do so, we can rearrange the defining relationship of conditional probability, to solve for the quantities of interest. Because of the importance of this procedure, we actually give this mostly straightforward rearrangement a special name. 
 
@@ -162,7 +162,7 @@ To do so, we can rearrange the defining relationship of conditional probability,
 The multiplication rule states that, for two events $A$ and $B$ where $P(B) > 0$, $$P(A\cap B) = P(A|B)P(B).$$ 
 :::
 
-Note that, by multiplying both sides of the definition of $P(A|B)$ by $P(B)$ gives the result. In words it states that we can solve for the joint probability of $A$ and $B$ by multiplying the conditional probability of $A$ given $B$, by the marginal probability of $B$. This is symmetric in $A$ and $B$ so that $$P(A\cap B) = P(B|A)P(A).$$ This is useful as sometimes it is easier to determine $B$ given $A$. 
+Note that, by multiplying both sides of the definition of $P(A|B)$ by $P(B)$ gives the result. In words, it states that we can solve for the joint probability of $A$ and $B$ by multiplying the conditional probability of $A$ given $B$, by the marginal probability of $B$. This is symmetric in $A$ and $B$ so that $$P(A\cap B) = P(B|A)P(A).$$ This is useful as sometimes it is easier to determine $B$ given $A$. 
 
 :::{#exm-package-delivery-times}
 ## Package Delivery Times
@@ -176,7 +176,7 @@ We will take $L$ to correspond to the events where the package is late, $A$ to t
 
 First, $$P(L, A) = P(L|A)P(A) = (0.75)(0.1) = 0.075.$$ Additionally, $$P(L, B) = P(L|B)P(B) = (0.15)(0.9) = 0.135.$$ 
 
-As a result it is more likely to have the package late and sent with $B$ then the package late and sent with $A$.^[Note, this is another result which seems to (on the surface) defy expectations. We will see this again later on in this chapter in a slightly different context. It seems strange that company $A$ is more likely to be late, and yet, we are more likely to see a late package that is sent by company $B$ then a late package that is sent by company $A$. The reason for this is that company $B$ is used much more frequently than company $A$, which overcomes the added likelihood of company $A$ being late.]
+As a result it is more likely to have the package late and sent with $B$ than to have the package late and sent with $A$.^[Note, this is another result which seems to (on the surface) defy expectations. We will see this again later on in this chapter in a slightly different context. It seems strange that company $A$ is more likely to be late, and yet, we are more likely to see a late package that is sent by company $B$ than a late package that is sent by company $A$. The reason for this is that company $B$ is used much more frequently than company $A$, which overcomes the added likelihood of company $A$ being late.]
 ::::
 :::
 
@@ -185,7 +185,7 @@ While the multiplication rule gives us the capacity to solve for joint probabili
 
 :::{#def-partition}
 ## Partition
-A partition is a collection of sets which divide up the sample space such that all of the sets are disjoint from one another, and the sample space is given by the union of all of the sets. That is, $A_1,\dots,A_n$ is a partition of $\mathcal{S}$ if:
+A partition is a collection of sets which divide up the sample space such that all the sets are disjoint from one another, and the sample space is given by the union of all the sets. That is, $A_1,\dots,A_n$ is a partition of $\mathcal{S}$ if:
 
 1. $A_i \cap A_j = \emptyset$ for all $i \neq j$, and 
 2. $$\bigcup_{i=1}^n A_i = \mathcal{S}.$$
@@ -217,7 +217,7 @@ B_4 &= \{(\text{H},\text{H},\text{H})\}.
 3. We can partition the space into the number of times the sequence switches between heads and tails. There will be either $0$ switches, $1$ switch, or $2$ switches. This gives \begin{align*}
 B_1 &= \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{H})\}\\
 B_2 &= \{(\text{T},\text{T},\text{H}), (\text{H},\text{T},\text{T}), (\text{H},\text{H},\text{T}), (\text{T},\text{H},\text{H})\}\\
-B_3 &= \{(\text{T},\text{H},\text{T}),  (\text{H},\text{T},\text{H})\}.
+B_3 &= \{(\text{T},\text{H},\text{T}), (\text{H},\text{T},\text{H})\}.
 \end{align*}
 ::::
 :::
@@ -302,7 +302,7 @@ A commonly used example application for Bayes' Theorem is medical testing. Suppo
 
 If we take $A$ to be the event that the test returns positive, and $B$ to be the event that the patient is infected,^[It is worth drawing attention to the language that we have started to use at this point in the notes regarding "events". In this case our sample space would actually be formed using pairs of information. In particular, we might have $$\mathcal{S} = \{(\text{Pos. Test}, \text{Illness}), (\text{Neg. Test}, \text{Illness}),(\text{Pos. Test}, \text{No Illness}),(\text{Neg. Test}, \text{No Illness})\}.$$ Then the event $A$ here is actually $A = \{(\text{Pos. Test}, \text{Illness}),(\text{Pos. Test}, \text{No Illness})\}$ and $B$ is $\{(\text{Pos. Test}, \text{Illness}),(\text{Neg. Test}, \text{Illness})\}$. It is far more clunky to make explicit these events, and so we move towards using more natural language. Until you feel confident that you can identify the specific outcomes associated with the events of interest, it is worth writing these out in full.] then we are saying that $P(A|B) = 0.99$ and $P(A^C|B^C) = 0.95$ which means that $P(A|B^C) = 0.05$.^[Since $P(A|B^C) = 1 - P(A^C|B^C) = 1 - 0.95 = 0.05$.] Suppose that we know that, across the entire population, one in a thousand individuals is likely to be infected. This means that $P(B) = 0.001$. 
 
-Now if a random individual goes into a doctor's office and tests positive for the disease, how likely are they to actually be infected? In this case we want to know the probability of them being infected given that they have tested positive. In notation, this is $P(B|A)$. We do not know this quantity directly, but given an application of Bayes' Theorem, we can find it. Using the natural partition of $B$ and $B^C$, we get $$P(B|A) = \dfrac{P(A|B)P(A)}{P(A|B)P(B)+P(A|B^C)P(B^C)} = \dfrac{(0.99)(0.001)}{(0.99)(0.001)+(0.05)(0.999)} \approx 0.019.$$ That is, despite the fact that this test is exceptionally effective at detecting this disease, a positive test still means that an individual has a probability of only $0.019$ of actually having the illness.^[This counter intuitive fact was an intensely frustrating reality for statisticians everywhere during the height of the COVID-19 pandemic, when politicians and the population at large turned away from testing owing to its perceived "ineffectiveness". The quantity of interest for knowing how good a test is is $P(A|B)$ and $P(A^C|B^C)$. However, if a disease is sufficiently rare, with $P(B)$ sufficiently small, then no matter how effective the tests are you will likely have $P(B|A)$ to be low. Note that $P(B|A) >> P(B)$ in the example, and this will also be true in general. A single test cannot say with certainty, however, they are an incredibly effective tool at reducing our uncertainty.]
+Now if a random individual goes into a doctor's office and tests positive for the disease, how likely are they to actually be infected? In this case we want to know the probability of them being infected given that they have tested positive. In notation, this is $P(B|A)$. We do not know this quantity directly, but given an application of Bayes' Theorem, we can find it. Using the natural partition of $B$ and $B^C$, we get $$P(B|A) = \dfrac{P(A|B)P(A)}{P(A|B)P(B)+P(A|B^C)P(B^C)} = \dfrac{(0.99)(0.001)}{(0.99)(0.001)+(0.05)(0.999)} \approx 0.019.$$ That is, despite the fact that this test is exceptionally effective at detecting this disease, a positive test still means that an individual has a probability of only $0.019$ of actually having the illness.^[This counterintuitive fact was an intensely frustrating reality for statisticians everywhere during the height of the COVID-19 pandemic, when politicians and the population at large turned away from testing owing to its perceived "ineffectiveness". The quantity of interest for knowing how good a test is, is $P(A|B)$ and $P(A^C|B^C)$. However, if a disease is sufficiently rare, with $P(B)$ sufficiently small, then no matter how effective the tests are you will likely have $P(B|A)$ to be low. Note that $P(B|A) >> P(B)$ in the example, and this will also be true in general. A single test cannot say with certainty, however, they are an incredibly effective tool at reducing our uncertainty.]
 
 :::{#exm-bayes-theorem}
 ## Sadie's Late Package
@@ -323,7 +323,7 @@ We have seen that, in most cases, conditioning on an event changes the probabili
 
 It is totally possible that two events do not influence one another at all. The weather outside today is likely not influenced by your favourite sports team's performance last night.^[Though, perhaps the world will freeze over if *(insert-your-least-favourite-team-here)* wins the *(insert-the-name-of-the-championship-for-the-league-you-care-about-here)*?] In this case, we would have $P(A|B) = P(A)$. 
 
-We saw an example of this previously when we wanted to know the probability of a randomly selected card being a heart ($A$) given that it was an ace ($B$). We found that this was $\dfrac{1}{4}$, exactly the same as the probability if we did not know that it was an ace. Thus here we have $P(A|B)=P(A)$. We could have also said that $P(B|A)=P(B)=\dfrac{1}{13}$. The symmetry of these events makes it somewhat more convenient to express this relationship differently. 
+We saw an example of this previously when we wanted to know the probability of a randomly selected card being a heart ($A$) given that it was an ace ($B$). We found that this was $\dfrac{1}{4}$, exactly the same as the probability if we did not know that it was an ace. Thus, here we have $P(A|B)=P(A)$. We could have also said that $P(B|A)=P(B)=\dfrac{1}{13}$. The symmetry of these events makes it somewhat more convenient to express this relationship differently. 
 
 Instead of writing $P(A|B) = P(A)$ and $P(B|A) = P(B)$, we can multiply the first relationship by $P(B)$ on both sides, or the second by $P(A)$ on both sides. The multiplication rule gives $P(A|B)P(B) = P(A,B)$, and so the first relationship becomes $P(A,B) = P(A)P(B)$. The second follows exactly the same. Any two events that satisfy this relationship are said to be independent. 
 
@@ -352,9 +352,9 @@ Often, in elementary probability and statistics courses, the **Multiplication Ru
 
 The multiplication rule states that, for independent events $A$ and $B$, $P(A\cap B) = P(A)P(B)$. That is, with independent events if you want to know the probability that they both happen, you multiply together the probabilities. The addition rule states that, for disjoint events $A$ and $B$, $P(A \cup B) = P(A) + P(B)$. That is, with disjoint events if you want to know the probability that either or occurs, you add them together. These can be quite handy tools when correctly applied. 
 
-For instance, if we assume that we flip a coin then roll a die, we can say that the probability that you get a heads and an even number must be $\dfrac{1}{2}\times\dfrac{1}{2} = \dfrac{1}{4}$ since $P(\text{Heads}) = \dfrac{1}{2}$ and $P(\text{Even}) = \dfrac{1}{2}$, and the coin flip must be independent of the die roll. Similarly, suppose that we wish to know what the probability that, when drawing a card from a standard deck of $52$ cards, the result is an Ace, Three, Six, or King. Here we can say that this must be $\dfrac{4}{52} + \dfrac{4}{52} + \dfrac{4}{52} + \dfrac{4}{52} = \dfrac{4}{13}$. This is because each rank has a $\dfrac{4}{52}$ chance of occurring, and each of these events are disjoint.
+For instance, if we assume that we flip a coin then roll a die, we can say that the probability that you get a head and an even number must be $\dfrac{1}{2}\times\dfrac{1}{2} = \dfrac{1}{4}$ since $P(\text{Heads}) = \dfrac{1}{2}$ and $P(\text{Even}) = \dfrac{1}{2}$, and the coin flip must be independent of the die roll. Similarly, suppose that we wish to know what the probability that, when drawing a card from a standard deck of $52$ cards, the result is an Ace, Three, Six, or King. Here we can say that this must be $\dfrac{4}{52} + \dfrac{4}{52} + \dfrac{4}{52} + \dfrac{4}{52} = \dfrac{4}{13}$. This is because each rank has a $\dfrac{4}{52}$ chance of occurring, and each of these events are disjoint.
 
-So, if the multiplication and addition rules are handy, why do we not discuss them directly in these notes? As pointed out, we did learn both of the rules: the multiplication rule is the defining relationship for independent events, and the addition rule is the axiom of additivity. However, highlighting these as substantially more important than the surrounding topics can lead to deeper struggles with probability calculations. Specifically, these two techniques apply in only very limited situations: if we know that events are independent or we know that events are disjoint. Most of the time, neither assumption is going to hold, and in those settings we need to move past multiplying or adding to critically thinking about the specific quantities. This can lead to deeper confusion in translating these beyond simple examples.
+So, if the multiplication and addition rules are handy, why do we not discuss them directly in these notes? As pointed out, we did learn both of the rules: the multiplication rule is the defining relationship for independent events, and the addition rule is the axiom of additivity. However, highlighting these as substantially more important than the surrounding topics can lead to deeper struggles with probability calculations. Specifically, these two techniques apply in only very limited situations: if we know that events are independent, or we know that events are disjoint. Most of the time, neither assumption is going to hold, and in those settings we need to move past multiplying or adding to critically thinking about the specific quantities. This can lead to deeper confusion in translating these beyond simple examples.
 
 The concern here moves beyond ensuring success in introductory sequences of probability and statistics. Uncritical deference to the multiplication and addition rules can have dire real-world consequences. As one particularly sobering example, [Sally Clark](https://en.wikipedia.org/wiki/Sally_Clark){target="_BLANK"} was convicted in 1999 of the murder of her two sons, each of whom had died a few weeks following their birth. The defense claimed that the deaths were the results of Sudden Infant Death Syndrome (SIDS). The prosecution presented a statistical analysis from a paediatrician, Roy Meadow, who claimed that the probability of an infant dying of SIDS is approximately $\dfrac{1}{8500}$. An application of the multiplication rule then tells us that the probability that both of Sally Clark's sons would die of SIDS is $$\dfrac{1}{8500}\times\dfrac{1}{8500} = \dfrac{1}{72,250,000}.$$ This is very rare, and seemed strong enough evidence to convict Sally Clark. The conviction was later overturned on an appeal, owing to both additional evidence coming to light and a [critique of the statistical reasoning employed in the case](https://web.archive.org/web/20110824151124/http://www.rss.org.uk/uploadedfiles/documentlibrary/744.pdf){target="_BLANK"} published by the Royal Society of Statistics, but only after Sally Clark had served more than three years of a prison sentence. 
 
@@ -386,13 +386,13 @@ e. Is it possible that competitive games are independent of heavy games?
 ## Solution
 a. We are suggesting that $P(A,B) = 0.05$, where $A$ is "two player" and $B$ is "cooperative". We know that $P(B) = 0.25$ and $P(A) = 0.20$. Calculating $P(A)P(B) = (0.20)(0.25) = 0.05 = P(A,B)$, and so these traits **are** independent.
 
-b. We have $P(A,B) = 0.2$ where $A$ is "heavy" and $B$ is "$4+$ players. We know that $P(A) = 0.45$ and $P(B) = 0.20$, and so $P(A)P(B) = (0.45)(0.20) = 0.09 \neq P(A,B)$. As a result, these traits are **not** independent.
+b. We have $P(A,B) = 0.2$ where $A$ is "heavy" and $B$ is "$4+$ players". We know that $P(A) = 0.45$ and $P(B) = 0.20$, and so $P(A)P(B) = (0.45)(0.20) = 0.09 \neq P(A,B)$. As a result, these traits are **not** independent.
 
 c. We know that $P(A) > 0$ and $P(B) > 0$ for $A$ being moderately involved and $B$ being cooperative. As a result, $P(A)P(B) > 0$, and so if $P(A,B) = 0$, they must **not** be independent. 
 
 d. Taking $A$ to be "competitive" we have $P(A) = 0.75$. Taking $B$ to be "two player" we have $P(B) = 0.20$. As a result, if $A\perp B$ then $P(A,B) = P(A)P(B) = (0.75)(0.20) = 0.15$. Thus, there must be $15$ competitive, two player games.
 
-e. Taking $A$ to be "competitive" we have $P(A) = 0.75$. Taking $B$ to be "heavy" weh ave $P(B) = 0.45$. Thus, if they were independent, we would have $P(A,B) = P(A)P(B) = (0.75)(0.45) = 0.3375$. This would require $33.75$ games to be heavy, competitive games and so we must conclude that they are **not** independent. 
+e. Taking $A$ to be "competitive" we have $P(A) = 0.75$. Taking $B$ to be "heavy" we have $P(B) = 0.45$. Thus, if they were independent, we would have $P(A,B) = P(A)P(B) = (0.75)(0.45) = 0.3375$. This would require $33.75$ games to be heavy, competitive games, and so we must conclude that they are **not** independent. 
 
 ::::
 :::
@@ -495,7 +495,7 @@ By including two (or more) factors in the table we are able to capture not only 
 
 Consider the two-way contingency table, @tbl-uni-contingency. Each cell consists of frequency with which a combination of the two traits occurs in the population.^[That is, the number of students who are enrolled in that faculty, in that year of study.] If we take events corresponding to each of the levels of the two variables of interest, then these central cells represent the frequency of joint events. That is, each interior cell gives the total number of observations with a set level for variable one^[Faculty.] AND a set level for variable two^[Year of study.]. For instance, there are `r tab1[5, 2]` individuals who are in `r rownames(tab1)[5]` and studying in `r colnames(tab1)[2]`. 
 
-Each row is then summed, with the total number following into the corresponding row recorded in the right hand margin. each column is summed, with the total number corresponding to the given column recorded in the bottom margin. For instance there are a total of `r tab1[3,6]` students in `r rownames(tab1)[3]` and a total of `r tab1[8,3]` in `r colnames(tab1)[3]`. Then the margin totals are summed and the total is recorded in the lower right margin space (in this case, `r tab1[8,6]`). Whether the rows or columns are summed, they should sum to the same total, which is the total of the population under consideration. This is the same as simply adding all of the observed interior frequencies. To turn a frequency into a probability, you need only divide the correct frequency by the correct total.
+Each row is then summed, with the total number following into the corresponding row recorded in the right-hand margin. Each column is summed, with the total number corresponding to the given column recorded in the bottom margin. For instance there are a total of `r tab1[3,6]` students in `r rownames(tab1)[3]` and a total of `r tab1[8,3]` in `r colnames(tab1)[3]`. Then the margin totals are summed, and the total is recorded in the lower right margin space (in this case, `r tab1[8,6]`). Whether the rows or columns are summed, they should sum to the same total, which is the total of the population under consideration. This is the same as simply adding all the observed interior frequencies. To turn a frequency into a probability, you need only divide the correct frequency by the correct total.
 
 ```{r}
 #| echo: false
@@ -529,10 +529,10 @@ Note that these procedures are exactly in line with what we had seen before. The
 Recall that the law of total probability states that, if $B_1,\dots,B_n$ forms a partition of the sample space, then $$P(A) = \sum_{i=1}^n P(A|B_i)P(B_i) = \sum_{i=1}^n P(A, B_i)$$. In a contingency table it is easier to see how either of the two factors at play (either those in the rows or the columns) forms a partition of the space. Every observation has to fall in exactly one row and exactly one column. Thus, if we want to know the marginal frequency of a single trait (say represented by some row of the table), then one way to find this total is to sum up every observation in each of the corresponding columns. This is *precisely* the same process as the law of total probability. Note that, denoting each column as $B_i$, and supposing there are $k$ total columns, then the total number in a row is taken to be $$N_A = \sum_{i=1}^k N_{A, B_i},$$ simply as the summation of the corresponding row. By definition, $P(A) = \dfrac{N_A}{N}$, and so dividing both sides by $N$ gives $$P(A) = \dfrac{N_A}{N} = \dfrac{1}{N}\sum_{i=1}^k N_{A, B_i} = \sum_{i=1}^k \dfrac{N_{A, B_i}}{N} = \sum_{i=1}^n P(A\cap B_i).$$
 :::
 
-It is important to note that there is redundant information within a contingency table. For instance, the margins need not be listed explicitly, as they can be directly calculated from the interior points. Same goes for interior points, given the margins of the table (assuming *some* interior points are also presented). This can be useful for a compact representation of the information, and manipulating these tables -- being able to find the required information in many places -- should become familiar to you as you continue to work with them more and more.
+It is important to note that there is redundant information within a contingency table. For instance, the margins need not be listed explicitly, as they can be directly calculated from the interior points. The same goes for interior points, given the margins of the table (assuming *some* interior points are also presented). This can be useful for a compact representation of the information, and manipulating these tables -- being able to find the required information in many places -- should become familiar to you as you continue to work with them more and more.
 
 :::{#exm-charles-contingency-table}
-## The Evolving Contents of Charle's Urns
+## The Evolving Contents of Charles' Urns
 After learning of contingency tables, Sadie points out to Charles that with the whole urn debacle they went through, the two of them actually ended up using a contingency table to summarize the information. How neat! In the interim, there has been some development in the contents of Charles's urns, and armed with the new knowledge of contingency tables, the following summary is produced. 
 ```{r}
 #| echo: false
@@ -632,7 +632,7 @@ b. Independence is more cumbersome to check. We require the product of marginal 
 :::
 
 #### Contingency Tables and Data Frames in R
-In R we can use the `table` and `prop.table` to calculate the (interior) of a contingency table. This will return a `table` type object in R, which can be thought of as a matrix of sorts. On it, we can use the functions `rowSums` and `colSums` to get the summation of the rows and columns, respectively. Typically the object we pass to `table` will be a **data frame**. A data frame is another R object type that we have not yet seen. The idea with a data frame is that we have multiple columns with different variables (of possibly different types) represented. Each row corresponds to a single observation, and then each column is read as a feature of those observations. Data frames are essentially large spreadsheets (or data tables) which indicate the various observations that we have. In practice, data frames are the most commonly used object in an R analysis, and we will see them plenty going forward.
+In R, we can use the `table` and `prop.table` to calculate the (interior) of a contingency table. This will return a `table` type object in R, which can be thought of as a matrix of sorts. On it, we can use the functions `rowSums` and `colSums` to get the summation of the rows and columns, respectively. Typically, the object we pass to `table` will be a **data frame**. A data frame is another R object type that we have not yet seen. The idea with a data frame is that we have multiple columns with different variables (of possibly different types) represented. Each row corresponds to a single observation, and then each column is read as a feature of those observations. Data frames are essentially large spreadsheets (or data tables) which indicate the various observations that we have. In practice, data frames are the most commonly used object in an R analysis, and we will see them plenty going forward.
 
 ::: {.content-visible when-format='pdf'}
 ```{r}
@@ -779,11 +779,11 @@ Consider the following argument from *Pillow Problems* @Carroll, which purports 
 >
 > Then the chances, that it contains ($\alpha$) BBB, ($\beta$) BWB, ($\gamma$) WWB, are, as before, $\dfrac{1}{4}$, $\dfrac{1}{2}$, $\dfrac{1}{4}$.
 >
-> Hence the chance, of now drawing the black one, $$ = \frac{1}{4}\cdot 1 + \frac{1}{2}\cdot\frac{2}{3} + \frac{1}{4}\cdot\frac{1}{3} = \frac{2}{3}.$$
+> Hence, the chance, of now drawing the black one, $$ = \frac{1}{4}\cdot 1 + \frac{1}{2}\cdot\frac{2}{3} + \frac{1}{4}\cdot\frac{1}{3} = \frac{2}{3}.$$
 >
-> Hence the bag now contains BBW (since any other state of things would not give this chance).
+> Hence, the bag now contains BBW (since any other state of things would not give this chance).
 >
-> Hence, before the black counter was added, it contained BW, i.e. one black counter and one white.
+> Hence, before the black counter was added, it contained BW, i.e., one black counter and one white.
 
 a. Show that the probability of drawing a black ball in the described setup is indeed $2/3$.
 b. Is the logic sound? Why?

@@ -82,7 +82,7 @@ The signed-rank test allowed for nonparametric tests regarding a single populati
 
 Considering the equivalence of the distributions tends to be a stronger requirement than in the parametric case of comparing equality of means. However, it is worth revisiting why this may be reasonable. Specifically, in the nonparametric case, it is not guaranteed that any two distributions can be characterized by the same parameters. One distribution may have a mean, while the other does not. In this setting, it would not be reasonable to compare population means, since there are not two means to compare. If, when running the test comparing the populations, you are willing to make stronger assumptions regarding the distribution, it is possible to convert a test of equality of distributions into a direct test of location measures. For instance, suppose you are willing to assume that the population distributions of $X$ and $Y$ are equivalent except for, perhaps, their location. In this case testing whether the distributions are equivalent is the same as testing whether the locations are equal. In the standard $t$-test, this is essentially the assumption that is made. For nonparametric testing, it is useful to leave this more broad. 
 
-Denoting the cumulative distribution function of the first population, $F_X$, and of the second population, $F_Y$, the process of testing for equality of distributions can be expressed as testing the null hypothesis $H_0: F_X = F_Y$ versus the alternative $H_A: F_X \neq F_Y$. To do this nonparametrically, we can apply the Mann-Whitney $U$-test. The Mann-Whitney $U$-test is also referred to as the rank-sum test, the Mann-Whitney-Wilcoxon test, or the Wilcoxon rank-sum test. To ensure that the test remains clearly distinguished from the signed-rank test, it will be referred to as the $U$-test. The $U$-test, like the signed-rank test, relies on the ranks of the data. Unlike the signed-rank test, however, these are not the ranks of the absolute values, but rather the ranks of the data directly. Specifically, consider the combined sample of $\{X_1,X_2,\dots,X_n,Y_1,Y_2,\dots,Y_m\}$. Within this sample, rank all the observations from smallest to largest, assigning the ranks as $\{R_1,R_2,\dots,R_{n+m}\}$.
+Denoting the cumulative distribution function of the first population, $F_X$, and of the second population, $F_Y$, the process of testing for equality of distributions can be expressed as testing the null hypothesis $H_0: F_X = F_Y$ versus the alternative $H_A: F_X \neq F_Y$. To do this nonparametrically, we can apply the Mann-Whitney $U$-test. The Mann-Whitney $U$-test is also referred to as the rank-sum test, the Mann-Whitney-Wilcoxon test, or the Wilcoxon rank-sum test. To ensure that the test remains clearly distinguished from the signed-rank test, it will be referred to as the $U$-test. The $U$-test, like the signed-rank test, relies on the ranks of the data. Unlike the signed-rank test, however, these are not the ranks of the absolute values, but rather the ranks of the data directly. Specifically, consider the combined sample of $\{X_1,X_2,\dots,X_n,Y_1,Y_2,\dots,Y_m\}$. Within this sample, rank all the observations from smallest to largest, assigning the ranks as $\{R_1,R_2,\dots,R_{n+m}\}$. If there are any ties, the average-rank procedure is used. That is to say that each observation gets the average rank that would be given if we resolved ties according to every possible reordering. 
 
 With the ranks for each data point computed, we can then compute the **rank-sum** for each sample. Namely, take $R_X$ to be the sum of all the ranks from the observations corresponding to $\{X_1,\dots,X_n\}$ and $R_Y$ to be the sum of all the ranks from the observations corresponding to $\{Y_1,\dots,Y_m\}$. That is, $$R_X = \sum_{i=1}^n R_i \quad\text{and}\quad R_Y = \sum_{i=1}^m R_{n+i}.$$ Once the rank-sum is calculated for both samples, the $U$-statistics can be as well. Specifically take $$U_X = nm + \frac{n(n+1)}{2} - R_X \quad\text{and}\quad U_Y = nm + \frac{m(m+1)}{2} - R_Y.$$
 
@@ -240,3 +240,135 @@ wilcox.test(x = X, y = Z, paired = TRUE)
 :::
 
 ## Exercises {.unnumbered}
+
+:::{#exr-17.1}
+For each of the following scenarios, identify what hypothesis test is most appropriate ($Z$-test, $t$-test, paired $t$-test, Wilcoxon signed-rank, Mann-Whitney, or paired signed-rank).
+
+a. A researcher wants to compare the average height of male and female students in a college. They sample a very large number of both male and female students.
+a. A researcher wants to compare the average lifespan of two different breeds of dogs. They sample $23$ dogs of each species, and consider their lifespans. 
+a. A market research firm wants to compare customer satisfaction ratings for two competing products. They record satisfaction ratings from a small sample of customers for each product are available.
+a. A teacher wants to determine if the average score on a standardized test for students in their class is significantly different from the national average. Standardized grades are normally distributed, with a known variance. 
+a. A company wants to know if a new training program improves employee productivity. They sample productivity scores for $20$ employees both before and after the training program is implemented.
+a. A psychologist wants to investigate if a new therapy reduces anxiety levels in patients. They take a sample of $100$ patients, recording the anxiety levels before and after therapy for each.
+a. A company wants to compare the average salaries of male and female employees with the same job title. They consider the $18$ pairs of male and female employees with the same job title that are available.
+a. A manufacturer claims that their light bulbs last an average of 1000 hours. A consumer group wants to test this claim by taking a sample of $50$ lightbulbs and recording their lifespan.
+a. A psychologist wants to investigate if the average level of anxiety in a specific population is higher than the national average. They record the anxiety scores for $18$ individual patients from the population. 
+:::
+
+:::{#exr-17.2}
+A local environmental group claims that the median daily water consumption per household in their city exceeds $570$ liters. Daily water consumption (in liters) for a random sample of $7$ households in the city are taken. The researchers observe $$608, 551, 684, 494, 665, 589, 722.$$
+
+Calculate the signed-rank test statistic that researchers can use to test this claim. 
+:::
+
+:::{#exr-17.3}
+A sports coach hypothesizes that the median number of push-ups that their athletes can perform is $50$. They randomly sample $8$ athletes, and have them do push-ups. The total number performed are: $$48, 55, 42, 58, 45, 60, 52, 49.$$
+
+a. Calculate the signed-rank test statistic that the coach can use to test their claim. 
+b. Perform the Wilcoxon signed-rank test. What conclusions can be drawn? 
+:::
+
+:::{#exr-17.4}
+A pharmaceutical company claims that their new pain relief medication provides a median pain reduction of at least $3$ points on a 10-point pain scale. They sample $8$ patients, who report the following pain reduction scores after taking the medication $$2, 4, 5, 2, 4, 1, 3, 2.$$
+
+a. What is the signed-rank test statistic, if the average rank procedure is used?
+b. What is the signed-rank test statistic, if the random tie-breaking procedure is used? 
+:::
+
+:::{#exr-17.5}
+A researcher is investigating the effectiveness of a new mindfulness technique in reducing stress levels. Changes in stress levels (measured on a standardized scale) for a sample of $10$ participants after a week of practicing the mindfulness technique: $$-2, 1, 0, -3, 2, 4, -1, 3, 1, -2.$$
+
+a. Test the null hypothesis that there is no change in stress levels using mindfulness techniques, using the random tie-breaking procedure.
+b. Repeat part (a) a second time. Do your results change? Explain.
+:::
+
+:::{#exr-17.6}
+A botanist wants to compare the growth of two different varieties of tomato plants. The heights (in inches) of 5 plants from each variety after two weeks are recorded as:
+
+- Variety A: $3, 5, 4, 6, 10$
+- Variety B: $7, 8, 6.5, 9, 2$
+
+Compute the rank-sum test statistic used to determine whether there is a significant difference between the growth rates of these plants. 
+:::
+
+:::{#exr-17.7}
+A teacher wants to determine if there is a significant difference in the exam scores of students who attended a review session and those who did not. The collect exam scores for 6 students who attended the review and 5 who did not.
+
+- Attended: $85, 90, 78, 82, 88, 92$
+- Did Not Attend: $75, 80, 72, 79, 70$
+
+a. Compute the rank-sum test statistic used to determine whether there is a significant difference between those who attended and those who did not attend the review session.
+b. What assumptions are required to test this hypothesis using the Mann-Whitney test?
+c. Perform the Mann-Whitney $U$-test. What conclusions can be drawn?
+:::
+
+:::{#exr-17.8}
+A researcher wants to compare the reaction times of two groups of participants: one group that has been drinking water and another group that has been drinking caffeine. Past research suggests that the distribution of reaction times in the population may change in location under different conditions, but does not change in shape. They record the following reaction times (in ms):
+
+- Water: $250, 230, 245, 260, 240$
+- Caffeine: $220, 215, 235, 205, 225$
+
+a. What is required in order to test the null hypothesis that the locations of the two distributions are equivalent?
+b. Test the hypothesis that the locations of the two distributions are equivalent. 
+:::
+
+:::{#exr-17.9}
+A doctor wants to compare the effectiveness of two different pain relievers in reducing headache pain. They record the following data on random patients reporting a pain intensity score (scale of $1$ to $10$):
+
+- Medication A: $2, 3, 1, 4, 2, 3$
+- Medication B: $1, 0, 2, 1$
+
+a. Suppose that a Mann-Whitney $U$-test is run on these data. What is required of the data to run the test, and what is the hypothesis that is actually being tested?
+b. Run the Mann-Whitney $U$-test, and draw relevant conclusions.
+:::
+
+:::{#exr-17.10}
+An educator wants to compare the reading speeds of students who undergo a speed-reading program. A group of $5$ students attend the program, and their reading speeds before and after the program are recorded (in words per minute):
+
+- After program: $250, 280, 262, 275, 240$
+- Before Program: $200, 220, 210, 230, 215$
+
+a. What is the signed-rank test statistic used to test if the program increases the median reading speed for children?
+b. What is the signed-rank test statistic used to test if the program increases the median reading speed for children, by at least $50$ words per minute?
+:::
+
+:::{#exr-17.11}
+A therapist wants to assess the effectiveness of a new therapy for depression. They record the depressive scores (on a standardized scale) for $4$ patients before and after therapy. The results are:
+
+- Patient 1: Before: $30$, After: $25$
+- Patient 2: Before: $28$, After: $22$
+- Patient 3: Before: $32$, After: $28$
+- Patient 4: Before: $21$, After: $20$
+
+a. Test the null hypothesis that therapy changes depressive scores in this population. Indicate what hypothesis test is used, and what needs to be assumed about the populations to use it.
+b. Test the null hypothesis that therapy changes depressive scores, reducing them by $3$, in this population. Indicate what hypothesis test is used, and what needs to be assumed about the populations to use it.
+
+:::
+
+:::{#exr-17.12}
+A doctor wants to assess the effectiveness of a new medication in lowering blood pressure. Blood pressure readings (systolic) for 7 patients before and after taking the medication are given as:
+
+- Patient 1: Before: $140$, After: $135$
+- Patient 2: Before: $150$, After: $145$
+- Patient 3: Before: $138$, After: $130$
+- Patient 4: Before: $135$, After: $138$
+- Patient 5: Before: $155$, After: $150$
+- Patient 6: Before: $148$, After: $142$
+- Patient 7: Before: $148$, After: $153$
+
+a. What is the relevant signed-rank test statistic if using the average-rank procedure?
+b. What is the relevant signed-rank test statistic if using the random tie-breaking procedure? 
+:::
+
+:::{#exr-17.13}
+A researcher wants to evaluate the effectiveness of a new sleep aid. They collect data on $5$ patients, before and after using the sleep aid. The quality scores (on a scale of $1$ to $10$) for each of the participants are recorded as follows: 
+
+- Participant 1: Before: $2$, After: $7$
+- Participant 2: Before: $3$, After: $6$
+- Participant 3: Before: $5$, After: $3$
+- Participant 4: Before: $2$, After: $4$
+- Participant 5: Before: $6$, After: $1$
+
+a. Using the random tie-breaking procedure, assess whether there is a change in sleep quality observed by taking the sleep aid.
+b. Repeat the procedure in part (a). Are your results the same or different?
+:::
