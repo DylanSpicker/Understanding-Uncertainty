@@ -15,7 +15,7 @@ Ideally, we would like to be able to form an interval that has a direct probabil
 
 The statement $P(\widehat{\theta} \in (a, b))$ can be interpreted as a sensible probability, where here the probability is taken with respect to the sampling distribution. To form our confidence intervals, we start with this idea. Specifically, we attempt to find values $a$ and $b$ such that $P(a \leq \widehat{\theta} \leq b) = p$ for some suitably high threshold, $p$. This interval, $(a, b)$, can be thought of as an interval that will contain the estimated value with high probability. If $p=0.95$ then, based on the sampling distribution, there is a $95\%$ chance that the computed estimator will fall between $a$ and $b$.
 
-Note that this interval, $(a, b)$ is not yet an interval for the true parameter; it is an interval for our estimator. However, it will almost always be the case that the endpoints of the interval, $a$ and $b$, depend on the parameters of the sampling distribution. Recall that the sampling distribution's parameters are connected to the population distributions parameters, and so we can view $a$ and $b$ as depending directly on $\theta$. To emphasize this point, we write $$P\left(a(\theta) \leq \widehat{\theta} \leq b(\theta)\right) = p.$$ It is important to remember that, in this expression, the only random quantity is $\widehat{\theta}$. However, we have an expression that we know will be true with high probability, that contains both $\theta$ and $\widehat{\theta}$. We can exploit this to form confidence intervals.
+Note that this interval, $(a, b)$ is not yet an interval for the true parameter; it is an interval for our estimator. However, it will almost always be the case that the endpoints of the interval, $a$ and $b$, depend on the parameters of the sampling distribution. Recall that the sampling distribution's parameters are connected to the population distribution's parameters, and so we can view $a$ and $b$ as depending directly on $\theta$. To emphasize this point, we write $$P\left(a(\theta) \leq \widehat{\theta} \leq b(\theta)\right) = p.$$ It is important to remember that, in this expression, the only random quantity is $\widehat{\theta}$. However, we have an expression that we know will be true with high probability, that contains both $\theta$ and $\widehat{\theta}$. We can exploit this to form confidence intervals.
 
 The lower bound of our interval occurs where $a(\theta) = \widehat{\theta}$. Note that $a$ is some function of $\theta$, and so we can think of the *inverse function* of $a$, and apply it to both sides.^[Recall that an inverse function is the function, $f^{-1}$ such that $f^{-1}(f(x)) = x$. So if $f(x) = \log(x)$, then $f^{-1}(x) = \exp(x)$. If $f(x) = x$ then $f^{-1} = \frac{1}{x}$ and so forth.] That is, $$a^{-1}(a(\theta)) = a^{-1}(\widehat{\theta}) \implies \theta = a^{-1}(\widehat{\theta}).$$ Similarly, applying the same rationale with $b^{-1}$ to the upper bound on the interval provides a secondary bound, $\theta = b^{-1}(\widehat{\theta})$. 
 
@@ -33,7 +33,7 @@ Note that we are told $$100 \leq 5T + 10 \leq 300.$$ We can invert this interval
 ::::
 :::
 
-Taken together this means that whenever $\widehat{\theta}$ falls in the interval with endpoints $a(\theta)$ and $b(\theta)$, it is equivalent to say that $\theta$ falls in the interval with end points $a^{-1}(\widehat{\theta})$ and $b^{-1}(\widehat{\theta})$.^[Note that very often we will find that $a^{-1}(\widehat{\theta}) \geq b^{-1}(\widehat{\theta})$, and so the endpoints *switch*. This is not always the case, but frequently occurs.] Thus, if we know that $\widehat{\theta}$ falls between $a(\theta)$ and $b(\theta)$ with probability $p$, this is mathematically equivalent to saying that $\theta$ falls between $a^{-1}(\widehat{\theta})$ and $b^{-1}(\widehat{\theta})$ with probability $p$ as well. This inverted interval gives the confidence interval for $\theta$.
+Taken together this means that whenever $\widehat{\theta}$ falls in the interval with endpoints $a(\theta)$ and $b(\theta)$, it is equivalent to say that $\theta$ falls in the interval with endpoints $a^{-1}(\widehat{\theta})$ and $b^{-1}(\widehat{\theta})$.^[Note that very often we will find that $a^{-1}(\widehat{\theta}) \geq b^{-1}(\widehat{\theta})$, and so the endpoints *switch*. This is not always the case, but frequently occurs.] Thus, if we know that $\widehat{\theta}$ falls between $a(\theta)$ and $b(\theta)$ with probability $p$, this is mathematically equivalent to saying that $\theta$ falls between $a^{-1}(\widehat{\theta})$ and $b^{-1}(\widehat{\theta})$ with probability $p$ as well. This inverted interval gives the confidence interval for $\theta$.
 
 :::{#def-confidence-interval}
 ## Confidence Interval
@@ -136,7 +136,7 @@ While confidence intervals can be derived for any parameter of interest, as prev
 ### Confidence Intervals in Normal Populations
 If our population is normally distributed then the sample mean is known to be exactly normally distributed as well. The sampling distribution depends on both the population mean, $\mu$, and on the population variance, $\sigma^2$. Suppose that we wanted to determine $P(a \leq \overline{X} \leq b)$, for some values $a$ and $b$, then we know that $$P(a \leq \overline{X} \leq b) = P\left(\frac{a - \mu}{\sigma/\sqrt{n}} \leq Z \leq \frac{b - \mu}{\sigma/\sqrt{n}}\right) = \Phi\left(\frac{b - \mu}{\sigma/\sqrt{n}}\right) - \Phi\left(\frac{a - \mu}{\sigma/\sqrt{n}}\right).$$
 
-If $\sigma^2$ is known then we can use the percentiles of the standard normal distribution to solve for what $a$ and $b$ would have to be. Specifically, if we take the two end points to be symmetric, then we want to solve for $$\Phi\left(\frac{b - \mu}{\sigma/\sqrt{n}}\right) = 1 - \frac{1-p}{2},\quad\text{and}\quad\Phi\left(\frac{a - \mu}{\sigma/\sqrt{n}}\right) = \frac{1-p}{2}.$$ If we did this then we would find that $$P(a \leq \overline{X} \leq b) = 1 - \frac{1-p}{2} - \frac{1-p}{2} = p,$$ as desired.
+If $\sigma^2$ is known then we can use the percentiles of the standard normal distribution to solve for what $a$ and $b$ would have to be. Specifically, if we take the two endpoints to be symmetric, then we want to solve for $$\Phi\left(\frac{b - \mu}{\sigma/\sqrt{n}}\right) = 1 - \frac{1-p}{2},\quad\text{and}\quad\Phi\left(\frac{a - \mu}{\sigma/\sqrt{n}}\right) = \frac{1-p}{2}.$$ If we did this then we would find that $$P(a \leq \overline{X} \leq b) = 1 - \frac{1-p}{2} - \frac{1-p}{2} = p,$$ as desired.
 
 To solve for these quantities, we note that these are exactly the quantiles of the standard normal distribution. That is, \begin{align*}\Phi\left(\frac{b - \mu}{\sigma/\sqrt{n}}\right) &= 1 - \frac{1-p}{2} \implies \frac{b - \mu}{\sigma/\sqrt{n}} = Z_{1 - \frac{1-p}{2}}, \\ 
 \Phi\left(\frac{a - \mu}{\sigma/\sqrt{n}}\right) &= \frac{1-p}{2} \implies \frac{a - \mu}{\sigma/\sqrt{n}} = Z_{\frac{1-p}{2}}.\end{align*} Note that, by symmetry, $Z_{(1-p)/2} = -Z_{1 - (1-p)/2}$, so we take $$Z_{(1-p)/2}\frac{\sigma}{\sqrt{n}} + \mu \leq \overline{X} \leq Z_{1-(1-p)/2}\dfrac{\sigma}{\sqrt{n}} + \mu.$$ This interval can then be inverted to give an interval for $\mu$. Namely, \begin{align*}
@@ -179,7 +179,7 @@ knitr::kable(
 
 :::{#exm-mean-ci-known-variance}
 ## Charles' Nap Times
-Charles is a frequent napper. Sadie, on the other hand, cannot take naps at all. Sadie often has a significant amount of boredom while Charles naps away, and so Sadie starts to record the length of the naps that Charles takes, in minutes. Over the last $5$ days, Charles' naps have been: $$33.2, \ 29.6, \ 29.7, \ 31.7, \ 29.1.$$
+Charles is a frequent napper. Sadie, on the other hand, cannot take naps at all. Sadie often has a significant amount of boredom while Charles naps away, and so Sadie starts to record the lengths of the naps that Charles takes, in minutes. Over the last $5$ days, Charles' naps have been: $$33.2, \ 29.6, \ 29.7, \ 31.7, \ 29.1.$$
 
 a. What is an estimate for the average length of Charles' naps?
 b. Sadie assumes that Charles' naps are normally distributed, with a variance of $4$. Find a $90\%$ confidence interval for the average nap length.
@@ -239,7 +239,7 @@ Sadie realizes that the assumption that Charles' nap lengths are normally distri
 
 a. Can Sadie use these data, assuming that they are not normal, to compute a confidence interval for the mean length of Charles' naps? Explain.
 b. Suppose that Sadie records data over two months, giving $n=60$. Over this time, the mean nap length is $31.10$ and the standard deviation is $8.61$. How may Sadie use this information to construct a $100p\%$ confidence interval for the length of the nap. 
-c. Given that $n$ is fairly large, what will be the approximate value of the critical value needed for a $95\%$ confidence interval. Use this to write down an approximate $95\%$ confidence interval.
+c. Given that $n$ is fairly large, what will be the approximate value of the critical value needed for a $95\%$ confidence interval? Use this to write down an approximate $95\%$ confidence interval.
 
 ::::{.callout .solution collapse='true'}
 ## Solution
@@ -277,7 +277,7 @@ For a normally distributed population, a confidence interval for the variance is
 
 Note that this derivation follows directly from knowledge of the sampling distribution of $S^2$. Had we been given a different result, we could have worked through the same procedure, resulting in different interval formula with the same underlying process. This specific result importantly relies on the assumption that the population is normally distributed. Were we in a situation where this is not the case, the formula does not hold, regardless of the size of the sample. To find confidence intervals for sample variances in non-normal populations, we require results regarding their sampling distributions.
 
-It is also worth considering how we may use this result to form confidence intervals for standard deviations. Generally speaking, confidence intervals are **not** invariant to transformations. By this we mean that, even though $\sigma = \sqrt{\sigma^2}$, taking the confidence interval $(\sqrt{L(S^2)}, \sqrt{U(S^2)})$ will not result in an exact confidence interval for $\sigma$. Despite the fact that this will not generally be exactly correct, this is the procedure we tend to use. That is, if we have a confidence interval for a parameter, $\theta$, given by $$(L(\widehat{\theta}), U(\widehat{\theta})),$$ and we wish to have a confidence interval for some transformation, $g(\theta)$, we will typically use $$\left(g(L(\widehat{\theta})), g(U(\widehat{\theta}))\right).$$ As long as $g$ is a nicely behaved function, this will typically result in an acceptably close approximation.^[By nicely behaved, we mean monotonic. That is, if $a \leq b$, then $g(a) \leq g(b)$ or $g(a) \geq g(b)$ should hold. This means that taking $g(x) = \sqrt{x}$ is nicely behaved, but taking $g(x) = x^2$ is not. The concern with a function like $g(x) = x^2$ comes from what would happen if, for instance, our initial interval were $(-2, 2)$. Then transforming this interval gives $(4, 4)$ which is clearly incorrect. There are ways of working around this, however, considerations of more complex transformations are beyond the scope of these notes.] Supposing that we have a confidence interval for $\sigma^2$, then we can form a confidence interval for $\sigma$ simply by taking the square root of the end points. 
+It is also worth considering how we may use this result to form confidence intervals for standard deviations. Generally speaking, confidence intervals are **not** invariant to transformations. By this we mean that, even though $\sigma = \sqrt{\sigma^2}$, taking the confidence interval $(\sqrt{L(S^2)}, \sqrt{U(S^2)})$ will not result in an exact confidence interval for $\sigma$. Despite the fact that this will not generally be exactly correct, this is the procedure we tend to use. That is, if we have a confidence interval for a parameter, $\theta$, given by $$(L(\widehat{\theta}), U(\widehat{\theta})),$$ and we wish to have a confidence interval for some transformation, $g(\theta)$, we will typically use $$\left(g(L(\widehat{\theta})), g(U(\widehat{\theta}))\right).$$ As long as $g$ is a nicely behaved function, this will typically result in an acceptably close approximation.^[By nicely behaved, we mean monotonic. That is, if $a \leq b$, then $g(a) \leq g(b)$ or $g(a) \geq g(b)$ should hold. This means that taking $g(x) = \sqrt{x}$ is nicely behaved, but taking $g(x) = x^2$ is not. The concern with a function like $g(x) = x^2$ comes from what would happen if, for instance, our initial interval were $(-2, 2)$. Then transforming this interval gives $(4, 4)$ which is clearly incorrect. There are ways of working around this, however, considerations of more complex transformations are beyond the scope of these notes.] Supposing that we have a confidence interval for $\sigma^2$, then we can form a confidence interval for $\sigma$ simply by taking the square root of the endpoints. 
 
 :::{#exm-variance-ci}
 ## Charles' Tufting Supplier Variability
@@ -297,7 +297,7 @@ c. Supposing that a confidence interval is found for the variance as $(3.24, 49.
 ## Solution
 a. For the sample variance, we first need to get the sample mean. This is given by $$\frac{1}{6}\left(`r paste0(samples, collapse=" + ");`\right) = `r mean(samples)`.$$ Then, we take $$\begin{split}\frac{1}{6-1}\left(`r paste0("(", samples[1:3], " - ", mean(samples), ")^2", collapse = " + ")` \right. \\ \left. + `r paste0("(", samples[4:5], " - ", mean(samples), ")^2", collapse = " + ")`\right) = `r var(samples)`.\end{split}$$ 
 b. To form the confidence interval in this setting we note that, assuming the observations are normally distributed, then the scaled sample mean will follow a $\chi^2_{n-1}$ distribution, where $n=6$. Thus, we take $$\left(\frac{(n-1)S^2}{\chi^2_{n-1,1-(1-p)/2}}, \frac{(n-1)S^2}{\chi^2_{n-1,(1-p)/2}}\right)$$ where $s^2 = `r var(samples)`$, $n=6$, and $p=0.95$. Plugging in, this gives $$\left(\frac{(5)(`r var(samples)`)}{\chi^2_{5,0.975}}, \frac{(5)(`r var(samples)`)}{\chi^2_{5,0.025}}\right).$$ If we use `R` to compute the critical values, this gives $(`r c(5*var(samples)/qchisq(0.975, 5), 5*var(samples)/qchisq(0.025, 5))`)$.
-c. Given the interval $(3.24, 49.0)$, we can approximate a confidence interval for the standard deviation by square rooting the end points. This gives $(1.8, 7)$. This is not exact, since confidence intervals are not typically invariant to transformations. Instead, this will be approximate, but will typically be close enough in practice. 
+c. Given the interval $(3.24, 49.0)$, we can approximate a confidence interval for the standard deviation by square rooting the endpoints. This gives $(1.8, 7)$. This is not exact, since confidence intervals are not typically invariant to transformations. Instead, this will be approximate, but will typically be close enough in practice. 
 ::::
 :::
 
@@ -435,7 +435,7 @@ a. One of these confidence intervals is a $90\%$ interval, the other is a $99\%$
 :::
 
 :::{#exr-14.05}
-A random sample of $50$ bottles of a brand of cough syrup are selected and have their alcohol content determined. If $\mu$ is the average alcohol content for the population of all bottles under study, then suppose that a $95\%$ confidence interval for $\mu$ is computed as $(7.8, 9.4)$. 
+A random sample of $50$ bottles of a brand of cough syrup is selected and have their alcohol content determined. If $\mu$ is the average alcohol content for the population of all bottles under study, then suppose that a $95\%$ confidence interval for $\mu$ is computed as $(7.8, 9.4)$. 
 
 a. Would a $90\%$ confidence interval calculated from this sample have been narrower or wider than the given interval? Why?
 a. Is the following statement correct? Why? "There is a $95\%$ chance that $\mu$ is between $7.8$ and $9.4$."
@@ -543,7 +543,7 @@ A random sample of $400$ electronic components manufactured by a certain process
 
 a. Let $p$ represent the proportion of components manufactured by this process that are defective. Find a $95\%$ confidence interval for $p$.
 a. How many components must be sampled so that the $95\%$ confidence interval will specify the proportion to within $\pm 0.02$?
-a. A device will be manufactured in which two components are connected in series. The components function independent and the device functions only if both components function. Let $q$ be the probability that the device functions. Find a $95\%$ confidence interval for $q$. 
+a. A device will be manufactured in which two components are connected in series. The components function independently, and the device functions only if both components function. Let $q$ be the probability that the device functions. Find a $95\%$ confidence interval for $q$. 
 a. **Challenge:** The company ships the components in lots of $200$. Lots containing more than $20$ defective components are returned. Find a $95\%$ confidence interval for the proportion of lots that will be returned.
 
 :::
@@ -591,7 +591,7 @@ A sample of $10$ measurements of the diameter of a sphere gave a mean of $\overl
 :::
 
 :::{#exr-14.28}
-Measurements for the chemical analysis of runoff water from sawmills in British Columbia are taken. Six measurements for the waters pH are recorded as: $5.9$, $5.0$, $6.5$, $5.6$, $5.9$, and $6.5$. If these are a random sample from an approximately normally distributed population, find a $95\%$ confidence interval for the true pH.
+Measurements for the chemical analysis of runoff water from sawmills in British Columbia are taken. Six measurements for the water's pH are recorded as: $5.9$, $5.0$, $6.5$, $5.6$, $5.9$, and $6.5$. If these are a random sample from an approximately normally distributed population, find a $95\%$ confidence interval for the true pH.
 :::
 
 :::{#exr-14.29}
@@ -630,7 +630,7 @@ The amount of lateral expansion was determined for a sample of $n=9$ pulsed-powe
 :::
 
 :::{#exr-14.34}
-Wire electrical-discharge machining (WEDM) is a process used to manufacture conductive hard metal components. IT uses a continuously moving wire that serves as an electrode. Coating on the wire electrode allows for cooling of the wire electrode core and provides an improved cutting performance. A sample of eight wire electrodes used had a coating layer thickness measured as: $21$, $16$, $29$, $35$, $42$, $24$, $24$, and $25$. Find a $99\%$ CI for the standard deviation of the coating layer thickness. Is this a valid interval? 
+Wire electrical-discharge machining (WEDM) is a process used to manufacture conductive hard metal components. It uses a continuously moving wire that serves as an electrode. Coating on the wire electrode allows for cooling of the wire electrode core and provides an improved cutting performance. A sample of eight wire electrodes used had a coating layer thickness measured as: $21$, $16$, $29$, $35$, $42$, $24$, $24$, and $25$. Find a $99\%$ CI for the standard deviation of the coating layer thickness. Is this a valid interval? 
 :::
 
 :::{#exr-14.35}
