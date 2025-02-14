@@ -611,7 +611,7 @@ c. Suppose that the population standard deviation is determined to be $0.3$. Wha
 :::
 
 :::{#exr-14.31}
-The concentration of carbon monoxide in a gas sample is measured by a spectrophotometer and found to be $85$ppm. Through long experience with this instrument it is believed that its measurements are unbiased and normally distributed, with a standard deviation of $8$ppm. Find a $95\%$ confidence interval for the concentration of CO in this sample. 
+The concentration of carbon monoxide in a single gas sample is measured by a spectrophotometer and found to be $85$ppm. Through long experience with this instrument it is believed that its measurements are unbiased and normally distributed, with a standard deviation of $8$ppm. Find a $95\%$ confidence interval for the concentration of CO in this sample.
 :::
 
 :::{#exr-14.32}

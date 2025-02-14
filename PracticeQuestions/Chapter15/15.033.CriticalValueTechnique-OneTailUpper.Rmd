@@ -1,0 +1,41 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+reduction <- sample(5:25, 1)
+n <- sample(35:100, 1)
+mean <- sample(setdiff(-25:25, reduction), 1)
+sd <- round(runif(1, 1, 8), 2)
+alpha <- round(runif(1, 0.01, 0.2), 2)
+
+ans1 <- qt(1-alpha, df = n-1)
+ans2 <- (mean - reduction)/(sd / sqrt(n))
+ans3 <- c(ans2 >= ans1, ans2 < ans1)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+A pharmaceutical company claims their new cholesterol-lowering medication reduces cholesterol levels by an average of at least `r reduction` points.  A clinical trial was conducted with `r n` patients to test this claim.  The sample mean reduction in cholesterol was `r mean` points, with a sample standard deviation of `r sd` points. Consider $\mu$ to be the average reduction in cholesterol level (such that higher values for $\mu$ represent larger reductions).
+
+a. What is the critical value for the associated hypothesis test, at $\alpha = `r alpha`$?  ##ANSWER1##
+b. What is the relevant value of the test statistic for testing the null hypothesis? ##ANSWER2##
+c. What is the conclusion from the hypothesis test? 
+
+##ANSWER3##
+
+Question ID: *`r id`*
+
+Answerlist
+------------
+* Based on the results, we can reject the null hypothesis.
+* Based on the results, we fail to reject the null hypothesis. 
+
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r mchoice2string(ans3)`
+exclozetype: num|num|schoice
+exname: CriticalValueTes
+extol: 0.01

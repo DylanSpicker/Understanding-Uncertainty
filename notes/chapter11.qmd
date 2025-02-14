@@ -1052,7 +1052,7 @@ kable(data.frame("Female" = fn_female, "Male" = fn_male))
 ## Exercises {.unnumbered}
 
 :::{#exr-11.0A}
-In a survey conducted among students, they were asked about their favorite colors. The options were red, blue, green, yellow, and orange. Below are the responses from 10 students. Use these data to construct a frequency distribution.
+In a survey conducted among students, they were asked about their favourite colors. The options were red, blue, green, yellow, and orange. Below are the responses from 10 students. Use these data to construct a frequency distribution.
 
 > Red, Blue, Green, Yellow, Orange, Blue, Red, Green, Green, Yellow
 :::
@@ -1064,7 +1064,7 @@ A group of students was surveyed about their preferred leisure activities. The o
 :::
 
 :::{#exr-11.0C}
-In a class of 30 students, each student was asked to choose their favorite genre of music from rock, pop, hip-hop, jazz, and classical. Below are the responses for 10 of them.
+In a class of 30 students, each student was asked to choose their favourite genre of music from rock, pop, hip-hop, jazz, and classical. Below are the responses for 10 of them.
 
 > Rock, Pop, Pop, Hip-Hop, Jazz, Classical, Rock, Pop, Pop, Hip-Hop
 

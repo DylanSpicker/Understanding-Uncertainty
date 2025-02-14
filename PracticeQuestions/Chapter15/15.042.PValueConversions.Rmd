@@ -1,0 +1,136 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+symbols <- c("\\mu", "\\theta", "\\gamma", "\\lambda", "\\rho", "\\sigma")
+hypotheses <- c("=", "\\geq", "\\leq")
+value <- round(runif(1, 1, 100), 4)
+observed <- value + round(runif(1, -value+0.05, value-0.05), 4)
+
+if(observed == value) {
+    observed <- value + round(sample(c(-1,1), 1) * runif(1, 0.05, abs(value)), 4)
+}
+
+symbol <- sample(symbols, 1)
+hyp <- sample(hypotheses, 1)
+
+full_hypothesis <- paste(symbol, hyp, value, sep = " ")
+
+p_val <- round(runif(1, 0.005, 0.15), 3)
+same_diff <- sample(0:1, 1)
+
+if(hyp == "=") {
+    a_hyp <- "\\geq"
+    b_hyp <- "\\leq"
+
+    if(same_diff == 0) {
+        # Same conclusion; 
+        # Either sample from (0.001, p-val-0.001) or else (p-val/2-0.001, 0.31)
+        alpha <- ifelse(sample(0:1, 1) == 0, 
+                            round(runif(1, 0.001, p_val-0.001), 3), 
+                            round(runif(1, p_val/2-0.001, 0.31), 3))
+    } else {
+        # Different conclusion;
+        # Sample from either (0.001, p-val/2-0.001) or else (p-val-0.001, 0.31)
+        alpha <- ifelse(sample(0:1, 1) == 0, 
+                            round(runif(1, 0.001, p_val/2-0.001), 3), 
+                            round(runif(1, p_val-0.001, 0.31), 3))
+    }
+
+    ans_a <- ifelse(observed < value, p_val/2, 1-p_val/2)
+    ans_a_c <- c(ans_a <= alpha, ans_a > alpha)
+    ans_b <- 1 - ans_a
+    ans_b_c <- c(ans_b <= alpha, ans_b > alpha)
+
+} else if(hyp == "\\geq") {
+    a_hyp <- "="
+    b_hyp <- "\\leq"
+
+    if(same_diff == 0) {
+        # Same conclusion; 
+        # Either sample from (0.001, p-val-0.001) or else (p-val*2-0.001, 0.31)
+        alpha <- ifelse(sample(0:1, 1) == 0, 
+                            round(runif(1, 0.001, p_val-0.001), 3), 
+                            round(runif(1, p_val*2-0.001, 0.31), 3))
+    } else {
+        # Different conclusion;
+        # Sample from either (0.001, p-val*2-0.001) or else (p-val-0.001, 0.31)
+        alpha <- ifelse(sample(0:1, 1) == 0, 
+                            round(runif(1, 0.001, p_val*2-0.001), 3), 
+                            round(runif(1, p_val-0.001, 0.31), 3))
+    }
+
+
+    if(observed > value) {
+        # p-value should be large
+        p_val <- 1 - p_val 
+    }
+
+    ans_a <- ifelse(observed < value, p_val*2, 2*(1-p_val))
+    ans_a_c <- c(ans_a <= alpha, ans_a > alpha)
+
+    ans_b <- 1 - p_val
+    ans_b_c <- c(ans_b <= alpha, ans_b > alpha)
+} else if(hyp == "\\leq") {
+    a_hyp <- "\\geq"
+    b_hyp <- "="
+
+    if(same_diff == 0) {
+        # Same conclusion; 
+        # Either sample from (0.001, p-val-0.001) or else (p-val*2-0.001, 0.31)
+        alpha <- ifelse(sample(0:1, 1) == 0, 
+                            round(runif(1, 0.001, p_val-0.001), 3), 
+                            round(runif(1, p_val*2-0.001, 0.31), 3))
+    } else {
+        # Different conclusion;
+        # Sample from either (0.001, p-val*2-0.001) or else (p-val-0.001, 0.31)
+        alpha <- ifelse(sample(0:1, 1) == 0, 
+                            round(runif(1, 0.001, p_val*2-0.001), 3), 
+                            round(runif(1, p_val-0.001, 0.31), 3))
+    }
+
+
+    if(observed < value) {
+        # p-value should be large
+        p_val <- 1 - p_val 
+    }
+
+    ans_a <- 1 - p_val
+    ans_a_c <- c(ans_a <= alpha, ans_a > alpha)
+
+    ans_b <- ifelse(observed > value, p_val*2, 2*(1-p_val))
+    ans_b_c <- c(ans_b <= alpha, ans_b > alpha)
+} 
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+A hypothesis test is run, testing $H_0: `r full_hypothesis`$. The estimated value for $`r symbol`$, based on the sample, is `r observed`. The hypothesis is tested using a symmetric null distribution. Suppose that the $p$-value is found to be `r p_val`, and that the hypothesis test is run with a significance level of `r alpha`. 
+
+a. What is the $p$-value that would be observed testing $H_0: `r paste(symbol, a_hyp, value, sep = " ")`$? ##ANSWER1##
+b. What is the conclusion that would be reached testing $H_0: `r paste(symbol, a_hyp, value, sep = " ")`$? 
+
+##ANSWER2##
+
+c. What is the $p$-value that would be observed testing $H_0: `r paste(symbol, b_hyp, value, sep = " ")`$? ##ANSWER3##
+d. What is the conclusion that would be reached testing $H_0: `r paste(symbol, b_hyp, value, sep = " ")`$? 
+
+##ANSWER4##
+
+Question ID: *`r id`*
+
+Answerlist
+------------
+* Based on the results, we can reject the null hypothesis.
+* Based on the results, we fail to reject the null hypothesis. 
+* Based on the results, we can reject the null hypothesis.
+* Based on the results, we fail to reject the null hypothesis. 
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans_a, 3)`|`r mchoice2string(ans_a_c)`|`r fmt(ans_b, 3)`|`r mchoice2string(ans_b_c)`
+exclozetype: num|schoice|num|schoice
+exname: P Value Conversion
+extol: 0.01

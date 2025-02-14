@@ -215,7 +215,7 @@ B_4 &= \{(\text{H},\text{H},\text{H})\}.
 \end{align*}
 
 3. We can partition the space into the number of times the sequence switches between heads and tails. There will be either $0$ switches, $1$ switch, or $2$ switches. This gives \begin{align*}
-B_1 &= \{(\text{H},\text{H},\text{H}), (\text{H},\text{H},\text{H})\}\\
+B_1 &= \{(\text{H},\text{H},\text{H}), (\text{T},\text{T},\text{T})\}\\
 B_2 &= \{(\text{T},\text{T},\text{H}), (\text{H},\text{T},\text{T}), (\text{H},\text{H},\text{T}), (\text{T},\text{H},\text{H})\}\\
 B_3 &= \{(\text{T},\text{H},\text{T}), (\text{H},\text{T},\text{H})\}.
 \end{align*}
@@ -833,7 +833,7 @@ a. Given the package arrived the next day, what is the probability that it was s
 :::
 
 :::{#exr-4.10}
-A quality control program at a food production facility involves inspecting finished product for safety. The proportion of items that actually are unsafe is $0.0002$. If an item is found to be unsafe, the probability is $0.995$ that it will fail the inspection. If an item is safe, the probability is $0.99$ that it will pass the inspection. 
+A quality control program at a food production facility involves inspecting finished product for safety. The proportion of items that actually are unsafe is $0.0002$. If an item is unsafe, the probability is $0.995$ that it will fail the inspection. If an item is safe, the probability is $0.99$ that it will pass the inspection. 
 
 a. If an item fails the inspection, what is the probability that it is unsafe?
 a. Which of the following is more correct interpretation to the previous answer: 

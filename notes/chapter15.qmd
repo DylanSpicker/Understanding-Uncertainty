@@ -101,7 +101,7 @@ The **level of significance**, denoted $\alpha$, is a measure of how much eviden
 
 A fundamental truth of hypothesis testing^[and, indeed, of any procedure that deals with randomness and uncertainty] is that we can never be certain in our conclusions. Owing to the inherent random nature of data, there is always the possibility that mistakes occur. The level of significance provides us with the capacity to control the likelihood of one class of these mistakes. Specifically, it controls how likely it is to conclude that the null hypothesis is not true when it is. In a perfect world, free of randomness and uncertainty, we would take $\alpha = 0$. This way, we would never conclude that the null hypothesis should be rejected when it is actually true. Unfortunately, the only way to ensure that we never make this mistake is to never reject the null hypothesis.^[Uncertainty ensures us that there is always a *chance* that the null hypothesis was incorrectly rejected.] Instead, we take $\alpha$ to be a small value greater than $0$. 
 
-To decide what value specifically, we have to consider the question "What if we are wrong?" If you incorrectly reject the null hypothesis, what are the stakes of that error. Consider a scenario where we are testing a new treatment for a severe illness, and we want to test whether the treatment has an effect on survival rates. In this case, we would typically take $H_0: \theta = 0$ versus the alternative, $H_A: \theta \neq 0$; by default we are assuming that the treatment does not have any impact, and are looking for evidence to the contrary. Now, suppose that there already exists a treatment for the illness that is moderately effective. In this setting, it is far more costly to make a mistake stating that the new treatment is also effective, if it turns out that it is not. The reason being that if we conclude the treatment is effective it may be prescribed to individuals, and this may happen in place of the existing effective treatment. If it turns out that the new treatment does not have a positive impact, this would mean that real people will receive treatments that are ineffective, when they could receive treatments that actually help. Conversely, if there does not exist any treatment at all for the illness now, we likely are willing to take a slightly higher risk. In this case, if we are wrong and the treatment does not meaningfully help, there is no alternative for the patient. As a result, in the first case we should take a lower value of $\alpha$ compared to the second. 
+To decide what value specifically, we have to consider the question "What if we are wrong?". If you incorrectly reject the null hypothesis, what are the stakes of that error? Consider a scenario where we are testing a new treatment for a severe illness, and we want to test whether the treatment has an effect on survival rates. In this case, we would typically take $H_0: \theta = 0$ versus the alternative, $H_A: \theta \neq 0$; by default we are assuming that the treatment does not have any impact, and are looking for evidence to the contrary. Now, suppose that there already exists a treatment for the illness that is moderately effective. In this setting, it is far more costly to make a mistake stating that the new treatment is also effective, if it turns out that it is not. The reason being that if we conclude the treatment is effective it may be prescribed to individuals, and this may happen in place of the existing effective treatment. If it turns out that the new treatment does not have a positive impact, this would mean that real people will receive treatments that are ineffective, when they could receive treatments that actually help. Conversely, if there does not exist any treatment at all for the illness now, we likely are willing to take a slightly higher risk. In this case, if we are wrong and the treatment does not meaningfully help, there is no alternative for the patient. As a result, in the first case we should take a lower value of $\alpha$ compared to the second. 
 
 :::{#exm-determine-significance-levels}
 ## Sadie and Charles Care for Trees: Identifying Hypotheses
@@ -137,7 +137,7 @@ Test statistics are statistics^[Recall that statistics are any quantities that c
 
 :::{#def-test-statistic}
 ## Test Statistic
-A **test statistic** is any statistic, which is to a say a quantity computable given a specific sample, used for hypothesis testing. Test statistics must have the property that, supposing the null hypothesis is true, the sampling distribution of the statistic is completely specified. Often, the exact sampling distribution will not be known, but a statistic can still be regarded as a test statistic if an approximate distribution is available.
+A **test statistic** is any statistic, which is to say a quantity computable given a specific sample, used for hypothesis testing. Test statistics must have the property that, supposing the null hypothesis is true, the sampling distribution of the statistic is completely specified. Often, the exact sampling distribution will not be known, but a statistic can still be regarded as a test statistic if an approximate distribution is available.
 :::
 
 :::{#def-null-distribution}
@@ -394,7 +394,7 @@ A **type I** error is a false positive. This occurs when the null hypothesis is 
 A **type II** error is a false negative. This occurs when the null hypothesis is not rejected, but the null hypothesis is actually false. 
 :::
 
-Both type I and type II errors are problematic, and test procedures are preferable when they minimize the probabilities of each error type. Focusing on the probability that a type I error occurs, we can determine how likely this is by asking what the probability of rejecting the null hypothesis is, assuming that the null is true. That is, under the null hypothesis, what is the probability that we observe a statistic beyond the critical value. By definition, this is given by the level of significance. That is, the probability of a type I error is exactly equal to the level of significance, $\alpha$. 
+Both type I and type II errors are problematic, and test procedures are preferable when they minimize the probabilities of each error type. Focusing on the probability that a type I error occurs, we can determine how likely this is by asking what the probability of rejecting the null hypothesis is, assuming that the null is true. That is, under the null hypothesis, what is the probability that we observe a statistic beyond the critical value? By definition, this is given by the level of significance. That is, the probability of a type I error is exactly equal to the level of significance, $\alpha$. 
 
 This gives an alternative method of interpreting the value of $\alpha$. Specifically, the value of $\alpha$ is the probability of making a false positive claim. Intuitively, we want this to be as small as possible, and so taking $\alpha$ to be smaller seems reasonable. Unfortunately, the probability of making a type I error tends to be inversely correlated with the probability of making a type II error. The probability of a type II error is, typically, less straightforward to determine. For it, we need to determine the probability, assuming that the null hypothesis is actually false, that we fail to reject the null. That is, under the alternative hypothesis, what is the probability that we observe a statistic value that is less than the critical value. While this is a challenging probability to determine^[This is challenging for several reasons. One is that the test statistic is defined so that it has a well-defined null distribution. Unfortunately, to work out the type II error probability, the null distribution is not helpful. Instead, we need to work out the distribution of the test statistic assuming the null is not true. Unfortunately, the alternative is typically a **composite hypothesis**. That is, the alternative is specified as a range of possible values, rather than a single point. If the alternative is $H_A: \mu \neq 0$, should we take $\mu = 1$ or $\mu = -1$ or $\mu = \pi$? It is not always clear. As a result, we tend to define the probability of a type II error on the basis of a function, say $\pi'(\theta)$ that gives the probability of a false negative for any given value $\theta$.] explicitly, we give this the label $\beta$. If we consider the probability $1-\beta$, this gives the probability of rejecting the null hypothesis when it is actually false, a *true* rejection. This is a quantity of particular interest in hypothesis testing, and as such, we refer to it as **the power** of a hypothesis test.
 
@@ -431,7 +431,7 @@ d. Sadie has been researching techniques for protecting plants through the winte
 
 ::::{.callout .solution collapse='true'}
 ## Solution
-a. In this case, a Type I error represents the conclusion that the new seed variety differs from the historical average when, in fact, it does not. A type II error would occur if Sadie and Charles fail to reject the null hypothesis, concluding that there is no evidence of a difference between the current and historical seeds, when such a difference really does exist. Because they are currently happy with their current seeds, and because the new seeds more expensive, they would want to be very certain that the new seeds are in fact different if they are going to switch. As a result, they should be considering a **lower level of significance** here, reducing the probability of type I error. 
+a. In this case, a Type I error represents the conclusion that the new seed variety differs from the historical average when, in fact, it does not. A type II error would occur if Sadie and Charles fail to reject the null hypothesis, concluding that there is no evidence of a difference between the current and historical seeds, when such a difference really does exist. Because they are currently happy with their current seeds, and because the new seeds are more expensive, they would want to be very certain that the new seeds are in fact different if they are going to switch. As a result, they should be considering a **lower level of significance** here, reducing the probability of type I error. 
 
 b. In this case, a Type I error occurs if they conclude the new fertilizer is improved, if it really is not an improvement, where the type II error occurs if they see no evidence of improvement when there really is. Because the fertilizer is cheaper, they would save money if they managed to switch, and thus it is important for them to identify if there really is an improvement. Missing an improvement that exists is a costly mistake, and so they should prioritize **higher power** in order to minimize the negative consequences associated with missing out. 
 
@@ -575,11 +575,11 @@ Despite the prevalence of hypothesis testing and the seemingly intuitive derivat
 While there are many critiques of hypothesis testing, we focus on four foundational concerns. 
 
 1. **Effects are (basically) never truly zero**. Most of the time, hypothesis testing is set up with a null hypothesis of $H_0: \theta = 0$. This typically refers to the effect of some intervention (such as a medical treatment), or the difference in outcomes achieved after making some change, or similar. The hypothesis test then seeks to determine, based on the observed evidence, is the effect of interest really different from zero. Many individuals critique this framing since, in practice, we should not expect any effect to be exactly zero. Every factor likely exerts some influence, no matter how small, on any related factors. It may not be practically significant in terms of its effect size, but the only quantities that will truly have no effect on each other are quantities that are not likely to be tested against one another. As a result, for many hypothesis tests, the framework is set up to disprove a statement that no one actually believes. We are not seeking evidence of effect size, just that it is different from zero, but likely we should approach every situation expecting the effects to be different from zero.
-2. **In hypothesis testing, $p$-values are prioritized above all else.** $p$-values are, at their core, a statistic computed based on a particular sample that provide a measure of the level of evidence against a null hypothesis. This is a continuous measure of evidence, with any value $(0,1)$ being theoretically possible. The process of hypothesis testing takes this continuous measures and expresses it discretely as either "statistically significant" or else "not statistically significant", treating this discretization as the sole arbiter of whether an effect is real or not. Not only is there information lost by moving from a continuous measure to a discrete one based on only two categories, but this process also ignores other important sources of information that should likely be considered alongside a $p$-value. For instance, alongside a $p$-value we may wish to consider whatever prior evidence of the claim we may have, the scientific validity or plausibility of the underlying finding, the quality of the data or the study, the practical significance, and so forth. The critique in this context is not so much that $p$-values are not useful, but rather, that a sole reliance on $p$-values ignores many important factors. 
+2. **In hypothesis testing, $p$-values are prioritized above all else.** $p$-values are, at their core, a statistic computed based on a particular sample that provide a measure of the level of evidence against a null hypothesis. This is a continuous measure of evidence, with any value $(0,1)$ being theoretically possible. The process of hypothesis testing takes this continuous measure and expresses it discretely as either "statistically significant" or else "not statistically significant", treating this discretization as the sole arbiter of whether an effect is real or not. Not only is there information lost by moving from a continuous measure to a discrete one based on only two categories, but this process also ignores other important sources of information that should likely be considered alongside a $p$-value. For instance, alongside a $p$-value we may wish to consider whatever prior evidence of the claim we may have, the scientific validity or plausibility of the underlying finding, the quality of the data or the study, the practical significance, and so forth. The critique in this context is not so much that $p$-values are not useful, but rather, that a sole reliance on $p$-values ignores many important factors. 
 3. **The null hypothesis is often a *straw man***. This is related to the first point, but is more broad than the idea that we can typically assume that effects are non-zero. Recall that the null hypothesis is meant to be the default belief about the world, the state of affairs that we ought to believe without sufficient evidence contradicting it. A null hypothesis that actually satisfies this criterion is required for the utility of the hypothesis testing framework. Often, however, the null hypothesis that is selected is one that effectively no one would actually believe. This is a *straw man*.^[The concept of a straw man stems from the world of debate wherein sometimes individuals argue against a position that others do not really hold. The idea is that there is a position that is constructed that appears to be the one up for debate, but that is actually different in important ways. The person is then said to be attacking a straw man, as in, a human figure made of straw that would be easy to knock over or destroy.] If the null hypothesis is not truly believed by anyone, or if it is so unlikely as to be irrelevant, then refuting it with a hypothesis test tells us nothing. At the heart of the hypothesis testing framework is the concept of *falsification*. We are not looking for positive, confirmatory support in favour of a particular hypothesis, but rather looking to falsify the null hypothesis. If the idea that we are falsifying is not particularly relevant, then the fact that we have falsified it is also not particularly relevant. Unfortunately, in practice, irrelevant null hypotheses are often used.
-4. **The hypothesis testing framework is ripe for abuse.** In any statistical analysis there are many choices that need to be made by individual conducting the analysis. Often, there are many reasonable sounding choices that could lead to valid results, if those choices are guided by substantive considerations. Different choices which may be reasonable in different settings can, if applied to the same analysis, lead to very different conclusions. This is a reality in any statistical analysis, but is particularly concerning in the hypothesis testing framework where there is often a single goal for the researcher, namely, find a result that is statistically significant. A researcher that is setting out to achieve statistical significance at all costs is able to make many choices that aid in this attempt, if so desired. This process, known as *p-hacking*, can be intentional or unintentional, and can involve decisions that are reasonable from the outside or decisions that are explicitly fraudulent. For instance, an investigator may consider using a one-sided hypothesis test, a choice that, while reasonable in some settings, has the effect of halving the observed $p$-value. Researchers may throw out certain data that they deem to be *outliers* because they do not follow the underlying trend they are looking for. Researchers may perform many different analyses, and only report those that happened to be statistically significant.^[Consider a researcher performing $n$ independent hypothesis tests, each at a significance level of $p$. Note that the number of results they would expect to find as statistically significant, even if none of them truly are, follows a $\text{Bin}(n, p)$ distribution. If $p = 0.05$, then after $n=14$ tests there is a greater than $50\%$ chance that at least one of them returns a statistically significant result, despite none being true.] The arbitrary nature of the level of significance is another area of choice for the researchers -- if they calculate a $p$-value and find it to be $0.08$, taking $\alpha = 0.1$ allows them to report a statistically significant effect. The sum total of these choices means that any particular analysis, even if well-intentioned, may be subject to an artificially deflated $p$-value, achieving the moniker of statistical significance unfairly. 
+4. **The hypothesis testing framework is ripe for abuse.** In any statistical analysis there are many choices that need to be made by individuals conducting the analysis. Often, there are many reasonable sounding choices that could lead to valid results, if those choices are guided by substantive considerations. Different choices which may be reasonable in different settings can, if applied to the same analysis, lead to very different conclusions. This is a reality in any statistical analysis, but is particularly concerning in the hypothesis testing framework where there is often a single goal for the researcher, namely, find a result that is statistically significant. A researcher that is setting out to achieve statistical significance at all costs is able to make many choices that aid in this attempt, if so desired. This process, known as *p-hacking*, can be intentional or unintentional, and can involve decisions that are reasonable from the outside or decisions that are explicitly fraudulent. For instance, an investigator may consider using a one-sided hypothesis test, a choice that, while reasonable in some settings, has the effect of halving the observed $p$-value. Researchers may throw out certain data that they deem to be *outliers* because they do not follow the underlying trend they are looking for. Researchers may perform many different analyses, and only report those that happened to be statistically significant.^[Consider a researcher performing $n$ independent hypothesis tests, each at a significance level of $p$. Note that the number of results they would expect to find as statistically significant, even if none of them truly are, follows a $\text{Bin}(n, p)$ distribution. If $p = 0.05$, then after $n=14$ tests there is a greater than $50\%$ chance that at least one of them returns a statistically significant result, despite none being true.] The arbitrary nature of the level of significance is another area of choice for the researchers -- if they calculate a $p$-value and find it to be $0.08$, taking $\alpha = 0.1$ allows them to report a statistically significant effect. The sum total of these choices means that any particular analysis, even if well-intentioned, may be subject to an artificially deflated $p$-value, achieving the moniker of statistical significance unfairly. 
 
-These critiques are not just theoretical. There has been, in recent years, major concerns over the replicability of research in a wide range of fields. While there are many aspects that drive this so-called replication crisis, the inappropriate use of hypothesis testing is certainly among the explanations. In light of these critiques, it is worth questioning whether the framework of hypothesis testing is worthy of pursuit. Generally, it is reasonable to answer this with a cautious "yes". However, it is critically important to take seriously these criticisms. Hypothesis testing should not be used to the exclusion of other forms of evidence. The hypothesis tests should not be dichotomized as "significant" or "not significant" where all results that are "significant" are treated as gospel and those that are "not significant" are treated as false. The selected null hypothesis should be a genuine null hypothesis, and the choices made in the analysis should be made prior to collecting or analyzing data on the basis of the context of the situation, rather than on the basis of what happens to be observed. Hypothesis testing should be used to support scientific inquiry, not as the sole tool of scientific inquiry. In short, the process of hypothesis testing provides a useful, statistical framework for assessing the degree of evidence that exists within a sample, however, it should never be applied uncritically.
+These critiques are not just theoretical. There has been, in recent years, major concern over the replicability of research in a wide range of fields. While there are many aspects that drive this so-called replication crisis, the inappropriate use of hypothesis testing is certainly among the explanations. In light of these critiques, it is worth questioning whether the framework of hypothesis testing is worthy of pursuit. Generally, it is reasonable to answer this with a cautious "yes". However, it is critically important to take seriously these criticisms. Hypothesis testing should not be used to the exclusion of other forms of evidence. The hypothesis tests should not be dichotomized as "significant" or "not significant" where all results that are "significant" are treated as gospel and those that are "not significant" are treated as false. The selected null hypothesis should be a genuine null hypothesis, and the choices made in the analysis should be made prior to collecting or analyzing data on the basis of the context of the situation, rather than on the basis of what happens to be observed. Hypothesis testing should be used to support scientific inquiry, not as the sole tool of scientific inquiry. In short, the process of hypothesis testing provides a useful, statistical framework for assessing the degree of evidence that exists within a sample, however, it should never be applied uncritically.
 
 ## Hypothesis Testing in `R`
 Hypothesis testing in R can proceed in one of two ways. First, test statistics can be directly computed, and then functions (such as `pnorm` or similar) can be used to compute $p$-values according to the null distribution. Alternatively, many common hypothesis tests are built into `R` to begin. The most relevant function, given the tests that were discussed throughout this chapter, is the `t.test` function. This will perform a $t$-test, based on a sample of data, contrasting the mean against a particular value. Moreover, the `t.test` function will, by default, produce confidence intervals for the mean, allowing both to be reported alongside one another. If you wish to perform a hypothesis test that is not built-in, then this can be accomplished using the same procedures outlined for confidence intervals.
@@ -772,7 +772,7 @@ a. $\{100.01\}$.
 :::
 
 :::{#exr-15.21}
-A certain manufactured product is supposed to contain $23\%$ potassium by weight. A sample of $10$ specimens of this product have an average percentage of $23.2\%$ with a standard deviation of $0.2\%$. Run a hypothesis test to determine whether the process is correctly calibrated or not. 
+A certain manufactured product is supposed to contain $23\%$ potassium by weight. A sample of $10$ specimens of this product has an average percentage of $23.2\%$ with a standard deviation of $0.2\%$. Run a hypothesis test to determine whether the process is correctly calibrated or not. 
 :::
 
 :::{#exr-15.22}
@@ -820,7 +820,7 @@ A grinding machine will be qualified for a particular task if it can be shown to
 :::
 
 :::{#exr-15.30}
-The manufacturer for a patented medicine claimed that it was $90\%$ effective in relieving an allergy for a period of $8$ hours. In a sample of $200$ people who had the allergy, the medicine provided relief for $160$ people. Determine the legitimacy of the manufacturers claim.
+The manufacturer for a patented medicine claimed that it was $90\%$ effective in relieving an allergy for a period of $8$ hours. In a sample of $200$ people who had the allergy, the medicine provided relief for $160$ people. Determine the legitimacy of the manufacturer's claim.
 :::
 
 :::{#exr-15.31}
@@ -844,4 +844,94 @@ a. How many tests would need to be performed until the probability of a type I e
 
 :::{#exr-15.35}
 Suppose that a $90\%$ confidence interval for $\theta$ is found to be $(a, b)$. Describe how this can be used to test the hypothesis $H_0:\theta = c$. 
+:::
+
+::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-15.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.033.CriticalValueTechnique-TwoTail.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+```
+:::
+
+:::{#sa-15.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.033.CriticalValueTechnique-OneTailLower.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+```
+:::
+
+:::{#sa-15.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.033.CriticalValueTechnique-OneTailUpper.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+```
+:::
+
+:::{#sa-15.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.034.TypeIandTypeIIErrors-schoice.Rmd", 
+            edir = "../PracticeQuestions/Chapter15", 
+            n = 70)
+```
+:::
+
+:::{#sa-15.05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.039.PowerCalculations-Z-test.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+```
+:::
+
+:::{#sa-15.06}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.042.PValueConversions.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+```
+:::
+
+
 :::

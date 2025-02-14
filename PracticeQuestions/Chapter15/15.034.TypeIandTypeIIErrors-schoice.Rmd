@@ -1,0 +1,42 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+# TRUE/FALSE solutions for answers (partly created with ChatGPT)
+sol <- rep(c(TRUE, FALSE), c(7, 7))
+
+
+type <- sample(c("type I error", "type II error"), 1)
+if(type != "type I error") sol <- !sol
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+Which of the following scenarios describes a `r type`?
+
+(Question ID: *`r id`*)
+
+Answerlist
+------------
+* A quality control inspector at a light bulb factory rejects a batch of light bulbs because the sample mean lifespan is significantly lower than the claimed lifespan. However, the batch actually meets the claimed lifespan. 
+* A jury finds a defendant guilty, but the defendant is actually innocent. 
+* A teacher believes a new teaching method improves test scores and implements it. However, the new method has no actual impact on test scores. 
+* A store owner believes a new advertising campaign has increased sales, but in reality, sales have not changed. The owner proceeds with the expensive campaign. 
+* A company decides to launch a new product based on a market survey that showed significant interest. However, the survey results were flawed, and there is actually little real interest in the product. 
+* A fire alarm goes off in a building, and everyone evacuates, even though there is no actual fire. 
+* A doctor diagnoses a patient with a rare disease based on a positive test result. However, the patient does not actually have the disease. 
+* A scientist concludes that there is no link between a certain gene and a disease, when in reality, the gene does play a role in the disease. 
+* A medical researcher fails to reject the null hypothesis that a new drug has no effect, even though the drug actually does have a statistically significant positive effect. 
+* A farmer decides not to use a new fertilizer because a hypothesis test showed no significant increase in crop yield.  However, the fertilizer would have actually increased the yield. 
+* A study fails to find a statistically significant difference in effectiveness between a new drug and a placebo, even though the new drug is actually more effective.
+* A study concludes that a pollutant has no significant effect on a local ecosystem, even though the pollutant is causing harm.
+* An investor decides that a stock is actually fairly valued, and does not invest, even though the stock is actually undervalued and likely to increase in price.
+* A public health official concludes that a new disease outbreak is not serious, even though it is a significant threat.
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(sol)`
+exshuffle: 5
+exname: TypeIandTypeII-choice

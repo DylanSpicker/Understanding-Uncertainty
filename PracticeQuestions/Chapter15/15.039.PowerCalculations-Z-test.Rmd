@@ -1,0 +1,35 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+popAvg <- sample(130:150, 1)
+Delta <- round(runif(1, 0.5, 10), 2)
+power <- round(runif(1, 0.8, 0.95), 2)
+popSd <- round(runif(1, 5, 15), 2)
+
+nA <- sample(35:100, 1)
+alpha <- round(runif(1, 0.01, 0.2), 2)
+
+
+ans1 <- pnorm(qnorm(alpha/2) + Delta/(popSd/sqrt(nA))) + (1 - pnorm(qnorm(1-alpha/2) + Delta/(popSd/sqrt(nA))))
+ans2 <- ceiling((popSd * (qnorm(1-power) + qnorm(1-alpha/2))/abs(Delta))^2)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+Researchers are investigating the impact that a new drug has on blood pressure.  They want to conduct a clinical trial to test if the drug is effective.  The current average systolic blood pressure in the target population is `r popAvg` mmHg.  They want to be able to detect a true average blood pressure change of `r Delta` mmHg.  Assume the population standard deviation of systolic blood pressure is known to be `r popSd` mmHg. They will test using $\alpha = `r alpha`$. 
+
+
+a. In a sample of size $`r nA`$, what is the power of the test at detecting the desired differences?  ##ANSWER1##
+b. What is the approximate sample size required in order achieve a power of $`r power`$? ##ANSWER2##
+
+Question ID: *`r id`*
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`
+exclozetype: num|num
+exname: PowerCalculation
+extol: 0.01

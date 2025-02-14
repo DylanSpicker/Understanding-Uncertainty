@@ -214,7 +214,7 @@ A **simple linear regression model** is a statistical model specified for the co
 
 The key assumption when using linear regression is that this mean relationship, that $E[Y|X=x] = \beta_0 + \beta_1 x$, is a good representation of the truth. Without linearity of the mean, using a linear regression will provide misleading results. Implicitly, this also means that we are taking $Y$ to be a continuous variable.^[There are regression-type methods for non-continuous outcomes. These require more advanced techniques, but the same underlying ideas will hold.] A secondary assumption that we have made implicitly in the specification of this model is that the amount of variability in the error term does not depend on $X$. This assumption is called **homogeneity** and is typically summarized as being an assumption of constant variance.^[Note, there are more advanced regression techniques that allow for the relaxation of the homogeneity assumption.] Mathematically, we can frame this as assuming that $\text{var}(\epsilon|X=x) = \sigma^2$, for any value $x$. 
 
-:::{#def-homogeneity}
+:::{#def-homogeneity-assumption}
 ## Homogeneity (assumption)
 The assumption of **homogeneity** (often expressed as saying that the data are *homogeneous*), requires that the variance of the error terms in a model do not depend on the predictors in that model. That is, there is a constant variance across all observations in the model.
 :::

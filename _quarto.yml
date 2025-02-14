@@ -54,9 +54,8 @@ format:
     theme: 
     - cosmo
     - custom.scss
-    include-after-body: 
-      text: |
-        <script type="application/javascript" src="/webex.js"></script>
+    css: webex.css
+    include-after-body: webex.js
     code-annotations: select
     default-image-extension: svg
   pdf:
@@ -68,10 +67,10 @@ format:
 crossref:
   custom:
     - kind: float
-      reference-prefix: Practice Problem
-      latex-env: prac
-      key: prac
-prac-cap-location: top
+      reference-prefix: Self Assessment
+      latex-env: sa
+      key: sa
+sa-cap-location: top
 
 
 # comments:
