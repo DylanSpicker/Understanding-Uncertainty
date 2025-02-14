@@ -872,7 +872,9 @@ set.seed(31415)
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.033.CriticalValueTechnique-TwoTail.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+exams2forms("15.033.CriticalValueTechnique-TwoTail.Rmd", 
+            edir = "../PracticeQuestions/Chapter15", 
+            n = 100)
 ```
 :::
 
@@ -883,7 +885,9 @@ exams2forms("15.033.CriticalValueTechnique-TwoTail.Rmd", edir = "../PracticeQues
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.033.CriticalValueTechnique-OneTailLower.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+exams2forms("15.033.CriticalValueTechnique-OneTailLower.Rmd", 
+            edir = "../PracticeQuestions/Chapter15", 
+            n = 100)
 ```
 :::
 
@@ -894,7 +898,9 @@ exams2forms("15.033.CriticalValueTechnique-OneTailLower.Rmd", edir = "../Practic
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.033.CriticalValueTechnique-OneTailUpper.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+exams2forms("15.033.CriticalValueTechnique-OneTailUpper.Rmd", 
+            edir = "../PracticeQuestions/Chapter15", 
+            n = 100)
 ```
 :::
 
@@ -918,7 +924,9 @@ exams2forms("15.034.TypeIandTypeIIErrors-schoice.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.039.PowerCalculations-Z-test.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+exams2forms("15.039.PowerCalculations-Z-test.Rmd", 
+            edir = "../PracticeQuestions/Chapter15", 
+            n = 100)
 ```
 :::
 

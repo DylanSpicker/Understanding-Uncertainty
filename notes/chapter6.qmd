@@ -781,7 +781,7 @@ Consider a bag containing three red marbles, two green marbles, and four blue ma
 The probability mass function is given by,
 $$
 p_Y(y) = \begin{cases} 
-\frac{31}{36} & y = 0 \\
+\frac{21}{36} & y = 0 \\
 \frac{14}{36} & y = 1 \\
 \frac{1}{36} & y = 2 \\
 0 & \text{otherwise}

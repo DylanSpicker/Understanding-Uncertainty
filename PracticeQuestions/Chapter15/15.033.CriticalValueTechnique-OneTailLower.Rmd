@@ -2,11 +2,21 @@
 
 amt <- round(runif(1, 10, 14), 2)
 n <- sample(35:100, 1)
-mean <- round(runif(1, amt - 1, amt - 0.1), 2)
 sd <- round(runif(1, 0.05, 1.5), 2)
 alpha <- round(runif(1, 0.01, 0.2), 2)
-
 ans1 <- qt(alpha, df = n-1)
+
+
+if(sample(c(0,1),1) == 0) {
+    # Reject
+    val <- runif(1,  2 * ans1, 1.1 * ans1)
+} else {
+    # Fail to Reject
+    val <- runif(1, 0.9 * ans1, -1.5 * ans1)
+}
+
+mean <- round(val * sd/sqrt(n) + amt, 2)
+
 ans2 <- (mean - amt)/(sd / sqrt(n))
 ans3 <- c(ans2 <= ans1, ans2 > ans1)
 

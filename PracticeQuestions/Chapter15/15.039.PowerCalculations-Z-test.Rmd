@@ -1,16 +1,20 @@
 ```{r data generation, echo = FALSE, results = "hide"}
 
+nA <- sample(35:100, 1)
+approx_nB <- sample((nA+1):1000, 1)
 popAvg <- sample(130:150, 1)
-Delta <- round(runif(1, 0.5, 10), 2)
+
 power <- round(runif(1, 0.8, 0.95), 2)
 popSd <- round(runif(1, 5, 15), 2)
-
-nA <- sample(35:100, 1)
 alpha <- round(runif(1, 0.01, 0.2), 2)
+
+Delta <- round(popSd * (qnorm(power) + qnorm(1-alpha/2))/sqrt(approx_nB), 2)
+
+round(runif(1, 0.5, 10), 2)
 
 
 ans1 <- pnorm(qnorm(alpha/2) + Delta/(popSd/sqrt(nA))) + (1 - pnorm(qnorm(1-alpha/2) + Delta/(popSd/sqrt(nA))))
-ans2 <- ceiling((popSd * (qnorm(1-power) + qnorm(1-alpha/2))/abs(Delta))^2)
+ans2 <- ceiling((popSd * (qnorm(power) + qnorm(1-alpha/2))/abs(Delta))^2)
 
 id <- sprintf("%010d", sample(0:1000000000, 1))
 
