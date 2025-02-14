@@ -40,7 +40,10 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9cf7f73ae95708c47935cfd4a35bc870.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9e10166b8cbf4a4130f8224f3febb104.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -69,7 +72,37 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webex.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -262,8 +295,28 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#contingency-tables-frequency-distributions-and-categorical-data" id="toc-contingency-tables-frequency-distributions-and-categorical-data" class="nav-link active" data-scroll-target="#contingency-tables-frequency-distributions-and-categorical-data"><span class="header-section-number">18.1</span> Contingency Tables, Frequency Distributions, and Categorical Data</a></li>
+  <li><a href="#expected-cell-counts-for-contingency-tables" id="toc-expected-cell-counts-for-contingency-tables" class="nav-link" data-scroll-target="#expected-cell-counts-for-contingency-tables"><span class="header-section-number">18.2</span> Expected Cell Counts for Contingency Tables</a>
+  <ul class="collapse">
+  <li><a href="#expected-values-for-goodness-of-fit" id="toc-expected-values-for-goodness-of-fit" class="nav-link" data-scroll-target="#expected-values-for-goodness-of-fit"><span class="header-section-number">18.2.1</span> Expected Values for Goodness-of-Fit</a></li>
+  <li><a href="#expected-values-for-homogeneity" id="toc-expected-values-for-homogeneity" class="nav-link" data-scroll-target="#expected-values-for-homogeneity"><span class="header-section-number">18.2.2</span> Expected Values for Homogeneity</a></li>
+  <li><a href="#expected-values-for-independence" id="toc-expected-values-for-independence" class="nav-link" data-scroll-target="#expected-values-for-independence"><span class="header-section-number">18.2.3</span> Expected Values for Independence</a></li>
+  </ul></li>
+  <li><a href="#chi-squared-tests" id="toc-chi-squared-tests" class="nav-link" data-scroll-target="#chi-squared-tests"><span class="header-section-number">18.3</span> Chi-Squared Tests</a>
+  <ul class="collapse">
+  <li><a href="#the-chi-squared-test-statistic" id="toc-the-chi-squared-test-statistic" class="nav-link" data-scroll-target="#the-chi-squared-test-statistic"><span class="header-section-number">18.3.1</span> The Chi-squared Test Statistic</a></li>
+  <li><a href="#the-null-distribution" id="toc-the-null-distribution" class="nav-link" data-scroll-target="#the-null-distribution"><span class="header-section-number">18.3.2</span> The Null Distribution</a></li>
+  <li><a href="#performing-a-chi-squared-test" id="toc-performing-a-chi-squared-test" class="nav-link" data-scroll-target="#performing-a-chi-squared-test"><span class="header-section-number">18.3.3</span> Performing a Chi-squared Test</a></li>
+  <li><a href="#the-three-common-chi-squared-tests" id="toc-the-three-common-chi-squared-tests" class="nav-link" data-scroll-target="#the-three-common-chi-squared-tests"><span class="header-section-number">18.3.4</span> The Three Common Chi-squared Tests</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -287,11 +340,1326 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Currently in progress.</p>
+<section id="contingency-tables-frequency-distributions-and-categorical-data" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="contingency-tables-frequency-distributions-and-categorical-data"><span class="header-section-number">18.1</span> Contingency Tables, Frequency Distributions, and Categorical Data</h2>
+<p>The concept of contingency tables (<a href="chapter4.html#def-contingency-table" class="quarto-xref">Definition&nbsp;<span>4.7</span></a>) was introduced in <a href="chapter4.html#sec-contingency-tables" class="quarto-xref"><span>Section 4.5</span></a>. Briefly, contingency tables succinctly summarize the breakdown of two (or more) traits in a population. The number of individual items in the population that satisfy the intersecting traits are recorded in a table, with each member of the population counted at some specific intersection. Contingency tables provide an effective tool for considering probability distributions over finite populations. This is particularly true when the traits being considered are categorical.</p>
+<p>Categorical data provide an interesting challenge for statistical inference. If collected data happen to be categorical, it may not be immediately clear how to analyze them. With quantitative measurements we can readily compute estimates that map onto specific parameters in the population distribution. The parallels with categorical data are less direct.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> In order to conduct inference using categorical data, we require a technique for systematically converting qualitative information into quantitative information. While it is conceivable to determine several strategies for this purpose, one highly effective tool is the use of frequency distributions (<a href="chapter11.html#def-frequency-distribution" class="quarto-xref">Definition&nbsp;<span>11.1</span></a>).</p>
+<p>Notably, a contingency table can be seen as a method of encoding the joint frequency distribution of two (or more) categorical factors in a sample. By simply recording the number of individuals who possess particular combinations of traits, we are able to have a succinct breakdown of the composition of the sample. This summarizes the categorical features of the sample, but it does so quantitatively. Using the frequency distribution it is possible to ask whether different traits occur with similar frequencies in the sample.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Alternatively, frequency distributions can begin to give insight into whether different traits are related to, or independent of, one another.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>Thus, (joint) frequency distributions, often expressed via contingency tables for samples, provide a useful mechanism for summarizing categorical data, and can in turn be used to conduct statistical inference. The primary technique for doing so is to consider what was expected to be seen based on an underlying null hypothesis, and then assess how different what was actually observed happened to be. In a sense we are comparing the observed contingency table to an expected contingency table, and the similarity (or difference) dictates the likelihood that our hypothesized model can adequately explain the data.</p>
+</section>
+<section id="expected-cell-counts-for-contingency-tables" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="expected-cell-counts-for-contingency-tables"><span class="header-section-number">18.2</span> Expected Cell Counts for Contingency Tables</h2>
+<p>When dealing with random variables (<a href="chapter5.html#def-random-variable" class="quarto-xref">Definition&nbsp;<span>5.1</span></a>), the concept of an expected value was explored. The idea was that we can answer the question “What value do we expect to observe, if this random variable were to be realized?” on the basis of the underlying probability distribution. We can ask, and answer, a similar type of question in terms of contingency tables. Suppose, for instance, that we roll a die that has six different colours printed on each of its sides. If we roll the die <span class="math inline">\(60\)</span> times it is reasonable to ask ourselves “how many times do we expect to see each colour?”. If the die is fair then we should expect that no colour turns up any more often than any other, and as a result, our expectation would be to observe <span class="math inline">\(10\)</span> rolls for each colour. Now, suppose further that we did run this experiment. By recording the colours of the <span class="math inline">\(60\)</span> rolls we could compare our observations to the expected observations, and the similarity of these two frequency distributions will give some evidence whether the die is actually fair or not. There is nothing particularly special about assuming the die is fair to determine the expected counts.</p>
+<p>More generally, if we pose any particular model underpinning reality, we can determine what we would expect to observe in a frequency distribution or contingency table. This may be achieved by imposing a particular distribution on the underlying population or through assumptions about the traits of the population that impact their distribution. Critically, we require the ability to translate these types of statements into expected values for the contingency table and frequency distribution. While any set of assumptions that generate expected values can be used, there are three common overarching types of assumptions that are worth considering directly in more depth. Namely, these are (i) the fit of a specific distribution, (ii) homogeneity of multiple populations, or (iii) independence of two characteristics.</p>
+<section id="expected-values-for-goodness-of-fit" class="level3" data-number="18.2.1">
+<h3 data-number="18.2.1" class="anchored" data-anchor-id="expected-values-for-goodness-of-fit"><span class="header-section-number">18.2.1</span> Expected Values for Goodness-of-Fit</h3>
+<p>It is common to ask whether a particular distribution is a good fit for a particular set of data. This may be through named distributions<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> or it may be through explicitly specified distributions. In either case, these distributions give rise to expected frequency distributions. The idea, in brief, is to leverage the specific distribution to theoretically determine the expected number of observations in each cell, based on the overarching total. This was the process used by assuming that the die was fair. This assumption amounted to an assumption that the population follows a discrete uniform distribution (<a href="chapter8.html#sec-discrete-uniform" class="quarto-xref"><span>Section 8.1</span></a>), and could be used to determine the expected counts.</p>
+<p>Instead of assuming that the distribution was a discrete uniform, perhaps we had an explicitly specified distribution. Suppose that we wondered whether the coin was biased such that it was <span class="math inline">\(5\)</span> times as likely to come up as the <span class="math inline">\(6\)</span>th colour, compared to all other options. Then, taking <span class="math inline">\(p_i\)</span> to be the probability that the <span class="math inline">\(i\)</span>th colour is rolled, we can determine that <span class="math inline">\(p_1 = p_2 = p_3 = p_4 = p_5 = 0.1\)</span>, while <span class="math inline">\(p_6 = 0.5\)</span>. Then, if we still rolled the coin <span class="math inline">\(60\)</span> times we should expect to see <span class="math inline">\(E_1 = E_2 = E_3 = E_4 = E_5 = 0.1(60) = 6\)</span>, while <span class="math inline">\(E_6 = 0.5(60) = 30\)</span>. Any other explicit assumptions about the relative proportions of the different categories would result in a corresponding set of expected frequencies.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>In general, by assuming an underlying distribution, we can determine the theoretical probability of a particular observation being observed in a particular category. Then, with this probability, say <span class="math inline">\(p\)</span>, the expected count in a cell is given by <span class="math inline">\(np\)</span>, where <span class="math inline">\(n\)</span> is the total number of observations in the frequency distribution or contingency table.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Expected Value for Goodness-of-Fit Testing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that a distribution is hypothesized regarding the frequency distribution for a particular trait. Namely, suppose that the distribution gives rise to a set of probabilities, <span class="math inline">\(\{p_1,p_2,\dots,p_k\}\)</span>, such that each option for the trait <span class="math inline">\(j=1,\dots,k\)</span> will have probability <span class="math inline">\(p_j\)</span> of being observed. Moreover, suppose that a total of <span class="math inline">\(n\)</span> observations will be taken. Then, we expected value of the <span class="math inline">\(j\)</span>th cell is <span class="math inline">\(E_j = np_j\)</span>.</p>
+<p>If the cell probabilities are not given directly, such as through a probability mass function or similar, they can often be derived via the use of a cumulative distribution function. Notably, if the categories are bins of numeric quantities, then, for a given continuous distribution with cumulative distribution function <span class="math inline">\(F\)</span>, <span class="math display">\[E_j = n(F(u_j) - F(\ell_j)),\]</span> where <span class="math inline">\(u_j\)</span> is the upper bound on the <span class="math inline">\(j\)</span>th bin, and <span class="math inline">\(\ell_j\)</span> is the corresponding lower bound.</p>
+</div>
+</div>
+</section>
+<section id="expected-values-for-homogeneity" class="level3" data-number="18.2.2">
+<h3 data-number="18.2.2" class="anchored" data-anchor-id="expected-values-for-homogeneity"><span class="header-section-number">18.2.2</span> Expected Values for Homogeneity</h3>
+<p>If we wish to describe two quantities are being alike, we frequently describe them as being <em>homogenous</em>. If some trait is homogenous between two populations, then that trait is equally distributed between those different populations. We may wish to understand, for instance, whether genders are represented homogeneously between various careers. Note that this is not to say that all careers are equally likely to be pursued, but rather, that the rates that individuals pursue various careers is the same across gender.</p>
+<p>We are able to summarize the frequency distribution of a single trait<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> across multiple populations<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> using a contingency table. We take the characteristic that defines the populations as one of the factors (say the rows), and then the trait of interest as the other factor (say the columns). This summarizes data in a manner that is identical to taking a sample from a single population, measuring two different traits, but it is conceived of differently. Notably, we view this as multiple samples of a single trait, from multiple distinct populations. Denote the number of observations from population <span class="math inline">\(i\)</span>, who have trait <span class="math inline">\(j\)</span> as <span class="math inline">\(n_{i,j}\)</span>. Each population will have a set number of realizations drawn from it, denoted <span class="math inline">\(n_{i, \bullet}\)</span>.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> We can use a similar notation to denote the number of observations with trait <span class="math inline">\(j\)</span>, taking <span class="math inline">\(n_{\bullet, j} = \sum_{i=1}^k n_{i, j}\)</span>.</p>
+<div id="tbl-example-contingency-table-population" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-example-contingency-table-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;18.1: The notation used for a contingency table based on <span class="math inline">\(k\)</span> distinct populations, with each of which categorizes individuals based on a single trait, with <span class="math inline">\(\ell\)</span> possible values. The notation <span class="math inline">\(n_{i,j}\)</span> gives the total number of individuals in population <span class="math inline">\(i\)</span> with trait <span class="math inline">\(j\)</span>. Subscripts of <span class="math inline">\(\bullet\)</span> are used to sum over an index, so <span class="math inline">\(n_{i,\bullet}\)</span> is the total sample size from population <span class="math inline">\(i\)</span>, and <span class="math inline">\(n_{\bullet,j}\)</span> gives the total number of individuals with trait <span class="math inline">\(j\)</span>.
+</figcaption>
+<div aria-describedby="tbl-example-contingency-table-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 9%">
+<col style="width: 17%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">Population 1</th>
+<th style="text-align: center;">Population 2</th>
+<th style="text-align: center;"><span class="math inline">\(\cdots\)</span></th>
+<th style="text-align: center;">Population <span class="math inline">\(k\)</span></th>
+<th style="text-align: right;"><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Trait <span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_{1,1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_{2,1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\cdots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_{k,1}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(n_{\bullet, 1}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trait <span class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_{1,2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_{2,2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\cdots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_{k,2}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(n_{\bullet, 2}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\vdots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\vdots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\vdots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ddots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\vdots\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trait <span class="math inline">\(\ell\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_{1,\ell}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_{2,\ell}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\cdots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_{k,\ell}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(n_{\bullet, \ell}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="math inline">\(n_{1,\bullet}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_{2,\bullet}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\cdots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_{k,\bullet}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(n\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Thus, the total number of realizations will be <span class="math inline">\(n = n_{1, \bullet} + n_{2, \bullet} + \cdots + n_{k, \bullet} = n_{\bullet, 1} + n_{\bullet, 2} + \cdots + n_{\bullet, \ell}\)</span>. In order for the populations to be homogenous, we would expect that the proportion of observations for any trait, say <span class="math inline">\(\dfrac{n_{i,j}}{n_{i,\bullet}}\)</span> should be equivalent across the various populations. Note that, across the entire sample, the proportion of individuals with trait <span class="math inline">\(j\)</span> is <span class="math inline">\(\dfrac{n_{\bullet, j}}{n}\)</span>. Thus, if we take <span class="math display">\[p_j = \dfrac{n_{\bullet, j}}{n},\]</span> under a homogenous model for the populations we should observe that <span class="math inline">\(n_{i, j} = n_{i,\bullet}p_j = \dfrac{n_{i,\bullet}n_{\bullet,j}}{n}\)</span>.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<p>Formally, we estimate the overall proportion of individuals in the sample with each trait, combining them across the different populations. We then suggest that, if the populations are truly homogenous with respect to the given trait, we would expect to see the proportion of individuals with the given trait being equivalent across each population. This gives rise to the homogenous expected frequency.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Expected Value for Homogeneity Testing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that we are considering <span class="math inline">\(k\)</span> distinct populations, and hypothesize that these <span class="math inline">\(k\)</span> populations will be homogenous with respect to some trait that has <span class="math inline">\(\ell\)</span> distinct options. In this case, for the <span class="math inline">\(i\)</span>th population and <span class="math inline">\(j\)</span>th value of the trait, we should expect to see <span class="math display">\[E{i,j} = \frac{n_{i,\bullet}n_{\bullet,j}}{n}.\]</span> That is, the expectation is the total size of the <span class="math inline">\(i\)</span>th population, multiplied by the total count of individuals with the <span class="math inline">\(j\)</span>th trait, divided by the total number of individuals.</p>
+</div>
+</div>
+</section>
+<section id="expected-values-for-independence" class="level3" data-number="18.2.3">
+<h3 data-number="18.2.3" class="anchored" data-anchor-id="expected-values-for-independence"><span class="header-section-number">18.2.3</span> Expected Values for Independence</h3>
+<p>Suppose that, rather than drawing from <span class="math inline">\(k\)</span> distinct populations, we take a sample from a single population but measure two different traits.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> In this framing it is natural to inquire whether the traits measured in the population are independent of one another. Recall that independence (<a href="chapter4.html#def-independence" class="quarto-xref">Definition&nbsp;<span>4.5</span></a>) arises whenever one event (or random variable) provides no information regarding another event (or random variable). Mathematically, events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are independent if <span class="math inline">\(P(A,B) = P(A)P(B)\)</span>, and random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent if <span class="math inline">\(p_{X,Y}(x,y) = p_X(x)p_Y(y)\)</span>.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<p>Thus, suppose that a two-way contingency table exists, using the same notation as <a href="#tbl-example-contingency-table-population" class="quarto-xref">Table&nbsp;<span>18.1</span></a>, however, this time representing draws from a single population with two different traits measured. Thus, <span class="math inline">\(n_{i,j}\)</span> is the count of the number of individuals who have option <span class="math inline">\(i\)</span> for the first trait <span class="math inline">\(1\)</span> and option <span class="math inline">\(j\)</span> for the second trait. Then, consider the event <span class="math inline">\(A\)</span> to be that a randomly selected individual has <span class="math inline">\(i\)</span> as their first trait, and the event <span class="math inline">\(B\)</span> to be that a randomly selected individual has <span class="math inline">\(j\)</span> as their second trait. Thus, <span class="math display">\[P(A) = \frac{n_{i,\bullet}}{n}, \quad P(B) = \frac{n_{\bullet,j}}{n},\quad\text{and}\quad P(A,B) = \frac{n_{i,j}}{n}.\]</span> If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are independent then, this would require that <span class="math display">\[\frac{n_{i,j}}{n} = \frac{n_{i,\bullet}}{n}\times\frac{n_{\bullet,j}}{n} \implies n_{i,j} = \frac{n_{i,\bullet}n_{\bullet,j}}{n}.\]</span></p>
+<p>The same logic applies to any combination of traits. As a result, if we hypothesize that two traits in a population are independent, this gives us a means of determining how many observations we should expect to see, in each cell.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Expected Value for Independence Testing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that we are considering a single population, with two traits, the first of which has <span class="math inline">\(k\)</span> options and the second with <span class="math inline">\(\ell\)</span> options. Further, suppose we hypothesize that, in this population, these traits are independent of one another. In this case, for the <span class="math inline">\(i\)</span>th option of trait one and <span class="math inline">\(j\)</span>th value of trait two, we should expect to see <span class="math display">\[E{i,j} = \frac{n_{i,\bullet}n_{\bullet,j}}{n}.\]</span> That is, the expectation is the total number of individuals with <span class="math inline">\(i\)</span> as the first trait, multiplied by the total count of individuals with the <span class="math inline">\(j\)</span>th second trait, divided by the total number of individuals.</p>
+</div>
+</div>
+<p>Note that the expected value for testing independence and the expected value for testing homogeneity are mathematically equivalent to one another. In a sense, the assumption of homogeneity is equivalent to the assumption of independence, and vice versa. The distinction, however, arises based on what the data represent and how the data arise. When we are considering independence, we are envisioning the sample as arising from one overarching population, and we take a random sample from this. When we are considering homogeneity, we are considering <span class="math inline">\(k\)</span> distinct populations, with random samples from each of these. Practically, this means that in homogeneity testing, we have <span class="math inline">\(n_{i,\bullet}\)</span> fixed for all <span class="math inline">\(i\)</span>, while in independence testing, <span class="math inline">\(n_{i,\bullet}\)</span> is a random quantity that is only observed once the sample is realized. We should not expect to see the exact same contingency tables if we run two separate experiments, one randomly sampling from a combined population, and the other sampling from each population separately.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+</section>
+</section>
+<section id="chi-squared-tests" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="chi-squared-tests"><span class="header-section-number">18.3</span> Chi-Squared Tests</h2>
+<p>Categorical data are well-summarized using a frequency distribution.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> Concrete assumptions regarding the underlying distribution of any categorical traits give rise to expected frequency distributions. The comparison of these observed and expected tables give a natural method for testing the underlying assumptions. Specifically, the observed and expected frequency distributions naturally give rise to Pearson’s chi-squared test statistic. This test statistic, under some minimal assumptions, will approximately follow a chi-squared distribution, supposing that the hypothesis used to generate the expected distribution is correct. Thus, this setup can be used to test assumptions regarding the underlying distribution of the categorical data.</p>
+<section id="the-chi-squared-test-statistic" class="level3" data-number="18.3.1">
+<h3 data-number="18.3.1" class="anchored" data-anchor-id="the-chi-squared-test-statistic"><span class="header-section-number">18.3.1</span> The Chi-squared Test Statistic</h3>
+<p>To express the test statistic, suppose that we make observations <span class="math inline">\(O_{i,j}\)</span> across the contingency table, for <span class="math inline">\(i=1,\dots,k\)</span> and <span class="math inline">\(j=1,\dots,\ell\)</span>. Moreover, suppose that, under the assumptions that are being tested, the corresponding expected cell counts are found to be <span class="math inline">\(E_{i,j}\)</span>. Then the chi-squared test statistic is given by <span class="math display">\[\chi^2 = \sum_{i=1}^{k}\sum_{j=1}^{\ell}\frac{(O_{i,j} - E_{i,j})^2}{E_{i,j}}.\]</span> Note that, if instead of a contingency table, a frequency distribution is used, this can be reframed as having observations <span class="math inline">\(O_i\)</span>, for <span class="math inline">\(i=1,\dots,k\)</span>, with corresponding expectations <span class="math inline">\(E_i\)</span>. Then, in this setting, <span class="math display">\[\chi^2 = \sum_{i=1}^k \frac{(O_i - E_i)^2}{E_i}.\]</span></p>
+<p>In general, the test statistic is computed by finding <span class="math display">\[\frac{(\text{Observed} - \text{Expected})^2}{\text{Expected}},\]</span> for each cell in the contingency table or frequency distribution, and then summing all of these values. This test statistic does not depend on the underlying hypothesis that is being tested, only on being able to determine the expected quantities for each cell in the table or distribution.</p>
+</section>
+<section id="the-null-distribution" class="level3" data-number="18.3.2">
+<h3 data-number="18.3.2" class="anchored" data-anchor-id="the-null-distribution"><span class="header-section-number">18.3.2</span> The Null Distribution</h3>
+<p>Under the null hypothesis, that the expected values are actually correct, the chi-squared test statistic will have an (approximate) chi-squared distribution. There are two important caveats on this point:</p>
+<ol type="1">
+<li>This approximation will only hold under assumptions on the sampling procedure, sample size, and expected cell counts; and</li>
+<li>The exact number of degrees of freedom for the chi-squared distribution will depend on the assumptions generating the expectations.</li>
+</ol>
+<p>There are three primary assumptions required to conduct a chi-squared test. First, we must assume that the sample arises from simple random sampling. That is, there is an overarching population (or multiple populations in the case of testing for homogeneity), from which the observed data are drawn, with equal probability of any member of the population being sampled. If sampling is done via a simple random sample, alternatives to the chi-squared procedure are required. Next, we require that the expected cell counts are all sufficiently large. As a general rule of thumb, all the expected cell counts should be above <span class="math inline">\(5.\)</span><a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> Note that this assumption puts an implicit requirement on the sample size. Namely, if your sample size is too small, the expected counts will not be large enough to adequately perform the hypothesis test. The final assumption that is required is that the observations in the sample are independent of one another. We need to make independent draws from the underlying population, rather than allowing for dependence between different observations.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a></p>
+<p>If the assumptions are all satisfied, then <span class="math inline">\(\chi^2 \stackrel{H_0}{\sim} \chi^2_{d}\)</span>, where <span class="math inline">\(d\)</span> represents the number of degrees of freedom for the distribution. Broadly speaking, the degrees of freedom will be given by <span class="math inline">\(k\ell - c\)</span>, where <span class="math inline">\(k\)</span> and <span class="math inline">\(\ell\)</span> are the total number of options for traits one and two, and <span class="math inline">\(c\)</span> is the number of <em>constraints</em> placed on the table. Note that, <span class="math inline">\(k\ell\)</span> gives the total number of cells in the contingency table. Moreover, if the test is being run on a frequency distribution rather than a contingency table, we can take <span class="math inline">\(\ell = 1\)</span>.</p>
+<p>The number of constraints, <span class="math inline">\(c\)</span>, arise in the calculating the expected frequencies based on the underlying hypotheses. The question we are asking ourselves is “how many cell values are pre-determined, based on the assumptions?”. Take, for instance, the simple goodness-of-fit assumptions. In this case we have that <span class="math inline">\(E_i = np_i\)</span>, for <span class="math inline">\(i=1,\dots,k\)</span>. Note, however, that in order to calculate <span class="math inline">\(E_i\)</span> we are assuming that the total number of observations is going to be <span class="math inline">\(n\)</span>. By assumption, we know that <span class="math display">\[E_1 + E_2 + \cdots + E_k = n.\]</span> As a result, once we have determined <span class="math inline">\(\{E_1, E_2, \dots, E_{k-1}\}\)</span>, the final value, <span class="math inline">\(E_k\)</span> must also be determined as <span class="math display">\[E_k = n - E_1 - E_2 - \cdots - E_{k-1}.\]</span> Thus, while we calculate <span class="math inline">\(k\)</span> expected values, we have a constraint on exactly <span class="math inline">\(1\)</span> of these values, so <span class="math inline">\(c=1\)</span>. This gives the familiar <span class="math inline">\(d = k - 1\)</span>.</p>
+<p>In the contingency table for independence we calculate a total of <span class="math inline">\(k\ell\)</span> expected values. However, we make the assumption that both <span class="math inline">\(n_{i,\bullet}\)</span> and <span class="math inline">\(n_{\bullet,j}\)</span> are fixed for each row and column. This gives <span class="math inline">\(k + \ell\)</span> constraints, however, it is the case that <span class="math display">\[\sum_{i=1}^{k} n_{i,\bullet} = \sum_{j=1}^{\ell} n_{\bullet,j} = n.\]</span> Thus, once we have constrained the <span class="math inline">\(k\)</span> totals for the rows, and <span class="math inline">\(\ell - 1\)</span> totals for the columns, the final value for the remaining column has already been constrained as well. Thus, in this case, <span class="math inline">\(c = k + \ell - 1\)</span>. This gives, <span class="math display">\[d = k\ell - (k + \ell - 1) = (k - 1)(\ell - 1).\]</span></p>
+<p>An alternative framing for counting the degrees of freedom is to ask ourselves: “how many expected values can we independently compute?”. To answer this we note that we calculate one in each cell, minus any of those that are constrained, hence giving <span class="math inline">\(d = k\ell - c\)</span>. However, in some situations it may be easier to directly count the free to vary expected values. Either way, the assumptions guarantee that the distribution will be approximately chi-squared, and the hypotheses give rise to the number of degrees of freedom.</p>
+</section>
+<section id="performing-a-chi-squared-test" class="level3" data-number="18.3.3">
+<h3 data-number="18.3.3" class="anchored" data-anchor-id="performing-a-chi-squared-test"><span class="header-section-number">18.3.3</span> Performing a Chi-squared Test</h3>
+<p>In order to perform a chi-squared test we follow a five-step procedure:</p>
+<ol type="1">
+<li>Compute the expected cell counts based on the underlying hypothesis.</li>
+<li>Compute the <span class="math inline">\(\chi^2\)</span> test statistic, giving a realization of <span class="math inline">\(x\)</span>.</li>
+<li>Determine the null distribution (degrees of freedom).</li>
+<li>Calculate the <span class="math inline">\(p\)</span>-value as <span class="math inline">\(P(\chi^2 &gt; x)\)</span>, or determine the relevant (upper-tail) critical value.</li>
+<li>Draw and communicate conclusions.</li>
+</ol>
+<p>The first three steps are addressed in the previous sections. Once the realization of the test statistic and the null distribution are known, the test proceeds<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> either via <span class="math inline">\(p\)</span>-values or critical values. When attempting to determine the <span class="math inline">\(p\)</span>-value, it is helpful to consider which tail contradicts the null hypothesis. Under the null hypothesis we should expect that <span class="math inline">\(O_{i,j} \approx E_{i,j}\)</span>, for all <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>. If this is the case then we have that <span class="math inline">\(\chi^2\)</span> will be small in magnitude (close to zero). If this is not the case, however, we will see that <span class="math inline">\(\chi^2\)</span> will be large in magnitude (far from zero), and <em>always</em> positive.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> As a result, it is only the <strong>upper tail</strong> that we are concerned with in terms of generating <span class="math inline">\(p\)</span>-values or for finding critical values.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-rejection-region-plot-chisq" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-rejection-region-plot-chisq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.1: The rejection region for a chi-squared hypothesis test. For chi-squared tests we do not differentiate between one- and two-tailed tests. Instead, if the alternative holds, we should expect to see large values of the test statistic. As a result, the <span class="math inline">\(p\)</span>-value always corresponds to the right-tail probability. The <span class="math inline">\(p\)</span>-value will, just as in other hypothesis tests, be compared to the level of significance.
+</figcaption>
+<div aria-describedby="fig-rejection-region-plot-chisq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="chapter18_files/figure-html/fig-rejection-region-plot-chisq-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;18.1: The rejection region for a chi-squared hypothesis test. For chi-squared tests we do not differentiate between one- and two-tailed tests. Instead, if the alternative holds, we should expect to see large values of the test statistic. As a result, the p-value always corresponds to the right-tail probability. The p-value will, just as in other hypothesis tests, be compared to the level of significance."><img src="chapter18_files/figure-html/fig-rejection-region-plot-chisq-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>Formally, taking <span class="math inline">\(F\)</span> to represent the cumulative distribution function of a <span class="math inline">\(\chi^2_d\)</span> random variable, then given <span class="math inline">\(\chi^2 = x\)</span>, the <span class="math inline">\(p\)</span>-value for the hypothesis test is <span class="math inline">\(p = 1 - F(x)\)</span>. This can be compared to the level of significance, <span class="math inline">\(\alpha\)</span>. Alternatively, the critical value can be determined as <span class="math inline">\(\chi^2_{d, 1-\alpha}\)</span>. Then, if <span class="math inline">\(x &gt; \chi^2_{d,1-\alpha}\)</span>, the null hypothesis is rejected at the <span class="math inline">\(\alpha\)</span> level of significance. Conclusions are then drawn in the same manner as other hypothesis tests: if the null hypothesis is rejected at the given level of significance, there is sufficient evidence in the data to take the alternative as being a better description of reality than the null. The level of significance is still interpretable as the probability of making a Type I error, and it should still be balanced with the power of the hypothesis test, depending on the contextual requirements.</p>
+</section>
+<section id="the-three-common-chi-squared-tests" class="level3" data-number="18.3.4">
+<h3 data-number="18.3.4" class="anchored" data-anchor-id="the-three-common-chi-squared-tests"><span class="header-section-number">18.3.4</span> The Three Common Chi-squared Tests</h3>
+<p>While it is conceptually possible to test any hypotheses that generate expected frequency distributions, it is most common to test one of the three aforementioned hypotheses: (i) the goodness-of-fit of a distribution, (ii) the homogeneity of two or more populations, or (iii) the independence of two characteristics. Respectively, these tests are often referred to as the chi-squared goodness-of-fit test, the chi-squared test for homogeneity, and the chi-squared test for independence. Each test follows the general framework for a chi-squared test: the expected values are determined, <span class="math inline">\(\chi^2\)</span> is calculated, the degrees of freedom are determined, and a <span class="math inline">\(p\)</span>-value is derived. Because of the frequency with which these tests are used, it is useful to summarize each procedure as a concrete example of the relevant hypothesis test.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Chi-squared Goodness-of-Fit Test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that observations are made for <span class="math inline">\(k\)</span> categories, based on a simple random sample, giving <span class="math inline">\(O_1, \dots, O_k\)</span>. In order to test whether these are drawn from a particular distribution or not, we test <span class="math display">\[H_0: \text{The Distribution is a Good Fit} \quad H_A: \text{The Distribution Does Not Fit}.\]</span> The expected cell counts, <span class="math inline">\(E_1, \dots, E_k\)</span> are computed under the null hypothesis (namely, that the distribution fits). In particular, the expected quantities are computed as <span class="math display">\[E_i = p_in,\]</span> where <span class="math inline">\(p_i\)</span> is the probability of observing class <span class="math inline">\(i\)</span> based on the assumed distribution.</p>
+<p>Then, the <span class="math inline">\(\chi^2\)</span> statistic is computed, <span class="math display">\[\chi^2 = \sum_{i=1}^k \frac{(O_i - E_i)^2}{E_i} \stackrel{H_0}{\sim} \chi^2_{k-1}.\]</span></p>
+<p>Finally, supposing that <span class="math inline">\(\chi^2 = x\)</span>, the <span class="math inline">\(p\)</span>-value is calculated as <span class="math inline">\(p = P(\chi^2 \geq x)\)</span>, where <span class="math inline">\(\chi^2\)</span> is a <span class="math inline">\(\chi^2_{k-1}\)</span> random variable.</p>
+</div>
+</div>
+<p>Because the expected values for testing for independence and homogeneity are equivalent, the test procedures for independence and homogeneity are also equivalent. Recall that the difference between the two test procedures stems from the difference in the data structure<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> and in the method of data collection.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a> Given that the differences are contextual, the test can be viewed as a single test procedure.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Chi-squared Test for Homogeneity / Chi-Squared Test for Independence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that observations are made either from:</p>
+<ol type="1">
+<li>A simple random sample from <span class="math inline">\(k\)</span> distinct populations, producing observations of a trait with <span class="math inline">\(\ell\)</span> categories; or</li>
+<li>A simple random sample from a single population, with two characteristics measured, the first with <span class="math inline">\(k\)</span> distinct categories and the second with <span class="math inline">\(\ell\)</span> categories.</li>
+</ol>
+<p>In both cases, record the observed data as <span class="math inline">\(O_{i,j}\)</span> for <span class="math inline">\(i=1,\dots,k\)</span> (indexing the population or first trait), and <span class="math inline">\(j=1,\dots,\ell\)</span> (indexing the second trait). In order to test either:</p>
+<ol type="1">
+<li><span class="math inline">\(H_0: \text{The Populations are Homogenous with Respect to the Trait}\)</span> versus <span class="math inline">\(H_A: \text{The Populations are Heterogeneous with Respect to the Trait}\)</span>; or</li>
+<li><span class="math inline">\(H_0: \text{The Traits are Independent in the Population}\)</span> versus <span class="math inline">\(H_A: \text{The Traits are Dependent in the Population}\)</span>,</li>
+</ol>
+<p>the expected values for each cell can be computed as <span class="math display">\[E_{i,j} = \frac{n_{i,\bullet}n_{\bullet,j}}{n}.\]</span></p>
+<p>Then, the <span class="math inline">\(\chi^2\)</span> statistic is computed, <span class="math display">\[\chi^2 = \sum_{i=1}^k\sum_{j=1}^{\ell} \frac{(O_{i,j} - E_{i,j})^2}{E_{i,j}} \stackrel{H_0}{\sim} \chi^2_{(k-1)(\ell-1)}.\]</span></p>
+<p>Finally, supposing that <span class="math inline">\(\chi^2 = x\)</span>, the <span class="math inline">\(p\)</span>-value is calculated as <span class="math inline">\(p = P(\chi^2 \geq x)\)</span>, where <span class="math inline">\(\chi^2\)</span> is a <span class="math inline">\(\chi^2_{(k-1)(\ell-1)}\)</span> random variable.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-18.1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.1</strong></span> A die is rolled <span class="math inline">\(120\)</span> times, and the observed frequencies are recorded in the following table.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+<th style="text-align: center;">6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">20</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>What are the expected cells counts that arise to test whether the die is fair?</li>
+<li>Test the hypothesis that the die is fair, at the <span class="math inline">\(\alpha = 0.05\)</span> level of significance.</li>
+<li>Test the hypothesis that the die shows up <span class="math inline">\(2\)</span> with a probability of <span class="math inline">\(0.2\)</span>, and is equally likely to show up as any other number, at the <span class="math inline">\(\alpha = 0.05\)</span> level of significance.</li>
+</ol>
+</div>
+<div id="exr-18.2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.2</strong></span> In a batch of flowers that a florist receives the flowers are all either red or white. They expect that the quantity of red flowers is represented by a binomial distribution, with proportion <span class="math inline">\(0.75\)</span>. In a sample of <span class="math inline">\(200\)</span> flowers, they receive <span class="math inline">\(40\)</span> white flowers.</p>
+<p>Test whether the resulting order matches the expected distribution at the <span class="math inline">\(\alpha = 0.1\)</span> level of significance.</p>
+</div>
+<div id="exr-18.3" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.3</strong></span> A marketing analyst believes that consumer preference is evenly distributed across four major soda brands. To test this belief, they sample <span class="math inline">\(300\)</span> consumers and find that <span class="math inline">\(70\)</span> prefer brand A, <span class="math inline">\(85\)</span> prefer brand B, <span class="math inline">\(70\)</span> prefer brand C, and <span class="math inline">\(85\)</span> prefer brand <span class="math inline">\(D\)</span>.</p>
+<ol type="a">
+<li>Test the analyst’s belief, at the <span class="math inline">\(\alpha = 0.01\)</span> level of significance.</li>
+<li>Suppose that brand <span class="math inline">\(A\)</span> invests in a heavy marketing push, specifically aimed at attracting the attention of customers who historically have preferred brand <span class="math inline">\(D\)</span>. They will consider the campaign a success if they manage to attract <span class="math inline">\(5\%\)</span> of customers from <span class="math inline">\(D\)</span> to prefer their soda instead, leaving the rest of the industry unchanged. They have started from the assumption that all four brands are equally preferred. They, collect a sample of <span class="math inline">\(500\)</span> individuals, and find <span class="math inline">\(148\)</span> prefer brand A, <span class="math inline">\(137\)</span> prefer brand B, <span class="math inline">\(125\)</span> prefer brand C, and <span class="math inline">\(90\)</span> prefer brand D. Test whether these data fit their desired distribution at the <span class="math inline">\(\alpha = 0.01\)</span> level of significance.</li>
+</ol>
+</div>
+<div id="exr-18.4" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.4</strong></span> A geneticist expects offspring to have a phenotype ratio of <span class="math inline">\(9:3:3:1\)</span>. That is to say, there are 4 phenotypes in the population, and the geneticist expects that there will be <span class="math inline">\(9\)</span> times as many offspring with the first phenotype (compared to the fourth), and <span class="math inline">\(3\)</span> times as many offspring with the second and third phenotypes (compared with the fourth).</p>
+<p>In a sample of <span class="math inline">\(160\)</span> offspring, the observed frequencies are <span class="math inline">\(95\)</span>, <span class="math inline">\(35\)</span>, <span class="math inline">\(20\)</span>, and <span class="math inline">\(10\)</span>, for the four phenotypes, respectively.</p>
+<p>Does the data conform to the geneticists expectations, at an <span class="math inline">\(\alpha = 0.05\)</span> level of significance?</p>
+</div>
+<div id="exr-18.5" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.5</strong></span> A company claims that their candies are produced in equal proportions of five colors.</p>
+<ol type="a">
+<li>Suppose that a bag of candies contains <span class="math inline">\(20\)</span> candies in total. Can the companies claim be tested in this setting?</li>
+<li>Suppose that <span class="math inline">\(5\)</span> bags of candies are put together, resulting in <span class="math inline">\(25\)</span> red, <span class="math inline">\(20\)</span> blue, <span class="math inline">\(18\)</span> green, <span class="math inline">\(17\)</span> yellow, and <span class="math inline">\(20\)</span> brown candies. Is there evidence to suggest the company’s claim is false, at an <span class="math inline">\(\alpha = 0.05\)</span> level of significance?</li>
+</ol>
+</div>
+<div id="exr-18.6" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.6</strong></span> Researchers wish to compare the effectiveness of two different teaching methods. They consider two separate classes, applying each method to one of the classes, and recording the results (pass/fail) for the students.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Pass</th>
+<th>Fail</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Method A</td>
+<td>30</td>
+<td>10</td>
+<td>40</td>
+</tr>
+<tr class="even">
+<td>Method B</td>
+<td>25</td>
+<td>15</td>
+<td>40</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>55</td>
+<td>25</td>
+<td>80</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>Supposing that the methods are equally effective, what are the expected cell counts?</li>
+<li>Test if the effectiveness of the two teaching methods is the same, at an <span class="math inline">\(\alpha = 0.01\)</span>.</li>
+<li>Explain if there are any concerns regarding the use of a chi-squared test, in this setting.</li>
+</ol>
+</div>
+<div id="exr-18.7" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.7</strong></span> A survey seeks to determine whether an individual’s sex impacts their preferred type of movie (comedy, drama, action). The researchers take a random sample of <span class="math inline">\(100\)</span> women, and a random sample of <span class="math inline">\(150\)</span> men, soliciting their movie preferences.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Movie Preference</th>
+<th>Women</th>
+<th>Men</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Comedy</td>
+<td>30</td>
+<td>60</td>
+<td>90</td>
+</tr>
+<tr class="even">
+<td>Drama</td>
+<td>40</td>
+<td>50</td>
+<td>90</td>
+</tr>
+<tr class="odd">
+<td>Action</td>
+<td>30</td>
+<td>40</td>
+<td>70</td>
+</tr>
+<tr class="even">
+<td>Total</td>
+<td>100</td>
+<td>150</td>
+<td>250</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>Is there a difference in movie preference (at <span class="math inline">\(\alpha = 0.01\)</span>) between men and women?</li>
+<li>Describe how this test would have changed if the researchers instead took a random sample of individuals, and asked them for their sex and movie preference.</li>
+</ol>
+</div>
+<div id="exr-18.8" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.8</strong></span> Three different factories produce the same product. Samples from each factory are inspected for defects. The following table shows the results of these samples.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Factory</th>
+<th>Defective</th>
+<th>Non-Defective</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Factory A</td>
+<td>5</td>
+<td>95</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td>Factory B</td>
+<td>15</td>
+<td>185</td>
+<td>200</td>
+</tr>
+<tr class="odd">
+<td>Factory C</td>
+<td>30</td>
+<td>170</td>
+<td>200</td>
+</tr>
+<tr class="even">
+<td>Total</td>
+<td>50</td>
+<td>450</td>
+<td>500</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>Is the defect rate the same across all three factories, at the <span class="math inline">\(\alpha = 0.02\)</span> level of significance?</li>
+<li>Suppose that an additional <span class="math inline">\(100\)</span> observations are obtained from factor <span class="math inline">\(A\)</span>, with <span class="math inline">\(15\)</span> defective and <span class="math inline">\(85\)</span> non-defective products. Do these additional observations change the conclusion in part (a)?</li>
+</ol>
+</div>
+<div id="exr-18.9" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.9</strong></span> A researcher wants to know if the distribution of American political affiliation (Democrat, Republican, Independent) is the same across three different age groups. Data is collected from each group, and reported in the table below.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Age Group</th>
+<th>Democrat</th>
+<th>Republican</th>
+<th>Independent</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>18-24</td>
+<td>150</td>
+<td>50</td>
+<td>25</td>
+<td>225</td>
+</tr>
+<tr class="even">
+<td>25-34</td>
+<td>120</td>
+<td>75</td>
+<td>30</td>
+<td>225</td>
+</tr>
+<tr class="odd">
+<td>35-54</td>
+<td>80</td>
+<td>110</td>
+<td>40</td>
+<td>230</td>
+</tr>
+<tr class="even">
+<td>55+</td>
+<td>50</td>
+<td>150</td>
+<td>50</td>
+<td>250</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>400</td>
+<td>385</td>
+<td>145</td>
+<td>930</td>
+</tr>
+</tbody>
+</table>
+<p>Perform the appropriate test, at the <span class="math inline">\(\alpha = 0.05\)</span> level of significance.</p>
+</div>
+<div id="exr-18.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.10</strong></span> Four different brands of tires are tested for tread life. The following table reports the observed wear for these tires.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tire Brand</th>
+<th>Low</th>
+<th>Medium</th>
+<th>High</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>0</td>
+<td>4</td>
+<td>0</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>4</td>
+<td>4</td>
+<td>8</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>Can these data be used to test whether the brand has a significant impact on the observed wear? Explain.</li>
+<li>A second study is run, producing the follow data. Use these data to test whether tire brands have an impact on the wear patterns, at the <span class="math inline">\(\alpha = 0.10\)</span> level of significance.</li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tire Brand</th>
+<th>Low</th>
+<th>Medium</th>
+<th>High</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>20</td>
+<td>30</td>
+<td>0</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>5</td>
+<td>15</td>
+<td>30</td>
+<td>50</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>40</td>
+<td>10</td>
+<td>0</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>5</td>
+<td>5</td>
+<td>40</td>
+<td>50</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>70</td>
+<td>60</td>
+<td>70</td>
+<td>200</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="exr-18.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.11</strong></span> A researcher seeks to investigate whether there is a relationship between smoking status (smoker/non-smoker) and lung cancer (yes/no). They collect data on a large sample of individuals, producing the following two-by-two contingency table.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Lung Cancer: Yes</th>
+<th>Lung Cancer: No</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Smoker</td>
+<td>80</td>
+<td>120</td>
+<td>200</td>
+</tr>
+<tr class="even">
+<td>Non-Smoker</td>
+<td>20</td>
+<td>180</td>
+<td>200</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>100</td>
+<td>300</td>
+<td>400</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>If there is no relationship between smoking and lung cancer, how is this represented statistically?</li>
+<li>What are the expected totals in the contingency table under the assumption that there is no association between smoking and lung cancer?</li>
+<li>Test whether there is a relationship between smoking and lung cancer, based on the observed data, at the <span class="math inline">\(\alpha = 0.05\)</span> level of significance.</li>
+</ol>
+</div>
+<div id="exr-18.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.12</strong></span> A policy analyst wants to determine whether there is an association between an individual’s level of education (high school, bachelor’s, graduate) and their income level (low, medium, high), in a particular region. As a result, they take a sample of <span class="math inline">\(500\)</span> individuals from the region, and observe the following results.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Education Level</th>
+<th>Low Income</th>
+<th>Medium Income</th>
+<th>High Income</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>High School</td>
+<td>80</td>
+<td>70</td>
+<td>50</td>
+<td>200</td>
+</tr>
+<tr class="even">
+<td>Bachelor’s Degree</td>
+<td>50</td>
+<td>100</td>
+<td>70</td>
+<td>220</td>
+</tr>
+<tr class="odd">
+<td>Graduate Degree</td>
+<td>20</td>
+<td>50</td>
+<td>10</td>
+<td>80</td>
+</tr>
+<tr class="even">
+<td>Total</td>
+<td>150</td>
+<td>220</td>
+<td>130</td>
+<td>500</td>
+</tr>
+</tbody>
+</table>
+<p>In this region, is there evidence that an individual’s level of income is associated with their education (at <span class="math inline">\(\alpha = 0.01\)</span>)?</p>
+</div>
+<div id="exr-18.13" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.13</strong></span> A group of <span class="math inline">\(200\)</span> kindergarten students are given a survey where they are asked their favourite colour, and their favourite season. The results are summarized as follows.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Favourite Colour</th>
+<th>Spring</th>
+<th>Summer</th>
+<th>Autumn</th>
+<th>Winter</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Red</td>
+<td>15</td>
+<td>25</td>
+<td>10</td>
+<td>5</td>
+<td>55</td>
+</tr>
+<tr class="even">
+<td>Blue</td>
+<td>20</td>
+<td>20</td>
+<td>15</td>
+<td>10</td>
+<td>65</td>
+</tr>
+<tr class="odd">
+<td>Green</td>
+<td>10</td>
+<td>15</td>
+<td>20</td>
+<td>10</td>
+<td>55</td>
+</tr>
+<tr class="even">
+<td>Yellow</td>
+<td>5</td>
+<td>10</td>
+<td>5</td>
+<td>10</td>
+<td>30</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>50</td>
+<td>70</td>
+<td>50</td>
+<td>30</td>
+<td>200</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>Are there any concerns with testing this hypothesis, based on the observed data?</li>
+<li>Regardless of your response in (a), test the hypothesis at the <span class="math inline">\(\alpha = 0.05\)</span> level of significance.</li>
+</ol>
+</div>
+<div id="exr-18.14" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.14</strong></span> Data on the hair colour (blonde, brown, red, black) and eye colour (blue, green, brown) of a group of <span class="math inline">\(550\)</span> individuals is contained in the following table.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Hair Colour</th>
+<th>Blue Eyes</th>
+<th>Green Eyes</th>
+<th>Brown Eyes</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Blonde</td>
+<td>60</td>
+<td>30</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td>Brown</td>
+<td>80</td>
+<td>70</td>
+<td>150</td>
+<td>300</td>
+</tr>
+<tr class="odd">
+<td>Red</td>
+<td>10</td>
+<td>20</td>
+<td>20</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td>Black</td>
+<td>10</td>
+<td>10</td>
+<td>30</td>
+<td>50</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>160</td>
+<td>130</td>
+<td>260</td>
+<td>550</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>Using these data, test whether eye colours are equally distributed in this population (<span class="math inline">\(\alpha = 0.05\)</span>).</li>
+<li>Using these data, test whether hair colours are equally distributed in this population (<span class="math inline">\(\alpha = 0.05\)</span>).</li>
+<li>Using these data, test whether there is an association between eye colour and hair colour in this population (<span class="math inline">\(\alpha = 0.05\)</span>).</li>
+</ol>
+</div>
+<div id="exr-18.15" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.15</strong></span> Research has long suggested that there is no such thing as “learning styles”. That is, students do not perform any better when being taught to their reported learning style, compared with being taught in a randomly assigned manner. This finding has been robustly demonstrated overtime. A group of researchers is interested in whether an individual’s reported preferred learning style has an impact on how well they perform on particular tasks (that correspond to the those same learning styles).</p>
+<p>They collect the following data on <span class="math inline">\(300\)</span> individuals who report being either visual, auditory, or kinesthetic learners, and then rate which task (of a visual, auditory, or kinesthetic task) they performed best on.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 20%">
+<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Preferred Learning Style</th>
+<th>Best on Visual Task</th>
+<th>Best on Auditory Task</th>
+<th>Best on Kinesthetic Task</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Visual</td>
+<td>60</td>
+<td>30</td>
+<td>30</td>
+<td>120</td>
+</tr>
+<tr class="even">
+<td>Auditory</td>
+<td>30</td>
+<td>70</td>
+<td>20</td>
+<td>120</td>
+</tr>
+<tr class="odd">
+<td>Kinesthetic</td>
+<td>20</td>
+<td>20</td>
+<td>20</td>
+<td>60</td>
+</tr>
+<tr class="even">
+<td>Total</td>
+<td>110</td>
+<td>120</td>
+<td>70</td>
+<td>300</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>Explain what it would mean to test whether there is an association between preferred learning style and task performance in these data. Would the presence of an association provide evidence that learning styles really exist? Explain.</li>
+<li>Test the hypothesis (at <span class="math inline">\(\alpha = 0.05\)</span>) that there is an association between preferred learning style and task performance using these data.</li>
+</ol>
+</div>
+<div id="exr-18.16" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.16</strong></span> A store owner believes that the number of customers visiting the store on each day of the week follows a specific pattern. Data is collected for a week.</p>
+<ol type="a">
+<li>Formalize the store owner’s hypothesis in the framework of hypothesis testing. What test needs to be performed, and why?</li>
+<li>What data would need to be collected to perform the test? How would the test proceed?</li>
+</ol>
+</div>
+<div id="exr-18.17" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.17</strong></span> A pharmaceutical company is testing three different formulations of a drug. They want to know if the effectiveness (rated categorically) of the drugs is the same, and they further want to know if there are any differences in side effects for the various formulations.</p>
+<p>Describe how the company can test these hypotheses. Describe what the data collection would need to look like, and what hypothesis test would be required.</p>
+</div>
+<div id="exr-18.18" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.18</strong></span> A researcher collects data on people’s favourite genre of music and their personality type (introvert/extrovert).</p>
+<ol type="a">
+<li>Describe three separate hypotheses that can be tested on the basis of these data.</li>
+<li>What hypothesis test would be used to test each of the described hypotheses? How do these tests differ from one another?</li>
+</ol>
+</div>
+<div id="exr-18.19" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.19</strong></span> &nbsp;</p>
+<ol type="a">
+<li>Explain the difference between a test for homogeneity and a test for independence.</li>
+<li>Give an example of a research question that would be addressed by each test.</li>
+</ol>
+</div>
+<div id="exr-18.20" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 18.20</strong></span> A company wants to know if there is a relationship between employee satisfaction and productivity. They collect data on both variables. Employee satisfaction is rated categorically (as either satisfied or not satisfied), however, productivity is a quantitative measure ranging from <span class="math inline">\(0\)</span> (not at all productive) to <span class="math inline">\(100\)</span> (maximum productivity).</p>
+<ol type="a">
+<li>What hypothesis test can the company perform to understand this question?</li>
+<li>What must be done in order to perform the hypothesis test identified in part (a)?</li>
+<li>Is there an alternative method that could be used to test this question? What must be done in order to perform this hypothesis test?</li>
+<li>What concerns or considerations may exist to select between the test identified in (a) and that identified in (c)? Can you think of any additional hypothesis tests that may alleviate some of these concerns?</li>
+</ol>
+</div>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>There is no way, for instance, to consider the <em>average</em> favourite colour for a group of school-aged children, or to consider the median political party that a region supports. There may be techniques that can measure related quantities numerically, however, these are not typically numerical quantities.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>For instance, do children report <em>red</em> and <em>blue</em> as being their favourite colour with equal proportions?<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>For instance, is a child’s favourite colour related to their favourite animal, or are these two characteristics independent?<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Such as the Poisson, generating counts.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>While this is described as being a distribution that is explicitly characterized, rather than deriving from a named distribution, the underlying distribution is in fact named. Notably, the distribution follows a <em>multinomial</em> distribution, where the multinomial extends the concept of the binomial to multiple different options. This is characterized by a total number of observations (<span class="math inline">\(60\)</span> in the example), as well as a set of probabilities of observing each class (<span class="math inline">\(p_1,\dots,p_6\)</span>).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Such as one’s career.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Say, defined by individuals’ gender.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>The notation of a subscript <span class="math inline">\(\bullet\)</span> is used to suggest that you sum over that index. So, <span class="math inline">\(n_{i,\bullet} = \sum_{j} n_{i,j}\)</span>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Notice that, if this were actually true, then for two populations, say <span class="math inline">\(i\)</span> and <span class="math inline">\(k\)</span>, we would have <span class="math display">\[\dfrac{n_{i,j}}{n_{i,\bullet}} = \frac{n_{\bullet,j}}{n} = \frac{n_{k,j}}{n_{k,\bullet}},\]</span> exactly as desired.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>For instance, we may take a random sample of individuals and ask them for their gender and their job.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>If the random variables are continuous, the same breakdown applies with density functions rather than probability mass functions, giving <span class="math inline">\(f_{X,Y}(x,y) = f_X(x)f_Y(y)\)</span>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>The reason for this stems from the fact that each population may be different sizes. If you have one population that is much larger than another, in the overall simple random sample, you should expect far more realizations from this population. In the separate population framing, this would only hold if you choose to select fewer individuals from the smaller populations. The difference is analogous to the difference between simple random sampling and stratified random sampling.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Or, equivalently, a contingency table<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>As with all <em>rules of thumb</em>, this is a rough rule that indicates where these tests may be appropriate. Some sources may indicate that you should have above <span class="math inline">\(10\)</span> for some expected values. Others indicate that, if you have many cells under consideration, it suffices to have <span class="math inline">\(80\%\)</span> of the expected cells above <span class="math inline">\(5\)</span>, so long as none are zero. As with all size requirements, the truth depends on the underlying reality, however, the larger the expected counts, the better the approximation will work.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>There are two important points on this. First, under a true simple random sample, independence will typically be a reasonable assumption. Second, the required independence is distinct from the type of independence we may test for using the chi-squared test. Independence of observations means that two subsequent realizations should not ever depend on one another. The independence that we may test for, conversely, refers to independence of traits within a population (that is, traits on the same individual are independent of one another).<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>As do all other tests in the NHST framework.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>This arises since the differences between the observed and expected values are squared, so any difference, positive or negative, becomes a positive contribution to the test statistic.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>Testing for homogeneity involves multiple separate populations, whereas testing for independence involves a single population with multiple traits.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>Testing for homogeneity relies on multiple simple random samples from various populations, whereas, testing for independence relies on a single simple random sample.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
+<script>
+
+/* definition of content for the buttons */
+const webex_buttons = {check_hidden:          "<b>&check;</b>",
+                       check_hidden_alt:      "Check answer",
+                       check_shown:           "<b>&lsh;</b>",
+                       check_shown_alt:       "Hide check",
+                       check_of_total:        "/",
+                       solution:              "<b>&quest;</b>",
+                       solution_alt:          "Correct solution",
+                       question_next:         "<b>&#8634;</b>",
+                       question_next_alt:     "Next question",
+                       question_previous:     "",
+                       question_previous_alt: ""}
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  document.querySelectorAll(".webex-total_correct").forEach(total => {
+    p = total.closest(".webex-box");
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+    /* no specific class on input node, thus searching via query selector */
+    var checkboxgroups = p.querySelectorAll("div[class=webex-checkboxgroup] input[type=checkbox]").length
+
+    /* show number of correct / total number of answers */
+    total.innerHTML = correct + "&nbsp;" + webex_buttons.check_of_total + "&nbsp;" + (solvemes + radiogroups + checkboxgroups + selects);
+  });
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answer");
+
+  //var cl = this.parentElement.classList;
+  var cl = this.closest(".webex-box").classList;
+  if (cl.contains("unchecked")) {
+    cl.remove("unchecked");
+    this.innerHTML = webex_buttons.check_shown; //"Hide check";
+    if (webex_buttons.check_shown_alt.length > 0) this.setAttribute("title", webex_buttons.check_shown_alt);
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = webex_buttons.check_hidden; //"Check answer";
+    if (webex_buttons.check_hidden_alt.length > 0) this.setAttribute("title", webex_buttons.check_hidden_alt);
+  }
+}
+
+/* Show/hide correct solution */
+solution_func = function() {
+  console.log("webex: show/hide solution");
+
+  var div = this.closest(".webex-question").querySelector(".webex-solution");
+  var cl = div.classList;
+
+  if (cl.contains("visible")) {
+    cl.remove("visible");
+  } else {
+    cl.add("visible");
+  }
+}
+
+/* function to check if the real answer is numeric */
+convert_to_numeric = function(x) {
+    if (typeof x == "string") {
+        /* do nothing */
+    } else if (x.length == 1) {
+        /* take first element */
+        x = x[0]
+    } else {
+        return NaN;
+    }
+
+    /* remove spaces for easier parsing */
+    x = x.replace(/\s/g, "");
+
+    /* Define patterns for different formats, note that spaces have been removed above */
+    const patterns = [
+        {regex: /^[+-]?\d+(\.\d{3})*,\d+$/, decimal: ",", thousand: "." },  // Format: "1.100.100.100,3"
+        {regex: /^[+-]?\d+(,\d{3})*\.\d+$/, decimal: ".", thousand: "," },  // Format: "1,100,100,100.3"
+        {regex: /^[+-]?\d+(\.\d+)?$/, decimal: "." },                       // Format: "1100100100.5"
+        {regex: /^[+-]?\d+,\d+$/, decimal: "," }                            // Format: "1100100100,5"
+    ];
+
+    /* testing all regular expressions, convert to float if possible */
+    for (const { regex, decimal, thousand } of patterns) {
+        if (regex.test(x)) {
+            let numeric = x;
+            if (thousand) numeric = numeric.replace(new RegExp(`\\${thousand}`, "g"), "");
+            numeric = numeric.replace(decimal, ".");
+            return parseFloat(numeric);
+        }
+    }
+    
+    /* input of length 1 but none of the known formats, return NaN */
+    return NaN;
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  /* avoid that keyup and keychange twice execute this function within nms = 10
+   * ms, clearing inputTimer and add timeout */
+  console.log("webex: check solveme");
+
+  /* float, precision for checking numeric answers */
+  const eps = 0.00000000000001;
+
+  /* get last checked user answer */
+  const question = this.closest(".webex-question")
+
+  /* extracting classes */
+  var cl = this.classList;
+  var my_answer = this.value;
+
+  /* empty answer? Job done */
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+    return false;
+  }
+
+  /* "Else" we continue evaluating the answer */
+  var real_answers = JSON.parse(this.dataset.answer);
+
+  /* by default we assume the users' answer is incorrect */
+  var user_answer_correct = false;
+
+  /* check if the correct answer is numeric, i.e. if 
+   * real_answers is of length 1 containing one single numeric
+   * value in a known format, else, NaN is returned */
+  const num_real_answer = convert_to_numeric(real_answers);
+  const num_my_answer   = convert_to_numeric(my_answer);
+
+  /* if the correct answer is numeric (float), the user's answer
+   * must also be numeric. If not, it is wrong. Else we can
+   * compare floating point numbers */
+  if (!isNaN(num_real_answer) && !isNaN(num_my_answer)) {
+    //DEV// console.log("webex: evaluating numeric answer")
+    /* check if the real answer and the user input are numerically the same;
+     * adding 'delta' to avoid precision issues */
+    var diff = Math.abs(num_real_answer - num_my_answer);
+    if (diff < parseFloat(this.dataset.tol) + eps) { user_answer_correct = true; }
+
+  /* if the question contains regex, a regular expression is used
+   * to evaluate the users answer (only possible if length of answers is 1) */
+  } else if (cl.contains("regex") && real_answers.length == 1) {
+    //console.log("webex: evaluating answer using regular expression")
+    let regex = new RegExp(real_answers[0], cl.contains("ignorecase") ? "i" : "");
+    if (regex.test(my_answer)) { user_answer_correct = true; }
+
+  /* else we evaluate on 'string level', considering the creators preferences
+   * regarding set options */
+  } else {
+    //console.log("webex: evaluating string answer")
+    /* modify/prepare answer */
+    if (cl.contains("ignorecase")) { my_answer = my_answer.toLowerCase(); }
+    if (cl.contains("nospaces"))   { my_answer = my_answer.replace(/ /g, ""); }
+
+    /* if the real answer includes user input - correct */
+    if (real_answers.includes(my_answer)) {
+      user_answer_correct = true;
+  
+      // added regex bit
+      if (cl.contains("regex")) {
+        answer_regex = RegExp(real_answers.join("|"))
+        if (answer_regex.test(my_answer)) {
+          cl.add("webex-correct");
+        }
+      }
+    }
+  }
+
+  if (user_answer_correct) {
+      cl.add("webex-correct");
+      cl.remove("webex-incorrect");
+  } else {
+      cl.add("webex-incorrect");
+      cl.remove("webex-correct");
+  }
+
+  update_total_correct();
+
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector("input[name=" + this.id + "]:checked");
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+
+/* function for checking checkboxgroups answers */
+checkboxgroups_func = function(e) {
+  console.log("webex: check checkboxgroups");
+
+  /* list of all answer elements (correct and incorrect) */
+  var inputs = document.querySelectorAll("div[id='" + this.id + "'] input")
+
+  /* setting class for correct/incorrect answers */
+  inputs.forEach(function(input) {
+      var label = input.parentNode
+      if ((input.checked && input.value == "answer") || (!input.checked && input.value == "")) {
+          //input.setAttribute("class", "webex-correct")
+          label.setAttribute("class", "webex-correct")
+      } else {
+          label.setAttribute("class", "webex-incorrect")
+      }
+  });
+
+  update_total_correct();
+}
+
+/* shuffling array (thanks to stack overflow)
+ * If argument x is an integer we create an integer sequence
+ * from 0, 1, ..., (x - 1) and return a shuffled version. If
+ * the input is an array, we simply shuffle it */
+shuffle_array = function(x) {
+   if (Number.isInteger(x) && !isNaN(x)) {
+     x = Array.from({length: x}, (v, i) => i);
+   }
+   let shuffled = x.map(value => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort).map(({ value }) => value)
+   return shuffled;
+}
+
+/* ---------------------------------------------------------
+ * ---------------------------------------------------------
+ * --------------------------------------------------------- */
+window.onload = function() {
+  console.log("webex onload");
+
+  /* setting up buttons and actions to show/hide answers */
+  document.querySelectorAll(".webex-check").forEach(section => {
+    section.classList.add("unchecked");
+
+    /* ul to take up the list items with buttons */
+    let button_ul = document.createElement("ul");
+    button_ul.setAttribute("class", "webex-button-list");
+    section.appendChild(button_ul);
+
+    /* button to _check_ if answers given are correct */
+    let li_check = document.createElement("li");
+    button_ul.appendChild(li_check); /* add list item to ul */
+    let btn_check = document.createElement("button");
+    btn_check.innerHTML = webex_buttons.check_hidden;  // "Check answer";
+    btn_check.setAttribute("class", "webex-button webex-button-check");
+    if (webex_buttons.check_hidden_alt.length > 0) btn_check.setAttribute("title", webex_buttons.check_hidden_alt);
+    btn_check.onclick = check_func;
+    li_check.appendChild(btn_check);
+
+    /* span to show current number of points (when _check_ active) */
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    li_check.appendChild(spn);
+
+    /* button to show the _solution_ if there is one */
+    var has_solution = section.parentNode.querySelectorAll(".webex-solution").length > 0;
+    if (has_solution) {
+      let li_solution = document.createElement("li");
+      button_ul.appendChild(li_solution); /* add list item to ul */
+      let btn_solution = document.createElement("button");
+      btn_solution.innerHTML = webex_buttons.solution; // "Correct answer";
+      btn_solution.setAttribute("class", "webex-button webex-button-solution");
+      if (webex_buttons.solution_alt.length > 0) btn_solution.setAttribute("title", webex_buttons.solution_alt);
+      btn_solution.onclick = solution_func;
+      li_solution.appendChild(btn_solution);
+    }
+
+  });
+
+  /* set up webex-solveme inputs */
+  document.querySelectorAll(".webex-solveme").forEach(solveme => {
+    solveme.setAttribute("autocomplete","off");
+    solveme.setAttribute("autocorrect", "off");
+    solveme.setAttribute("autocapitalize", "off");
+    solveme.setAttribute("spellcheck", "false");
+    solveme.value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    if (solveme.classList.contains("ignorecase")) {
+      solveme.dataset.answer = solveme.dataset.answer.toLowerCase();
+    }
+    /* adjust answer for 'no spaces' (ignore spaces) */
+    if (solveme.classList.contains("nospaces")) {
+      solveme.dataset.answer = solveme.dataset.answer.replace(/ /g, "");
+    }
+
+    /* attach checking function, triggered on key up, change, and when
+     * elemnt is out of focus. Only evaluated once by tracking changes
+     * via variable solveme_last_user_answer */
+    solveme.addEventListener("keyup",  solveme_func);
+    solveme.addEventListener("change", solveme_func);
+    solveme.addEventListener("blur",   solveme_func);
+
+    /* adding span to show correct/incorrect icon */
+    solveme.insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  });
+
+  /* set up radiogroups (single choice questions with display = "buttons") */
+  document.querySelectorAll(".webex-radiogroup").forEach(radiogroup => {
+    radiogroup.onchange = radiogroups_func;
+  });
+
+  /* set up checkboxgroups (multiple choice questions with display = "buttons") */
+  document.querySelectorAll(".webex-checkboxgroup").forEach(checkboxgroup => {
+    checkboxgroup.onchange = checkboxgroups_func;
+  });
+
+  /* set up selects (dropdown menus) */
+  document.querySelectorAll(".webex-select").forEach(select => {
+    select.onchange = select_func;
+    /* append webex-icon for correct/incorrect icons */
+    var elem = document.createElement("span")
+    elem.classList.add("webex-icon")
+    select.parentNode.appendChild(elem)
+  });
+
+  /* change to next/previous question if multiple are available */
+  function handleQuestionClick(group, questions, step) {
+    return async function() {
+      /* get question order as integer vector */
+      let questionOrder = group.dataset.questionOrder.split(",").map(str => parseInt(str));
+
+      /* current question/position */
+      let currentPosition = parseInt(group.dataset.currentPosition);
+  
+      /* Hide the current question */
+      questions.forEach(question => { question.classList.remove("active"); });
+
+      /* Move to the next question index */
+      currentPosition = (currentPosition + step) % questionOrder.length;
+      if (currentPosition < 0) currentPosition = currentPosition + questionOrder.length
+
+      /* Display the new question */
+      // devel // console.log("set question " + questionOrder[currentPosition] +
+      // devel //             " (" + currentPosition + ") as active");
+      questions[questionOrder[currentPosition]].classList.add("active");
+  
+      // Update the currentPosition data attribute on the group div
+      group.dataset.currentPosition = currentPosition;
+    };
+  }
+
+  
+  document.querySelectorAll(".webex-group").forEach(group => {
+    const questions = Array.from(group.querySelectorAll(".webex-question"));
+    const questionOrder = shuffle_array(questions.length);
+
+    /* take start position (if set) or start at 0 */
+    const currentPosition = parseInt(group.getAttribute("data-start-position")) || 0;
+
+    /* show the default question for each group */
+    questions[questionOrder[currentPosition]].classList.add("active");
+    // devel // console.log("set question " + questionOrder[currentPosition] +
+    // devel //             " (" + currentPosition + ") as active; " + questionOrder);
+  
+    /* store random order of questions as well as current position */
+    group.dataset.questionOrder   = questionOrder;
+    group.dataset.currentPosition = currentPosition;
+
+    /* find all webex-questions, search for .webex-button-list and
+     * populate the list with necessary <li><button>...</button></li> elements */
+    questions.forEach(question => {
+        let button_ul = question.querySelector("ul.webex-button-list");
+
+        let li_next = document.createElement("li");
+        let nextButton = document.createElement("button");
+        nextButton.setAttribute("class", "webex-button webex-button-next");
+        if (webex_buttons.question_next_alt.length > 0) nextButton.setAttribute("title", webex_buttons.question_next_alt);
+        nextButton.innerHTML = webex_buttons.question_next; // "Next question";
+        nextButton.addEventListener("click", handleQuestionClick(group, questions, 1));
+        li_next.appendChild(nextButton);
+
+        let li_previous = document.createElement("li");
+        let previousButton = document.createElement("button");
+        previousButton.setAttribute("class", "webex-button webex-button-previous");
+        if (webex_buttons.question_previous_alt.length > 0) previousButton.setAttribute("title", webex_buttons.question_previous_alt);
+        previousButton.innerHTML = webex_buttons.question_previous; // "Previous question";
+        previousButton.addEventListener("click", handleQuestionClick(group, questions, -1));
+        li_previous.appendChild(previousButton);
+
+        console.log(button_ul);
+        if (webex_buttons.question_previous.length > 0) button_ul.appendChild(li_previous);
+        if (webex_buttons.question_next.length > 0) button_ul.appendChild(li_next);
+    });
+  });
+
+
+  update_total_correct();
+}
+
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -766,7 +2134,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script type="application/javascript" src="../webex.js"></script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
