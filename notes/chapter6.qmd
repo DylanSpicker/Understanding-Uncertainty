@@ -764,7 +764,7 @@ Describe several measures of variability indicating the strengths and drawbacks 
 :::{#exr-6.9}
 a. Suppose that two random quantities have the same mode, median, and expected value. Is their distribution guaranteed to be the same? Is it guaranteed to be similar? Why?
 b. Suppose that two random quantities have the same range, IQR, variance, and mean absolute deviation. Is their distribution guaranteed to be the same? Is it guaranteed to be similar? Why?
-c. Suppose that two random quantities have the same percentiles for all values for which the percentiles are defined. Is their distribution guaranteed to be teh same? Is it guaranteed to be similar? Why?
+c. Suppose that two random quantities have the same percentiles for all values for which the percentiles are defined. Is their distribution guaranteed to be the same? Is it guaranteed to be similar? Why?
 :::
 
 :::{#exr-6.10}
@@ -788,11 +788,11 @@ p_Y(y) = \begin{cases}
 \end{cases}
 $$
 
-a. What is the expected value of $X$?
-b. What is the mode of $X$?
-c. What is the variance of $X$?
-d. What is the range of $X$?
-e. What is the standard deviation of $X$?
+a. What is the expected value of $Y$?
+b. What is the mode of $Y$?
+c. What is the variance of $Y$?
+d. What is the range of $Y$?
+e. What is the standard deviation of $Y$?
 :::
 
 :::{#exr-6.13}
@@ -809,10 +809,10 @@ p_Z(z) = \begin{cases}
 \end{cases}
 $$
 
-a. What is the expected value of $X$?
-b. What is the median of $X$?
-c. What is the variance of $X$?
-d. What is the standard deviation of $X$?
+a. What is the expected value of $Z$?
+b. What is the median of $Z$?
+c. What is the variance of $Z$?
+d. What is the standard deviation of $Z$?
 :::
 
 :::{#exr-6.14}
@@ -825,17 +825,17 @@ p_W(w) = \begin{cases}
 \frac{2}{10} & w = 1 \\
 \frac{3}{10} & w = 2 \\
 \frac{2}{10} & w = 3 \\
-\frac{1}{10} & w = 4 \\
+\frac{2}{10} & w = 4 \\
 0 & \text{otherwise}
 \end{cases}
 $$
 
-a. What is the expected value of $X$?
-b. What is the mode of $X$?
-c. What is the variance of $X$?
+a. What is the expected value of $W$?
+b. What is the mode of $W$?
+c. What is the variance of $W$?
 d. What is $\zeta(0.3)$? 
 e. What is $\zeta(0.8)$?
-e. What is the standard deviation of $X$?
+e. What is the standard deviation of $W$?
 :::
 
 :::{#exr-6.15}

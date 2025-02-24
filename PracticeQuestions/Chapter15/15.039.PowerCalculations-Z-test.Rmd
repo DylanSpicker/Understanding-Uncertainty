@@ -26,7 +26,7 @@ Researchers are investigating the impact that a new drug has on blood pressure. 
 
 
 a. In a sample of size $`r nA`$, what is the power of the test at detecting the desired differences?  ##ANSWER1##
-b. What is the approximate sample size required in order achieve a power of $`r power`$? ##ANSWER2##
+b. What is the approximate sample size required in order to achieve a power of $`r power`$? ##ANSWER2##
 
 Question ID: *`r id`*
 
