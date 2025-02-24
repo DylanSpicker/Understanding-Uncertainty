@@ -198,11 +198,11 @@ wilcox.test(x = X, y = Z, paired = TRUE)
 # Signed-Rank Test
 ###################
 # Suppose that we observe T = 8 with n = 30
-tstar <- 8/2 + 30*(30 + 1)/4 # Adjust t
+tstar <- -8/2 + 30*(30 + 1)/4 # Adjust t
 psignrank(tstar, n = 30)
 
 # To get the p-value:
-2 * min(psignrank(tstar, n = 30), 1-psignrank(tstar, n = 30))
+2 * psignrank(tstar, n = 30)
 
 ########################################
 # U-Test
