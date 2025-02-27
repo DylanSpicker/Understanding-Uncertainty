@@ -1,0 +1,117 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+# TRUE/FALSE solutions for answers (partly created with ChatGPT)
+sol <- c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)
+
+sc_idx <- sample(1:7, 1)
+
+sol[sc_idx] <- TRUE
+
+scenarios <- list(
+    c( # Discrete Uniform
+        "A fair, six-sided die is rolled, and the result is recorded.",
+        "A lottery is played by drawing a number, at random, between 1 and 1000. You are concerned with guessing the winning number.",
+        "An airline numbers its on a small aircraft from 1 to 100. When purchasing a ticket, your seat is assigned completely at random. You are the first person to purchase a seat on a given flight.",
+        "A computer generates a random number, equally likely, between 1 and 5000."
+    ),
+    c( # Bernoulli
+        "A quality control team inspects a batch of items, classifying the batch as either defective or non-defective.",
+        "A coin is tossed a single time, and the number of observed heads is recorded.",
+        "A patient is given a medical test that yields a positive or negative result for a specific condition.",
+        "A sales representative is making a single sales call, which will result in either closing a deal or not.",
+        "An email is received and processed by the email provided. It is classified as either spam or not spam.",
+        "A website tracks when users visit, specifically recording whether a specific user clicks on an advertisement or not."
+    ),
+    c( # Binomial
+        "A baseball player wants is interested in the number of home runs they hit in a game, where the probability of hitting a home run is the same for each at-bat.",
+        "A basketball player wants to know the number of successful free throws they make out of 10 attempts, where each attempt has the same probability of success.", 
+        "A factory inspects 50 light bulbs and counts the number of defective bulbs, assuming a constant defect rate.", 
+        "A student takes a multiple-choice quiz with 20 questions, and wants to know the number of correct answers, assuming they guess randomly on each question.", 
+        "A pharmaceutical company tests a new drug on 100 patients and counts the number of patients who experience a positive effect, assuming each patient's response is independent.", 
+        "A call center records the number of successful sales calls made out of 30 attempts, assuming a constant probability of success per call.", 
+        "A gardener plants 25 seeds and counts the number of seeds that germinate, assuming each seed has the same chance of germination.", 
+        "A quality control team checks 100 computer chips for errors, and counts the number of chips with errors, assuming a constant error rate.", 
+        "A casino dealer deals 5 hands of blackjack and counts the number of hands that result in a blackjack, assuming random card distribution.", 
+        "A marketing company sends out 500 emails and counts the number of recipients who click on a link, assuming a constant click-through rate.", 
+        "A meteorologist counts the number of rainy days in a week, assuming each day has a constant independent probability of rain."
+    ),
+    c( # Geometric
+        "In a manufacturing process, you’re interested in the number of trials required to produce the first defective item.",
+        "A basketball player attempts free throws until they make their first shot, counting the number of attempts.",
+        "A telemarketer makes calls until they reach their first successful sale, recording the number of calls.",
+        "A quality control inspector tests items until they find the first defective one, counting the number of items tested.",
+        "A gambler rolls a die until they roll a six, counting the number of rolls.",
+        "A software tester runs a program until they encounter the first bug, counting the number of runs.",
+        "A job seeker applies for jobs until they receive their first offer, counting the number of applications.",
+        "A fisherman casts their line until they catch their first fish, counting the number of casts.",
+        "A student takes a series of multiple-choice test questions, guessing randomly, until they get the first question right, counting the number of questions."
+    ),
+    c( # Negative Binomial
+        "In a network setup, multiple backup routers are used, and the network remains functional as long as a certain number of them are operational. A network engineer is interested in how many backup routers are needed to ensure network reliability under various failure scenarios.",
+        "A basketball player attempts free throws until they make their 5th shot, counting the total number of attempts.",
+        "A telemarketer makes calls until they achieve 3 successful sales, recording the total number of calls made.",
+        "A quality control inspector tests items until they find 4 defective ones, counting the total number of items tested.",
+        "A gambler rolls a die until they get six twice, counting the total number of rolls.",
+        "A software tester runs a program until they encounter 3 bugs, counting the total number of runs.",
+        "A job seeker applies for jobs until they receive 2 offers, counting the total number of applications sent.",
+        "A fisherman casts their line until they catch 3 fish, counting the total number of casts.",
+        "A student answers a series of multiple-choice questions sequentially, guessing randomly, until they get 4 total questions right, counting the total number of attempts."
+    ),
+    c( # Hypergeometric
+        "In a survey from a finite population, you want to determine the number of people who prefer online shopping over in-store shopping.",
+        "Researchers are studying a group of patients with a very rare disease. They wish to know whether a particular gene mutation is associated with the disease or not. They sample members of the population who have the disease to further study.",
+        "In a survey from a finite population, you want to determine the number of people who prefer online shopping over in-store shopping.",
+        "Researchers are studying a group of patients with a very rare disease. They wish to know whether a particular gene mutation is associated with the disease or not. They sample members of the population who have the disease to further study.",
+        "A quality control inspector selects 10 items from a batch of 100, where 15 are known to be defective, and counts the number of defective items in the sample.",
+        "A deck of 52 cards contains 4 aces. You draw 5 cards and count the number of aces in your hand.",
+        "A primary school classroom has 30 students, 12 of whom are girls. A group of 8 students is randomly selected for a project, and the number of girls in the selected group is counted.",
+        "A bag contains 20 marbles, 8 red and 12 blue. You draw 6 marbles without replacement and count the number of red marbles.",
+        "A company has 50 employees, 20 of whom have advanced degrees. A committee of 10 employees is randomly formed, and you count the number of members with advanced degrees.",
+        "A lottery draw selects 6 numbers from a pool of 49. You have a ticket with 6 numbers, and you count the number of matching numbers.",
+        "An aquarium contains 100 fish, 30 of which are goldfish. You catch 15 fish and count the number of goldfish caught.",
+        "A box of 100 screws contains 10 defective screws. You select 20 screws and count the number of defective screws in your selection.",
+        "A library has 500 books, 100 of which are historical novels. You randomly select 50 books and count the number of historical novels in your selection.",
+        "A voter registration list contains 1000 names, 400 of whom are registered Democrats. A sample of 100 names is selected, and you count the number of registered Democrats in the sample."
+    ),
+    c( # Poisson
+        "In a manufacturing process, you’re interested in the number of trials required to produce the first defective item.",
+        "An online streaming platform wants to model the number of times a specific video is watched in an hour, given a known average view rate.",
+        "A call center manager wants to model the number of calls received per minute during a quiet period of the day.",
+        "A server host counts the number of emails received by a server in a minute.",
+        "A grocery store wants to understand the number of customers arriving at the store in a given hour, assuming a constant average arrival rate.",
+        "A researcher counts the number of radioactive decays occurring in a sample of material over a given time interval.",
+        "An editor is considering the number of typos found in a book chapter, and suspects that the average rate of errors is constant across the whole book.",
+        "A city planner wishes to consider the number of accidents occurring at a specific intersection in a week.",
+        "An engineer is considering the number of power outages in a city during a month, given an average monthly outage rate.",
+        "A politician wants to estimate the number of cars that will pass a toll booth in an hour, assuming a constant average traffic flow."
+    )
+)
+
+scenario <- sample(scenarios[[sc_idx]], 1)
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+What named distribution best describes the following scenario?
+
+`r scenario`
+
+(Question ID: *`r id`*)
+
+Answerlist
+------------
+* The Discrete Uniform
+* The Bernoulli
+* The Binomial
+* The Geometric
+* The Negative Binomial
+* The Hypergeometric
+* The Poisson
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(sol)`
+exshuffle: 5
+exname: IdentifyNamedDistribution

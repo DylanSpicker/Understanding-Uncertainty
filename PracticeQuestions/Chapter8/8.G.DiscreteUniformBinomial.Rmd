@@ -1,0 +1,60 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+d <- sample(6:20, 1)
+n <- sample(10:100, 1)
+lower <- sample(1:(d-5), 1)
+upper <- lower + sample(2:5, 1)
+symbol_l <- sample(c("<", "\\leq"), 1)
+symbol_u <- sample(c("<", "\\leq"), 1)
+
+
+lb <- ifelse(symbol_l == "<", lower+1, lower)
+ub <- ifelse(symbol_u == "<", upper-1, upper)
+
+scenarios <- c("observing a value as in (a) at least once", 
+               "never observing a value as in (a)", 
+               paste0("observing a value as in (a) no more than ", n-1, " times"), 
+               "observing a value as in (a) everytime")
+
+ans1 <- (ub - lb + 1)/d
+
+sc_A <- 1 - dbinom(0, n, ans1)
+sc_B <- dbinom(0, n, ans1)
+sc_C <- 1 - dbinom(n, n, ans1)
+sc_D <- dbinom(n, n, ans1)
+
+prob_os <- c(sc_A, sc_B, sc_C, sc_D)
+
+if(all(prob_os < 0.01 | prob_os > 0.99)) {
+    k <- which.max(dbinom(0:n, n, ans1))
+    scenario <- paste0("observing a value as in (a) exactly ", k, " times")
+
+    ans2 <- dbinom(k, n, ans1)
+
+} else {
+    idxs <- which(prob_os >= 0.01 & prob_os <= 0.99)
+    idx <- sample(idxs, 1)
+
+    ans2 <- prob_os[idx]
+    scenario <- scenarios[idx]
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+A fair `r d`-sided die is tossed `r n` times. 
+
+a. On any single toss, what is the probability of observing a value, $v$, such that $`r lower` `r symbol_l` v `r symbol_u` `r upper`$? ##ANSWER1##
+b. Across the `r n` tosses, what is the probability of `r scenario`? ##ANSWER2##
+
+Question ID: `r id`
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`
+exclozetype: num|num
+exname: DiscreteUniformAndBinomial
+extol: 0.01

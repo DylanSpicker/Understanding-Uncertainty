@@ -777,3 +777,164 @@ Suppose that a popular website is analyzing their traffic to determine the stabi
 a. If, in in one particular hour, there are $10,000$ visitors, what distribution best models the number of users who face server issues?
 b. Suppose that the company is concerned with the number of individuals who cannot access the website over a $2$ hour period, without knowing precisely how many visitors they receive during that time. Approximate the probability that they will have more than $4$ visitors not being able to access the site, and explain why this is a reasonable approximation.
 :::
+
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-8.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("8.A.IdentifyDist.Rmd", 
+            edir = "../PracticeQuestions/Chapter8", 
+            n = 100)
+```
+:::
+
+:::{#sa-8.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("8.B.Binomial.Rmd", 
+            edir = "../PracticeQuestions/Chapter8", 
+            n = 100)
+```
+:::
+
+:::{#sa-8.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("8.C.Geometric.Rmd", 
+            edir = "../PracticeQuestions/Chapter8", 
+            n = 100)
+```
+:::
+
+:::{#sa-8.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("8.D.NegativeBinomial.Rmd", 
+            edir = "../PracticeQuestions/Chapter8", 
+            n = 70)
+```
+:::
+
+:::{#sa-8.05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("8.E.Hypergeometric.Rmd", 
+            edir = "../PracticeQuestions/Chapter8", 
+            n = 100)
+```
+:::
+
+:::{#sa-8.06}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("8.F.Poisson.Rmd", 
+            edir = "../PracticeQuestions/Chapter8", 
+            n = 100)
+```
+:::
+
+:::{#sa-8.07}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("8.G.DiscreteUniformBinomial.Rmd", 
+            edir = "../PracticeQuestions/Chapter8", 
+            n = 100)
+```
+:::
+
+:::{#sa-8.08}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("8.H.HypergeometricWP.Rmd", 
+            edir = "../PracticeQuestions/Chapter8", 
+            n = 100)
+```
+:::
+
+:::{#sa-8.09}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("8.I.GeometricWP.Rmd", 
+            edir = "../PracticeQuestions/Chapter8", 
+            n = 100)
+```
+:::
+
+:::{#sa-8.10}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("8.J.NegativeBinomialWP.Rmd", 
+            edir = "../PracticeQuestions/Chapter8", 
+            n = 100)
+```
+:::
+
+:::{#sa-8.11}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("8.K.PoissonWP.Rmd", 
+            edir = "../PracticeQuestions/Chapter8", 
+            n = 100)
+```
+:::

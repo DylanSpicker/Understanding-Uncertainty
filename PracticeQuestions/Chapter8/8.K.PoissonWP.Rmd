@@ -1,0 +1,67 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+lambda <- round(runif(1, 0.75, 10), 2)
+
+x_pos <- 2:ceiling(3*lambda)
+vals <- dpois(x_pos, lambda = lambda)
+idxs <- which(vals >= 0.01)
+
+if(length(idxs) == 0) { 
+    idxs <- which.max(vals)
+}
+
+Xa <- x_pos[sample(idxs, 1)]
+
+events <- c(
+    "computer crashes",
+    "car accidents at a particular intersection",
+    "complications for a patient at an ICU",
+    "phone calls to a call center",
+    "emails to a server",
+    "arrivals to a store",
+    "arrivals to an emergency room"
+)
+
+events_b <- c(
+    "computer crashes",
+    "car accidents at the particular intersection",
+    "complications for the patient",
+    "phone calls to the call center",
+    "emails to the server",
+    "arrivals to the store",
+    "arrivals to the emergency room"
+)
+
+timeframe_units <- c("day", "month", "stay", "minute", "second", "hour", "quarter hour")
+preps <- c("on", "during", "during", "during", "during", "during", "during")
+
+sc_idx <- sample(1:length(events), 1)
+
+event <- events[sc_idx]
+event_b <- events_b[sc_idx]
+timeframe_unit <- timeframe_units[sc_idx]
+prep <- preps[sc_idx]
+
+ans1 <- dpois(Xa, lambda = lambda)
+ans2 <- lambda
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+Suppose that `r event` occur at a rate of `r lambda` per `r timeframe_unit`. 
+
+a. What is the probability that `r Xa` `r event_b` occur `r prep` a specific `r timeframe_unit`? ##ANSWER1##
+b. What is the variance in the number of occurrences of `r event_b` per `r timeframe_unit`? ##ANSWER2##
+
+Question ID: `r id`
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`
+exclozetype: num|num
+exname: DiscreteUniformAndBinomial
+extol: 0.01

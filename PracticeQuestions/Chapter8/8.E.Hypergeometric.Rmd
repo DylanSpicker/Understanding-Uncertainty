@@ -1,0 +1,47 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+N <- sample(10:100, 1)
+p <- round(runif(1, 0.25, 0.75), 2)
+M <- floor(N * p) 
+
+
+small_n <- sample(2:min((N-M), M), 1)
+
+EX <- small_n * M / N
+
+x_pos <- 0:small_n
+vals <- dhyper(x_pos, m = M, n = N-M, k=small_n)
+
+Xc <- sample(x_pos[which(vals >= 0.01)], 1)
+Xdl <- sample(x_pos[which(vals >= 0.01)], 1)
+Xdu <- Xdl + sample(2:4, 1)
+
+Xdl <- max(1, Xdl)
+Xdu <- max(Xdu, Xdl + 1)
+
+ans1 <- EX
+ans2 <- small_n * M/N * (N-M)/N * (N-small_n) / (N-1)
+ans3 <- choose(N-M, small_n - Xc) * choose(M, Xc) / choose(N, small_n)
+ans4 <- sum(choose(N-M, small_n - (Xdl+1):(Xdu-1)) * choose(M, (Xdl+1):(Xdu-1)) / choose(N, small_n))
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+Suppose that $X$ follows a hypergeometric distribution with $N = `r N`$, $M = `r M`$, and $n = `r small_n`$. 
+
+a. What is $E[X]$? ##ANSWER1##
+b. What is $\text{var}(X)$? ##ANSWER2##
+c. What is $P(X = `r Xc`)$? ##ANSWER3##
+d. What is $P(`r Xdl` < X < `r Xdu`)$? ##ANSWER4##
+
+Question ID: `r id`
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`
+exclozetype: num|num|num|num
+exname: GeometricCalculations
+extol: 0.01

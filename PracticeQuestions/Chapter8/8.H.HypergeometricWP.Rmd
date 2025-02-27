@@ -1,0 +1,65 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+
+N <- sample(20:100, 1)
+M <- sample(2:(N-2), 1)
+n <- sample(2:min((N-M), M), 1)
+
+possible_k <- 0:n
+vals <- dhyper(possible_k, m = M, n = N-M, k = n)
+
+if(all(vals < 0.01)) {
+    k <- possible_k[which.max(vals)]
+} else {
+    k <- sample(possible_k[which(vals >= 0.01)], 1)
+}
+
+items <- c("computers",
+           "phones",
+           "cameras",
+           "cars",
+           "patients")
+locations <- c(
+    "repair shop",
+    "repair shop",
+    "repair shop",
+    "garage",
+    "clinic"
+)
+conditions <- c(
+    "a broken screen",
+    "a cracked display",
+    "a broken lens",
+    "a cracked windshield",
+    "flu-like symptoms"
+)
+
+sc_idx <- sample(1:length(items), 1)
+
+item <- items[sc_idx]
+location <- locations[sc_idx]
+condition <- conditions[sc_idx]
+
+ans1 <- n * M / N
+ans2 <- dhyper(k, m = M, n = N-M, k = n)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+There are a total of `r N` `r item` currently at a local `r location`. Of these, `r M` `r item` have `r condition`. Suppose that `r n` `r item` are selected at random.
+
+a. How many `r item` should we expect to have `r condition`? ##ANSWER1##
+b. What is the probability that, of those selected, exactly `r k` `r item` have `r condition`? ##ANSWER2##
+
+Question ID: `r id`
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`
+exclozetype: num|num
+exname: DiscreteUniformAndBinomial
+extol: 0.01

@@ -1,0 +1,74 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+p <- round(runif(1, 0.01, 0.5), 2)
+k <- sample(2:10, 1)
+
+x_pos <- 1:100
+vals <- choose(x_pos - 1, k - 1) * p^k * (1 - p)^(x_pos-k)
+idxs <- which(vals >= 0.01)
+
+if(length(idxs) == 0) {
+    idxs <- which.max(vals)
+}
+
+Xa <- x_pos[sample(idxs, 1)]
+Xb <- sample(k:(k+5), 1)
+
+
+events <- c(
+    "computer crash",
+    "car accident at a particular intersection",
+    "defective item being produced",
+    "complication for a patient at an ICU"
+)
+
+events_b <- c(
+    "computer crash",
+    "car accident at the particular intersection",
+    "defective item produced",
+    "complication for the patient"
+)
+
+timeframes <- c(
+    "on any particular day",
+    "during any specific month",
+    "the production of any item",
+    "during any hour"
+)
+
+preps <- c("occurs on", "occurs in", "is", "occurs during")
+
+timeframe_units <- c("day", "month", "item", "hour")
+
+sc_idx <- sample(1:length(events), 1)
+
+event <- events[sc_idx]
+event_b <- events_b[sc_idx]
+timeframe <- timeframes[sc_idx]
+timeframe_unit <- timeframe_units[sc_idx]
+prep <- preps[sc_idx]
+
+
+ans1 <- choose(Xa - 1, k - 1) * p^k * (1 - p)^(Xa - k)
+ans2 <- sum(choose(1:Xb - 1, k - 1) * p^k * (1 - p)^(1:Xb - k))
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+The probability of a `r event` occuring `r timeframe` is `r p`.
+
+a. What is the probability that the `r scales::ordinal(k)` `r event_b` `r prep` `r timeframe_unit` `r Xa`? ##ANSWER1##
+b. What is the probability that, by `r timeframe_unit` `r Xb`, the `r scales::ordinal(k)` `r event_b` has still not occured ? ##ANSWER2##
+
+Question ID: `r id`
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`
+exclozetype: num|num
+exname: DiscreteUniformAndBinomial
+extol: 0.01

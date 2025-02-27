@@ -1,0 +1,40 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+p <- round(runif(1, 0.01, 0.95), 2)
+r <- sample(2:20, 1)
+
+
+Xc <- sample(r:ceiling(2*r/p), 1)
+
+Xdl <- sample(r:ceiling(2*r/p), 1)
+Xdu <- Xdl + sample(1:4, 1)
+
+Xdu <- max(Xdu, Xdl + 1)
+
+ans1 <- r/p
+ans2 <- r * (1-p)/p^2
+ans3 <- choose(Xc - 1, r - 1) * (1 - p)^(Xc - r) * p^r
+ans4 <- sum(choose(Xdl:Xdu - 1, r-1) * (1 - p)^(Xdl:Xdu - r) * p^r)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+Suppose that $X$ follows a negative binomial distribution with success probability of $`r p`$, requiring $`r r`$ successes.
+
+a. What is $E[X]$? ##ANSWER1##
+b. What is $\text{var}(X)$? ##ANSWER2##
+c. What is $P(X = `r Xc`)$? ##ANSWER3##
+d. What is $P(`r Xdl` \leq X \leq `r Xdu`)$? ##ANSWER4##
+
+Question ID: `r id`
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`
+exclozetype: num|num|num|num
+exname: NegativeBinomialCalculations
+extol: 0.01
