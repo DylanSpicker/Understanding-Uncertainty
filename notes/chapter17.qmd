@@ -84,14 +84,14 @@ Denoting the cumulative distribution function of the first population, $F_X$, an
 
 With the ranks for each data point computed, we can then compute the **rank-sum** for each sample. Namely, take $R_X$ to be the sum of all the ranks from the observations corresponding to $\{X_1,\dots,X_n\}$ and $R_Y$ to be the sum of all the ranks from the observations corresponding to $\{Y_1,\dots,Y_m\}$. That is, $$R_X = \sum_{i=1}^n R_i \quad\text{and}\quad R_Y = \sum_{i=1}^m R_{n+i}.$$ Once the rank-sum is calculated for both samples, the $U$-statistics can be as well. Specifically take $$U_X = nm + \frac{n(n+1)}{2} - R_X \quad\text{and}\quad U_Y = nm + \frac{m(m+1)}{2} - R_Y.$$
 
-The **Mann-Whitney $U$-Statistic** is then given by $U = \min\{U_X, U_Y\}$. Under the null hypothesis, the $U$-statistic will follow the Wilcoxon rank-sum distribution. This distribution is characterized by both sample sizes, $n$ and $m$. Thus, taking $F_{n,m}$ to be the cumulative distribution function for the Wilcoxon rank-sum distribution, then the $p$-value for the $U$-test will be $$p = 2\times\min\{F_{n,m}(u), 1 - F_{n,m}(u)\}.$$ The form of this $p$-value arises since the distribution will not be symmetric around $0$.^[In the case of $Z$-tests, $t$-tests, and the presented version of the signed-rank test, the null distribution has always been symmetric around $0$. In this case we must have that $F(-|t|) = 1-F(|t|)$ and as such, we can express the $p$-value as the sum of the two tails. For non-symmetric null distributions, we still wish to understand the probability of observing something at least as extreme as what was actually observed. Here, however, that is not as simple as saying less than $-|t|$ or above $|t|$, since the distribution is not centered on $0$. In fact, in the case of the $U$-statistic, the null distribution is strictly positive. This form, $2\times\min\{F(u), 1-F(u)\}$ is broadly applicable across many hypothesis tests, however, it tends to be less informative compared to the sum of the tail probabilities.] When both $n$ and $m$ are large, then the null distribution is well-approximated by a normal distribution. Specifically, for large $n$ and $m$, $$U \stackrel{\dot H_0}{\sim} N\left(\frac{nm}{2}, \frac{nm(n+m+1)}{12}\right).$$ Thus, for the $p$-value, $$p \approx 2\times\Phi\left(-\frac{|U - nm/2|}{\sqrt{nm(n+m+1)/12}}\right).$$
+The **Mann-Whitney $U$-Statistic** is then given by $U = \min\{U_X, U_Y\}$. Under the null hypothesis, the $U$-statistic will follow the Wilcoxon rank-sum distribution. This distribution is characterized by both sample sizes, $n$ and $m$. Thus, taking $F_{n,m}$ to be the cumulative distribution function for the Wilcoxon rank-sum distribution, then the $p$-value for the $U$-test will be $$p = 2\times\min\{F_{n,m}(u), 1 - F_{n,m}(u-1)\}.$$ The form of this $p$-value arises since the distribution will not be symmetric around $0$.^[In the case of $Z$-tests, $t$-tests, and the presented version of the signed-rank test, the null distribution has always been symmetric around $0$. In this case we must have that $F(-|t|) = 1-F(|t|)$ and as such, we can express the $p$-value as the sum of the two tails. For non-symmetric null distributions, we still wish to understand the probability of observing something at least as extreme as what was actually observed. Here, however, that is not as simple as saying less than $-|t|$ or above $|t|$, since the distribution is not centered on $0$. In fact, in the case of the $U$-statistic, the null distribution is strictly positive. This form, $2\times\min\{F(u), 1-F(u-1)\}$ is broadly applicable across many hypothesis tests, however, it tends to be less informative compared to the sum of the tail probabilities.] When both $n$ and $m$ are large, then the null distribution is well-approximated by a normal distribution. Specifically, for large $n$ and $m$, $$U \stackrel{\dot H_0}{\sim} N\left(\frac{nm}{2}, \frac{nm(n+m+1)}{12}\right).$$ Thus, for the $p$-value, $$p \approx 2\times\Phi\left(-\frac{|U - nm/2|}{\sqrt{nm(n+m+1)/12}}\right).$$
 
 :::{.callout-tip icon="false"}
 ## The Mann-Whitney $U$-Test (General)
 Suppose that two independent samples are drawn from two separate populations, denoted $X_1,\dots,X_n$ from the first and $Y_1,\dots,Y_m$ from the second. The distribution function for $X_i$ is $F_X$ and the distribution function for $Y_i$ is $F_Y$. To test the null hypothesis that the distributions are equivalent, $H_0: F_X = F_Y$, versus the alternative that they differ, $H_A: F_X \neq F_Y$, the Mann-Whitney $U$-test can be run. First, all data from the two samples are combined and ranked. Then, the rank-sum statistics are computed for both samples, giving $R_X$ and $R_Y$. Using these statistics, the $U$-statistics for each sample are computed as $$U_X = nm + \frac{n(n+1)}{2} - R_X \quad\text{and}\quad U_Y = nm + \frac{m(m+1)}{2} - R_Y.$$ Finally, $U = \min\{U_X, U_Y\}$ is calculated as the $U$ statistic. 
 
 Under the null hypothesis, $U$ follows a rank-sum distribution with size parameters $n$ and $m$. Taking $U = u$ based on the observed sample, the $p$-value can be computed as: 
-$$p = 2\times\min\{F_{n,m}(u), 1 - F_{n,m}(u)\} \approx 2\times\Phi\left(-\frac{|U - nm/2|}{\sqrt{nm(n+m+1)/12}}\right).$$
+$$p = 2\times\min\{F_{n,m}(u), 1 - F_{n,m}(u-1)\} \approx 2\times\Phi\left(-\frac{|U - nm/2|}{\sqrt{nm(n+m+1)/12}}\right).$$
 
 :::
 
@@ -158,7 +158,7 @@ tstar <- 8/2 + 30*(30 + 1)/4 # Adjust t
 psignrank(tstar, n = 30)
 
 # To get the p-value:
-2 * min(psignrank(tstar, n = 30), 1-psignrank(tstar, n = 30))
+2 * psignrank(-abs(tstar), n = 30)
 
 ########################################
 # U-Test
@@ -167,7 +167,7 @@ psignrank(tstar, n = 30)
 pwilcox(800, n = 50, m = 40)
 
 # To get the p-value:
-2 * min(pwilcox(800, n=50, m=40), 1 - pwilcox(800, n=50, m=40))
+2 * min(pwilcox(800, n=50, m=40), 1 - pwilcox(800-1, n=50, m=40))
 
 #########################################
 # Test Procedures for Observed Data
@@ -202,7 +202,7 @@ tstar <- -8/2 + 30*(30 + 1)/4 # Adjust t
 psignrank(tstar, n = 30)
 
 # To get the p-value:
-2 * psignrank(tstar, n = 30)
+2 * psignrank(-abs(tstar), n = 30)
 
 ########################################
 # U-Test
@@ -211,7 +211,7 @@ psignrank(tstar, n = 30)
 pwilcox(800, n = 50, m = 40)
 
 # To get the p-value:
-2 * min(pwilcox(800, n=50, m=40), 1 - pwilcox(800, n=50, m=40))
+2 * min(pwilcox(800, n=50, m=40), 1 - pwilcox(800-1, n=50, m=40))
 
 #########################################
 # Test Procedures for Observed Data
