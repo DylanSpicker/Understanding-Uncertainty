@@ -73,7 +73,7 @@ c. They understand that bark beetles are a problem that can often impact pine tr
 
 a. Here, we could think of running two separate hypothesis tests. If we take $\theta_1$ to represent the average height of an aspen grown from the seed, we may test $H_0: \theta_1 = 50$ versus the alternative $H_A: \theta_1 \neq 50$. If $\theta_2$ represents the average diameter of the grown aspens, then we can test $H_1: \theta_2 = 10.5$ versus the alternative $H_A: \theta_2 \neq 10.5$. 
 b. Here, we require a parameter, say $\theta_3$, to represent the effect of the fertilizer on tree growth. Specifically, we may take $\theta_3$ to represent the average change in height that a tree receiving the fertilizer has (compared to if the tree had not received the fertilizer). Then, it is most sensible to assume by default that there is no effect, and thus $H_0: \theta_3 = 0$ versus $H_A: \theta_3 \neq 0$.
-c. Here, the parameter of interest is $\theta_4$, the proportion of trees in a particular area that are infected with bark beetles. We may consider $H_0: \theta = 0.1$ versus the alternative $H_A: \theta \neq 0.1$. However, in this case, it may be more prudent to actually use a **one-sided hypothesis**, taking $H_0: \theta \geq 0.1$ versus $H_A: \theta \leq 0.1$. The rationale would be that, since the decision to act would only be influenced by a small value of $\theta_4$, the true interest is in whether it is smaller than $0.1$, not simply whether it is different from $0.1$.
+c. Here, the parameter of interest is $\theta_4$, the proportion of trees in a particular area that are infected with bark beetles. We may consider $H_0: \theta = 0.1$ versus the alternative $H_A: \theta \neq 0.1$. However, in this case, it may be more prudent to actually use a **one-sided hypothesis**, taking $H_0: \theta \geq 0.1$ versus $H_A: \theta < 0.1$. The rationale would be that, since the decision to act would only be influenced by a small value of $\theta_4$, the true interest is in whether it is smaller than $0.1$, not simply whether it is different from $0.1$.
 ::::
 :::
 
@@ -866,6 +866,7 @@ set.seed(31415)
 
 ```
 
+
 :::{#sa-15.01}
 ```{r}
 #| echo: false
@@ -873,7 +874,7 @@ set.seed(31415)
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.033.CriticalValueTechnique-TwoTail.Rmd", 
+exams2forms("15.030.ValidHypotheses.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100)
 ```
@@ -886,7 +887,7 @@ exams2forms("15.033.CriticalValueTechnique-TwoTail.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.033.CriticalValueTechnique-OneTailLower.Rmd", 
+exams2forms("15.030.NullAlternativeFormat.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100)
 ```
@@ -899,11 +900,14 @@ exams2forms("15.033.CriticalValueTechnique-OneTailLower.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.033.CriticalValueTechnique-OneTailUpper.Rmd", 
+
+exams2forms("15.030.DrawConclusions.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100)
 ```
 :::
+
+
 
 :::{#sa-15.04}
 ```{r}
@@ -912,9 +916,9 @@ exams2forms("15.033.CriticalValueTechnique-OneTailUpper.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.034.TypeIandTypeIIErrors-schoice.Rmd", 
+exams2forms("15.032.PValueTechnique-TwoTail.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 70)
+            n = 100)
 ```
 :::
 
@@ -925,7 +929,7 @@ exams2forms("15.034.TypeIandTypeIIErrors-schoice.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.039.PowerCalculations-Z-test.Rmd", 
+exams2forms("15.032.PValueTechnique-OneTailLower.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100)
 ```
@@ -938,9 +942,87 @@ exams2forms("15.039.PowerCalculations-Z-test.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.042.PValueConversions.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+exams2forms("15.032.PValueTechnique-OneTailUpper.Rmd", 
+            edir = "../PracticeQuestions/Chapter15", 
+            n = 100)
 ```
 :::
 
+
+:::{#sa-15.OOO01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.033.CriticalValueTechnique-TwoTail.Rmd", 
+            edir = "../PracticeQuestions/Chapter15", 
+            n = 100)
+```
+:::
+
+:::{#sa-15.OOO02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.033.CriticalValueTechnique-OneTailLower.Rmd", 
+            edir = "../PracticeQuestions/Chapter15", 
+            n = 100)
+```
+:::
+
+:::{#sa-15.OOO03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.033.CriticalValueTechnique-OneTailUpper.Rmd", 
+            edir = "../PracticeQuestions/Chapter15", 
+            n = 100)
+```
+:::
+
+:::{#sa-15.OOO04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.034.TypeIandTypeIIErrors-schoice.Rmd", 
+            edir = "../PracticeQuestions/Chapter15", 
+            n = 70)
+```
+:::
+
+:::{#sa-15.OOO05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.039.PowerCalculations-Z-test.Rmd", 
+            edir = "../PracticeQuestions/Chapter15", 
+            n = 100)
+```
+:::
+
+:::{#sa-15.OOO06}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("15.042.PValueConversions.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+```
+:::
 
 :::

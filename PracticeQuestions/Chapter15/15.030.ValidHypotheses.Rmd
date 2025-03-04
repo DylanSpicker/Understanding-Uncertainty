@@ -1,0 +1,171 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+sol <- rep(c(TRUE, FALSE), c(72, 72))
+
+
+type <- sample(c("is", "is **not**"), 1)
+if(type != "is") sol <- !sol
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+Which of the following statements `r type` a valid statistical hypothesis?
+
+(Question ID: *`r id`*)
+
+Answerlist
+------------
+* $\mu \geq `r sample(-100:100, 1)`$.
+* $\mu \leq `r sample(-100:100, 1)`$.
+* $\mu = `r sample(-100:100, 1)`$.
+* $\theta \geq `r sample(-100:100, 1)`$.
+* $\theta \leq `r sample(-100:100, 1)`$.
+* $\theta = `r sample(-100:100, 1)`$.
+* $\sigma \geq `r sample(1:100, 1)`$.
+* $\sigma \leq `r sample(1:100, 1)`$.
+* $\sigma = `r sample(1:100, 1)`$.
+* $\sigma^2 \geq `r sample(1:100, 1)`$.
+* $\sigma^2 \leq `r sample(1:100, 1)`$.
+* $\sigma^2 = `r sample(1:100, 1)`$.
+* $\mu > `r sample(-100:100, 1)`$.
+* $\mu < `r sample(-100:100, 1)`$.
+* $\mu \neq `r sample(-100:100, 1)`$.
+* $\theta > `r sample(-100:100, 1)`$.
+* $\theta < `r sample(-100:100, 1)`$.
+* $\theta \neq `r sample(-100:100, 1)`$.
+* $\sigma > `r sample(1:100, 1)`$.
+* $\sigma < `r sample(1:100, 1)`$.
+* $\sigma \neq `r sample(1:100, 1)`$.
+* $\sigma^2 > `r sample(1:100, 1)`$.
+* $\sigma^2 < `r sample(1:100, 1)`$.
+* $\sigma^2 \neq `r sample(1:100, 1)`$.
+* $\mu_1 = \mu_2$
+* $\mu_1 \geq \mu_2$
+* $\mu_1 \leq \mu_2$
+* $\mu_1 \neq \mu_2$
+* $\mu_1 > \mu_2$
+* $\mu_1 < \mu_2$
+* $\mu_1 - \mu_2 = `r sample(-100:100, 1)`$
+* $\mu_1 - \mu_2 \geq `r sample(-100:100, 1)`$
+* $\mu_1 - \mu_2 \leq `r sample(-100:100, 1)`$
+* $\mu_1 - \mu_2 \neq `r sample(-100:100, 1)`$
+* $\mu_1 - \mu_2 > `r sample(-100:100, 1)`$
+* $\mu_1 - \mu_2 < `r sample(-100:100, 1)`$
+* $\theta_1 = \theta_2$
+* $\theta_1 \geq \theta_2$
+* $\theta_1 \leq \theta_2$
+* $\theta_1 \neq \theta_2$
+* $\theta_1 > \theta_2$
+* $\theta_1 < \theta_2$
+* $\theta_1 - \theta_2 = `r sample(-100:100, 1)`$
+* $\theta_1 - \theta_2 \geq `r sample(-100:100, 1)`$
+* $\theta_1 - \theta_2 \leq `r sample(-100:100, 1)`$
+* $\theta_1 - \theta_2 \neq `r sample(-100:100, 1)`$
+* $\theta_1 - \theta_2 > `r sample(-100:100, 1)`$
+* $\theta_1 - \theta_2 < `r sample(-100:100, 1)`$
+* $\sigma_1 = \sigma_2$
+* $\sigma_1 \geq \sigma_2$
+* $\sigma_1 \leq \sigma_2$
+* $\sigma_1 \neq \sigma_2$
+* $\sigma_1 > \sigma_2$
+* $\sigma_1 < \sigma_2$
+* $\sigma_1 - \sigma_2 = `r sample(-100:100, 1)`$
+* $\sigma_1 - \sigma_2 \geq `r sample(-100:100, 1)`$
+* $\sigma_1 - \sigma_2 \leq `r sample(-100:100, 1)`$
+* $\sigma_1 - \sigma_2 \neq `r sample(-100:100, 1)`$
+* $\sigma_1 - \sigma_2 > `r sample(-100:100, 1)`$
+* $\sigma_1 - \sigma_2 < `r sample(-100:100, 1)`$
+* $\sigma_1^2 = \sigma_2^2$
+* $\sigma_1^2 \geq \sigma_2^2$
+* $\sigma_1^2 \leq \sigma_2^2$
+* $\sigma_1^2 \neq \sigma_2^2$
+* $\sigma_1^2 > \sigma_2^2$
+* $\sigma_1^2 < \sigma_2^2$
+* $\sigma_1^2 - \sigma_2^2 = `r sample(-100:100, 1)`$
+* $\sigma_1^2 - \sigma_2^2 \geq `r sample(-100:100, 1)`$
+* $\sigma_1^2 - \sigma_2^2 \leq `r sample(-100:100, 1)`$
+* $\sigma_1^2 - \sigma_2^2 \neq `r sample(-100:100, 1)`$
+* $\sigma_1^2 - \sigma_2^2 > `r sample(-100:100, 1)`$
+* $\sigma_1^2 - \sigma_2^2 < `r sample(-100:100, 1)`$
+* $\overline{X} \geq `r sample(-100:100, 1)`$.
+* $\overline{X} \leq `r sample(-100:100, 1)`$.
+* $\overline{X} = `r sample(-100:100, 1)`$.
+* $X \geq `r sample(-100:100, 1)`$.
+* $X \leq `r sample(-100:100, 1)`$.
+* $X = `r sample(-100:100, 1)`$.
+* $S_X \geq `r sample(1:100, 1)`$.
+* $S_X \leq `r sample(1:100, 1)`$.
+* $S_X = `r sample(1:100, 1)`$.
+* $S_X^2 \geq `r sample(1:100, 1)`$.
+* $S_X^2 \leq `r sample(1:100, 1)`$.
+* $S_X^2 = `r sample(1:100, 1)`$.
+* $\overline{X} > `r sample(-100:100, 1)`$.
+* $\overline{X} < `r sample(-100:100, 1)`$.
+* $\overline{X} \neq `r sample(-100:100, 1)`$.
+* $X > `r sample(-100:100, 1)`$.
+* $X < `r sample(-100:100, 1)`$.
+* $X \neq `r sample(-100:100, 1)`$.
+* $S_X > `r sample(1:100, 1)`$.
+* $S_X < `r sample(1:100, 1)`$.
+* $S_X \neq `r sample(1:100, 1)`$.
+* $S_X^2 > `r sample(1:100, 1)`$.
+* $S_X^2 < `r sample(1:100, 1)`$.
+* $S_X^2 \neq `r sample(1:100, 1)`$.
+* $\overline{X} = \overline{Y}$
+* $\overline{X} \geq \overline{Y}$
+* $\overline{X} \leq \overline{Y}$
+* $\overline{X} \neq \overline{Y}$
+* $\overline{X} > \overline{Y}$
+* $\overline{X} < \overline{Y}$
+* $\overline{X} - \overline{Y} = `r sample(-100:100, 1)`$
+* $\overline{X} - \overline{Y} \geq `r sample(-100:100, 1)`$
+* $\overline{X} - \overline{Y} \leq `r sample(-100:100, 1)`$
+* $\overline{X} - \overline{Y} \neq `r sample(-100:100, 1)`$
+* $\overline{X} - \overline{Y} > `r sample(-100:100, 1)`$
+* $\overline{X} - \overline{Y} < `r sample(-100:100, 1)`$
+* $X = Y$
+* $X \geq Y$
+* $X \leq Y$
+* $X \neq Y$
+* $X > Y$
+* $X < Y$
+* $X - Y = `r sample(-100:100, 1)`$
+* $X - Y \geq `r sample(-100:100, 1)`$
+* $X - Y \leq `r sample(-100:100, 1)`$
+* $X - Y \neq `r sample(-100:100, 1)`$
+* $X - Y > `r sample(-100:100, 1)`$
+* $X - Y < `r sample(-100:100, 1)`$
+* $S_X = S_Y$
+* $S_X \geq S_Y$
+* $S_X \leq S_Y$
+* $S_X \neq S_Y$
+* $S_X > S_Y$
+* $S_X < S_Y$
+* $S_X - S_Y = `r sample(-100:100, 1)`$
+* $S_X - S_Y \geq `r sample(-100:100, 1)`$
+* $S_X - S_Y \leq `r sample(-100:100, 1)`$
+* $S_X - S_Y \neq `r sample(-100:100, 1)`$
+* $S_X - S_Y > `r sample(-100:100, 1)`$
+* $S_X - S_Y < `r sample(-100:100, 1)`$
+* $S_X^2 = S_Y^2$
+* $S_X^2 \geq S_Y^2$
+* $S_X^2 \leq S_Y^2$
+* $S_X^2 \neq S_Y^2$
+* $S_X^2 > S_Y^2$
+* $S_X^2 < S_Y^2$
+* $S_X^2 - S_Y^2 = `r sample(-100:100, 1)`$
+* $S_X^2 - S_Y^2 \geq `r sample(-100:100, 1)`$
+* $S_X^2 - S_Y^2 \leq `r sample(-100:100, 1)`$
+* $S_X^2 - S_Y^2 \neq `r sample(-100:100, 1)`$
+* $S_X^2 - S_Y^2 > `r sample(-100:100, 1)`$
+* $S_X^2 - S_Y^2 < `r sample(-100:100, 1)`$
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(sol)`
+exshuffle: 5
+exname: ValidStatisticalHypotheses

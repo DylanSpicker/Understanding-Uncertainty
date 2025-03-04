@@ -100,7 +100,7 @@ While the conditional expectation is used often, the conditional variance is les
 
 :::{.callout-tip icon="false"}
 ## The Law of Total Variance
-For any random variables $X$ and $Y$, we can write $$\text{var}(X) = E[\text{var}(X|Y)] + \text{var}(E[X|Y]).$$ This result can be viewed as decomposing the variance of a random quantity into two separate components, and comes up again in later statistics courses. At this point we can view this as a method for connecting the marginal distribution through the conditional variance nad expectation. 
+For any random variables $X$ and $Y$, we can write $$\text{var}(X) = E[\text{var}(X|Y)] + \text{var}(E[X|Y]).$$ This result can be viewed as decomposing the variance of a random quantity into two separate components, and comes up again in later statistics courses. At this point we can view this as a method for connecting the marginal distribution through the conditional variance and expectation. 
 :::
 
 

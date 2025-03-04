@@ -1,8 +1,30 @@
 ```{r data generation, echo = FALSE, results = "hide"}
+sc <- sample(1:3, 1)
+
+if(sc == 1) {
+    amt <- sample(5:25, 1)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 1, 8), 2)
+
+    qtext <- paste("A pharmaceutical company claims their new cholesterol-lowering medication reduces cholesterol levels by an average of at least", amt, "points. A clinical trial was conducted with", n, "patients to test this claim. For each patient, the researchers measured their amt in cholesterol level. The researchers found")
+} else if(sc == 2) {
+    amt <- round(runif(1, 15, 48), 2)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 1, 5), 2)
+
+    qtext <- paste("A phone manufacturer has designed a new model of phone. They wish to test whether their new phone has a battery life that exceeds that of their outgoing model. Their previous model has an average life of", format(amt, scientific=FALSE, digits=2), "hours. They randomly sample", n, "of the new model phones, testing the battery life, and find")
+} else if(sc == 3) {
+    amt <- sample(2000:15000, 1)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 50 * amt/2000, 100 * amt/2000), 2)
+
+    qtext <- paste("A lightbulb manufacturer comes up with a new design that they hope will lead to a longer-lasting lightbulb. Their existing design is rated for an average of", format(amt, scientific=FALSE, digits=2), "hours. To test the new design, the company samples", n, "of the new lightbulbs, testing their lifespan, and they find")
+}
+
 
 amt <- round(runif(1, 10, 14), 2)
 
-reduction <- sample(5:25, 1)
+amt <- sample(5:25, 1)
 n <- sample(35:100, 1)
 sd <- round(runif(1, 1, 8), 2)
 alpha <- round(runif(1, 0.01, 0.2), 2)
@@ -17,9 +39,9 @@ if(sample(c(0,1),1) == 0) {
     val <- runif(1, -1.5 * ans1, 0.9 * ans1)
 }
 
-mean <- round(val * sd/sqrt(n) + reduction, 1)
+mean <- round(val * sd/sqrt(n) + amt, 1)
 
-ans2 <- (mean - reduction)/(sd / sqrt(n))
+ans2 <- (mean - amt)/(sd / sqrt(n))
 ans3 <- c(ans2 >= ans1, ans2 < ans1)
 
 id <- sprintf("%010d", sample(0:1000000000, 1))
@@ -28,7 +50,8 @@ id <- sprintf("%010d", sample(0:1000000000, 1))
 
 Question
 ========
-A pharmaceutical company claims their new cholesterol-lowering medication reduces cholesterol levels by an average of at least `r reduction` points.  A clinical trial was conducted with `r n` patients to test this claim.  The sample mean reduction in cholesterol was `r mean` points, with a sample standard deviation of `r sd` points. Consider $\mu$ to be the average reduction in cholesterol level (such that higher values for $\mu$ represent larger reductions).
+
+`r qtext` a sample mean of `r format(mean, scientific=FALSE)` and a sample standard deviation of `r format(sd, scientific=FALSE)`.
 
 a. What is the critical value for the associated hypothesis test, at $\alpha = `r alpha`$?  ##ANSWER1##
 b. What is the relevant value of the test statistic for testing the null hypothesis? ##ANSWER2##

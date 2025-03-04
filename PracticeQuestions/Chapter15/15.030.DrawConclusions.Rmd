@@ -1,0 +1,60 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+tail_num <- sample(c("one-tailed", "two-tailed"), 1)
+conclusion <- sample(c("reject the null hypothesis", "fail to reject the null hypothesis"), 1)
+
+alphas <- sample(seq(0.005, 0.1, by = 0.005), 5, FALSE)
+
+
+if(conclusion == "reject the null hypothesis") {
+    reject <- sample(seq(0.0001, alphas[1] - 0.0001, by = 0.0001), 1)
+    ftr <- c(
+        2 * sample(seq(alphas[2] / 2 + 0.0001, alphas[2] - 0.0001, by = 0.0001), 1),
+        round(runif(1, alphas[3] + 0.0001, 0.49), 4),
+        round(runif(1, 0.5, 0.99), 4),
+        round(alphas[5] + runif(1, 0.0001, 0.001), 4)
+    )
+    
+    ps <- format(c(reject, ftr), scientific = FALSE, digits = 4)
+
+} else {
+    ftr <- c(
+        2 * sample(seq(alphas[1] / 2 + 0.0001, alphas[1] - 0.0001, by = 0.0001), 1),
+        round(runif(1, alphas[1] + 0.0001, 0.49), 4),
+        round(runif(1, 0.5, 0.99), 4),
+        round(alphas[1] + runif(1, 0.0001, 0.001), 4)
+    )
+    reject <- c(sample(seq(0.0001, alphas[2] - 0.0001, by = 0.0001), 1),
+                sample(seq(0.0001, alphas[3] - 0.0001, by = 0.0001), 1),
+                sample(seq(0.0001, alphas[4] - 0.0001, by = 0.0001), 1),
+                sample(seq(0.0001, alphas[5] - 0.0001, by = 0.0001), 1))
+
+    ps <- format(c(sample(ftr, 1), reject), scientific = FALSE, digits = 4)
+}
+
+answers <- paste0("$p=", ps, "$ and $\\alpha=", alphas, "$.")
+solutions <- c(TRUE, rep(FALSE, 4))
+
+order <- sample(1:5, 5, FALSE)
+
+answers <- answers[order]
+solutions <- solutions[order]
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+A statistical hypothesis test is run. It is a `r tail_num` test. For which of the following $p$-value / level of significance pairs would the researcher `r conclusion`? 
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(answers, markup = "markdown")
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(solutions, single = TRUE)`
+exname: HypothesisTestConclusions

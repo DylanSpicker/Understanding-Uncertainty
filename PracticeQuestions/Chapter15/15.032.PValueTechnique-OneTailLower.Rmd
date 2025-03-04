@@ -1,0 +1,91 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+sc <- sample(1:6, 1)
+
+if(sc == 1) {
+    amt <- round(runif(1, 10, 14), 2)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 0.05, 1.5), 2)
+
+    qtext <- paste("A coffee shop chain claims that their average cup of coffee contains", format(amt, scientific=FALSE, digits=2), "ounces of coffee. A consumer advocacy group suspects that the actual average amount is less than", format(amt, scientific=FALSE, digits=2), "ounces. They randomly sample", n, "cups of coffee from various locations and find")
+
+} else if (sc == 2) {
+    amt <- round(runif(1, 15, 48), 2)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 1, 5), 2)
+
+    qtext <- paste("A phone manufacturer claims that their phone batteries last for an average of", format(amt, scientific=FALSE, digits=2), "hours. A tech YouTuber suspects that this is an overstatement, and wish to use statistical techniques to demonstrate their claim. They purchase", n, "phones, testing the battery life, and find")
+} else if (sc == 3) {
+    amt <- round(runif(1, 75, 500), 2)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, amt/6, amt/2), 2)
+
+    qtext <- paste("A cloud server host is contractually obligated to maintain a server load time of no more than", format(amt, scientific=FALSE, digits=2), "milliseconds. A data analyst working with quality assurance is responsible for providing statistical evidence as to whether this is achieved. They randomly sample", n, "page visits, recording the load time for each, and find")
+} else if (sc == 4) {
+    amt <- round(runif(1, 3, 15), 2)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 0.5 * amt/3, amt/3), 2)
+
+    qtext <- paste("A vehicle manufacturer claims that their vehicles achieve an average fuel efficiency of", format(amt, scientific=FALSE, digits=2), "L/100km. A consumer magazine suspects that this is being overestimated. They randomly sample", n, "of these vehicles, and record the fuel efficiency of each, finding")
+} else if (sc == 5) {
+    amt <- sample(2000:15000, 1)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 50 * amt/2000, 100 * amt/2000), 2)
+
+    qtext <- paste("A lightbulb manufacturer comes up with a new design that they hope will lead to a longer-lasting lightbulb. Their existing design is rated for an average of", format(amt, scientific=FALSE, digits=2), "hours. To test the new design, the company samples", n, "of the new lightbulbs, testing their lifespan, and they find")
+}  else if (sc == 6) {
+    amt <- round(runif(1, 140, 180), 2)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 5, 15), 2)
+
+    qtext <- paste("A new drug is developed to lower the blood pressure of members of a particular population. The population average is", format(amt, scientific=FALSE, digits=2), ". To test its efficacy, researchers take a sample of", n, "individuals from the population, prescribe them the medication, and then monitor their blood pressure. Doing this they find")
+}
+
+
+alpha <- round(runif(1, 0.01, 0.2), 2)
+crit <- qt(alpha, df = n-1)
+
+
+if(sample(c(0,1),1) == 0) {
+    # Reject
+    val <- runif(1,  2 * crit, 1.1 * crit)
+} else {
+    # Fail to Reject
+    val <- runif(1, 0.9 * crit, -1.5 * crit)
+}
+
+mean <- round(val * sd/sqrt(n) + amt, 2)
+
+ans1 <- (mean - amt)/(sd / sqrt(n))
+ans2 <- pt(ans1, df = n-1)
+ans3 <- c(ans2 <= alpha, ans2 > alpha)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r qtext` a sample mean of `r format(mean, scientific=FALSE)` and a sample standard deviation of `r format(sd, scientific=FALSE)`.
+
+a. What is the relevant value of the test statistic for testing the null hypothesis? ##ANSWER1##
+a. What is the $p$-value calculated when running this hypothesis test? ##ANSWER2##
+c. What is the conclusion from the hypothesis test, if $\alpha = `r alpha`$? 
+
+##ANSWER3##
+
+Question ID: *`r id`*
+
+Answerlist
+------------
+* Based on the results, we can reject the null hypothesis.
+* Based on the results, we fail to reject the null hypothesis. 
+
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r mchoice2string(ans3)`
+exclozetype: num|num|schoice
+exname: CriticalValueTes
+extol: 0.01

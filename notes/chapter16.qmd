@@ -107,7 +107,7 @@ Once the sample of differences is formed, the problem of interval estimation or 
 To estimate the difference of two population means, $\mu_X - \mu_Y$, from populations that are paired with one another, we can form confidence $Z$- or $t$-based confidence intervals, depending on whether the variances are known or not. First, we find the paired differences, $D_i = X_i - Y_i$, and then consider the sample $D_1, \dots, D_n$ as a single sample. The variance of $D_i$ is given by $$\text{var}(D_i) = \sigma_D^2 = \sigma_X^2 + \sigma^2 - 2\sigma_{XY}.$$
 
 1. If $\sigma_D^2$ is known, take $$\overline{D} \pm Z_{\alpha/2}\frac{\sigma_D}{\sqrt{n}}.$$
-2. If $\sigma_D^2$ is unknown, take $$\overline{D} \pm t_{n-1, \alpha/2}\frac{S_D^2}{\sqrt{n}}.$$ 
+2. If $\sigma_D^2$ is unknown, take $$\overline{D} \pm t_{n-1, \alpha/2}\frac{S_D}{\sqrt{n}}.$$ 
 :::
 
 :::{.callout-tip icon="false"}
