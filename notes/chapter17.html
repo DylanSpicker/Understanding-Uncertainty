@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9e10166b8cbf4a4130f8224f3febb104.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-932f868ca5e0934f5300a6a88d9b9529.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -932,7 +932,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#the-mann-whitney-u-test" id="toc-the-mann-whitney-u-test" class="nav-link" data-scroll-target="#the-mann-whitney-u-test"><span class="header-section-number">17.4</span> The Mann-Whitney <span class="math inline">\(U\)</span>-Test</a>
   <ul class="collapse">
-  <li><a href="#the-mann-whitney-u-test-for-location-shift-distributions" id="toc-the-mann-whitney-u-test-for-location-shift-distributions" class="nav-link" data-scroll-target="#the-mann-whitney-u-test-for-location-shift-distributions"><span class="header-section-number">17.4.1</span> The Mann-Whitney <span class="math inline">\(U\)</span>-Test for Location Shift Distributions</a></li>
+  <li><a href="#correction-for-ties" id="toc-correction-for-ties" class="nav-link" data-scroll-target="#correction-for-ties"><span class="header-section-number">17.4.1</span> Correction for Ties</a></li>
+  <li><a href="#the-mann-whitney-u-test-for-location-shift-distributions" id="toc-the-mann-whitney-u-test-for-location-shift-distributions" class="nav-link" data-scroll-target="#the-mann-whitney-u-test-for-location-shift-distributions"><span class="header-section-number">17.4.2</span> The Mann-Whitney <span class="math inline">\(U\)</span>-Test for Location Shift Distributions</a></li>
   </ul></li>
   <li><a href="#the-wilcoxon-signed-rank-test-for-paired-data" id="toc-the-wilcoxon-signed-rank-test-for-paired-data" class="nav-link" data-scroll-target="#the-wilcoxon-signed-rank-test-for-paired-data"><span class="header-section-number">17.5</span> The Wilcoxon Signed-Rank Test (for Paired Data)</a>
   <ul class="collapse">
@@ -1203,10 +1204,31 @@ Formality Under the Alternative
 <p>In order for the <span class="math inline">\(U\)</span>-test to give consistent,<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> accurate results, then a further assumption is required under the alternative hypothesis. Namely, it must be the case that <span class="math inline">\(P(X &gt; Y) \neq P(Y &gt; X)\)</span> if the <strong>alternative hypothesis</strong> holds. Thus, if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> both have symmetric distributions, centered on the same value, then the <span class="math inline">\(U\)</span>-test will not reliably conclude that the distributions are different, even when sample sizes grow indefinitely. This is a fairly technical consideration, but it is important when applying the <span class="math inline">\(U\)</span>-test in practice. If you suspect that the two distributions are symmetric, and centered on the same value, the hypothesis test is no longer correctly regarded as testing <span class="math inline">\(F_X = F_Y\)</span>. To do so, alternative test procedures would be required.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 </div>
 </div>
-<section id="the-mann-whitney-u-test-for-location-shift-distributions" class="level3" data-number="17.4.1">
-<h3 data-number="17.4.1" class="anchored" data-anchor-id="the-mann-whitney-u-test-for-location-shift-distributions"><span class="header-section-number">17.4.1</span> The Mann-Whitney <span class="math inline">\(U\)</span>-Test for Location Shift Distributions</h3>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Direct Calculation of the <span class="math inline">\(U\)</span> statistic
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While the formal procedure for computing the <span class="math inline">\(U\)</span> statistic gives rise to an easier theoretical analysis of the test statistic, there is a more practically applicable procedure for computing the statistic. The <strong>direct method</strong> for calculation circumvents the need to directly rank the data, or keep track of which observations came from which samples.</p>
+<p>Instead, to compute <span class="math inline">\(U\)</span>, we first consider one of the samples, point-by-point. For each point in the sample, we count the number of observations from the second sample that are smaller than the presently considered point. If there are any ties, we count these as <span class="math inline">\(0.5\)</span>. We do this for every point, in turn, summing up the total results. The resulting sum is denoted <span class="math inline">\(U'\)</span>. Then, to find <span class="math inline">\(U\)</span>, we take <span class="math display">\[U = \min\{U', nm-U'\}.\]</span></p>
+<p>Suppose, for instance, that we observe <span class="math inline">\(\{4, 21, 32, 64\}\)</span> as the first sample, and <span class="math inline">\(\{32, 31, 44, 45, 15,36\}\)</span> as the second sample. To find <span class="math inline">\(U'\)</span>, we first consider the first sample. We start with <span class="math inline">\(4\)</span>, and note that there are <span class="math inline">\(0\)</span> points in the second sample smaller than <span class="math inline">\(4\)</span>. We then consider <span class="math inline">\(21\)</span>, and note that there is exactly <span class="math inline">\(1\)</span> point (<span class="math inline">\(15\)</span>) in the second sample smaller than <span class="math inline">\(21\)</span>. We then take <span class="math inline">\(32\)</span> and note that there are <span class="math inline">\(2\)</span> points that are smaller than <span class="math inline">\(32\)</span> (<span class="math inline">\(31\)</span> and <span class="math inline">\(15\)</span>) and <span class="math inline">\(1\)</span> point equal to <span class="math inline">\(32\)</span>, giving a total of <span class="math inline">\(2.5\)</span>. Finally, for <span class="math inline">\(64\)</span>, we note that all <span class="math inline">\(6\)</span> points are smaller than <span class="math inline">\(64\)</span>. Thus, <span class="math inline">\(U' = 0 + 1 + 2.5 + 6 = 9.5\)</span>. This gives <span class="math inline">\(U = \min\{9.5, 24-9.5\} = 9.5\)</span>.</p>
+</div>
+</div>
+<section id="correction-for-ties" class="level3" data-number="17.4.1">
+<h3 data-number="17.4.1" class="anchored" data-anchor-id="correction-for-ties"><span class="header-section-number">17.4.1</span> Correction for Ties</h3>
+<p>When the data have a substantial number of observations that are tied in rank, just as in the signed-rank test, the null distribution is no longer represented by a Wilcoxon rank-sum distribution. Because of the altered null distribution, it is typically preferable - in the presence of many ties - to use the normal approximation. However, when the number of ties is large, the variance of the approximate normal distribution should be modified to better capture the impact of the tied observations. Specifically, if there are many ties, the variance will be <em>overestimated</em> relative to what it should be, leading to a less powerful test.</p>
+<p>Suppose that there are <span class="math inline">\(k\)</span> unique data points observed. For each of the these points, enumerated from <span class="math inline">\(1\)</span> to <span class="math inline">\(k\)</span>, we can label the total number of observations of that value, between both samples, as <span class="math inline">\(t_i\)</span>. Then we must have that <span class="math inline">\(n + m = \sum_{i=1}^{k} t_i\)</span>. For any <span class="math inline">\(t_i \neq 1\)</span>, there are multiple points tied with the given value. Using this notation, we define <span class="math display">\[\sigma_U^2 = \frac{nm(n+m+1)}{12} - \frac{nm\sum_{i=1}^k (t_i^3 - t_i)}{12(n+m)(n+m-1)}.\]</span> Notice that, if <span class="math inline">\(t_i = 1\)</span> for all <span class="math inline">\(i=1,\dots,k\)</span>, then <span class="math inline">\(t_i^3 - t_i = 0\)</span>, and as a result, <span class="math inline">\(\sigma_U^2\)</span> equals the previously established variance term for <span class="math inline">\(U\)</span>. However, if <span class="math inline">\(t_i \neq 1\)</span> for any <span class="math inline">\(i=1,\dots,k\)</span>, then <span class="math inline">\(t_i^3 - t_i &gt; 0\)</span>, and as a result, <span class="math inline">\(\sigma_U^2\)</span> will be strictly less than the previously established variance term.</p>
+<p>The normal approximation for <span class="math inline">\(U\)</span> can then be stated as <span class="math inline">\(U \stackrel{H_0}{\sim} N(\dfrac{nm}{2}, \sigma_U^2)\)</span>. To compute an approximate <span class="math inline">\(p\)</span>-value, based on an observed <span class="math inline">\(U=u\)</span>, we can then take <span class="math display">\[p \approx 2\Phi\left(-\frac{|u - nm/2|}{\sigma_U}\right).\]</span> When there are not many ties, this should be approximately equal to the previously established approximation. However, when there are many ties, this can change substantially from the approximation without the correction for ties.</p>
+</section>
+<section id="the-mann-whitney-u-test-for-location-shift-distributions" class="level3" data-number="17.4.2">
+<h3 data-number="17.4.2" class="anchored" data-anchor-id="the-mann-whitney-u-test-for-location-shift-distributions"><span class="header-section-number">17.4.2</span> The Mann-Whitney <span class="math inline">\(U\)</span>-Test for Location Shift Distributions</h3>
 <p>Because the null hypothesis is that the two distributions are equivalent, it is possible to reject the null hypothesis when the location of the two samples is equivalent. This is because two distributions that share a location are not necessarily equivalent. Consider, for instance, the <span class="math inline">\(N(0,1)\)</span> and <span class="math inline">\(t_3\)</span> distributions. Both have a location of <span class="math inline">\(0\)</span>, but otherwise behave quite differently. This is a desirable property of the <span class="math inline">\(U\)</span>-test, that makes it broadly applicable. However, on occasion it may be desirable to test whether <span class="math inline">\(\mu_X = \mu_Y\)</span>, or more broadly, <span class="math inline">\(H_0: \mu_X - \mu_Y = \Delta_0\)</span>, for some fixed constant. The <span class="math inline">\(U\)</span>-test can be extended to this setting, under <strong>stricter assumptions</strong> regarding the null and alternative distributions.</p>
-<p>Namely, if it is assumed that <span class="math inline">\(F_X(x) = F_Y(y + \delta)\)</span>, for some value <span class="math inline">\(\delta\)</span>, then we are in effect saying that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have equivalent distributions, except they are shifted away from one another by <span class="math inline">\(\delta\)</span>. In this context, testing whether <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Y\)</span> are equivalent is the same as testing whether <span class="math inline">\(\delta = 0\)</span>, or alternatively, whether <span class="math inline">\(\mu_X = \mu_Y\)</span>. Thus, if we are willing to assume that it is impossible for the distributions of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> to differ, except in location, then the <span class="math inline">\(U\)</span>-test becomes a test about the equality of those locations. Note that it is not possible to test the assumption that the distributions are otherwise equivalent, and as a result, using the <span class="math inline">\(U\)</span>-test in this way is only valid when this assumption is justified via subject-matter arguments.</p>
+<p>Namely, if it is assumed that <span class="math inline">\(F_X(x) = F_Y(x + \delta)\)</span>, for some value <span class="math inline">\(\delta\)</span>, then we are in effect saying that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have equivalent distributions, except they are shifted away from one another by <span class="math inline">\(\delta\)</span>. In this context, testing whether <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Y\)</span> are equivalent is the same as testing whether <span class="math inline">\(\delta = 0\)</span>, or alternatively, whether <span class="math inline">\(\mu_X = \mu_Y\)</span>. Thus, if we are willing to assume that it is impossible for the distributions of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> to differ, except in location, then the <span class="math inline">\(U\)</span>-test becomes a test about the equality of those locations. Note that it is not possible to test the assumption that the distributions are otherwise equivalent, and as a result, using the <span class="math inline">\(U\)</span>-test in this way is only valid when this assumption is justified via subject-matter arguments.</p>
 <p>When this assumption is made, in order to test <span class="math inline">\(H_0: \mu_X - \mu_Y = \Delta_0\)</span>, the <span class="math inline">\(U\)</span>-test can be directly applied to <span class="math inline">\(X_1,\dots,X_n\)</span> for the first sample, and <span class="math inline">\(Y_1 + \Delta_0, \dots, Y_n + \Delta_0\)</span> for the second. Note that if the null hypothesis holds, then <span class="math inline">\(\mu_X = \mu_Y + \Delta_0\)</span>, and so <span class="math inline">\(Y + \Delta_0\)</span> will have location <span class="math inline">\(\mu_X\)</span>. Then testing <span class="math inline">\(F_X = F_{Y+\Delta_0}\)</span> is equivalent to testing whether their locations are equal.</p>
 </section>
 </section>
@@ -1229,8 +1251,8 @@ Wilcoxon Signed-Rank Tests for Paired Populations (Without Ties)
 <p>Further, suppose that the paired differences are such that the absolute values of all differences are unique. Then the Wilcoxon Signed-Rank test can be used to test <span class="math inline">\(H_0: \mu_D = 0\)</span> versus <span class="math inline">\(H_0: \mu_D \neq 0\)</span>, or the one-tailed alternatives, where <span class="math inline">\(\mu_D = \mu_X - \mu_Y\)</span> is the difference in population locations. To do so, the <strong>signed-rank sum</strong> test statistic is computed, <span class="math display">\[T = \sum_{i=1}^n \text{sgn}(D_i)R_i,\]</span> where <span class="math inline">\(R_i\)</span> is the rank order (smallest to largest) of <span class="math inline">\(|D_i|\)</span>.</p>
 <p>Under the null hypothesis, <span class="math inline">\(T\)</span> follows a signed-rank distribution with size parameter <span class="math inline">\(n\)</span>. Taking <span class="math inline">\(T = t\)</span> based on the observed sample, the <span class="math inline">\(p\)</span>-value can be computed as:</p>
 <ol type="1">
-<li>If <span class="math inline">\(H_0: \mu_D = 0\)</span> versus <span class="math inline">\(H_A: \mu_D \neq 0\)</span>, then <span class="math display">\[p = F_n(-|t|) + 1 - F_n(|t|) \approx 2\Phi\left(-|t|/\sqrt{n(n+1)(2n+1)/6}\right).\]</span></li>
-<li>If <span class="math inline">\(H_0: \mu_D \leq 0\)</span> versus <span class="math inline">\(H_A: \mu_D &gt; 0\)</span>, then <span class="math display">\[p = 1 - F_n(t) \approx 1 - \Phi\left(t/\sqrt{n(n+1)(2n+1)/6}\right).\]</span></li>
+<li>If <span class="math inline">\(H_0: \mu_D = 0\)</span> versus <span class="math inline">\(H_A: \mu_D \neq 0\)</span>, then <span class="math display">\[p = F_n(-|t|) + 1 - F_n(|t|-1) \approx 2\Phi\left(-|t|/\sqrt{n(n+1)(2n+1)/6}\right).\]</span></li>
+<li>If <span class="math inline">\(H_0: \mu_D \leq 0\)</span> versus <span class="math inline">\(H_A: \mu_D &gt; 0\)</span>, then <span class="math display">\[p = 1 - F_n(t-1) \approx 1 - \Phi\left(t/\sqrt{n(n+1)(2n+1)/6}\right).\]</span></li>
 <li>If <span class="math inline">\(H_0: \mu_D \geq 0\)</span> versus <span class="math inline">\(H_A: \mu_D &lt; 0\)</span>, then <span class="math display">\[p = F_n(t) \approx \Phi\left(t/\sqrt{n(n+1)(2n+1)/6}\right).\]</span></li>
 </ol>
 </div>
@@ -1447,6 +1469,30 @@ wilcox.test(x = X, y = Z, paired = TRUE)`,
 <li>Using the random tie-breaking procedure, assess whether there is a change in sleep quality observed by taking the sleep aid.</li>
 <li>Repeat the procedure in part (a). Are your results the same or different?</li>
 </ol>
+</div>
+<div id="calculator-holder">
+<div id="qwebr-insertion-location-2"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-2");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    2
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `## Enter your calculations here`, 
+  2);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div id="calculator-holder-btn">
+<p><i class="bi bi-calculator"></i></p>
 </div>
 
 
@@ -1896,6 +1942,47 @@ window.onload = function() {
 
   update_total_correct();
 }
+
+</script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const calculatorButton = document.getElementById('calculator-holder-btn');
+
+    const calculatorHolder = document.getElementById('calculator-holder');
+
+  
+
+    if (calculatorButton && calculatorHolder) {
+
+      let isVisible = false;
+
+  
+
+      calculatorButton.addEventListener('click', function() {
+
+        if (isVisible) {
+
+          calculatorHolder.style.bottom = '-100%';
+
+          calculatorButton.innerHTML = '<i class="bi bi-calculator"></i>';
+
+        } else {
+
+          calculatorHolder.style.bottom = '0';
+
+          calculatorButton.innerHTML = '<i class="bi bi-x-lg"></i>';
+
+        }
+
+        isVisible = !isVisible;
+
+      });
+
+    }
+
+  });
 
 </script>
 <script id="quarto-html-after-body" type="application/javascript">

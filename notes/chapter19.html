@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9e10166b8cbf4a4130f8224f3febb104.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-932f868ca5e0934f5300a6a88d9b9529.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -3078,6 +3078,30 @@ predict(mlr.1, newdata = data.frame(
 <li>Suppose that it is determined that the sample covariance between temperature and slope is <span class="math inline">\(19157.32\)</span>, that the sample variance of <span class="math inline">\(x\)</span> is <span class="math inline">\(12666.67\)</span>, and that the sample means of temperature and pressure are <span class="math inline">\(180\)</span> and <span class="math inline">\(124.3367\)</span>, respectively. Write down the estimated ordinary least squares equation.</li>
 </ol>
 </div>
+<div id="calculator-holder">
+<div id="qwebr-insertion-location-2"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-2");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    2
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `## Enter your calculations here`, 
+  2);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div id="calculator-holder-btn">
+<p><i class="bi bi-calculator"></i></p>
+</div>
 
 
 </section>
@@ -3534,6 +3558,47 @@ window.onload = function() {
 
   update_total_correct();
 }
+
+</script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const calculatorButton = document.getElementById('calculator-holder-btn');
+
+    const calculatorHolder = document.getElementById('calculator-holder');
+
+  
+
+    if (calculatorButton && calculatorHolder) {
+
+      let isVisible = false;
+
+  
+
+      calculatorButton.addEventListener('click', function() {
+
+        if (isVisible) {
+
+          calculatorHolder.style.bottom = '-100%';
+
+          calculatorButton.innerHTML = '<i class="bi bi-calculator"></i>';
+
+        } else {
+
+          calculatorHolder.style.bottom = '0';
+
+          calculatorButton.innerHTML = '<i class="bi bi-x-lg"></i>';
+
+        }
+
+        isVisible = !isVisible;
+
+      });
+
+    }
+
+  });
 
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
