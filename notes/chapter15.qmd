@@ -876,7 +876,7 @@ set.seed(31415)
 #| cache: true
 exams2forms("15.030.ValidHypotheses.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -889,7 +889,7 @@ exams2forms("15.030.ValidHypotheses.Rmd",
 #| cache: true
 exams2forms("15.030.NullAlternativeFormat.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -903,7 +903,7 @@ exams2forms("15.030.NullAlternativeFormat.Rmd",
 
 exams2forms("15.030.DrawConclusions.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -916,7 +916,7 @@ exams2forms("15.030.DrawConclusions.Rmd",
 #| cache: true
 exams2forms("15.032.PValueTechnique-TwoTail.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -929,7 +929,7 @@ exams2forms("15.032.PValueTechnique-TwoTail.Rmd",
 #| cache: true
 exams2forms("15.032.PValueTechnique-OneTailLower.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -942,7 +942,7 @@ exams2forms("15.032.PValueTechnique-OneTailLower.Rmd",
 #| cache: true
 exams2forms("15.032.PValueTechnique-OneTailUpper.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -956,7 +956,7 @@ exams2forms("15.032.PValueTechnique-OneTailUpper.Rmd",
 #| cache: true
 exams2forms("15.033.CriticalValueTechnique-TwoTail.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -969,7 +969,7 @@ exams2forms("15.033.CriticalValueTechnique-TwoTail.Rmd",
 #| cache: true
 exams2forms("15.033.CriticalValueTechnique-OneTailLower.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -982,7 +982,7 @@ exams2forms("15.033.CriticalValueTechnique-OneTailLower.Rmd",
 #| cache: true
 exams2forms("15.033.CriticalValueTechnique-OneTailUpper.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -996,7 +996,7 @@ exams2forms("15.033.CriticalValueTechnique-OneTailUpper.Rmd",
 #| cache: true
 exams2forms("15.038.Proportions-CriticalValue.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -1010,7 +1010,7 @@ exams2forms("15.038.Proportions-CriticalValue.Rmd",
 #| cache: true
 exams2forms("15.038.Proportions-PValue.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -1036,7 +1036,7 @@ exams2forms("15.034.TypeIandTypeIIErrors-schoice.Rmd",
 #| cache: true
 exams2forms("15.039.PowerCalculations-Z-test.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -1047,12 +1047,9 @@ exams2forms("15.039.PowerCalculations-Z-test.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.042.PValueConversions.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50)
+exams2forms("15.042.PValueConversions.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50, cloze_schoice_display = "buttons")
 ```
 :::
 
 :::
 
-::: {.content-visible when-format='html'}
-{{< include /calculator.qmd >}}
-:::

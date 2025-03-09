@@ -270,7 +270,7 @@ set.seed(31415)
 #| cache: true
 exams2forms("16.A.TwoSampleZTest.Rmd", 
             edir = "../PracticeQuestions/Chapter16", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -283,7 +283,7 @@ exams2forms("16.A.TwoSampleZTest.Rmd",
 #| cache: true
 exams2forms("16.B.TwoSampleTTest.Rmd", 
             edir = "../PracticeQuestions/Chapter16", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -296,7 +296,7 @@ exams2forms("16.B.TwoSampleTTest.Rmd",
 #| cache: true
 exams2forms("16.C.TwoSampleNormalVariances.Rmd", 
             edir = "../PracticeQuestions/Chapter16", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -309,7 +309,7 @@ exams2forms("16.C.TwoSampleNormalVariances.Rmd",
 #| cache: true
 exams2forms("16.E.PooledVariance.Rmd", 
             edir = "../PracticeQuestions/Chapter16", 
-            n = 100)
+            n = 100, cloze_schoice_display = "buttons")
 ```
 :::
 
