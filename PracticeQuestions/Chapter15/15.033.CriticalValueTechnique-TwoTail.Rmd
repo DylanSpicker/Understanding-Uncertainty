@@ -1,8 +1,48 @@
 ```{r data generation, echo = FALSE, results = "hide"}
 
-avg <- sample(40:180, 1)
-n <- sample(35:100, 1)
-sd <- round(runif(1, 3, 25), 2)
+set.seed(31415)
+
+sc <- sample(1:6, 1)
+
+if(sc == 1) {
+    amt <- sample(40:180, 1)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 3, 25), 2)
+
+    qtext <- paste("A biologist is studying the average lifespan of a particular species of beetle. Based on previous research, the average lifespan of these beetles is known to be", amt, "days. The biologist suspects that environmental changes in a specific region might be affecting the beetles' lifespan. They observe a sample of", n, "beetles from the specific region, measuring the lifepsan of these sampled beetles. They find")
+} else if(sc == 2) {
+    amt <- round(runif(1, 0.25, 0.75), 4)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 0.05, 0.1), 4)
+
+    qtext <- paste("A reasearcher is studying the impact of a particular drug on human reaction times. They know that the average reaction time for subjects without the drug in the task is", format(amt, scientific=FALSE, digits=4), "seconds. The researchers randomly sample", n, "individuals, providing them the drug, and measure their reaction times. They find")
+} else if(sc == 3) {
+    amt <- sample(400:600, 1)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 5, 10), 2)
+
+    qtext <- paste("A factory that fills food containers has a process that is meant to fill individual boxes to", amt, "g. To ensure that the process has not resulted in faulty calibration, they company randomly samples", n, "boxes, weighing them. They find")
+} else if (sc == 4) {
+    amt <- round(runif(1, 140, 180), 2)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 5, 15), 2)
+
+    qtext <- paste("A medical researcher is interested in understanding if a particular diet has an impact on individual blood pressure. In the population they know the average blood pressure is", format(amt, scientific=FALSE), ". To understand the impact of the diet, they randomly select", n, "individuals, and have them change their diet. Following up, the research records each individual's blood pressure. They find")
+} else if (sc == 5) {
+    amt <- sample(140:160, 1)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 2, 5), 2)
+
+    qtext <- paste("A large chain coffee shop claims that their lattes have", amt, "mg of caffeine. A researcher, who stops to grab a latte from this chain each morning, is curious as to whether this claim is accurate. As a result, they purchase a sample of ", n, "lattes, randomly from various locations, and bring them to a lab to measure the caffeine content. Doing this they find")
+   
+} else if (sc == 6) {
+    amt <- sample(70:80, 1)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 5, 10), 2)
+
+    qtext <- paste("A teacher is investigating the impact of a new teaching method for their students. Historically, the standardized test used to assess the students has had students scoring an average of ", amt, ". To test the new method, they randomly sample", n, "students to be given the new teaching method. They record the standardized test scores for each individual. They find")
+}
+
 alpha <- round(runif(1, 0.01, 0.2), 2)
 
 ans1 <- qt(1-alpha/2, df = n-1)
@@ -15,9 +55,9 @@ if(sample(c(0,1),1) == 0) {
     val <- sample(c(-1, 1), 1) * runif(1, 0.2 * ans1, 0.85 * ans1)
 }
 
-mean <- round(val * sd/sqrt(n) + avg,1)
+mean <- round(val * sd/sqrt(n) + amt,1)
 
-ans2 <- (mean - avg)/(sd / sqrt(n))
+ans2 <- (mean - amt)/(sd / sqrt(n))
 ans3 <- c(abs(ans2) >= ans1, abs(ans2) < ans1)
 
 id <- sprintf("%010d", sample(0:1000000000, 1))
@@ -26,7 +66,9 @@ id <- sprintf("%010d", sample(0:1000000000, 1))
 
 Question
 ========
-A biologist is studying the average lifespan of a particular species of beetle. Based on previous research, the average lifespan of these beetles is known to be `r avg` days. The biologist suspects that environmental changes in a specific region might be affecting the beetles' lifespan. They observe a sample of `r n` beetles from the specific region, finding an average life span of `r mean` days with a standard deviation of `r sd` days. 
+
+`r qtext` a sample mean of `r format(mean, scientific=FALSE)` and a sample standard deviation of `r format(sd, scientific=FALSE)`.
+
 
 a. What is the **magnitude** of the critical value for the associated hypothesis test, at $\alpha = `r alpha`$?  ##ANSWER1##
 b. What is the relevant value of the test statistic for testing the null hypothesis? ##ANSWER2##

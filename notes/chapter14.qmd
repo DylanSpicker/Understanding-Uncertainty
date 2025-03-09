@@ -636,3 +636,7 @@ Wire electrical-discharge machining (WEDM) is a process used to manufacture cond
 :::{#exr-14.35}
 Suppose that a group of researchers decides to estimate the interval for a population proportion by taking $\widehat{p} \pm \frac{1}{n}$. If the sample size is large enough to use the normal approximation, what is the approximate coverage probability of this interval?
 :::
+
+::: {.content-visible when-format='html'}
+{{< include /calculator.qmd >}}
+:::

@@ -700,4 +700,6 @@ b. What is the approximate probability that the sample mean is within $36$ grams
 :::
 
 
-
+::: {.content-visible when-format='html'}
+{{< include /calculator.qmd >}}
+:::

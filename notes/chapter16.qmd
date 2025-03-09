@@ -239,3 +239,82 @@ In order to determine whether to pitch a new advertising campaign more toward me
 :::{#exr-16.19}
 Two groups $A$ and $B$, each consisting of $100$ people who have a disease, are enrolled in a trial to test the efficacy of a newly developed serum. Group $A$ receives the serum, and group $B$ receives a fake treatment, known as a placebo. It is found that in group $A$ and $B$ there were $75$ and $65$ people who recovered from the disease, respectively. Test the hypothesis that the serum is effective for treatment of the disease. Draw a conclusion as to whether the serum should be used.
 :::
+
+
+::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+
+:::{#sa-16.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("16.A.TwoSampleZTest.Rmd", 
+            edir = "../PracticeQuestions/Chapter16", 
+            n = 100)
+```
+:::
+
+:::{#sa-16.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("16.B.TwoSampleTTest.Rmd", 
+            edir = "../PracticeQuestions/Chapter16", 
+            n = 100)
+```
+:::
+
+:::{#sa-16.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("16.C.TwoSampleNormalVariances.Rmd", 
+            edir = "../PracticeQuestions/Chapter16", 
+            n = 100)
+```
+:::
+
+:::{#sa-16.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("16.E.PooledVariance.Rmd", 
+            edir = "../PracticeQuestions/Chapter16", 
+            n = 100)
+```
+:::
+
+:::
+
+::: {.content-visible when-format='html'}
+{{< include /calculator.qmd >}}
+:::

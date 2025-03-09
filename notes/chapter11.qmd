@@ -1300,3 +1300,7 @@ Match each of the following boxplots (A)-(D), with the histograms (1)-(4).
 
 ![](/graphics/matching1.png)
 :::
+
+::: {.content-visible when-format='html'}
+{{< include /calculator.qmd >}}
+:::

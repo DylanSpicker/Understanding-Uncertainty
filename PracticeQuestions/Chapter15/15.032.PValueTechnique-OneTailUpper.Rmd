@@ -1,6 +1,6 @@
 ```{r data generation, echo = FALSE, results = "hide"}
 
-sc <- sample(1:3, 1)
+sc <- sample(1:6, 1)
 
 if(sc == 1) {
     amt <- sample(5:25, 1)
@@ -20,6 +20,32 @@ if(sc == 1) {
     sd <- round(runif(1, 50 * amt/2000, 100 * amt/2000), 2)
 
     qtext <- paste("A lightbulb manufacturer comes up with a new design that they hope will lead to a longer-lasting lightbulb. Their existing design is rated for an average of", format(amt, scientific=FALSE, digits=2), "hours. To test the new design, the company samples", n, "of the new lightbulbs, testing their lifespan, and they find")
+} else if (sc == 4) {
+    amt <- round(runif(1, 65, 80), 2)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 1, 5), 2)
+
+    qtext <- paste("The average lifespan in a particular country is", format(amt, scientific=FALSE), "years. An anthropologist is studying a particular regional group of individuals from this country, who the anthropologist suspects live longer on average than other citizens of the country. To test this, the anthropologist randomly samples records from", n, "individuals in this region, recording their lifespans. They find")
+} else if (sc == 5) {
+    amt <- sample(0:10, 1)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 1, 5), 2)
+
+    if(amt != 0) {
+        qtext <- paste("A pyschologist is investigating the impact of a new treatment for depression on their patients. They suspect that it will result in an improvement to the standardized depression scores of their patients of at least", amt, "points. To test this, they randomly sample", n, "patients, and provide the new treatment to them. They record the improvement in depression scores for each individual. They find")
+    } else {
+        qtext <- paste("A pyschologist is investigating the impact of a new treatment for depression on their patients. They suspect that it will result in an improvement to the standardized depression scores of their patients. To test this, they randomly sample", n, "patients, and provide the new treatment to them. They record the improvement in depression scores for each individual. They find")
+    }
+} else if (sc == 6) {
+    amt <- sample(0:10, 1)
+    n <- sample(35:100, 1)
+    sd <- round(runif(1, 1, 5), 2)
+
+    if(amt != 0) {
+        qtext <- paste("A teacher is investigating the impact of a new teaching method for teaching statistics to their students. They suspect that it will result in an improvement to the test scores of their students of at least", amt, "points. To test this, they randomly sample", n, "students to be given the new teaching method. They record the change in test scores for each individual. They find")
+    } else {
+        qtext <- paste("A teacher is investigating the impact of a new teaching method for teaching statistics to their students. They suspect that it will result in an improvement to the test scores of their students. To test this, they randomly sample", n, "students to be given the new teaching method. They record the change in test scores for each individual. They find")
+    }
 }
 
 alpha <- round(runif(1, 0.01, 0.2), 2)

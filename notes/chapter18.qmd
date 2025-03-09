@@ -416,3 +416,7 @@ b. What must be done in order to perform the hypothesis test identified in part 
 c. Is there an alternative method that could be used to test this question? What must be done in order to perform this hypothesis test?
 d. What concerns or considerations may exist to select between the test identified in (a) and that identified in (c)? Can you think of any additional hypothesis tests that may alleviate some of these concerns? 
 :::
+
+::: {.content-visible when-format='html'}
+{{< include /calculator.qmd >}}
+:::

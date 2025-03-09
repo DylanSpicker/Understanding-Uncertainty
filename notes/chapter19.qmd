@@ -669,3 +669,7 @@ b. If a linear regression were fit to these data, what would be the sign of the 
 c. Suppose that it is determined that the sample covariance between temperature and slope is $`r format(cov(pressure$temperature, pressure$pressure), scientific = FALSE)`$, that the sample variance of $x$ is $`r format(round(var(pressure$temperature), 4), scientific = FALSE)`$, and that the sample means of temperature and pressure are $`r round(mean(pressure$temperature), 4)`$ and $`r round(mean(pressure$pressure), 4)`$, respectively. Write down the estimated ordinary least squares equation. 
 
 :::
+
+::: {.content-visible when-format='html'}
+{{< include /calculator.qmd >}}
+:::

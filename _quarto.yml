@@ -55,7 +55,9 @@ format:
     - cosmo
     - custom.scss
     css: webex.css
-    include-after-body: webex.js
+    include-after-body: 
+    - webex.js
+    - calculator_btn.js
     code-annotations: select
     default-image-extension: svg
   pdf:

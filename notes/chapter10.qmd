@@ -821,3 +821,7 @@ a. Annual Rainfall
 a. Type of Smartphone Owned
 a. Level of Agreement on a Survey Question
 :::
+
+::: {.content-visible when-format='html'}
+{{< include /calculator.qmd >}}
+:::

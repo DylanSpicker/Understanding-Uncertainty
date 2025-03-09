@@ -1,0 +1,294 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+sided <- sample(1:3, 1)
+sc <- sample(1:11, 1)
+
+# Question Texts 
+
+if(sc == 1) {
+    qscenario <- "A group of researchers are studying the impact of two different medications on blood pressure."
+    pop1 <- "individuals taking the first medication"
+    pop2 <- "individuals taking the second medication"
+
+    directions <- c("have higher average systolic blood pressures", 
+                    "have lower average systolic blood pressures", 
+                    "have different average systolic blood pressures")
+
+    sigmaX <- round(runif(1, 7, 13), 2)
+    sigmaY <- round(runif(1, 7, 13), 2)
+    Xbar <- round(runif(1, 100, 130), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+
+} else if(sc == 2) {
+    qscenario <- "A group of researchers are studying the heights of individuals from two different regions."
+    pop1 <- "individuals from the first region"
+    pop2 <- "individuals from the second region"
+
+    directions <- c("are taller on average", 
+                    "are shorter on average", 
+                    "are different height on average")
+
+    sigmaX <- round(runif(1, 3, 10), 2)
+    sigmaY <- round(runif(1, 3, 10), 2)
+    Xbar <- round(runif(1, 155, 180), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+
+} else if(sc == 3) {
+    qscenario <- "A medical researcher in interested in understanding the impact of two different diets on blood pressure."
+    pop1 <- "individuals on the first diet"
+    pop2 <- "individuals on the second diet"
+
+    directions <- c("have higher average systolic blood pressures", 
+                    "have lower average systolic blood pressures", 
+                    "have different average systolic blood pressures")
+
+    sigmaX <- round(runif(1, 7, 13), 2)
+    sigmaY <- round(runif(1, 7, 13), 2)
+    Xbar <- round(runif(1, 100, 130), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+
+} else if(sc == 4) {
+    qscenario <- "A pyschologist is studying the reaction times of individuals who have taken two different medical treatments."
+    pop1 <- "individuals taking the first treatment"
+    pop2 <- "individuals taking the second treatment"
+
+
+    directions <- c("have faster average reaction times", 
+                    "have slower average reaction times", 
+                    "differ in their average reaction times")
+
+    sigmaX <- round(runif(1, 20, 100), 2)
+    sigmaY <- round(runif(1, 20, 100), 2)
+    Xbar <- round(runif(1, 200, 800), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+
+} else if(sc == 5) {
+    qscenario <- "A research nurse wants to understand how the presence (or absence) of prenatal vitamins impacts the weight of newborns."
+    pop1 <- "newborns whose mothers took prenatal viatmins"
+    pop2 <- "newborns whose mothers did not take prenatal vitamins"
+
+    directions <- c("weigh more on average", 
+                    "weigh less on average", 
+                    "differ in their average weights")
+
+    sigmaX <- round(runif(1, 200, 800), 2)
+    sigmaY <- round(runif(1, 200, 800), 2)
+    Xbar <- round(runif(1, 3000, 3800), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+
+} else if(sc == 6) {
+    qscenario <- "Medical researchers are interested in studying how internal body temperatures are impacted by two different medications."
+    pop1 <- "individuals taking the first medication"
+    pop2 <- "individuals taking the second medication"
+
+    directions <- c("have higher average body temperatures", 
+                    "have lower average body temperatures", 
+                    "have different average body temperatures")
+
+    sigmaX <- round(runif(1, 0.5, 1.5), 4)
+    sigmaY <- round(runif(1, 0.5, 1.5), 4)
+    Xbar <- round(runif(1, 33, 38), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+
+} else if(sc == 7) {
+    qscenario <- "Researchers are investigating the serum cholesterol levels of individuals who consume two different diets."
+    pop1 <- "individuals on the first diet"
+    pop2 <- "individuals on the second diet"
+
+    directions <- c("have higher average serum cholesterol levels", 
+                    "have lower average serum cholesterol levels", 
+                    "have different average serum cholesterol levels")
+
+    sigmaX <- round(runif(1, 15, 50), 2)
+    sigmaY <- round(runif(1, 15, 50), 2)
+    Xbar <- round(runif(1, 150, 220), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+
+} else if(sc == 8) {
+    qscenario <- "Researchers are studying the red blood cell counts for individuals from two different populations."
+    pop1 <- "individuals in the first population"
+    pop2 <- "individuals in the second population"
+
+    directions <- c("have higher average red blood cell counts", 
+                    "have lower average red blood cell counts", 
+                    "differ in their average red blood cell counts")
+
+    sigmaX <- round(runif(1, 0.2, 0.8), 4)
+    sigmaY <- round(runif(1, 0.2, 0.8), 4)
+    Xbar <- round(runif(1, 3, 6.5), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+
+} else if(sc == 9) {
+    qscenario <- "A lightbulb manufacturer wants to compare the lifespan for two different models of their lightbulbs."
+    pop1 <- "lightbulbs of the first model"
+    pop2 <- "lightbulbs of the second model"
+
+    directions <- c("last longer on average", 
+                    "last shorter on average", 
+                    "last for a different average length of time")
+
+    Xbar <- sample(2000:15000, 1)
+    sigmaX <- round(runif(1, 50 * Xbar/2000, 100 * Xbar/2000), 2)
+    sigmaY <- round(runif(1, 50 * Xbar/2000, 100 * Xbar/2000), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+
+} else if(sc == 10) {
+    qscenario <- "A group of marine biologists wants to understand whether differences in length exist between male and female hickory shad."
+    pop1 <- "male hickory shad"
+    pop2 <- "female hickory shad"
+    
+    directions <- c("are longer on average", 
+                    "are shorter on average", 
+                    "have different average lengths")
+
+    sigmaX <- round(runif(1, 2, 5), 2)
+    sigmaY <- round(runif(1, 2, 5), 2)
+    Xbar <- round(runif(1, 30, 40), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+
+} else if(sc == 11) {
+    qscenario <- "A professor is interested in comparing the average number of hours that students study for Introductory Probability compared to Introductory Statistics."
+    pop1 <- "students in Introductory Probability"
+    pop2 <- "students in Introductory Statistics"
+
+    directions <- c("study for more time", 
+                    "study for less time", 
+                    "study for different lengths of time")
+
+    sigmaX <- round(runif(1, 5, 15), 2)
+    sigmaY <- round(runif(1, 5, 15), 2)
+    Xbar <- round(runif(1, 20, 50), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+
+}
+
+direction <- directions[sided]
+# Sided = 1: X > Y
+# Sided = 2: X < Y
+# Sided = 3: X = Y
+
+conclusion <- sample(0:1, 1)
+alpha <- round(runif(1, 0.01, 0.2), 2)
+
+# Sample a p-value based on the desired conclusion and alpha
+if(conclusion == 0) {
+    # Reject H0
+    p <- round(runif(1, 0.001, alpha - 0.005), 3)
+} else {
+    # Fail to Reject H0
+    p <- round(runif(1, alpha + 0.001, 0.9), 3)
+}
+
+# Compute the Relevant values for Ybar
+if(sided == 1) {
+    # One-Tail Upper
+    crit <- qnorm(1-p)
+    p_calc <- function(x) { 1 - pnorm(x) }
+
+    hypotheses <- "$H_0: \\mu_X \\leq \\mu_Y$ vs. $H_A: \\mu_X > \\mu_Y$"
+
+} else if(sided == 2) {
+    # One-Tail Lower
+    crit <- qnorm(p)
+    p_calc <- function(x) { pnorm(x) }
+
+    hypotheses <- "$H_0: \\mu_X \\geq \\mu_Y$ vs. $H_A: \\mu_X < \\mu_Y$"
+} else {
+    # Two-Tailed
+    crit <- qnorm(sample(c(p/2, 1-p/2), 1))
+    p_calc <- function(x) { 2*pnorm(-abs(x)) }
+
+    hypotheses <- "$H_0: \\mu_X = \\mu_Y$ vs. $H_A: \\mu_X \\neq \\mu_Y$"
+}
+
+# Find Ybar
+Ybar <- round(Xbar - crit * sqrt(sigmaX^2 / n + sigmaY^2 / m), 2)
+test_stat <- (Xbar - Ybar)/sqrt(sigmaX^2/n + sigmaY^2/m)
+p_value <- p_calc(test_stat)
+
+###########################################################################
+# Fixed Answers
+all_hypotheses <- c(
+    "$H_0: \\mu_X \\leq \\mu_Y$ vs. $H_A: \\mu_X > \\mu_Y$",
+    "$H_0: \\mu_X \\geq \\mu_Y$ vs. $H_A: \\mu_X < \\mu_Y$",
+    "$H_0: \\mu_X = \\mu_Y$ vs. $H_A: \\mu_X \\neq \\mu_Y$",
+    "$H_0: \\mu_X < \\mu_Y$ vs. $H_A: \\mu_X \\geq \\mu_Y$",
+    "$H_0: \\mu_X > \\mu_Y$ vs. $H_A: \\mu_X \\leq \\mu_Y$",
+    "$H_0: \\mu_X \\neq \\mu_Y$ vs. $H_A: \\mu_X = \\mu_Y$"
+)
+answer_a <- c(TRUE, rep(FALSE, 4))
+options_a <- c(hypotheses, sample(setdiff(all_hypotheses, hypotheses), 4))
+sort_a <- sample(1:5, 5)
+
+incorrect_conclusions <- c(
+    "Because the $p$-value is greater than $\\alpha$, we reject the null hypothesis.",
+    "Because the $p$-value is smaller than $\\alpha$, we fail to reject the null hypothesis.",
+    "Because the $p$-value is smaller than $\\alpha$, we accept the null hypothesis.",
+    "Because the $p$-value is greater than $\\alpha$, we accept the null hypothesis."
+)
+correct_conclusion <- ifelse(p_value <= alpha, 
+    "Because the $p$-value is smaller than $\\alpha$, we reject the null hypothesis.",
+    "Because the $p$-value is greater than $\\alpha$, we fail to reject the null hypothesis."
+)
+incorrect_conclusion_include <- ifelse(p_value > alpha, 
+    "Because the $p$-value is smaller than $\\alpha$, we reject the null hypothesis.",
+    "Because the $p$-value is greater than $\\alpha$, we fail to reject the null hypothesis."
+)
+
+answer_d <- c(TRUE, rep(FALSE, 4))
+options_d <- c(correct_conclusion, incorrect_conclusion_include, sample(incorrect_conclusions, 3))
+sort_d <- sample(1:5, 5)
+
+ans1 <- answer_a[sort_a]
+ans2 <- test_stat
+ans3 <- p_value
+ans4 <- answer_d[sort_d]
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+
+`r qscenario` They collect a sample of `r n` `r pop1` (labeled $X$). Further, they take a sample of `r m` `r pop2` (labeled $Y$). 
+
+From their sample, they observe $\overline{X} = `r format(Xbar, scientific=FALSE)`$ and $\overline{Y} = `r format(Ybar, scientific=FALSE)`$. Moreover, they know that $\sigma_X = `r sigmaX`$ and $\sigma_Y = `r sigmaY`$. 
+
+The interest of the study is in testing whether `r pop1` `r direction` (compared to `r pop2`).
+
+a. What set of hypotheses should be tested in this setting? 
+
+##ANSWER1##
+
+b. What is the value of the test statistic used to test the hypothesis identified in (a)? ##ANSWER2##
+c. What is the $p$-value computed for the hypothesis test? ##ANSWER3##
+d. What is the conclusion from the hypothesis test, at a significance level of `r alpha`.
+
+##ANSWER4##
+
+Question ID: *`r id`*
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(c(options_a[sort_a], options_d[sort_d]), markup = "markdown")
+```
+
+
+Meta-information
+================
+extype: cloze
+exsolution: `r mchoice2string(ans1)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r mchoice2string(ans4)`
+exclozetype: schoice|num|num|schoice
+exname: TwoSampleZTest
+extol: 0.01

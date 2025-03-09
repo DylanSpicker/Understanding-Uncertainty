@@ -101,10 +101,28 @@ $$p = 2\times\min\{F_{n,m}(u), 1 - F_{n,m}(u-1)\} \approx 2\times\Phi\left(-\fra
 In order for the $U$-test to give consistent,^[Note that here, consistency refers to a specific statistical idea. Namely, consistency represents the idea that, as sample sizes increase larger and larger, the resulting statistical procedure will approach the correct results.] accurate results, then a further assumption is required under the alternative hypothesis. Namely, it must be the case that $P(X > Y) \neq P(Y > X)$ if the **alternative hypothesis** holds. Thus, if $X$ and $Y$ both have symmetric distributions, centered on the same value, then the $U$-test will not reliably conclude that the distributions are different, even when sample sizes grow indefinitely. This is a fairly technical consideration, but it is important when applying the $U$-test in practice. If you suspect that the two distributions are symmetric, and centered on the same value, the hypothesis test is no longer correctly regarded as testing $F_X = F_Y$. To do so, alternative test procedures would be required.^[For instance, the Kolmogorov-Smirnov test is a nonparametric test that considers the equality (or lack thereof) of continuous distributions, without making the same assumptions under the null hypothesis.]
 :::
 
+:::{.callout-note icon="false"}
+## Direct Calculation of the $U$ statistic
+
+While the formal procedure for computing the $U$ statistic gives rise to an easier theoretical analysis of the test statistic, there is a more practically applicable procedure for computing the statistic. The **direct method** for calculation circumvents the need to directly rank the data, or keep track of which observations came from which samples.
+
+Instead, to compute $U$, we first consider one of the samples, point-by-point. For each point in the sample, we count the number of observations from the second sample that are smaller than the presently considered point. If there are any ties, we count these as $0.5$. We do this for every point, in turn, summing up the total results. The resulting sum is denoted $U'$. Then, to find $U$, we take $$U = \min\{U', nm-U'\}.$$
+
+Suppose, for instance, that we observe $\{4, 21, 32, 64\}$ as the first sample, and $\{32, 31, 44, 45, 15,36\}$ as the second sample. To find $U'$, we first consider the first sample. We start with $4$, and note that there are $0$ points in the second sample smaller than $4$. We then consider $21$, and note that there is exactly $1$ point ($15$) in the second sample smaller than $21$. We then take $32$ and note that there are $2$ points that are smaller than $32$ ($31$ and $15$) and $1$ point equal to $32$, giving a total of $2.5$. Finally, for $64$, we note that all $6$ points are smaller than $64$. Thus, $U' = 0 + 1 + 2.5 + 6 = 9.5$. This gives $U = \min\{9.5, 24-9.5\} = 9.5$.
+
+:::
+
+### Correction for Ties
+When the data have a substantial number of observations that are tied in rank, just as in the signed-rank test, the null distribution is no longer represented by a Wilcoxon rank-sum distribution. Because of the altered null distribution, it is typically preferable - in the presence of many ties - to use the normal approximation. However, when the number of ties is large, the variance of the approximate normal distribution should be modified to better capture the impact of the tied observations. Specifically, if there are many ties, the variance will be *overestimated* relative to what it should be, leading to a less powerful test.
+
+Suppose that there are $k$ unique data points observed. For each of the these points, enumerated from $1$ to $k$, we can label the total number of observations of that value, between both samples, as $t_i$. Then we must have that $n + m = \sum_{i=1}^{k} t_i$. For any $t_i \neq 1$, there are multiple points tied with the given value. Using this notation, we define $$\sigma_U^2 = \frac{nm(n+m+1)}{12} - \frac{nm\sum_{i=1}^k (t_i^3 - t_i)}{12(n+m)(n+m-1)}.$$ Notice that, if $t_i = 1$ for all $i=1,\dots,k$, then $t_i^3 - t_i = 0$, and as a result, $\sigma_U^2$ equals the previously established variance term for $U$. However, if $t_i \neq 1$ for any $i=1,\dots,k$, then $t_i^3 - t_i > 0$, and as a result, $\sigma_U^2$ will be strictly less than the previously established variance term.
+
+The normal approximation for $U$ can then be stated as $U \stackrel{H_0}{\sim} N(\dfrac{nm}{2}, \sigma_U^2)$. To compute an approximate $p$-value, based on an observed $U=u$, we can then take $$p \approx 2\Phi\left(-\frac{|u - nm/2|}{\sigma_U}\right).$$ When there are not many ties, this should be approximately equal to the previously established approximation. However, when there are many ties, this can change substantially from the approximation without the correction for ties. 
+
 ### The Mann-Whitney $U$-Test for Location Shift Distributions
 Because the null hypothesis is that the two distributions are equivalent, it is possible to reject the null hypothesis when the location of the two samples is equivalent. This is because two distributions that share a location are not necessarily equivalent. Consider, for instance, the $N(0,1)$ and $t_3$ distributions. Both have a location of $0$, but otherwise behave quite differently. This is a desirable property of the $U$-test, that makes it broadly applicable. However, on occasion it may be desirable to test whether $\mu_X = \mu_Y$, or more broadly, $H_0: \mu_X - \mu_Y = \Delta_0$, for some fixed constant. The $U$-test can be extended to this setting, under **stricter assumptions** regarding the null and alternative distributions.
 
-Namely, if it is assumed that $F_X(x) = F_Y(y + \delta)$, for some value $\delta$, then we are in effect saying that $X$ and $Y$ have equivalent distributions, except they are shifted away from one another by $\delta$. In this context, testing whether $F_X$ and $F_Y$ are equivalent is the same as testing whether $\delta = 0$, or alternatively, whether $\mu_X = \mu_Y$. Thus, if we are willing to assume that it is impossible for the distributions of $X$ and $Y$ to differ, except in location, then the $U$-test becomes a test about the equality of those locations. Note that it is not possible to test the assumption that the distributions are otherwise equivalent, and as a result, using the $U$-test in this way is only valid when this assumption is justified via subject-matter arguments. 
+Namely, if it is assumed that $F_X(x) = F_Y(x + \delta)$, for some value $\delta$, then we are in effect saying that $X$ and $Y$ have equivalent distributions, except they are shifted away from one another by $\delta$. In this context, testing whether $F_X$ and $F_Y$ are equivalent is the same as testing whether $\delta = 0$, or alternatively, whether $\mu_X = \mu_Y$. Thus, if we are willing to assume that it is impossible for the distributions of $X$ and $Y$ to differ, except in location, then the $U$-test becomes a test about the equality of those locations. Note that it is not possible to test the assumption that the distributions are otherwise equivalent, and as a result, using the $U$-test in this way is only valid when this assumption is justified via subject-matter arguments. 
 
 When this assumption is made, in order to test $H_0: \mu_X - \mu_Y = \Delta_0$, the $U$-test can be directly applied to $X_1,\dots,X_n$ for the first sample, and $Y_1 + \Delta_0, \dots, Y_n + \Delta_0$ for the second. Note that if the null hypothesis holds, then $\mu_X = \mu_Y + \Delta_0$, and so $Y + \Delta_0$ will have location $\mu_X$. Then testing $F_X = F_{Y+\Delta_0}$ is equivalent to testing whether their locations are equal. 
 
@@ -124,8 +142,8 @@ Further, suppose that the paired differences are such that the absolute values o
 
 Under the null hypothesis, $T$ follows a signed-rank distribution with size parameter $n$. Taking $T = t$ based on the observed sample, the $p$-value can be computed as: 
 
-1. If $H_0: \mu_D = 0$ versus $H_A: \mu_D \neq 0$, then $$p = F_n(-|t|) + 1 - F_n(|t|) \approx 2\Phi\left(-|t|/\sqrt{n(n+1)(2n+1)/6}\right).$$
-2. If $H_0: \mu_D \leq 0$ versus $H_A: \mu_D > 0$, then $$p = 1 - F_n(t) \approx 1 - \Phi\left(t/\sqrt{n(n+1)(2n+1)/6}\right).$$
+1. If $H_0: \mu_D = 0$ versus $H_A: \mu_D \neq 0$, then $$p = F_n(-|t|) + 1 - F_n(|t|-1) \approx 2\Phi\left(-|t|/\sqrt{n(n+1)(2n+1)/6}\right).$$
+2. If $H_0: \mu_D \leq 0$ versus $H_A: \mu_D > 0$, then $$p = 1 - F_n(t-1) \approx 1 - \Phi\left(t/\sqrt{n(n+1)(2n+1)/6}\right).$$
 3. If $H_0: \mu_D \geq 0$ versus $H_A: \mu_D < 0$, then $$p = F_n(t) \approx \Phi\left(t/\sqrt{n(n+1)(2n+1)/6}\right).$$
 :::
 
@@ -369,4 +387,8 @@ A researcher wants to evaluate the effectiveness of a new sleep aid. They collec
 
 a. Using the random tie-breaking procedure, assess whether there is a change in sleep quality observed by taking the sleep aid.
 b. Repeat the procedure in part (a). Are your results the same or different?
+:::
+
+::: {.content-visible when-format='html'}
+{{< include /calculator.qmd >}}
 :::

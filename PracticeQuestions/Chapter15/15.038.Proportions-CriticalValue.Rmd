@@ -1,0 +1,187 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+sided <- sample(1:3, 1)
+
+sc <- sample(1:6, 1)
+
+# Two-Sided
+if(sc == 1) {
+    p0 <- round(runif(1, 2/6, 5/6), 2)
+    n <- sample(max(ceiling(10/p0), ceiling(10/(1-p0))):2000, 1)
+
+    if(sided == 1) {
+        qtext <- paste("A woodworker is attempting to construct a biased six-sided die that shows a six with probability", p0, ". In order to test to see if their construction is acceptable, they take a prototype, and roll the die", n, "times, recording a six on")
+        units <- "rolls"
+    } else if(sided == 2) {
+        qtext <- paste("A woodworker is attempting to construct a biased six-sided die that shows a six with probability at least", p0, ". In order to test to see if their construction is acceptable, they take a prototype, and roll the die", n, "times, recording a six on")
+        units <- "rolls"
+    } else {
+        p0 <- round(runif(1, 0.01, 0.12), 2)
+        n <- sample(max(ceiling(10/p0), ceiling(10/(1-p0))):2000, 1)
+
+        qtext <- paste("A woodworker is attempting to construct a biased six-sided die that shows a six with probability no more than", p0, ". In order to test to see if their construction is acceptable, they take a prototype, and roll the die", n, "times, recording a six on")
+        units <- "rolls"
+    }
+} else if(sc == 2) {
+    p0 <- round(runif(1, 0.4, 0.6), 2)
+    n <- sample(max(ceiling(10/p0), ceiling(10/(1-p0))):2000, 1)
+    
+    if(sided == 1) {
+        qtext <- paste("A pollster wants to determine whether the support for a particular issue in a region differs meaningfully from", p0, ". They take a random sample of", n, "individuals, observing that")
+        units <- "individuals support the issue"
+    } else if(sided == 2) {
+        qtext <- paste("A pollster wants to determine whether the support for a particular issue in a region exceeds", p0, ". They take a random sample of", n, "individuals, observing that")
+        units <- "individuals support the issue"
+    } else {
+        qtext <- paste("A pollster wants to determine whether the support for a particular issue in a region is less than", p0, ". They take a random sample of", n, "individuals, observing that")
+        units <- "individuals support the issue"
+    }
+} else if(sc == 3) {
+    p0 <- round(runif(1, 0.02, 0.1), 2)
+    n <- sample(max(ceiling(10/p0), ceiling(10/(1-p0))):2000, 1)
+
+    if(sided == 1) {
+        qtext <- paste("A correctly functioning machine at a particular factory is calibrated so that in", p0, "proportion of cases, the mass of the produced product is outside of tolerance. A group of engineers need to test the calibration on the machine, so they randomly sample", n, "parts, measuring their mass. They find that")
+        units <- "parts are outside of mass tolerances"
+    } else if(sided == 2) {
+        p0 <- 1-p0
+        qtext <- paste("A correctly functioning machine at a particular factory is calibrated so that in at least", p0, "proportion of cases, the mass of the produced product is within the bounds of tolerance. A group of engineers need to test the calibration on the machine, so they randomly sample", n, "parts, measuring their mass. They find that")
+        units <- "parts satisfy of mass tolerances"
+    } else {
+        qtext <- paste("A correctly functioning machine at a particular factory is calibrated so that in no more than", p0, "proportion of cases, the mass of the produced product is outside of tolerance. A group of engineers need to test the calibration on the machine, so they randomly sample", n, "parts, measuring their mass. They find that")
+        units <- "parts are outside of mass tolerances"
+    }
+
+} else if(sc == 4) {
+    p0 <- round(runif(1, 0.2, 0.8), 2)
+    n <- sample(max(ceiling(10/p0), ceiling(10/(1-p0))):2000, 1)
+
+    if(sided == 1) {
+        qtext <- paste("An existing surgical intervention is successful with probability",p0,"at treating an underlying condition. A research surgeon has developed a new technique, which is easier to implement, and they want to understand its effectiveness. They have the new technique applied for", n, "patients, and observe that")
+        units <- "of the surgeries are successful"
+    } else if(sided == 2) {
+        qtext <- paste("An existing surgical intervention is successful with probability",p0,"at treating an underlying condition. A research surgeon has developed a new technique, that they suspect should be more effective at treating the disease. They have the new technique applied for", n, "patients, and observe that")
+        units <- "of the surgeries are successful"
+    } else {
+        qtext <- paste("An existing surgical intervention is successful with probability",p0,"at treating an underlying condition. A research surgeon has developed a new technique, which is easier to implement and substantially cheaper. They worry, however, that it may be worse at treating the disease compared to the existing procedure. To test this concern, they have the new technique applied for", n, "patients, and observe that")
+        units <- "of the surgeries are successful"
+    }
+} else if(sc == 5) {
+    p0 <- round(runif(1, 0.01, 0.2), 2)
+    n <- sample(max(ceiling(10/p0), ceiling(10/(1-p0))):2000, 1)
+
+    if(sided == 1) {
+        qtext <- paste("In the general population, a particular disease has prevalence", p0,". Researhcers are interested in whether the prevalence in a particular subpopulation is equivalent. They sample", n, "individuals from this subpopulation, and find that")
+        units <- "individuals have the disease."
+    } else if(sided == 2) {
+        qtext <- paste("In the general population, a particular disease has prevalence", p0,". Researhcers are interested in whether the prevalence in a particular subpopulation with heightened risk factors is actually greater than the overall average. They sample", n, "individuals from this subpopulation, and find that")
+        units <- "individuals have the disease."
+    } else {
+        qtext <- paste("In the general population, a particular disease has prevalence", p0,". Researhcers are interested in whether the prevalence in a particular subpopulation who appear to have certain protective lifestyle factors is actually less than the overall average. They sample", n, "individuals from this subpopulation, and find that")
+        units <- "individuals have the disease."
+    }
+} else if(sc == 6) {
+    p0 <- round(runif(1, 0.3, 0.7), 2)
+    
+    if(p0 == 0.5) {
+        p0 <- 0.7
+    }
+
+    n <- sample(max(ceiling(10/p0), ceiling(10/(1-p0))):2000, 1)
+
+    if(sided == 1) {
+        qtext <- paste("An amateur magician has a collection of biased coins that turn up heads with certain probabilities. The magician purchases a new coin that claims it has a probability of", p0, "of showing heads. Past experience suggests that these coins are not always correctly calibrated, and as such, the magician decides to test the claim. They flip the coin", n, "times, seeing heads on")
+        units <- "flips"
+    } else if(sided == 2) {
+        p0 <- max(p0, 1 - p0)
+        qtext <- paste("An amateur magician has a collection of biased coins that turn up heads with certain probabilities. The magician purchases a new coin that claims it has a probability of at least", p0, "of showing heads. Past experience suggests that these coins are not always correctly calibrated, and as such, the magician decides to test the claim. They flip the coin", n, "times, seeing heads on")
+        units <- "flips"
+    } else {
+        p0 <- min(p0, 1-p0)
+        qtext <- paste("An amateur magician has a collection of biased coins that turn up heads with certain probabilities. The magician purchases a new coin that claims it has a probability of no more than", p0, "of showing heads. Past experience suggests that these coins are not always correctly calibrated, and as such, the magician decides to test the claim. They flip the coin", n, "times, seeing heads on")
+        units <- "flips"
+    }
+}
+
+alpha <- round(runif(1, 0.01, 0.2), 2)
+
+
+if(sided == 1) {
+    crit <- qnorm(1-alpha/2)
+} else if(sided == 2) {
+    crit <- qnorm(1-alpha)
+} else {
+    crit <- qnorm(alpha)
+}
+
+if(sample(c(0,1),1) == 0) {
+    # Reject
+    u1 <- 1.1*crit
+    u2 <- 2 * crit 
+    val <- sample(c(-1, 1), 1) * runif(1, min(u1, u2), max(u1, u2))
+
+    if(sided == 2) {
+        val <- abs(val)
+    } else if (sided == 3) {
+        val <- -1*abs(val)
+    }
+
+} else {
+    # Fail to Reject
+    u1 <- 0.2 * crit
+    u2 <- 0.85 * crit
+    val <- sample(c(-1, 1), 1) * runif(1, min(u1, u2), max(u1, u2))
+
+    if(sided == 2) {
+        val <- abs(val)
+    } else if (sided == 3) {
+        val <- -1*abs(val)
+    }
+}
+
+phat <- round(val * p0 * (1 - p0)/sqrt(n) + p0, 1)
+phat <- pmax(pmin(phat, 0.99), 0.01)
+x <- round(phat * n, 0)
+
+ans1 <- abs(crit)
+ans2 <- (x/n - p0)/sqrt(p0 * (1 - p0) / n)
+
+if(sided == 1) {
+    ans3 <- c(abs(ans2) >= ans1, abs(ans2) < ans1)
+} else if(sided == 2) {
+    ans3 <- c(ans2 >= ans1, ans2 < ans1)
+} else {
+    ans3 <- c(ans2 <= -1*ans1, ans2 > -1*ans1)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+
+`r qtext` `r x` `r units`. 
+
+
+a. What is the **magnitude** of the critical value for the associated hypothesis test, at $\alpha = `r alpha`$?  ##ANSWER1##
+b. What is the relevant value of the test statistic for testing the null hypothesis? ##ANSWER2##
+c. What is the conclusion from the hypothesis test? 
+
+##ANSWER3##
+
+Question ID: *`r id`*
+
+Answerlist
+------------
+* Based on the results, we can reject the null hypothesis.
+* Based on the results, we fail to reject the null hypothesis. 
+
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r mchoice2string(ans3)`
+exclozetype: num|num|schoice
+exname: CriticalValueTes
+extol: 0.01
