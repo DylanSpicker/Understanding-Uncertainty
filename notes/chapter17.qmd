@@ -389,6 +389,120 @@ a. Using the random tie-breaking procedure, assess whether there is a change in 
 b. Repeat the procedure in part (a). Are your results the same or different?
 :::
 
+
+::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-17.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("17.A.ChooseTest.Rmd", 
+            edir = "../PracticeQuestions/Chapter17", 
+            n = 100, cloze_schoice_display = "buttons")
+```
+:::
+
+:::{#sa-17.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("17.B.SignedRankNoTies.Rmd", 
+            edir = "../PracticeQuestions/Chapter17", 
+            n = 100, cloze_schoice_display = "buttons")
+```
+:::
+
+:::{#sa-17.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("17.C.SignedRankTies.Rmd", 
+            edir = "../PracticeQuestions/Chapter17", 
+            n = 100, cloze_schoice_display = "buttons")
+```
+:::
+
+:::{#sa-17.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("17.D.MannWhitneyNoTies.Rmd", 
+            edir = "../PracticeQuestions/Chapter17", 
+            n = 100, cloze_schoice_display = "buttons")
+```
+:::
+
+:::{#sa-17.05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("17.E.MannWhitneyTies.Rmd", 
+            edir = "../PracticeQuestions/Chapter17", 
+            n = 100, cloze_schoice_display = "buttons")
+```
+:::
+
+:::{#sa-17.06}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("17.F.PairedSignedRankNoTies.Rmd", 
+            edir = "../PracticeQuestions/Chapter17", 
+            n = 100, cloze_schoice_display = "buttons")
+```
+:::
+
+:::{#sa-17.07}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("17.G.PairedSignedRankTies.Rmd", 
+            edir = "../PracticeQuestions/Chapter17", 
+            n = 100, cloze_schoice_display = "buttons")
+```
+:::
+
+
+:::
+
 ::: {.content-visible when-format='html'}
 {{< include /calculator.qmd >}}
 :::

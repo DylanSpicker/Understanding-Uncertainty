@@ -1,0 +1,279 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+sided <- sample(1:3, 1)
+sc <- sample(1:9, 1)
+
+# Question Texts 
+
+if(sc == 1) {
+    qscenario <- "A group of researchers are studying the impact of a newly designed medication on blood pressure. They measure individual's systolic blood pressure before ($X$) and after ($Y$) taking the medicaiton."
+
+    directions <- c("whether the medication lowers patients' average systolic blood pressure", 
+                    "whether the medication increases patients' average systolic blood pressure", 
+                    "whether the medication changes patients' average systolic blood pressure")
+
+    sigmaX <- round(runif(1, 7, 13), 2)
+    sigmaY <- round(runif(1, 7, 13), 2)
+    Xbar <- round(runif(1, 100, 130), 2)
+    n <- sample(30:500, 1)
+    rd <- 2
+
+} else if(sc == 2) {
+    qscenario <- "A group of researchers are studying the impact of a particular diet on blood pressure. They measure individual's systolic blood pressure before ($X$) and after ($X$) starting the diet."
+
+    directions <- c("whether the diet lowers patients' average systolic blood pressure", 
+                    "whether the diet increases patients' average systolic blood pressure", 
+                    "whether the diet changes patients' average systolic blood pressure")
+
+    sigmaX <- round(runif(1, 7, 13), 2)
+    sigmaY <- round(runif(1, 7, 13), 2)
+    Xbar <- round(runif(1, 100, 130), 2)
+    n <- sample(30:500, 1)
+    rd <- 2
+
+} else if(sc == 3) {
+    qscenario <- "A manufacturer of tires is interested in determining the quality difference in two different makes of their tires. They decide to takes pairs of the tires, placing 2 of each type on the same set of vehicles, driving and measuring the wear. They record the wear of the first type as $X$ and of the second type as $Y$."
+    
+    directions <- c("whether the first type of tires exhibit more wear", 
+                    "whether the first type of tires exhibit less wear", 
+                    "whether the two types of tires exhibit different wear")
+
+    sigmaX <- round(runif(1, 0.001, 0.02), 3)
+    sigmaY <- round(runif(1, 0.001, 0.02), 3)
+    Xbar <- round(runif(1, 1/32, 10/32), 4)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+    rd <- 4
+
+} else if(sc == 4) {
+    qscenario <- "A school is implementing a peer tutoring service to see if it has an impact on student test scores on a standardized test. For the students in the peer tutoring service, the school records the test scores before ($X$) and after ($Y$) the tutoring takes place."
+    
+    directions <- c("whether the peer tutoring improves student test scores", 
+                    "whether the peer tutoring worsens student test scores", 
+                    "whether the peer tutoring impacts student test scores")
+
+    sigmaX <- round(runif(1, 7, 18), 2)
+    sigmaY <- round(runif(1, 7, 18), 2)
+    Xbar <- round(runif(1, 40, 70), 1)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+    rd <- 1
+
+} else if(sc == 5) {
+    qscenario <- "A manufacturing company decides to recalibrate settings for one type of their machines. They want to determine how this calibration has impacted the dimensions of a particular component being manufactured. They take diameter measurements produced by each of these machines both before ($X$) and after ($Y$) calibration."
+    
+    directions <- c("whether the parts were larger in diameter before calibration", 
+                    "whether the parts had smaller diameters before calibration", 
+                    "whether calibration changed the diameters of the parts")
+
+    sigmaX <- round(runif(1, 0.02, 0.08), 3)
+    sigmaY <- round(runif(1, 0.02, 0.08), 3)
+    Xbar <- round(runif(1, 8, 12), 3)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+    rd <- 3
+
+}  else if(sc == 6) {
+    qscenario <- "A psychologist is interested in how a particular stimulant impacts individual reaction times. The psychologist administer a test to individuals, and records their reaction times, both before ($X$) and after ($Y$) receiving the stimulant."
+    
+    directions <- c("whether the stimulant decreases reaction times", 
+                    "whether the stimulant increases reaction times", 
+                    "whether the stimulant impacts reaction times")
+
+    sigmaX <- round(runif(1, 50, 100), 2)
+    sigmaY <- round(runif(1, 50, 100), 2)
+    Xbar <- round(runif(1, 250, 500), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+    rd <- 2
+
+} else if(sc == 7) {
+    qscenario <- "A farmer hopes to understand the impact of fertilizer application on the productivity of their plots. They consider the application of fertilizer directly to rows of their fields. Within each row, they measure the unfertilized yield ($X$) and the fertilized yield ($Y$)."
+
+    directions <- c("whether the unfertilized rows have higher yields", 
+                    "whether the fertilized rows have higher yields", 
+                    "whether the fertilizer impacts the yields of the rows")
+
+    sigmaX <- round(runif(1, 10, 20), 2)
+    sigmaY <- round(runif(1, 10, 20), 2)
+    Xbar <- round(runif(1, 70, 130), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+    rd <- 2
+} else if(sc == 8) {
+    qscenario <- "A laboratory wants to compare two different devices for measuring the concentrations of chemical solutions. They prepare multiple samples, measuring each individual sample with each device. They report the measured concentrations of the first device as $X$ and the measured concentrations of the second device as $Y$."
+
+    directions <- c("whether the first device reports higher concentrations, on average",
+                    "whether the second device reports higher concentrations, on average",
+                    "whether the two devices report different concentrations, on average")
+
+    sigmaX <- round(runif(1, 0.2, 2), 3)
+    sigmaY <- round(runif(1, 0.2, 2), 3)
+    Xbar <- round(runif(1, 10, 50), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+    rd <- 2
+} else if(sc == 9) {
+    qscenario <- "A team of researchers is interested in the perceived breakdown of domestic labour within heterosexual couples. The researchers recruit a range of couples, asking them to self-report their perceived quantity of weekly household labour. The researchers record the male-reported values as $X$, and the female reported values as $Y$."
+
+    directions <- c("whether the males self-report doing more domestic labour",
+                    "whether the males self-report doing less domestic labour",
+                    "whether the individuals in each couple self-report different levels of domestic labour")
+
+    sigmaX <- round(runif(1, 1, 10), 2)
+    sigmaY <- round(runif(1, 1, 10), 2)
+    Xbar <- round(runif(1, 2, 10), 2)
+    n <- sample(30:500, 1)
+    m <- sample(30:500, 1)
+    rd <- 2
+}
+
+direction <- directions[sided]
+# Sided = 1: X > Y
+# Sided = 2: X < Y
+# Sided = 3: X = Y
+
+conclusion <- sample(0:1, 1)
+alpha <- round(runif(1, 0.01, 0.2), 2)
+
+rho <- runif(1, 0.01, 0.7)
+sigma_XY <- round(rho * sigmaX * sigmaY, 4)
+
+m <- n 
+wrong_df <- (sigmaX^2/n + sigmaY^2/m)^2/((sigmaX^2/n)^2/(n-1) + (sigmaY^2/m)^2/(m-1))
+my_df <- n - 1
+
+# Sample a p-value based on the desired conclusion and alpha
+if(conclusion == 0) {
+    # Reject H0
+    p <- round(runif(1, 0.001, alpha - 0.005), 3)
+} else {
+    # Fail to Reject H0
+    p <- round(runif(1, alpha + 0.001, 0.9), 3)
+}
+
+# Compute the Relevant values for Ybar
+if(sided == 1) {
+    # One-Tail Upper
+    crit <- qt(1-p, df = my_df)
+    p_calc <- function(x) { 1 - pt(x, df = my_df) }
+
+    hypotheses <- "$H_0: \\mu_X \\leq \\mu_Y$ vs. $H_A: \\mu_X > \\mu_Y$"
+
+} else if(sided == 2) {
+    # One-Tail Lower
+    crit <- qt(p, df = my_df)
+    p_calc <- function(x) { pt(x, df = my_df) }
+
+    hypotheses <- "$H_0: \\mu_X \\geq \\mu_Y$ vs. $H_A: \\mu_X < \\mu_Y$"
+} else {
+    # Two-Tailed
+    crit <- qt(sample(c(p/2, 1-p/2), 1), df = my_df)
+    p_calc <- function(x) { 2*pt(-abs(x), df = my_df) }
+
+    hypotheses <- "$H_0: \\mu_X = \\mu_Y$ vs. $H_A: \\mu_X \\neq \\mu_Y$"
+}
+
+# Find Ybar
+Ybar <- round(Xbar - crit * sqrt((sigmaX^2 + sigmaY^2 - 2*sigma_XY) / n), rd)
+test_stat <- (Xbar - Ybar)/sqrt((sigmaX^2 + sigmaY^2 - 2*sigma_XY) / n)
+p_value <- p_calc(test_stat)
+
+###########################################################################
+## Part (A)
+all_hypotheses <- c(
+    "$H_0: \\mu_X \\leq \\mu_Y$ vs. $H_A: \\mu_X > \\mu_Y$",
+    "$H_0: \\mu_X \\geq \\mu_Y$ vs. $H_A: \\mu_X < \\mu_Y$",
+    "$H_0: \\mu_X = \\mu_Y$ vs. $H_A: \\mu_X \\neq \\mu_Y$",
+    "$H_0: \\mu_X < \\mu_Y$ vs. $H_A: \\mu_X \\geq \\mu_Y$",
+    "$H_0: \\mu_X > \\mu_Y$ vs. $H_A: \\mu_X \\leq \\mu_Y$",
+    "$H_0: \\mu_X \\neq \\mu_Y$ vs. $H_A: \\mu_X = \\mu_Y$"
+)
+answer_a <- c(TRUE, rep(FALSE, 4))
+options_a <- c(hypotheses, sample(setdiff(all_hypotheses, hypotheses), 4))
+sort_a <- sample(1:5, 5)
+
+## Part (C)
+answer_c <- c(TRUE, rep(FALSE, 4))
+options_c <- c(
+    paste0("A $t$ distribution with ", my_df, " degrees of freedom."),
+    paste0("A $t$ distribution with ", round(wrong_df, 3), " degrees of freedom."),
+    paste0("A $t$ distribution with ", n, " degrees of freedom."),
+    paste0("A $t$ distribution with ", n + m -2, " degrees of freedom."),
+    paste0("A standard normal distribution.")
+)
+sort_c <- sample(1:5, 5)
+
+## Part (E)
+incorrect_conclusions <- c(
+    "Because the $p$-value is greater than $\\alpha$, we reject the null hypothesis.",
+    "Because the $p$-value is smaller than $\\alpha$, we fail to reject the null hypothesis.",
+    "Because the $p$-value is smaller than $\\alpha$, we accept the null hypothesis.",
+    "Because the $p$-value is greater than $\\alpha$, we accept the null hypothesis."
+)
+correct_conclusion <- ifelse(p_value <= alpha, 
+    "Because the $p$-value is smaller than $\\alpha$, we reject the null hypothesis.",
+    "Because the $p$-value is greater than $\\alpha$, we fail to reject the null hypothesis."
+)
+incorrect_conclusion_include <- ifelse(p_value > alpha, 
+    "Because the $p$-value is smaller than $\\alpha$, we reject the null hypothesis.",
+    "Because the $p$-value is greater than $\\alpha$, we fail to reject the null hypothesis."
+)
+
+answer_e <- c(TRUE, rep(FALSE, 4))
+options_e <- c(correct_conclusion, incorrect_conclusion_include, sample(incorrect_conclusions, 3))
+sort_e <- sample(1:5, 5)
+
+ans1 <- answer_a[sort_a]
+ans2 <- test_stat
+ans3 <- answer_c[sort_c]
+ans4 <- p_value
+ans5 <- answer_e[sort_e]
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+
+`r qscenario` 
+
+In a sample of `r n` observations, they observe:
+
+* $\overline{X} = `r format(Xbar, scientific=FALSE)`$
+* $\overline{Y} = `r format(Ybar, scientific=FALSE)`$
+* $S_X = `r format(sigmaX, scientific=FALSE)`$
+* $S_Y = `r format(sigmaY, scientific=FALSE)`$
+* $S_{XY} = `r format(sigma_XY, scientific=FALSE)`$
+
+Their interest is in whether `r direction`.
+
+a. What set of hypotheses should be tested in this setting? 
+
+##ANSWER1##
+
+b. What is the value of the test statistic used to test the hypothesis identified in (a)? ##ANSWER2##
+c. What is the relevant sampling distribution for this hypothesis test?  
+
+##ANSWER3##
+
+c. What is the $p$-value computed for the hypothesis test? ##ANSWER4##
+d. What is the conclusion from the hypothesis test, at a significance level of `r alpha`.
+
+##ANSWER5##
+
+Question ID: *`r id`*
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(c(options_a[sort_a], options_c[sort_c], options_e[sort_e]), markup = "markdown")
+```
+
+
+Meta-information
+================
+extype: cloze
+exsolution: `r mchoice2string(ans1)`|`r fmt(ans2, 3)`|`r mchoice2string(ans3)`|`r fmt(ans4, 3)`|`r mchoice2string(ans5)`
+exclozetype: schoice|num|schoice|num|schoice
+exname: TwoSampleTTest
+extol: 0.01

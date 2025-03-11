@@ -1,0 +1,255 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+sided <- sample(1:3, 1)
+sc <- sample(1:8, 1)
+
+# Question Texts 
+
+
+if(sc == 1) {
+    qscenario <- "A group of researchers are interested in studying the poverty rates for two different regions."
+    pop1 <- "individuals living in the first region"
+    pop2 <- "individuals living in the second region"
+
+    directions <- c("experience higher rates of poverty", 
+                    "experience lower rates of poverty", 
+                    "experience different rates of poverty")
+
+    pX <- runif(1, 0.05, 0.15)
+    n <- sample(1000:2000, 1)
+    X <- rbinom(1, n, pX)
+
+    m <- sample(1000:2000, 1)
+
+} else if(sc == 2) {
+    qscenario <- "A group of researchers are interested in studying the rates of smartphone ownership for students from two different schoolboards."
+    pop1 <- "students from the first school board"
+    pop2 <- "students from the second school board"
+
+    directions <- c("have a higher rate of smartphone ownership", 
+                    "have a lower rate of smartphone ownership", 
+                    "have different rates of smartphone ownership")
+
+    pX <- runif(1, 0.4, 0.85)
+    n <- sample(1000:2000, 1)
+    X <- rbinom(1, n, pX)
+
+    m <- sample(1000:2000, 1)
+
+} else if(sc == 3) {
+    qscenario <- "Researchers are considering the proportion of individuals from two different countries who smoke cigarettes."
+    pop1 <- "residents of the first country"
+    pop2 <- "residents of the second country"
+
+    directions <- c("smoke in higher proportion", 
+                    "smoke in lower proportion", 
+                    "smoke in a different proportion")
+
+    pX <- runif(1, 0.05, 0.45)
+    n <- sample(1000:2000, 1)
+    X <- rbinom(1, n, pX)
+
+    m <- sample(1000:2000, 1)
+
+} else if(sc == 4) {
+    qscenario <- "A researcher is interested in determining whether male and female children exhibit left-hand dominance with different rates."
+    pop1 <- "male children"
+    pop2 <- "female children"
+
+
+    directions <- c("are left-handed in a higher proportion of cases", 
+                    "are left-handed in a lower proportion of cases", 
+                    "are left-handed in a different proportion of cases")
+
+    pX <- runif(1, 0.05, 0.15)
+    n <- sample(1000:2000, 1)
+    X <- rbinom(1, n, pX)
+
+    m <- sample(1000:2000, 1)
+
+} else if(sc == 5) {
+    qscenario <- "A municipality is interested in determining whether residents of regions within the municipality recycle at different rates."
+    pop1 <- "residents of the first region"
+    pop2 <- "residents of the second region"
+
+    directions <- c("have a higher rate of recycling", 
+                    "have a lower rate of recycling", 
+                    "have a different rate of recycling")
+
+    pX <- runif(1, 0.1, 0.9)
+    n <- sample(1000:2000, 1)
+    X <- rbinom(1, n, pX)
+
+    m <- sample(1000:2000, 1)
+
+} else if(sc == 6) {
+    qscenario <- "A researcher is interested in determining whether there is a difference in the rates of veganism between females and males."
+    pop1 <- "females"
+    pop2 <- "males"
+
+    directions <- c("have a higher probability of being vegan", 
+                    "have a lower probability of being vegan ", 
+                    "have a different probability of being vegan")
+
+    pX <- runif(1, 0.02, 0.15)
+    n <- sample(1000:2000, 1)
+    X <- rbinom(1, n, pX)
+
+    m <- sample(1000:2000, 1)
+
+} else if(sc == 7) {
+    qscenario <- "A sociologist is studying the rates of daily social media usage, comparing young and older people."
+    pop1 <- "young people"
+    pop2 <- "older people"
+
+    directions <- c("have a higher rate of daily social media usage", 
+                    "have a lower rate of daily social media usage", 
+                    "have a different rate of daily social media usage")
+
+    pX <- runif(1, 0.35, 0.9)
+    n <- sample(1000:2000, 1)
+    X <- rbinom(1, n, pX)
+
+    m <- sample(1000:2000, 1)
+
+} else if(sc == 8) {
+    qscenario <- "An organizational behaviour specialist is interested in whether the rates of job satisfaction differ between people working in human resources and those working in finance."
+    pop1 <- "people working in human resources"
+    pop2 <- "people working in finance"
+
+    directions <- c("report higher rates of being satisfied with their job", 
+                    "report lower rates of being satisfied with their job", 
+                    "report different rates of job satisfaction")
+
+    pX <- runif(1, 0.3, 0.9)
+    n <- sample(1000:2000, 1)
+    m <- sample(1000:2000, 1)
+    X <- rbinom(1, n, pX)
+
+
+} 
+
+
+direction <- directions[sided]
+# Sided = 1: X > Y
+# Sided = 2: X < Y
+# Sided = 3: X = Y
+
+conclusion <- sample(0:1, 1)
+alpha <- round(runif(1, 0.01, 0.2), 2)
+
+# Sample a p-value based on the desired conclusion and alpha
+if(conclusion == 0) {
+    # Reject H0
+    p <- round(runif(1, 0.001, alpha - 0.005), 3)
+} else {
+    # Fail to Reject H0
+    p <- round(runif(1, alpha + 0.001, 0.9), 3)
+}
+
+# Compute the Relevant values for Ybar
+if(sided == 1) {
+    # One-Tail Upper
+    crit <- qnorm(1-p)
+    p_calc <- function(x) { 1 - pnorm(x) }
+
+    hypotheses <- "$H_0: p_X \\leq p_Y$ vs. $H_A: p_X > p_Y$"
+
+} else if(sided == 2) {
+    # One-Tail Lower
+    crit <- qnorm(p)
+    p_calc <- function(x) { pnorm(x) }
+
+    hypotheses <- "$H_0: p_X \\geq p_Y$ vs. $H_A: p_X < p_Y$"
+} else {
+    # Two-Tailed
+    crit <- qnorm(sample(c(p/2, 1-p/2), 1))
+    p_calc <- function(x) { 2*pnorm(-abs(x)) }
+
+    hypotheses <- "$H_0: p_X = p_Y$ vs. $H_A: p_X \\neq p_Y$"
+}
+
+
+find_y <- function(yhat) {
+    (X/n - yhat/m) / sqrt((X + yhat)/(n+m) * (1 - (X + yhat)/(n+m)) * (1/n + 1/m)) - crit
+}
+Y <- round(uniroot(f = find_y, interval = c(0, m))$root)
+
+test_stat <- (X/n - Y/m) / sqrt((X + Y)/(n+m) * (1 - (X + Y)/(n+m)) * (1/n + 1/m))
+p_value <- p_calc(test_stat)
+
+###########################################################################
+# Fixed Answers
+all_hypotheses <- c(
+    "$H_0: p_X \\leq p_Y$ vs. $H_A: p_X > p_Y$",
+    "$H_0: p_X \\geq p_Y$ vs. $H_A: p_X < p_Y$",
+    "$H_0: p_X = p_Y$ vs. $H_A: p_X \\neq p_Y$",
+    "$H_0: p_X < p_Y$ vs. $H_A: p_X \\geq p_Y$",
+    "$H_0: p_X > p_Y$ vs. $H_A: p_X \\leq p_Y$",
+    "$H_0: p_X \\neq p_Y$ vs. $H_A: p_X = p_Y$"
+)
+answer_a <- c(TRUE, rep(FALSE, 4))
+options_a <- c(hypotheses, sample(setdiff(all_hypotheses, hypotheses), 4))
+sort_a <- sample(1:5, 5)
+
+incorrect_conclusions <- c(
+    "Because the $p$-value is greater than $\\alpha$, we reject the null hypothesis.",
+    "Because the $p$-value is smaller than $\\alpha$, we fail to reject the null hypothesis.",
+    "Because the $p$-value is smaller than $\\alpha$, we accept the null hypothesis.",
+    "Because the $p$-value is greater than $\\alpha$, we accept the null hypothesis."
+)
+correct_conclusion <- ifelse(p_value <= alpha, 
+    "Because the $p$-value is smaller than $\\alpha$, we reject the null hypothesis.",
+    "Because the $p$-value is greater than $\\alpha$, we fail to reject the null hypothesis."
+)
+incorrect_conclusion_include <- ifelse(p_value > alpha, 
+    "Because the $p$-value is smaller than $\\alpha$, we reject the null hypothesis.",
+    "Because the $p$-value is greater than $\\alpha$, we fail to reject the null hypothesis."
+)
+
+answer_d <- c(TRUE, rep(FALSE, 4))
+options_d <- c(correct_conclusion, incorrect_conclusion_include, sample(incorrect_conclusions, 3))
+sort_d <- sample(1:5, 5)
+
+ans1 <- answer_a[sort_a]
+ans2 <- test_stat
+ans3 <- p_value
+ans4 <- answer_d[sort_d]
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+
+`r qscenario` They collect a sample of `r n` `r pop1` (labeled $X$). Further, they take a sample of `r m` `r pop2` (labeled $Y$). 
+
+From their sample, they observe $X = `r X`$ and $Y = `r Y`$. 
+
+The interest of the study is in testing whether `r pop1` `r direction` (compared to `r pop2`).
+
+a. What set of hypotheses should be tested in this setting? 
+
+##ANSWER1##
+
+b. What is the value of the test statistic used to test the hypothesis identified in (a)? ##ANSWER2##
+c. What is the $p$-value computed for the hypothesis test? ##ANSWER3##
+d. What is the conclusion from the hypothesis test, at a significance level of `r alpha`.
+
+##ANSWER4##
+
+Question ID: *`r id`*
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(c(options_a[sort_a], options_d[sort_d]), markup = "markdown")
+```
+
+
+Meta-information
+================
+extype: cloze
+exsolution: `r mchoice2string(ans1)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r mchoice2string(ans4)`
+exclozetype: schoice|num|num|schoice
+exname: TwoSampleZTest
+extol: 0.01

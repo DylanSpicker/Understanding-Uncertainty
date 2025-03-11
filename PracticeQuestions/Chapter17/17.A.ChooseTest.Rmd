@@ -1,0 +1,81 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+sol <- c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)
+
+sc_idx <- sample(1:7, 1)
+
+sol[sc_idx] <- TRUE
+
+# a. A psychologist wants to investigate if the average level of anxiety in a specific population is higher than the national average. They record the anxiety scores for $18$ individual patients from the population. 
+
+large_n <- sample(100:300, 1)
+small_n <- sample(5:20, 1)
+
+scenarios <- list(
+    c( # One Sample Z 
+        paste0("A teacher wants to determine if the average score on a standardized test for students in their class is significantly different from the national average. Standardized grades are normally distributed, with a known variance."),
+        paste0("A psychologist wants to investigate if the average level of anxiety in a specific population is higher than the national average. They record the anxiety scores for ", small_n, " individual patients from the population. It is known that anxiety scores are normally distributed, with a known variance.")
+    ),
+    c( # One Sample t
+        paste0("A teacher wants to determine if the average score on a standardized test for students in their class is significantly different from the national average. The teacher takes a sample of ", small_n, " students. Standardized grades are normally distributed, with an unknown variance."),
+        paste0("A teacher wants to determine if the average score on a standardized test for students in their class is significantly different from the national average. The teacher takes a sample of ", large_n, " students."),
+        paste0("A manufacturer claims that their light bulbs last an average of 1000 hours. A consumer group wants to test this claim by taking a sample of ", large_n, " lightbulbs and recording their lifespan."),
+        paste0("A psychologist wants to investigate if the average level of anxiety in a specific population is higher than the national average. They record the anxiety scores for ", small_n, " individual patients from the population. It is known that anxiety scores are normally distributed, with an unknown variance."),
+        paste0("A psychologist wants to investigate if the average level of anxiety in a specific population is higher than the national average. They record the anxiety scores for ", large_n, " individual patients from the population.")
+    ),
+    c( # Two Sample Independent t
+        paste0("A researcher wants to compare the average height of male and female students in a college. They sample ", large_n, " each of male and female students."),
+        paste0("A researcher wants to compare the average lifespan of two different breeds of dogs. They sample ", large_n, " dogs of each species, and consider their lifespans.")
+    ),
+    c( # Two Sample Paired t
+        paste0("A market research firm wants to compare customer satisfaction ratings for two competing products. They record satisfaction ratings from a group of ", large_n, "customers. Each customer provides their satisfaction rating for each of the two products."),
+        paste0("A company wants to know if a new training program improves employee productivity. They sample productivity scores for ", large_n, " employees both before and after the training program is implemented."),
+        paste0("A psychologist wants to investigate if a new therapy reduces anxiety levels in patients. They take a sample of ", large_n, " patients, recording the anxiety levels before and after therapy for each."),
+        paste0("A company wants to compare the average salaries of male and female employees with the same job title. They consider the ", large_n, " pairs of male and female employees with the same job title that are available.")
+    ),
+    c( # The Signed-Rank
+        paste0("A teacher wants to determine if the average score on a standardized test for students in their class is significantly different from the national average. The teacher takes a sample of ", small_n, " students."),
+        paste0("A manufacturer claims that their light bulbs last an average of 1000 hours. A consumer group wants to test this claim by taking a sample of ", small_n, " lightbulbs and recording their lifespan."),
+        paste0("A psychologist wants to investigate if the average level of anxiety in a specific population is higher than the national average. They record the anxiety scores for ", small_n, " individual patients from the population.")
+    ),
+    c( # Mann-Whitney U
+        paste0("A researcher wants to compare the average height of male and female students in a college. They sample ", small_n, " each of male and female students."),
+        paste0("A researcher wants to compare the average lifespan of two different breeds of dogs. They sample ", small_n, " dogs of each species, and consider their lifespans.")
+    ),
+    c( # Paired Signed-Rank
+        paste0("A market research firm wants to compare customer satisfaction ratings for two competing products. They record satisfaction ratings from a group of ", small_n, "customers. Each customer provides their satisfaction rating for each of the two products."),
+        paste0("A company wants to know if a new training program improves employee productivity. They sample productivity scores for ", small_n, " employees both before and after the training program is implemented."),
+        paste0("A psychologist wants to investigate if a new therapy reduces anxiety levels in patients. They take a sample of ", small_n, " patients, recording the anxiety levels before and after therapy for each."),
+        paste0("A company wants to compare the average salaries of male and female employees with the same job title. They consider the ", large_n, " pairs of male and female employees with the same job title that are available.")
+    )
+)
+
+scenario <- sample(scenarios[[sc_idx]], 1)
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+What hypothesis test procedure is *most appropriate* for the following scenario?
+
+`r scenario`
+
+(Question ID: *`r id`*)
+
+Answerlist
+------------
+* The One-Sample $Z$-test
+* The One-Sample $t$-test
+* The Two-Sample Independent $t$-test 
+* The Two-Sample Paired $t$-test
+* The Signed-Rank Test
+* The Mann-Whitney $U$-test 
+* The Paired Signed-Rank Test
+* The Two-Sample Pooled $t$-test
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(sol)`
+exshuffle: 5
+exname: IdentifyNamedDistribution

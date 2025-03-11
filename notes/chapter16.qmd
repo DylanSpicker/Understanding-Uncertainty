@@ -307,7 +307,33 @@ exams2forms("16.C.TwoSampleNormalVariances.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
+exams2forms("16.D.TwoSampleProportions.Rmd", 
+            edir = "../PracticeQuestions/Chapter16", 
+            n = 100, cloze_schoice_display = "buttons")
+```
+:::
+
+:::{#sa-16.05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
 exams2forms("16.E.PooledVariance.Rmd", 
+            edir = "../PracticeQuestions/Chapter16", 
+            n = 100, cloze_schoice_display = "buttons")
+```
+:::
+
+:::{#sa-16.06}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("16.F.PairedDifferences.Rmd", 
             edir = "../PracticeQuestions/Chapter16", 
             n = 100, cloze_schoice_display = "buttons")
 ```
