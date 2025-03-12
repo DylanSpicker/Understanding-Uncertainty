@@ -10,9 +10,6 @@ alpha <- round(runif(1, 0.01, 0.2), 2)
 
 Delta <- round(popSd * (qnorm(power) + qnorm(1-alpha/2))/sqrt(approx_nB), 2)
 
-round(runif(1, 0.5, 10), 2)
-
-
 ans1 <- pnorm(qnorm(alpha/2) + Delta/(popSd/sqrt(nA))) + (1 - pnorm(qnorm(1-alpha/2) + Delta/(popSd/sqrt(nA))))
 ans2 <- ceiling((popSd * (qnorm(power) + qnorm(1-alpha/2))/abs(Delta))^2)
 

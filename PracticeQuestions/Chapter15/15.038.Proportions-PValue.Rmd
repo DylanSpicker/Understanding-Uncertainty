@@ -71,14 +71,14 @@ if(sc == 1) {
     n <- sample(max(ceiling(10/p0), ceiling(10/(1-p0))):2000, 1)
 
     if(sided == 1) {
-        qtext <- paste("In the general population, a particular disease has prevalence", p0,". Researhcers are interested in whether the prevalence in a particular subpopulation is equivalent. They sample", n, "individuals from this subpopulation, and find that")
-        units <- "individuals have the disease."
+        qtext <- paste("In the general population, a particular disease has prevalence", p0,". Researchersare interested in whether the prevalence in a particular subpopulation is equivalent. They sample", n, "individuals from this subpopulation, and find that")
+        units <- "individuals have the disease"
     } else if(sided == 2) {
-        qtext <- paste("In the general population, a particular disease has prevalence", p0,". Researhcers are interested in whether the prevalence in a particular subpopulation with heightened risk factors is actually greater than the overall average. They sample", n, "individuals from this subpopulation, and find that")
-        units <- "individuals have the disease."
+        qtext <- paste("In the general population, a particular disease has prevalence", p0,". Researchersare interested in whether the prevalence in a particular subpopulation with heightened risk factors is actually greater than the overall average. They sample", n, "individuals from this subpopulation, and find that")
+        units <- "individuals have the disease"
     } else {
-        qtext <- paste("In the general population, a particular disease has prevalence", p0,". Researhcers are interested in whether the prevalence in a particular subpopulation who appear to have certain protective lifestyle factors is actually less than the overall average. They sample", n, "individuals from this subpopulation, and find that")
-        units <- "individuals have the disease."
+        qtext <- paste("In the general population, a particular disease has prevalence", p0,". Researchersare interested in whether the prevalence in a particular subpopulation who appear to have certain protective lifestyle factors is actually less than the overall average. They sample", n, "individuals from this subpopulation, and find that")
+        units <- "individuals have the disease"
     }
 } else if(sc == 6) {
     p0 <- round(runif(1, 0.3, 0.7), 2)

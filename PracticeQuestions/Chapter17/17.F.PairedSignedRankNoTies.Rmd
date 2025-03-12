@@ -142,6 +142,8 @@ ans1 <- U
 ans2 <- p_val
 ans3 <- answer_c[sort_c]
 
+data_string <- paste0("* Observation ", 1:n, ": X=", X, " and Y=", Y, ".", collapse = "\n")
+
 id <- sprintf("%010d", sample(0:1000000000, 1))
 
 ```
@@ -155,12 +157,7 @@ Question
 
 They observe the following data: 
 
-```{r dataoutput, results = "asis", echo=FALSE} 
-    cat(paste0("| |", paste0(1:n, collapse=" | "), "\n"))
-    cat(paste0("|:-:|", paste0(rep(":-:|", n), collapse=""), "\n"))
-    cat(paste0("|$X$|", paste0(X, collapse=" | "), "\n"))
-    cat(paste0("|$Y$|", paste0(Y, collapse=" | "), "\n"))
-```
+`r I(data_string)`
 
 a. What is the value of the test statistic used to test the given hypothesis. Use average rank tie-breaking, if required. ##ANSWER1##
 b. What is the $p$-value computed for the hypothesis test? ##ANSWER2##

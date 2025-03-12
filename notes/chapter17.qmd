@@ -496,10 +496,10 @@ exams2forms("17.F.PairedSignedRankNoTies.Rmd",
 #| cache: true
 exams2forms("17.G.PairedSignedRankTies.Rmd", 
             edir = "../PracticeQuestions/Chapter17", 
-            n = 100, cloze_schoice_display = "buttons")
+            n = 100, 
+            cloze_schoice_display = "buttons")
 ```
 :::
-
 
 :::
 
