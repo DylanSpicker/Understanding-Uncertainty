@@ -7,7 +7,7 @@ if(sc == 1) {
     n <- sample(35:100, 1)
     sd <- round(runif(1, 1, 8), 2)
 
-    qtext <- paste("A pharmaceutical company claims their new cholesterol-lowering medication reduces cholesterol levels by an average of at least", amt, "points. A clinical trial was conducted with", n, "patients to test this claim. For each patient, the researchers measured their amt in cholesterol level. The researchers found")
+    qtext <- paste("A pharmaceutical company claims their new cholesterol-lowering medication reduces cholesterol levels by an average of at least", amt, "points. A clinical trial was conducted with", n, "patients to test this claim. For each patient, the researchers measured their cholesterol level. The researchers found")
 } else if(sc == 2) {
     amt <- round(runif(1, 15, 48), 2)
     n <- sample(35:100, 1)
