@@ -1,7 +1,5 @@
 ```{r data generation, echo = FALSE, results = "hide"}
 
-set.seed(31415)
-
 sc <- sample(1:6, 1)
 
 if(sc == 1) {
