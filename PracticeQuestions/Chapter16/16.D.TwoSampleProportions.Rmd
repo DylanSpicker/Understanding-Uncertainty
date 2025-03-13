@@ -98,7 +98,7 @@ if(sc == 1) {
     m <- sample(1000:2000, 1)
 
 } else if(sc == 7) {
-    qscenario <- "A sociologist is studying the rates of daily social media usage, comparing young and older people."
+    qscenario <- "A sociologist is studying the rates of daily social media usage, comparing younger and older people."
     pop1 <- "young people"
     pop2 <- "older people"
 

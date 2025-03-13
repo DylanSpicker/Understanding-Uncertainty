@@ -6,7 +6,7 @@ sc <- sample(1:9, 1)
 # Question Texts 
 
 if(sc == 1) {
-    qscenario <- "A group of researchers are studying the impact of a newly designed medication on blood pressure. They measure individual's systolic blood pressure before ($X$) and after ($Y$) taking the medicaiton."
+    qscenario <- "A group of researchers are studying the impact of a newly designed medication on blood pressure. They measure individuals' systolic blood pressure before ($X$) and after ($Y$) taking the medication."
 
     directions <- c("whether the medication lowers patients' average systolic blood pressure", 
                     "whether the medication increases patients' average systolic blood pressure", 
@@ -19,7 +19,7 @@ if(sc == 1) {
     rd <- 2
 
 } else if(sc == 2) {
-    qscenario <- "A group of researchers are studying the impact of a particular diet on blood pressure. They measure individual's systolic blood pressure before ($X$) and after ($X$) starting the diet."
+    qscenario <- "A group of researchers are studying the impact of a particular diet on blood pressure. They measure individuals' systolic blood pressure before ($X$) and after ($X$) starting the diet."
 
     directions <- c("whether the diet lowers patients' average systolic blood pressure", 
                     "whether the diet increases patients' average systolic blood pressure", 

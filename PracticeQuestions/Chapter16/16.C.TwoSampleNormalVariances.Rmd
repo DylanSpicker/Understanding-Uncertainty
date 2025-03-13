@@ -67,7 +67,7 @@ id <- sprintf("%010d", sample(0:1000000000, 1))
 Question
 ========
 
-Data are collected from two independent, normally distributed populations. From the first population, a sample of size `r n` is taken, observing a sample mean of `r Xbar` and a standard deviation of `r sdX`. For the second population, a sample of size `r m` is taken, observing a sample mean of `r Ybar` and a standard deviation of `r sdY`. There is a desire to determine whether `r statement`. 
+Data are collected from two independent, normally distributed populations. From the first population, a sample of size `r n` is taken, observing a sample mean of `r Xbar` and a standard deviation of `r sdX`. From the second population, a sample of size `r m` is taken, observing a sample mean of `r Ybar` and a standard deviation of `r sdY`. There is a desire to determine whether `r statement`. 
 
 Test the corresponding hypothesis with a significance level of `r alpha`.
 

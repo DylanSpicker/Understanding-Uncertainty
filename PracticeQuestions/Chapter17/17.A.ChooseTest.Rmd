@@ -78,4 +78,4 @@ Meta-information
 extype: schoice
 exsolution: `r mchoice2string(sol)`
 exshuffle: 5
-exname: IdentifyNamedDistribution
+exname: ChoseTest

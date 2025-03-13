@@ -72,7 +72,7 @@ if(length(unique(D)) < length(unique(ranks))) {
 
 D <- rep(D, times=as.numeric(table(ranks)))
 D <- unname(D * signs + mu)
-U <- sum(rank(abs(D-mu)) * signs * (X != mu))
+U <- sum(rank(abs(D-mu)) * signs * (D != mu))
 
 
 X <- round(rnorm(n, mean = meanX, sd = sdX), rd)
