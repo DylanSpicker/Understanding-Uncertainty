@@ -138,7 +138,7 @@ The location of the population $D$, $\mu_D$, will be equal to the difference in 
 ## Wilcoxon Signed-Rank Tests for Paired Populations (Without Ties)
 Suppose that data are selected from two symmetric populations, such that the observations are paired. First, compute the paired differences, taking $$(D_1, D_2, \dots, D_n) = (X_1 - Y_1, X_2 - Y_2, \dots, X_n - Y_n).$$
 
-Further, suppose that the paired differences are such that the absolute values of all differences are unique. Then the Wilcoxon Signed-Rank test can be used to test $H_0: \mu_D = 0$ versus $H_0: \mu_D \neq 0$, or the one-tailed alternatives, where $\mu_D = \mu_X - \mu_Y$ is the difference in population locations. To do so, the **signed-rank sum** test statistic is computed, $$T = \sum_{i=1}^n \text{sgn}(D_i)R_i,$$ where $R_i$ is the rank order (smallest to largest) of $|D_i|$. 
+Further, suppose that the paired differences are such that the absolute values of all differences are unique. Then the Wilcoxon Signed-Rank test can be used to test $H_0: \mu_D = 0$ versus $H_A: \mu_D \neq 0$, or the one-tailed alternatives, where $\mu_D = \mu_X - \mu_Y$ is the difference in population locations. To do so, the **signed-rank sum** test statistic is computed, $$T = \sum_{i=1}^n \text{sgn}(D_i)R_i,$$ where $R_i$ is the rank order (smallest to largest) of $|D_i|$. 
 
 Under the null hypothesis, $T$ follows a signed-rank distribution with size parameter $n$. Taking $T = t$ based on the observed sample, the $p$-value can be computed as: 
 
