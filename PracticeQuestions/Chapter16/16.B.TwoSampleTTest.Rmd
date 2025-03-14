@@ -56,8 +56,8 @@ if(sc == 1) {
     pop2 <- "individuals taking the second treatment"
 
 
-    directions <- c("have faster average reaction times", 
-                    "have slower average reaction times", 
+    directions <- c("have longer average reaction times", 
+                    "have shorter average reaction times", 
                     "differ in their average reaction times")
 
     sigmaX <- round(runif(1, 20, 100), 2)

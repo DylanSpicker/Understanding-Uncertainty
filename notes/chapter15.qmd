@@ -916,7 +916,8 @@ exams2forms("15.030.DrawConclusions.Rmd",
 #| cache: true
 exams2forms("15.032.PValueTechnique-TwoTail.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100, cloze_schoice_display = "buttons")
+            n = 100, 
+            cloze_schoice_display = "buttons")
 ```
 :::
 
@@ -1051,5 +1052,9 @@ exams2forms("15.042.PValueConversions.Rmd", edir = "../PracticeQuestions/Chapter
 ```
 :::
 
+:::
+
+::: {.content-visible when-format='html'}
+{{< include /calculator.qmd >}}
 :::
 

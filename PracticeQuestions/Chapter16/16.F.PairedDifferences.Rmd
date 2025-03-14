@@ -32,7 +32,7 @@ if(sc == 1) {
     rd <- 2
 
 } else if(sc == 3) {
-    qscenario <- "A manufacturer of tires is interested in determining the quality difference in two different makes of their tires. They decide to takes pairs of the tires, placing 2 of each type on the same set of vehicles, driving and measuring the wear. They record the wear of the first type as $X$ and of the second type as $Y$."
+    qscenario <- "A manufacturer of tires is interested in determining the quality difference in two different makes of their tires. They decide to take pairs of the tires, placing 2 of each type on the same set of vehicles, driving and measuring the wear. They record the wear of the first type as $X$ and of the second type as $Y$."
     
     directions <- c("whether the first type of tires exhibit more wear", 
                     "whether the first type of tires exhibit less wear", 
@@ -48,8 +48,8 @@ if(sc == 1) {
 } else if(sc == 4) {
     qscenario <- "A school is implementing a peer tutoring service to see if it has an impact on student test scores on a standardized test. For the students in the peer tutoring service, the school records the test scores before ($X$) and after ($Y$) the tutoring takes place."
     
-    directions <- c("whether the peer tutoring improves student test scores", 
-                    "whether the peer tutoring worsens student test scores", 
+    directions <- c("whether the peer tutoring worsens student test scores", 
+                    "whether the peer tutoring improves student test scores", 
                     "whether the peer tutoring impacts student test scores")
 
     sigmaX <- round(runif(1, 7, 18), 2)

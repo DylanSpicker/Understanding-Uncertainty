@@ -779,6 +779,8 @@ b. Suppose that the company is concerned with the number of individuals who cann
 :::
 
 
+::: {.content-visible when-format='html'}
+
 ## Self-Assessment {.unnumbered}
 
 Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
@@ -937,4 +939,6 @@ exams2forms("8.K.PoissonWP.Rmd",
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
 ```
+:::
+
 :::
