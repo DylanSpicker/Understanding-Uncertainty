@@ -13,7 +13,7 @@ if(sc == 1) {
     n <- sample(35:100, 1)
     sd <- round(runif(1, 0.05, 0.1), 4)
 
-    qtext <- paste("A researcher is studying the impact of a particular drug on human reaction times. They know that the average reaction time for subjects without the drug in the task is", format(amt, scientific=FALSE, digits=4), "seconds. The researchers randomly sample", n, "individuals, providing them the drug, and measure their reaction times. They find")
+    qtext <- paste("A researcher is studying the impact of a particular drug on human reaction times. They know that the average reaction time for subjects without the drug in the task is", format(amt, scientific=FALSE, nsmall=4), "seconds. The researchers randomly sample", n, "individuals, providing them the drug, and measure their reaction times. They find")
 } else if(sc == 3) {
     amt <- sample(400:600, 1)
     n <- sample(35:100, 1)

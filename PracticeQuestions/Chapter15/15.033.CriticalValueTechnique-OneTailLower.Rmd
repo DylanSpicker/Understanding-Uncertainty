@@ -8,38 +8,38 @@ if(sc == 1) {
     n <- sample(35:100, 1)
     sd <- round(runif(1, 0.05, 1.5), 2)
 
-    qtext <- paste("A coffee shop chain claims that their average cup of coffee contains", format(amt, scientific=FALSE, digits=2), "ounces of coffee. A consumer advocacy group suspects that the actual average amount is less than", format(amt, scientific=FALSE, digits=2), "ounces. They randomly sample", n, "cups of coffee from various locations and find")
+    qtext <- paste("A coffee shop chain claims that their average cup of coffee contains", format(amt, scientific=FALSE, nsmall=2), "ounces of coffee. A consumer advocacy group suspects that the actual average amount is less than", format(amt, scientific=FALSE, nsmall=2), "ounces. They randomly sample", n, "cups of coffee from various locations and find")
 
 } else if (sc == 2) {
     amt <- round(runif(1, 15, 48), 2)
     n <- sample(35:100, 1)
     sd <- round(runif(1, 1, 5), 2)
 
-    qtext <- paste("A phone manufacturer claims that their phone batteries last for an average of", format(amt, scientific=FALSE, digits=2), "hours. A tech YouTuber suspects that this is an overstatement, and wish to use statistical techniques to demonstrate their claim. They purchase", n, "phones, testing the battery life, and find")
+    qtext <- paste("A phone manufacturer claims that their phone batteries last for an average of", format(amt, scientific=FALSE, nsmall=2), "hours. A tech YouTuber suspects that this is an overstatement, and wish to use statistical techniques to demonstrate their claim. They purchase", n, "phones, testing the battery life, and find")
 } else if (sc == 3) {
     amt <- round(runif(1, 75, 500), 2)
     n <- sample(35:100, 1)
     sd <- round(runif(1, amt/6, amt/2), 2)
 
-    qtext <- paste("A cloud server host is contractually obligated to maintain a server load time of no more than", format(amt, scientific=FALSE, digits=2), "milliseconds. A data analyst working with quality assurance is responsible for providing statistical evidence as to whether this is achieved. They randomly sample", n, "page visits, recording the load time for each, and find")
+    qtext <- paste("A cloud server host is contractually obligated to maintain a server load time of no more than", format(amt, scientific=FALSE, nsmall=2), "milliseconds. A data analyst working with quality assurance is responsible for providing statistical evidence as to whether this is achieved. They randomly sample", n, "page visits, recording the load time for each, and find")
 } else if (sc == 4) {
     amt <- round(runif(1, 3, 15), 2)
     n <- sample(35:100, 1)
     sd <- round(runif(1, 0.5 * amt/3, amt/3), 2)
 
-    qtext <- paste("A vehicle manufacturer claims that their vehicles achieve an average fuel efficiency of", format(amt, scientific=FALSE, digits=2), "L/100km. A consumer magazine suspects that this is being overestimated. They randomly sample", n, "of these vehicles, and record the fuel efficiency of each, finding")
+    qtext <- paste("A vehicle manufacturer claims that their vehicles achieve an average fuel efficiency of", format(amt, scientific=FALSE, nsmall=2), "L/100km. A consumer magazine suspects that this is being overestimated. They randomly sample", n, "of these vehicles, and record the fuel efficiency of each, finding")
 } else if (sc == 5) {
     amt <- sample(2000:15000, 1)
     n <- sample(35:100, 1)
     sd <- round(runif(1, 50 * amt/2000, 100 * amt/2000), 2)
 
-    qtext <- paste("A lightbulb manufacturer suspects that a competitor's new design has a shorter lifespan than their existing design. Their existing design is rated for an average of", format(amt, scientific=FALSE, digits=2), "hours. To test their competitor's new design, the company purchases", n, "of the new lightbulbs, testing their lifespan, and they find")
+    qtext <- paste("A lightbulb manufacturer suspects that a competitor's new design has a shorter lifespan than their existing design. Their existing design is rated for an average of", format(amt, scientific=FALSE, nsmall=2), "hours. To test their competitor's new design, the company purchases", n, "of the new lightbulbs, testing their lifespan, and they find")
 }  else if (sc == 6) {
     amt <- round(runif(1, 140, 180), 2)
     n <- sample(35:100, 1)
     sd <- round(runif(1, 5, 15), 2)
 
-    qtext <- paste("A new drug is developed to lower the blood pressure of members of a particular population. The population average is", format(amt, scientific=FALSE, digits=2), ". To test its efficacy, researchers take a sample of", n, "individuals from the population, prescribe them the medication, and then monitor their blood pressure. Doing this they find")
+    qtext <- paste("A new drug is developed to lower the blood pressure of members of a particular population. The population average is", format(amt, scientific=FALSE, nsmall=2), ". To test its efficacy, researchers take a sample of", n, "individuals from the population, prescribe them the medication, and then monitor their blood pressure. Doing this they find")
 }
 
 

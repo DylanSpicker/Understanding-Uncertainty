@@ -805,7 +805,7 @@ set.seed(31415)
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="8.A.IdentifyDist.Rmd", 
+exams2forms("8.A.IdentifyDist.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
 ```
@@ -818,7 +818,7 @@ exams2forms(file="8.A.IdentifyDist.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="8.B.Binomial.Rmd", 
+exams2forms("8.B.Binomial.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
 ```
@@ -831,7 +831,7 @@ exams2forms(file="8.B.Binomial.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="8.C.Geometric.Rmd", 
+exams2forms("8.C.Geometric.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
 ```
@@ -844,7 +844,7 @@ exams2forms(file="8.C.Geometric.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="8.D.NegativeBinomial.Rmd", 
+exams2forms("8.D.NegativeBinomial.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 70)
 ```
@@ -857,7 +857,7 @@ exams2forms(file="8.D.NegativeBinomial.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="8.E.Hypergeometric.Rmd", 
+exams2forms("8.E.Hypergeometric.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
 ```
@@ -870,7 +870,7 @@ exams2forms(file="8.E.Hypergeometric.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="8.F.Poisson.Rmd", 
+exams2forms("8.F.Poisson.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
 ```
@@ -883,7 +883,7 @@ exams2forms(file="8.F.Poisson.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="8.G.DiscreteUniformBinomial.Rmd", 
+exams2forms("8.G.DiscreteUniformBinomial.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
 ```
@@ -896,7 +896,7 @@ exams2forms(file="8.G.DiscreteUniformBinomial.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="8.H.HypergeometricWP.Rmd", 
+exams2forms("8.H.HypergeometricWP.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
 ```
@@ -909,7 +909,7 @@ exams2forms(file="8.H.HypergeometricWP.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="8.I.GeometricWP.Rmd", 
+exams2forms("8.I.GeometricWP.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
 ```
@@ -922,7 +922,7 @@ exams2forms(file="8.I.GeometricWP.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="8.J.NegativeBinomialWP.Rmd", 
+exams2forms("8.J.NegativeBinomialWP.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
 ```
@@ -935,7 +935,7 @@ exams2forms(file="8.J.NegativeBinomialWP.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="8.K.PoissonWP.Rmd", 
+exams2forms("8.K.PoissonWP.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
 ```

@@ -13,13 +13,13 @@ if(sc == 1) {
     n <- sample(35:100, 1)
     sd <- round(runif(1, 1, 5), 2)
 
-    qtext <- paste("A phone manufacturer has designed a new model of phone. They wish to test whether their new phone has a battery life that exceeds that of their outgoing model. Their previous model has an average life of", format(amt, scientific=FALSE, digits=2), "hours. They randomly sample", n, "of the new model phones, testing the battery life, and find")
+    qtext <- paste("A phone manufacturer has designed a new model of phone. They wish to test whether their new phone has a battery life that exceeds that of their outgoing model. Their previous model has an average life of", format(amt, scientific=FALSE, nsmall=2), "hours. They randomly sample", n, "of the new model phones, testing the battery life, and find")
 } else if(sc == 3) {
     amt <- sample(2000:15000, 1)
     n <- sample(35:100, 1)
     sd <- round(runif(1, 50 * amt/2000, 100 * amt/2000), 2)
 
-    qtext <- paste("A lightbulb manufacturer comes up with a new design that they hope will lead to a longer-lasting lightbulb. Their existing design is rated for an average of", format(amt, scientific=FALSE, digits=2), "hours. To test the new design, the company samples", n, "of the new lightbulbs, testing their lifespan, and they find")
+    qtext <- paste("A lightbulb manufacturer comes up with a new design that they hope will lead to a longer-lasting lightbulb. Their existing design is rated for an average of", format(amt, scientific=FALSE, nsmall=2), "hours. To test the new design, the company samples", n, "of the new lightbulbs, testing their lifespan, and they find")
 } else if (sc == 4) {
     amt <- round(runif(1, 65, 80), 2)
     n <- sample(35:100, 1)

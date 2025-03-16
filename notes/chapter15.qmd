@@ -874,7 +874,7 @@ set.seed(31415)
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.030.ValidHypotheses.Rmd", 
+exams2forms(file="15.030.ValidHypotheses.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -887,7 +887,7 @@ exams2forms("15.030.ValidHypotheses.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.030.NullAlternativeFormat.Rmd", 
+exams2forms(file="15.030.NullAlternativeFormat.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -901,7 +901,7 @@ exams2forms("15.030.NullAlternativeFormat.Rmd",
 #| warning: false
 #| cache: true
 
-exams2forms("15.030.DrawConclusions.Rmd", 
+exams2forms(file="15.030.DrawConclusions.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -914,7 +914,7 @@ exams2forms("15.030.DrawConclusions.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.032.PValueTechnique-TwoTail.Rmd", 
+exams2forms(file="15.032.PValueTechnique-TwoTail.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, 
             cloze_schoice_display = "buttons")
@@ -928,7 +928,7 @@ exams2forms("15.032.PValueTechnique-TwoTail.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.032.PValueTechnique-OneTailLower.Rmd", 
+exams2forms(file="15.032.PValueTechnique-OneTailLower.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -941,7 +941,7 @@ exams2forms("15.032.PValueTechnique-OneTailLower.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.032.PValueTechnique-OneTailUpper.Rmd", 
+exams2forms(file="15.032.PValueTechnique-OneTailUpper.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -955,7 +955,7 @@ exams2forms("15.032.PValueTechnique-OneTailUpper.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.033.CriticalValueTechnique-TwoTail.Rmd", 
+exams2forms(file="15.033.CriticalValueTechnique-TwoTail.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -968,7 +968,7 @@ exams2forms("15.033.CriticalValueTechnique-TwoTail.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.033.CriticalValueTechnique-OneTailLower.Rmd", 
+exams2forms(file="15.033.CriticalValueTechnique-OneTailLower.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -981,7 +981,7 @@ exams2forms("15.033.CriticalValueTechnique-OneTailLower.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.033.CriticalValueTechnique-OneTailUpper.Rmd", 
+exams2forms(file="15.033.CriticalValueTechnique-OneTailUpper.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -995,7 +995,7 @@ exams2forms("15.033.CriticalValueTechnique-OneTailUpper.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.038.Proportions-CriticalValue.Rmd", 
+exams2forms(file="15.038.Proportions-CriticalValue.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -1009,7 +1009,7 @@ exams2forms("15.038.Proportions-CriticalValue.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.038.Proportions-PValue.Rmd", 
+exams2forms(file="15.038.Proportions-PValue.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -1022,7 +1022,7 @@ exams2forms("15.038.Proportions-PValue.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.034.TypeIandTypeIIErrors-schoice.Rmd", 
+exams2forms(file="15.034.TypeIandTypeIIErrors-schoice.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 70)
 ```
@@ -1035,7 +1035,7 @@ exams2forms("15.034.TypeIandTypeIIErrors-schoice.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.039.PowerCalculations-Z-test.Rmd", 
+exams2forms(file="15.039.PowerCalculations-Z-test.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -1048,7 +1048,7 @@ exams2forms("15.039.PowerCalculations-Z-test.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("15.042.PValueConversions.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50, cloze_schoice_display = "buttons")
+exams2forms(file="15.042.PValueConversions.Rmd", edir = "../PracticeQuestions/Chapter15", n = 50, cloze_schoice_display = "buttons")
 ```
 :::
 

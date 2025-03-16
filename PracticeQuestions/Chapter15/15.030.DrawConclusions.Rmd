@@ -15,7 +15,7 @@ if(conclusion == "reject the null hypothesis") {
         round(alphas[5] + runif(1, 0.0001, 0.001), 4)
     )
     
-    ps <- format(c(reject, ftr), scientific = FALSE, digits = 4)
+    ps <- format(c(reject, ftr), scientific = FALSE, nsmall = 4)
 
 } else {
     ftr <- c(
@@ -29,7 +29,7 @@ if(conclusion == "reject the null hypothesis") {
                 sample(seq(0.0001, alphas[4] - 0.0001, by = 0.0001), 1),
                 sample(seq(0.0001, alphas[5] - 0.0001, by = 0.0001), 1))
 
-    ps <- format(c(sample(ftr, 1), reject), scientific = FALSE, digits = 4)
+    ps <- format(c(sample(ftr, 1), reject), scientific = FALSE, nsmall = 4)
 }
 
 answers <- paste0("$p=", ps, "$ and $\\alpha=", alphas, "$.")

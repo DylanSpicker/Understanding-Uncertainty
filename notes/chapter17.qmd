@@ -416,7 +416,7 @@ set.seed(31415)
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("17.A.ChooseTest.Rmd", 
+exams2forms(file="17.A.ChooseTest.Rmd", 
             edir = "../PracticeQuestions/Chapter17", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -429,7 +429,7 @@ exams2forms("17.A.ChooseTest.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("17.B.SignedRankNoTies.Rmd", 
+exams2forms(file="17.B.SignedRankNoTies.Rmd", 
             edir = "../PracticeQuestions/Chapter17", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -442,7 +442,7 @@ exams2forms("17.B.SignedRankNoTies.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("17.C.SignedRankTies.Rmd", 
+exams2forms(file="17.C.SignedRankTies.Rmd", 
             edir = "../PracticeQuestions/Chapter17", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -455,7 +455,7 @@ exams2forms("17.C.SignedRankTies.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("17.D.MannWhitneyNoTies.Rmd", 
+exams2forms(file="17.D.MannWhitneyNoTies.Rmd", 
             edir = "../PracticeQuestions/Chapter17", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -468,7 +468,7 @@ exams2forms("17.D.MannWhitneyNoTies.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("17.E.MannWhitneyTies.Rmd", 
+exams2forms(file="17.E.MannWhitneyTies.Rmd", 
             edir = "../PracticeQuestions/Chapter17", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -481,7 +481,7 @@ exams2forms("17.E.MannWhitneyTies.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("17.F.PairedSignedRankNoTies.Rmd", 
+exams2forms(file="17.F.PairedSignedRankNoTies.Rmd", 
             edir = "../PracticeQuestions/Chapter17", 
             n = 100, cloze_schoice_display = "buttons")
 ```
@@ -494,7 +494,7 @@ exams2forms("17.F.PairedSignedRankNoTies.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms("17.G.PairedSignedRankTies.Rmd", 
+exams2forms(file="17.G.PairedSignedRankTies.Rmd", 
             edir = "../PracticeQuestions/Chapter17", 
             n = 100, 
             cloze_schoice_display = "buttons")
