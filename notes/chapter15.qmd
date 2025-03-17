@@ -981,7 +981,7 @@ exams2forms(file="15.033.CriticalValueTechnique-OneTailLower.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="15.033.CriticalValueTechnique-OneTailUpper.Rmd", 
+exams2forms("15.033.CriticalValueTechnique-OneTailUpper.Rmd",
             edir = "../PracticeQuestions/Chapter15", 
             n = 100, 
             cloze_schoice_display = "buttons")
