@@ -983,7 +983,8 @@ exams2forms(file="15.033.CriticalValueTechnique-OneTailLower.Rmd",
 #| cache: true
 exams2forms(file="15.033.CriticalValueTechnique-OneTailUpper.Rmd", 
             edir = "../PracticeQuestions/Chapter15", 
-            n = 100, cloze_schoice_display = "buttons")
+            n = 100, 
+            cloze_schoice_display = "buttons")
 ```
 :::
 
