@@ -1,6 +1,6 @@
 # Simple Linear Regression
 
-So far, we have only considered individual estimation and inference (for single parameters) or else the comparison between single parameters. While these estimation and comparison procedures are widely applicable and a powerful basis for inquiry, they fail to capture an important type of statistical analysis. Specifically, the forms of estimation and hypothesis testing considered thus far have not provided a means of capturing the relationship between two (or more) variables. Regression models generally provide on method for accomplishing this task. 
+So far, we have only considered individual estimation and inference (for single parameters) or else the comparison between single parameters. While these estimation and comparison procedures are widely applicable and a powerful basis for inquiry, they fail to capture an important type of statistical analysis. Specifically, the forms of estimation and hypothesis testing considered thus far have not provided a means of capturing the relationship between two (or more) variables. Regression models generally provide one method for accomplishing this task. 
 
 ## Linear Relationships and Lines of Best Fit
 
