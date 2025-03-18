@@ -1,0 +1,37 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+EX <- sample(-50:50, 1)
+varX <- sample(1:100, 1)
+a <- sample(setdiff(-50:50, 0), 1)
+b <- sample(setdiff(-50:50, 0), 1)
+
+sgn <- ifelse(b < 0, "-", "+")
+
+ans1 <- a * EX + b
+ans2 <- a^2 * varX
+ans3 <- a*(varX + EX^2) + b
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+
+Suppose that $X$ is a random variable with $E[X] = `r EX`$ and $\text{var}(X) = `r varX`$. 
+
+Answer the following questions. If ever you are not provided sufficient information, enter a value of -1. 
+
+a. What is $E[`r a`X `r sgn` `r abs(b)`]$? ##ANSWER1##
+a. What is $\text{var}(`r a`X `r sgn` `r abs(b)`)$? ##ANSWER2##
+c. What is $E[`r a`X^2 `r sgn` `r abs(b)`]$? ##ANSWER3##
+
+Question ID: *`r id`*
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`
+exclozetype: num|num|num
+exname: ExpectedValueAndVarianceLinearTransformations
+extol: 0.01
