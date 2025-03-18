@@ -46,7 +46,7 @@ scenarios <- list(
         paste0("A market research firm wants to compare customer satisfaction ratings for two competing products. They record satisfaction ratings from a group of ", small_n, "customers. Each customer provides their satisfaction rating for each of the two products."),
         paste0("A company wants to know if a new training program improves employee productivity. They sample productivity scores for ", small_n, " employees both before and after the training program is implemented."),
         paste0("A psychologist wants to investigate if a new therapy reduces anxiety levels in patients. They take a sample of ", small_n, " patients, recording the anxiety levels before and after therapy for each."),
-        paste0("A company wants to compare the average salaries of male and female employees with the same job title. They consider the ", large_n, " pairs of male and female employees with the same job title that are available.")
+        paste0("A company wants to compare the average salaries of male and female employees with the same job title. They consider the ", small_n, " pairs of male and female employees with the same job title that are available.")
     )
 )
 

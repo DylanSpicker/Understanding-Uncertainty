@@ -1,0 +1,154 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+format <- sample(1:3, 1)
+
+if(format == 1) {
+    # Binomial
+    n <- sample(5:10, 1)
+    p <- round(runif(1, 0.01, 0.99), 2)
+
+    pmf <- paste0("$$p_X(x) = ",(1-p),"^{",n,"}\\times\\dbinom{",n,"}{x}\\left(\\dfrac{",p,"}{",1-p,"}\\right)^x, \\quad x \\in \\{0,\\dots,",n,"\\}.$$")
+
+    a_val <- sample(0:n, 1)                     # = A
+    b_val <- sample(c(0,1,2,n,n-1,n-2), 1)      # <= B
+    c_val <- sample(c(0,1,2,n,n-1,n-2), 1)      # > C
+
+    all_v <- dbinom(0:n, size=n, p=p)
+    possible_v <- (0:n)[which(all_v > 0.01 & all_v < 0.75)]
+
+    v1 <- sample(possible_v, 1)
+    sym1 <- sample(c("<", "\\leq"), 1)
+    v2 <- sample(setdiff(intersect((v1-3):(v1+3), 0:n), c(v1, v1-1, v1+1)), 1)
+    sym2 <- sample(c("<", "\\leq"), 1)
+
+    lv <- min(v1, v2)
+    uv <- max(v1, v2)
+
+    probs <- dbinom(lv:uv, size=n, p = p)
+    mask <- rep(TRUE, length(probs))
+
+    if(sym1 == "<") mask[1] <- FALSE
+    if(sym2 == "<") mask[length(probs)] <- FALSE
+
+    ans1 <- dbinom(a_val, size=n, p=p)
+    ans2 <- pbinom(b_val, size=n, p=p)
+    ans3 <- 1-pbinom(c_val, size=n, p=p)
+    ans4 <- sum(probs[mask])
+
+    pmf_f <- function(x) { dbinom(x, size = n, p = p) }
+
+} else if(format == 2) {
+    # Hyper Geometric
+    N <- sample(15:30, 1)
+    M <- sample(5:ceiling(N/2), 1)
+    n <- sample(4:M, 1)
+
+    pmf <- paste0("$$p_X(x) = \\frac{\\dbinom{",M,"}{x}\\dbinom{",N-M,"}{", n,"-x}}{",choose(N, n),"},\\quad x\\in\\{0,\\dots,", n, "\\}.$$")
+
+    pmf_f <- function(x) {
+        choose(M, x) * choose(N-M,n-x) / choose(N, n)
+    }
+
+    a_val <- sample(0:n, 1)                     # = A
+    b_val <- sample(c(0,1,2,n,n-1,n-2), 1)      # <= B
+    c_val <- sample(c(0,1,2,n,n-1,n-2), 1)      # > C
+
+    
+    all_v <- pmf_f(0:n)
+    possible_v <- (0:n)[which(all_v > 0.01 & all_v < 0.9)]
+
+    v1 <- sample(possible_v, 1)
+    sym1 <- sample(c("<", "\\leq"), 1)
+    v2 <- sample(setdiff(intersect((v1-3):(v1+3), 0:n), c(v1, v1-1, v1+1)), 1)
+    sym2 <- sample(c("<", "\\leq"), 1)
+
+    lv <- min(v1, v2)
+    uv <- max(v1, v2)
+
+    probs <- pmf_f(lv:uv)
+    mask <- rep(TRUE, length(probs))
+
+    if(sym1 == "<") mask[1] <- FALSE
+    if(sym2 == "<") mask[length(probs)] <- FALSE
+
+    ans1 <- choose(M, a_val) * choose(N-M,n-a_val) / choose(N, n)
+    ans2 <- sum(choose(M, 0:b_val) * choose(N-M,n-0:b_val) / choose(N, n))
+    ans3 <- 1-sum(choose(M, 0:c_val) * choose(N-M,n-0:c_val) / choose(N, n))
+    ans4 <- sum(probs[mask])
+
+} else {
+     # Negative Hyper Geometric
+    N <- sample(15:30, 1)
+    K <- sample(5:ceiling(N/2), 1)
+    r <- sample(2:(N-K), 1)
+
+    pmf <- paste0("$$p_X(x) = \\frac{\\dbinom{x + ",r-1,"}{x}\\dbinom{",N-r,"-x}{", K,"-x}}{",choose(N, K),"},\\quad x\\in\\{0,\\dots,", K, "\\}.$$")
+
+    a_val <- sample(0:K, 1)                     # = A
+    b_val <- sample(c(0,1,2,K,K-1,K-2), 1)      # <= B
+    c_val <- sample(c(0,1,2,K,K-1,K-2), 1)      # > C
+
+    pmf_f <- function(x) {
+        choose(x + r - 1, x) * choose(N-r-x,K-x) / choose(N, K)
+    }
+
+    all_v <- pmf_f(0:K)
+    possible_v <- (0:K)[which(all_v > 0.01 & all_v < 0.9)]
+
+    v1 <- sample(possible_v, 1)
+    sym1 <- sample(c("<", "\\leq"), 1)
+    v2 <- sample(setdiff(intersect((v1-3):(v1+3), 0:K), c(v1, v1-1, v1+1)), 1)
+    sym2 <- sample(c("<", "\\leq"), 1)
+
+    lv <- min(v1, v2)
+    uv <- max(v1, v2)
+
+    probs <- pmf_f(lv:uv)
+    mask <- rep(TRUE, length(probs))
+
+    if(sym1 == "<") mask[1] <- FALSE
+    if(sym2 == "<") mask[length(probs)] <- FALSE
+
+    ans1 <- pmf_f(a_val)
+    ans2 <- sum(pmf_f(0:b_val))
+    ans3 <- 1-sum(pmf_f(0:c_val))
+    ans4 <- sum(probs[mask])
+
+}
+
+while(ans4 > 0.99) {
+    uv <- uv - 1
+    
+    probs <- pmf_f(lv:uv)
+    mask <- rep(TRUE, length(probs))
+
+    if(sym1 == "<") mask[1] <- FALSE
+    if(sym2 == "<") mask[length(probs)] <- FALSE
+
+    ans4 <- sum(probs[mask])
+
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+
+A discrete random variable $X$ has probability mass function `r pmf`
+
+a. Compte $P(X = `r a_val`)$. ##ANSWER1##
+a. Compute $P(X \leq `r b_val`)$. ##ANSWER2##
+c. Compute $P(X > `r c_val`)$. ##ANSWER3##
+d. Compute $P(`r lv` `r sym1` X `r sym2` `r uv`)$. ##ANSWER4##
+
+Question ID: *`r id`*
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`
+exclozetype: num|num|num|num
+exname: FindPmfK
+extol: 0.01

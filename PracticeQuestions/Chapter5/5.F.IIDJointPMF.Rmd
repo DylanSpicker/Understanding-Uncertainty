@@ -1,0 +1,105 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+format <- sample(1:3, 1)
+
+if(format == 1) {
+    # Binomial
+    n <- sample(5:10, 1)
+    p <- round(runif(1, 0.01, 0.99), 2)
+
+    pmf <- paste0("$$p_X(x) = ",(1-p),"^{",n,"}\\times\\dbinom{",n,"}{x}\\left(\\dfrac{",p,"}{",1-p,"}\\right)^x, \\quad x \\in \\{0,\\dots,",n,"\\}.$$")
+
+    pmf_f <- function(x) {
+        dbinom(x, size = n, p = p)
+    }
+
+    x_vals <- 0:n
+
+} else if(format == 2) {
+    # Hyper Geometric
+    N <- sample(15:30, 1)
+    M <- sample(5:ceiling(N/2), 1)
+    n <- sample(4:M, 1)
+
+    pmf <- paste0("$$p_X(x) = \\frac{\\dbinom{",M,"}{x}\\dbinom{",N-M,"}{", n,"-x}}{",choose(N, n),"},\\quad x\\in\\{0,\\dots,", n, "\\}.$$")
+
+    pmf_f <- function(x) {
+        choose(M, x) * choose(N-M,n-x) / choose(N, n)
+    }
+
+    x_vals <- 0:n
+
+} else {
+     # Negative Hyper Geometric
+    N <- sample(15:30, 1)
+    K <- sample(5:ceiling(N/2), 1)
+    r <- sample(2:(N-K), 1)
+
+    pmf <- paste0("$$p_X(x) = \\frac{\\dbinom{x + ",r-1,"}{x}\\dbinom{",N-r,"-x}{", K,"-x}}{",choose(N, K),"},\\quad x\\in\\{0,\\dots,", K, "\\}.$$")
+
+    pmf_f <- function(x) {
+        choose(x + r - 1, x) * choose(N-r-x,K-x) / choose(N, K)
+    }
+
+    x_vals <- 0:K
+}
+
+all_p <- pmf_f(x_vals)
+
+suitable_x_A <- x_vals[which(all_p > 0.171)]
+
+if(length(suitable_x_A) == 0) {
+    suitable_x_A <- x_vals[which.max(all_p)]
+}
+
+suitable_x_B <- x_vals[which(all_p > 0.005)]
+
+if(length(suitable_x_B) == 0) {
+    suitable_x_B <- x_vals[which.max(all_p)]
+}
+
+suitable_x_C <- x_vals[which(all_p > 0.071)]
+
+if(length(suitable_x_C) == 0) {
+    suitable_x_C <- x_vals[which.max(all_p)]
+}
+
+
+Xa <- sample(suitable_x_A, 1)
+Ya <- sample(suitable_x_A, 1)
+Za <- sample(suitable_x_A, 1)
+
+Xb <- sample(suitable_x_B, 1)
+Yb <- sample(x_vals, 1)
+
+Xc <- sample(suitable_x_C, 1)
+Yc <- sample(suitable_x_C, 1)
+Zc <- sample(x_vals, 1)
+
+
+ans1 <- pmf_f(Xa) * pmf_f(Ya) * pmf_f(Za)
+ans2 <- pmf_f(Xb) 
+ans3 <- pmf_f(Xc) * pmf_f(Yc)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+
+Suppose that $X$, $Y$, and $Z$ are three independent and identically distributed random variables. Moreover, suppose that the PMF of $X$ is `r pmf`
+
+a. Compute $P(X = `r Xa`, Y = `r Ya`, Z = `r Za`)$. ##ANSWER1##
+b. Compute $P(X = `r Xb` | Y = `r Yb`)$. ##ANSWER2##
+c. Compute $P(X = `r Xc`, Y = `r Yc` | Z = `r Zc`)$. ##ANSWER3##
+
+Question ID: *`r id`*
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`
+exclozetype: num|num|num
+exname: IIDJointProbabilities
+extol: 0.01

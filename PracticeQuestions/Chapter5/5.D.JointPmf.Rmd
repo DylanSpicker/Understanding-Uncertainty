@@ -1,0 +1,74 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+# Joint Probability Tables
+rows <- sample(2:4, 1)
+cols <- sample(2:4, 1)
+
+all_probs <- matrix(
+    0.02, nrow = rows, ncol = cols
+)
+
+
+for(ii in 1:rows) {
+    for (jj in 1:cols) {
+        prob_remaining <- 1 - sum(all_probs) 
+        all_probs[ii, jj] <- all_probs[ii, jj] + round(runif(1, 0, prob_remaining / 2), 2)
+    }
+}
+
+extra_prob <- 1 - sum(all_probs)
+
+idxi <- sample(1:rows, 1)
+idxj <- sample(1:cols, 1)
+
+all_probs[idxi, idxj] <- all_probs[idxi, idxj] + extra_prob
+
+## Create Table with Dataframe
+colnames(all_probs) <- paste0("$X = ", 1:cols, "$")
+rownames(all_probs) <- paste0("$Y = ", 1:rows, "$")
+
+# Joint Event 
+aX <- sample(1:cols, 1)
+aY <- sample(1:rows, 1)
+
+bX <- sample(1:cols, 1)
+cY <- sample(1:rows, 1)
+
+dX <- sample(1:cols, 1)
+dY <- sample(1:rows, 1)
+
+eX <- sample(1:cols, 1)
+eY <- sample(1:rows, 1)
+
+ans1 <- all_probs[aY, aX]
+ans2 <- sum(all_probs[,bX])
+ans3 <- sum(all_probs[cY,])
+ans4 <- all_probs[dY, dX] / sum(all_probs[dY,])
+ans5 <- all_probs[eY, eX] / sum(all_probs[,eX])
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+
+The joint distribution of $X$ and $Y$ is summarized by the following probabilities.
+
+`r all_probs |> knitr::kable(format = "markdown")`
+
+a. Compute $P(X = `r aX`, Y = `r aY`)$. ##ANSWER1##
+b. Compute $P(X = `r bX`)$. ##ANSWER2##
+c. Compute $P(Y = `r cY`)$. ##ANSWER3##
+d. Compute $P(X = `r dX`|Y = `r dY`)$. ##ANSWER4##
+e. Compute $P(Y = `r eY`|X = `r eX`)$. ##ANSWER5##
+
+Question ID: *`r id`*
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`|`r fmt(ans5, 3)`
+exclozetype: num|num|num|num|num
+exname: FindPmfK
+extol: 0.01

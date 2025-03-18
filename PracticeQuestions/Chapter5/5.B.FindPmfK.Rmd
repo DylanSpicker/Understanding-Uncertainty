@@ -4,34 +4,65 @@ format <- sample(1:3, 1)
 
 if(format == 1) {
     # Piecewise where k is used twice; a total of 3 possibilities
-    # X values 
     x_vals <- sort(sample(-50:50, 3))
-    constants <- sample(1:20, 3)
+    constants <- sample(1:20, 2)
 
     a <- constants[1]
-    c <- constants[3]
-    p2 <- round(constants[2]/sum(constants), 2)
+    c <- constants[2]
 
-    pmf <- paste0("$$p_X(x) = \\begin{cases}", a,"k & x = ", x_vals[1], "\\\\ ", p2, " & x =", x_vals[2], " \\\\ ", c, "k & x = ", x_vals[3], ".\\end{cases}")
+    desired_k <- round(runif(1, 0.1/(a+c), 0.9/(a+c)), 3)
+    p2 <- 1 - (a + c)*desired_k 
+    k <- (1-p2)/(a + c)
 
-}
+    which_pmf <- sample(1:3, 1)
 
-alpha <- round(runif(1, 0.01, 0.2), 2)
-crit  <- qt(1-alpha, df = n-1)
+    if(which_pmf == 1) {
+        pmf <- paste0("$$p_X(x) = \\begin{cases}", a,"k & x = ", x_vals[1], "\\\\ ", p2, " & x =", x_vals[2], " \\\\ ", c, "k & x = ", x_vals[3], ".\\end{cases}$$")
+        probs <- c(k*a, p2, k*c)
+    } else if(which_pmf == 2){
+        pmf <- paste0("$$p_X(x) = \\begin{cases}", p2," & x = ", x_vals[1], "\\\\ ", a, "k & x =", x_vals[2], " \\\\ ", c, "k & x = ", x_vals[3], ".\\end{cases}$$")
+        probs <- c(p2, k*a, k*c)
+    } else {
+        pmf <- paste0("$$p_X(x) = \\begin{cases}", a,"k & x = ", x_vals[1], "\\\\ ", c, "k & x =", x_vals[2], " \\\\ ", p2, " & x = ", x_vals[3], ".\\end{cases}$$")
+        probs <- c(k*a, k*c, p2)
+    }
 
-if(sample(c(0,1),1) == 0) {
-    # Reject
-    val <- runif(1,  1.1 * crit, 2 * crit)
+} else if(format == 2) {
+    # k/x^2, for 3 values of x
+    x_vals <- sort(sample(1:20, 3))
+
+    pmf <- paste0("$$p_X(x) = \\dfrac{k}{x^2}, x \\in \\{", x_vals[1], ", ", x_vals[2], ", ", x_vals[3], "\\}.$$")
+
+    k <- 1/sum((1/x_vals)^2)
+    probs <- k/x_vals^2
 } else {
-    # Fail to Reject
-    val <- runif(1, -1.5 * crit, 0.9 * crit)
+    # k(ax + b) 
+    x_vals <- sort(sample(0:10, 3))
+    constants <- sample(1:10, 2)
+
+    pmf <- paste0("$$p_X(x) = k(", constants[1], "x + ", constants[2], "), x \\in \\{", x_vals[1], ", ", x_vals[2], ", ", x_vals[3], "\\}.$$")
+    
+    k <- 1/sum(constants[1] * x_vals + constants[2])
+    probs <- k * (constants[1] * x_vals + constants[2])
 }
 
-mean <- round(val * sd/sqrt(n) + amt, 1)
+A <- sample(x_vals, 1)
+A_symb <- sample(c("=", "\\neq"), 1)
+B <- sample((x_vals[1]+1):(x_vals[3]-1), 1)
+B_symb <- sample(c("<", "\\leq", ">", "\\geq"), 1)
+if(B_symb == "<") {
+    bidx <- which(x_vals < B) 
+} else if(B_symb == "\\leq") {
+    bidx <- which(x_vals <= B)
+} else if(B_symb == ">") {
+    bidx <- which(x_vals > B)
+} else {
+    bidx <- which(x_vals >= B)
+}
 
-ans1 <- (mean - amt)/(sd / sqrt(n))
-ans2 <- 1 - pt(ans1, df = n-1)
-ans3 <- c(ans2 <= alpha, ans2 > alpha)
+ans1 <- k
+ans2 <- ifelse(A_symb == "=", probs[which(x_vals == A)], sum(probs[which(x_vals != A)]))
+ans3 <- sum(probs[bidx])
 
 id <- sprintf("%010d", sample(0:1000000000, 1))
 
@@ -40,26 +71,18 @@ id <- sprintf("%010d", sample(0:1000000000, 1))
 Question
 ========
 
-`r qtext` a sample mean of `r format(mean, scientific=FALSE)` and a sample standard deviation of `r format(sd, scientific=FALSE)`.
+A discrete random variable $X$ has probability mass function `r pmf`
 
-a. What is the relevant value of the test statistic for testing the null hypothesis? ##ANSWER1##
-a. What is the $p$-value calculated when running this hypothesis test? ##ANSWER2##
-c. What is the conclusion from the hypothesis test, if $\alpha = `r alpha`$? 
-
-##ANSWER3##
+a. What is the value of $k$? ##ANSWER1##
+a. Compute $P(X `r A_symb` `r A`)$. ##ANSWER2##
+c. Compute $P(X `r B_symb` `r B`)$. ##ANSWER3##
 
 Question ID: *`r id`*
-
-Answerlist
-------------
-* Based on the results, we can reject the null hypothesis.
-* Based on the results, we fail to reject the null hypothesis. 
-
 
 Meta-information
 ================
 extype: cloze
-exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r mchoice2string(ans3)`
-exclozetype: num|num|schoice
-exname: CriticalValueTes
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`
+exclozetype: num|num|num
+exname: FindPmfK
 extol: 0.01

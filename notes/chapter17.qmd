@@ -416,7 +416,7 @@ set.seed(31415)
 #| results: 'asis'
 #| warning: false
 #| cache: true
-exams2forms(file="17.A.ChooseTest.Rmd", 
+exams2forms("17.A.ChooseTest.Rmd", 
             edir = "../PracticeQuestions/Chapter17", 
             n = 100, cloze_schoice_display = "buttons")
 ```

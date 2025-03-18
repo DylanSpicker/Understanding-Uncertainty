@@ -714,3 +714,113 @@ a. What is the joint probability mass function of $(X_1,\dots,X_n)$?
 b. What is the conditional probability mass function, $P(X_1 = x | X_2 = y)$?
 c. What is the probability mass function of $X_1$ conditional on $\sum_{i=2}^n X_i$?
 :::
+
+
+::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-5.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+exams2forms("5.A.DiscreteVersusContinuous.Rmd", 
+            edir = "../PracticeQuestions/Chapter5", 
+            n = 100)
+```
+:::
+
+:::{#sa-5.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+exams2forms("5.B.FindPmfK.Rmd", 
+            edir = "../PracticeQuestions/Chapter5", 
+            n = 100)
+```
+:::
+
+:::{#sa-5.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+
+exams2forms("5.C.ProbabilitiesFromPmf.Rmd", 
+            edir = "../PracticeQuestions/Chapter5", 
+            n = 100)
+```
+:::
+
+:::{#sa-5.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+
+exams2forms("5.D.JointPmf.Rmd", 
+            edir = "../PracticeQuestions/Chapter5", 
+            n = 100)
+```
+:::
+
+:::{#sa-5.05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+
+exams2forms("5.E.ConditionalProbs.Rmd", 
+            edir = "../PracticeQuestions/Chapter5", 
+            n = 100)
+```
+:::
+
+
+:::{#sa-5.06}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678999
+
+exams2forms("5.F.IIDJointPMF.Rmd", 
+            edir = "../PracticeQuestions/Chapter5", 
+            n = 100)
+```
+:::
+
+:::

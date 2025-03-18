@@ -613,7 +613,7 @@ a. A quality control team inspects a batch of items and classifies each batch as
 a. In a survey, you want to determine the number of people who prefer online shopping over in-store shopping.
 a. Researchers are studying a group of patients with a very rare disease. They wish to know whether a particular gene mutation is associated with the disease or not. They sample members of the population who have the disease to further study.
 a.  An online streaming platform wants to model the number of times a specific video is watched in an hour, given a known average view rate.
-a. A baseball player wants is interested in the number of home runs they hit in a game, where the probability of hitting a home run is the same for each at-bat.
+a. A baseball player is interested in the number of home runs they hit in a game, where the probability of hitting a home run is the same for each at-bat.
 a. A call center manager wants to model the number of calls received per minute during a quiet period of the day.
 a. In a network setup, multiple backup routers are used, and the network remains functional as long as a certain number of them are operational. A network engineer is interested in how many backup routers are needed to ensure network reliability under various failure scenarios.
 :::

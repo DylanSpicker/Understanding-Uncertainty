@@ -1,0 +1,83 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+# Joint Probability Tables
+x_vals <- sort(sample(1:15, 3))
+x_cuts <- sort(round(runif(2, 0.01, 0.99), 2))
+
+p1 <- x_cuts[1]
+p2 <- x_cuts[2] - x_cuts[1]
+p3 <- 1 - (p1 + p2)
+
+pmf_X <- function(x){
+    ifelse(x == x_vals[1], p1, ifelse(x == x_vals[2], p2, p3))
+}
+
+pmfX <- paste0("$$p_{X}(x) = \\begin{cases}", p1, " & x = ", x_vals[1], "\\\\", p2, " & x = ", x_vals[2], "\\\\", p3, " & x = ", x_vals[3], " \\end{cases}.$$")
+
+y_vals <- sort(sample(1:15, 3))
+
+format <- sample(1:3, 1) 
+
+if(format == 1) {
+    # P(Y|X) = xy/k
+    K <- sum(y_vals * rep(x_vals, each = 3))
+
+    pmf <- paste0("$$p_{Y|X}(y|x) = \\dfrac{xy}{",K,"}, \\quad y \\in \\{", y_vals[1], ", ", y_vals[2], ", ", y_vals[3], "\\};  x \\in \\{", x_vals[1], ", ", x_vals[2], ", ", x_vals[3], "\\}.$$")
+    pmf_YX <- function(y, x) {
+        x*y/K
+    }
+} else if(format == 2) {
+    # P(Y|X) = (x+y)/k
+    K <- sum(rep(x_vals, each = 3) + y_vals)
+
+    pmf <- paste0("$$p_{Y|X}(y|x) = \\dfrac{x+y}{",K,"}, \\quad y \\in \\{", y_vals[1], ", ", y_vals[2], ", ", y_vals[3], "\\};  x \\in \\{", x_vals[1], ", ", x_vals[2], ", ", x_vals[3], "\\}.$$")
+    pmf_YX <- function(y, x) {
+        (x + y)/K
+    }
+} else {
+    # P(Y|X) = y^x / k 
+
+    K <- sum((y_vals - rep(x_vals, each = 3))^2)
+
+    pmf <- paste0("$$p_{Y|X}(y|x) = \\dfrac{(y - x)^2}{",K,"}, \\quad y \\in \\{", y_vals[1], ", ", y_vals[2], ", ", y_vals[3], "\\};  x \\in \\{", x_vals[1], ", ", x_vals[2], ", ", x_vals[3], "\\}.$$")
+    pmf_YX <- function(y, x) {
+        (y - x)^2/K
+    }
+
+}
+
+aX <- sample(x_vals, 1)
+aY <- sample(y_vals, 1)
+
+bY <- sample(y_vals, 1)
+
+cX <- sample(x_vals, 1)
+cY <- sample(y_vals, 1)
+
+ans1 <- pmf_YX(aY, aX) * pmf_X(aX)
+ans2 <- sum(pmf_YX(bY, x_vals) * pmf_X(x_vals))
+ans3 <- pmf_YX(cY, cX) * pmf_X(cX) / sum(pmf_YX(cY, x_vals) * pmf_X(x_vals))
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+
+The conditional distribution of $Y$ given $X$ has a probability mass function `r pmf`
+
+Moreover, the probability mass function for $X$ is `r pmfX`
+
+a. Compute $P(X = `r aX`, Y = `r aY`)$. ##ANSWER1##
+b. Compute $P(Y = `r bY`)$. ##ANSWER2##
+c. Compute $P(X = `r cX` | Y = `r cY`)$. ##ANSWER3##
+
+Question ID: *`r id`*
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`
+exclozetype: num|num|num
+exname: ConditionalPmfProbs
+extol: 0.01
