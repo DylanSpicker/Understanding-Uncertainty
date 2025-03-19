@@ -1,0 +1,41 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+# Give E[X], E[Y], E[Y|X], and var(Y|X)
+EX <- sample(1:50, 1)
+varX <- sample(1:50, 1)
+
+a <- sample(2:50, 1)
+b <- sample(2:50, 1)
+d <- sample(2:50, 1)
+
+EYgX <- paste0(a, "X + ", d)
+varYgX <- paste0(b,"X")
+
+# Variance of Y
+varY <- a^2 * varX + (b * EX)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+
+Question
+========
+
+Suppose that it is known that, for two random variables $X$ and $Y$, we have:
+
+* $E[X] = `r EX`$.
+* $\text{var}(X) = `r varX`$.
+* $E[Y|X] = `r EYgX`$.
+* $\text{var}(Y|X) = `r varYgX`$.
+
+What is the variance of $Y$ (round your answer to 2 decimal points).
+
+Question ID: *`r id`*
+
+
+Meta-information
+================
+extype: num
+exsolution: `r fmt(varY, 3)`
+exname: LawOfTotalVariance
+extol: 0.01

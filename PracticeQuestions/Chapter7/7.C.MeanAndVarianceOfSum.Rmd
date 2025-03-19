@@ -1,0 +1,49 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+# Give E[X], E[Y], E[Y|X], and var(Y|X)
+EX <- sample(-50:50, 1)
+sdX <- sample(2:10, 1)
+varX <- sdX^2 
+EY <- sample(-50:50, 1)
+sdY <- sample(2:10, 1)
+varY <- sdY^2
+
+corrB <- sample(seq(-1, 1, by = 0.01), 1)
+
+covXYb <- corrB * sdX * sdY
+
+corrC <- sample(seq(-1, 1, by = 0.01), 1)
+
+covXYc <- corrC * sdX * sdY
+varXpYc <- round(varX + varY + 2*covXYc, 2)
+
+ans1 <- EX + EY
+ans2 <- varX + varY + 2*covXYb
+ans3 <- (varXpYc - varX - varY) / 2
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+
+Question
+========
+
+Suppose that it is known that, for two random variables $X$ and $Y$, we have:
+
+* $E[X] = `r EX`$ and $\text{var}(X) = `r varX`$.
+* $E[Y] = `r EY`$ and $\text{var}(Y) = `r varY`$.
+
+a. What is $E[X + Y]$? ##ANSWER1##
+b. If it is known that $\text{cov}(X, Y) = `r covXYb`$, what is $\text{var}(X + Y)$? ##ANSWER2##
+c. If it is known that $\text{var}(X + Y) = `r varXpYc`$, what is $\text{cov}(X, Y)$? ##ANSWER3##
+
+Question ID: *`r id`*
+
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`
+exname: LawOfTotalVariance
+extol: 0.01

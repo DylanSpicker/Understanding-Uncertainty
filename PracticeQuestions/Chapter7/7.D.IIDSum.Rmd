@@ -1,0 +1,38 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+# Give E[X], E[Y], E[Y|X], and var(Y|X)
+EX <- sample(-50:50, 1)
+varX <- sample(1:50, 1)
+n <- sample(5:500, 1)
+
+ans1 <- n * EX
+ans2 <- n * varX
+ans3 <- EX
+ans4 <- varX / n
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+
+Question
+========
+
+Suppose that $X_1, \dots, X_{`r n`}$ are all independent and identically distributed. Moreover, suppose $E[X_1] = `r EX`$ and $\text{var}(X_1) = `r varX`$.
+
+For each of the following, enter -1 if insufficient information is given. 
+
+a. What is $E\left[\sum_{i=1}^{`r n`} X_i\right]$? ##ANSWER1##
+b. What is $\text{var}\left(\sum_{i=1}^{`r n`} X_i\right)$? ##ANSWER2##
+c. What is $E\left[\dfrac{1}{`r n`}\sum_{i=1}^{`r n`} X_i\right]$? ##ANSWER3##
+d. What is $\text{var}\left(\dfrac{1}{`r n`}\sum_{i=1}^{`r n`} X_i\right)$? ##ANSWER4##
+
+Question ID: *`r id`*
+
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`
+exname: LawOfTotalVariance
+extol: 0.01

@@ -1,0 +1,675 @@
+# Simple Linear Regression
+
+So far, we have only considered individual estimation and inference (for single parameters) or else the comparison between single parameters. While these estimation and comparison procedures are widely applicable and a powerful basis for inquiry, they fail to capture an important type of statistical analysis. Specifically, the forms of estimation and hypothesis testing considered thus far have not provided a means of capturing the relationship between two (or more) variables. Regression models generally provide one method for accomplishing this task. 
+
+## Linear Relationships and Lines of Best Fit
+
+The most basic mathematical function that we can conceive of is a straight line. We can consider the equation of a line, $$y = mx + b,$$ where $y$ is the **dependent variable** and $x$ is the **independent variable**. In this equation, $m$ represents the **slope** of the line,^[Remember, the slope is the "rise" over the "run".] a quantity that indicates how much the value of $y$ changes as the value of $x$ changes. The term $b$ represents the **intercept** of the line,^[Technically, the $y$-intercept, though, we predominantly discuss only the $y$-intercept.] which corresponds to the value of $y$ when $x=0$. This relationship is **deterministic** in that, if $y = mx + b$ actually holds, then we can perfectly know the value of $y$ for any value of $x$, simply by specifying the values $m$ and $b$. 
+
+Despite the simplicity of the linear relationship, it remains a very powerful model for investigating the relationship between two variables. There are many quantities that follow a deterministic linear relationship, and we can exploit this simple pattern to understand their joint behaviour. For instance, if we have a vehicle that is traveling at a constant speed, then the distance traveled, $d$, is given by the linear relationship $d = mt$, where $m$ is the speed and $t$ is the time of travel. If you have an investment that will pay simple interest, then the total payout $P$, is given by the linear relationship $P = mx + x$, where $m$ is the rate of return, and $x$ is the initial investment. As a final example, the temperature measured in Fahrenheit, $F$, is given by $F = 1.8C + 32$, where $C$ is the temperature measured in Celsius. 
+
+In each of these cases the dependent variable, also called the **response variable**, can be exactly explained by constants as well as the **independent variable**, also known as the **predictor** or **explanatory variable**. While there are many other situations that can be exactly described using linear relationships, there are even more settings in which an approximate linear relationship between the predictor and the response will hold. These are the situations that we are concerned with in the simple linear regression model.
+
+:::{#def-response-variable}
+## Response Variable (Dependent Variable)
+The **response variable** is the variable that is treated as the outcome when considering a relationship between two or more variables. The response variable is treated as being *dependent* on the other variables being considered. It is the variable that the model is attempting to explain. 
+:::
+
+:::{#def-explanatory-variable}
+## Predictor Variable (Explanatory Variable; Independent Variable)
+The **predictor variable** (or predictor variables, if using more than one) are the variables that are used to predict or explain the variation in the response. These are variables that are treated as input to the relationship, and where the primary consideration of these variables is through their influence on the outcome.
+:::
+
+## The Simple Linear Regression Model
+
+### Approximating Linear Relationships
+
+In the case of modelling the relationship between two or more variables, we need to consider data collection as consisting of two or more records on the same unit. For simplicity, suppose we observe one outcome ($y$) and one predictor ($x$). Then, if we wanted to take a sample of $n$ units from the population, the data we collected would consist of pairs, $(x_i, y_i)$ for $i=1,\dots,n$. That is, we would take $\{(x_1,y_1), (x_2, y_2), \dots, (x_n, y_n)\}$. In this case, $x_1$ is the predictor for the first unit, and $y_1$ is the outcome for the first unit; $x_2$ is the predictor for the second unit, and $y_2$ is the predictor for the second unit; and so forth. We can conceive of this data collection procedure in much the same way that we have conceived of all data collection procedures to date. Namely, $x_1,\dots,x_n$ are realizations of some random variable, $X$, that has some population distribution, and $y_1,\dots,y_n$ are realizations of $Y$ with some other population distribution. If we are concerned with the relationship between $X$ and $Y$, then we are working from the assumption that $X$ and $Y$ are not independent of one another. It is also convention to use $X$ and $Y$ to describe the explanatory and response variables, respectively.
+
+Even in settings where a perfect linear relationship between two or more variable is theoretically justified, in collected data we will not often observe an exact linear relationship. Suppose we are measuring the distance traveled, when traveling at a constant speed, across multiple points in time. There will be some level of uncertainty in our measures of the distance traveled, either because we have made mistakes, or because our instruments for measuring distance are not perfect, or because there is a finite amount of precision that can actually be detected by the tools. The same issues are likely to impact our measures of time. Moreover, it is likely not possible to travel at exactly constant speeds, and so the underlying assumptions generating the exact linear model will likely not hold, precisely. However, we should still find that, in this case, a linear model will do a fairly good job of capturing the relationship between distance and speed. 
+
+When we have other quantities, specifically quantities where there may not be a theoretically justified linear relationship between the response and predictor, it may still be the case that a linear relationship can approximate the dependence between the variables. One technique for assessing the appropriateness of a linear relationship is through the use of **scatter plots**. Scatter plots are plots of bivariate data, where the values of one variable are plotted along the $x$-axis and values of a second variable are plotted along the $y$-axis. Each observation, $(x_i, y_i)$ is then plotted as a single point at the corresponding location on the plane. By investigating the relationship displayed in the plot, we can observe whether or not a linear relationship appears appropriate. By convention, we will place the outcome on the $y$-axis and the predictors on the $x$-axis. 
+
+:::{#def-scatterplot}
+## Scatter Plot
+A **scatter plot** is a visual display of bivariate data in which observations are plotted at the Cartesian coordinates of their observed location. Typically, the $x$-axis will be used for the independent factors, and the $y$-axis will be used for the dependent factors. 
+:::
+
+```{r}
+#| echo: false
+#| layout-ncol: 3
+#| eval: true
+#| label: fig-scatterplot-examples
+#| fig-cap: A demonstration of three scatter plots. 
+#| fig-subcap:
+#|      - "Approximate linear relationship."
+#|      - "Nonlinear relationship."
+#|      - "No relationship."
+#| cache: true 
+
+library(ggplot2)
+library(ggthemes)
+
+n <- 100 
+x1 <- rnorm(n, 5, 4)
+y1 <- 50 - 22*x1 + rnorm(n, 0, 6)
+
+x2 <- runif(n, -4, 4)
+y2 <- exp(x2) + rnorm(n, 0, 4)
+
+x3 <- rnorm(n, 10, 5)
+y3 <- rnorm(n, 3, 5)
+
+data.frame(x = x1, y = y1) |>
+    ggplot(aes(x = x, y = y)) + 
+    geom_point() + 
+    labs(x = "Predictor", y = "Response") +
+    theme_clean() + 
+    theme(plot.background = element_blank(), legend.position="none")
+
+data.frame(x = x2, y = y2) |>
+    ggplot(aes(x = x, y = y)) + 
+    geom_point() + 
+    labs(x = "Predictor", y = "Response") +
+    theme_clean() + 
+    theme(plot.background = element_blank(), legend.position="none")
+
+data.frame(x = x3, y = y3) |>
+    ggplot(aes(x = x, y = y)) + 
+    geom_point() + 
+    labs(x = "Predictor", y = "Response") +
+    theme_clean() + 
+    theme(plot.background = element_blank(), legend.position="none")
+```
+
+By considering the scatter plot, we can determine whether there appears to be an approximate linear relationship between the response and the predictors. Recognizing the sampling variability that is inherent to all data, we need not observe a perfect linear relationship. As long as a straight line appears to capture a dominant component of the trend, it is possible to use a linear model to represent the relationship between the variables. In cases where a linear relationship is entirely inappropriate, it may be the case that we observe patterns that appear to follow some other functional, non-linear relationship. For instance, it is common to see data that appear to exhibit the relationship $y \approx e^x$, or $y \approx \log(x)$, or perhaps $y = x^2$. In each of these cases, we may still be able to present the data as having an approximately linear relationship if we **transform** the outcome. In the above examples, this corresponds to stating that $\log(y) \approx x$, or $e^y \approx x$, or $\sqrt{y} \approx x$ (see @fig-transformation-of-outcomes).^[Note, in the case of $y = x^2$, we would need this to be for only positive (or only negative) $x$. The problem with the transformation $\sqrt{y}$ is that it is not **one-to-one**. For every value of $y$, there are two values of $\sqrt{y}$ (namely, the positive and negative roots). If our data existed over $x$ values that were both positive and negative, we would end-up considering a graph that resembles $y \approx |x|$ rather than $y \approx x$. This is technically two separate linear relationships, stuck together.] 
+
+```{r}
+#| echo: false
+#| layout-ncol: 3
+#| fig.height: 10
+#| eval: true
+#| label: fig-transformation-of-outcomes
+#| fig-cap: A demonstration of three scatter plots. 
+#| fig-subcap:
+#|      - "Exponential relationship, transformed via logarithm."
+#|      - "Logarithmic relationship, transformed via exponential."
+#|      - "Quadratic relationship, transformed via square root."
+#| cache: true 
+#| warning: false
+
+library(ggplot2)
+library(ggthemes)
+library(patchwork)
+
+n <- 100 
+x1 <- rnorm(n, 5, 4)
+y1 <- exp(0.2*x1+2) + rnorm(n)
+
+x2 <- runif(n, -1, 13)
+y2 <- log(3 + 2*x2) + rnorm(n, 0, 0.15)
+
+x3 <- runif(n, 0, 10)
+y3 <- (6 * x3 + 2)^2 + rnorm(n, 0, 14)
+
+p1a <- data.frame(x = x1, y = y1) |>
+            ggplot(aes(x = x, y = y)) + 
+            geom_point() + 
+            labs(x = "Predictor", y = "Response", title = "Untransformed (Exponential)") +
+            theme_clean() + 
+            theme(plot.background = element_blank(), legend.position="none")
+p1b <- data.frame(x = x1, y = log(y1)) |>
+            ggplot(aes(x = x, y = y)) + 
+            geom_point() + 
+            labs(x = "Predictor", y = "Response", title = "Transformed (Log Transformation)") +
+            theme_clean() + 
+            theme(plot.background = element_blank(), legend.position="none")
+
+p2a <- data.frame(x = x2, y = y2) |>
+            ggplot(aes(x = x, y = y)) + 
+            geom_point() + 
+            labs(x = "Predictor", y = "Response", title = "Untransformed (Logarithmic)") +
+            theme_clean() + 
+            theme(plot.background = element_blank(), legend.position="none")
+p2b <- data.frame(x = x2, y = exp(y2)) |>
+            ggplot(aes(x = x, y = y)) + 
+            geom_point() + 
+            labs(x = "Predictor", y = "Response", title = "Transformed (Exponential Transformation)") +
+            theme_clean() + 
+            theme(plot.background = element_blank(), legend.position="none")
+
+p3a <- data.frame(x = x3, y = y3) |>
+            ggplot(aes(x = x, y = y)) + 
+            geom_point() + 
+            labs(x = "Predictor", y = "Response", title = "Untransformed (Quadratic)") +
+            theme_clean() + 
+            theme(plot.background = element_blank(), legend.position="none")
+p3b <- data.frame(x = x3, y = sqrt(y3)) |>
+            ggplot(aes(x = x, y = y)) + 
+            geom_point() + 
+            labs(x = "Predictor", y = "Response", title = "Untransformed (Root)") +
+            theme_clean() + 
+            theme(plot.background = element_blank(), legend.position="none")
+
+p1a + p1b + plot_layout(ncol = 1)
+p2a + p2b + plot_layout(ncol = 1)
+p3a + p3b + plot_layout(ncol = 1)
+```
+
+If you have established that the relationship between a response and a predictor appears to follow an (approximately) linear relationship, the natural follow-up question is how we determine specifically what that relationship is. Naturally, given a plot that demonstrates an approximately linear relationship, we can likely draw-in the **line of best fit** using our intuition. Informally, the line of best fit will be the straight line that best explains the pattern we see in the data. That means it will get as close to as many of the points as possible, while not exhibiting a systematic bias, trying to balance the points that are over- and under-estimated. To find this line, formally, we can leverage **simple linear regression**.
+
+### The Model and Assumptions 
+At its core, a linear regression model is a mathematical model for the **conditional mean** of the response variable. Namely, with simple linear regression we stipulate that $$E[Y|X=x] = \beta_0 + \beta_1 x.$$ Here, $\beta_0$ takes the role of the intercept parameter, and $\beta_1$ takes the role of the slope parameter. That is, instead of indicating that $Y$ follows an exactly linear relationship, we say that *on average* $Y$ will be linear (in $x$). Because the average of $Y$ given $X=x$ is linear, we know that the actual observations of $Y$ will fall around this line, either higher or lower depending on sampling variability. We also know that they should not be biased towards one side or the other, as on average, they will sit on the line. As a result, we will typically postulate that $$Y = \beta_0 + \beta_1 X + \epsilon,$$ where $\epsilon$ is a random variable, not dependent on the value of $x$, such that $E[\epsilon] = 0$ and labeling $\text{var}(\epsilon) = \sigma^2$. We will typically refer to $\epsilon$ as the **error term**. 
+
+```{r}
+#| echo: false
+#| fig.height: 5.5
+#| eval: true
+#| label: fig-labeled-linear-regression
+#| fig-cap: The linear regression model, wth the labeled mean and two separate error terms. Each of the points is comprised of the mean component (blue line) plus or minus some error term that deviates in the $y$ direction. Each of these errors could be labeled in the same way. These errors are taken to have a constant variance, and a mean of $0$, when considered across the full population.
+#| cache: true 
+#| warning: false
+
+library(ggplot2)
+library(ggthemes)
+
+# Generate some sample data with a linear relationship
+n <- 48
+x <- runif(n, 0, 10)
+y <- 2 + 3*x + rnorm(n, sd = 4)
+
+x <- c(x, 2.5, 7.5)
+y <- c(y, 15, 10)
+
+# Create a data frame to hold the data
+df <- data.frame(x, y)
+
+# Fit a linear regression model
+model <- lm(y ~ x, data = df)
+
+df2 <- data.frame(x=x[49:50], y=y[49:50], yfit = fitted(model)[49:50])
+
+# Create the plot
+ggplot(df, aes(x = x, y = y)) +
+    geom_point() +  # Scatter plot of the data points
+    geom_smooth(method = "lm", se = FALSE, color = "#00BFC4", formula = y ~ x) +  # Add the regression line
+    geom_segment(data = df2, aes(x = x, y = y, xend = x, yend = yfit), linetype = "dashed", color = "#F8766D") +  # Add error lines
+    labs(x = "X", y = "Y", title = "") +
+    annotate(geom = "point", x = 2.5, y = 15, color = "#F8766D") +
+    annotate(geom = "point", x = 7.5, y = 10, color = "#F8766D") +
+    annotate(geom = "text", x = 2.7, y = 12, label = "epsilon[i]", parse = TRUE, color = "#F8766D", size = 7) + 
+    annotate(geom = "text", x = 7.7, y = 18, label = "epsilon[j]", parse = TRUE, color = "#F8766D", size = 7) + 
+    annotate(geom = "text", x = 5, y = 30, label = expression("E[Y|X=x]"~beta[0]~"+"~beta[1]~"x"), parse = TRUE, color = "#00BFC4", size = 7) + 
+    annotate("segment", x = 5, y = 28, xend = 6, yend = 20.2, linewidth = 1, color = "#00BFC4", arrow = arrow(type = "closed", length = unit(0.02, "npc"))) + 
+    theme_clean() + 
+    theme(plot.background = element_blank(), legend.position="none")
+```
+
+From this assumption, we can re-derive that $E[Y|X=x] = \beta_0 + \beta_1 x$. Note that this model is referred to as the **simple** linear regression model, since it has only a single predictor variable. If we specify multiple predictor variables in otherwise the same form, this remains a linear regression model, however, it is no longer labeled "simple".
+
+:::{#def-simple-linear-regression}
+## Simple Linear Regression Model
+A **simple linear regression model** is a statistical model specified for the conditional mean of a response variable, conditioned on a single explanatory variable. The model postulates that the conditional mean of the response is a linear function of predictor, such that $E[Y|X=x] = \beta_0 + \beta_1 x$.
+:::
+
+The key assumption when using linear regression is that this mean relationship, that $E[Y|X=x] = \beta_0 + \beta_1 x$, is a good representation of the truth. Without linearity of the mean, using a linear regression will provide misleading results. Implicitly, this also means that we are taking $Y$ to be a continuous variable.^[There are regression-type methods for non-continuous outcomes. These require more advanced techniques, but the same underlying ideas will hold.] A secondary assumption that we have made implicitly in the specification of this model is that the amount of variability in the error term does not depend on $X$. This assumption is called **homoscedasticity** and is typically summarized as being an assumption of constant variance.^[Note, there are more advanced regression techniques that allow for the relaxation of the homoscedasticity assumption.] Mathematically, we can frame this as assuming that $\text{var}(\epsilon|X=x) = \sigma^2$, for any value $x$. 
+
+:::{#def-homoscedasticity-assumption}
+## Homoscedasticity (assumption)
+The assumption of **homoscedasticity** (often expressed as saying that the data are *homoscedastic*), requires that the variance of the error terms in a model do not depend on the predictors in that model. That is, there is a constant variance across all observations in the model.
+:::
+
+By assuming that $E[Y|X=x] = \beta_0 + \beta_1 x$, and that otherwise, $Y = E[Y|X=x] + \epsilon$, where $\epsilon$ has mean $0$ and does not depend on the value of $X$, then this model has specified the parametric form for $Y|X=x$. Namely, $$E[Y|X=x] = \beta_0 + \beta_1 x \quad\text{ and }\quad \text{var}(Y|X=x) = \sigma^2.$$ It is this random variable, $Y$, that we are primarily concerned with, conditional on $X$. Note that sometimes it will be convenient to make further assumptions regarding $\epsilon$. Most commonly, we may assume that $\epsilon \sim N(0, \sigma^2)$. Under this assumption, we end up further assuming that $$Y|X=x \sim N(\beta_0 + \beta_1 x, \sigma^2).$$ This assumption is **not** necessary for the estimation of the regression parameters, $\beta_0$ and $\beta_1$, but it will be useful if we wish to conduct inference regarding the parameters. 
+
+:::{.callout-warning icon="false"}
+## A Note on the Randomness of $X$
+
+Many authors will discuss linear regression under the assumption that $X$ is nonrandom. That is, they suppose that $Y$ is a random variable, and that $X$ is simply a set of fixed values. They then discuss the relationship between $Y$ and $X$. Mathematically, this convention is entirely equivalent to the one that we are exploring, since we are considering the value of $Y$ conditional on $X$. In some settings, it is far more sensible to take one approach or the other. For instance, if you are running a designed experiment, then $X$ will typically denote the level of the treatment variable that you are modifying. In this setting, the level of the treatment variable is decided upon by yourself, and so there is no randomness there at all: you have picked the values of $X$, and then measured the random $Y$. Conversely, if you are considering observational data, then typically we treat every observation as random since none of it was directly controlled. 
+
+Even when $X$ is treated as random, as it is in our discussion, it is important to note that we never make assumptions regarding the distribution of $X$, except insofar as it relates to the distribution of $Y$ and $\epsilon$. That is, our predictors can be drawn from any population distribution, and our discussion holds as written. If this is a deterministic distribution, that does not cause any issue. Whether you approach linear regression from the viewpoint of a random $X$ quantity, where we are doing everything conditioned on the variable, or if you take $X$ to be fixed and $Y$ depends on the fixed value, the interpretation and estimation is equivalent. 
+:::
+
+### Estimation of Model Parameters
+
+Estimation in the simple linear regression refers specifically to estimation of the parameters, $\beta_0$ and $\beta_1$. Under the specified model, with estimates for both the intercept and the slope, the procedure provides an estimate of the line of best fit, and equivalently, for the conditional mean of $Y$ given $X=x$. Denote the estimators for $\beta_0$ and $\beta_1$ as $\widehat{\beta}_0$ and $\widehat{\beta}_1$, respectively. Then, if estimates for these quantities were worked out, we could also write $$\widehat{E}[Y|X=x] = \widehat{\beta}_0 + \widehat{\beta}_1x.$$ That is, the estimated conditional mean, given some value of $x$, can be derived through these estimators.
+
+In the data that we have observed, we will have $\{(x_1, y_1), \dots, (x_n, y_n)\}$ observed in pairs. If we apply our estimated relationship, $\widehat{\beta}_0 + \widehat{\beta}_1x_i$ to any specific individual, if the estimators are well-behaved then this should be close to the true value, $y_i$. We will typically write $$\widehat{y}_i = \widehat{E}[Y|X=x] = \widehat{\beta}_0 + \widehat{\beta}_1x.$$ In a sense, the difference between $y_i$ and $\widehat{y}_i$ is the "mistake" that the estimated regression line makes on the specific individual. It is the amount of the outcome that is *not* captured by the regression model. We refer to these quantities as the **residuals**. 
+
+:::{#def-residuals}
+## Residuals (Regression Model)
+Broadly speaking **residuals** refer to the difference between the true value of an outcome, and the value of the outcome that is implied by the estimated model. For simple linear regression, the residuals for an individual with predictor $x_i$ and outcome $y_i$ are given by $$e_i = y_i - (\widehat{\beta}_0 + \widehat{\beta}_1x_i) = y_i - \widehat{y}_i.$$ The residuals can be viewed as estimated values for the errors, $\epsilon_i$, since if $\widehat{\beta}_0 = \beta_0$ and $\widehat{\beta}_1 = \beta_1$, then $e_i = \epsilon_i$. 
+:::
+
+Intuitively, in order to have the **line of best fit**, we want to have the residuals be as small as possible across the entire dataset. Importantly, however, we want to consider both positive and negative residuals as being equally far from the truth. If the value implied by the model is $10$ units larger than the truth, or if the value implied by the model is $10$ units larger than the truth, these both constitute an error of $10$ units. As a result, instead of consider $e_i$ alone, we will instead consider the **squared residuals**, $e_i^2$. Specifically, the line of best fit, the estimated regression line, will be defined by the parameters that minimize the sum of the squared residuals. 
+
+:::{#def-regression-line}
+## Estimated Regression Line (Line of Best Fit)
+The **estimated regression line**, also referred to as the line of best fit, is the line that is estimated from a set of data based on $\widehat{\beta}_0$ and $\widehat{\beta}_1$. This line is taken to be the line that minimizes the sum of squared residuals. Namely, the estimated regression line is defined by finding $\widehat{\beta}_0$ and $\widehat{\beta}_1$ such that $$\sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i)^2,$$ is minimized. This procedure is referred to as the **least squares** procedure, or sometimes, **ordinary least squares**.
+:::
+
+Through the least squares procedure, the line of best fit can be derived. In the case of linear regression, the estimators $\widehat{\beta}_0$ and $\widehat{\beta}_1$ take on a specific form, based on the observed data. 
+
+:::{.callout-tip icon="false"}
+## The Ordinary Least Squares Estimators for Simple Linear Regression
+
+In a simple linear regression, based on observed data $\{(x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)\}$, the ordinary least squares estimators, $\widehat{\beta}_0$ and $\widehat{\beta}_1$, are given by $$\widehat{\beta}_0 = \overline{Y} - \widehat{\beta}_1\overline{X} \quad\text{and}\quad \widehat{\beta}_1 = \frac{\sum_{i=1}^n (X_i - \overline{X})(Y_i - \overline{Y})}{\sum_{i=1}^n (X_i - \overline{X})^2}.$$
+Note that the estimator for $\widehat{\beta}_1$ can be viewed as taking the *sample covariance* between $x_i$ and $y_i$, divided by the *sample variance* of $x$. Namely, the sample covariance is $$S_{XY} = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X})(Y_i - \overline{Y}) \implies \widehat{\beta}_1 = \frac{S_{XY}}{S_{X}^2}.$$
+:::
+
+:::{.callout-warning icon="false" collapse="true"}
+## $\int$: The Least Squares Derivation for the Simple Linear Regression
+In order to derive the least squares estimator for the simple linear regression, we require the use of multivariate differential calculus. Specifically, if we wish to find the parameters that minimize $\sum_{i=1}^n e_i^2$, then we can proceed by first solving for the partial derivatives of this quantity, with respect to the parameters of interest, and then jointly solving for these equations equal to $0$. This gives \begin{align*}
+\frac{\partial}{\partial\widehat{\beta}_0}\sum_{i=1}^n e_i^2 &= \sum_{i=1}^n \frac{\partial}{\partial\widehat{\beta}_0} (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i)^2 \\
+&= -2\sum_{i=1}^n (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i) \\
+\frac{\partial}{\partial\widehat{\beta}_1}\sum_{i=1}^n e_i^2 &= \sum_{i=1}^n \frac{\partial}{\partial\widehat{\beta}_1} (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i)^2 \\
+&= -2\sum_{i=1}^n (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i)x_i.
+\end{align*} Next, we need to jointly set these two quantities equal to $0$, solving for the parameters. Rearranging the first gives \begin{align*}
+0 &= -2\sum_{i=1}^n y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i \\
+0 &= \sum_{i=1}^n y_i - n\widehat{\beta}_0 - \widehat{\beta}_1\sum_{i=1}^n x_i \\
+\widehat{\beta}_0 &= \frac{1}{n}\sum_{i=1}^n y_i - \widehat{\beta}_1\frac{1}{n}\sum_{i=1}^n x_i \\
+\widehat{\beta}_0 &= \overline{y} - \widehat{\beta}_1\overline{x}.
+\end{align*} The same general procedure can be applied to the second expression, giving \begin{align*}
+0 &= -2\sum_{i=1}^n (y_i - \widehat{\beta}_0 - \widehat{\beta}_1x_i)x_i \\
+&= \sum_{i=1}^n (y_i - \overline{y} - \widehat{\beta}_1\overline{x} - \widehat{\beta}_1x_i)x_i \\
+&= \sum_{i=1}^n (y_i - \overline{y})x_i - \widehat{\beta}_1(x_i - \overline{x})x_i. 
+\end{align*} Note that $\sum_{i=1}^n (x_i - \overline{x}) = \sum_{i=1}^n (y_i - \overline{y})= 0$, and so we can subtract off $\sum_{i=1}^n \overline{x}(y_i - \overline{y})$ and $\sum_{i=1}^n \widehat{\beta}_1(x_i - \overline{x})\overline{x}$, and not change the overall expression. This gives the required result, \begin{align*}
+0 &= \sum_{i=1}^n (y_i - \overline{y})(x_i - \overline{x}) - \widehat{\beta}_1(x_i - \overline{x})(x_i - \overline{x}) \\
+\widehat{\beta}_1 &= \frac{\sum_{i=1}^n (y_i - \overline{y})(x_i - \overline{x})}{\sum_{i=1}^n (x_i - \overline{x})^2}.
+\end{align*}
+:::
+
+The line of best fit, in the simple linear regression, then depends on only the sample means of both $x$ and $y$, as well as on the sample variance of $x$ and the sample covariance of $x$ and $y$. From these quantities, we are able to derive the closed form estimators for the intercept and slope parameters, which in turn define the estimated regression line. The estimated regression is as such taken to be the best line in the sense that the sums of the squared residuals will be minimized among all possible linear relationships.^[Note, it is conceptually possible to define other "best" lines. You could have thought to take $|y_i - \widehat{y}_i|$ or similar instead. Doing this results in alternative forms of the regression relationship, forms that exhibit slightly different properties. The least squares regression tends to be the most common in use, is the most well-studied, and is in many ways the most mathematically convenient.] With the estimated linear relationship found, we can turn towards considering interpretation and inference for the parameters and overall relationship.
+
+### Interpretation and Inference Regarding Model Parameters 
+
+In the deterministic linear relationship, $y = mx + b$, $b$ was interpreted as the $y$-intercept, which is to say the value of $y$ when $x=0$, and $m$ was interpreted as the slope, which is to say the change in $y$ for a $1$ unit change in $x$. These interpretations carry over to the *coefficients* in the linear regression model. The key distinction is that in the deterministic relationship these are exact. For the linear regression model we must remember that $\beta_0 + \beta_1 x$ is a model for the **mean** of $Y$ given $X=x$. That is, our interpretations will not center on the values of $Y$ specifically, but rather on the average values of $Y$. 
+
+To understand the interpretation of the parameters, we can consider separate points that isolate the parameters themselves. First, consider what happens for a data point that has $X = 0$. In this case we find, $$E[Y|X=0] = \beta_0 + \beta_1(0) = \beta_0.$$ Thus, the expected value of $Y$ when $X$ is $0$ is exactly equal to the intercept, $\beta_0$. As a result, in order to interpret $\beta_0$, we can suggest that it is the mean of the outcome when the predictor is $0$. Next, consider two different points. If we first take $X=x$, and then consider a second point with $X=x+1$, then we can take the difference between these two quantities. This gives \begin{align*}
+E[Y|X=x] &= \beta_0 + \beta_1x \\
+E[Y|X=x+1] &= \beta_0 + \beta_1(x + 1) \\
+&= \beta_0 + \beta_1x + \beta_1 \\
+E[Y|X=x+1] - E[Y|X=x] &= \beta_0 + \beta_1x + \beta_1 - (\beta_0 + \beta_1 x) \\
+&= \beta_1. 
+\end{align*} Thus, $\beta_1$ represents the change in the expected outcome when $X$ increases by a single unit. In practice, we will not have the values of the parameters exactly, and so our interpretation will rely on estimates of these parameters. This means that we interpret $\widehat{\beta}_0$ as an estimate of the average value of the outcome when the predictor is $0$, and we interpret $\widehat{\beta}_1$ as an estimate of the average change in the outcome for a $1$ unit increase in the predictor. 
+
+:::{.callout-tip icon="false"}
+## Interpretations of the Parameters in a Simple Linear Regression
+Consider a simple linear regression model, specified by $$E[Y|X=x] = \beta_0 + \beta_1 x.$$
+
+a. In this model, $\beta_0$ corresponds to the average outcome when the predictor is $0$. 
+b. In this model, $\beta_1$ corresponds to the average change in the outcome when the predictor increases by $1$. 
+
+The estimates for these parameters, $\widehat{\beta}_0$ and $\widehat{\beta}_1$, correspond to estimates of these quantities. 
+:::
+
+It is important to note that whether the parameters have interpretations that are substantively interesting depends on the specific context. For instance, it may be the case that $X=0$ is not a meaningful quantity, depending on what $X$ measures. Consider if the regression model is predicting some health outcome using blood pressure as the predictor, $X$. In this case, it is not particularly meaningful to predict the health outcome if $X=0$. There are other cases where the prediction may be reasonably assumed to equal $0$, but that this is not an interesting case. Consider, for instance, if $Y$ represents the revenue that a company will earn based on the amount that they spend on advertising ($X$). It is unlikely that the company will spend $0$ on advertising in any situation, and as a result, the intercept becomes of little interest. Similar considerations can occur for the slope parameter as well. In particular, if a $1$ unit change in the predictor is unrealistic or uninteresting, then the slope parameter does not have a particularly interesting meaning. Consider, for instance, any regression model that relies on a proportion as a predictor. In this case, $X \in [0,1]$, and so most changes of $X$ will not be of size $1$. Alternatively, consider a regression model that relies on annual income as a predictor, measured in dollars. In this case, a $\$1$ change in income is not likely a sizable enough effect to care deeply about. 
+
+To avoid concerns with the scale of the predictor being off, either because $1$ unit change is too large or too small, we can adjust the linear regression model in one of two ways. First, we can transform the predictors so that they are measured on a scale where a $1$ unit change *is* meaningful. This relies on multiplying or dividing all the observations of $X$ by some constant. Consider, for instance, the proportions example. Measured as a value between $0$ and $1$, a $1$ unit change is unreasonable. However, if we multiply all the proportions by $100$, then our predictors are measured as percentages instead. In this case, a $1$ unit change corresponds to a $1\%$ change, which is more likely to be relevant. Similarly, in the income example, we could perhaps measure income in thousands of dollars. To do so, we would divide $X$ by $1000$. Then, a $1$ unit change in the predictor corresponds to a $\$1000$ change in income, which is more likely to be relevant. If we scale the predictors up or down, the estimated parameter values for the intercept will not change. Moreover, the slope value will be scaled by the same constant, in the opposite way. If we multiply $X$ by $100$, the newly estimated $\beta_1$ will be $$\widehat{\beta}_1^\text{new} = \dfrac{\widehat{\beta}_1}{100}.$$ Similarly, if we divide $X$ by $1000$, then the newly estimated $\beta_1$ will be $\widehat{\beta}_1^\text{new} = 1000\times\widehat{\beta}_1$. As a result, we need not actually refit the regression model with the transformed predictors. Instead, we can scale up or down the estimate to operate on a scale that is more relevant.
+
+A mathematically equivalent, but conceptually distinct, method of reinterpreting the slope coefficient returns to the initial method used to determine the meaning of the parameters. Recall that we considered two separate data points, one with $X=x$ and one with $X=x+1$. If a difference of $1$ is not meaningful, then we could have instead considered a difference of $\delta$, for some $\delta$ that is meaningful. For instance, in the proportion example perhaps $\delta = 0.01$, and in the income example perhaps $\delta = 1000$. Then, using the same strategy as before, \begin{align*}
+E[Y|X=x] &= \beta_0 + \beta_1x \\
+E[Y|X=x+\delta] &= \beta_0 + \beta_1(x + \delta) \\
+&= \beta_0 + \beta_1x + \delta\beta_1 \\
+E[Y|X=x+1] - E[Y|X=x] &= \beta_0 + \beta_1x + \delta\beta_1 - (\beta_0 + \beta_1 x) \\
+&= \delta\beta_1. 
+\end{align*} As a result, we can say that $\delta\beta_1$ is the expected change in the outcome for a $\delta$ unit increase in the predictor. This results in the same scaling as before, but in certain settings, it may be clearer to envision.
+
+The interpretations of the parameter estimates does not explicitly account for the uncertainty in estimation. If we had access to the true parameter values, $\beta_0$ and $\beta_1$, we would be able to directly interpret the values as outlined. Unfortunately, the estimators are subject to the same uncertainty that all estimators are. As such, it is important to consider the sampling distribution of the parameters, and use this to quantify our uncertainty in the values of the parameters. 
+
+Without assuming normality, we can derive the expected value and variance of the two estimators. Importantly, both $\widehat{\beta}_0$ and $\widehat{\beta}_1$ are **unbiased** estimators of the truth, meaning $$E[\widehat{\beta}_0] = \beta_0 \quad\text{ and }\quad E[\widehat{\beta}_1] = \beta_1.$$ For the variances, each of them depends on the overarching variance of the error terms, $\sigma^2$. Specifically, $$\text{var}(\widehat{\beta}_0) = \sigma^2\left(\frac{\sum_{i=1}^nX_i^2}{n\sum_{i=1}^n(X_i - \overline{X})^2}\right) \quad\text{and}\quad \text{var}(\widehat{\beta}_1) = \sigma^2\left(\frac{1}{\sum_{i=1}^n(X_i - \overline{X})^2}\right).$$ Under the assumption that the errors are normal^[As well as, more critically, the assumption that the regression model is correct and the assumption that variances are homoscedastic.] then regardless of the sample size, the sampling distribution of the parameters will also be normal. In the case of a **large sample** then the sampling distributions will be approximately normal, regardless of the distribution of the errors. These sampling distributions can be used to construct confidence intervals for the parameters, or to conduct hypothesis tests regarding their values. 
+
+:::{.callout-tip icon="false"}
+## The Sampling Distribution for Simple Linear Regression Estimators
+
+Assuming the linear model for a simple linear regression holds, and that the error variances are homoscedastic with a variance of $\sigma^2$, then so long as the sample size ($n$) is large, or that the errors can be assumed to be normally distributed, both the estimators for the intercept and slope parameters will have normal sampling distributions. Specifically, \begin{align*}
+\widehat{\beta}_0 &\sim N\left(\beta_0, \ \sigma^2\left(\frac{\sum_{i=1}^n X_i^2}{n\sum_{i=1}^n (X_i - \overline{X})^2}\right)\right); \ \text{and}\\
+\widehat{\beta}_1 &\sim N\left(\beta_1, \ \sigma^2\left(\frac{1}{\sum_{i=1}^n (X_i - \overline{X})^2}\right)\right). \\
+\end{align*}
+:::
+
+Because the parameters are normally distributed, statistical inference from the normal distribution applies. Specifically, both confidence intervals and hypothesis tests can be conducted using a normal distribution, when $\sigma^2$ is assumed to be known, and using a $t$ distribution if $\sigma^2$ is replace by its estimated value. Specifically, if we denote the standard errors of $\widehat{\beta}_0$ and $\widehat{\beta}_1$ as $SE(\widehat{\beta}_0)$ and $\widehat{\beta}_1$,^[Recall that the standard errors are given by the square root of the variance terms. It is convenient when the variance of estimator is a fairly involved expression (as is the case for the regression parameters), to use the shorthand notation.] then a $100(1-\alpha)\%$ confidence interval is given by $$\widehat{\beta}_j \pm Z_{\alpha/2}SE(\widehat{\beta}_j),$$ if $\sigma^2$ is known, and otherwise, by $$\widehat{\beta}_j \pm t_{n-2,\alpha/2}\widehat{SE}(\widehat{\beta}_j).$$ These results also directly permit the use of $Z$-tests or $t$-tests for the values of the parameters. Notably, if the null hypothesis is $H_0: \beta_j = c$, then $$\frac{\widehat{\beta}_j - c}{SE(\widehat{\beta}_j)} \stackrel{H_0}{\sim} N(0, 1) \quad\text{and}\quad \frac{\widehat{\beta}_j - c}{\widehat{SE}(\widehat{\beta}_j)} \stackrel{H_0}{\sim} t_{n-2}.$$ 
+
+These results are powerful as they permit the entirety of our study on $t$-tests and $Z$-tests, as well as on the relevant confidence intervals, to apply directly to the regression parameters. Conceptually, it is no different to find the confidence interval for the slope (or intercept) in a regression, as it is to find the confidence interval for a sample mean. Similarly, the test procedure for the regression procedures is equivalent, once the parameters have been estimated, as it is for the sample mean. When considering hypothesis tests we will typically focus on tests of the slope parameter, rather than tests of the intercept. Moreover, it is most typical to see tests of the null hypothesis $H_0: \beta_1 = 0$, versus the two-sided alternative. If $\beta_1 = 0$, then the conclusion that we would draw is that there is no relationship^[Linear relationship.] between the outcome and the predictor. This is typically interpreted as saying that the predictor does not have an effect on the outcome, though, we must be cautious with such language as a hypothesis test in a regression does not *necessarily* constitute an assessment of causality. 
+
+In the case of an unknown error variance^[This case is of course far more common in practice] then there are two important considerations to make. The first is that the sampling distribution is given by a $t$ distribution with $n-2$ degrees of freedom. This differs from the case of the sample mean, where we considered a $t$ distribution with $n-1$ degrees of freedom. The second is that, in order to estimate the standard error of either estimator, we require an estimator for the variance of the error terms, $\widehat{\sigma}^2$. In order to estimate the error variance, we turn towards considering a breakdown of the sources of errors in the regression model as a whole.
+
+## Sources of Variation in Simple Linear Regression
+One way to view a regression model is as an attempt to explain the variability in the outcome variable using the predictor. Since $Y$ is a random quantity, we know that there is inherent variability in $Y$, say, captured through its variance. In the sample that we obtain, we have estimated this variability using the sample variance before. An alternative method of representing the variability in the sample is to use the total variation, $$\text{SST} = \sum_{i=1}^n (y_i - \overline{y})^2.$$ This is the same as the sample variance, except we are not scaling amount of variability by $n-1$. We refer to this as the **sum of squares total** or the **total sum of squares**, and it represents the total variability in the outcome within our sample. 
+
+:::{#def-SST}
+## Sum of Squares Total (SST)
+The **total sum of squares** is the sum of all squared differences between the observations of the outcome, and the overall mean of the outcome, within a sample. It measures the complete variability within a sample, and is calculated as $$\text{SST} = \sum_{i=1}^n (y_i - \overline{y})^2.$$ 
+:::
+
+The goal with the regression model is then to explain as much variability in the outcome as is possible, using the explanatory factor. Assuming that the linear regression model is the correct expression of the conditional mean then this will explain some portion of the differences between various observations of $Y$. That is, if we take two observations in our data, $(x_i, y_i)$ and $(x_j, y_j)$, then we expect that $y_i \neq y_j$. In part this occurs if $x_i \neq x_j$, since $E[Y|X=x] = \beta_0 + \beta_1x$, and so there is an expected difference of $\beta_1(x_i - x_j)$. These differences can be *explained* by the regression model. Beyond these differences, however, there is likely to be further differences between the observations. These come from the errors in the model. 
+
+Consider, $y_i - y_j$, if we do not take expectations, this will give $\beta_1(x_i - x_j) + (\epsilon_i - \epsilon_j)$. Thus, even if $x_i = x_j$, we will likely not observe $y_i = y_j$ because of the error terms. The variability owing to the errors cannot be explained by the model, since the errors are purely random and not dependent on the explanatory factors. Recall that we defined the residuals to be $e_i = y_i - \widehat{y}_i$. Notice that, if $\widehat{\beta}_0 = \beta_0$ and $\widehat{\beta}_1 = \beta_1$, we have that $e_i = \epsilon_i$. In a sense then, the residuals can then be seen as estimates of the errors. As a result, if we take the sum of squared residuals, this gives an estimate of the total variation from the errors, resulting in $$\text{SSE} = \sum_{i=1}^n e_i^2.$$ This is referred to as either the **residual sum of squares**, or the **error sum of squares**, or sometimes the **sum of squared errors**. 
+
+:::{#def-SSE}
+## Residual Sum of Squares (Sum of Squared Errors; SSE)
+
+The **residual sum of squares** is a measure of the amount of variability in the outcomes of a linear regression model that is **not** explained by the model itself. That is, it is the residual variability, after accounting for the explanatory factors. The residual sum of squares of computed as $$\text{SSE} = \sum_{i=1}^n e_i^2.$$
+
+:::
+
+If the total sum of squares, $\text{SST}$, gives the complete variability in the outcome, and the residual sum of squares, $\text{SSE}$, gives the variability in the outcome that is left unexplained by the model, then the difference between these two quantities gives the amount of variability that *is* explained by the model. That is, $\text{SSR} = \text{SST} - \text{SSE}$, where $\text{SSR}$ refers to the **regression sum of squares**. The regression sum of squares gives a measure of the explainable component of the variability in the outcome. 
+
+:::{#def-SSR}
+## Regression Sum of Squares (SSR)
+The **regression sum of squares** is the amount of variability in the outcome that can be explained by the regression model. This captures how much variability is described by the explanatory factors. The total variability is made up of the regression sum of squares and the residual sum of squares, so that $\text{SST} = \text{SSE} + \text{SSR}$, and this relationship can be used to write $$\text{SSR} = \text{SST} - \text{SSE}.$$
+:::
+
+With the framing of regression as breaking down the source of variation, we are able to both estimate variance components that are of interest for inferential purposes, and diagnose how well the model seems to fit or explain the observations. In order to conduct statistical inference in the event of an unknown error variance, we required an estimator for the variance of the error terms, denoted $\sigma^2$. Noting that the residual sum of squares approximates the total variability within the error terms, we can scale this to give an estimate of the error variance. Namely, we take $$\widehat{\sigma}^2 = \text{MSE} = \frac{SSE}{n - 2}.$$ Here, $\text{MSE}$ refers to the **mean squared errors**. 
+
+:::{#def-MSE}
+## Mean Squared Error (MSE)
+The **mean squared error** refers to an estimate of the residuals of the error terms. This estimate is derived as a scaled version of the sum of squared errors, where the $\text{SSE}$ is scaled by the total sample size less the number of estimated parameters in the model. In the case of a simple linear regression model there are $2$ estimated parameters and so $$\text{MSE} = \frac{\text{SSE}}{n-2}.$$ 
+:::
+
+:::{.callout-tip icon="false"}
+## The Sampling Distribution for Simple Linear Regression Estimators (Estimated Variance)
+
+Assuming the linear model for a simple linear regression holds, and that the error variances are homoscedastic with a variance of $\sigma^2$ that is unknown, then so long as the sample size ($n$) is large, or that the errors can be assumed to be normally distributed, both the estimators for the intercept and slope parameters can be scaled by the mean squared error to result in a $t$ distribution. Specifically, \begin{align*}
+\frac{\widehat{\beta}_0 - \beta_0}{\sqrt{\text{MSE}\left.\sum_{i=1}^n X_i^2\right/\left(n\sum_{i=1}^n (X_i - \overline{X})^2\right)}} &\sim t_{n-2}; \ \text{and}\\
+\frac{\widehat{\beta}_1 - \beta_1}{\sqrt{\text{MSE}\left/\sum_{i=1}^n (X_i - \overline{X})^2\right.}} &\sim t_{n-2}. \\
+\end{align*}
+:::
+
+The breakdown of sources of variance can also provide a method of understanding the overall quality of the regression model. One common technique for doing this is through the use of the **coefficient of determination** or the $R^2$ value. The coefficient of determination gives a measure of the proportion of variation that is explained by the regression model, with the idea that generally speaking, it is preferable when a model explains more variation than less. 
+
+:::{#def-coefficient-of-determination}
+## Coefficient of Determination ($R^2$)
+The **coefficient of determination** is a measure of the proportion of the variation in the outcome that is attributed to the regression sum of squares. This measure is typically denoted $R^2$, such that $$R^2 = \frac{\text{SSR}}{\text{SST}}.$$ Note that $0 \leq R^2 \leq 1$, and as $R^2$ nears $1$, the model explains more of the variability in the outcomes.
+:::
+
+The $R^2$ is an incredibly popular measure to be reported alongside the results of a linear regression model. The prominence makes it important to understand. With that said, the $R^2$ is often misused or misinterpreted, and as a result, great care should be taken when encountering the $R^2$ values. What follows are some frequent misinterpretations or mistakes regarding the $R^2$ value, and an attempt to illustrate why these are mistake.^[Note, a more thorough, theoretical account of these issues is available [here](https://www.stat.cmu.edu/~cshalizi/mreg/15/lectures/10/lecture-10.pdf). This requires a deeper understanding of regression more broadly.]
+
+1. **$R^2$ is often used a measure of goodness of fit**. It is not. Note that goodness of fit refers to a measure of how well the model tracks with reality. We know that in practice the mean of $Y$ given $X=x$ is unlikely to be precisely $\beta_0 + \beta_1x$, however, we hope that it is close. Measures of goodness of fit tell us whether the model appears to fit or not. Many individuals use $R^2$ as a measure of the goodness of fit, however, this is inappropriate. The $R^2$ value can be made to be arbitrarily small for a model that is exactly correct, for instance, by increasing the variability of the error terms. On the flip side, there is no upper bound on how high the $R^2$ value can be when the model is entirely wrong -- it can be arbitrarily close to $1$. 
+2. **The $R^2$ is often used to compare across different datasets.** It cannot be. The $R^2$ is a data-dependent measure. If you take two different sources of data and compare regression models fit on each of them, the $R^2$ values are entirely incomparable. If you are comparing two different models fit to the same data, then in this case, $R^2$ *can* be compared, however, any conclusions could also be derived at by comparing (say) the $\text{MSE}$ (a more useful measure).
+3. **The $R^2$ value is often thought to describe causality**. It does not. The phrasing "the fraction of variance explained" is a misleading phrase at best. When this language is used, it is meant to say that the $R^2$ gives the proportion of the total variation that is made up by the variation in the regression model. This is not to say that a high $R^2$ means that the explanatory factor is a good explanatory factor of the outcome, nor to say that there is some causal connection between these components. In fact, if we fit two regression models, one where $Y$ is treated as the outcome and $X$ as the explanatory factor, and then a second where the roles are reversed ($X$ is treated as the outcome and $Y$ the explanatory variable), the $R^2$ in each of these models will be exactly equivalent. As such, $R^2$ can certainly not capture any "explanation" in a scientific sense of the word. 
+
+The $R^2$ will not typically be a particularly useful quantity to report. However, its prominence is not likely to be minimized at any point in the near future. Correspondingly, it is important to understand what $R^2$ is, and also critically, what it is not. 
+
+## Prediction using Linear Regression
+
+To define the residuals, we introduced $\widehat{y} = \widehat{\beta}_0 + \widehat{\beta}_1x$. This was thought of as the **estimated** expected value of $Y$ given $X = x$. Expressed in this way, this is an estimation procedure like any other that we have seen. That is, we are estimating the parameter of a population distribution^[Namely, the conditional distribution of $Y$ given $X=x$.] using observed data. However, the notation is suggestive of an alternative perspective. Notably, suppose that beyond our sample we make a new observation with $X=x$, but we do not observe the corresponding value of $Y$. In this case, we can use the same relationship, $\widehat{\beta}_0 + \widehat{\beta}_1x$ to make a guess as to the unobserved value for the outcome. Notice that this framing of the estimation problem is distinct from estimation problems we have previously seen. In this case, we are attempting to use data to guess the value of a variable outside the data that we have collected. When we use estimation in this context, we no longer refer to it as estimation but instead as **prediction**.
+
+:::{#def-prediction}
+## Prediction
+In statistics, **prediction** refers to the process of using data to guess the value of a random quantity that was not observed in the sample. The specific values are typically informed through observed data. The numeric values themselves are referred to as *predictions*, while the functions that generate the predictions can be referred to as *predictors*.^[This distinction is analogous to the *estimates* and *estimators* distinction.]
+:::
+
+One of the most useful features of linear regression is the ability to generate predictions from the estimated regression function. The process of prediction is a very important application of statistics. Critically, with prediction, we are able to make guesses beyond the samples that we have actually recorded. This allows data in the present to inform our understanding of the future, helping to make decisions or guide action. With prediction we must be cautious, however, as we are relying on the past to be a good representation of the future. If the patterns from the past fail to hold moving forward then prediction will be invalid. Moreover, if the value of the dependent variable is far from values that were actually seen in the data, there is no way to assess the quality of prediction. These types of predictions are known as **extrapolations**. 
+
+:::{#def-extrapolation}
+## Extrapolation
+
+When prediction occurs beyond the scope of the model, this is known as **extrapolation**. Specifically, extrapolation refers to predictions that are made for values of the explanatory factors that were not observed, or which are far from values that were observed, in the initial data used to fit the model. Extrapolation is typically ill-advised, as its use cannot be supported via statistical theory. 
+
+:::
+
+The concern with extrapolation is that there is no way to determine whether the pattern over the observed range of the explanatory factors will continue beyond the current range. It is possible that what appears to be a linear relationship over the observed data ends up looking nonlinear over a wider range. Alternatively, perhaps there is a value of the explanatory variable after which a fundamentally new pattern emerges. Extrapolation relies on the thought that the observed trends will continue indefinitely, and this assumption tends to be fairly strong. In order to responsibly extrapolate beyond the scope of a model, the extrapolation should be supported by the subject-matter theory. If there are good theoretical reasons to believe that the same pattern will continue, or that the relationship will remain linear over the entire range of the explanatory factors, then extrapolation is better supported. Critically, however, these arguments do not come from statistical observation and instead rely on subject-matter knowledge. 
+
+As long as the use of prediction is supported, then we can view the regression function as providing the best guess as to the value of new, unobserved data. There is uncertainty in the predictions that we make. Just as with estimation, we should never expect the predicted values to exactly equal the unobserved values. Instead, we hope that we are close to the truth. With estimation, when faced with the reality of never exactly getting the value correct, we supplemented point estimation with interval estimation. The same general concept applies for prediction. We can find **prediction intervals** that give a range of values that are, in some sense, equally well-supported by the observed data. 
+
+:::{#def-prediction-interval}
+## Prediction Interval
+A **prediction interval** is an interval estimator calibrated to contain the value of an unobserved response, based on observed explanatory factors, with a set probability. The prediction interval supports the use of (point) prediction, giving a range of plausible values for the unobserved response.
+:::
+
+To form the prediction interval for simple linear regression, we need to consider the variability of the prediction itself. Namely, if we take $$\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1X,$$ for a set value of $X$, then notice that the variance of this quantity is given by \begin{align*}
+    \text{var}\left[\widehat{\beta}_0 + X\widehat{\beta}_1\right] &= \text{var}(\widehat{\beta}_0) + X^2\text{var}(\widehat{\beta}_1) + 2X\text{cov}(\widehat{\beta}_0, \widehat{\beta}_1) \\
+    &= \frac{\sigma^2\sum_{i=1}^nX_i^2}{n\sum_{i=1}^n(X_i - \overline{X})^2} + \frac{X^2\sigma^2}{\sum_{i=1}^n(X_i - \overline{X})^2} - \frac{2\sigma^2X\overline{X}}{\sum_{i=1}^n(X_i - \overline{X})^2} \\
+    &= \sigma^2\left(\frac{1}{n} + \frac{(X - \overline{X})^2}{\sum_{i=1}^n (X_i - \overline{X})^2}\right).
+\end{align*} If we wished to form confidence intervals around the estimated conditional mean of $Y$ given $X=x$, we could use the square root of this quantity as the variance, either using the true variance when known^[With a normal distribution.] or else using the MSE as an estimate of the variance^[With a $t$ distribution]. For the prediction interval, however, we are not looking to quantify the mean directly, but rather the actual observed outcome. Recall that $Y = E[Y|X=x] + \epsilon$, where $\epsilon$ is an error term, with variance given by $\sigma^2$. As a result, the actual outcome should fall near $E[Y|X=x]$, but will be perturbed by a noise term, $\epsilon$, with variance $\sigma^2$. Thus, to capture the variance of the predicted outcome, we ought to add an extra $\sigma^2$ to the variability, $$\sigma^2 + \sigma^2\left(\frac{1}{n} + \frac{(X - \overline{X})^2}{\sum_{i=1}^n (X_i - \overline{X})^2}\right) = \sigma^2\left(1 + \frac{1}{n} + \frac{(X - \overline{X})^2}{\sum_{i=1}^n (X_i - \overline{X})^2}\right).$$
+
+The relevant sampling distribution will still be normal, supposing that $\sigma^2$ is known, or else a $t_{n-2}$ if the MSE is used as an estimate for $\sigma^2$.
+
+:::{.callout-tip icon = "false"}
+## Prediction Interval for an Estimated Outcome
+
+When estimating the value of an outcome, $y$, based on an observed predictor, $x$, the $100(1-\alpha)\%$ prediction interval, taking $\widehat{y} = \widehat{\beta}_0 + \widehat{\beta}_1x$, is given by $$\widehat{y} \pm t_{n-2, \alpha/2}\sqrt{\text{MSE}\left(1 + \frac{1}{n} + \frac{(x - \overline{X})^2}{\sum_{i=1}^n (X_i - \overline{X})^2}\right)}.$$
+
+:::
+
+## Beyond Simple Linear Regression
+
+Simple linear regression is characterized by the use of a single predictor to explain the outcome. The framework of linear regression, however, is far more broad. The most natural extension to simple linear regression is that of multiple linear regression, where in place of a single predictor, multiple predictors are used. In this setting the relationship between the outcome and the predictors remains linear, however, each predictor has its own slope coefficient. For instance, we may write $$E[Y|X_1=x_1, X_2=x_2, X_3=x_3] = \beta_0 + \beta_1x_1 + \beta_2x_2 + \beta_3x_3,$$ and so forth. The same estimation procedure^[Using ordinary least squares.] can apply to give estimates of the various parameters, and the same types of distributional results apply for inference, giving both confidence and prediction intervals. Statistical software will readily estimate regression lines with large numbers of predictors, and by including increasing numbers of explanatory factors, the model fit will correspondingly improve. The main difficulty with multiple regression, compared to simple linear regression, is that the parameters need to be interpreted with more care: by considering multiple factors at the same time, our interpretations also need to do so. 
+
+Other extensions to the framework of regression modeling exist as well. For instance, there are **generalized linear models**, that can take outcome variables that are not continuous, and fit them using linear functions. This is particularly useful if the outcome is, for instance, a binary indicator^[Perhaps a $1$ if an individual has a particular disease, and a $0$ otherwise.] or count data.^[Maybe the number of defective products produced in a shift by a manufacturing plant.] These generalized linear models require an expansion of the theory, but are based on many of the same underlying principles. Regression models can also move beyond linear functions of the predictors. There are nonlinear forms of regression that capture more complex relationships, whether the outcome is continuous or otherwise. 
+
+Fundamentally, regression modelling specifies a model for the conditional mean of an outcome, given some number of predictors. This is a very general problem, and there has correspondingly been a tremendous amount of development of techniques for addressing this concern. Many procedures in statistics, and questions in science more broadly, can be formulated through a regression framework. For this reason, regression remains an incredibly powerful tool to make use of, for both inference and prediction. Simple linear regression is useful in certain contexts, however, it can also be viewed as an approachable first-step towards understanding the broader world of regression modelling. 
+
+## Linear Regression in `R`
+Fortunately, `R` makes the computation of a linear regression -- along with the testing of hypotheses surrounding the regression, straightforward to complete. The primary function of interest is the `lm` function, standing for a **l**inear **m**odel. The `lm` function can take in many different parameters, however, the primary argument that is required is the model formula. In R, a formula is a special arrangement of variables which define a particular mathematical relationship. For instance, we may write `lm(y ~ x)`. Here, `y ~ x` is the formula. 
+
+To read this formula we consider the left-hand side (to the left of `~`) and the right-hand side (to the right of `~`) separately. The left-hand side specifies the dependent variable, or the outcome. In this case, we are saying that the variable `y` contains the dependent observations. On the right-hand side, we include any explanatory factors of interest, so in this case, there is a single predictor, `x`. If `R` is to be used beyond simple linear regression, we may write, for instance, `lm(y ~ x1 + x2 + x3)`, to fit a model where `y` is explained by `x1`, `x2`, and `x3`. Note that, by default, a formula in `R` will include an intercept. That is, we do not need to include an explicit term specifying to fit $\beta_0$, as `R` will do this by default.
+
+The variables passed into the formula can be variables that exist in the environment broadly, or, they can be columns of a dataframe. If we have defined a dataframe with a column, `my_df$outcome` and another, `my_df$predictor` then the linear model can be fit using the call `lm(outcome ~ predictor, data = my_df)`. Here, the variables in the formula will be drawn from the dataframe passed in as the `data` argument, but otherwise they are read the same way. This is particularly useful as it enables us to collect and store data in one location, and then fit the regression model directly to these data. 
+
+Once a regression model has been fit, the object itself contains a great deal of information. Most of this can be read via the `summary` function. This will output a thorough summary of the regression, including the coefficients, their standard errors, $t$-tests of the hypotheses that they are actually equal to $0$, as well as the mean squared error, degrees of freedom, and $R^2$ value (among other reported quantities). When it is only the estimated coefficients that are of interest, `coef` will return a named vector of the parameters in the model. Beyond `summary`, the `predict` function can be useful. The `predict` function takes in the fitted linear model, as well as the `newdata` and `interval` arguments. The `newdata` is a dataframe that has a column for each of the predictor variables used in the model (the outcome is not required). It will then use the fitted model to predict the outcome (or expected conditional mean) based on the input. The `interval` parameter is optional, and can be set to either `"prediction"` or `"confidence"`, in order to automatically compute a prediction or confidence interval around the predicted value. By default, this will be at the $95\%$ level of confidence, but this can be controlled using the `level` argument. 
+
+::: {.content-visible when-format='pdf'}
+```{r}
+set.seed(31415) # Seed for Consistency
+
+# Generate some Data
+n <- 100
+X <- runif(n, 2, 10) # Predictors between 2 and 10
+Y <- 2 - 3 * X + rnorm(n) # Outcomes E[Y|X=x] = 2 - 3x
+
+# Since the variables are not in a dataframe, we can use
+# the more simple format
+linear.model1 <- lm(Y ~ X)
+
+# Consider the model summary
+summary(linear.model1)
+
+# Predict some new values of 'X'
+new_X <- data.frame(X = 2:15) 
+predict(linear.model1, newdata = new_X, interval = "prediction")
+
+# The iris dataframe is built into R and contains
+# information surrounding different measurements for
+# the growth of flowers. Specifically, it contains
+# information on their sepal length and width, their
+# petal length and width, and the species of flower.
+linear.model2 <- lm(Sepal.Length ~ Sepal.Width, data = iris)
+summary(linear.model2) 
+
+# Note that in R we can also easily fit multiple linear regression
+# models and use the same functions to investigate them
+mlr.1 <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, 
+            data = iris)
+summary(mlr.1)
+
+predict(mlr.1, newdata = data.frame(
+    Sepal.Width = 3.5,
+    Petal.Length = 1.4,
+    Petal.Width = 0.2
+), interval = "prediction")
+
+```
+:::
+::: {.content-visible when-format='html'}
+```{webr-r}
+set.seed(31415) # Seed for Consistency
+
+# Generate some Data
+n <- 100
+X <- runif(n, 2, 10) # Predictors between 2 and 10
+Y <- 2 - 3 * X + rnorm(n) # Outcomes E[Y|X=x] = 2 - 3x
+
+# Since the variables are not in a dataframe, we can use
+# the more simple format
+linear.model1 <- lm(Y ~ X)
+
+# Consider the model summary
+summary(linear.model1)
+
+# Predict some new values of 'X'
+new_X <- data.frame(X = 2:15) 
+predict(linear.model1, newdata = new_X, interval = "prediction")
+
+# The iris dataframe is built into R and contains
+# information surrounding different measurements for
+# the growth of flowers. Specifically, it contains
+# information on their sepal length and width, their
+# petal length and width, and the species of flower.
+linear.model2 <- lm(Sepal.Length ~ Sepal.Width, data = iris)
+summary(linear.model2) 
+
+# Note that in R we can also easily fit multiple linear regression
+# models and use the same functions to investigate them
+mlr.1 <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, 
+            data = iris)
+summary(mlr.1)
+
+predict(mlr.1, newdata = data.frame(
+    Sepal.Width = 3.5,
+    Petal.Length = 1.4,
+    Petal.Width = 0.2
+), interval = "prediction")
+
+```
+:::
+
+When reading the `summary` output, the table of Coefficients gives the estimated value (`Estimate`), standard error (`Std. Error`), $t$-test statistic (`t value`), and the $p$-value (`Pr(>|t|)`). Beneath, the mean-squared error is listed as the `Residual standard error`, with the relevant number of degrees of freedom specified for the $t$-distribution. The $R^2$ is given as `Multiple R-squared` beneath that. The output from the `predict` function is a matrix, with a column of the predicted point estimated (`fit`), followed by the lower and upper bounds on the interval (`lwr` and `upr`, respectively). 
+
+## Exercises {.unnumbered}
+
+
+:::{#exr-17.1}
+Write down and explain the components of the linear regression model.
+:::
+
+:::{#exr-17.2}
+Each month for several months, the average temperature ($x$) and the number of pounds of steam consumed by a certain chemical plant ($y$) were measured. Suppose that the least squares line is fit and found to be $y = 245.82 + 1.13x$.
+
+a. Predict the number of pounds of steam consumed in a month, when the average temperature is $65$. 
+b. If two months differ in their average temperatures by $5$ degrees, by how much do you predict the number of pounds of steam to differ?
+:::
+
+:::{#exr-17.3}
+The least squares line is fit to a set of points. If the total sum of squares is $9615$ and the error sum of squares is $1450$, compute the coefficient of determination, $R^2$. 
+:::
+
+:::{#exr-17.4}
+A simple random sample of $100$ men aged $25-34$ averaged $70$ inches in height, with a standard deviation of $3$ inches. Their incomes average $34,900$ and had a standard deviation of $17,200$. From the least-square line, suppose that we predict the income of a man who is $70$ inches tall. Can we tell whether this prediction is less than, equal to, or above $34,900$? If so, which response is it. If not, what information is missing?
+:::
+
+:::{#exr-17.5}
+In a study of copper bars, the relationship between shear stress in ksi ($x$) and shear strain in $\%$ ($y$) was summarized by the least-squares line, $y= - 20.00 + 2.56x$. There were a total of $n=17$ observations, and the coefficient of determination was $R^2 = 0.9111$. If the total sum of squares was $234.19$, compute the estimated error variance, $s^2$. 
+:::
+
+:::{#exr-17.6}
+If we treated the independent variables, $X_i$, as fixed, show that the estimators for $\beta_0$ and $\beta_1$ are unbiased.
+:::
+
+:::{#exr-17.7}
+Suppose that the regression of $Y$ on $X$ is estimated as $35.82 + 0.476x$, that the sum of square errors is $19.70$, the regression sum of squares is $19.22$, that sample standard deviation of $x$ was $2.77$, with a sample size was $12$. 
+
+Is the slope parameter significant at a $0.05$ significance level?
+:::
+
+:::{#exr-17.8}
+Show that the point of averages, $(\overline{x}, \overline{y})$ lies on the regression line.
+:::
+
+:::{#exr-17.9}
+Consider the following output for a linear regression that considers explaining the cost of a diamond ($y$) based on the carat of the diamond ($x$). 
+
+```{r}
+#| echo: false
+#| warning: false
+library(gtsummary)
+library(ggplot2)
+library(MASS)
+
+lm(price ~ carat, data = diamonds) |> 
+    tbl_regression(intercept = TRUE) |> 
+    modify_column_hide(column = c(conf.low)) |>
+    modify_column_unhide(column = std.error) |>
+    add_glance_source_note(include = c(nobs, sigma, r.squared))
+```
+a. Explain the meaning of the coefficients in this model.
+a. Draw a rough sketch of the represented linear relationship.
+b. What is the predicted value of a $1$ carat diamond? 
+c. What is the test statistic for testing $H_0: \beta_1 = 7500$? What is the null distribution of this test? 
+d. Give a $95\%$ confidence interval for the coefficient on carat. 
+e. Explain the reported $R^2$ value.
+f. If the overall mean of the carat in the dataset is `r mean(diamonds$carat)`, give a $95\%$ prediction interval for the value of a diamond that is $1.5$ carats. 
+g. If the overall mean of the carat in the dataset is `r mean(diamonds$carat)`, give a $95\%$ confidence interval for the value of a diamond that is $1.5$ carats. 
+:::
+
+:::{#exr-17.10}
+Consider the following output for a linear regression that considers explaining the heart weight of cats ($y$) based on their measured body weight ($x$).
+
+```{r}
+#| echo: false
+#| warning: false
+
+lm(Hwt ~ Bwt, data = cats) |> 
+    tbl_regression(intercept = TRUE) |> 
+    modify_column_hide(column = c(conf.low)) |>
+    modify_column_unhide(column = std.error) |>
+    add_glance_source_note(include = c(nobs, sigma, r.squared))
+```
+a. Explain the meaning of the coefficients in this model.
+a. Draw a rough sketch of the represented linear relationship.
+b. What is the predicted heart weight of a $2.5$kg cat? 
+c. What is the test statistic for testing $H_0: \beta_1 = 0$? What is the null distribution of this test? 
+d. Give a $95\%$ confidence interval for the coefficient on Bwt. 
+e. Explain the reported $R^2$ value.
+f. If the overall mean body weight in the dataset is `r mean(cats$Bwt)`, give a $95\%$ prediction interval for the heart weight of a cat that is $3$kg. 
+g. If the overall mean body weight in the dataset is `r mean(cats$Bwt)`, give a $95\%$ confidence interval for the heart weight of a cat that is $3$kg. 
+
+:::
+
+:::{#exr-17.11}
+Consider the following output for a linear regression that considers explaining the distance it took for a car to come to a complete stop ($y$) based on the measured speed it was traveling ($x$).
+
+```{r}
+#| echo: false
+#| warning: false
+
+lm(dist ~ speed, data = cars) |> 
+    tbl_regression(intercept = TRUE) |> 
+    modify_column_hide(column = c(conf.low)) |>
+    modify_column_unhide(column = std.error) |>
+    add_glance_source_note(include = c(nobs, sigma, r.squared))
+```
+a. Explain the meaning of the coefficients in this model.
+a. Draw a rough sketch of the represented linear relationship.
+b. What is the predicted distance to stop for a car traveling $18$mph?
+c. What is the test statistic for testing $H_0: \beta_1 = 5$? What is the null distribution of this test? 
+d. Give a $95\%$ confidence interval for the coefficient on speed. 
+e. Explain the reported $R^2$ value.
+f. If the overall mean speed in the dataset is `r mean(cars$speed)`, give a $95\%$ prediction interval for the distance to stop for a car traveling $15$mph. 
+g. If the overall mean speed in the dataset is `r mean(cars$speed)`, give a $95\%$ confidence interval for the distance to stop for a car traveling $15$mph. 
+
+:::
+
+:::{#exr-17.12}
+Consider the following plot demonstrating the relationship between pressure ($y$) and the temperature ($x$) of the vapor pressure of mercury. 
+```{r}
+#| echo: false
+library(ggthemes)
+
+pressure |>
+    ggplot(aes(x = temperature, y = pressure)) + 
+    geom_point() + 
+    labs(x = "Temperature (x)", y = "Pressure (y)", title = "Vapor Pressure of Mercury") +
+    theme_clean() + 
+    theme(plot.background = element_blank(), legend.position="none")
+```
+
+a. Is a linear regression appropriate to explain the pressure of the mercury from the temperature? If not, how may this be improved? If so, explain.
+b. If a linear regression were fit to these data, what would be the sign of the slope?
+c. Suppose that it is determined that the sample covariance between temperature and slope is $`r format(cov(pressure$temperature, pressure$pressure), scientific = FALSE)`$, that the sample variance of $x$ is $`r format(round(var(pressure$temperature), 4), scientific = FALSE)`$, and that the sample means of temperature and pressure are $`r round(mean(pressure$temperature), 4)`$ and $`r round(mean(pressure$pressure), 4)`$, respectively. Write down the estimated ordinary least squares equation. 
+
+:::
+
+::: {.content-visible when-format='html'}
+{{< include /calculator.qmd >}}
+:::

@@ -1,0 +1,426 @@
+# Expectations and Variances with Multiple Random Variables
+
+## Conditional Expectation
+Up until this point we have considered the marginal probability distribution when exploring the measures of central tendency and spread. These help to summarize the marginal behaviour of a random quantity, capturing the distribution of $X$ alone. When introducing distributions, we also made a point to introduce the conditional distribution as one which is particularly relevant when there is extra information. The question "what do we expect to happen, given that we have an additional piece of information?" is not only well-defined, but it is an incredibly common type of question to ask.^[For instance, you might ask "how long do we expect a patient to live, given that they received a particular treatment?" or "how much do we expect this house to sell for, given it has a certain square footage?" or "how many goals do we expect this hockey team to score, given their current lineup?" A large number of questions which we may hope to answer using data can be framed as a question of conditional expectation.] To answer it, we require **conditional expectations**.
+
+:::{#def-conditional-expectation}
+The conditional expectation of a random variable, $X$, given a second random variable, $Y$, is the average value of $X$ when we know the value of $Y$. Specifically, we write $E[X|Y]$, and define this to be $$E[X|Y] = \sum_{x\in\mathcal{X}} xp_{X|Y}(x|y),$$ which is exactly analogous to the defining relationship for $E[X]$, replacing the marginal probability mass function with the conditional probability mass function.
+:::
+
+In principle, a conditional expectation is no more challenging to calculate than a marginal expectation. Suppose we want to know the expected value of $X$ assuming that we know that a second random quantity, $Y$ has taken on the value $y$. We write this as $E[X|Y=y]$, and we replace $p_X(x)$ with $p_{X|Y}(x|y)$ in the defining relationship. That is $$E[X|Y=y] = \sum_{x\in\mathcal{X}}xp_{X|Y}(x|y).$$ We can think of the conditional distribution of $X|Y=y$ as simply being a distribution itself, and then work with that no differently. The conditional variance, which we denote $\text{var}(X|Y=y)$ is defined in an exactly analogous manner, giving $$\text{var}(X|Y) = E[(X - E[X|Y])^2|Y].$$
+
+
+Above we supposed that we knew that $Y=y$. However, sometimes we want to work with the conditional distribution more generally. That is, we want to investigate the behaviour of $X|Y$, without yet knowing what $Y$ equals. We can use the same procedure as above, however, this time we leave $Y$ unspecified. We denote this as $E[X|Y]$, and this expression will be a function of $Y$. Then, whenever a value for $Y$ is observed, we can specify $Y=y$, deriving the specific value. We will typically compute $E[X|Y]$ rather than $E[X|Y=y]$, since once we have $E[X|Y]$ we can easily find $E[X|Y=y]$ for *every* value of $y$.
+
+:::{#exm-conditional-expectation}
+## Charles Commences Crocheting 
+Charles has recently taking up crocheting, but as it is a new skill, is still in the phase of learning where mistakes are somewhat common. When sitting down to practice, the number of rows that Charles can complete in an hour is being recorded by Sadie, as a random quantity $X$. After these have been completed, Charles goes back through and counts the number of mistakes that were made, recording this as $Y$. In their experiments they find that $$p_{X,Y}(x,y) = \frac{44800}{854769} \frac{1}{(x-y)!y!} \left(\frac{21}{10}\right)^x\left(\frac{3}{7}\right)^{y}, $$ for $x \in \{1,2,3,\dots,10\}$ and  $y \in\{0,1,2,\dots,y\}$. Sadie works out that $$p_X(x) = \frac{44800}{854769} \frac{3^x}{x!}, \quad x\in\{1,2,3,\dots,10\}.$$
+
+a. How could Sadie have worked out $p_X(x)$? You do not need to actually compute it.
+b. If we know that $X = 3$, what is the expected value of $Y$?
+c. Generally, given $X$, write down an expression for the expected value of $Y$. 
+d. **Challenge:** Can you simplify the expression in (c)? It may be useful to know that $k\dbinom{n}{k} = n\dbinom{n-1}{k-1}$.
+d. What is the variance of $Y$, when $X=3$?
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. Sadie could have used the process of marginalization. That is, $$p_X(x) = \sum_{y = 0}^{x} p_{X,Y}(x,y) = \sum_{y=0}^{x} \frac{44800}{854769} \frac{1}{(x-y)!y!} \left(\frac{21}{10}\right)^x\left(\frac{3}{7}\right)^{y}.$$
+b. We want $E[Y|X=3]$. For this, we can use $p_{Y|X}(y|3)$ as the distribution, which is expressible as $$p_{Y|X}(y|3) = \frac{\frac{44800}{854769} \frac{1}{(3-y)!y!} \left(\frac{21}{10}\right)^3\left(\frac{3}{7}\right)^{y}}{\frac{44800}{854769} \frac{3^{3}}{(3)!}} = \left(\frac{7}{10}\right)^3\binom{3}{y}\left(\frac{3}{7}\right)^y,$$ where $y \in \{0,1,2,3\}$. Then, \begin{align*}
+    E[Y|X=3] &= \sum_{y=0}^3 y\left(\frac{7}{10}\right)^3\binom{3}{y}\left(\frac{3}{7}\right)^y \\
+    &= (1)\left(\frac{7}{10}\right)^3\binom{3}{1}\left(\frac{3}{7}\right)^1 + (2)\left(\frac{7}{10}\right)^3\binom{3}{2}\left(\frac{3}{7}\right)^2 + (3)\left(\frac{7}{10}\right)^3\binom{3}{3}\left(\frac{3}{7}\right)^3 \\
+    &= \frac{9}{10} = 0.9.
+\end{align*}
+c. Following the same process as above, we first get that the general conditional distribution is given by $$p_{Y|X}(y|x) = \frac{\frac{44800}{854769} \frac{1}{(x-y)!y!} \left(\frac{21}{10}\right)^x\left(\frac{3}{7}\right)^{y}}{\frac{44800}{854769} \frac{3^{x}}{(x)!}} = \binom{x}{y}\left(\frac{7}{10}\right)^x\left(\frac{3}{7}\right)^y,$$ for $y\in\{0,\dots,x\}$. Then the expected value of $E[Y|X]$ can be found as \begin{align*}
+E[Y|X] &= \sum_{y=0}^x y\binom{x}{y}\left(\frac{7}{10}\right)^x\left(\frac{3}{7}\right)^y.
+\end{align*}
+d. We have \begin{align*}
+E[Y|X] &= \sum_{y=0}^x y\binom{x}{y}\left(\frac{7}{10}\right)^x\left(\frac{3}{7}\right)^y \\
+&= \sum_{y=1}^x y\binom{x}{y}\left(\frac{7}{10}\right)^x\left(\frac{3}{7}\right)^y \\
+&= \sum_{y=1}^x x\binom{x-1}{y-1}\left(\frac{7}{10}\right)^x\left(\frac{3}{7}\right)^y \\
+&= \frac{3x}{10}\sum_{y=1}^x \binom{x-1}{y-1}\left(\frac{7}{10}\right)^{x-1}\left(\frac{3}{7}\right)^{y-1} \\
+&= \frac{3x}{10}\sum_{k=0}^{r} \binom{r}{k}\left(\frac{7}{10}\right)^r\left(\frac{3}{7}\right)^{k} \\
+&= \frac{3x}{10}\sum_{k=0}^{r} p_{Y|X}(k|r) \\
+&= \frac{3x}{10}.
+\end{align*}
+d. We have seen that $E[Y|X=3] = 0.9$. As a result, using the previously derived conditional probability distribution, \begin{align*}
+    \text{var}(Y|X=3) &= \sum_{y=0}^3 (y-0.9)^2\left(\frac{7}{10}\right)^3\binom{3}{y}\left(\frac{3}{7}\right)^y \\
+    &= 0.9^2\left(\frac{7}{10}\right)^3\binom{3}{0}\left(\frac{3}{7}\right)^0 + (0.1)^2\left(\frac{7}{10}\right)^3\binom{3}{1}\left(\frac{3}{7}\right)^1 \\
+    &\quad + (1.1)^2\left(\frac{7}{10}\right)^3\binom{3}{2}\left(\frac{3}{7}\right)^2 + (2.1)^2\left(\frac{7}{10}\right)^3\binom{3}{3}\left(\frac{3}{7}\right)^3 \\
+    &= 0.63
+\end{align*}
+::::
+:::
+
+## Conditional Expectations as Random Variables
+Since $E[X|Y]$ is a function of an unknown random quantity, $Y$, $E[X|Y]$ is also a random variable.^[It is useful to keep in mind that anytime we do *anything* with a random variable, mathematically, we produce an additional random variable. If we think of a random variable as being some mathematical variable whose value depends on the results of an experiment, then if we take that value and apply a function to it we have a *new* value whose results also depend on the results of an experiment.] It is a transformation of $Y$, and as such, it will have some distribution, some expectation, and some variance itself. This is often a confusing concept when it is first introduced, so to recap: 
+
+* $X$ and $Y$ are both random variables; 
+* $E[X]$ and $E[Y]$ are both constant, numerical values describing the distribution of $X$ and $Y$; 
+* $E[X|Y=y]$ and $E[Y|X=x]$ are each numeric constants which summarize the distribution of $X|Y=y$ and $Y|X=x$ respectively; 
+* $E[X|Y]$ and $E[Y|X]$ are functions of $Y$ and $X$, respectively, and can as such be seen as transformations of (and random quantities depending on) $Y$ and $X$ respectively.
+
+We do not often think of the distribution of $E[X|Y]$ directly, however, there are very useful results regarding its expected value and its variance, which will commonly be exploited. If we take the expected value of $E[X|Y]$ we will find that $E[E[X|Y]] = E[X]$. Note that since $E[X|Y] = g(Y)$ for some transformation, $g$, the outer expectation is taken with respect to the distribution of $Y$. Sometimes when this may get confusing we will use notation to emphasize this fact, specifically, $E_Y[E_{X|Y}[X|Y]] = E_X[X]$. This notation is not necessary, but it can clarify when there is much going on, and is a useful technique to fallback on. 
+
+:::{.callout-tip icon="false"}
+## The Law of Total Expectation
+For any random quantities, $X$ and $Y$, the Law of Total Expectation states that $$E[X] = E[E[X|Y]].$$ That is, if we first compute the conditional expectation of $X$ given $Y$, then take the expected value of this quantity, we compute $E[X]$.
+:::
+
+In the same way that it is sometimes easier to first condition on $Y$ in order to compute the marginal distribution of $X$ via applications of the law of total probability, so too can it be easier to first work out conditional expectations, and then take the expected value of the resulting expression. 
+
+:::{.callout-warning icon="false" collapse="true"}
+## Proof of the Law of Total Expectation
+To prove that law of total expectation, we note that $E[X|Y]$ is a random function of $Y$. As a result, we can apply the LOTUS to $E[X|Y]$ as a function of $Y$ when we take $E[E[X|Y]]$. Doing so yields, \begin{align*}
+E_Y[E[X|Y]] &= \sum_{y\in\mathcal{Y}} E[X|Y]p_Y(y) \\
+&= \sum_{y\in\mathcal{Y}}\left(\sum_{x\in\mathcal{X}}xp_{X|Y}(x|Y)\right)p_Y(y) \\
+&= \sum_{y\in\mathcal{Y}}\sum_{x\in\mathcal{X}}x\frac{p_{X,Y}(x,y)}{p_Y(y)}p_Y(y)\\
+&= \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}xp_{X,Y}(x,y)\\
+&= \sum_{x\in\mathcal{X}} xp_X(x)\\
+&= E[X].\end{align*} The remainder of the proof, following an application of the LOTUS relies upon manipulating summations.
+:::
+
+:::{#exm-law-of-total-expectation}
+## Charles Crochet Mistakes
+While Charles came to understand the expected number of mistakes being made given a certain number of crochet lines being complete, it is easier for Charles to consider this on the basis of hourly errors than conditional hourly errors. Knowing that $$p_{X,Y}(x,y) = \frac{44800}{854769} \frac{1}{(x-y)!y!} \left(\frac{21}{10}\right)^x\left(\frac{3}{7}\right)^{y}, $$ for $x \in \{1,2,3,\dots,10\}$ and  $y \in\{0,1,2,\dots,y\}$, that $$p_X(x) = \frac{44800}{854769} \frac{3^x}{x!}, \quad x\in\{1,2,3,\dots,10\},$$ and that $E[Y|X] = \frac{3X}{10}$, what is $E[Y]$?
+
+::::{.callout .solution collapse='true'}
+## Solution
+Here we can apply the law of total expectation. We have that $E[Y] = E[E[Y|X]] = E\left[\frac{3X}{10}\right] = \frac{3}{10}E[X]$. Thus, we need to work out $E[X]$, which can be done via the probability mass function of $X$. Specifically, \begin{align*}
+E[X] &= \sum_{x=1}^{10} x\frac{44800}{854769} \frac{3^x}{x!} \\
+&= \frac{44800}{854769} \sum_{x=1}^{10} \frac{3^x}{(x-1)!} \\
+&= \frac{44800}{854769}\times\frac{67413}{1120} \\
+&= \frac{898840}{284923} \approx 3.155. 
+\end{align*} Thus, in total, the expected value of $Y$ will be $$\frac{3}{10}\times\frac{898840}{284923} = \frac{269652}{284923} \approx 0.946.$$
+::::
+:::
+
+## Conditional Variance
+While the conditional expectation is used often, the conditional variance is less central to the study of random variables. As discussed, briefly, the conditional variance is given by the same variance relationship, replacing the marginal probability distribution with the conditional one. Just as with expectations $\text{var}(X|Y=y)$ is a numeric quantity given by $E[(X-E[X|Y=y])^2|Y=y]$ and $\text{var}(X|Y)$ is a random variable given by $E[(X-E[X|Y])^2|Y]$. This means that we can consider the distribution, and critically the expected value of, $\text{var}(X|Y)$. A core result relating to conditional expectations and variances connects these concepts. 
+
+:::{.callout-tip icon="false"}
+## The Law of Total Variance
+For any random variables $X$ and $Y$, we can write $$\text{var}(X) = E[\text{var}(X|Y)] + \text{var}(E[X|Y]).$$ This result can be viewed as decomposing the variance of a random quantity into two separate components, and comes up again in later statistics courses. At this point we can view this as a method for connecting the marginal distribution through the conditional variance and expectation. 
+:::
+
+
+:::{#exm-law-of-total-variance}
+## Charles' Crochet Consistency
+Charles understands that the number of mistakes made per hour ($Y$) given the number of rows crocheted per hour ($X$) has $E[Y|X] = 0.3X$. Moreover, the variability in this estimate is given by $\text{var}(Y|X) = 0.21X$. Sadie has worked hard to find out that $$E[X] = \frac{898840}{284923} \quad\text{ and }\quad \text{var}(X) = \frac{214410323010}{81181115929}.$$ Can Charles use this information to understand $\text{var}(Y)$?
+
+::::{.callout .solution collapse='true'}
+## Solution
+We can apply the law of total variance. Specifically, $$\text{var}(Y) = E[\text{var}(Y|X)] + \text{var}(E[Y|X]) = E[0.21X] + \text{var}(0.3X) = 0.21E[X] + 0.09\text{var}(X).$$ Plugging in the marginal values gives $$\text{var}(Y) = 0.21\frac{898840}{284923} + 0.09\frac{214410323010}{81181115929} = \frac{730779688281}{811811159290} \approx 0.90.$$
+::::
+:::
+
+## Joint Expectations
+The final set of techniques to consider^[At least, for now.] relate to making use of the joint distribution between $X$ and $Y$. Specifically, if we have any function of two random variables, say $g(X,Y)$ and we wish to find $E[g(X,Y)]$. This follows in an exactly analogous derivation to what we have seen so far. In this case, we replace the marginal distribution with the joint distribution. The variance extends in the same manner as well.
+
+:::{#def-joint-expectation}
+## Joint Expectation
+The joint expectation of a function ($g$) of two random variables, $X$ and $Y$, is written $E[g(X,Y)]$. This is an expectation computed with respect to the joint distribution of $X$ and $Y$, giving $$E[g(X,Y)] = \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}g(x,y)p_{X,Y}(x,y).$$ The joint expectation captures the location of a multivariate function, and is readily extended to more than two random variables. 
+:::
+
+:::{#def-joint-variance}
+## Joint Variance
+The joint variance of a function ($g$) of two random variables, $X$ and $Y$, is written $\text{var}(g(X,Y))$. This is a variance computed with respect to the joint distribution of $X$ and $Y$, giving $$\text{var}(g(X,Y)) = E[(g(X,Y) - E[g(X,Y)])^2].$$ The joint variance captures the spread of a multivariate function, and is readily extended to more than two random variables. 
+:::
+
+For instance, if we want to consider the product of two random variables, we could use this technique to determine $E[XY]$ and $\text{var}(XY)$.
+
+:::{#exm-joint-expectation}
+## Door-to-Door Charity Chocolate Bars
+Charles and Sadie are helping to raise money for a local charity, and to do so, they are going around house-to-house to sell chocolate bars. As they walk between the homes, they realize that depending on where in the city they are, the number of houses that they visit in a day is going to be vary. Moreover, each time they stop by a house, whether or not they will make a sale is uncertain. If, in any given hour, they take $Y$ to be the number of houses that they visit, and $X$ to be the number of chocolate bars that they sell, then they work out that the joint probability mass function of $X$ and $Y$ is given by $$p_{X,Y}(x,y) = \frac{2y - 1}{36(y + 1)}, \quad y\in\{1,\dots,6\}, x\in\{0,\dots,y\}.$$
+
+What is the expected number of chocolate bars per house that the visit? 
+
+::::{.callout .solution collapse='true'}
+## Solution
+We want $E[g(X,Y)]$ where $g(X,Y) = \dfrac{X}{Y}$. Thus, using the defining relationship for joint probabilities we get \begin{align*}
+E[g(X,Y)] &= E\left[\frac{X}{Y}\right] \\
+&= \sum_{y=1}^{6}\sum_{x=0}^{y} \frac{x}{y}\cdot\frac{2y - 1}{36(y + 1)} \\
+&= \sum_{y=1}^{6}\frac{2y-1}{36y(y + 1)}\sum_{x=0}^{y} x \\
+&= \sum_{y=1}^{6}\frac{2y-1}{36y(y + 1)}\cdot\frac{y(y+1)}{2} \\
+&= \sum_{y=1}^{6}\frac{2y-1}{72} \\
+&= \frac{1}{72}\left[2\sum_{y=1}^{6} y - \sum_{y=1}^6 1\right]\\
+&= \frac{1}{72}\left[42 - 6\right] = \frac{1}{2}.
+\end{align*}
+As a result, they sell $0.5$ chocolate bars per house that they visit, on average.
+::::
+:::
+
+It is worth considering, briefly, the ways in which conditional and joint expectations interact. Namely, if we know that $Y=y$, then the transformation $g(X,y)$ only has one random component, which is $X$. As a result, taking $E[g(X,Y)|Y=y] = E[g(X,y)|Y=y]$. If instead we use the conditional distribution without a specific value, we still have that $Y$ is fixed within the expression, it is just fixed to an unknown quantity. That is $E[g(X,Y)|Y]$ will be a function of $Y$. We saw before that $E[E[X|Y]] = E[X]$, and the same is true in the joint case. Thus, one technique for computing the joint expectation, $g(X,Y)$ is to first compute the conditional expectation, and then compute the marginal expectation of the resulting quantity.
+
+:::{#exm-joint-expectation-two}
+## Door-to-Door Charity Chocolate Bars, Marginally Easier
+While walking around selling chocolate bars for charity, Charles and Sadie realize that it is fairly straightforward^[Comparatively speaking!] to marginalize the joint probability mass function for the number of houses that they visit and the number of chocolate bars that they sell, since $X$ does not actually appear in the equation. That is, when $$p_{X,Y}(x,y) = \frac{2y - 1}{36(y + 1)}, \quad y\in\{1,\dots,6\}, x\in\{0,\dots,y\},$$ taking the sum $\sum_{x=0}^{y} p_{X,Y}(x,y) = (y+1)p_{X,Y}(x,y) = \dfrac{2y-1}{36}$. This gives the marginal probability distribution of $Y$. They also realize that this has greatly simplified finding the conditional probability distribution of $X$ given $Y$. 
+
+a. Find the expected value of the number of chocolate bars per house that they sell, given the number of houses they visit.
+b. Use this result to determine the expected number of chocolate bars sold per visited house.
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. Note that $$p_{X|Y}(x|y) = \frac{1}{y+1} \quad x \in \{0,1,\dots,y\}.$$ As a result, we can compute $$E[\frac{X}{Y}|Y] \frac{1}{Y}E[X|Y]= \frac{1}{Y}\sum_{x=0}^{Y} \frac{x}{Y+1} = \frac{1}{Y(Y+1)}\cdot\frac{Y(Y+1)}{2} = \frac{1}{2}.$$
+b. Note that, $$E\left[\frac{Y}{X}\right] = E\left[E\left[\left.\frac{Y}{X}\right|Y\right]\right] = E[0.5] = 0.5,$$ just as before.
+
+::::
+:::
+
+### Linear Combinations of Random Variables
+
+With this relationship, we can ask about taking combinations of random variables. For instance, if we have two random variables $X$ and $Y$, we can use this framework to understand how $X + Y$ behaves. An application of these rules with the function $g(X,Y) = X + Y$ gives $E[X+Y] = E[X] + E[Y]$, and that $\text{var}(X + Y) = \text{var}(X) + \text{var}(Y) + 2E[(X-E[X])(Y - E[Y])]$. Thus, we see that expectations are linear over combinations of random variables, however, variances are not. The term $E[(X-E[X])(Y - E[Y])]$ is called the **covariance** of $X$ and $Y$, and it is a measure of how related $X$ and $Y$ happen to be.
+
+:::{#def-covariance}
+## Covariance
+The covariance of two random variables, $X$ and $Y$, is given by $\text{cov}(X,Y) = E[(X - E[X])(Y - E[Y])]$. The covariance measures the relationship between $X$ and $Y$, where a positive covariance value means that as $X$ increases, $Y$ will also increase on average (and vice versa). A negative covariance means that as $X$ increases, $Y$ will decrease on average (and vice versa).
+::: 
+
+The covariance behaves similarly to the variance. We can see directly from the definition that $\text{cov}(X,X) = \text{var}(X)$. Moreover, using similar arguments to those used for the variance, we can show that $$\text{cov}(aX+b,cY+d) = ac\text{cov}(X,Y).$$ Covariances remain linear, so that \begin{multline*}\text{cov}(X+Y,X+Y+Z)=\text{cov}(X,X)+\text{cov}(X,Y)+\text{cov}(X,Z)\\ +\text{cov}(Y,X)+\text{cov}(Y,Y)+\text{cov}(Y,Z).\end{multline*} These make covariances somewhat nicer to deal with than variances, and on occasion it may be easier to think of variances as covariances with themselves.
+
+:::{.callout-warning icon="false" collapse="true"}
+## Proofs for the Expectation and Variance of Linear Combinations of Random Variables
+With $g(X,Y) = X+Y$, we can consider applying the defining relationship for joint expectations. That is \begin{align*}
+E[X+Y] &= \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}(x+y)p_{X,Y}(x,y) \\
+&= \sum_{x\in\mathcal{X}}x\sum_{y\in\mathcal{Y}}p_{X,Y}(x,y) + \sum_{y\in\mathcal{Y}}y\sum_{x\in\mathcal{X}}p_{X,Y}(x,y) \\
+&= \sum_{x\in\mathcal{X}}xp_X(x) + \sum_{y\in\mathcal{Y}}yp_Y(y) \\
+&= E[X] + E[Y].\end{align*}
+
+For the variances, we apply the variance relationship, giving  \begin{align*}
+E[(X+Y-E[X]-E[Y])^2] &= E[((X-E[X])+(Y-E[Y]))^2] \\
+&= E[(X-E[X])^2] + E[(Y-E[Y])^2] \\
+&\quad+ 2E[(X-E[X])(Y-E[Y])] \\
+&= \text{var}(X) + \text{var}(Y) + 2E[(X-E[X])(Y-E[Y])].\end{align*} Rewriting the covariance in more common terms gives, $$\text{var}(X+Y) = \text{var}(X) + \text{var}(Y) + 2\text{cov}(X,Y).$$
+:::
+
+:::{#exm-linear-combination-of-RV}
+## Charles and Sadie's Orchard Trip
+Charles and Sadie adore visiting orchards when the season is right. They are happy to go pick fruit, and then combine everything that they manage together at the end. On one trip to a favourite orchard of theirs they decide to split up and pick separately. This works well enough that on the trip home they decide to start analyzing this behaviour. They take $X$ to be the quantity of fruit picked by Sadie, and $Y$ to be the quantity of fruit picked by Charles. Suppose that they figure that the number of kilograms of fruit jointly picked by them is represented by the probability mass function $$p_{X,Y}(x,y) = \frac{14xy}{251(x + y)}, \quad x,y\in\{1,\dots,4\}.$$ 
+
+a. What quantity of fruit does Sadie pick on average? Charles?
+b. What is the variance of fruit picked by Sadie? Charles?
+c. What is the covariance between the amount of fruit that Sadie and Charles each pick?
+d. What is the expected total fruit picked between both Charles and Sadie?
+e. What is the variance of the total fruit picked between both Charles and Sadie?
+
+::::{.callout .solution collapse='true'}
+## Solution
+
+a. Note that the joint distribution is symmetric in $X$ and $Y$ so they will have equal expected value. We solve for $E[X]$ and note that $E[Y]$ will be the same. \begin{align*}
+E[X] &= \sum_{x=1}^4 xp_X(x) \\
+&= \sum_{x=1}^4 x\sum_{y=1}^4 p_{X,Y}(x, y) \\
+&= \sum_{x=1}^4\sum_{y=1}^4 \frac{14x^2y}{251(x + y)} \\
+&= \frac{700}{251} \approx 2.789.
+\end{align*}
+b. For the variance we note that they will also be equivalent between the two individuals. Since we have $E[X]$ already, we simply compute $E[X^2]$ which is given by \begin{align*}
+E[X^2] &= \sum_{x=1}^4 x^2p_X(x) \\
+&= \sum_{x=1}^4 x^2\sum_{y=1}^4 p_{X,Y}(x, y) \\
+&= \sum_{x=1}^4\sum_{y=1}^4 \frac{14x^3y}{251(x + y)} \\
+&= \frac{11169}{1255} \approx 8.900.
+\end{align*} Thus, the variance is going to be given by $$\text{var}(X) = \frac{11169}{1255} - \left(\frac{700}{251}\right)^2 = \frac{353419}{315005}.$$
+c. The covariance is computable using the joint distribution directly, giving \begin{align*}
+\text{cov}(X,Y) &= E[(X-E[X])(Y-E[Y])] \\
+&= \sum_{x=1}^4\sum_{y=1}^4 \left(X-\frac{700}{251}\right)\left(Y-\frac{700}{251}\right)\frac{14xy}{251(x + y)} \\
+&= \frac{17581}{315005} \approx 0.059
+\end{align*}
+d. We want $E[X+Y] = E[X] + E[Y] = \frac{1400}{251}$. This could also be computed directly, \begin{align*}
+E[X+Y] &= \sum_{x=1}^4\sum_{y=1}^4 (x+y)\frac{14xy}{251(x + y)} \\
+&= \frac{14}{251}\sum_{x=1}^4\sum_{y=1}^{4}xy \\
+&= \frac{14}{251}\times 100 = \frac{1400}{251}.
+\end{align*}
+e. We want $$\text{var}(X+Y) = \text{var}(X) + \text{var}(Y) + 2\text{cov}(X,Y) = 2\times\frac{353419}{315005} + 2\times\frac{17581}{315005} = \frac{148400}{63001}.$$
+::::
+:::
+
+## Expectations when Random Variables are Independent {#sec-indep-expectations}
+Whenever we can assume independence of random quantities, we can greatly simplify the expressions we are dealing with. Recall that the key defining relationship with independence is that $p_{X,Y}(x,y) = p_X(x)p_Y(y)$. Suppose then that we can write $g(X,Y) = g_X(X)h_Y(Y)$. For instance, for the covariance we have $g(X,Y)=(x-E[X])(Y-E[Y])$ and so $g_X(X) = X-E[X]$ and $h_Y(Y) = Y-E[Y]$. If we want to compute $E[g(X,Y)]$ then we get \begin{align*}
+E[g(X,Y)] &= E[g_X(X)h_Y(Y)] \\
+&= \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}g_X(x)h_Y(y)p_{X,Y}(x,y) \\
+&= \sum_{x\in\mathcal{X}}\sum_{y\in\mathcal{Y}}g_X(x)h_Y(y)p_X(x)p_Y(y) \\
+&=\sum_{x\in\mathcal{X}}g_X(x)p_X(x)\sum_{y\in\mathcal{Y}}h_Y(y)p_Y(y)\\
+&= E[g_X(X)]E[h_Y(Y)].\end{align*} Thus, whenever random variables are independent, we have the ability to separate them over their expectations. Stated succinctly, whenever $X\perp Y$, then $$E[g_X(X)h_Y(Y)] = E[g_X(X)]E[h_Y(Y)].$$ 
+
+:::{#exm-independent-rv-expectation}
+## Sadie and Charles Turn back To Dice
+With a more thorough understanding of joint distributions, Sadie and Charles turn back to games of chance. They are considering games where dice are rolled a set number of times, and then the total sum is recorded across all of the rolls. They want to understand both what happens in expectation, and the variability of these trials.
+
+a. Suppose that $X_1$ is a single roll of a die. What is the mean and variance of the roll?
+b. Suppose that $X_1$ and $X_2$ are the results from two independent rolls of a die. What is the mean and variance of $X_1 + X_2$. 
+c. Suppose that $X_1,\dots,X_n$ are the results from $n$ independent rolls of a die. What is the mean and variance of $\sum_{i=1}^n X_i$?
+d. Suppose that $X_1,\dots,X_n$ are the results from $n$ independent rolls of a die. Moreover, take $Z$ to be the result of an additional independent die roll. What is the mean and variance of $Z\times \sum_{i=1}^n X_i$?
+
+::::{.callout .solution collapse='true'}
+## Solution
+a. We know that $X_1$ takes on the values in $\{1,\dots,6\}$ with equal probability each. Thus we have \begin{align*}
+E[X_1] &= \sum_{x=1}^6 \frac{x}{6} = \frac{21}{6} = 3.5 \\
+E[X_1^2] &= \sum_{x=1}^6 \frac{x^2}{6} = \frac{91}{6} \\
+\text{var}(X_1) &= \frac{91}{6} - \left(\frac{21}{6}\right)^2 = \frac{35}{12}.
+\end{align*}
+
+b. Note that because $X_1$ and $X_2$ are independent, we get \begin{align*}
+    E[X_1 + X_2] &= E[X_1] + E[X_2] \\
+    &= 2\frac{21}{6} = 7.\\
+    \text{var}(X_1 + X_2) &= \text{var}(X_1) + \text{var}(X_2) \\
+    &= 2\frac{35}{12} = \frac{35}{6}.
+\end{align*}
+
+c. Note that because $X_1$ and $X_2$ are independent, we get \begin{align*}
+    E[\sum_{i=1}^n X_i] &= \sum_{i=1}^n E[X_i]\\
+    &= \frac{21n}{6}\\
+    \text{var}(\sum_{i=1}^nX_i) &= \sum_{i=1}^n\text{var}(X_i)\\
+    &= \frac{35n}{12}.
+\end{align*}
+
+d. Note that $Z$ and $X_1,\dots,X_n$ are all independent. As a result if we take $T = \sum_{i=1}^n X_i$, then $T \perp Z$ and so $E[TZ] = E[T]E[Z]$. Thus, from (a), (b), and (c) we get $E[ZT] = \frac{21}{6}\times\frac{21n}{6} = \frac{49n}{4}$. 
+
+For the variance note that we get $$\text{var}(TZ) = E[(TZ)^2] - E[TZ]^2 = E[T^2]E[Z^2] - E[TZ]^2.$$ For $E[T^2]$ and $E[Z^2]$ note that $E[T^2] = \text{var}(T) + E[T]^2$, and similarly for $Z$. Thus $$E[T^2] = \frac{35n}{12} + \left(\frac{21n}{6}\right)^2,$$ and $$E[Z^2] = \frac{91}{6},$$ thus $$\text{var}(TZ) = \left(\frac{35n}{12} + \left(\frac{21n}{6}\right)^2\right)\left(\frac{91}{6}\right) - \left( \frac{49n}{4}\right)^2 = \frac{245n(21n + 26)}{144}.$$
+
+::::
+:::
+
+Consider what this means for the covariance between independent random variables. If $X\perp Y$ then $$\text{cov}(X,Y) = E[(X-E[X])(Y-E[Y])] = E[X-E[X]]E[Y-E[Y]].$$ Note that $E[X - E[X]] = E[X] - E[X] = 0$, and the same for $E[Y - E[Y]]$. Thus, if $X \perp Y$ then $\text{cov}(X, Y) = 0$. That is to say, if $X$ and $Y$ are independent, then $\text{cov}(X,Y)=0$. It is critical to note that this relationship does **not** go both ways. You are able to have $\text{cov}(X,Y) = 0$ even if $X\not\perp Y$. 
+
+While the covariance is interesting in and of itself, the result allows us to simplify the expression for the variance of a sum of two random variables. Specifically, for independent random variables $X$ and $Y$ we also must have that $\text{var}(X+Y)=\text{var}(X)+\text{var}(Y)$. This further extends to more than two random variables, where if (for instance) we have $X_1,X_2,\dots,X_n$ all independent, we get both that $$E\left[\sum_{i=1}^n X_i\right] = \sum_{i=1}^n E[X_i],$$ and that $$\text{var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{var}(X_i).$$ These are relationships that we will use **heavily** once we begin to consider statistics. Note, this extension to more than two random variables applies to all of the concepts discussed throughout this chapter. 
+
+In order to do so, the relevant joint distribution, or conditional distribution would need to be substituted into the definitions. Often the complexity here becomes a matter of keeping track of which quantities are random, and which are not. For instance, if we have $X,Y,Z$ as random variables, then $E[X|Y,Z]$ is a random function of $Y$ and $Z$. We will still have that $E[E[X|Y,Z]] = E[X]$, however, the outer expectation is now the joint expectation with respect to $Y$ and $Z$. As a result, we can also write $E[E[X|Y,Z]|Y]$. The first expectation will be with respect to $X|Y,Z$, while the outer expectation is with respect to $Z|Y$. This is a useful demonstration for when making the distribution of the expectation explicit may help clarify what is being computed. In general, the innermost expectations will always have more conditioning variables than the outer ones. Each time we step out, we peel back one of hte conditional variables until the outermost is either a marginal (or joint). This may help to keep things clear.
+
+## Exercises {.unnumbered}
+
+:::{.exr-7.1}
+Find the variance and standard deviation of the sum obtained in tossing a pair of standard dice. (Note, this was @exr-6.1 as well; however, now we can use a different technique for it.)
+:::
+
+::: {#exr-7.2}
+Consider the joint probability mass function of two random variables, $X$ and $Y$, given by $$P(X=x, Y=y) = \frac{1}{150}(x + y), 1\leq x, y\leq 5.$$
+
+a. Find $E[X|Y=2]$.
+b. Find $E[Y|X]$.
+c. Find $\text{var}(Y|X)$.
+:::
+
+::: {#exr-7.3}
+Consider the joint probability mass function of two random variables, $X$ and $Y$, given by $$P(X=x, Y=y) = \frac{1}{12}(y - x)^2, 1\leq x, y\leq 3.$$
+
+a. Find $E[X|Y=1]$.
+b. Find $E[Y|X]$.
+c. Find $\text{var}(Y|X)$.
+d. Find $\text{cov}(X,Y)$.
+:::
+
+::: {#exr-7.4}
+Consider the following joint probability mass function represented as a contingency table:
+
+$$
+\begin{array}{c|ccc}
+    & Y = 1 & Y = 2 & Y = 3 \\
+\hline
+X = 1 & 0.1 & 0.2 & 0.3 \\
+X = 2 & 0.2 & 0.1 & 0.1 \\
+\end{array}
+$$
+
+a. Find $E[X]$.
+b. Find $E[Y]$.
+c. Find $\text{var}(X)$.
+d. Find $\text{var}(Y)$.
+e. Find $\text{cov}(X,Y)$.
+f. Find the expected value and variance of $X+Y$.
+:::
+
+::: {#exr-7.5}
+Suppose that a particular disease is associated with two common types of genetic mutations, say type $A$ and type $B$. Let $A$ and $B$ correspond to the random variables which count the locations at which each type of mutation has occurred. In order for a type $B$ mutation to occur, a type $A$ must have also occurred at the same location, and so we can say that $$P(B=b|A=a) = \binom{a}{b}(0.25)^b(0.75)^{a-b}, \quad b\in\{0,1,2,\dots, a\}.$$ Moreover, suppose that $$P(A=a) = \frac{10-a}{45} \quad a\in\{0,1,2,3,4,5\}.$$
+
+a. Find $E[B|A]$.
+b. Find $E[B]$.
+c. Find $\text{var}(B|A)$.
+d. Find $\text{var}(B)$.
+:::
+
+::: {#exr-7.6}
+Suppose a factory produces two types of products: Widgets and Gadgets. Let $W$ and $G$ represent the random variables denoting the number of units produced for each type, in a particular hour. Suppose that the following is observed as the joint probability mass function $$P(W=w, G=g) = \frac{1}{80}, \quad w \in \{1,2,3,\dots,8\}, g \in \{1,2,3,\dots,10\}.$$
+
+Find both the mean and variance of $W+G$.
+:::
+
+::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-7.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 1234567891
+exams2forms("7.A.ConditionalExpectation.Rmd", 
+            edir = "../PracticeQuestions/Chapter7", 
+            cloze_schoice_display = "buttons",
+            n = 100)
+```
+:::
+
+:::{#sa-7.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123457789
+exams2forms("7.B.LawOfTotalVariance.Rmd", 
+            edir = "../PracticeQuestions/Chapter7", 
+            cloze_schoice_display = "buttons",
+            n = 100)
+```
+:::
+
+:::{#sa-7.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 1234123211
+exams2forms("7.C.MeanAndVarianceOfSum.Rmd", 
+            edir = "../PracticeQuestions/Chapter7", 
+            cloze_schoice_display = "buttons",
+            n = 100)
+```
+:::
+
+:::{#sa-7.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 11111111
+exams2forms("7.D.IIDSum.Rmd", 
+            edir = "../PracticeQuestions/Chapter7", 
+            cloze_schoice_display = "buttons",
+            n = 100)
+```
+:::
+
+
+:::
+
