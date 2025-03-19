@@ -873,7 +873,7 @@ set.seed(31415)
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 123456789
+cache_check <- 12345678
 exams2forms("6.A.BasicExpectedValueAndVariance.Rmd", 
             edir = "../PracticeQuestions/Chapter6", 
             n = 100)
@@ -887,7 +887,7 @@ exams2forms("6.A.BasicExpectedValueAndVariance.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 123456789
+cache_check <- 123456
 exams2forms("6.B.LinearTransformation.Rmd", 
             edir = "../PracticeQuestions/Chapter6", 
             n = 100)
@@ -901,7 +901,7 @@ exams2forms("6.B.LinearTransformation.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 123456789
+cache_check <- 123456
 exams2forms("6.C.SummaryStatistics.Rmd", 
             edir = "../PracticeQuestions/Chapter6", 
             n = 100)
