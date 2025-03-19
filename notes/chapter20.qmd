@@ -1,3 +1,0 @@
-# The One-Way ANOVA
-
-Currently in progress.

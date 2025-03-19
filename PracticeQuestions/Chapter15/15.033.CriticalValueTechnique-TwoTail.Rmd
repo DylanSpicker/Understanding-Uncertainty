@@ -19,7 +19,7 @@ if(sc == 1) {
     n <- sample(35:100, 1)
     sd <- round(runif(1, 5, 10), 2)
 
-    qtext <- paste("A factory that fills food containers has a process that is meant to fill individual boxes to", amt, "g. To ensure that the process has not resulted in faulty calibration, they company randomly samples", n, "boxes, weighing them. They find")
+    qtext <- paste("A factory that fills food containers has a process that is meant to fill individual boxes to", amt, "g. To ensure that the process has not resulted in faulty calibration, the company randomly samples", n, "boxes, weighing them. They find")
 } else if (sc == 4) {
     amt <- round(runif(1, 140, 180), 2)
     n <- sample(35:100, 1)
