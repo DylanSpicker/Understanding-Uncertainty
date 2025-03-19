@@ -1,0 +1,77 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+X_vals <- sort(sample(0:50, 5))
+probs <- round(diff(c(0, sort(round(runif(4, 0, 1),2)), 1)), 2)
+
+while(sum(probs) != 1) {
+    probs <- round(diff(c(0, sort(round(runif(4, 0, 1),2)), 1)), 2)
+}
+
+pmf <- paste0("$$p_X(x) = \\begin{cases}",
+              probs[1], " & x = ", X_vals[1], "\\\\",
+              probs[2], " & x = ", X_vals[2], "\\\\",
+              probs[3], " & x = ", X_vals[3], "\\\\",
+              probs[4], " & x = ", X_vals[4], "\\\\",
+              probs[5], " & x = ", X_vals[5], "\\end{cases}.$$")
+
+EX <- sum(X_vals * probs)
+median <- X_vals[which(cumsum(probs) >= 0.5)[1]]
+mode <- X_vals[which.max(probs)]
+
+pth <- sample(setdiff(seq(0.01, 0.99, by=0.01), c(0.5, 0.25, 0.75)), 1)
+percentile <- X_vals[which(cumsum(probs) >= pth)[1]]
+
+range <- max(X_vals) - min(X_vals)
+var <- sum(X_vals^2 * probs) - EX^2
+MAD <- sum(abs(X_vals - EX) * probs)
+sd <- sqrt(var)
+Q1 <- X_vals[which(cumsum(probs) >= 0.25)[1]]
+Q3 <- X_vals[which(cumsum(probs) >= 0.75)[1]]
+IQR <- Q3 - Q1
+
+
+ans1 <- EX
+ans2 <- median
+ans3 <- mode
+ans4 <- percentile
+ans5 <- range
+ans6 <- var
+ans7 <- MAD
+ans8 <- sd
+ans9 <- IQR
+
+oomvar <- ifelse(var >= 1000000, 1, 
+                ifelse(var >= 100000, 0.1, 0.01))
+oommad <- ifelse(MAD >= 1000000, 1, 
+                ifelse(MAD >= 100000, 0.1, 0.01))
+oomsd <- ifelse(sd >= 1000000, 1, 
+                ifelse(sd >= 100000, 0.1, 0.01))
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+
+The following is the probability mass function for a random variable $X$, `r pmf`
+
+a. What is $E[X]$? ##ANSWER1##
+b. What is the median of $X$? ##ANSWER2##
+c. What is the mode of $X$? (Note: select the smallest value for the mode, if multiple modes exist). ##ANSWER3##
+d. What is the `r 100*pth`th percentile of $X$? ##ANSWER4##
+e. What is the range of $X$? ##ANSWER5##
+f. What is the variance of $X$? ##ANSWER6##
+g. What is the mean absolute deviation of $X$? ##ANSWER7##
+h. What is the standard deviation of $X$? ##ANSWER8##
+i. What is the interquartile range of $X$? ##ANSWER9##
+
+Question ID: *`r id`*
+
+Meta-information
+================
+extype: cloze
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`|`r fmt(ans5, 3)`|`r fmt(ans6, 3)`|`r fmt(ans7, 3)`|`r fmt(ans8, 3)`|`r fmt(ans9, 3)`
+exclozetype: num|num|num|num|num|num|num|num|num
+exname: PieceWiseValues
+extol: 0.01|0|0|0|0|`r oomvar`|`r oommad`|`r oomsd`|0

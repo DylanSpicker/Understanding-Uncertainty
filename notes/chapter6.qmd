@@ -894,6 +894,19 @@ exams2forms("6.B.LinearTransformation.Rmd",
 ```
 :::
 
+:::{#sa-6.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+exams2forms("6.C.SummaryStatistics.Rmd", 
+            edir = "../PracticeQuestions/Chapter6", 
+            n = 100)
+```
+:::
 
 :::
 
