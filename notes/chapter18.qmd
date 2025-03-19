@@ -342,7 +342,7 @@ A group of $200$ kindergarten students are given a survey where they are asked t
 | Red              | 15     | 25     | 10     | 5      | 55    |
 | Blue             | 20     | 20     | 15     | 10     | 65    |
 | Green            | 10     | 15     | 20     | 10     | 55    |
-| Yellow           | 5      | 10     | 5      | 10     | 30    |
+| Yellow           | 5      | 10     | 5      | 5      | 25    |
 | Total            | 50     | 70     | 50     | 30     | 200   |
 
 a. Are there any concerns with testing this hypothesis, based on the observed data?
@@ -359,7 +359,7 @@ Data on the hair colour (blonde, brown, red, black) and eye colour (blue, green,
 | Brown       | 80        | 70         | 150        | 300   |
 | Red         | 10        | 20         | 20         | 50    |
 | Black       | 10        | 10         | 30         | 50    |
-| Total       | 160       | 130        | 260        | 550   |
+| Total       | 160       | 130        | 210        | 500   |
 
 a. Using these data, test whether eye colours are equally distributed in this population ($\alpha = 0.05$).
 b. Using these data, test whether hair colours are equally distributed in this population ($\alpha = 0.05$).
