@@ -48,7 +48,7 @@ timeframe_unit <- timeframe_units[sc_idx]
 prep <- preps[sc_idx]
 
 ans1 <- p * (1 - p)^(Xa - 1)
-ans2 <- sum(p * (1 - p)^(1:Xb - 1))
+ans2 <- 1 - sum(p * (1 - p)^(1:Xb - 1))
 
 id <- sprintf("%010d", sample(0:1000000000, 1))
 

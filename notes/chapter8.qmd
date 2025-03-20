@@ -910,6 +910,7 @@ exams2forms("8.H.HypergeometricWP.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
+cache_check <- 1234
 exams2forms("8.I.GeometricWP.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
@@ -923,6 +924,7 @@ exams2forms("8.I.GeometricWP.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
+cache_check <- 1234
 exams2forms("8.J.NegativeBinomialWP.Rmd", 
             edir = "../PracticeQuestions/Chapter8", 
             n = 100)
