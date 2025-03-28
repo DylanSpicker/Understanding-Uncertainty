@@ -59,7 +59,7 @@ The following is the probability mass function for a random variable $X$, `r pmf
 a. What is $E[X]$? ##ANSWER1##
 b. What is the median of $X$? ##ANSWER2##
 c. What is the mode of $X$? (Note: select the smallest value for the mode, if multiple modes exist). ##ANSWER3##
-d. What is the `r 100*pth`th percentile of $X$? ##ANSWER4##
+d. What is the `r scales::ordinal(100*pth)` percentile of $X$? ##ANSWER4##
 e. What is the range of $X$? ##ANSWER5##
 f. What is the variance of $X$? ##ANSWER6##
 g. What is the mean absolute deviation of $X$? ##ANSWER7##

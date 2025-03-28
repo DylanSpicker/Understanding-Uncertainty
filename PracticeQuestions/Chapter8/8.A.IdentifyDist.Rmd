@@ -23,7 +23,7 @@ scenarios <- list(
         "A website tracks when users visit, specifically recording whether a specific user clicks on an advertisement or not."
     ),
     c( # Binomial
-        "A baseball player wants is interested in the number of home runs they hit in a game, where the probability of hitting a home run is the same for each at-bat.",
+        "A baseball player is interested in the number of home runs they hit in a game, where the probability of hitting a home run is the same for each at-bat.",
         "A basketball player wants to know the number of successful free throws they make out of 10 attempts, where each attempt has the same probability of success.", 
         "A factory inspects 50 light bulbs and counts the number of defective bulbs, assuming a constant defect rate.", 
         "A student takes a multiple-choice quiz with 20 questions, and wants to know the number of correct answers, assuming they guess randomly on each question.", 
@@ -74,7 +74,6 @@ scenarios <- list(
         "A voter registration list contains 1000 names, 400 of whom are registered Democrats. A sample of 100 names is selected, and you count the number of registered Democrats in the sample."
     ),
     c( # Poisson
-        "In a manufacturing process, you’re interested in the number of trials required to produce the first defective item.",
         "An online streaming platform wants to model the number of times a specific video is watched in an hour, given a known average view rate.",
         "A call center manager wants to model the number of calls received per minute during a quiet period of the day.",
         "A server host counts the number of emails received by a server in a minute.",

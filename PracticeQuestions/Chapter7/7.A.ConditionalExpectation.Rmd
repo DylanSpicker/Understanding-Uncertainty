@@ -4,9 +4,9 @@
 x_vals <- sort(sample(1:15, 3))
 x_cuts <- sort(round(runif(2, 0.01, 0.99), 2))
 
-p1 <- x_cuts[1]
-p2 <- x_cuts[2] - x_cuts[1]
-p3 <- 1 - (p1 + p2)
+p1 <- round(x_cuts[1], 2)
+p2 <- round(x_cuts[2] - x_cuts[1], 2)
+p3 <- round(1 - (p1 + p2), 2)
 
 pmf_X <- function(x){
     ifelse(x == x_vals[1], p1, ifelse(x == x_vals[2], p2, p3))
@@ -85,7 +85,7 @@ c. Which of the following is `r type`?
 
 ##ANSWER3##
 
-d. What is $\text{var}(Y|X = `r Xa`)$?
+d. What is $\text{var}(Y|X = `r Xa`)$? ##ANSWER4##
 
 
 Question ID: *`r id`*

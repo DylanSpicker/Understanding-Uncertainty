@@ -71,7 +71,7 @@ A coin flip is, by itself, not particularly interesting. However *any* statistic
 :::{#exm-bernoulli}
 ## Charles and Sadie find Bernoulli Quantities
 
-In their ongoing quest to best understand the named distributions, Charles ans Sadie continue their discussions of various quantities, and how they may fit a Bernoulli distribution.
+In their ongoing quest to best understand the named distributions, Charles and Sadie continue their discussions of various quantities, and how they may fit a Bernoulli distribution.
 
 For each of the following, help Charles and Sadie provide a justification of why a Bernoulli distribution would (or would not be) appropriate, including a description of the parameter. 
 

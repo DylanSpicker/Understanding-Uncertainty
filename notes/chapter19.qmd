@@ -539,44 +539,44 @@ When reading the `summary` output, the table of Coefficients gives the estimated
 ## Exercises {.unnumbered}
 
 
-:::{#exr-17.1}
+:::{#exr-19.1}
 Write down and explain the components of the linear regression model.
 :::
 
-:::{#exr-17.2}
+:::{#exr-19.2}
 Each month for several months, the average temperature ($x$) and the number of pounds of steam consumed by a certain chemical plant ($y$) were measured. Suppose that the least squares line is fit and found to be $y = 245.82 + 1.13x$.
 
 a. Predict the number of pounds of steam consumed in a month, when the average temperature is $65$. 
 b. If two months differ in their average temperatures by $5$ degrees, by how much do you predict the number of pounds of steam to differ?
 :::
 
-:::{#exr-17.3}
+:::{#exr-19.3}
 The least squares line is fit to a set of points. If the total sum of squares is $9615$ and the error sum of squares is $1450$, compute the coefficient of determination, $R^2$. 
 :::
 
-:::{#exr-17.4}
-A simple random sample of $100$ men aged $25-34$ averaged $70$ inches in height, with a standard deviation of $3$ inches. Their incomes average $34,900$ and had a standard deviation of $17,200$. From the least-square line, suppose that we predict the income of a man who is $70$ inches tall. Can we tell whether this prediction is less than, equal to, or above $34,900$? If so, which response is it. If not, what information is missing?
+:::{#exr-19.4}
+A simple random sample of $100$ men aged $25-34$ averaged $70$ inches in height, with a standard deviation of $3$ inches. Their incomes averaged $34,900$ and had a standard deviation of $17,200$. From the least-square line, suppose that we predict the income of a man who is $70$ inches tall. Can we tell whether this prediction is less than, equal to, or above $34,900$? If so, which response is it. If not, what information is missing?
 :::
 
-:::{#exr-17.5}
+:::{#exr-19.5}
 In a study of copper bars, the relationship between shear stress in ksi ($x$) and shear strain in $\%$ ($y$) was summarized by the least-squares line, $y= - 20.00 + 2.56x$. There were a total of $n=17$ observations, and the coefficient of determination was $R^2 = 0.9111$. If the total sum of squares was $234.19$, compute the estimated error variance, $s^2$. 
 :::
 
-:::{#exr-17.6}
+:::{#exr-19.6}
 If we treated the independent variables, $X_i$, as fixed, show that the estimators for $\beta_0$ and $\beta_1$ are unbiased.
 :::
 
-:::{#exr-17.7}
-Suppose that the regression of $Y$ on $X$ is estimated as $35.82 + 0.476x$, that the sum of square errors is $19.70$, the regression sum of squares is $19.22$, that sample standard deviation of $x$ was $2.77$, with a sample size was $12$. 
+:::{#exr-19.7}
+Suppose that the regression of $Y$ on $X$ is estimated as $35.82 + 0.476x$, that the sum of squared errors is $19.70$, the regression sum of squares is $19.22$, that sample standard deviation of $x$ was $2.77$, with a sample size was $12$. 
 
 Is the slope parameter significant at a $0.05$ significance level?
 :::
 
-:::{#exr-17.8}
+:::{#exr-19.8}
 Show that the point of averages, $(\overline{x}, \overline{y})$ lies on the regression line.
 :::
 
-:::{#exr-17.9}
+:::{#exr-19.9}
 Consider the following output for a linear regression that considers explaining the cost of a diamond ($y$) based on the carat of the diamond ($x$). 
 
 ```{r}
@@ -602,7 +602,7 @@ f. If the overall mean of the carat in the dataset is `r mean(diamonds$carat)`, 
 g. If the overall mean of the carat in the dataset is `r mean(diamonds$carat)`, give a $95\%$ confidence interval for the value of a diamond that is $1.5$ carats. 
 :::
 
-:::{#exr-17.10}
+:::{#exr-19.10}
 Consider the following output for a linear regression that considers explaining the heart weight of cats ($y$) based on their measured body weight ($x$).
 
 ```{r}
@@ -626,7 +626,7 @@ g. If the overall mean body weight in the dataset is `r mean(cats$Bwt)`, give a 
 
 :::
 
-:::{#exr-17.11}
+:::{#exr-19.11}
 Consider the following output for a linear regression that considers explaining the distance it took for a car to come to a complete stop ($y$) based on the measured speed it was traveling ($x$).
 
 ```{r}
@@ -650,7 +650,7 @@ g. If the overall mean speed in the dataset is `r mean(cars$speed)`, give a $95\
 
 :::
 
-:::{#exr-17.12}
+:::{#exr-19.12}
 Consider the following plot demonstrating the relationship between pressure ($y$) and the temperature ($x$) of the vapor pressure of mercury. 
 ```{r}
 #| echo: false
