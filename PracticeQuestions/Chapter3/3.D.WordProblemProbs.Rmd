@@ -1,0 +1,105 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+probs <- round(diff(c(0, sort(sample(seq(0.05, 0.95, by=0.001), 2)), 1)), 3)
+
+pA <- 100 * probs[1] 
+pB <- 100 * probs[2]
+
+scenarios <- list(
+    list(
+        A = "low risk", 
+        B = "moderate risk", 
+        C = "high risk", 
+        scenario = "Patients with a particular illness are categorized into three levels of risk",
+        unit = "patient",
+        article = "a",
+        verb = "are"
+    ),
+    list(
+        A = "low risk",
+        B = "moderate risk",
+        C = "high risk",
+        scenario = "An investor categorizes prospective investments into three levels of risk",
+        unit = "investment",
+        article = "an",
+        verb = "are"
+    ),
+    list(
+        A = "dissatisfied",
+        B = "neutral",
+        C = "satisfied",
+        scenario = "Customers at a particular store have their satisfaction recorded across three categories",
+        unit = "customer",
+        article = "a",
+        verb = "are"
+    ),
+    list(
+        A = "light",
+        B = "moderate",
+        C = "heavy",
+        scenario = "The traffic on commuter trains in categorized into one of three categories",
+        unit = "train",
+        article = "a",
+        verb = "have traffic considered"
+    ),
+    list(
+        A = "needs improvement",
+        B = "meets expectations",
+        C = "exceeds expectations",
+        scenario = "Student submissions are qualitatively graded on a three-point scale",
+        unit = "submission",
+        article = "a",
+        verb = "are scored"        
+    ),
+    list(
+        A = "budget",
+        B = "mid-range",
+        C = "luxury",
+        scenario = "Hotels are rated on a three tier scale",
+        unit = "hotel",
+        article = "a",
+        verb = "are"        
+    )
+)
+
+sc_idx <- sample(1:length(scenarios), 1) 
+
+scenario <- scenarios[[sc_idx]]$scenario
+oA <- scenarios[[sc_idx]]$A
+oB <- scenarios[[sc_idx]]$B
+oC <- scenarios[[sc_idx]]$C
+article <- scenarios[[sc_idx]]$article
+verb <- scenarios[[sc_idx]]$verb
+unit <- scenarios[[sc_idx]]$unit
+
+
+ans1 <- probs[3]
+ans2 <- probs[2] + probs[3]
+ans3 <- probs[1] + probs[2]
+ans4 <- 0
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+`r scenario`: `r oA`, `r oB`, and `r oC`. 
+
+Suppose that `r pA`% of `r unit`s `r verb` `r oA` and that `r pB`% of `r unit`s `r verb` `r oB`. 
+
+Consider `r article` `r unit` that is randomly selected. 
+
+a. What is the probability that the `r unit` is `r oC`? ##ANSWER1##
+b. What is the probability that the `r unit` is not `r oA`? ##ANSWER2##
+c. What is the probability that the `r unit` is either `r oA` or `r oB`? ##ANSWER3##
+d. What is the probability that the `r unit` is both `r oA` and `r oB`? ##ANSWER4##
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`
+extol: 0.001
+exname: 3.05 - Set Probabilities

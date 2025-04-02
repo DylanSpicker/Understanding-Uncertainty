@@ -1,0 +1,51 @@
+```{r data generation, echo = FALSE, results = "hide"}
+true_statements <- c(
+    "The sample space of a statistical experiment is a mathematical set.",
+    "The sample space of a statistical experiment contains all possible outcomes.",
+    "We typically denote the sample space using $\\mathcal{S}$, or similar.",
+    "The outcomes of a sample space are mutually exclusive.",
+    "Events are defined to be any subset of the sample space. ",
+    "The sample space can be thought of as an event from the random experiment.",
+    "For any given experiment, the sample space is unique."
+)
+
+false_statements <- c(
+    "The sample space is the set of all possible events in a statistical experiment.",
+    "There can be repeated or overlapping elements in a sample space.",
+    "A sample space must be a finite set.",
+    "It is possible to observe an event with elements that are outside the sample space.",
+    "The sample space contains possible outcomes and their associated probabilities.",
+    "The sample space is subjective in that different observers of the same experiment may define different sample spaces."
+)
+
+answer <- sample(1:2, 1)
+sol <- c(FALSE, FALSE)
+sol[answer] <- TRUE
+
+if(answer == 1) {
+    statement <- sample(true_statements, 1)
+} else {
+    statement <- sample(false_statements, 1)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+
+Question
+========
+
+`r statement`
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* True
+* False
+
+Meta-information
+================
+exname: Sample space definition
+extype: schoice
+exsolution: `r mchoice2string(sol)`

@@ -1,0 +1,94 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+pS <- round(runif(1, 0.1, 0.9), 3)
+pC <- round(runif(1, 0.1, 0.9), 3)
+pSnC <- round(runif(1, 0.05, min(pS, pC) - 0.025), 3)
+pSuC <- round(pS + pC - pSnC, 3)
+
+subjects <- c(
+    "art history",
+    "biology",
+    "chemistry",
+    "design",
+    "english",
+    "french",
+    "geography",
+    "history",
+    "international relations",
+    "journalism",
+    "kinesiology",
+    "law",
+    "music",
+    "neuroscience",
+    "oceanography",
+    "psychology",
+    "quantum mechanics",
+    "religion",
+    "statistics",
+    "theater",
+    "urban planning",
+    "visual arts"
+)
+
+sel_subjects <- sample(subjects, 2)
+subjectA <- sel_subjects[1]
+subjectB <- sel_subjects[2]
+
+eventA <- toupper(substring(subjectA, 1, 1))
+eventB <- toupper(substring(subjectB, 1, 1))
+
+given_prob <- sample(1:2, 1)
+
+if(given_prob == 1) {
+    events <- c(
+                paste0("the student has taken either a course in either ", subjectA, " or ", subjectB),
+                paste0("the student has not taken a course in either of ", subjectA, " or ", subjectB ),
+                paste0("the student has taken a course in ", subjectA, " but not in ", subjectB),
+                paste0("the student has taken a course in ", subjectB, " but not in ", subjectA)
+    )
+    
+    probs <- round(c(pS + pC - pSnC,
+            1 - (pS + pC - pSnC),
+            pS - pSnC,
+            pC - pSnC), 3)
+
+    given_prob_final <- paste0("$P(", eventA, " \\cap ", eventB, ") = ", pSnC, "$")
+
+} else {
+        events <- c(
+                paste0("the student has taken either a course in both ", subjectA, " and ", subjectB),
+                paste0("the student has not taken a course in both ", subjectA, " and ", subjectB ),
+                paste0("the student has taken a course in ", subjectA, " but not in ", subjectB),
+                paste0("the student has taken a course in ", subjectB, " but not in ", subjectA)
+    )
+    
+    probs <- round(c(pS + pC - pSuC,
+                        1 - (pS + pC - pSuC),
+                        pC - pSuC,
+                        pS - pSuC), 3)
+
+    given_prob_final <- paste0("$P(", eventA, " \\cup ", eventB, ") = ", pSuC, "$")
+
+}
+
+q <- sample(1:length(events), 1)
+
+event <- events[q]
+truth <- probs[q]
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+Let $`r eventA`$ be the event that a randomly selected university student has taken any course in `r subjectA`, and $`r eventB`$ be the event that a randomly selected university student has taken any course in `r subjectB`. 
+Suppose that $P(`r eventA`) = `r pS`$, $P(`r eventB`) = `r pC`$, and `r given_prob_final`. What is the probability that `r event`? 
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: num
+exsolution: `r fmt(truth, 3)`
+extol: 3
+exname: 3.05 - Set Probabilities

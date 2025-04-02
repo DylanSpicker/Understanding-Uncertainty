@@ -1,0 +1,62 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+disjoint_events <- c(
+    "$A$: all screens are correctly calibrated; and $B$: the third screen is not correctly calibrated.",
+    "$A$: all screens are correctly calibrated; and $B$: at least one screen is not correctly calibrated.",
+    "$A$: all screens are correctly calibrated; and $B$: exactly one screen is not correctly calibrated.",
+    "$A$: all screens are correctly calibrated; and $B$: no screens are correctly calibrated.",
+    "$A$: no screens are correctly calibrated; and $B$: exactly one screen is not correctly calibrated.",
+    "$A$: only the even numbered screens are correctly calibrated; and $B$: screens $5$ and $8$ are correctly calibrated.",
+    "$A$: all the even numbered screens are correctly calibrated; and $B$: screens $5$ and $8$ are not correctly calibrated."
+)
+
+nondisjoint_events <- c(
+    "$A$: the third screen is not correctly calibrated; and $B$: at least one screen is not correctly calibrated.",
+    "$A$: the third screen is not correctly calibrated; and $B$: exactly one screen is not correctly calibrated.",
+    "$A$: the third screen is not correctly calibrated; and $B$: screens $5$ and $8$ are correctly calibrated.",
+    "$A$: the third screen is not correctly calibrated; and $B$: screens $5$ and $8$ are not correctly calibrated.",
+    "$A$: only the even numbered screens are correctly calibrated; and $B$: the third screen is not correctly calibrated.",
+    "$A$: all the even numbered screens are correctly calibrated; and $B$: the third screen is not correctly calibrated.",
+    "$A$: at least one screen is not correctly calibrated; and $B$: exactly one screen is not correctly calibrated.",
+    "$A$: at least one screen is not correctly calibrated; and $B$: screens $5$ and $8$ are correctly calibrated.",
+    "$A$: at least one screen is not correctly calibrated; and $B$: screens $5$ and $8$ are not correctly calibrated."
+)
+
+sol <- c(FALSE, FALSE)
+
+type <- sample(1:2, 1)
+
+sol[type] <- TRUE
+
+if(type == 1) {
+    event <- sample(disjoint_events, 1)
+} else {
+    event <- sample(nondisjoint_events, 1)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+A cinema has $12$ screens, numbered $1$ through $12$. Before opening, an employee checks to ensure that the projectors are correctly calibrated. 
+
+Consider the following events:
+
+> `r event`
+
+Are these events disjoint, or not disjoint?
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* Disjoint 
+* Not Disjoint
+
+
+Meta-information
+================
+exname: 2.07 - Disjoint Events
+extype: schoice
+exsolution: `r mchoice2string(sol)`

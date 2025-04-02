@@ -1,0 +1,56 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+realizations <- sample(5:50, 3)
+
+red <- realizations[1]
+white <- realizations[2]
+blue <- realizations[3]
+
+pR <- red / sum(realizations)
+pW <- white / sum(realizations)
+pB <- blue / sum(realizations)
+
+events <- c(
+    "the ball is red",
+    "the ball is white",
+    "the ball is blue",
+    "the ball is not red",
+    "the ball is not white",
+    "the ball is not blue",
+    "the ball is red or white",
+    "the ball is red or blue",
+    "the ball is white or blue"
+)
+
+probs <- c(
+    pR, 
+    pW, 
+    pB, 
+    pW + pB,
+    pR + pB,
+    pW + pR,
+    pR + pW,
+    pR + pB,
+    pW + pB
+)
+
+q <- sample(1:length(events), 1)
+
+event <- events[q]
+ans <- probs[q]
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+A ball is drawn at random from a box containing $`r red`$ red balls, $`r white`$ white balls, and $`r blue`$ blue balls. What is the probability that `r event`?
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: num
+exsolution: `r fmt(ans, 3)`
+extol: 0.001
+exname: 3.03 - Ball Draw Probabilities.

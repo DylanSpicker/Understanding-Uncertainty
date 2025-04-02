@@ -154,7 +154,7 @@ To determine whether there is sufficient evidence to contradict the assumed null
 
 :::{#def-p-value}
 ## $p$-value
-The **$p$-value**, (or probability value), is a measure of how likely the observed data is assuming that the null hypothesis is true. Specifically, the $p$-value measures the probability of observing an outcome at least as extreme^[Here, extreme means contradictory to the null hypothesis. Note that the extremity of an observation depends on whether we have a one-tailed or two-tailed alternative. With a two-tailed alternative, we need to consider extreme values in both tails, with a one-tailed alternative, we simply need to consider values that are further away from the null value.] as the outcome that was observed, based on the test statistic. This probability indicates how likely the data were to be observed by random chance, assuming the null hypothesis holds.
+The **$p$-value**, (or probability value), is a measure of how likely the observed data are, assuming that the null hypothesis is true. Specifically, the $p$-value measures the probability of observing an outcome at least as extreme^[Here, extreme means contradictory to the null hypothesis. Note that the extremity of an observation depends on whether we have a one-tailed or two-tailed alternative. With a two-tailed alternative, we need to consider extreme values in both tails, with a one-tailed alternative, we simply need to consider values that are further away from the null value.] as the outcome that was observed, based on the test statistic. This probability indicates how likely the data were to be observed by random chance, assuming the null hypothesis holds.
 :::
 
 Suppose, for sake of example, we observe a value of a test statistic, $t=-2$. Under the null hypothesis, we know that $t$ should equal $0$. Then, we ask "what could we have observed that would have been *more* contradictory than what we did observe?" Suppose that we are considering a two-tailed alternative. Note that if we had observed any value of $t < -2$, this would have been more extreme. On the other hand, had we observed any value of $t \geq 2$, this also would have been more extreme. Thus, any value outside the interval $(-2, 2)$ would have been more extreme. Thus, to work out the $p$-value in this case we would find $$P(\{T \leq -2\}\cup\{T \geq 2\}) = P(T \leq -2) + P(T \geq 2).$$ Had this been a one-tailed test, the $p$-value would have been only $P(T \leq -2)$. 
@@ -656,8 +656,8 @@ a. In the field of civil engineering, a new construction method is being tested 
 a. A clinical trial is conducted to determine whether a new medical device is more effective than the current standard of care for a common health condition.
 a. A software development team is testing a new algorithm for data compression. The current compression method is widely accepted and used. 
 a. An environmental study is conducted to assess the impact of a new manufacturing process on air quality in a city.
-a. A pharmaceutical company is conducting a study to evaluate the effectiveness of a new vaccine against a highly contagious disease. Safety data is available.
-a. A new dietary supplement is being tested for its potential to improve cognitive function in adults. Safety data is limited.
+a. A pharmaceutical company is conducting a study to evaluate the effectiveness of a new vaccine against a highly contagious disease. Safety data are available.
+a. A new dietary supplement is being tested for its potential to improve cognitive function in adults. Safety data are limited.
 a. In the context of transportation engineering, a new traffic management system is being evaluated for its impact on reducing congestion.
 a. A study is conducted to determine whether a new teaching method improves student performance in mathematics compared to the traditional method.
 a. A marketing team is testing the effectiveness of two different advertising campaigns for a popular consumer product.

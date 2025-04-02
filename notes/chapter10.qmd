@@ -115,7 +115,7 @@ Thus, taken together we are interested in a particular population. We are typica
 :::{#def-parameter}
 ## Parameter
 
-A parameter is a numeric quantity of interest which is defined for to a population. A parameter captures the behaviour of the population. Typically, the value of parameters will be unknown and unknowable.
+A parameter is a numeric quantity of interest which is defined for a population. A parameter captures the behaviour of the population. Typically, the value of parameters will be unknown and unknowable.
 :::
 
 The fact that parameters are generally unknowable is the central tension at the heart of many statistical problems. To resolve this tension we turn our focus towards quantities which can be computed, namely those which are derived from samples that we have taken. These quantities are aptly named **statistics**.
@@ -130,7 +130,7 @@ In this regard, Statistics as a subject is the study of statistics (as quantitie
 
 Thus, with these definitions we are able to concretely outline the process of statistics. We have interest in a particular population, conceptual or otherwise. Specifically, we have questions which are answered by parameters defined for this population. These parameters are unknowable since it is infeasible to observe all members of the population, and so instead we turn to taking observations for subsets of the population. These subsets are called samples, and samples are observable. Once observed, we are able to compute quantities of interest on the samples, referred to as statistics. It is our hope that somehow these statistics will be representative of the underlying parameters of interest, thus allowing us to answer the questions about the populations using information from the sample.
 
-![On overview of the process of statistics. Visualized is the complete population, which is unable to be observed in full. There exist a parameter (or parameters) of interest that are computable from this population. We take a sample (subset) of this population, and can more accurately observe this sample, allowing us to compute the value of a statistic. This statistic is meant to correspond to the parameter of interest.](/graphics/ch10-population-sampling){#fig-population-sample}
+![An overview of the process of statistics. Visualized is the complete population, which is unable to be observed in full. There exists a parameter (or parameters) of interest that are computable from this population. We take a sample (subset) of this population, and can more accurately observe this sample, allowing us to compute the value of a statistic. This statistic is meant to correspond to the parameter of interest.](/graphics/ch10-population-sampling){#fig-population-sample}
 
 :::{#exm-process-of-statistics}
 ## Experiments in the Coffee Shop
@@ -542,7 +542,7 @@ Whether data are collected via sampling or via experiments, the data themselves 
 
 We will focus both on how to summarize and communicate data that have been collected, and then how to begin gaining insight from these data. These are the first two roles of statistics, as introduced before: description and inference. All the roles that statistics plays build from the idea that we have been able to collect data which are somehow relevant and representative of the underlying population of interest. We investigate the data, describe what has been observed in the sample, or attempt to conduct inference not because we are interested in the data themselves, but because we hope that the data will be reflective of the population of interest. We are not primarily interested in the statistics that we calculate, but in what these statistics say about the parameters of interest.
 
-It is important, as we begin to explore how we can use data directly, to keep in mind that the entire statistical enterprise relies on having high quality data available. This relies on having measured the factors that we care about, in ways that are meaningful. It relies on representative samples and well-designed experiments. Without adhering to the principles discussed throughout this chapter, statistics cannot proceed in a way which addresses our goals. High quality data is not a substitute for statistical analysis, but it is a prerequisite for it.
+It is important, as we begin to explore how we can use data directly, to keep in mind that the entire statistical enterprise relies on having high quality data available. This relies on having measured the factors that we care about, in ways that are meaningful. It relies on representative samples and well-designed experiments. Without adhering to the principles discussed throughout this chapter, statistics cannot proceed in a way which addresses our goals. High quality data are not a substitute for statistical analysis, but it is a prerequisite for it.
 
 ## Exercises {.unnumbered}
 

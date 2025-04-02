@@ -1,0 +1,77 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+roll <- sample(1:6, 1)
+result <- sample(c("heads", "tails"), 1)
+black <- sample(1:50, 1)
+red <- sample(1:50, 1)
+flips <- sample(10:100, 1)
+numtype <- sample(c("even", "odd"), 1)
+rb <- sample(c("red", "black"), 1)
+lt <- sample(3:6, 1)
+
+simple_events <- c(
+    paste0("Rolling a ", roll," on a six-sided die. "),
+    paste0("Flipping a coin and getting ", result,"."),
+    "Drawing the Ace of Spades from a standard deck of cards.",
+    paste0("Picking a red marble from a bag containing ", red," red and ", black," black marbles."),
+    paste0("No ", result," are seen when flipping a coin ", flips," times."),
+    paste0("Only ", result," are seen when flipping a coin ", flips," times. ")
+)
+
+compound_events <- c(
+    paste0("An ", numtype," number is seen when rolling a six-sided die."),
+    paste0("At least one ", result," is seen when flipping a coin ", flips," times."),
+    paste0("The same number is seen when rolling a six-sided die ", flips," times."),
+    paste0("The same result is seen when flipping a coin ", flips," times."),
+    paste0("A ", rb," card is drawn from a standard deck of cards. "),
+    paste0("Rolling a number less than ", lt," on a six-sided die.")
+)
+
+eventA_choice <- sample(0:1, 1)
+eventB_choice <- sample(0:1, 1)
+eventC_choice <- sample(0:1, 1)
+
+simple_events <- sample(simple_events, 3)
+compound_events <- sample(compound_events, 3)
+
+eventA <- ifelse(eventA_choice == 0, simple_events[1], compound_events[1])
+eventB <- ifelse(eventB_choice == 0, simple_events[2], compound_events[2])
+eventC <- ifelse(eventC_choice == 0, simple_events[3], compound_events[3])
+
+solA <- c(FALSE, FALSE)
+solB <- c(FALSE, FALSE)
+solC <- c(FALSE, FALSE)
+
+solA[eventA_choice + 1] <- TRUE
+solB[eventB_choice + 1] <- TRUE
+solC[eventC_choice + 1] <- TRUE
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+For each of the following, identify whether the event is *simple* or *compound*.
+
+a. `r eventA` ##ANSWER1##
+b. `r eventB` ##ANSWER2##
+c. `r eventC` ##ANSWER3##
+
+(Question ID: *`r id`*)
+
+Answerlist
+------------
+* Simple Event
+* Compound Event
+* Simple Event
+* Compound Event
+* Simple Event
+* Compound Event
+
+
+Meta-information
+================
+exname: Simple versus compound events
+extype: cloze
+exclozetype: schoice|schoice|schoice
+exsolution: `r mchoice2string(solA)`|`r mchoice2string(solB)`|`r mchoice2string(solC)`

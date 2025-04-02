@@ -1,7 +1,7 @@
 # The Analysis of Categorical Data
 
 ## Contingency Tables, Frequency Distributions, and Categorical Data
-The concept of contingency tables (@def-contingency-table) was introduced in @sec-contingency-tables. Briefly, contingency tables succinctly summarize the breakdown of two (or more) traits in a population. The number of individual items in the population that satisfy the intersecting traits are recorded in a table, with each member of the population counted at some specific intersection. Contingency tables provide an effective tool for considering probability distributions over finite populations. This is particularly true when the traits being considered are categorical. 
+The concept of contingency tables (@def-contingency-table) was introduced in @sec-contingency-tables. Briefly, contingency tables succinctly summarize the breakdown of two (or more) traits in a population. The numbers of individual items in the population that satisfy the intersecting traits are recorded in a table, with each member of the population counted at some specific intersection. Contingency tables provide an effective tool for considering probability distributions over finite populations. This is particularly true when the traits being considered are categorical. 
 
 Categorical data provide an interesting challenge for statistical inference. If collected data happen to be categorical, it may not be immediately clear how to analyze them. With quantitative measurements we can readily compute estimates that map onto specific parameters in the population distribution. The parallels with categorical data are less direct.^[There is no way, for instance, to consider the *average* favourite colour for a group of school-aged children, or to consider the median political party that a region supports. There may be techniques that can measure related quantities numerically, however, these are not typically numerical quantities.] In order to conduct inference using categorical data, we require a technique for systematically converting qualitative information into quantitative information. While it is conceivable to determine several strategies for this purpose, one highly effective tool is the use of frequency distributions (@def-frequency-distribution). 
 
@@ -24,13 +24,13 @@ In general, by assuming an underlying distribution, we can determine the theoret
 :::{.callout-tip icon="false"}
 ## The Expected Value for Goodness-of-Fit Testing
 
-Suppose that a distribution is hypothesized regarding the frequency distribution for a particular trait. Namely, suppose that the distribution gives rise to a set of probabilities, $\{p_1,p_2,\dots,p_k\}$, such that each option for the trait $j=1,\dots,k$ will have probability $p_j$ of being observed. Moreover, suppose that a total of $n$ observations will be taken. Then, we expected value of the $j$th cell is $E_j = np_j$.
+Suppose that a distribution is hypothesized regarding the frequency distribution for a particular trait. Namely, suppose that the distribution gives rise to a set of probabilities, $\{p_1,p_2,\dots,p_k\}$, such that each option for the trait $j=1,\dots,k$ will have probability $p_j$ of being observed. Moreover, suppose that a total of $n$ observations will be taken. Then, the expected value of the $j$th cell is $E_j = np_j$.
 
 If the cell probabilities are not given directly, such as through a probability mass function or similar, they can often be derived via the use of a cumulative distribution function. Notably, if the categories are bins of numeric quantities, then, for a given continuous distribution with cumulative distribution function $F$, $$E_j = n(F(u_j) - F(\ell_j)),$$ where $u_j$ is the upper bound on the $j$th bin, and $\ell_j$ is the corresponding lower bound.
 :::
 
 ### Expected Values for Homogeneity
-If we wish to describe two quantities as being alike, we frequently describe them as being *homogenous*. If some trait is homogenous between two populations, then that trait is equally distributed between those different populations. We may wish to understand, for instance, whether genders are represented homogeneously between various careers. Note that this is not to say that all careers are equally likely to be pursued, but rather, that the rates that individuals pursue various careers is the same across gender. 
+If we wish to describe two quantities as being alike, we frequently describe them as being *homogenous*. If some trait is homogenous between two populations, then that trait is equally distributed between those different populations. We may wish to understand, for instance, whether genders are represented homogeneously between various careers. Note that this is not to say that all careers are equally likely to be pursued, but rather, that the rate that individuals pursue various careers is the same across gender. 
 
 We are able to summarize the frequency distribution of a single trait^[Such as one's career.] across multiple populations^[Say, defined by individuals' gender.] using a contingency table. We take the characteristic that defines the populations as one of the factors (say the rows), and then the trait of interest as the other factor (say the columns). This summarizes data in a manner that is identical to taking a sample from a single population, measuring two different traits, but it is conceived of differently. Notably, we view this as multiple samples of a single trait, from multiple distinct populations. Denote the number of observations from population $i$, who have trait $j$ as $n_{i,j}$. Each population will have a set number of realizations drawn from it, denoted $n_{i, \bullet}$.^[The notation of a subscript $\bullet$ is used to suggest that you sum over that index. So, $n_{i,\bullet} = \sum_{j} n_{i,j}$.] We can use a similar notation to denote the number of observations with trait $j$, taking $n_{\bullet, j} = \sum_{i=1}^k n_{i, j}$.
 
@@ -88,7 +88,7 @@ There are three primary assumptions required to conduct a chi-squared test. Firs
 
 If the assumptions are all satisfied, then $\chi^2 \stackrel{H_0}{\sim} \chi^2_{d}$, where $d$ represents the number of degrees of freedom for the distribution. Broadly speaking, the degrees of freedom will be given by $k\ell - c$, where $k$ and $\ell$ are the total number of options for traits one and two, and $c$ is the number of *constraints* placed on the table. Note that, $k\ell$ gives the total number of cells in the contingency table. Moreover, if the test is being run on a frequency distribution rather than a contingency table, we can take $\ell = 1$. 
 
-The number of constraints, $c$, arise in the calculating the expected frequencies based on the underlying hypotheses. The question we are asking ourselves is "how many cell values are pre-determined, based on the assumptions?". Take, for instance, the simple goodness-of-fit assumptions. In this case we have that $E_i = np_i$, for $i=1,\dots,k$. Note, however, that in order to calculate $E_i$ we are assuming that the total number of observations is going to be $n$. By assumption, we know that $$E_1 + E_2 + \cdots + E_k = n.$$ As a result, once we have determined $\{E_1, E_2, \dots, E_{k-1}\}$, the final value, $E_k$ must also be determined as $$E_k = n - E_1 - E_2 - \cdots - E_{k-1}.$$ Thus, while we calculate $k$ expected values, we have a constraint on exactly $1$ of these values, so $c=1$. This gives the familiar $d = k - 1$.
+The number of constraints, $c$, arise while calculating the expected frequencies based on the underlying hypotheses. The question we are asking ourselves is "how many cell values are pre-determined, based on the assumptions?". Take, for instance, the simple goodness-of-fit assumptions. In this case we have that $E_i = np_i$, for $i=1,\dots,k$. Note, however, that in order to calculate $E_i$ we are assuming that the total number of observations is going to be $n$. By assumption, we know that $$E_1 + E_2 + \cdots + E_k = n.$$ As a result, once we have determined $\{E_1, E_2, \dots, E_{k-1}\}$, the final value, $E_k$ must also be determined as $$E_k = n - E_1 - E_2 - \cdots - E_{k-1}.$$ Thus, while we calculate $k$ expected values, we have a constraint on exactly $1$ of these values, so $c=1$. This gives the familiar $d = k - 1$.
 
 In the contingency table for independence we calculate a total of $k\ell$ expected values. However, we make the assumption that both $n_{i,\bullet}$ and $n_{\bullet,j}$ are fixed for each row and column. This gives $k + \ell$ constraints, however, it is the case that $$\sum_{i=1}^{k} n_{i,\bullet} = \sum_{j=1}^{\ell} n_{\bullet,j} = n.$$ Thus, once we have constrained the $k$ totals for the rows, and $\ell - 1$ totals for the columns, the final value for the remaining column has already been constrained as well. Thus, in this case, $c = k + \ell - 1$. This gives, $$d = k\ell - (k + \ell - 1) = (k - 1)(\ell - 1).$$
 
@@ -189,7 +189,7 @@ A die is rolled $120$ times, and the observed frequencies are recorded in the fo
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | 18  | 25  | 22  | 15  | 20  | 20  |
 
-a. What are the expected cells counts that arise to test whether the die is fair?
+a. What are the expected cell counts that arise to test whether the die is fair?
 b. Test the hypothesis that the die is fair, at the $\alpha = 0.05$ level of significance.
 c. Test the hypothesis that the die shows up $2$ with a probability of $0.2$, and is equally likely to show up as any other number, at the $\alpha = 0.05$ level of significance.
 :::
@@ -214,7 +214,7 @@ A geneticist expects offspring to have a phenotype ratio of $9:3:3:1$. That is t
 
 In a sample of $160$ offspring, the observed frequencies are $95$, $35$, $20$, and $10$, for the four phenotypes, respectively. 
 
-Does the data conform to the geneticists expectations, at an $\alpha = 0.05$ level of significance? 
+Do the data conform to the geneticist's expectations, at an $\alpha = 0.05$ level of significance? 
 :::
 
 :::{#exr-18.5}
@@ -268,7 +268,7 @@ b. Suppose that an additional $100$ observations are obtained from factor $A$, w
 :::
 
 :::{#exr-18.9}
-A researcher wants to know if the distribution of American political affiliation (Democrat, Republican, Independent) is the same across three different age groups. Data is collected from each group, and reported in the table below. 
+A researcher wants to know if the distribution of American political affiliation (Democrat, Republican, Independent) is the same across three different age groups. Data are collected from each group, and reported in the table below. 
 
 | Age Group | Democrat | Republican | Independent | Total |
 | --------- | -------- | ---------- | ----------- | ----- |
@@ -293,7 +293,7 @@ Four different brands of tires are tested for tread life. The following table re
 | Total      | 4   | 4      | 8    | 16    |
 
 a. Can these data be used to test whether the brand has a significant impact on the observed wear? Explain.
-b. A second study is run, producing the follow data. Use these data to test whether tire brands have an impact on the wear patterns, at the $\alpha = 0.10$ level of significance.
+b. A second study is run, producing the following data. Use these data to test whether tire brands have an impact on the wear patterns, at the $\alpha = 0.10$ level of significance.
 
 | Tire Brand | Low | Medium | High | Total |
 | ---------- | --- | ------ | ---- | ----- |
@@ -368,7 +368,7 @@ c. Using these data, test whether there is an association between eye colour and
 :::
 
 :::{#exr-18.15}
-Research has long suggested that there is no such thing as "learning styles". That is, students do not perform any better when being taught to their reported learning style, compared with being taught in a randomly assigned manner. This finding has been robustly demonstrated overtime. A group of researchers is interested in whether an individual's reported preferred learning style has an impact on how well they perform on particular tasks (that correspond to the those same learning styles). 
+Research has long suggested that there is no such thing as "learning styles". That is, students do not perform any better when being taught to their reported learning style, compared with being taught in a randomly assigned manner. This finding has been robustly demonstrated overtime. A group of researchers is interested in whether an individual's reported preferred learning style has an impact on how well they perform on particular tasks (that correspond to the same learning styles). 
 
 They collect the following data on $300$ individuals who report being either visual, auditory, or kinesthetic learners, and then rate which task (of a visual, auditory, or kinesthetic task) they performed best on. 
 
@@ -384,7 +384,7 @@ b. Test the hypothesis (at $\alpha = 0.05$) that there is an association between
 :::
 
 :::{#exr-18.16}
-A store owner believes that the number of customers visiting the store on each day of the week follows a specific pattern. Data is collected for a week. 
+A store owner believes that the number of customers visiting the store on each day of the week follows a specific pattern. Data are collected for a week. 
 
 a. Formalize the store owner's hypothesis in the framework of hypothesis testing. What test needs to be performed, and why?
 b. What data would need to be collected to perform the test? How would the test proceed?

@@ -98,7 +98,7 @@ Often in mathematics when we have an intuitive set of rules^[These rules, which 
 ## The Axioms of Probability 
 
 1. **Unitary:** Every valid set of probabilities must assign a probability of $1$ to the full sample space. That is, $P(\mathcal{S}) = 1$. This is an intuitive requirement as every time the experiment is run we observe an outcome in the sample space. As a result, in every experimental run the event $\mathcal{S}$ occurs.
-2. **Non-negative:** We require that every probability is non-negative. We can have probabilities of $0$, but we can never have a probability less than zero. Again, this is sensible^[What would it mean to have a negative probability? It is perhaps a more interesting question than it seems at first glance. It is a topic that has come up in some pretty strange places and, while it is not presently sensible to call them "probabilities" in a traditional sense, there are interesting results which follow.] but is important to include in our formalization. Specifically, for every event $E$, we must have $P(E) \geq 0$.
+3. **Non-negative:** We require that every probability is non-negative. We can have probabilities of $0$, but we can never have a probability less than zero. Again, this is sensible^[What would it mean to have a negative probability? It is perhaps a more interesting question than it seems at first glance. It is a topic that has come up in some pretty strange places and, while it is not presently sensible to call them "probabilities" in a traditional sense, there are interesting results which follow.] but is important to include in our formalization. Specifically, for every event $E$, we must have $P(E) \geq 0$.
 3. **Additivity:** the final property requires slightly more parsing on first pass. Suppose that we define a sequence of events, $E_1, E_2, E_3, \dots$ such that no two events have any overlap. That is, $E_j \cap E_\ell = \emptyset$ for all $\ell\neq j$. Then, the final property we require for probabilities is that $$P(E_1 \cup E_2 \cup E_3 \cup \cdots) = P\left(\bigcup_i E_i\right) = \sum_i P(E_i) = P(E_1) + P(E_2) + P(E_3) + \cdots.$$ That is, the probability of the union of disjoint events is the summation of the probability of these events.
 :::
 
@@ -123,7 +123,7 @@ These three axioms fully define valid probabilities. Any mechanism that assigns 
 Using the previously indicated axioms of probability we are able to derive many useful **secondary properties**. These properties will frequently be used to actually compute different probabilities, and are helpful to become familiar with. All of the following properties follow directly from the axioms, though, some are more clear than others. For the following we take $E$ and $E_1,E_2,E_3,\dots$ to be arbitrary events on some well defined sample space.
 
 1. **Complements:** $P(E^C) = 1-P(E)$, and equivalently, $P(E) = 1 - P(E^C)$.
-2. **Null Event:** $P(\emptyset) = 0$.
+3. **Null Event:** $P(\emptyset) = 0$.
 3. **Arbitrary Unions (Two Events):** $P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1\cap E_2)$.
 4. **Arbitrary Unions (Three Events):** \begin{multline*}P(E_1 \cup E_2 \cup E_3) = P(E_1) + P(E_2) + P(E_3) - P(E_1\cap E_2) - P(E_1 \cap E_3) \\ - P(E_2 \cap E_3) + P(E_1 \cap E_2 \cap E_3).\end{multline*}
 5. **Containment:** If $E_1 \subseteq E_2$ then $P(E_1) \leq P(E_2)$. 
@@ -134,7 +134,7 @@ It may be instructive to see how these properties are derived. Doing so generate
 
 1. Note that, for any event $E$, by definition we have $E \cup E^C = \mathcal{S}$ and $E \cap E^C = \emptyset$. As a result, we can apply **additivity** to the sets $E$ and $E^C$ giving $P(E \cup E^C) = P(E) + P(E^C)$. However, since $E\cup E^C = \mathcal{S}$, then we know that $P(E \cup E^C) = P(\mathcal{S}) = 1$ by the **unitary** property. Taken together this tells us that $1 = P(E) + P(E^C)$, and rearranging gives $P(E^C) = 1 - P(E)$, or $P(E) = 1 - P(E^C)$, as required.
 
-2. We know that $\mathcal{S}^C = \emptyset$. Using secondary property (1), $P(E) = 1 - P(E^C)$. Taking $E = \emptyset$ gives $P(\emptyset) = 1 - P(\mathcal{S}) = 1 - 1 = 0$, by the **unitary** property.
+3. We know that $\mathcal{S}^C = \emptyset$. Using secondary property (1), $P(E) = 1 - P(E^C)$. Taking $E = \emptyset$ gives $P(\emptyset) = 1 - P(\mathcal{S}) = 1 - 1 = 0$, by the **unitary** property.
 
 3. Here note that $E_1 \cup E_2$ can be written as $E_1 \cup E_2'$ where $E_2' = E_2\cap E_1^C$. That is, $E_2'$ contains the outcomes from $E_2$ which were not shared by $E_1$. Then $E_1 \cap E_2' = \emptyset$ so we can write $P(E_1 \cup E_2) = P(E_1 \cup E_2') = P(E_1) + P(E_2')$, by **additivity**. Now, if we define $E_2^* = E_2\cap E_1$ then $E_2 = E_2' \cup E_2^*$, and $E_2'\cap E_2^* = \emptyset$. Thus, $P(E_2) = P(E_2'\cup E_2^*) = P(E_2') + P(E_2^*)$. Rearranging this gives $P(E_2') = P(E_2) - P(E_2^*)$, and we know that $P(E_2^*) = P(E_1 \cap E_2)$. Thus, plugging into what we found before we get $$P(E_1 \cup E_2) = P(E_1) + P(E_2') = P(E_1) + P(E_2) - P(E_1 \cap E_2).$$
 
@@ -402,7 +402,7 @@ b. With the first choice having $45$ possible options, the second choice that ne
 Charles and Sadie are asked by a local organization to help organize a raffle as a fundraiser. The organizers are considering two different versions for the raffle. 
 
 1. They would sell $1000$ tickets, and there are $5$ different prizes (valued at \$1000, \$500, \$250, \$150, and \$100) respectively. 
-2. They would sell $1000$ tickets, and draw $5$ winners. Each winner would win \$400. 
+3. They would sell $1000$ tickets, and draw $5$ winners. Each winner would win \$400. 
 
 They are curious how these two scenarios differ statistically. 
 
@@ -622,4 +622,99 @@ A game has individuals forming random "words" (strings of letters, whether they 
 Six pairs of socks come in sets: there are two pairs of red socks, two pairs of white socks, and two pairs with stripes on them. If the socks are placed randomly into pairs, find the probability that no sock ends up in a pair with the same pattern.
 :::
 
-### References  {.unnumbered}
+::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-3.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+exams2forms("3.A.BasicProbabilities.Rmd", 
+            edir = "../PracticeQuestions/Chapter3", 
+            n = 50)
+```
+:::
+
+:::{#sa-3.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+exams2forms("3.B.BallDrawProbabilities.Rmd", 
+            edir = "../PracticeQuestions/Chapter3", 
+            n = 50)
+```
+:::
+
+:::{#sa-3.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("3.C.SetProbabilities.Rmd", 
+            edir = "../PracticeQuestions/Chapter3", 
+            n = 50)
+```
+:::
+
+:::{#sa-3.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("3.D.WordProblemProbs.Rmd", 
+            edir = "../PracticeQuestions/Chapter3", 
+            n = 50)
+```
+:::
+
+:::{#sa-3.05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("3.E.BookshelfCombinatorics.Rmd", 
+            edir = "../PracticeQuestions/Chapter3", 
+            n = 50)
+```
+:::
+
+:::
+
+
+### References {.unnumbered}

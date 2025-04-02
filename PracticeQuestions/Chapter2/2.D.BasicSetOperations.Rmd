@@ -1,0 +1,64 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+paste_set <- function(S) {
+  paste0("\\{", paste(S, collapse=", "), "\\}")
+}
+
+## Generate three Sets
+s <- sample(0:10, 1)
+
+S <- (s):(s + 9)
+A <- sort(sample(S, 4, FALSE))
+B <- sort(sample(S, 4, FALSE))
+C <- sort(sample(S, 4, FALSE))
+
+event_and_answer <- list(
+    list(event = "$A^C$", ans = setdiff(S, A)),
+    list(event = "$B^C$", ans = setdiff(S, B)),
+    list(event = "$C^C$", ans = setdiff(S, C)),
+    list(event = "$A\\cup B$", ans = union(A, B)),
+    list(event = "$A\\cup C$", ans = union(A, C)),
+    list(event = "$B\\cup C$", ans = union(B, C)),
+    list(event = "$A\\cap B$", ans = intersect(A, B)),
+    list(event = "$A\\cap C$", ans = intersect(A, C)),
+    list(event = "$B\\cap C$", ans = intersect(B, C)),
+    list(event = "$A\\cup B^C$", ans = union(A, setdiff(S, B))),
+    list(event = "$A\\cup C^C$", ans = union(A, setdiff(S, C))),
+    list(event = "$B\\cup C^C$", ans = union(B, setdiff(S, C))),
+    list(event = "$A^C\\cup B$", ans = union(setdiff(S, A), B)),
+    list(event = "$A^C\\cup C$", ans = union(setdiff(S, A), C)),
+    list(event = "$B^C\\cup C$", ans = union(setdiff(S, B), C)),
+    list(event = "$A\\cap B^C$", ans = intersect(A, setdiff(S, B))),
+    list(event = "$A\\cap C^C$", ans = intersect(A, setdiff(S, C))),
+    list(event = "$B\\cap C^C$", ans = intersect(B, setdiff(S, C))),
+    list(event = "$A^C\\cap B$", ans = intersect(setdiff(S, A), B)),
+    list(event = "$A^C\\cap C$", ans = intersect(setdiff(S, A), C)),
+    list(event = "$B^C\\cap C$", ans = intersect(setdiff(S, B), C))
+)
+
+which_q <- sample(1:length(event_and_answer), 1)
+true_set <- event_and_answer[[which_q]]$ans
+event_of_interest <- event_and_answer[[which_q]]$event 
+solutions <- S %in% true_set
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+Suppose that the sample space for an experiment, $\mathcal{S}$ is given by $`r paste_set(S)`$. 
+Moreover, take three events, $A = `r paste_set(A)`$, $B = `r paste_set(B)`$, and $C = `r paste_set(C)`$.
+
+Which of the following elements comprise `r event_of_interest`? (Note, select all that apply).
+
+(Question ID: *`r id`*)
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(S, markup = "markdown")
+```
+
+Meta-information
+================
+extype: mchoice
+exsolution: `r mchoice2string(solutions, single = FALSE)`
+exname: 2.04 - Basic set operations.

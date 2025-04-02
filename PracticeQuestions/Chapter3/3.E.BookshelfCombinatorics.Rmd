@@ -1,0 +1,57 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+hardcovers <- sample(4:9, 1)
+paperbacks <- hardcovers - 1
+
+restrictions <- c(
+    "where every book is distinct, and such that each paperback is between two hardcovers.",
+    "where each paperback is identical and each hardcover is identical.",
+    "where each paperback is identical, but the hardcovers are distinct.",
+    "where each hardcover is identical, but the paperbacks are distinct.",
+    "where every book is distinct.",
+    "where every book is distinct, but the first and last should be a hardcover.",
+    "where every book is distinct, but the first and last should be a paperback.",
+    "where every book is distinct, but all the paperbacks are grouped together.",
+    "where every book is distinct, but all the paperbacks are grouped together and the hardcovers are grouped together.",
+    "where every book is distinct, but all the hardcovers are grouped together.",
+    "where every book is distinct, but the first book is a hardcover and the last book is a paperback.",
+    "where every book is distinct, but the first book is a paperback and the last book is a hardcover."
+)
+
+answers <- c(
+    factorial(hardcovers) * factorial(paperbacks),
+    exp(lfactorial(hardcovers + paperbacks) - lfactorial(hardcovers) - lfactorial(paperbacks)),
+    exp(lfactorial(hardcovers + paperbacks) - lfactorial(paperbacks)),
+    exp(lfactorial(hardcovers + paperbacks) - lfactorial(hardcovers)),
+    factorial(hardcovers + paperbacks),
+    2 * choose(hardcovers, 2) * factorial(hardcovers + paperbacks - 2),
+    2 * choose(paperbacks, 2) * factorial(hardcovers + paperbacks - 2),
+    factorial(paperbacks) * factorial(hardcovers + 1),
+    factorial(paperbacks) * factorial(hardcovers) * 2,
+    factorial(paperbacks + 1) * factorial(hardcovers),
+    choose(paperbacks, 1) * choose(hardcovers, 1) * factorial(paperbacks + hardcovers - 2),
+    choose(paperbacks, 1) * choose(hardcovers, 1) * factorial(paperbacks + hardcovers - 2)
+)
+
+qid <- sample(1:length(restrictions), 1)
+
+restriction <- restrictions[qid]
+ans <- answers[qid]
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+It is required to place $`r hardcovers`$ hardcovers and $`r paperbacks`$ paperbacks onto a bookshelf, `r restriction`
+
+How many ways can this be done? 
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: num
+exsolution: `r fmt(ans, 0)`
+extol: 0
+exname: 3.12 - Factorial Combinatorics
