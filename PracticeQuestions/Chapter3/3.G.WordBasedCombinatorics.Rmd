@@ -1,0 +1,48 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+n1 <- sample(3:5, 1)
+n2 <- sample(3:5, 1)
+
+scenarios <- c(
+    paste0("Suppose that a car license plate is formed by taking ", n1, " letters (total of 26) followed by ", n2, " numbers (total of 10). There can be repeats."),
+    paste0("Suppose that a car license plate is formed by taking ", n1, " letters (total of 26) followed by ", n2, " numbers (total of 10). There are no repeats permitted."),
+    paste0("Suppose that a car license plate is formed by taking ", n1, " letters (total of 26) followed by ", n2, " numbers (total of 10). The letters may repeat, but not the numbers."),
+    paste0("Suppose that a car license plate is formed by taking ", n1, " letters (total of 26) followed by ", n2, " numbers (total of 10). The numbers may repeat, but not the letters."),
+    paste0("Suppose that a game is played where individuals must form words (which are strings of letters, whether or not they have a meaning). In one particular round, a player must form a word involving ", n1, " consonants (total of 21 to select), and ", n2, " vowels (total of 5 to select). The word cannot repeat any letters."),
+    paste0("Suppose that a game is played where individuals must form words (which are strings of letters, whether or not they have a meaning). In one particular round, a player must form a word involving ", n1, " consonants (total of 21 to select), and ", n2, " vowels (total of 5 to select). The word can repeat consonants, but not vowels."),
+    paste0("Suppose that a game is played where individuals must form words (which are strings of letters, whether or not they have a meaning). In one particular round, a player must form a word involving ", n1, " consonants (total of 21 to select), and ", n2, " vowels (total of 5 to select). The word cannot repeat consonants, but it can repeat vowels."),
+    paste0("Suppose that a game is played where individuals must form words (which are strings of letters, whether or not they have a meaning). In one particular round, a player must form a word involving ", n1, " consonants (total of 21 to select), and ", n2, " vowels (total of 5 to select). The word can repeat letters.")
+)
+answers <- c(
+    26^n1 * 10^n2,
+    choose(26, n1) * factorial(n1) * choose(10, n2) * factorial(n2),
+    26^n1 * choose(10, n2) * factorial(n2),
+    choose(26, n1) * factorial(n1) * 10^n2,
+    choose(21, n1) * choose(5, n2) * factorial(n1 + n2),
+    choose(21+n1-1, n1) * choose(5, n2) * factorial(n1 + n2),
+    choose(21, n1) * choose(5+n2-1, n2) * factorial(n1 + n2),
+    choose(21+n1-1, n1) * choose(5+n2-1, n2) * factorial(n1 + n2)
+)
+
+sc_id <- sample(1:length(scenarios), 1)
+
+scenario <- scenarios[sc_id]
+ans <- answers[sc_id]
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+`r scenario`
+
+How many options are available? 
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: num
+exsolution: `r fmt(ans, digits = 0)`
+extol: 0
+exname: 3.13 - Permutations Words

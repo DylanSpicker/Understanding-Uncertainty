@@ -1,0 +1,85 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+scenarios <- list(
+    list(
+        setup = "A company produces a certain product at three different factories.",
+        unit = "this product",
+        pronoun = "it",
+        A = "is manufactured at the first factory",
+        B = "is manufactured at the second factory",
+        C = "is manufactured at the third factory",
+        event = "this product is defective",
+        notA = "this product is not manufactured at the first factory"
+    ),
+    list(
+        setup = "A marketing team segments their customers into three possible demographic categories.",
+        unit = "the customer is",
+        pronoun = "they are",
+        A = "in demographic group one",
+        B = "in demographic group two",
+        C = "in demographic group three",
+        event = "the customer makes a purchase",
+        notA = "the customer is not in demographic group one"
+    ),
+    list(
+        setup = "A particular piece of software is being programmed by three different programmers.",
+        unit = "a line of code",
+        pronoun = "it",
+        A = "was written by Alice",
+        B = "was written by Barb",
+        C = "was written by Celeste",
+        event = "a line of code has an error",
+        notA = "the customer is not in demographic group one"
+    )
+)
+
+
+pS <- round(diff(c(0, sort(sample(seq(0.05, 0.95, by = 0.01), 2)), 1)), 2)
+pA <- pS[1]
+pB <- pS[2]
+pC <- pS[3]
+
+pEA <- sample(seq(0.01, 0.5, by = 0.01), 1)
+pEB <- sample(seq(0.01, 0.5, by = 0.01), 1)
+pEC <- sample(seq(0.01, 0.5, by = 0.01), 1)
+
+
+sc_idx <- sample(1:length(scenarios), 1)
+setup <- scenarios[[sc_idx]]$setup
+unit <- scenarios[[sc_idx]]$unit
+pronoun <- scenarios[[sc_idx]]$pronoun
+A <- scenarios[[sc_idx]]$A
+B <- scenarios[[sc_idx]]$B
+C <- scenarios[[sc_idx]]$C
+event <- scenarios[[sc_idx]]$event
+notA <- scenarios[[sc_idx]]$notA
+
+ans1 <- pA * pEA
+ans2 <- pB * pEB + pC * pEC
+ans3 <- ans1 + ans2
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r setup`
+
+The probability that `r unit` `r A` is `r pA`, that `r unit` `r B` is `r pB`, and that `r unit` `r C` is `r pC`. 
+
+The probability that `r event` given that `r pronoun` `r A` is `r pEA`, given that `r pronoun` `r B` is `r pEB`, and given that `r pronoun` `r C` is `r pEC`. 
+
+a. What is the probability that `r unit` `r A` and that `r event`? ##ANSWER1##
+b. What is the probability that `r notA` and that `r event`? ##ANSWER2##
+c. What is the probability that `r event`? ##ANSWER3##
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num
+exsolution: `r fmt(ans1, digits = 4)`|`r fmt(ans2, digits = 4)`|`r fmt(ans3, digits = 4)`
+extol: 0.001
+exname: Law of Total Probability (2)

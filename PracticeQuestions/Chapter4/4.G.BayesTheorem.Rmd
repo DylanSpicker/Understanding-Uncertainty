@@ -1,0 +1,121 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+scenario_idx <- sample(1:3, 1)
+
+if(scenario_idx == 1) {
+    p_unsafe <- sample(1:9, 1) / sample(c(10, 100, 1000, 10000), 1)
+    p_fail_unsafe <- 1 - sample(1:25, 1) / 1000
+    p_pass_safe <- 1 - sample(1:250, 1) / 10000
+    qtype <- sample(1:2, 1) 
+
+    if (qtype == 1) {
+        result <- "passes inspection"
+        outcome <- sample(c("unsafe", "safe"), 1)
+
+        truth <- p_pass_safe * (1 - p_unsafe) / (p_pass_safe * (1 - p_unsafe) + (1 - p_fail_unsafe) * p_unsafe)
+
+        if(outcome == "unsafe") {
+            truth <- 1 - truth
+        }
+
+    } else {
+        result <- "fails inspection"
+        outcome <- sample(c("unsafe", "safe"), 1)
+
+        truth <- p_fail_unsafe * p_unsafe / (p_fail_unsafe * p_unsafe + (1 - p_pass_safe) * (1 - p_unsafe))
+
+        if(outcome == "safe") {
+            truth <- 1 - truth
+        }
+    }
+
+    scenario <- paste0("A quality control program at a food production facility involves inspecting the finished product for safety. The proportion of items that are actually unsafe is $", format(p_unsafe, scientific=FALSE), "$. If an item is unsafe, the probability is $", format(p_fail_unsafe, scientific=FALSE), "$ that it will fail the inspection. If an item is safe, the probability is $", format(p_pass_safe, scientific=FALSE), "$ that it will pass the inspection.")
+
+    question <- paste0("If an item is ", result, ", what is the probability it is ", outcome,"?")
+
+} else if(scenario_idx == 2) {
+    reliability <- sample(90:99, 1)
+    numerator <- sample(1:8, 1)
+    denominator <- sample(c(50, 100, 1000, 10000), 1)
+
+    p_sick <- numerator / denominator
+    p_pos_sick <- reliability / 100
+    p_neg_healthy <- reliability / 100
+
+    qtype <- sample(1:2, 1) 
+
+    if (qtype == 1) {
+        result <- "tests negative"
+        outcome <- sample(c("sick", "not sick"), 1)
+
+        truth <- p_neg_healthy * (1 - p_sick) / (p_neg_healthy * (1 - p_sick) + (1 - p_pos_sick) * p_sick)
+
+        if(outcome == "sick") {
+            truth <- 1 - truth
+        }
+
+    } else {
+        result <- "tests positive"
+        outcome <- sample(c("sick", "not sick"), 1)
+
+        truth <- p_pos_sick * p_sick / (p_pos_sick * p_sick + (1 - p_neg_healthy) * (1 - p_sick))
+
+        if(outcome == "not sick") {
+            truth <- 1 - truth
+        }
+    }
+
+    scenario <- paste0("A patient goes to see a doctor. The doctor performs a test with $", reliability, "\\%$ reliability, that is, $", reliability, "\\%$ of people who are sick test positive and $", reliability, "\\%$ of the healthy people test negative. The doctor knows that only $", numerator, "$ in $", denominator, "$ people in the country are sick.")
+    
+    question <- paste0("If the patient ", result, ", what is the probability that they are ", outcome, "?")
+
+} else {
+    p_standard <- round(sample(seq(0.5, 0.85, by = 0.01), 1), 2)
+    p_late_standard <- round(sample(seq(0.05, 0.25, by = 0.01), 1), 2)
+    p_late_express <- round(sample(seq(0.01, p_late_standard - 0.01, by = 0.01), 1), 2)
+    qtype <- sample(1:2, 1) 
+
+    if (qtype == 1) {
+        result <- "arrives late"
+        outcome <- sample(c("standard", "express"), 1)
+
+        truth <- p_late_express * (1 - p_standard) / (p_late_express * (1 - p_standard) + p_late_standard * p_standard)
+
+        if(outcome == "standard") {
+            truth <- 1 - truth
+        }
+
+    } else {
+        result <- "arrives on time"
+        outcome <- sample(c("standard", "express"), 1)
+
+        truth <- (1-p_late_express) * (1 - p_standard) / ((1-p_late_express) * (1 - p_standard) + (1-p_late_standard) * p_standard)
+
+        if(outcome == "standard") {
+            truth <- 1 - truth
+        }
+    }
+
+    scenario <- paste0("A delivery company offers customers the ability to send their packages either using a standard service or an express service. Of all package sent, $", format(100*p_standard, scientific=FALSE), "\\%$ are sent via the standard service. A package sent via the standard service has a ", p_late_standard, " probability of arriving late, and a package sent via the express service has a ", p_late_express, " probability of arriving late.")
+
+    question <- paste0("If an package ", result, ", what is the probability it was sent via the ", outcome," service?")
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r scenario`
+
+`r question`
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: num
+extol: 0.001
+exsolution: `r fmt(truth, 3)`
+exname: Bayes' Theorem

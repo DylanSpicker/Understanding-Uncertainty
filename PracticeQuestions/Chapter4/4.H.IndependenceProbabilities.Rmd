@@ -1,0 +1,35 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+pA <- round(runif(1, 0.1, 1), 3)
+
+B_sel <- sample(1:2, 1)
+B_sel2 <- sample(1:2, 1)
+BE <- ifelse(B_sel == 1, "B", "B^C")
+BnE <- ifelse(B_sel2 == 1, "B^C", "B")
+pABE <- round(runif(1, 0.01, pA - 0.05), 3)
+
+if(B_sel == B_sel2) {
+    ans <- 1 - pABE / pA
+} else {
+    ans <- pABE / pA
+}
+
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+Let $A$ and $B$ be events with $P(A) = `r pA`$ and $P(A \cap `r BE`) = `r pABE`$. 
+
+For what value of $P(`r BnE`)$ will $A$ and $B$ be independent?
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: num
+exsolution: `r fmt(ans, digits = 4)`
+extol: 0.001
+exname: 4.13 - Independence

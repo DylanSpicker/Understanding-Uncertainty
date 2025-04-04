@@ -1,0 +1,43 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+total <- sample(7:10, 1)
+roles <- sample(3:(total - 2), 1)
+
+scenarios <- c(
+    paste0("A committee of ", total, " people must choose individuals for ", roles, " distinct roles."),
+    paste0("A company has hired ", total, " individuals, and must assign ", roles, " of them to the day shift and the remaining to the night shift."),
+    paste0("A team at a company consisting of ", total, " members have to select ", roles, " individuals to travel to a conference."),
+    paste0("A company received ", total, " applicants across postings for ", roles, " distinct jobs. They need to hire one individual for each posting."),
+    paste0("A company needs to fill three different shifts from a total of ", total + roles, " individuals. The first and second shift require ", roles, " individuals, while the third shift requires ", total - roles, ".")
+)
+
+answers <- c(
+    factorial(roles) * choose(total, roles),
+    choose(total, roles),
+    choose(total, roles),
+    factorial(roles) * choose(total, roles),
+    choose(total + roles, roles) * choose(total, roles)
+)  
+
+sc_id <- sample(1:length(scenarios), 1)
+
+scenario <- scenarios[sc_id]
+ans <- answers[sc_id]
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+`r scenario`
+
+How many ways can this be done? 
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: num
+exsolution: `r fmt(ans, digits = 0)`
+extol: 0
+exname: 3.13 - Permutations Combinatorics

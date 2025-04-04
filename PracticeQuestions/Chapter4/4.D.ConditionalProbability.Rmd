@@ -1,0 +1,74 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+scenarios <- list(
+    list(
+        setup = "Of people in a certain city who bought a new vehicle in the past year",
+        event1 = "bought an electric vehicle",
+        event2 = "bought an electric truck",
+        event3 = "it was a truck"
+    ),
+    list(
+        setup = "Of students at a particular University who joined a club in the past year",
+        event1 = "joined a sports club",
+        event2 = "joined the scocer club",
+        event3 = "it was the soccer club"
+    ),
+    list(
+        setup = "Of adults in a particular town who joined community programs this year",
+        event1 = "joined a visual arts program",
+        event2 = "joined a water colour program",
+        event3 = "it was a water colour program"
+    ),
+    list(
+        setup = "Of voters in a particular riding from the last election",
+        event1 = "voted for the incumbent",
+        event2 = "were 65+ and voted for the incumbent",
+        event3 = "they are 65+"
+    ),
+    list(
+        setup = "Of visitors to a local clinic",
+        event1 = "received a flu shot",
+        event2 = "received both a flu shot and a COVID booster",
+        event3 = "they also received a COVID booster"
+    ),
+    list(
+        setup = "Of active users on a social media platform in the past week",
+        event1 = "shared a news article",
+        event2 = "shared a news article about local politics",
+        event3 = "it was about local politics"
+    )    
+)
+
+sc_id <- sample(1:length(scenarios), 1)
+
+setup <- scenarios[[sc_id]]$setup
+event1 <- scenarios[[sc_id]]$event1
+event2 <- scenarios[[sc_id]]$event2
+event3 <- scenarios[[sc_id]]$event3
+
+percent1 <- sample(5:50, 1)
+percent2 <- sample(1:(percent1-1), 1)
+
+ans <- percent2 / percent1
+
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+
+
+Question
+========
+`r setup`, `r percent1`% `r event1` and `r percent2`% `r event2`. 
+
+Given that a person `r event1`, what is the probability that `r event3`? 
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: num
+extol: 0.001
+exsolution: `r fmt(ans, digits=5)`
+exname: 4.5 - Simple Conditional Probability

@@ -214,7 +214,7 @@ B_3 &= \{(\text{H},\text{H},\text{T}), (\text{H},\text{T},\text{H}), (\text{T},\
 B_4 &= \{(\text{H},\text{H},\text{H})\}.
 \end{align*}
 
-3. We can partition the space into the number of times the sequence switches between heads and tails. There will be either $0$ switches, $1$ switch, or $2$ switches. This gives \begin{align*}
+4. We can partition the space into the number of times the sequence switches between heads and tails. There will be either $0$ switches, $1$ switch, or $2$ switches. This gives \begin{align*}
 B_1 &= \{(\text{H},\text{H},\text{H}), (\text{T},\text{T},\text{T})\}\\
 B_2 &= \{(\text{T},\text{T},\text{H}), (\text{H},\text{T},\text{T}), (\text{H},\text{H},\text{T}), (\text{T},\text{H},\text{H})\}\\
 B_3 &= \{(\text{T},\text{H},\text{T}), (\text{H},\text{T},\text{H})\}.
@@ -392,7 +392,7 @@ c. We know that $P(A) > 0$ and $P(B) > 0$ for $A$ being moderately involved and 
 
 d. Taking $A$ to be "competitive" we have $P(A) = 0.75$. Taking $B$ to be "two player" we have $P(B) = 0.20$. As a result, if $A\perp B$ then $P(A,B) = P(A)P(B) = (0.75)(0.20) = 0.15$. Thus, there must be $15$ competitive, two player games.
 
-e. Taking $A$ to be "competitive" we have $P(A) = 0.75$. Taking $B$ to be "heavy" we have $P(B) = 0.45$. Thus, if they were independent, we would have $P(A,B) = P(A)P(B) = (0.75)(0.45) = 0.3375$. This would require $33.75$ games to be heavy, competitive games, and so we must conclude that they are **not** independent. 
+e. Taking $A$ to be "competitive" we have $P(A) = 0.75$. Taking $B$ to be "heavy" we have $P(B) = 0.45$. Thus, if they were independent, we would have $P(A,B) = P(A)P(B) = (0.75)(0.45) = 0.3375$. This would require $34.75$ games to be heavy, competitive games, and so we must conclude that they are **not** independent. 
 
 ::::
 :::
@@ -865,3 +865,144 @@ Prove that if $A\perp B$ then $A\perp B^C$, $A^C \perp B$ and $A^C \perp B^C$.
 :::{#exr-4.15}
 Show that if $A\perp B$ then $P(A|B) = P(A)$ and $P(B|A) = P(B)$.
 :::
+
+
+::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-4.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+exams2forms("4.A.IndependenceDefinition.Rmd", 
+            edir = "../PracticeQuestions/Chapter4", 
+            n = 20)
+```
+:::
+
+:::{#sa-4.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+exams2forms("4.B.PartitionsDefinition.Rmd", 
+            edir = "../PracticeQuestions/Chapter4", 
+            n = 20)
+```
+:::
+
+:::{#sa-4.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("4.C.LawOfTotalProbability.Rmd", 
+            edir = "../PracticeQuestions/Chapter4", 
+            n = 20)
+```
+:::
+
+:::{#sa-4.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("4.D.ConditionalProbability.Rmd", 
+            edir = "../PracticeQuestions/Chapter4", 
+            n = 50)
+```
+:::
+
+:::{#sa-4.05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("4.E.2x2Contingency.Rmd", 
+            edir = "../PracticeQuestions/Chapter4", 
+            n = 50)
+```
+:::
+
+:::{#sa-4.06}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("4.F.LawOfTotalProbability2.Rmd", 
+            edir = "../PracticeQuestions/Chapter4", 
+            n = 50)
+```
+:::
+
+:::{#sa-4.07}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("4.G.BayesTheorem.Rmd", 
+            edir = "../PracticeQuestions/Chapter4", 
+            n = 50)
+```
+:::
+
+:::{#sa-4.08}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 1234567890
+
+exams2forms("4.H.IndependenceProbabilities.Rmd", 
+            edir = "../PracticeQuestions/Chapter4", 
+            n = 50)
+```
+:::
+
+:::
+

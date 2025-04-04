@@ -1,0 +1,50 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+true_statements <- c(
+    "The union of all sets in a partition forms the sample space.",
+    "The intersection of any sets in a partition is the empty set.",
+    "The partition divides the entire sample space into a collection of mutually exclusive sets. ",
+    "Every element in the sample space belongs to exactly one set in a partition.",
+    "An event and its complement always form a partition.",
+    "A sample space may have multiple different partitions. ",
+    "Every outcome from a statistical experiment belongs to exactly one set in a partition. "
+)
+
+false_statements <- c(
+    "Any two mutually exclusive events form a partition.",
+    "Every event from a statistical experiment belongs to exactly one set in a partition.",
+    "A partition must consist of events that have equal probability.",
+    "The number of sets in a partition must equal the number of outcomes in a sample space.",
+    "Given a specific sample space and an event $A$, there is always exactly one partition that contains $A$ as one of its sets.",
+    "Any collection of sets whose union equals the sample space is a partition. "
+)
+
+answer <- sample(1:2, 1)
+sol <- c(FALSE, FALSE)
+sol[answer] <- TRUE
+
+if(answer == 1) {
+    statement <- sample(true_statements, 1)
+} else {
+    statement <- sample(false_statements, 1)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+`r statement`
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* True
+* False
+
+Meta-information
+================
+exname: Partitions definition
+extype: schoice
+exsolution: `r mchoice2string(sol)`
