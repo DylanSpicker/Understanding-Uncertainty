@@ -1,0 +1,139 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+# Possibilities 
+
+scenarios <- list(
+    list(
+        quantity = "lifespans of tortoises",
+        mean = sample(80:120, 1),
+        sd = sample(8:15, 1),
+        event_text = "a tortoise lives",
+        units = "years"
+    ),
+    list(
+        quantity = "heights of students in a class",
+        mean = sample(55:95, 1),
+        sd = sample(3:8, 1),
+        event_text = "a student is",
+        units = "inches tall"
+    ),
+    list(
+        quantity = "the lifespan of a lightbulb produced by a certain factory",
+        mean = sample(900:1100, 1),
+        sd = sample(30:80, 1),
+        event_text = "the bulb lasts",
+        units = "hours"
+    ),
+    list(
+        quantity = "the weight of an apple harvested by a farmer",
+        mean = sample(100:200, 1),
+        sd = sample(15:25, 1),
+        event_text = "the apple weighs",
+        units = "grams"
+    ),
+    list(
+        quantity = "the average monthly income for employees in a company",
+        mean = sample(2500:5000, 1),
+        sd = sample(400:700, 1),
+        event_text = "an employee earns",
+        units = "per month"
+    )
+)
+
+scenario_idx <- sample(1:length(scenarios), 1)
+
+quantity <- scenarios[[scenario_idx]]$quantity
+muX <- scenarios[[scenario_idx]]$mean
+sdX <- scenarios[[scenario_idx]]$sd
+varX <- sdX^2
+event_text <- scenarios[[scenario_idx]]$event_text
+units <- scenarios[[scenario_idx]]$units
+
+xa_lower <- round(sample(seq(muX - 2.5 * sdX, muX, by = 0.01), 1), 2)
+xa_upper <- round(sample(seq(muX, muX + 2.5 * sdX, by = 0.01), 1), 2)
+xb <- round(sample(seq(muX - 0.5 * sdX, muX + 3 * sdX, by = 0.01), 1), 2)
+xc <- round(sample(seq(muX - 3 * sdX, muX + 0.5 * sdX, by = 0.01), 1), 2)
+
+event_d_idx <- sample(0:1, 1) 
+if(event_d_idx == 0) {
+    # <= 
+    xd <- sample(-3:3, 1) * sdX + muX
+
+    event_d <- paste0("$X \\leq ", xd, "$")
+
+    k <- (xd - muX)/sdX
+
+    if(k > 0) {
+        delta <- ifelse(k == 1, 0.68/2, ifelse(k == 2, 0.95/2, 0.997/2))
+        ans4 <- 0.5 + delta
+    } else if(k < 0) {
+        delta <- ifelse(k == -1, 0.68/2, ifelse(k == -2, 0.95/2, 0.997/2))
+        ans4 <- 0.5 - delta
+    } else {
+        ans4 <- 0.5
+    }
+
+} else {
+    xd <- sample(-3:3, 1) * sdX + muX
+
+    event_d <- paste0("$X \\geq ", xd, "$")
+
+    k <- (xd - muX)/sdX
+
+    if(k > 0) {
+        delta <- ifelse(k == 1, 0.68/2, ifelse(k == 2, 0.95/2, 0.997/2))
+        ans4 <- 0.5 - delta
+    } else if(k < 0) {
+        delta <- ifelse(k == -1, 0.68/2, ifelse(k == -2, 0.95/2, 0.997/2))
+        ans4 <- 0.5 + delta
+    } else {
+        ans4 <- 0.5
+    }
+}
+
+event_e_vals <- sort(sample(-3:3, 2) * sdX + muX)
+
+
+ans1 <- pnorm((xa_upper - muX)/sdX) - pnorm((xa_lower - muX)/sdX)
+ans2 <- pnorm((xb - muX)/sdX)
+ans3 <- 1 - pnorm((xc - muX)/sdX)
+
+event_ek <- (event_e_vals - muX)/sdX
+
+upper_v_e <- ifelse(event_ek[2] == -2, 0.5 - 0.95/2,
+             ifelse(event_ek[2] == -1, 0.5 - 0.68/2,
+             ifelse(event_ek[2] == 0, 0.5, 
+             ifelse(event_ek[2] == 1, 0.5 + 0.68/2,
+             ifelse(event_ek[2] == 2, 0.5 + 0.95/2, 0.5 + 0.997/2)))))
+
+lower_v_e <- ifelse(event_ek[1] == -3, 0.5 - 0.997/2,
+             ifelse(event_ek[1] == -2, 0.5 - 0.95/2,
+             ifelse(event_ek[1] == -1, 0.5 - 0.68/2,
+             ifelse(event_ek[1] == 0, 0.5, 
+             ifelse(event_ek[1] == 1, 0.5 + 0.68/2, 0.5 + 0.95/2)))))
+
+ans5 <- upper_v_e - lower_v_e
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+Suppose that `r quantity` is normally distributed with a mean of `r format(muX, scientific=FALSE)` and a variance of `r format(varX, scientific=FALSE)`, and is denoted as $X$.
+
+a. What is the probability that `r event_text` between `r xa_lower` and `r xa_upper` `r units`? ##ANSWER1##
+b. What is the probability that `r event_text` less than `r xb` `r units`? ##ANSWER2##
+c. What is the probability that `r event_text` more than `r xc` `r units`? ##ANSWER3##
+d. Approximate the probability that `r event_d`, using the empirical rule. ##ANSWER4##
+d. Approximate the probability that $`r event_e_vals[1]` \leq X \leq `r event_e_vals[2]`$, using the empirical rule. ##ANSWER5##
+
+Question ID: `r id`
+
+Meta-information
+================
+extype: cloze
+extol: 0.001
+exclozetype: num|num|num|num|num
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`|`r fmt(ans5, 3)`
+exname: Normal Probabilities and Empirical Rule

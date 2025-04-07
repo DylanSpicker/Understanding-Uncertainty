@@ -1,0 +1,113 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+# Possibilities 
+cdf_idx <- sample(1:4, 1)
+
+if(cdf_idx == 1) {
+    # Exponential
+    lambda <- round(sample(seq(0.05, 20, by = 0.01), 1), 2)
+
+    Fx <- function(x) 1 - exp(-lambda * x)
+    Fx_text <- paste0("$$F_X(x) = 1 - \\exp\\left(-", lambda,"x\\right),\\quad x \\in (0,\\infty).$$")
+    
+    x_range <- c(0, 100 * 1/lambda)
+    signd <- "\\leq"
+    x_d <- sample(-100:-1, 1)
+    ans4 <- 0 
+
+} else if(cdf_idx == 2) {
+    # Uniform
+
+    a <- sample(-30:-1, 1)
+    b <- sample(1:20, 1)
+
+    Fx <- function(x) (x - a)/(b - a)
+    Fx_text <- paste0("$$F_X(x) = \\frac{x + ",abs(a),"}{",b - a,"}, \\quad x \\in [",a,", ",b,"].$$")
+
+    x_range <- c(a, b)
+
+    which_sign <- sample(0:1, 1)
+    if(which_sign == 0) {
+        signd <- "\\leq"
+        x_d <- sample(-100:(a-1), 1)
+        ans4 <- 0
+    } else {
+        signd <- "\\geq"
+        x_d <- sample((b+1):100, 1)
+        ans4 <- 1
+    }
+
+
+} else if(cdf_idx == 3) {
+    # Triangular
+    a <- sample(1:20, 1)
+    c <- sample((a+1):30, 1)
+
+    Fx <- function(x) (x - a)^2/(c-a)^2
+    Fx_text <- paste0("$$F_X(x) = \\frac{(x - ", a, ")}{", (c - a)^2 ,"}, \\quad x \\in [", a, ", ", c, "].$$")
+
+    x_range <- c(a, c)
+
+    
+    which_sign <- sample(0:1, 1)
+    if(which_sign == 0) {
+        signd <- "\\leq"
+        x_d <- sample(-100:(a-1), 1)
+        ans4 <- 0
+    } else {
+        signd <- "\\geq"
+        x_d <- sample((c+1):100, 1)
+        ans4 <- 1
+    }
+
+} else if(cdf_idx == 4) {
+    # Pareto Type I Distribution 
+
+    min_v <- sample(1:100, 1)
+    alpha <- sample(seq(1.01, 10, by = 0.01), 1)
+
+    Fx <- function(x) 1 - (min_v/x)^alpha
+    Fx_text <- paste0("$$F_X(x) = 1 - \\left(\\frac{", min_v, "}{x}\\right)^{",alpha,"}, \\quad x \\in [",min_v,", \\infty).$$")
+    x_range <- c(min_v, 100 * alpha * min_v / (alpha - 1))
+
+    signd <- "\\leq"
+    x_d <- sample((min_v-100):(min_v-1), 1)
+    ans4 <- 0 
+}
+
+## Possible Values 
+
+x_v <- seq(x_range[1], x_range[2], length.out = 100000)
+F_vals <- Fx(x_v)
+
+# Part (a) 
+x_a <- round(x_v[sample(which(F_vals <= 0.95), 1)], 2)
+x_b <- sort(round(x_v[sample(which(F_vals <= 0.95 & F_vals >= 0.05), 2)], 2))
+x_c <- round(sample(x_v, 1), 2)
+
+ans1 <- 1 - Fx(x_a)
+ans2 <- Fx(x_b[2]) - Fx(x_b[1])
+ans3 <- 0
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+Suppose that the cumulative distribution function of $X$ is given by `r Fx_text`
+
+a. What is $P(X > `r x_a`)$? ##ANSWER1##
+b. What is $P(`r x_b[1]` \leq X \leq `r x_b[2]`)$? ##ANSWER2##
+c. What is $P(X = `r x_c`)$? ##ANSWER3##
+d. What is $P(X `r signd` `r x_d`)$? ##ANSWER4##
+
+Question ID: `r id`
+
+Meta-information
+================
+extype: cloze
+extol: 0.001
+exclozetype: num|num|num|num
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`
+exname: Continuous CDF

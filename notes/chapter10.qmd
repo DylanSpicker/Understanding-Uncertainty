@@ -593,7 +593,7 @@ a. The percentage of defective products in a batch from a manufacturing plant.
 a. The most common age of all employees in a corporation.
 a. The percentage of students who participate in extracurricular activities in a specific school district.
 a. The spread in test scores for all students in a university.
-a. Is the percentage of households with pets in a country.
+a. The percentage of households with pets in a country.
 :::
 
 :::{#exr-10.4}

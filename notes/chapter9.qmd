@@ -1182,7 +1182,7 @@ d. What is the probability that a tortoise lives longer than $109$ years?
 :::{#exr-9.12}
 The heights of students in a class follow a normal distribution with a mean of 65 inches and a standard deviation of 4 inches. 
 
-a. Express the probability that a students is between 57 and 73 inches tall in terms of $\Phi(z)$.
+a. Express the probability that a student is between 57 and 73 inches tall in terms of $\Phi(z)$.
 b. Estimate the probability from (a).
 :::
 
@@ -1315,4 +1315,69 @@ a. If no accidents have occurred within the last six months, what is the probabi
 :::{#exr-9.28}
 a. Show that the mean of the exponential distribution is $1/\lambda$, and that its variance is $1/\lambda^2$.
 b. Suppose there are two independent random variables, $X$ and $Y$, with $X \sim \text{Exp}(\alpha)$ and $Y\sim\text{Exp}(2\alpha)$. If $T = \text{min}\{X, Y\}$, then show that $P(T \geq \alpha) = e^{-3/2}$. 
+:::
+
+
+::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-9.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+exams2forms("9.A.GivenCDF.Rmd", 
+            edir = "../PracticeQuestions/Chapter9", 
+            n = 50)
+```
+:::
+
+:::{#sa-9.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+exams2forms("9.B.NormalProbabilities.Rmd", 
+            edir = "../PracticeQuestions/Chapter9", 
+            n = 50)
+```
+:::
+
+:::{#sa-9.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("9.C.NormalApproximationToTheBinomial.Rmd", 
+            edir = "../PracticeQuestions/Chapter9", 
+            n = 50)
+```
+:::
+
 :::

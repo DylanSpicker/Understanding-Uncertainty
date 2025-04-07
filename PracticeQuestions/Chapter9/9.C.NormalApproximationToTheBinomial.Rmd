@@ -1,0 +1,48 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+# Possibilities 
+
+n <- sample(100:500, 1)
+p <- sample(seq(0.1, 0.9, by = 0.01), 1)
+
+x_vals <- sample(0:n, 6)
+xc <- x_vals[1]
+xd <- x_vals[2]
+xe <- x_vals[3]
+xf <- x_vals[4]
+xg_lower <- min(x_vals[c(5,6)])
+xg_upper <- max(x_vals[c(5,6)])
+
+ans1 <- n * p
+ans2 <- n * p * (1 - p)
+ans3 <- xc + 0.5
+ans4 <- xd - 0.5
+ans5 <- xe - 0.5 
+ans6 <- xf + 0.5
+ans7 <- pnorm((xg_upper - 0.5 - ans1) / sqrt(ans2)) - pnorm((xg_lower - 0.5 - ans1) / sqrt(ans2))
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+Suppose that $X \sim \text{Bin}(`r n`, `r p`)$. Suppose that $W$ is a normally distributed random variable chosen to approximate $X$.
+
+a. What is $E[W]$? ##ANSWER1##
+b. What is $\text{var}(W)$? ##ANSWER2##
+c. We can write that $P(X \leq `r xc`) \approx P(W \leq w)$ for what value of $w$? ##ANSWER3##
+d. We can write that $P(X \geq `r xd`) \approx P(W \geq w)$ for what value of $w$? ##ANSWER4##
+e. We can write that $P(X < `r xe`) \approx P(W \leq w)$ for what value of $w$? ##ANSWER5##
+f. We can write that $P(X > `r xf`) \approx P(W \geq w)$ for what value of $w$? ##ANSWER6##
+g. Approximate the probability that $`r xg_lower` \leq X < `r xg_upper`$. ##ANSWER7## 
+
+Question ID: `r id`
+
+Meta-information
+================
+extype: cloze
+extol: 0.001|0.001|0|0|0|0|0.001
+exclozetype: num|num|num|num|num|num|num
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 1)`|`r fmt(ans4, 1)`|`r fmt(ans5, 1)`|`r fmt(ans6, 1)`|`r fmt(ans7, 3)`
+exname: Normal Approximation to the Binomial

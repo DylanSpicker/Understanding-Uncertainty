@@ -37,7 +37,7 @@ scenarios <- list(
         A = "light",
         B = "moderate",
         C = "heavy",
-        scenario = "The traffic on commuter trains in categorized into one of three categories",
+        scenario = "The traffic on commuter trains is categorized into one of three categories",
         unit = "train",
         article = "a",
         verb = "have traffic considered"
@@ -89,10 +89,10 @@ Suppose that `r pA`% of `r unit`s `r verb` `r oA` and that `r pB`% of `r unit`s 
 
 Consider `r article` `r unit` that is randomly selected. 
 
-a. What is the probability that the `r unit` is `r oC`? ##ANSWER1##
-b. What is the probability that the `r unit` is not `r oA`? ##ANSWER2##
-c. What is the probability that the `r unit` is either `r oA` or `r oB`? ##ANSWER3##
-d. What is the probability that the `r unit` is both `r oA` and `r oB`? ##ANSWER4##
+a. What is the probability that the `r unit` is "`r oC`"? ##ANSWER1##
+b. What is the probability that the `r unit` is not "`r oA`"? ##ANSWER2##
+c. What is the probability that the `r unit` is either "`r oA`" or "`r oB`"? ##ANSWER3##
+d. What is the probability that the `r unit` is both "`r oA`" and "`r oB`"? ##ANSWER4##
 
 (Question ID: *`r id`*)
 

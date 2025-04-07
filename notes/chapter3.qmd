@@ -691,7 +691,7 @@ exams2forms("3.C.SetProbabilities.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 123456789
+cache_check <- 12345678900
 
 exams2forms("3.D.WordProblemProbs.Rmd", 
             edir = "../PracticeQuestions/Chapter3", 
