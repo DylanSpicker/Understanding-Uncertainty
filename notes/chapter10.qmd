@@ -971,7 +971,9 @@ cache_check <- 123456789
 
 exams2forms("10.I.ExperimentalComponents.Rmd", 
             edir = "../PracticeQuestions/Chapter10", 
-            n = 50)
+            n = 50,
+            usecase = FALSE,
+            usespace = FALSE)
 ```
 :::
 

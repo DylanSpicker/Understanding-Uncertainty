@@ -1,0 +1,94 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+scenarios <- list(
+    list(
+        scenario = "In a survey conducted among students, they were asked about their favourite colors. The options were red, blue, green, yellow, and orange.",
+        options = c("red", "blue", "green", "yellow", "orange")
+    ),
+    list(
+        scenario = "A group of students was surveyed about their preferred leisure activities. The options included reading, playing sports, watching movies, listening to music, and playing video games.",
+        options = c("reading", "playing sports", "watching movies", "listening to music", "playing video games")
+    ),
+    list(
+        scenario = "A group of students was asked for their favourite genre of music from rock, pop, hip-hop, jazz, and classical.",
+        options = c("rock", "pop", "hip-hop", "jazz", "classical")
+    ),
+    list(
+        scenario = "A survey was conducted to find out how many pets each household owns.",
+        options = c("0", "1", "2", "3", "4+")
+    ),
+    list(
+        scenario = "The number of books read by students over the summer break was collected.",
+        options = c("0", "1", "2", "3", "4+")
+    )
+)
+
+n <- sample(8:15, 1)
+sc_idx <- sample(1:length(scenarios), 1)
+scenario <- scenarios[[sc_idx]]$scenario
+options <- scenarios[[sc_idx]]$options
+
+observations <- sample(options, n, TRUE)
+
+table_output <- data.frame(
+    Option = options,
+    Frequency = c("(a)", "(b)", "(c)", "(d)", "(e)"),
+    'Relative Frequency' = c("(f)", "(g)", "(h)", "(i)", "(j)"),
+    check.names=FALSE
+)
+
+
+
+as <- sapply(options, function(x) {sum(observations == x)})
+a1 <- as[1]
+a2 <- as[2]
+a3 <- as[3]
+a4 <- as[4]
+a5 <- as[5]
+
+as_r <- as/sum(as)
+a6 <- as_r[1]
+a7 <- as_r[2]
+a8 <- as_r[3]
+a9 <- as_r[4]
+a10 <- as_r[5]
+
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r scenario`
+
+Below are `r n` responses. 
+
+> `r observations`
+
+Using these data, consider the following frequency distribution. 
+
+`r knitr::kable(table_output, format = "markdown", align='c')`
+
+Fill in each of the corresponding blanks.
+
+(a) ##ANSWER1##
+(b) ##ANSWER2##
+(c) ##ANSWER3##
+(d) ##ANSWER4##
+(e) ##ANSWER5##
+(f) ##ANSWER6##
+(g) ##ANSWER7##
+(h) ##ANSWER8##
+(i) ##ANSWER9##
+(j) ##ANSWER10##
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+exname: Frequency Distribution (Categorical and Discrete)
+extype: cloze
+exclozetype: num|num|num|num|num|num|num|num|num|num
+exsolution: `r fmt(a1, 0)`|`r fmt(a2, 0)`|`r fmt(a3, 0)`|`r fmt(a4, 0)`|`r fmt(a5, 0)`|`r fmt(a6, 3)`|`r fmt(a7, 3)`|`r fmt(a8, 3)`|`r fmt(a9, 3)`|`r fmt(a10, 3)`
+extol: 0|0|0|0|0|0.01|0.01|0.01|0.01|0.01

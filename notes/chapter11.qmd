@@ -213,7 +213,7 @@ kable(table(penguins$species, penguins$island)) %>% column_spec(1, bold = TRUE)
 :::
 :::
 
-Using these data^[Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package Version 0.1.0. https://allisonhorst.github.io/palmerpenguins/. doi:10.5281/zenodo.3960218.] answer the following.
+Using these data^[Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package Version 0.1.0. https://allisonhorst.github.io/palmerpenguins/. doi:11.5281/zenodo.3960218.] answer the following.
 
 a. Write down the complete frequency distribution for penguin species.
 b. Write down the complete frequency distribution for the inhabited island.
@@ -1300,6 +1300,74 @@ Match each of the following boxplots (A)-(D), with the histograms (1)-(4).
 
 ![](/graphics/matching1.png)
 :::
+
+
+::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-11.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+exams2forms("11.A.FrequencyDistribution.Rmd", 
+            edir = "../PracticeQuestions/Chapter11", 
+            n = 50)
+```
+:::
+
+:::{#sa-11.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+exams2forms("11.B.FrequencyDistributionContinuous.Rmd", 
+            edir = "../PracticeQuestions/Chapter11", 
+            n = 50)
+```
+:::
+
+:::{#sa-11.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 1234567894
+
+exams2forms("11.C.ShapeOfDistribution.Rmd", 
+            edir = "../PracticeQuestions/Chapter11", 
+            n = 50)
+```
+:::
+
+
+:::
+
+
 
 ::: {.content-visible when-format='html'}
 {{< include /calculator.qmd >}}

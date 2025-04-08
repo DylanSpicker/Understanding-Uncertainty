@@ -1,0 +1,129 @@
+```{r data generation, echo = FALSE, results = "hide"}
+get_factors <- function(n, digits) {
+  factors <- seq_len(abs(n) * 10^(digits))
+  return(factors[(n * 10^(digits)) %% factors == 0])
+}
+
+scenarios <- list(
+  list(
+    scenario = "The time taken (in minutes) by students to complete a quiz was recorded.",
+    min = 15,
+    max = 90,
+    digits = 0
+  ),
+  list(
+    scenario = "A survey asked participants about their monthly expenses on groceries.",
+    min = 100,
+    max = 1000,
+    digits = 0
+  ),
+  list(
+    scenario = "The birthweights of infants at a neonatal ICU were recorded over the period of a month (in grams).",
+    min = 2000,
+    max = 5000, # Adjusted max to be more realistic
+    digits = 0
+  ),
+  list(
+    scenario = "The temperature (in degrees Celsius) of a liquid was measured using a digital thermometer.",
+    min = 0,
+    max = 95,
+    digits = 2
+  ),
+  list(
+    scenario = "A soil sample was analyzed for its pH level.",
+    min = 3.5,
+    max = 8.5,
+    digits = 2
+  ),
+  list(
+    scenario = "The height of adult males in a population was recorded (in centimeters).",
+    min = 150,
+    max = 210,
+    digits = 0
+  ),
+  list(
+    scenario = "Participants were asked to estimate the number of hours they spend exercising per week.",
+    min = 0,
+    max = 40,
+    digits = 0
+  ),
+  list(
+    scenario = "The concentration of a chemical pollutant in a water sample was measured (in parts per million).",
+    min = 0.00,
+    max = 5.00,
+    digits = 2
+  ),
+  list(
+    scenario = "The response time (in milliseconds) of a website was recorded during a user testing session.",
+    min = 100,
+    max = 2000,
+    digits = 0
+  ),
+  list(
+    scenario = "A survey asked homeowners about the age of their primary residence (in years).",
+    min = 0,
+    max = 150,
+    digits = 0
+  ),
+  list(
+    scenario = "The blood pressure (systolic) of patients was measured during a routine check-up (in mmHg).",
+    min = 90,
+    max = 180,
+    digits = 0
+  )
+)
+
+
+n <- sample(8:15, 1)
+sc_idx <- sample(1:length(scenarios), 1)
+scenario <- scenarios[[sc_idx]]$scenario
+min <- scenarios[[sc_idx]]$min
+max <- scenarios[[sc_idx]]$max
+digits <- scenarios[[sc_idx]]$digits
+
+observations <- round(runif(n, min, max), digits)
+
+all_factors <- get_factors(max - min, digits)
+small_factors <- all_factors[which(all_factors < (max-min)/2 & all_factors > 1 & all_factors < n)]
+
+if(length(small_factors) == 1) {
+    bin_count <- small_factors[1]
+} else {
+    bin_count <- sample(small_factors, 1)
+}
+
+bin_num <- sample(1:bin_count, 1)
+
+ans1 <- (max - min)/bin_count
+ans2 <- min + ans1
+ans3 <- sum(observations >= max-ans1)
+ans4 <- sum(observations >= min + (bin_count - 1)*ans1 & observations < min + bin_count*ans1) / n 
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r scenario` 
+
+Possible responses range from `r min` to `r max`. Below are `r n` responses, ordered from smallest to largest.
+
+> `r sort(observations)`
+
+Suppose that there is a desire to have `r bin_count` bins in the frequency distribution. 
+
+(a) What is the corresponding bin width? ##ANSWER1##
+(b) What is the maximum value of the first bin? ##ANSWER2##
+(c) What is the frequency of the largest bin? ##ANSWER3##
+(d) What is the relative frequency of the `r scales::ordinal(bin_num)` bin? ##ANSWER4##
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+exname: Frequency Distribution (Continuous)
+extype: cloze
+exclozetype: num|num|num|num
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 0)`|`r fmt(ans4, 3)`
+extol: 0.001|0.001|0|0.001
