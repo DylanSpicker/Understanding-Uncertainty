@@ -4458,6 +4458,30 @@ Self Assessment&nbsp;9.3
 </div>
 </figure>
 </div>
+<div id="calculator-holder">
+<div id="qwebr-insertion-location-2"></div>
+<script type="module">
+// Retrieve the insertion point
+const currentDocumentLocation = document.getElementById("qwebr-insertion-location-2");
+
+// Initalize an interactive element
+const initializedElement =   qwebrCreateInteractiveElement(
+    2
+  );
+
+// Add the interactive element into the document scope
+currentDocumentLocation.appendChild(initializedElement);
+
+// Initialize a Monaco Editor Instance
+qwebrCreateMonacoEditorInstance(
+  `## Enter your calculations here`, 
+  2);
+</script>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div id="calculator-holder-btn">
+<p><i class="bi bi-calculator"></i></p>
+</div>
 
 
 </section>
