@@ -1381,3 +1381,8 @@ exams2forms("9.C.NormalApproximationToTheBinomial.Rmd",
 :::
 
 :::
+
+
+::: {.content-visible when-format='html'}
+{{< include /calculator.qmd >}}
+:::

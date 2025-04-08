@@ -1,0 +1,176 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+
+stratified <- c(
+    "To understand commuting habits in a city, researchers divide the population into income brackets and then randomly select individuals from each bracket.",
+    "A magazine wants to survey its readers about their preferences for future multistageent. They randomly select subscribers from each geographical region where the magazine is distributed.",
+    "A company wants to study the spending habits of different age groups. They divide the population into age brackets and then randomly select individuals from each bracket.",
+    "To assess employee satisfaction at a large university, administrators divide staff into units (faculty, administration, support) and randomly sample within each unit.",
+    "A political polling firm wants to gauge voter sentiment before an election. They divide the electorate into urban, suburban, and rural areas and then randomly select voters from each area.",
+    "To evaluate the effectiveness of a new teaching method, schools are divided by their performance level (high, medium, low), and then random classrooms are selected from each group.",
+    "A pharmaceutical company wishing to better understand the needs of individuals taking their medication, divistrat their current patients into groups based on the severity of their condition (mild, moderate, severe) and randomly samples within each group to survey the individuals.",
+    "To study the impact agriculture on soils, researchers divide farms into different sizes (small, medium, large) and then randomly select farms from each size category to investigate.",
+    "An environmental agency wants to assess water quality in a lake. They divide the lake into different zones (near shore, mid-lake, deep water) and then randomly collect samples from each zone.",
+    "To understand the reading habits of library patrons, librarians categorize members by the frequency of their visits (frequent, occasional, clustrequent) and then randomly survey members from each category.",
+    "A technology company wants feedback on a new software. They divide users into different subscription tiers (basic, premium, enterprise) and randomly select users from each tier.",
+    "To analyze the impact of a new fitness program, participants are grouped by their initial fitness level (beginner, intermediate, advanced), and then random individuals are assessed within each group.",
+    "A food manufacturer wants to assess consumer preference for different flavors. They divide consumers into families with children and families without children and then randomly survey individuals from each group."
+)
+
+clustered <- c(
+    "A university wants to study the satisfaction level of its students. They randomly select several classrooms and survey all the students systent in those classrooms.",
+    "A pharmaceutical company wants to test a new drug. They randomly select five hospitals and then sample all the patients being treated for the targeted condition in those hospitals.",
+    "To assess the prevalence of a certain disease in a city, health officials randomly select several neighbourhoods and then examine all the residents within those neighbourhoods.",
+    "To evaluate the effectiveness of a new teaching curriculum, a school district randomly selects several schools and then assesses all the students in a few randomly chosen grade levels within those schools.",
+    "To gauge employee morale in a large corporation with multiple office locations, HR randomly selects a few office buildings and then surveys all the employees within those buildings.",
+    "To study the impact of a community health program, researchers randomly select several villages and then collect data from all the households within those villages.",
+    "A tourism board wants to understand visitor experiences in a region. They randomly select several hotels and then survey all guests staying at those hotels over a period of time.",
+    "To assess the adoption rate of a new technology, researchers randomly select several companies in a specific industry and then survey all the employees within those companies to determine technology use."
+)
+
+systematic <- c(
+    "A market researcher selects every 10th person who enters a shopping mall to participate in a survey about consumer preferences.",
+    "A bank wants to assess customer satisfaction with its services. They decide to survey every 15th customer that enters a particular branch location on a particular day.",
+    "A quality multistagerol inspector on an assembly line selects every 50th item produced to check for defects.",
+    "A university registrar wants to survey students about their course registration experience and selects every 20th student on the alphabetical list of enrolled students.",
+    "A website administrator wants to analyze user navigation patterns and logs the activity of every 100th visitor to the site.",
+    "A librarian wants to survey library patrons about their reading habits and selects every 5th person leaving the library on a given day.",
+    "A city planner wants to assess traffic flow on a major road and records the type of vehicle passing a specific point every 30th vehicle.",
+    "An auditor reviewing financial records selects every 25th transaction in a ledger for detailed examination.",
+    "A researcher studying plant growth in a field marks every 8th plant in a row for measurement.",
+    "A telemarketing company wants to gauge interest in a new product and calls every 50th name on a purchased multistageact list.",
+    "A museum curator wants to understand visitor engagement with exhibits and surveys every 12th visitor entering the museum.",
+    "A software company wants feedback on a new feature and sends a survey to every 3rd user who logs into the application on a specific day."
+)
+
+multistage <- c(
+    "A city council wants to assess the opinion of its citizens on a proposed policy change. They divide the city into neighbourhoods and randomly select neighbourhoods, from which they randomly select households to survey.",
+    "A political pollster wants to gauge voter preferences in a country. They divide the country into regions and randomly select regions to conduct interviews with a random selection of eligible voters.",
+    "A marketing firm wants to understand consumer preferences for a new product. They randomly select several shopping malls and survey a sample of shoppers within those malls.",
+    "A researcher wants to study the dietary habits of teenagers in a state. They randomly select several high schools and then survey a sample of students within those selected schools.",
+    "A political campaign wants to understand voter opinions in a state. They randomly select several precincts and then survey a sample of registered voters within those precincts.",
+    "To study employee satisfaction in a large multinational corporation, they first stratify employees by country, then randomly select offices within each country, and finally randomly select employees from those offices to survey.",
+    "To assess the academic performance of elementary school students in a large school district, they first randomly select several schools, then randomly select classrooms within each selected school, and finally randomly select students from those classrooms for testing.",
+    "To understand the healthcare access experiences of residents in a state, they first divide the state into rural and urban areas, then randomly select several counties within each area, and finally survey every 50th household within the selected counties.",
+    "To evaluate the effectiveness of different advertising strategies, a company first divistrat its customer base by demographics, then randomly selects several demographic groups, before finally sending out targeted surveys to a sample of customers within those groups.",
+    "To study the impact of a new agricultural policy, researchers first select several agricultural regions within a country, then randomly select farms within each region, before finally conducting detailed interviews with the farm owners.",
+    "To assess the prevalence of a specific health condition in a population, health officials first divide the population into age groups, then randomly select several neighbourhoods within each age group. These neighbourhoods are then divided into income brackets, and households from each income bracket are randomly selected.",
+    "To understand the travel habits of tourists in a country, the tourism board first selects several popular tourist strattinations, then randomly selects hotels within each strattination, and finally surveys a random sample of guests staying at those hotels.",
+    "To evaluate the quality of online education programs, a university first selects several online courses, then randomly selects discussion forums within each course, and finally randomly selects student posts for analysis.",
+    "To study the adoption of renewable energy sources in a state, researchers first divide the state into urban, suburban, and rural areas, then randomly select several towns within each area, and finally conduct systematic sampling of households in those towns.",
+    "To assess the job satisfaction of nurses in a large hospital system, administrators first select several hospitals within the system, then randomly select departments within each hospital, and finally survey all the nurses within those selected departments."
+)
+
+simple <- c(
+    "A company wants to know the opinion of its employees about a new HR policy. They randomly select employees from the company list to survey about the policy.",
+    "A researcher wants to study the reading habits of adults in a city and obtains a list of all residents, then randomly selects participants for a survey.",
+    "A quality multistagerol team needs to check the quality of a batch of manufactured items and randomly selects a subset of items for inspection.",
+    "A university wants to assess student satisfaction with campus facilities and randomly selects students from the enrollment list to participate in a questionnaire.",
+    "A marketing firm wants to understand consumer preferences for a new snack food and randomly selects individuals from a consumer panel to taste and rate the product.",
+    "An environmental agency wants to test the water quality of a lake and randomly selects several points on the lake to collect water samples.",
+    "A political pollster wants to gauge public opinion on an upcoming election and randomly selects registered voters from a voter database to interview.",
+    "A medical researcher wants to study the prevalence of a certain health condition in a population and randomly selects individuals from a population registry for examination.",
+    "A software company wants to get feedback on a new software feature and randomly selects users from their customer database to participate in a usability study.",
+    "A school wants to evaluate the effectiveness of a new teaching method and randomly selects students from a specific grade level to participate in assessments.",
+    "A library wants to understand which types of books are most popular and randomly selects borrowed books from their database for analysis.",
+    "A transportation authority wants to survey commuters about their experiences and randomly selects passengers on different bus routes."
+)
+
+qtypeA <- sample(1:3, 1)
+qtypeB <- sample(1:3, 1)
+qtypeC <- sample(1:3, 1)
+
+stratified_v <- sample(stratified, 3)
+clustered_v <- sample(clustered, 3)
+multistage_v <- sample(multistage, 3)
+systematic_v <- sample(systematic, 3)
+simple_v <- sample(simple, 3)
+
+if(qtypeA == 1) {
+    varA <- stratified_v[1]
+    solA <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
+} else if(qtypeA == 2) {
+    varA <- clustered_v[1]
+    solA <- c(FALSE, TRUE, FALSE, FALSE, FALSE)
+} else if(qtypeA == 3) {
+    varA <- multistage_v[1]
+    solA <- c(FALSE, FALSE, TRUE, FALSE, FALSE)
+} else if(qtypeA == 4) {
+    varA <- systematic_v[1]
+    solA <- c(FALSE, FALSE, FALSE, TRUE, FALSE)
+} else {
+    varA <- simple_v[1]
+    solA <- c(FALSE, FALSE, FALSE, FALSE, TRUE)
+}
+
+if(qtypeB == 1) {
+    varB <- stratified_v[2]
+    solB <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
+} else if(qtypeB == 2) {
+    varB <- clustered_v[2]
+    solB <- c(FALSE, TRUE, FALSE, FALSE, FALSE)
+} else if(qtypeA == 3) {
+    varB <- multistage_v[2]
+    solB <- c(FALSE, FALSE, TRUE, FALSE, FALSE)
+} else if(qtypeB == 4) {
+    varB <- systematic_v[2]
+    solB <- c(FALSE, FALSE, FALSE, TRUE, FALSE)
+} else {
+    varB <- simple_v[2]
+    solB <- c(FALSE, FALSE, FALSE, FALSE, TRUE)
+}
+
+if(qtypeC == 1) {
+    varC <- stratified_v[3]
+    solC <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
+} else if(qtypeC == 2) {
+    varC <- clustered_v[3]
+    solC <- c(FALSE, TRUE, FALSE, FALSE, FALSE)
+} else if(qtypeA == 3) {
+    varC <- multistage_v[3]
+    solC <- c(FALSE, FALSE, TRUE, FALSE, FALSE)
+} else if(qtypeC == 4) {
+    varC <- systematic_v[3]
+    solC <- c(FALSE, FALSE, FALSE, TRUE, FALSE)
+} else {
+    varC <- simple_v[3]
+    solC <- c(FALSE, FALSE, FALSE, FALSE, TRUE)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+For each of the following, identify the type of variable described. 
+
+a. `r varA` ##ANSWER1##
+b. `r varB` ##ANSWER2##
+c. `r varC` ##ANSWER3##
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* Stratified
+* Clustered
+* Multistage
+* Systematic
+* Simple Random
+* Stratified
+* Clustered
+* Multistage
+* Systematic
+* Simple Random
+* Stratified
+* Clustered
+* Multistage
+* Systematic
+* Simple Random
+
+Meta-information
+================
+extype: cloze
+exclozetype: schoice|schoice|schoice
+exsolution: `r mchoice2string(solA, single = TRUE)`|`r mchoice2string(solB, single = TRUE)`|`r mchoice2string(solC, single = TRUE)`
+exname: 10.04 - Types of Variables

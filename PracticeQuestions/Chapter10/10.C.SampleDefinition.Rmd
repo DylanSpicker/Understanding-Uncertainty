@@ -1,0 +1,52 @@
+```{r data generation, echo = FALSE, results = "hide"}
+true_statements <- c(
+    "A sample is a subset of a population that is selected for study.",
+    "Samples can be used to make inferences regarding the larger population.",
+    "A sample is called representative if it accurately reflects the larger population.",
+    "Random sampling is useful as it assists with the collection of a representative sample.",
+    "The size of a sample is an important consideration for statistical inference.",
+    "There are several different methods for selectign a valid sample, with corresponding strengths and weaknesses.",
+    "Sampling variability measures the variation that would be observed when taking multiple samples from the same population."
+)
+
+false_statements <- c(
+    "A large sample is equivalent to a population.",
+    "A large sample is always preferable to a smaller sample, regardless of the method of selection.",
+    "A randomly selected sample will be representative of the population.",
+    "Statistical inference can only make statements regarding the sample, not the population.",
+    "The differences between individuals in a sample arise due to sampling variability.",
+    "Stratified random sampling is typically a cost-effective way of generating a representative sample.",
+    "Cluster random sampling is typically an expensive, but highly effective, form of sampling.",
+    "Simple random sampling and systematic random sampling produce equivalent samples. "
+)
+
+answer <- sample(1:2, 1)
+sol <- c(FALSE, FALSE)
+sol[answer] <- TRUE
+
+if(answer == 1) {
+    statement <- sample(true_statements, 1)
+} else {
+    statement <- sample(false_statements, 1)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r statement`
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* True
+* False
+
+Meta-information
+================
+exname: Definition of Population
+extype: schoice
+exsolution: `r mchoice2string(sol)`

@@ -1,0 +1,109 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+qual <- c("The colour of cars in a parking lot.",
+            "The contents of a shopping cart at the grocery store.",
+            "Someone's self-identified gender.",
+            "The genre of a film.",
+            "Socioeconomic status.",
+            "An individual's blood type.",
+            "An individual's nationality.",
+            "An individual's marital status.",
+            "An individual's level of schooling.",
+            "A child's favourite colour",
+            "An individual's political affiliation.",
+            "The type of car owned by a family.")
+discr <- c("The number of books a person has read.",
+            "A household's income (in thousands of dollars).",
+            "The age for study participants.",
+            "The number of children in a family.", 
+            "The number of cars parked in a parking lot.",
+            "The number of heads when flipping a coin multiple times.",
+            "The quantity of defective products in a batch.",
+            "The number of rooms in a house.",
+            "The number of siblings an individual has.",
+            "An individual's shoe size.",
+            "A student's GPA on a 4-point scale.",
+            "The number of pets a family owns.",
+            "The number of connections an individual has on a social media platform.")
+cont <- c("The temperature of a chemical substance.",
+            "The height of an individual.",
+            "The weight of an individual.",
+            "The time it takes to complete a race.",
+            "The distance between two randomly selected cities.",
+            "The speed that a vehicle is travelling at.",
+            "The volume that a container is filled to.",
+            "The annual amount of rainfall in a certain region.")
+
+
+qtypeA <- sample(1:3, 1)
+qtypeB <- sample(1:3, 1)
+qtypeC <- sample(1:3, 1)
+
+qual_v <- sample(qual, 3)
+discr_v <- sample(discr, 3)
+cont_v <- sample(cont, 3)
+
+if(qtypeA == 1) {
+    varA <- qual_v[1]
+    solA <- c(TRUE, FALSE, FALSE)
+} else if(qtypeA == 2) {
+    varA <- discr_v[1]
+    solA <- c(FALSE, TRUE, FALSE)
+} else {
+    varA <- cont_v[1]
+    solA <- c(FALSE, FALSE, TRUE)
+}
+
+if(qtypeB == 1) {
+    varB <- qual_v[2]
+    solB <- c(TRUE, FALSE, FALSE)
+} else if(qtypeB == 2) {
+    varB <- discr_v[2]
+    solB <- c(FALSE, TRUE, FALSE)
+} else {
+    varB <- cont_v[2]
+    solB <- c(FALSE, FALSE, TRUE)
+}
+
+if(qtypeC == 1) {
+    varC <- qual_v[3]
+    solC <- c(TRUE, FALSE, FALSE)
+} else if(qtypeC == 2) {
+    varC <- discr_v[3]
+    solC <- c(FALSE, TRUE, FALSE)
+} else {
+    varC <- cont_v[3]
+    solC <- c(FALSE, FALSE, TRUE)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+For each of the following, identify the type of variable described. 
+
+a. `r varA` ##ANSWER1##
+b. `r varB` ##ANSWER2##
+c. `r varC` ##ANSWER3##
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* Qualitative
+* Quantitative (Discrete)
+* Quantitative (Continuous)
+* Qualitative
+* Quantitative (Discrete)
+* Quantitative (Continuous)
+* Qualitative
+* Quantitative (Discrete)
+* Quantitative (Continuous)
+
+Meta-information
+================
+extype: cloze
+exclozetype: schoice|schoice|schoice
+exsolution: `r mchoice2string(solA, single = TRUE)`|`r mchoice2string(solB, single = TRUE)`|`r mchoice2string(solC, single = TRUE)`
+exname: 10.04 - Types of Variables

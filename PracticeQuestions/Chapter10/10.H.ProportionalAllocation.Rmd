@@ -1,0 +1,126 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+# Possibilities 
+
+scenarios <- list(
+  list(
+    scenario = "A health department wants to assess the prevalence of a disease in a city with a diverse population. They plan to divide the population into age groups and randomly select individuals from each group for testing.",
+    groupA = "children",
+    groupB = "adults",
+    groupC = "seniors"
+  ),
+  list(
+    scenario = "A research team wants to study the academic performance of students in a school district with schools of varying socioeconomic status. They plan to divide students into socioeconomic strata and randomly select students from each stratum for analysis.",
+    groupA = "students with low socioeconomic status",
+    groupB = "students with medium socioeconomic status",
+    groupC = "students with high socioeconomic status"
+  ),
+  list(
+    scenario = "A company wants to gather feedback on a new product from its customer base, which includes users with different levels of engagement.",
+    groupA = "new customers",
+    groupB = "occasional customers",
+    groupC = "frequent customers"
+  ),
+  list(
+    scenario = "A university wants to understand the opinions of its alumni regarding recent changes to the alumni association, categorizing alumni by their graduation year.",
+    groupA = "recent graduates",
+    groupB = "mid-career alumni",
+    groupC = "senior alumni"
+  ),
+  list(
+    scenario = "A magazine aims to survey its readership about their preferred content, considering readers from different geographical regions.",
+    groupA = "subscribers in the eastern region",
+    groupB = "subscribers in the central region",
+    groupC = "subscribers in the western region"
+  ),
+  list(
+    scenario = "A non-profit organization wants to assess the impact of its programs on beneficiaries with varying levels of participation.",
+    groupA = "low participation beneficiaries",
+    groupB = "medium participation beneficiaries",
+    groupC = "high participation beneficiaries"
+  ),
+  list(
+    scenario = "A tech company wants to evaluate the usability of a new software feature among users with different operating systems.",
+    groupA = "Windows users",
+    groupB = "macOS users",
+    groupC = "Linux users"
+  ),
+  list(
+    scenario = "A retail store wants to understand the purchasing behavior of customers with different membership tiers in their loyalty program.",
+    groupA = "basic members",
+    groupB = "silver members",
+    groupC = "gold members"
+  ),
+  list(
+    scenario = "A transportation authority wants to survey commuters about their satisfaction with public transit, considering different modes of transportation used.",
+    groupA = "bus users",
+    groupB = "train users",
+    groupC = "subway users"
+  ),
+  list(
+    scenario = "A research institute wants to study the adoption of sustainable practices among businesses of different sizes.",
+    groupA = "small businesses",
+    groupB = "medium-sized businesses",
+    groupC = "large corporations"
+  ),
+  list(
+    scenario = "A language learning platform wants to gather feedback on its curriculum from learners at different proficiency levels.",
+    groupA = "beginner learners",
+    groupB = "intermediate learners",
+    groupC = "advanced learners"
+  ),
+  list(
+    scenario = "An agricultural extension service wants to assess the adoption of new farming techniques among farmers with different farm sizes.",
+    groupA = "small-scale farmers",
+    groupB = "medium-scale farmers",
+    groupC = "large-scale farmers"
+  )
+)
+
+sc_idx <- sample(1:length(scenarios), 1)
+
+scenario <- scenarios[[sc_idx]]$scenario
+groupA <- scenarios[[sc_idx]]$groupA
+groupB <- scenarios[[sc_idx]]$groupB
+groupC <- scenarios[[sc_idx]]$groupC
+
+ps <- round(diff(round(c(0, sort(runif(2, 0, 1)),1), 2)), 2)
+
+pop_size <- 500 * sample(5:100, 1)
+n <- 100 * sample(1:((pop_size/500)-3), 1)
+
+Ns <- round(pop_size * ps, 0)
+
+N1 <- Ns[1]
+N2 <- Ns[2]
+N3 <- Ns[3]
+
+ans1 <- round(n*N1/(N1+N2+N3), 0)
+ans2 <- round(n*N2/(N1+N2+N3), 0)
+ans3 <- round(n*N3/(N1+N2+N3), 0)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r scenario`
+
+In the population there are `r format(N1, scientific=FALSE)` `r groupA`, `r format(N2, scientific=FALSE)` `r groupB`, and `r format(N3, scientific=FALSE)` `r groupC`. 
+
+Suppose the desired sample size is `r n`.
+
+a. What should be the sample size of `r groupA`? ##ANSWER1##
+b. What should be the sample size of `r groupB`? ##ANSWER2##
+c. What should be the sample size of `r groupC`? ##ANSWER3##
+
+Question ID: `r id`
+
+Meta-information
+================
+extype: cloze
+extol: 0|0|0
+exclozetype: num|num|num
+exsolution: `r fmt(ans1, 0)`|`r fmt(ans2, 0)`|`r fmt(ans3, 0)`
+exname: Proportional Allocation

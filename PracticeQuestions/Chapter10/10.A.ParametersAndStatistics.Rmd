@@ -1,0 +1,51 @@
+```{r data generation, echo = FALSE, results = "hide"}
+true_statements <- c(
+    "A parameter is a numerical characteristic of a population.",
+    "A statistic is a numerical characteristic of a sample.",
+    "Parameters are typically unknown and are estimated using statistics.",
+    "The population mean is a parameter.",
+    "The sample mean is a statistic.",
+    "Parameters are constant values.",
+    "Statistical inference involves using statistics to draw conclusions about parameters."
+)
+
+false_statements <- c(
+    "Parameters and statistics are two terms representing the same numerical quantities.",
+    "The value of a parameter is calculated from a sample.",
+    "The sample standard deviation is a parameter.",
+    "The population standard deviation is a statistic.",
+    "Parameters have an underlying distribution, called the sampling distribution.",
+    "The value of a statistic is unlikely to change across multiple different samples.",
+    "Interest in statistical inference is typically in the values of statistics directly."
+)
+
+answer <- sample(1:2, 1)
+sol <- c(FALSE, FALSE)
+sol[answer] <- TRUE
+
+if(answer == 1) {
+    statement <- sample(true_statements, 1)
+} else {
+    statement <- sample(false_statements, 1)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r statement`
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* True
+* False
+
+Meta-information
+================
+exname: Definition of Parameter
+extype: schoice
+exsolution: `r mchoice2string(sol)`

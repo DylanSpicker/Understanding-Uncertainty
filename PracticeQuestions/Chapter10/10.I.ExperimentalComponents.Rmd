@@ -1,0 +1,122 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+sc_idx <- sample(1:9, 1)
+
+if(sc_idx == 1) {
+    scenario <- "A study is conducted to investigate the effect of different fertilizer types on the growth of tomato plants. The researchers consider a natural fertilizer, synthetic fertilizer, and no fertilizer. They measure the height of the tomato plant."
+
+    factor <- "fertilizer type"
+    factor_count <- 1
+    levels <- 3
+    treatment_count <- 3
+    experimental_unit <- "tomato plant"
+    response_variable <- "height"
+
+} else if(sc_idx == 2) {
+    scenario <- "Researchers want to test the effectiveness of three different teaching methods on students' math test scores. They consider self-paced learning, standard lecture-style lessons, and a flipped-classroom model. Each student is randomly assigned to receive instruction based on one of the teaching methods."
+
+    factor <- "teaching method"
+    factor_count <- 1
+    levels <- 3
+    treatment_count <- 3
+    experimental_unit <- "student"
+    response_variable <- "math test score"
+} else if(sc_idx == 3) {
+    scenario <- "A pharmaceutical company wants to evaluate the impact of two dosage levels of a new medication, coupled with differing levels of physical activity regimens and dietary changes, on patients' systolic blood pressure. Physical activity is categorized into one of three categories (low, medium, and high), and the dietary change is characterized by switching to a low-sodium diet, or not."
+
+    factor <- "dosage level"
+    factor_count <- 3
+    levels <- 2
+    treatment_count <- 12
+    experimental_unit <- "patient"
+    response_variable <- "systolic blood pressure"
+} else if(sc_idx == 4) {
+    scenario <- "An environmental organization plans to assess the effect of varying light conditions on the growth of algae in aquatic ecosystems. They consider 10 different light conditions, applied to individual aquariums. They measure the growth rate of algae in each of the ecosystems."
+
+    factor <- "light condition"
+    factor_count <- 1
+    levels <- 10
+    treatment_count <- 10
+    experimental_unit <- "aquarium"
+    response_variable <- "growth rate"
+} else if(sc_idx == 5) {
+    scenario <- "A psychology research team aims to study the influence of different music genres (10 of them considered) and modes of listening (through speakers or headphones) on students' productivity levels, and considering how this differs based on the individuals' current mood."
+
+    factor <- "music genre"
+    factor_count <- 2
+    levels <- 10
+    treatment_count <- 20
+    experimental_unit <- "student"
+    response_variable <- "productivity level"
+} else if(sc_idx == 6) {
+    scenario <- "A sports scientist wants to investigate the impact of hydration levels on athletes' performance during endurance exercises. Athletes are randomly assigned to one of three hydration protocols (no extra hydration, moderate hydration, high hydration) before a standardized endurance test. Their time to exhaustion is recorded."
+
+    factor <- "hydration level"
+    factor_count <- 1
+    levels <- 3
+    treatment_count <- 3
+    experimental_unit <- "athlete"
+    response_variable <- "time to exhaustion"
+} else if(sc_idx == 7) {
+    scenario <- "A food manufacturer conducts a study to determine the effect of preparation methods (raw, steamed, boiled) and cooking temperatures (low, medium, high) on the vitamin C content of broccoli. Batches of broccoli are prepared using each combination of method and temperature, and the vitamin C content is measured after cooking."
+
+    factor <- "preparation method"
+    factor_count <- 2
+    levels <- 3
+    treatment_count <- 9
+    experimental_unit <- "batch of broccoli"
+    response_variable <- "vitamin C content"
+} else if(sc_idx == 8) {
+    scenario <- "Researchers plan to investigate the effect of different sleep durations (6 hours, 8 hours, and 10 hours) on cognitive function (measured by a standardized test score), while further considering caffeine consumption (yes or no), and time of day (morning, afternoon, or evening). Participants are randomly assigned to a particular sleep duration and caffeine consumption schedule for a week, and are then given the standardized test, producing a cognituve function score, during a randomly selected time of day."
+
+    factor <- "sleep duration"
+    factor_count <- 3
+    levels <- 3
+    treatment_count <- 18
+    experimental_unit <- "participant"
+    response_variable <- "cognitive function score"
+} else if(sc_idx == 9) {
+    scenario <- "A social scientist aims to study the effect of social media usage (low, moderate, and high, defined by average daily time spent) on individuals' self-esteem levels (measured using a standardized self-esteem scale). Participants are categorized into these usage groups based on their self-reported usage, and their self-esteem is assessed."
+    factor <- "social media usage"
+    factor_count <- 1
+    levels <- 3
+    treatment_count <- 3
+    experimental_unit <- "individual"
+    response_variable <- "self-esteem level"
+} 
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+`r scenario`
+
+a. What is the experimental unit for this study? ##ANSWER1##
+b. What is the first factor identified in this study description? ##ANSWER2##
+c. What is the response variable for this study? ##ANSWER3##
+d. How many levels are there for the first factor identified in this study? ##ANSWER4##
+e. How many total treatments are there identified in this study? ##ANSWER5##
+f. How many factors are there identified in this study? ##ANSWER6##
+
+
+**Note**: Your answer must match exactly the expected response for the text-based answers. See the provided solution for clarification.
+
+(Question ID: *`r id`*)
+
+Solution
+========
+Note: the text-based answers must match exactly (capitalization is not required). 
+
+* The experimental unit is *`r experimental_unit`*. 
+* The first factor is *`r factor`*.
+* The response variable is *`r response_variable`*.
+
+
+Meta-information
+================
+extype: cloze
+exclozetype: string|string|string|num|num|num
+exsolution: `r experimental_unit`|`r factor`|`r response_variable`|`r levels`|`r treatment_count`|`r factor_count`
+exname: Experimental Components
+extol: 0

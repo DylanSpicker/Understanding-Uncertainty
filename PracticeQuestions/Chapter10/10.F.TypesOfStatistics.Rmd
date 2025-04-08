@@ -1,0 +1,149 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+descriptive <- c(
+    "What is the average income of employees in our company?",
+    "How many students passed the math exam last year?",
+    "What is the margin of error for the survey results on public opinion regarding a proposed policy change?",
+    "What is the median age of customers who purchased our new product last week?",
+    "What is the range of scores achieved by participants at the local fitness challenge?",
+    "What percentage of website visitors clicked on the call-to-action button yesterday?",
+    "What is the standard deviation of daily sales figures for the past month?",
+    "What was the most frequent response in the customer satisfaction survey?",
+    "What is the interquartile range of the time it takes for customer support to resolve an issue?",
+    "What is the proportion of defective items produced in the last manufacturing batch?",
+    "What is the mode of transportation used by employees at our company to commute to work?",
+    "What is the 95th percentile of waiting times at the doctor's office?",
+    "What is the skewness of the observed distribution of customer spending?"
+)
+
+inferential <- c(
+    "Is there a difference in test scores between students who received extra tutoring and those who did not?",
+    "How confident are we that the recent increase in website traffic will lead to higher sales?",
+    "What are the key factors influencing employee job satisfaction in our organization?",
+    "Does customer churn depend on their past purchase behavior?",
+    "Is there a significant relationship between advertising spend and sales revenue?",
+    "Does the new marketing campaign have a statistically significant impact on brand awareness?",
+    "Can we generalize the findings from our sample survey to the entire population of potential customers?",
+    "Are there significant regional differences in customer preferences for our product?",
+    "Did the implementation of a new training program significantly change employee performance?",
+    "Can we infer a relationship between employee engagement and productivity?",
+    "Is the average customer satisfaction score significantly higher for users of our premium service?",
+    "Are there significant differences in the effectiveness of two different teaching methods?"
+)
+
+predictive <- c(
+    "What are next year's sales trends for our product going to be?",
+    "What percentage of existing customers are likely to purchase our new product based on market research?",
+    "How many units of each product are required next quarter to meet anticipated demand?",
+    "How likely is it that a specific customer will default on their loan?",
+    "How much is a new customer acquired through social media worth to the company, over their lifetime?",
+    "What will be the energy consumption of our building next month based on historical data and weather forecasts?",
+    "Which job applicants are most likely to be high performers based on their application data and interview scores?",
+    "What is the expected price of a house in a specific neighborhood in six months?",
+    "What is the likelihood that a specific website visitor clicking on a specific advertisement?",
+    "How many support tickets are we likely to receive next week?"
+)
+
+prescriptive <- c(
+    "Should we implement a new marketing strategy based on customer feedback and buying patterns?",
+    "Can we recommend changes to the manufacturing process to reduce defects in our products?",
+    "What is the optimal pricing strategy to maximize profit given current market conditions and competitor pricing?",
+    "Which suppliers should we prioritize to minimize supply chain disruptions and costs?",
+    "What is the best allocation of our advertising budget across different channels to maximize reach and conversions?",
+    "How should we adjust staffing levels in our call center to maintain service quality during peak hours?",
+    "What personalized product recommendations should we offer to individual customers to increase sales?",
+    "Which preventative maintenance actions should we take on our equipment to minimize downtime?",
+    "What is the most efficient route for our delivery trucks to minimize travel time and fuel consumption?",
+    "Which investment portfolio allocation is best suited to a client's risk tolerance and financial goals?",
+    "What changes to our website design should we implement to improve user engagement and conversion rates?",
+    "How should we adjust our inventory levels across different warehouses to meet demand while minimizing holding costs?"
+)
+
+
+
+
+qtypeA <- sample(1:4, 1)
+qtypeB <- sample(1:4, 1)
+qtypeC <- sample(1:4, 1)
+
+des <- sample(descriptive, 3)
+inf <- sample(inferential, 3)
+pred <- sample(predictive, 3)
+pres <- sample(prescriptive, 3)
+
+if(qtypeA == 1) {
+    varA <- des[1]
+    solA <- c(TRUE, FALSE, FALSE, FALSE)
+} else if(qtypeA == 2) {
+    varA <- inf[1]
+    solA <- c(FALSE, TRUE, FALSE, FALSE)
+} else if(qtypeA == 3) {
+    varA <- pred[1]
+    solA <- c(FALSE, FALSE, TRUE, FALSE)
+} else {
+    varA <- pres[1]
+    solA <- c(FALSE, FALSE, FALSE, TRUE)
+}
+
+if(qtypeB == 1) {
+    varB <- des[2]
+    solB <- c(TRUE, FALSE, FALSE, FALSE)
+} else if(qtypeB == 2) {
+    varB <- inf[2]
+    solB <- c(FALSE, TRUE, FALSE, FALSE)
+} else if(qtypeB == 3) {
+    varB <- pred[2]
+    solB <- c(FALSE, FALSE, TRUE, FALSE)
+} else {
+    varB <- pres[2]
+    solB <- c(FALSE, FALSE, FALSE, TRUE)
+}
+
+if(qtypeC == 1) {
+    varC <- des[3]
+    solC <- c(TRUE, FALSE, FALSE, FALSE)
+} else if(qtypeC == 2) {
+    varC <- inf[3]
+    solC <- c(FALSE, TRUE, FALSE, FALSE)
+} else if(qtypeC == 3) {
+    varC <- pred[3]
+    solC <- c(FALSE, FALSE, TRUE, FALSE)
+} else {
+    varC <- pres[3]
+    solC <- c(FALSE, FALSE, FALSE, TRUE)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+```
+
+Question
+========
+For each of the following, identify the type of statistical methods required to address the question.
+
+a. `r varA` ##ANSWER1##
+b. `r varB` ##ANSWER2##
+c. `r varC` ##ANSWER3##
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* Descriptive
+* Inferential
+* Predictive
+* Prescriptive
+* Descriptive
+* Inferential
+* Predictive
+* Prescriptive
+* Descriptive
+* Inferential
+* Predictive
+* Prescriptive
+
+Meta-information
+================
+extype: cloze
+exclozetype: schoice|schoice|schoice
+exsolution: `r mchoice2string(solA, single = TRUE)`|`r mchoice2string(solB, single = TRUE)`|`r mchoice2string(solC, single = TRUE)`
+exname: Types of Statistics

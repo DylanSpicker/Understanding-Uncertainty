@@ -327,7 +327,7 @@ c. What other factors may have been useful to segment the population into natura
 ::::{.callout .solution collapse='true'}
 ## Solution
 
-a. This population is made up of three strata, with $N_1 = 940$, $N_2 = 10000$, and $N_3 = 8000$. Using proportional allocation this will result in a sample from the first of size $n_1 = \dfrac{940}{18940}\times 75 = 3.7 \approx 4$. For the second we get $n_2 = \dfrac{10000}{18940}\times 75 = 39.6 \approx 40$. For the third we get $n_3 = \dfrac{8000}{18940}\times 75 = 31.6 \approx 32$. Taken together this gives $76$ as the sample size, which is close to desired. Then, three separate simple random samples are to be formed. The first is a sample of $4$ homes randomly selected from the numbers, $\{1,\dots,940\}$, the second is $40$ homes randomly selected from $\{1,\dots,10000\}$ middle income homes, and the remaining $32$ are selected from $\{1,\dots,8000\}$ from the low income households. These three groups are combined, and interviewed to form the overall sample.
+a. This population is made up of three strata, with $N_1 = 940$, $N_2 = 10000$, and $N_3 = 8000$. Using proportional allocation this will result in a sample from the first of size $n_1 = \dfrac{940}{18940}\times 75 = 3.7 \approx 4$. For the second we get $n_2 = \dfrac{10000}{18940}\times 75 = 310.6 \approx 40$. For the third we get $n_3 = \dfrac{8000}{18940}\times 75 = 31.6 \approx 32$. Taken together this gives $76$ as the sample size, which is close to desired. Then, three separate simple random samples are to be formed. The first is a sample of $4$ homes randomly selected from the numbers, $\{1,\dots,940\}$, the second is $40$ homes randomly selected from $\{1,\dots,10000\}$ middle income homes, and the remaining $32$ are selected from $\{1,\dots,8000\}$ from the low income households. These three groups are combined, and interviewed to form the overall sample.
 b. The major drawback is that this is likely to result in a costly sampling scheme. Specifically, as contrasted with the cluster sampling in @exm-clustered-sample, there is no guarantee that Charles and Sadie would not be required to travel across many of the blocks in their city. It is possible that to visit the $76$ households, they have to visit $76$ different blocks, which greatly increases the cost of administering the sample as described.
 c. It may have also been useful to stratify the population, for instance, based on vehicle ownership, based on commuter status, or based on political leanings. Each of these is likely to be relevant to subgroup analyzes, while also reducing the variability within the strata themselves.
 ::::
@@ -821,6 +821,162 @@ a. Annual Rainfall
 a. Type of Smartphone Owned
 a. Level of Agreement on a Survey Question
 :::
+
+
+::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-10.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+exams2forms("10.A.ParametersAndStatistics.Rmd", 
+            edir = "../PracticeQuestions/Chapter10", 
+            n = 50)
+```
+:::
+
+:::{#sa-10.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+exams2forms("10.B.PopulationDefinition.Rmd", 
+            edir = "../PracticeQuestions/Chapter10", 
+            n = 50)
+```
+:::
+
+:::{#sa-10.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("10.C.SampleDefinition.Rmd", 
+            edir = "../PracticeQuestions/Chapter10", 
+            n = 50)
+```
+:::
+
+:::{#sa-10.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("10.D.ParametersVersusStatistics.Rmd", 
+            edir = "../PracticeQuestions/Chapter10", 
+            n = 50)
+```
+:::
+
+:::{#sa-10.05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("10.E.VariableTypes.Rmd", 
+            edir = "../PracticeQuestions/Chapter10", 
+            n = 50)
+```
+:::
+
+:::{#sa-10.06}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("10.F.TypesOfStatistics.Rmd", 
+            edir = "../PracticeQuestions/Chapter10", 
+            n = 50)
+```
+:::
+
+:::{#sa-10.07}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("10.G.SamplingMethods.Rmd", 
+            edir = "../PracticeQuestions/Chapter10", 
+            n = 50)
+```
+:::
+
+:::{#sa-10.08}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("10.H.ProportionalAllocation.Rmd", 
+            edir = "../PracticeQuestions/Chapter10", 
+            n = 50)
+```
+:::
+
+:::{#sa-10.09}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+
+exams2forms("10.I.ExperimentalComponents.Rmd", 
+            edir = "../PracticeQuestions/Chapter10", 
+            n = 50)
+```
+:::
+
+:::
+
 
 ::: {.content-visible when-format='html'}
 {{< include /calculator.qmd >}}

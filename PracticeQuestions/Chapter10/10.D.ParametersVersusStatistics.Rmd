@@ -1,0 +1,87 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+paste_set <- function(S) {
+  paste0("\\{", paste(S, collapse=", "), "\\}")
+}
+
+parameters <- c("The average height of all adults in the world.",
+                "The median age of all people living in a country.",
+                "The unemployment rate for the entire country.",
+                "The percentage of cars sold that are electric vehicles.",
+                "The range of salaries in a particular company.",
+                "The percentage of defective products in an entire manufacturing plant.",
+                "The most common age of all employees in a corporation.",
+                "The spread in test scores for all students in a university.",
+                "The percentage of households with pets in a country.")
+statistics <- c("The average income of a sample of 100 households in a city.",
+                "The proportion of students who passed a standardized test in a specific school.",
+                "The mean score of your friends on a recent quiz.",
+                "The percentage of cars in a parking lot that are electric vehicles.",
+                "The variation of a species’ weight in a one specific national park.",
+                "The percentage of customers who prefer brand A over brand B in a nationwide survey.",
+                "The average number of students per classroom in a school.",
+                "The proportion of people who voted for a specific candidate in a county.",
+                "The range of salaries in a particular department at a company.",
+                "The percentage of defective products in a batch from a manufacturing plant.",
+                "The percentage of students who participate in extracurricular activities in a specific school.")
+
+qtypeA <- sample(1:2, 1)
+qtypeB <- sample(1:2, 1)
+qtypeC <- sample(1:2, 1)
+
+parms <- sample(parameters, 3)
+stats <- sample(statistics, 3)
+
+if(qtypeA == 1) {
+    varA <- parms[1]
+    solA <- c(TRUE, FALSE)
+} else {
+    varA <- stats[1]
+    solA <- c(FALSE, TRUE)
+}
+
+if(qtypeB == 1) {
+    varB <- parms[2]
+    solB <- c(TRUE, FALSE)
+} else {
+    varB <- stats[2]
+    solB <- c(FALSE, TRUE)
+}
+
+if(qtypeC == 1) {
+    varC <- parms[3]
+    solC <- c(TRUE, FALSE)
+} else {
+    varC <- stats[3]
+    solC <- c(FALSE, TRUE)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+For each of the following, identify whether the described quantity is a parameter or a statistic. 
+
+a. `r varA` ##ANSWER1##
+b. `r varB` ##ANSWER2##
+c. `r varC` ##ANSWER3##
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* Parameter
+* Statistic
+* Parameter
+* Statistic
+* Parameter
+* Statistic
+
+Meta-information
+================
+extype: cloze
+exclozetype: schoice|schoice|schoice
+exsolution: `r mchoice2string(solA, single = TRUE)`|`r mchoice2string(solB, single = TRUE)`|`r mchoice2string(solC, single = TRUE)`
+exname: 10.03 - Parameters versus Statistics.
