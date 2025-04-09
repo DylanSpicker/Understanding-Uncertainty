@@ -1364,6 +1364,35 @@ exams2forms("11.C.ShapeOfDistribution.Rmd",
 ```
 :::
 
+:::{#sa-11.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 1234567894
+
+exams2forms("11.D.SummaryStatistics.Rmd", 
+            edir = "../PracticeQuestions/Chapter11", 
+            n = 50)
+```
+:::
+
+:::{#sa-11.05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 1234567894
+
+exams2forms("11.E.MatchHistogramAndBP.Rmd", 
+            edir = "../PracticeQuestions/Chapter11", 
+            n = 25)
+```
+:::
 
 :::
 
