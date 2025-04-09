@@ -90,5 +90,5 @@ Meta-information
 ================
 extype: num
 exsolution: `r fmt(truth, 3)`
-extol: 3
+extol: 0
 exname: 3.05 - Set Probabilities
