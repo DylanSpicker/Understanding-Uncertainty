@@ -1,0 +1,154 @@
+```{r data generation, echo = FALSE, results = "hide"}
+scenarios <- list(
+  list(
+    scenario = "The time taken (in minutes) by students to complete a quiz was recorded.",
+    min = 15,
+    max = 90,
+    digits = 0
+  ),
+  list(
+    scenario = "A survey asked participants about their monthly expenses on groceries.",
+    min = 100,
+    max = 1000,
+    digits = 0
+  ),
+  list(
+    scenario = "The birthweights of infants at a neonatal ICU were recorded over the period of a month (in grams).",
+    min = 2000,
+    max = 5000, # Adjusted max to be more realistic
+    digits = 0
+  ),
+  list(
+    scenario = "The temperature (in degrees Celsius) of a liquid was measured using a digital thermometer.",
+    min = 0,
+    max = 95,
+    digits = 2
+  ),
+  list(
+    scenario = "A soil sample was analyzed for its pH level.",
+    min = 3.5,
+    max = 8.5,
+    digits = 2
+  ),
+  list(
+    scenario = "The height of adult males in a population was recorded (in centimeters).",
+    min = 150,
+    max = 210,
+    digits = 0
+  ),
+  list(
+    scenario = "Participants were asked to estimate the number of hours they spend exercising per week.",
+    min = 0,
+    max = 40,
+    digits = 0
+  ),
+  list(
+    scenario = "The concentration of a chemical pollutant in a water sample was measured (in parts per million).",
+    min = 0.00,
+    max = 5.00,
+    digits = 2
+  ),
+  list(
+    scenario = "The response time (in milliseconds) of a website was recorded during a user testing session.",
+    min = 100,
+    max = 2000,
+    digits = 0
+  ),
+  list(
+    scenario = "A survey asked homeowners about the age of their primary residence (in years).",
+    min = 0,
+    max = 150,
+    digits = 0
+  ),
+  list(
+    scenario = "The blood pressure (systolic) of patients was measured during a routine check-up (in mmHg).",
+    min = 90,
+    max = 180,
+    digits = 0
+  )
+)
+
+Modes <- function(x) {
+  ux <- unique(x)
+  tab <- tabulate(match(x, ux))
+  ux[tab == max(tab)]
+}
+
+find_median_sorted <- function(x) {
+    if(length(x) %% 2 == 0) {
+        (x[length(x)/2] + x[length(x)/2 + 1]) / 2
+    } else {
+        x[(length(x) + 1)/2]
+    }
+}
+
+n <- sample(5:9, 1)
+sc_idx <- sample(1:length(scenarios), 1)
+scenario <- scenarios[[sc_idx]]$scenario
+min <- scenarios[[sc_idx]]$min
+max <- scenarios[[sc_idx]]$max
+digits <- scenarios[[sc_idx]]$digits
+
+observations <- round(runif(n, min, max), digits)
+
+mode_type <- sample(0:1, 1)
+
+if(mode_type == 0) {
+    # We want a mode
+    while (length(Modes(observations)) != 1) {
+        observations <- c(observations, observations[1])
+    }
+}
+
+n <- length(observations)
+
+s_obs <- sort(observations)
+
+
+
+Q3 <- find_median_sorted(s_obs[ceiling((n+1)/2):n])
+Q1 <- find_median_sorted(s_obs[1:ceiling(n/2)])
+
+
+ans1 <- mean(observations)
+ans2 <- find_median_sorted(s_obs)
+ans3 <- Modes(observations)
+
+if(length(ans3) != 1) {
+    ans3 <- -1
+}
+
+ans4 <- var(observations)
+ans5 <- sqrt(ans4)
+ans6 <- max(observations) - min(observations)
+ans7 <- Q3 - Q1
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r scenario` 
+
+Below are `r n` responses, ordered from smallest to largest.
+
+> `r s_obs`
+
+(a) What is the sample mean of the observations? ##ANSWER1##
+(b) What is the sample median of the observations? ##ANSWER2##
+(c) What is the sample mode of the observations? (If there is no mode, respond -1) ##ANSWER3##
+(d) What is the sample variance of the observations? ##ANSWER4##
+(e) What is the sample standard deviation of the observations? ##ANSWER5##
+(f) What is the sample range of the observations? ##ANSWER6##
+(g) What is the sample IQR of the observations? ##ANSWER7##
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+exname: Sample Statistics
+extype: cloze
+exclozetype: num|num|num|num|num|num|num
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 0)`|`r fmt(ans4, 3)`|`r fmt(ans5, 3)`|`r fmt(ans6, 0)`|`r fmt(ans7, 3)`
+extol: 0.001|0.001|0|0.001|0.001|0|0
