@@ -1328,7 +1328,7 @@ set.seed(31415)
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 12345678900
+cache_check <- 123456789
 exams2forms("11.A.FrequencyDistribution.Rmd", 
             edir = "../PracticeQuestions/Chapter11", 
             n = 50)

@@ -68,7 +68,9 @@ Below are `r n` responses.
 
 Using these data, consider the following frequency distribution. 
 
-`r knitr::kable(table_output, format = "markdown", align='c')`
+```{r frequency_dist_table, warning = FALSE, echo = FALSE, results = "hide"}
+knitr::kable(table_output, format = "markdown", align='c')
+```
 
 Fill in each of the corresponding blanks.
 
