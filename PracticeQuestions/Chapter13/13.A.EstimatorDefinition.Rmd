@@ -1,0 +1,55 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+
+
+true_statements <- c(
+    "An estimator is a mathematical function that is used to estimate population parameters.",
+    "An estimate is a specific value obtained from an estimator, given a specific sample. ",
+    "Estimators are random variables.",
+    "Estimates are constant values.",
+    "The sample mean is an unbiased estimator for the population mean. ",
+    "The mean squared error is a useful metric for assessing the performance of estimators.",
+    "Estimates can be seen as realizations from the sampling distribution."
+)
+
+false_statements <- c(
+    "Estimates and estimators are two words for the same concept.",
+    "The sampling distribution is the distribution of the estimate.",
+    "The sample variance is an unbiased estimate for the population variance.",
+    "The population mean is an estimator. ",
+    "Each population parameter has exactly one estimator for it. ",
+    "An estimator is unbiased if it equals the true parameter value.",
+    "The standard deviation of an estimate is called the standard error. "
+)
+
+
+answer <- sample(1:2, 1)
+sol <- c(FALSE, FALSE)
+sol[answer] <- TRUE
+
+if(answer == 1) {
+    statement <- sample(true_statements, 1)
+} else {
+    statement <- sample(false_statements, 1)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r statement`
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* True
+* False
+
+Meta-information
+================
+exname: Estimator Definition 
+extype: schoice
+exsolution: `r mchoice2string(sol)`

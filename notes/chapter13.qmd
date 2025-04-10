@@ -901,5 +901,54 @@ Are method of moments estimators always unbiased? Justify your answer.
 :::
 
 ::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-13.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+exams2forms("13.A.EstimatorDefinition.Rmd", 
+            edir = "../PracticeQuestions/Chapter13", 
+            n = 50)
+```
+:::
+
+:::{#sa-13.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 13345678900
+exams2forms("13.B.RankEstimators.Rmd", 
+            edir = "../PracticeQuestions/Chapter13", 
+            n = 50)
+```
+:::
+
+:::
+
+::: {.content-visible when-format='html'}
 {{< include /calculator.qmd >}}
 :::

@@ -1,0 +1,124 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+scenarios <- list(
+    list(
+        scenario = "A machine at a factory fills containers with a liquid. The goal is to fill the container with exactly",
+        goal = sample(100:500, 1),
+        unit = "mL",
+        what = "fill amount",
+        what_pl = "fills",
+        sd = round(runif(1, 0.1, 1), 2)
+    ),
+  list(
+    scenario = "A baker is making a batch of cookies. The recipe calls for a total dough weight of",
+    goal = sample(500:1500, 1),
+    unit = "grams",
+    what = "dough weight",
+    what_pl = "batches",
+    sd = round(runif(1, 5, 20), 0)
+  ),
+  list(
+    scenario = "A construction crew is laying a section of pipe. The target length for a section is",
+    goal = sample(10:50, 1),
+    unit = "meters",
+    what = "pipe length",
+    what_pl = "sections",
+    sd = round(runif(1, 0.05, 0.5), 2)
+  ),
+  list(
+    scenario = "A call center aims to handle a certain number of calls per hour. The target for an hour is",
+    goal = sample(50:150, 1),
+    unit = "calls",
+    what = "calls handled",
+    what_pl = "hours",
+    sd = round(runif(1, 2, 10), 0)
+  ),
+  list(
+    scenario = "A farmer is harvesting apples from an orchard. The desired yield from a particular tree is",
+    goal = sample(80:200, 1),
+    unit = "kilograms",
+    what = "apple yield",
+    what_pl = "trees",
+    sd = round(runif(1, 5, 15), 0)
+  ),
+  list(
+    scenario = "A pharmaceutical company is manufacturing tablets. Each tablet should contain exactly",
+    goal = sample(10:500, 1),
+    unit = "mg",
+    what = "active ingredient weight",
+    what_pl = "tablets",
+    sd = round(runif(1, 0.1, 2), 2)
+  ),
+  list(
+    scenario = "A brewery is filling bottles with beer. The target volume per bottle is",
+    goal = sample(300:750, 1),
+    unit = "mL",
+    what = "beer volume",
+    what_pl = "bottles",
+    sd = round(runif(1, 0.5, 3), 1)
+  ),
+  list(
+    scenario = "A factory produces light bulbs. The target lifespan for these bulbs is",
+    goal = sample(1000:5000, 1),
+    unit = "hours",
+    what = "bulb lifespan",
+    what_pl = "bulbs",
+    sd = round(runif(1, 50, 200), 0)
+  ),
+  list(
+    scenario = "A tailor is cutting fabric for a suit. The required length of a specific piece is",
+    goal = sample(50:200, 1),
+    unit = "cm",
+    what = "fabric length",
+    what_pl = "pieces",
+    sd = round(runif(1, 1, 5), 1)
+  )
+)
+
+sc_idx <- sample(1:length(scenarios), 1)
+scenario <- scenarios[[sc_idx]]$scenario
+goal <- scenarios[[sc_idx]]$goal
+unit <- scenarios[[sc_idx]]$unit
+what <- scenarios[[sc_idx]]$what
+what_pl <- scenarios[[sc_idx]]$what_pl
+sd <- scenarios[[sc_idx]]$sd
+
+n <- sample(8:20, 1)^2 
+se <- sd/sqrt(n) 
+mean <- round(goal + runif(1,0,3) * se, 2)
+
+delta <- round(runif(1, 0, 3) * se, 2)
+
+ans1 <- mean
+ans2 <- se
+ans3 <- pnorm((goal - mean)/se)
+ans4 <- pnorm((goal + delta - mean)/se) - pnorm((goal - delta - mean)/se)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+
+`r scenario` `r goal` `r unit`. 
+
+Owing to unintentional variations, the `r what` is a random quantity, with a mean of `r mean` and a standard deviation of `r sd` `r unit`.
+
+Consider taking the mean `r what` based on a sample of `r n` `r what_pl`?
+
+a. What is the mean of the sampling distribution of the sample mean? ##ANSWER1## 
+b. What is the standard deviation of the sampling distribution of the sample mean? ##ANSWER2##
+a. What is the probability that the sample mean is less than `r goal` `r unit`? ##ANSWER3##
+b. What is the probability that the sample mean is within `r delta` `r unit` of `r goal`? ##ANSWER4##
+
+
+Question ID: *`r id`*
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num
+extol: 0.001
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`
+exname: Sampling distribution, identify and calculate probabilities.

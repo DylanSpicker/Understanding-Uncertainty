@@ -1,0 +1,55 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+mean <- sample(5:75, 1)
+variance <- sample(1:ceiling(sqrt(mean)/3), 1)^2
+n <- sample(30:100, 1)
+m <- sample((n+1):200, 1)
+
+value <- round(sample((mean - 2 * sqrt(variance)):(mean + 2*sqrt(variance)), 1), 1)
+value2 <- round(sample((mean - 2 * sqrt(variance * n / m)):(mean + 2*sqrt(variance * n / m)), 1), 1)
+
+whats <- c(
+    "the mean weight of a manufactured component",
+    "the mean length of time that customer visit a store",
+    "the mean temperature (in degrees Celsius) of products in a chemical reaction",
+    "the mean score of students on a standardized test",
+    "the mean daily rainfall in a city during a specific month",
+    "the mean time taken to complete a simple task",
+    "the mean length of leaves from a particular tree species",
+    "the mean diameter (in millimeters) of a certain type of seed",
+    "the mean concentration of a pollutant in a water sample",
+    "the mean electrical resistance of a specific type of resistor",
+    "the mean flow rate of a liquid through a pipe",
+    "the mean growth rate of a young tree",
+    "the mean pressure within a closed container"
+)
+
+what <- sample(whats, 1)
+
+ans1 <- 1 - pnorm((value - mean)/sqrt(variance))
+ans2 <- mean
+ans3 <- (n / m) * variance
+ans4 <- pnorm((value2 - mean)/sqrt(ans3))
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+Suppose that you are told that the sampling distribution of `r what` is $N(`r mean`, `r variance`)$, based on a random sample of size $`r n`$. 
+
+a. What is the probability that the calculated mean will exceed `r value`? ##ANSWER1##
+b. If the sample size had been `r m` instead, what would the mean of the sampling distribution have been? ##ANSWER2##
+c. If the sample size had been `r m` instead, what would the variance of the sampling distribution have been? ##ANSWER3##
+d. Suppose that a sample of size `r m` is taken. What is the probability that the calculated does not exceed `r value2`? ##ANSWER4##
+
+Question ID: *`r id`*
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num
+extol: 0.001
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`
+exname: Sampling distribution probabilities.

@@ -12,7 +12,7 @@ descriptive <- c(
     "What is the interquartile range of the time it takes for customer support to resolve an issue?",
     "What is the proportion of defective items produced in the last manufacturing batch?",
     "What is the mode of transportation used by employees at our company to commute to work?",
-    "What is the 95th percentile of waiting times at the doctor's office?",
+    "What is the 95th percentile of observed waiting times at the doctor's office?",
     "What is the skewness of the observed distribution of customer spending?"
 )
 

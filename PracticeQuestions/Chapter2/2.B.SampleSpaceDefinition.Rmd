@@ -3,7 +3,7 @@ true_statements <- c(
     "The sample space of a statistical experiment is a mathematical set.",
     "The sample space of a statistical experiment contains all possible outcomes.",
     "We typically denote the sample space using $\\mathcal{S}$, or similar.",
-    "The outcomes of a sample space are mutually exclusive.",
+    "The elements of a sample space are mutually exclusive.",
     "Events are defined to be any subset of the sample space. ",
     "The sample space can be thought of as an event from the random experiment.",
     "For any given experiment, the sample space is unique."

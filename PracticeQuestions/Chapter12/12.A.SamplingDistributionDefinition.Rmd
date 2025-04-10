@@ -1,0 +1,52 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+true_statements <- c(
+    "A sampling distribution is the distribution of a statistic. ",
+    "The standard deviation of a sampling distribution is referred to as the standard error. ",
+    "The Central Limit Theorem can be used to say that, in large samples, the sampling distribution of the sample mean is approximately normal. ",
+    "The sampling distribution depends on the population distribution, statistic being considered, and the sample size.",
+    "A single computed statistic can be viewed as a realization from its sampling distribution.",
+    "Confidence intervals have probabilities that are calibrated on the basis of sampling distributions.",
+    "If a sampling distribution is known, it can be used for probability calculations relating to the values of statistics."
+)
+
+false_statements <- c(
+    "The sampling distribution indicates the distribution of points in a single sample.",
+    "The sampling distribution will always be the same as the population distribution, with possibly different parameter values.",
+    "The Central Limit Theorem states that, in large samples, sampling distributions are approximately normal.",
+    "The sampling distribution is an estimate of the population distribution.",
+    "The sample variance and sample mean give the values of the variance and mean for the sampling distribution. ",
+    "If a population is normally distributed, all sampling distributions related to it will also be normal. "
+)
+
+
+answer <- sample(1:2, 1)
+sol <- c(FALSE, FALSE)
+sol[answer] <- TRUE
+
+if(answer == 1) {
+    statement <- sample(true_statements, 1)
+} else {
+    statement <- sample(false_statements, 1)
+}
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r statement`
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* True
+* False
+
+Meta-information
+================
+exname: Sampling Distribution Definition 
+extype: schoice
+exsolution: `r mchoice2string(sol)`

@@ -701,5 +701,101 @@ b. What is the approximate probability that the sample mean is within $36$ grams
 
 
 ::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-12.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+exams2forms("12.A.SamplingDistributionDefinition.Rmd", 
+            edir = "../PracticeQuestions/Chapter12", 
+            n = 50)
+```
+:::
+
+:::{#sa-12.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678900
+exams2forms("12.B.SamplingDistributionProbabilities.Rmd", 
+            edir = "../PracticeQuestions/Chapter12", 
+            n = 50)
+```
+:::
+
+:::{#sa-12.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 1234567894
+
+exams2forms("12.C.FindSamplingDistributionAndProbabilities.Rmd", 
+            edir = "../PracticeQuestions/Chapter12", 
+            n = 50)
+```
+:::
+
+:::{#sa-12.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 1234567894
+
+exams2forms("12.D.SamplingDistributionProbabilityProportions.Rmd", 
+            edir = "../PracticeQuestions/Chapter12", 
+            n = 50)
+```
+:::
+
+:::{#sa-12.05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 1234567894
+
+exams2forms("12.E.DescribeSamplingDistributions.Rmd", 
+            edir = "../PracticeQuestions/Chapter12", 
+            n = 50,
+            cloze_schoice_display = "buttons"
+            )
+```
+:::
+
+:::
+
+::: {.content-visible when-format='html'}
 {{< include /calculator.qmd >}}
 :::

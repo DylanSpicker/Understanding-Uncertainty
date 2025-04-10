@@ -1,0 +1,93 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+if(sample(0:1, 1) == 0) {
+    biasA <- 0 
+    varA <- sample(1:25, 1)
+} else {
+    biasA <- sample(c(-1, 1), 1) * sample(1:5, 1)
+    varA <- sample(1:25, 1)
+}
+mseA <- biasA^2 + varA 
+
+if(sample(0:1, 1) == 0) {
+    biasB <- 0 
+    varB <- sample(1:25, 1)
+} else {
+    biasB <- sample(c(-1, 1), 1) * sample(1:5, 1)
+    varB <- sample(1:25, 1)
+}
+mseB <- biasB^2 + varB
+
+if(sample(0:1, 1) == 0) {
+    biasC <- 0 
+    varC <- sample(1:25, 1)
+} else {
+    biasC <- sample(c(-1, 1), 1) * sample(1:5, 1)
+    varC <- sample(1:25, 1)
+}
+mseC <- biasC^2 + varC
+
+if(sample(0:1, 1) == 0) {
+    biasD <- 0 
+    varD <- sample(1:25, 1)
+} else {
+    biasD <- sample(c(-1, 1), 1) * sample(1:5, 1)
+    varD <- sample(1:25, 1)
+}
+mseD <- biasD^2 + varD
+
+minM <- min(mseA, mseB, mseC, mseD)
+
+ans1 <- mseA
+ans2 <- varB
+ans3 <- abs(biasC)
+ans4 <- mseD
+ans5 <- c(biasA == 0, biasB == 0, biasC == 0, biasD == 0)
+ans6 <- c(mseA == minM, mseB == minM, mseC == minM, mseD == minM)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+Consider the following $4$ estimators.
+
+* Estimator A has a bias of `r biasA` and a variance of `r varA`.
+* Estimator B has a bias of `r biasB` and an MSE of `r mseB`.
+* Estimator C has a variance of `r varC` and an MSE of `r mseC`.
+* Estimator D has a bias of `r biasD` and a variance of `r varD`. 
+
+a. What is the MSE of estimator A? ##ANSWER1##
+b. What is the variance of estimator B? ##ANSWER2##
+c. What is the magnitude of bias of estimator C? ##ANSWER3##
+d. What is the MSE of estimator D? ##ANSWER4##
+e. Which estimators are unbiased?
+
+##ANSWER5##
+
+f. Which estimator should be preferred, all else equal?
+
+##ANSWER6## 
+
+Question ID: *`r id`*
+
+Answerlist
+----------
+* Estimator A
+* Estimator B
+* Estimator C
+* Estimator D
+* Estimator A
+* Estimator B
+* Estimator C
+* Estimator D
+
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num|mchoice|mchoice
+extol: 0
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`|`r mchoice2string(ans5)`|`r mchoice2string(ans6)`
+exname: MSE, Bias, and Variance of an Estimator 

@@ -1,0 +1,125 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+scenarios <- list(
+  list(
+    scenario = "Among adults in a large city",
+    percent = sample(10:40, 1),
+    result = "attended university",
+    units = "adults",
+    pronoun = "who"
+  ),
+  list(
+    scenario = "In a population of wild deer",
+    percent = sample(5:25, 1),
+    result = "carry a specific genetic marker",
+    units = "deer",
+    pronoun = "that"
+  ),
+  list(
+    scenario = "Examining a batch of manufactured widgets",
+    percent = sample(2:15, 1),
+    result = "are found to be defective",
+    units = "widgets",
+    pronoun = "that"
+  ),
+  list(
+    scenario = "Within a colony of honeybees",
+    percent = sample(1:10, 1),
+    result = "are observed performing waggle dances",
+    units = "bees",
+    pronoun = "that"
+  ),
+  list(
+    scenario = "Among registered voters in a province",
+    percent = sample(30:60, 1),
+    result = "intend to vote in the upcoming election",
+    units = "voters",
+    pronoun = "who"
+  ),
+  list(
+    scenario = "In a forest of mature oak trees",
+    percent = sample(15:50, 1),
+    result = "show signs of a particular fungal infection",
+    units = "trees",
+    pronoun = "that"
+  ),
+  list(
+    scenario = "Considering a group of surveyed households",
+    percent = sample(5:35, 1),
+    result = "own more than one vehicle",
+    units = "households",
+    pronoun = "that"
+  ),
+  list(
+    scenario = "Within a flock of migratory birds",
+    percent = sample(20:70, 1),
+    result = "have been fitted with tracking devices",
+    units = "birds",
+    pronoun = "that"
+  ),
+  list(
+    scenario = "Looking at a collection of antique coins",
+    percent = sample(1:20, 1),
+    result = "are made of silver",
+    units = "coins",
+    pronoun = "that"
+  ),
+  list(
+    scenario = "Among patients visiting a doctor's office",
+    percent = sample(5:45, 1),
+    result = "report experiencing seasonal allergies",
+    units = "patients",
+    pronoun = "who"
+  ),
+  list(
+    scenario = "In a sample of soil from a farm",
+    percent = sample(10:60, 1),
+    result = "contains a specific type of bacteria",
+    units = "units of soil",
+    pronoun = "that"
+  )
+)
+
+sc_idx <- sample(1:length(scenarios), 1)
+
+scenario <- scenarios[[sc_idx]]$scenario
+percent <- scenarios[[sc_idx]]$percent
+result <- scenarios[[sc_idx]]$result
+units <- scenarios[[sc_idx]]$units
+pronoun <- scenarios[[sc_idx]]$pronoun
+
+n <- 100 * sample(10:50, 1)
+
+ans1 <- percent / 100 
+ans2 <- sqrt(percent / 100 * (1 - percent / 100) / n)
+
+percent_A <- round(runif(1, round(ans1 - 2.5 * ans2, 3), round(ans1 + 2.5 * ans2, 3)), 3)
+percent_B <- round(runif(1, round(ans1 - 2.5 * ans2, 3), round(ans1 + 2.5 * ans2, 3)), 3)
+
+ans3 <- pnorm((percent_A - ans1)/ans2)
+ans4 <- 1 - pnorm((percent_B - ans1)/ans2)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r scenario`, $`r percent`\%$ `r result`. A simple random sample of $`r format(n, scientific=FALSE, big.mark=",")`$ `r units` is taken. 
+
+Let $X$ denote the number of `r units` sampled `r pronoun` `r result`. 
+
+a. What is the expected value of the approximate sampling distribution of the sample proportion? ##ANSWER1##
+b. What is the standard error of the sample proportion? ##ANSWER2##
+c. Based on the approximate sampling distribution, what is the probability that the sample proportion is less than `r percent_A`? ##ANSWER3##
+d. Based on the approximate sampling distribution, what is the probability that the sample proportion is greater than `r percent_B`? ##ANSWER4##
+
+Question ID: *`r id`*
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num
+extol: 0.001
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`
+exname: Sampling distribution (proportions), identify and calculate probabilities.

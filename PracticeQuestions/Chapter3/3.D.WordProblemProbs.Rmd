@@ -13,7 +13,8 @@ scenarios <- list(
         scenario = "Patients with a particular illness are categorized into three levels of risk",
         unit = "patient",
         article = "a",
-        verb = "are"
+        verb = "are",
+        verb2 = "is"
     ),
     list(
         A = "low risk",
@@ -22,7 +23,8 @@ scenarios <- list(
         scenario = "An investor categorizes prospective investments into three levels of risk",
         unit = "investment",
         article = "an",
-        verb = "are"
+        verb = "are",
+        verb2 = "is"
     ),
     list(
         A = "dissatisfied",
@@ -31,7 +33,8 @@ scenarios <- list(
         scenario = "Customers at a particular store have their satisfaction recorded across three categories",
         unit = "customer",
         article = "a",
-        verb = "are"
+        verb = "are",
+        verb2 = "is"
     ),
     list(
         A = "light",
@@ -40,7 +43,8 @@ scenarios <- list(
         scenario = "The traffic on commuter trains is categorized into one of three categories",
         unit = "train",
         article = "a",
-        verb = "have traffic considered"
+        verb = "have traffic considered",
+        verb2 = "traffic is considered"
     ),
     list(
         A = "needs improvement",
@@ -49,7 +53,8 @@ scenarios <- list(
         scenario = "Student submissions are qualitatively graded on a three-point scale",
         unit = "submission",
         article = "a",
-        verb = "are scored"        
+        verb = "are scored",
+        verb2 = "is scored"        
     ),
     list(
         A = "budget",
@@ -58,9 +63,11 @@ scenarios <- list(
         scenario = "Hotels are rated on a three tier scale",
         unit = "hotel",
         article = "a",
-        verb = "are"        
+        verb = "are",
+        verb2 = "is"        
     )
 )
+
 
 sc_idx <- sample(1:length(scenarios), 1) 
 
@@ -70,6 +77,7 @@ oB <- scenarios[[sc_idx]]$B
 oC <- scenarios[[sc_idx]]$C
 article <- scenarios[[sc_idx]]$article
 verb <- scenarios[[sc_idx]]$verb
+verb2 <- scenarios[[sc_idx]]$verb2
 unit <- scenarios[[sc_idx]]$unit
 
 
@@ -89,10 +97,10 @@ Suppose that `r pA`% of `r unit`s `r verb` `r oA` and that `r pB`% of `r unit`s 
 
 Consider `r article` `r unit` that is randomly selected. 
 
-a. What is the probability that the `r unit` is "`r oC`"? ##ANSWER1##
-b. What is the probability that the `r unit` is not "`r oA`"? ##ANSWER2##
-c. What is the probability that the `r unit` is either "`r oA`" or "`r oB`"? ##ANSWER3##
-d. What is the probability that the `r unit` is both "`r oA`" and "`r oB`"? ##ANSWER4##
+a. What is the probability that the `r unit` `r verb2` "`r oC`"? ##ANSWER1##
+b. What is the probability that the `r unit` `r verb2` not "`r oA`"? ##ANSWER2##
+c. What is the probability that the `r unit` `r verb2` either "`r oA`" or "`r oB`"? ##ANSWER3##
+d. What is the probability that the `r unit` `r verb2` both "`r oA`" and "`r oB`"? ##ANSWER4##
 
 (Question ID: *`r id`*)
 

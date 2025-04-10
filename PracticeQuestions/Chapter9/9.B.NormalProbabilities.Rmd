@@ -1,7 +1,6 @@
 ```{r data generation, echo = FALSE, results = "hide"}
 
 # Possibilities 
-
 scenarios <- list(
     list(
         quantity = "lifespans of tortoises",
@@ -18,21 +17,21 @@ scenarios <- list(
         units = "inches tall"
     ),
     list(
-        quantity = "the lifespan of a lightbulb produced by a certain factory",
+        quantity = "the lifespans of lightbulbs produced by a certain factory",
         mean = sample(900:1100, 1),
         sd = sample(30:80, 1),
         event_text = "the bulb lasts",
         units = "hours"
     ),
     list(
-        quantity = "the weight of an apple harvested by a farmer",
+        quantity = "the weights of apples harvested by a farmer",
         mean = sample(100:200, 1),
         sd = sample(15:25, 1),
         event_text = "the apple weighs",
         units = "grams"
     ),
     list(
-        quantity = "the average monthly income for employees in a company",
+        quantity = "the monthly incomes for employees in a company",
         mean = sample(2500:5000, 1),
         sd = sample(400:700, 1),
         event_text = "an employee earns",
@@ -120,7 +119,7 @@ id <- sprintf("%010d", sample(0:1000000000, 1))
 
 Question
 ========
-Suppose that `r quantity` is normally distributed with a mean of `r format(muX, scientific=FALSE)` and a variance of `r format(varX, scientific=FALSE)`, and is denoted as $X$.
+Suppose that `r quantity` (denoted as $X$) are normally distributed with a mean of `r format(muX, scientific=FALSE)` and a variance of `r format(varX, scientific=FALSE)`.
 
 a. What is the probability that `r event_text` between `r xa_lower` and `r xa_upper` `r units`? ##ANSWER1##
 b. What is the probability that `r event_text` less than `r xb` `r units`? ##ANSWER2##
