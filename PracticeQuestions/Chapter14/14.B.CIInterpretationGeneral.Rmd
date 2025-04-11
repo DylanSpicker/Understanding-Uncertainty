@@ -1,0 +1,55 @@
+```{r data generation, echo = FALSE, results = "hide"}
+get_article_num <- function(num) {
+    fd <- as.numeric(substr(num, 1, 1))
+
+    if(fd == 8) {
+        "an"
+    } else {
+        "a"
+    }
+}
+
+percent <- sample(60:99, 1)
+theta_b <- round(runif(1, -10, 10), 2)
+
+delta <- round(runif(1, 0.5, 2.5), 2)
+width <- round(runif(1, 2*delta, 10), 2)
+
+wt <- sample(0:2, 1)
+
+if(wt == 0) {
+    # Contained
+    lb <- theta_b - delta
+    ub <- lb + width
+} else if(wt == 0) {
+    # lb is too high
+    lb <- theta_b + delta
+    ub <- lb + width 
+} else {
+    # ub is too low
+    ub <- theta_b - delta
+    lb <- ub - width
+}
+
+ub <- round(ub, 2)
+lb <- round(lb, 2)
+
+ans1 <- percent/100
+ans2 <- ifelse(wt == 0, 1, 0)
+
+```
+
+Question
+========
+Suppose that `r get_article_num(percent)` $`r percent`\%$ confidence interval is going to be formed for some parameter, $\theta$. The interval estimator is expressed as $(\widehat{L}, \widehat{U})$.
+
+a. Prior to taking the sample, what is the probability that $\theta$ is contained in $(\widehat{L}, \widehat{U})$ ? ##ANSWER1##
+b. Suppose that $\theta = `r theta_b`$. If the interval is computed as $(`r lb`, `r ub`)$, what is the probability that the interval contains $\theta$? ##ANSWER2##
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num
+extol: 0|0
+exsolution: `r fmt(ans1, 2)` | `r fmt(ans2, 0)`
+exname: Probability Interpretation of Interval Estimators 

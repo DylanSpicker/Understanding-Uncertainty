@@ -190,7 +190,7 @@ d. How would an $80\%$ confidence interval compare? A $99.9\%$ interval? Explain
 ## Solution
 
 a. We can use the sample average to estimate the population average. This is given by $$\frac{1}{5}\left(33.2 + 29.6 + 29.7 + 31.7 + 29.1\right) = 30.66$$
-b. Assuming normality and with known variance, we can take $$\overline{X} \pm Z_{(1-p)/2}\frac{\sigma}{\sqrt{n}}.$$ Here, $\sigma = 2$, $\sqrt{n} = \sqrt{5}$, $\overline{X} = 30.66$. For a $90\%$ confidence interval, we have $(1 - 0.9) / 2 = 0.05$, and thus $Z_{(1-p)/2} = -1.64$. We get $$30.66 \pm 1.64\frac{2}{\sqrt{5}} = (29.19, 32.13).$$
+b. Assuming normality and with known variance, we can take $$\overline{X} \pm Z_{(1-p)/2}\frac{\sigma}{\sqrt{n}}.$$ Here, $\sigma = 2$, $\sqrt{n} = \sqrt{5}$, $\overline{X} = 30.66$. For a $90\%$ confidence interval, we have $(1 - 0.9) / 2 = 0.05$, and thus $Z_{(1-p)/2} = -1.64$. We get $$30.66 \pm 1.64\frac{2}{\sqrt{5}} = (29.19, 32.14).$$
 c. For a $95\%$ confidence interval, we change the critical value to be given by $Z_{(1-0.95)/2} = -1.96$. Thus, $$30.66 \pm 1.96\frac{2}{\sqrt{5}} = (28.91, 32.41).$$
 d. As the confidence level increases, the width of the confidence level must also increase. Thus, we should find that an $80\%$ confidence interval is more tightly centered around $30.66$ and a $99.9\%$ confidence interval is more widely spread out. Indeed, using `R` we can find these to be $(`r round(c(30.66 - qnorm(0.9) * 2 / sqrt(5), 30.66 + qnorm(0.9) * 2/sqrt(5)), 2)`)$ for the $80\%$ interval, and $(`r round(c(30.66 - qnorm(0.9995) * 2 / sqrt(5), 30.66 + qnorm(0.9995) * 2/sqrt(5)), 2)`)$ for the $99.9\%$ interval.
 
@@ -493,7 +493,7 @@ a. They want to be $99\%$ confident?
 
 :::
 
-:::{#exr-14.13}
+:::{#exr-14.14}
 A company wishes to understand whether its recruiting practices are disproportionately aimed at men; to do so, they wish to understand the proportion, $p$, of applicants to their positions who do not identify as male. In a random sample of $80$ applications, it found that $22$ were from non-male identified individuals. 
 
 a. Find an approximate $90\%$ confidence interval for $p$, and indicate what assumptions are necessary for the approximation to be valid.
@@ -515,7 +515,7 @@ Suppose that the following output was obtained from a sample of tensile strength
 
 |   N   |   Mean   |  Median  | Std. Dev | SE. Mean | Minimum  | Maximum  |
 | :---: | :------: | :------: | :------: | :------: | :------: | :------: |
-| $153$ | $135.39$ | $135.40$ |  $4.59$  |  $0.37$  | $122.20$ | $147.70$ |
+| $153$ | $145.39$ | $145.40$ |  $4.59$  |  $0.37$  | $122.20$ | $147.70$ |
 :::
 
 :::{#exr-14.16}
@@ -529,7 +529,7 @@ A $95\%$ confidence interval for a population mean is computed from a sample of 
 :::
 
 :::{#exr-14.18}
-Based on a large sample of capacitors of a certain type, a $95\%$ confidence interval for the mean capacitance was computed to be $(0.213, 0.241)$. Find a $90\%$ confidence interval for the mean capacitance of this type of capacitor. 
+Based on a large sample of capacitors of a certain type, a $95\%$ confidence interval for the mean capacitance was computed to be $(0.214, 0.241)$. Find a $90\%$ confidence interval for the mean capacitance of this type of capacitor. 
 
 :::
 
@@ -549,7 +549,7 @@ a. **Challenge:** The company ships the components in lots of $200$. Lots contai
 :::
 
 :::{#exr-14.21}
-A stock market analyst notices that in a certain year, the price of IBM stock increased on $131$ of $252$ trading days. Can these data be used to find a $95\%$ confidence interval for the proportion of days that IBM stock increases? Explain.
+A stock market analyst notices that in a certain year, the price of IBM stock increased on $141$ of $252$ trading days. Can these data be used to find a $95\%$ confidence interval for the proportion of days that IBM stock increases? Explain.
 
 :::
 
@@ -595,7 +595,7 @@ Measurements for the chemical analysis of runoff water from sawmills in British 
 :::
 
 :::{#exr-14.29}
-Fission tracks are trails found in uranium-bearing minerals, left by fragments released during fission events. Fifteen tracks on one rock specimen had an average track length of $13$ $\mu$m with a standard deviation of $2$ $\mu$m. If the population is approximately normal, find a $99\%$ confidence interval for the mean track length for this rock specimen.
+Fission tracks are trails found in uranium-bearing minerals, left by fragments released during fission events. Fifteen tracks on one rock specimen had an average track length of $14$ $\mu$m with a standard deviation of $2$ $\mu$m. If the population is approximately normal, find a $99\%$ confidence interval for the mean track length for this rock specimen.
 :::
 
 :::{#exr-14.30}
@@ -603,7 +603,7 @@ The following output is generated from statistical software computing the confid
 
 | Variable | $N$ | Mean | Std. Dev | S.E. Mean | $95\%$ CI |
 |:-:|:-:|:-:|:-:|:-:|:-:|
-| $X$ | $10$ | $6.59635$ | $0.11213$ | $0.03546$ | $(6.51513, 6.67656)$ |
+| $X$ | $10$ | $6.59635$ | $0.11214$ | $0.03546$ | $(6.51514, 6.67656)$ |
 
 a. How many degrees of freedom does the $t$ distribution have?
 b. Using the information in the table, find a $99\%$ confidence interval for the mean.
@@ -635,6 +635,56 @@ Wire electrical-discharge machining (WEDM) is a process used to manufacture cond
 
 :::{#exr-14.35}
 Suppose that a group of researchers decides to estimate the interval for a population proportion by taking $\widehat{p} \pm \frac{1}{n}$. If the sample size is large enough to use the normal approximation, what is the approximate coverage probability of this interval?
+:::
+
+
+::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-14.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 123456789
+exams2forms("14.A.IdentifyLocationOfCI.Rmd", 
+            edir = "../PracticeQuestions/Chapter14", 
+            n = 50)
+```
+:::
+
+:::{#sa-14.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 14345678900
+exams2forms("14.B.CIInterpretationGeneral.Rmd", 
+            edir = "../PracticeQuestions/Chapter14", 
+            n = 50)
+```
+:::
+
 :::
 
 ::: {.content-visible when-format='html'}

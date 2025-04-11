@@ -1,0 +1,61 @@
+```{r data generation, echo = FALSE, results = "hide"}
+get_article_num <- function(num) {
+    fd <- as.numeric(substr(num, 1, 1))
+
+    if(fd == 8) {
+        "an"
+    } else {
+        "a"
+    }
+}
+
+mean <- sample(-200:200, 1)
+meA <- round(runif(1, 1, 10), 2)
+meB <- round(runif(1, 1, 10), 2)
+
+if(meB == meA) {
+    meB <- meA + runif(1, 0.01, 4)
+}
+
+a1 <- mean - meA
+a2 <- mean + meA 
+b1 <- mean - meB
+b2 <- mean + meB
+
+lows <- sample(80:95, 2, FALSE)
+low1 <- lows[1]
+low2 <- lows[2]
+
+high1 <- sample((low1 + 1):99, 1)
+high2 <- sample((low2 + 1):99, 1)
+
+if (meA < meB) {
+    smaller <- "$A$"
+    larger <- "$B$"
+} else {
+    smaller <- "$B$"
+    larger <- "$A$"
+}
+
+ans1 <- (a1 + a2)/2
+ans2 <- ifelse(meA < meB, low1, high1)
+ans3 <- ifelse(meA < meB, high1, low1)
+
+
+```
+
+Question
+========
+The following are confidence intervals for $\mu$, the true mean for a population: $A = (`r a1`, `r a2`)$ and $B = (`r b1`, `r b2`)$. These intervals are standard, symmetric confidence intervals for the mean. One is `r get_article_num(high1)` $`r high1`\%$ confidence interval, while the other is `r get_article_num(low1)` $`r low1`\%$ confidence interval.
+
+a. What is the sample mean? ##ANSWER1##
+b. What is the confidence level for $A$? ##ANSWER2##
+c. What is the confidence level for $B$? ##ANSWER3## 
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num
+extol: 0.001|0|0
+exsolution: `r fmt(ans1, 3)` | `r fmt(ans2, 0)` | `r fmt(ans3, 0)`
+exname: 14.04 - Properties of Confidence Intervals
