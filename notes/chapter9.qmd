@@ -1344,7 +1344,7 @@ set.seed(31415)
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 1234567890000
+cache_check <- 12345678900
 exams2forms("9.A.GivenCDF.Rmd", 
             edir = "../PracticeQuestions/Chapter9", 
             n = 50)

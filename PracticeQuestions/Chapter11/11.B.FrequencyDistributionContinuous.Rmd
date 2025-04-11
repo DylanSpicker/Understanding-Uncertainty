@@ -97,7 +97,7 @@ bin_num <- sample(1:bin_count, 1)
 ans1 <- (max - min)/bin_count
 ans2 <- min + ans1
 ans3 <- sum(observations >= max-ans1)
-ans4 <- sum(observations >= min + (bin_count - 1)*ans1 & observations < min + bin_count*ans1) / n 
+ans4 <- sum(observations >= min + (bin_num - 1)*ans1 & observations < min + bin_num*ans1) / n 
 
 id <- sprintf("%010d", sample(0:1000000000, 1))
 
