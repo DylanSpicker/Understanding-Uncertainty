@@ -936,6 +936,7 @@ window.Quarto = {
   <li><a href="#margin-of-error-and-sample-sizing" id="toc-margin-of-error-and-sample-sizing" class="nav-link" data-scroll-target="#margin-of-error-and-sample-sizing"><span class="header-section-number">14.6</span> Margin of Error and Sample Sizing</a></li>
   <li><a href="#confidence-intervals-in-r" id="toc-confidence-intervals-in-r" class="nav-link" data-scroll-target="#confidence-intervals-in-r"><span class="header-section-number">14.7</span> Confidence Intervals in R</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  <li><a href="#self-assessment" id="toc-self-assessment" class="nav-link" data-scroll-target="#self-assessment">Self-Assessment</a></li>
   </ul>
 </nav>
     </div>
@@ -1369,7 +1370,7 @@ Solution
 <div class="callout-body-container callout-body">
 <ol type="a">
 <li>We can use the sample average to estimate the population average. This is given by <span class="math display">\[\frac{1}{5}\left(33.2 + 29.6 + 29.7 + 31.7 + 29.1\right) = 30.66\]</span></li>
-<li>Assuming normality and with known variance, we can take <span class="math display">\[\overline{X} \pm Z_{(1-p)/2}\frac{\sigma}{\sqrt{n}}.\]</span> Here, <span class="math inline">\(\sigma = 2\)</span>, <span class="math inline">\(\sqrt{n} = \sqrt{5}\)</span>, <span class="math inline">\(\overline{X} = 30.66\)</span>. For a <span class="math inline">\(90\%\)</span> confidence interval, we have <span class="math inline">\((1 - 0.9) / 2 = 0.05\)</span>, and thus <span class="math inline">\(Z_{(1-p)/2} = -1.64\)</span>. We get <span class="math display">\[30.66 \pm 1.64\frac{2}{\sqrt{5}} = (29.19, 32.13).\]</span></li>
+<li>Assuming normality and with known variance, we can take <span class="math display">\[\overline{X} \pm Z_{(1-p)/2}\frac{\sigma}{\sqrt{n}}.\]</span> Here, <span class="math inline">\(\sigma = 2\)</span>, <span class="math inline">\(\sqrt{n} = \sqrt{5}\)</span>, <span class="math inline">\(\overline{X} = 30.66\)</span>. For a <span class="math inline">\(90\%\)</span> confidence interval, we have <span class="math inline">\((1 - 0.9) / 2 = 0.05\)</span>, and thus <span class="math inline">\(Z_{(1-p)/2} = -1.64\)</span>. We get <span class="math display">\[30.66 \pm 1.64\frac{2}{\sqrt{5}} = (29.19, 32.14).\]</span></li>
 <li>For a <span class="math inline">\(95\%\)</span> confidence interval, we change the critical value to be given by <span class="math inline">\(Z_{(1-0.95)/2} = -1.96\)</span>. Thus, <span class="math display">\[30.66 \pm 1.96\frac{2}{\sqrt{5}} = (28.91, 32.41).\]</span></li>
 <li>As the confidence level increases, the width of the confidence level must also increase. Thus, we should find that an <span class="math inline">\(80\%\)</span> confidence interval is more tightly centered around <span class="math inline">\(30.66\)</span> and a <span class="math inline">\(99.9\%\)</span> confidence interval is more widely spread out. Indeed, using <code>R</code> we can find these to be <span class="math inline">\((29.51, 31.81)\)</span> for the <span class="math inline">\(80\%\)</span> interval, and <span class="math inline">\((27.72, 33.6)\)</span> for the <span class="math inline">\(99.9\%\)</span> interval.</li>
 </ol>
@@ -1732,7 +1733,7 @@ c(Xbar - t_crit * s/sqrt(100), Xbar + t_crit * s/sqrt(100))`,
 <li>They want to be <span class="math inline">\(99\%\)</span> confident?</li>
 </ol>
 </div>
-<div id="exr-14.13" class="theorem exercise">
+<div id="exr-14.14" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 14.12</strong></span> A company wishes to understand whether its recruiting practices are disproportionately aimed at men; to do so, they wish to understand the proportion, <span class="math inline">\(p\)</span>, of applicants to their positions who do not identify as male. In a random sample of <span class="math inline">\(80\)</span> applications, it found that <span class="math inline">\(22\)</span> were from non-male identified individuals.</p>
 <ol type="a">
 <li>Find an approximate <span class="math inline">\(90\%\)</span> confidence interval for <span class="math inline">\(p\)</span>, and indicate what assumptions are necessary for the approximation to be valid.</li>
@@ -1772,8 +1773,8 @@ c(Xbar - t_crit * s/sqrt(100), Xbar + t_crit * s/sqrt(100))`,
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(153\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(135.39\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(135.40\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(145.39\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(145.40\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(4.59\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(0.37\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(122.20\)</span></td>
@@ -1789,7 +1790,7 @@ c(Xbar - t_crit * s/sqrt(100), Xbar + t_crit * s/sqrt(100))`,
 <p><span class="theorem-title"><strong>Exercise 14.16</strong></span> A <span class="math inline">\(95\%\)</span> confidence interval for a population mean is computed from a sample of size <span class="math inline">\(400\)</span>. Another <span class="math inline">\(95\%\)</span> confidence interval will be computed from a sample of size <span class="math inline">\(100\)</span> drawn from the sample population. What will be the approximate ratio of the length of the first interval to the length of the second?</p>
 </div>
 <div id="exr-14.18" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 14.17</strong></span> Based on a large sample of capacitors of a certain type, a <span class="math inline">\(95\%\)</span> confidence interval for the mean capacitance was computed to be <span class="math inline">\((0.213, 0.241)\)</span>. Find a <span class="math inline">\(90\%\)</span> confidence interval for the mean capacitance of this type of capacitor.</p>
+<p><span class="theorem-title"><strong>Exercise 14.17</strong></span> Based on a large sample of capacitors of a certain type, a <span class="math inline">\(95\%\)</span> confidence interval for the mean capacitance was computed to be <span class="math inline">\((0.214, 0.241)\)</span>. Find a <span class="math inline">\(90\%\)</span> confidence interval for the mean capacitance of this type of capacitor.</p>
 </div>
 <div id="exr-14.19" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 14.18</strong></span> Based on a sample of repair records, an engineer calculates a <span class="math inline">\(95\%\)</span> confidence interval for the mean cost to repair a fiber-optic component to be <span class="math inline">\((140, 160)\)</span>. A supervisor summarizes this result saying “We are <span class="math inline">\(95\%\)</span> confident that the mean cost of repairs is less than $160.” Is the supervisor underestimating, overestimating, or getting the confidence of this statement correct? Why?</p>
@@ -1804,7 +1805,7 @@ c(Xbar - t_crit * s/sqrt(100), Xbar + t_crit * s/sqrt(100))`,
 </ol>
 </div>
 <div id="exr-14.21" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 14.20</strong></span> A stock market analyst notices that in a certain year, the price of IBM stock increased on <span class="math inline">\(131\)</span> of <span class="math inline">\(252\)</span> trading days. Can these data be used to find a <span class="math inline">\(95\%\)</span> confidence interval for the proportion of days that IBM stock increases? Explain.</p>
+<p><span class="theorem-title"><strong>Exercise 14.20</strong></span> A stock market analyst notices that in a certain year, the price of IBM stock increased on <span class="math inline">\(141\)</span> of <span class="math inline">\(252\)</span> trading days. Can these data be used to find a <span class="math inline">\(95\%\)</span> confidence interval for the proportion of days that IBM stock increases? Explain.</p>
 </div>
 <div id="exr-14.22" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 14.21</strong></span> Measurements of the diameters of a random sample of <span class="math inline">\(200\)</span> ball bearings made by a certain machine during one week showed a mean of <span class="math inline">\(0.84\)</span> inches and a standard deviation of <span class="math inline">\(0.042\)</span> inches. Find <span class="math inline">\(95\%\)</span> and <span class="math inline">\(99\%\)</span> confidence intervals for the diameter of all the ball bearings.</p>
@@ -1839,7 +1840,7 @@ c(Xbar - t_crit * s/sqrt(100), Xbar + t_crit * s/sqrt(100))`,
 <p><span class="theorem-title"><strong>Exercise 14.27</strong></span> Measurements for the chemical analysis of runoff water from sawmills in British Columbia are taken. Six measurements for the water’s pH are recorded as: <span class="math inline">\(5.9\)</span>, <span class="math inline">\(5.0\)</span>, <span class="math inline">\(6.5\)</span>, <span class="math inline">\(5.6\)</span>, <span class="math inline">\(5.9\)</span>, and <span class="math inline">\(6.5\)</span>. If these are a random sample from an approximately normally distributed population, find a <span class="math inline">\(95\%\)</span> confidence interval for the true pH.</p>
 </div>
 <div id="exr-14.29" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 14.28</strong></span> Fission tracks are trails found in uranium-bearing minerals, left by fragments released during fission events. Fifteen tracks on one rock specimen had an average track length of <span class="math inline">\(13\)</span> <span class="math inline">\(\mu\)</span>m with a standard deviation of <span class="math inline">\(2\)</span> <span class="math inline">\(\mu\)</span>m. If the population is approximately normal, find a <span class="math inline">\(99\%\)</span> confidence interval for the mean track length for this rock specimen.</p>
+<p><span class="theorem-title"><strong>Exercise 14.28</strong></span> Fission tracks are trails found in uranium-bearing minerals, left by fragments released during fission events. Fifteen tracks on one rock specimen had an average track length of <span class="math inline">\(14\)</span> <span class="math inline">\(\mu\)</span>m with a standard deviation of <span class="math inline">\(2\)</span> <span class="math inline">\(\mu\)</span>m. If the population is approximately normal, find a <span class="math inline">\(99\%\)</span> confidence interval for the mean track length for this rock specimen.</p>
 </div>
 <div id="exr-14.30" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 14.29</strong></span> The following output is generated from statistical software computing the confidence interval for a population mean.</p>
@@ -1867,9 +1868,9 @@ c(Xbar - t_crit * s/sqrt(100), Xbar + t_crit * s/sqrt(100))`,
 <td style="text-align: center;"><span class="math inline">\(X\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(10\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(6.59635\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(0.11213\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.11214\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(0.03546\)</span></td>
-<td style="text-align: center;"><span class="math inline">\((6.51513, 6.67656)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((6.51514, 6.67656)\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -1901,6 +1902,983 @@ c(Xbar - t_crit * s/sqrt(100), Xbar + t_crit * s/sqrt(100))`,
 </div>
 <div id="exr-14.35" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 14.34</strong></span> Suppose that a group of researchers decides to estimate the interval for a population proportion by taking <span class="math inline">\(\widehat{p} \pm \frac{1}{n}\)</span>. If the sample size is large enough to use the normal approximation, what is the approximate coverage probability of this interval?</p>
+</div>
+</section>
+<section id="self-assessment" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="self-assessment">Self-Assessment</h2>
+<p>Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!</p>
+<p>For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon.</p>
+<div id="sa-14.01" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-sa figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-sa quarto-uncaptioned" id="sa-14.01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Self Assessment&nbsp;14.1
+</figcaption>
+<div aria-describedby="sa-14.01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="webex-group">
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (116.98, 125.02)\)</span> and <span class="math inline">\(B = (118.8, 123.2)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(90\%\)</span> confidence interval, while the other is an <span class="math inline">\(87\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;121&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;90&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;87&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-102.43, -83.57)\)</span> and <span class="math inline">\(B = (-101.54, -84.46)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(90\%\)</span> confidence interval, while the other is an <span class="math inline">\(88\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-93&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;90&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;88&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-124.71, -117.29)\)</span> and <span class="math inline">\(B = (-123.17, -118.83)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(94\%\)</span> confidence interval, while the other is an <span class="math inline">\(85\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-121&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;85&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (8.78, 19.22)\)</span> and <span class="math inline">\(B = (9.77, 18.23)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(95\%\)</span> confidence interval, while the other is an <span class="math inline">\(87\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;14&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;95&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;87&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-144.91, -141.09)\)</span> and <span class="math inline">\(B = (-146.2, -139.8)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(97\%\)</span> confidence interval, while the other is a <span class="math inline">\(90\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-143&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;90&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;97&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-111.15, -104.85)\)</span> and <span class="math inline">\(B = (-111.27, -104.73)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(95\%\)</span> confidence interval, while the other is a <span class="math inline">\(92\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-108&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;92&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;95&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-202.17, -187.83)\)</span> and <span class="math inline">\(B = (-197.76, -192.24)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(95\%\)</span> confidence interval, while the other is an <span class="math inline">\(87\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-195&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;95&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;87&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-146.29, -137.71)\)</span> and <span class="math inline">\(B = (-145.57, -138.43)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is an <span class="math inline">\(85\%\)</span> confidence interval, while the other is an <span class="math inline">\(84\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-142&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;85&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;84&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-148.45, -143.55)\)</span> and <span class="math inline">\(B = (-149.42, -142.58)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(92\%\)</span> confidence interval, while the other is an <span class="math inline">\(82\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-146&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;82&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;92&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-174.59, -171.41)\)</span> and <span class="math inline">\(B = (-176.66, -169.34)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(93\%\)</span> confidence interval, while the other is a <span class="math inline">\(92\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-173&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;92&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;93&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-14.9, 4.9)\)</span> and <span class="math inline">\(B = (-7.75, -2.25)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(99\%\)</span> confidence interval, while the other is an <span class="math inline">\(88\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-5&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;99&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;88&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-108.9, -101.1)\)</span> and <span class="math inline">\(B = (-108.06, -101.94)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(95\%\)</span> confidence interval, while the other is a <span class="math inline">\(94\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-105&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;95&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (75.7, 78.3)\)</span> and <span class="math inline">\(B = (69.53, 84.47)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is an <span class="math inline">\(89\%\)</span> confidence interval, while the other is an <span class="math inline">\(81\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;77&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;81&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;89&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-48.99, -29.01)\)</span> and <span class="math inline">\(B = (-48.86, -29.14)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is an <span class="math inline">\(88\%\)</span> confidence interval, while the other is an <span class="math inline">\(87\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-39&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;88&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;87&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-171.61, -164.39)\)</span> and <span class="math inline">\(B = (-169.21, -166.79)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is an <span class="math inline">\(87\%\)</span> confidence interval, while the other is an <span class="math inline">\(81\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-168&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;87&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;81&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (91.89, 102.11)\)</span> and <span class="math inline">\(B = (93.43, 100.57)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is an <span class="math inline">\(82\%\)</span> confidence interval, while the other is an <span class="math inline">\(80\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;97&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;82&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;80&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (120.45, 131.55)\)</span> and <span class="math inline">\(B = (117.08, 134.92)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(90\%\)</span> confidence interval, while the other is an <span class="math inline">\(83\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;126&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;83&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;90&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-17.61, 1.61)\)</span> and <span class="math inline">\(B = (-15.71, -0.29)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(98\%\)</span> confidence interval, while the other is a <span class="math inline">\(94\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-8&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;98&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (27.79, 44.21)\)</span> and <span class="math inline">\(B = (28.2, 43.8)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(92\%\)</span> confidence interval, while the other is a <span class="math inline">\(91\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;36&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;92&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;91&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-206.69, -187.31)\)</span> and <span class="math inline">\(B = (-201.96, -192.04)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(97\%\)</span> confidence interval, while the other is an <span class="math inline">\(88\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-197&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;97&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;88&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (123.38, 140.62)\)</span> and <span class="math inline">\(B = (122.73, 141.27)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(98\%\)</span> confidence interval, while the other is an <span class="math inline">\(82\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;132&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;82&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;98&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (114.39, 131.61)\)</span> and <span class="math inline">\(B = (116.79, 129.21)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(99\%\)</span> confidence interval, while the other is a <span class="math inline">\(91\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;123&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;99&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;91&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (117.33, 128.67)\)</span> and <span class="math inline">\(B = (115.14, 130.86)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(91\%\)</span> confidence interval, while the other is an <span class="math inline">\(86\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;123&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;86&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;91&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-67.65, -50.35)\)</span> and <span class="math inline">\(B = (-66.09, -51.91)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(91\%\)</span> confidence interval, while the other is an <span class="math inline">\(82\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-59&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;91&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;82&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (46.24, 63.76)\)</span> and <span class="math inline">\(B = (53.72, 56.28)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(98\%\)</span> confidence interval, while the other is a <span class="math inline">\(94\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;55&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;98&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (22.8, 29.2)\)</span> and <span class="math inline">\(B = (19.56, 32.44)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is an <span class="math inline">\(85\%\)</span> confidence interval, while the other is an <span class="math inline">\(80\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;26&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;80&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;85&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (189.55, 198.45)\)</span> and <span class="math inline">\(B = (186.86, 201.14)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(94\%\)</span> confidence interval, while the other is an <span class="math inline">\(82\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;194&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;82&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (12.35, 19.65)\)</span> and <span class="math inline">\(B = (6.19, 25.81)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(91\%\)</span> confidence interval, while the other is a <span class="math inline">\(90\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;16&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;90&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;91&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-152.66, -145.34)\)</span> and <span class="math inline">\(B = (-158.8, -139.2)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(99\%\)</span> confidence interval, while the other is a <span class="math inline">\(93\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-149&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;93&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;99&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-54.84, -41.16)\)</span> and <span class="math inline">\(B = (-52.93, -43.07)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is an <span class="math inline">\(86\%\)</span> confidence interval, while the other is an <span class="math inline">\(82\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-48&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;86&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;82&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-10.79, -7.21)\)</span> and <span class="math inline">\(B = (-16.98, -1.02)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(92\%\)</span> confidence interval, while the other is an <span class="math inline">\(84\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-9&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;84&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;92&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (147.01, 156.99)\)</span> and <span class="math inline">\(B = (148.73, 155.27)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is an <span class="math inline">\(89\%\)</span> confidence interval, while the other is an <span class="math inline">\(82\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;152&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;89&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;82&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (158.01, 169.99)\)</span> and <span class="math inline">\(B = (162.71, 165.29)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(94\%\)</span> confidence interval, while the other is a <span class="math inline">\(92\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;164&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;92&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-202.86, -191.14)\)</span> and <span class="math inline">\(B = (-205.97, -188.03)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(95\%\)</span> confidence interval, while the other is an <span class="math inline">\(85\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-197&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;85&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;95&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-66.6, -57.4)\)</span> and <span class="math inline">\(B = (-69.17, -54.83)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(99\%\)</span> confidence interval, while the other is a <span class="math inline">\(90\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-62&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;90&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;99&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-108.5, -101.5)\)</span> and <span class="math inline">\(B = (-108.04, -101.96)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(92\%\)</span> confidence interval, while the other is an <span class="math inline">\(88\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-105&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;92&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;88&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-98.81, -81.19)\)</span> and <span class="math inline">\(B = (-94.96, -85.04)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(98\%\)</span> confidence interval, while the other is an <span class="math inline">\(82\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-90&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;98&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;82&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (138.83, 155.17)\)</span> and <span class="math inline">\(B = (143.85, 150.15)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(96\%\)</span> confidence interval, while the other is a <span class="math inline">\(94\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;147&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;96&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-90.44, -85.56)\)</span> and <span class="math inline">\(B = (-90.58, -85.42)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(95\%\)</span> confidence interval, while the other is a <span class="math inline">\(94\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-88&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;95&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-102.68, -93.32)\)</span> and <span class="math inline">\(B = (-99.6, -96.4)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is an <span class="math inline">\(89\%\)</span> confidence interval, while the other is an <span class="math inline">\(86\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-98&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;89&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;86&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-24.16, -9.84)\)</span> and <span class="math inline">\(B = (-23.12, -10.88)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(98\%\)</span> confidence interval, while the other is a <span class="math inline">\(95\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-17&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;98&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;95&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-154.56, -151.44)\)</span> and <span class="math inline">\(B = (-159.18, -146.82)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(94\%\)</span> confidence interval, while the other is a <span class="math inline">\(92\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-153&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;92&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-69.34, -66.66)\)</span> and <span class="math inline">\(B = (-70.94, -65.06)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(94\%\)</span> confidence interval, while the other is a <span class="math inline">\(91\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-68&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;91&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-189.77, -178.23)\)</span> and <span class="math inline">\(B = (-191.05, -176.95)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(91\%\)</span> confidence interval, while the other is an <span class="math inline">\(84\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-184&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;84&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;91&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (127.99, 130.01)\)</span> and <span class="math inline">\(B = (124.46, 133.54)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(98\%\)</span> confidence interval, while the other is an <span class="math inline">\(82\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;129&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;82&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;98&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (76.09, 93.91)\)</span> and <span class="math inline">\(B = (77.95, 92.05)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(98\%\)</span> confidence interval, while the other is an <span class="math inline">\(84\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;85&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;98&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;84&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-149.27, -138.73)\)</span> and <span class="math inline">\(B = (-153.72, -134.28)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(93\%\)</span> confidence interval, while the other is an <span class="math inline">\(85\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-144&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;85&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;93&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-192.85, -181.15)\)</span> and <span class="math inline">\(B = (-193.62, -180.38)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(94\%\)</span> confidence interval, while the other is a <span class="math inline">\(93\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-187&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;93&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (-130.61, -111.39)\)</span> and <span class="math inline">\(B = (-122.73, -119.27)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(93\%\)</span> confidence interval, while the other is a <span class="math inline">\(92\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;-121&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;93&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;92&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>The following are confidence intervals for <span class="math inline">\(\mu\)</span>, the true mean for a population: <span class="math inline">\(A = (60.3, 71.7)\)</span> and <span class="math inline">\(B = (61.72, 70.28)\)</span>. These intervals are standard, symmetric confidence intervals for the mean. One is a <span class="math inline">\(94\%\)</span> confidence interval, while the other is a <span class="math inline">\(92\%\)</span> confidence interval.</p>
+<ol type="a">
+<li>What is the sample mean? <input class="webex-solveme nospaces" data-tol="0.001" size="20" data-answer="[&quot;66&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(A\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;94&quot;]"></li>
+<li>What is the confidence level for <span class="math inline">\(B\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;92&quot;]"></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+<div id="sa-14.02" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-sa figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-sa quarto-uncaptioned" id="sa-14.02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Self Assessment&nbsp;14.2
+</figcaption>
+<div aria-describedby="sa-14.02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="webex-group">
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(93\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.93&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -5.94\)</span>. If the interval is computed as <span class="math inline">\((-7.54, -2.69)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(82\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.82&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -3.68\)</span>. If the interval is computed as <span class="math inline">\((-15.64, -5.84)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(98\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.98&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -3.51\)</span>. If the interval is computed as <span class="math inline">\((-11.6, -4.84)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(88\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.88&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -5.18\)</span>. If the interval is computed as <span class="math inline">\((-15.03, -6.35)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(88\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.88&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -2.64\)</span>. If the interval is computed as <span class="math inline">\((-4.52, 4.4)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(69\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.69&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 7.87\)</span>. If the interval is computed as <span class="math inline">\((-2.94, 5.62)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(94\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.94&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -2.33\)</span>. If the interval is computed as <span class="math inline">\((-9.68, -3.45)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(67\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.67&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 9.74\)</span>. If the interval is computed as <span class="math inline">\((1.42, 9.2)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(67\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.67&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 6.12\)</span>. If the interval is computed as <span class="math inline">\((4.1, 13.16)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(87\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.87&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -3.31\)</span>. If the interval is computed as <span class="math inline">\((-4.18, 4.76)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(73\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.73&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 1.44\)</span>. If the interval is computed as <span class="math inline">\((-6.34, -0.65)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(70\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.7&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 3.71\)</span>. If the interval is computed as <span class="math inline">\((-4.61, 1.3)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(77\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.77&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -8.55\)</span>. If the interval is computed as <span class="math inline">\((-16.78, -9.81)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(95\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.95&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -2.51\)</span>. If the interval is computed as <span class="math inline">\((-11.2, -4.31)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(82\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.82&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 3.84\)</span>. If the interval is computed as <span class="math inline">\((-0.03, 3.3)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(77\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.77&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -4.74\)</span>. If the interval is computed as <span class="math inline">\((-5.87, -1.34)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(84\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.84&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 0.12\)</span>. If the interval is computed as <span class="math inline">\((-10.01, -1.92)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(87\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.87&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 8.5\)</span>. If the interval is computed as <span class="math inline">\((3.63, 7.53)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(71\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.71&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -9.75\)</span>. If the interval is computed as <span class="math inline">\((-18.28, -11.82)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(81\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.81&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -1.5\)</span>. If the interval is computed as <span class="math inline">\((-9.5, -3.28)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(87\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.87&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 7.96\)</span>. If the interval is computed as <span class="math inline">\((-0.81, 5.62)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(66\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.66&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 5.66\)</span>. If the interval is computed as <span class="math inline">\((3.51, 9.74)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(80\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.8&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -9.74\)</span>. If the interval is computed as <span class="math inline">\((-19.43, -10.36)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(78\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.78&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 4\)</span>. If the interval is computed as <span class="math inline">\((-7.39, 2.27)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(97\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.97&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -0.3\)</span>. If the interval is computed as <span class="math inline">\((-2.58, 7.25)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(71\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.71&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 1.89\)</span>. If the interval is computed as <span class="math inline">\((-5.51, 0.86)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(75\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.75&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -7.48\)</span>. If the interval is computed as <span class="math inline">\((-19.05, -9.96)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(88\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.88&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -1.73\)</span>. If the interval is computed as <span class="math inline">\((-13.17, -3.48)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(88\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.88&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -0.98\)</span>. If the interval is computed as <span class="math inline">\((-3.12, 3.81)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(81\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.81&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 5.07\)</span>. If the interval is computed as <span class="math inline">\((2.92, 8.22)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(78\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.78&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -0.8\)</span>. If the interval is computed as <span class="math inline">\((-6.09, -1.74)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(84\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.84&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 0.41\)</span>. If the interval is computed as <span class="math inline">\((-1.92, 6.12)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(70\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.7&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -4.46\)</span>. If the interval is computed as <span class="math inline">\((-15.3, -6.06)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(89\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.89&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 1.69\)</span>. If the interval is computed as <span class="math inline">\((-8.81, -0.8)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(86\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.86&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 7.15\)</span>. If the interval is computed as <span class="math inline">\((5.71, 9.37)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(86\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.86&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 6.7\)</span>. If the interval is computed as <span class="math inline">\((-0.79, 4.53)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(93\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.93&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -9.89\)</span>. If the interval is computed as <span class="math inline">\((-16.9, -10.92)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(87\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.87&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -4.86\)</span>. If the interval is computed as <span class="math inline">\((-7.11, -0.6)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(76\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.76&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -2.7\)</span>. If the interval is computed as <span class="math inline">\((-14.06, -5.08)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(67\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.67&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -3.96\)</span>. If the interval is computed as <span class="math inline">\((-10, -5.27)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(91\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.91&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -3.83\)</span>. If the interval is computed as <span class="math inline">\((-4.4, -0.62)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(65\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.65&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 3.13\)</span>. If the interval is computed as <span class="math inline">\((-8.16, 0.8)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(95\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.95&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -5.08\)</span>. If the interval is computed as <span class="math inline">\((-10.15, -6.51)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(88\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.88&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -4.47\)</span>. If the interval is computed as <span class="math inline">\((-11.48, -6.07)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(81\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.81&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 8.51\)</span>. If the interval is computed as <span class="math inline">\((1.75, 7.09)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(67\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.67&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 6.65\)</span>. If the interval is computed as <span class="math inline">\((0.26, 4.97)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(67\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.67&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = 7.38\)</span>. If the interval is computed as <span class="math inline">\((0.27, 5.6)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(62\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.62&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -8.54\)</span>. If the interval is computed as <span class="math inline">\((-17.71, -10.99)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that a <span class="math inline">\(66\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.66&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -7.46\)</span>. If the interval is computed as <span class="math inline">\((-8.08, -4.96)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;1&quot;]"></li>
+</ol>
+</div>
+</div>
+<div class="webex-question">
+<div class="webex-check webex-box">
+<p>Suppose that an <span class="math inline">\(80\%\)</span> confidence interval is going to be formed for some parameter, <span class="math inline">\(\theta\)</span>. The interval estimator is expressed as <span class="math inline">\((\widehat{L}, \widehat{U})\)</span>.</p>
+<ol type="a">
+<li>Prior to taking the sample, what is the probability that <span class="math inline">\(\theta\)</span> is contained in <span class="math inline">\((\widehat{L}, \widehat{U})\)</span> ? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0.8&quot;]"></li>
+<li>Suppose that <span class="math inline">\(\theta = -2.47\)</span>. If the interval is computed as <span class="math inline">\((-10.34, -3.83)\)</span>, what is the probability that the interval contains <span class="math inline">\(\theta\)</span>? <input class="webex-solveme nospaces" data-tol="0" size="20" data-answer="[&quot;0&quot;]"></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</figure>
 </div>
 <div id="calculator-holder">
 <div id="qwebr-insertion-location-2"></div>
