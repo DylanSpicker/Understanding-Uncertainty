@@ -69,9 +69,10 @@ Below are `r n` responses.
 
 Using these data, consider the following frequency distribution. 
 
-```{r freq_dist, echo = FALSE, results = "asis"}
+```{r tbl:freq_dist, echo = FALSE, results = "asis", tbl.cap = "This is a table caption?"}
 tbl_str
 ```
+
 Fill in each of the corresponding blanks.
 
 (a) ##ANSWER1##
