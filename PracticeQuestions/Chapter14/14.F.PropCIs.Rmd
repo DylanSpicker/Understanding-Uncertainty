@@ -1,0 +1,113 @@
+```{r data generation, echo = FALSE, results = "hide"}
+get_article_num <- function(num) {
+    fd <- as.numeric(substr(num, 1, 1))
+
+    if(fd == 8) {
+        "an"
+    } else {
+        "a"
+    }
+}
+
+scenarios <- list(
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals in a particular region living in poverty.",
+        qty = "number of people living in poverty",
+        prob = round(runif(1, 0.05, 0.15), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of high schoolers in a school board who own a smartphone.",
+        qty = "number of high schoolers with a smartphone",
+        prob = round(runif(1, 0.5, 0.85), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals who smoke cigarettes.",
+        qty = "number of individuals who smoke",
+        prob = round(runif(1, 0.05, 0.45), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals who are left-handed.",
+        qty = "number of left-handed individuals",
+        prob = round(runif(1, 0.05, 0.15), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals in a particular region who recycle.",
+        qty = "number of individuals who recycle",
+        prob = round(runif(1, 0.25, 0.75), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals who are vegan.",
+        qty = "number of people who are vegan",
+        prob = round(runif(1, 0.02, 0.15), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals who use social media daily.",
+        qty = "number of individuals who use social media daily",
+        prob = round(runif(1, 0.5, 0.9), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals who are satisfied with their jobs.",
+        qty = "number of individuals who report that they are satisfied with their jobs",
+        prob = round(runif(1, 0.3, 0.7), 2)
+    )
+)
+
+sc_idx <- sample(1:length(scenarios), 1)
+scenario <- scenarios[[sc_idx]]$scenario
+qty <- scenarios[[sc_idx]]$qty
+prob <- scenarios[[sc_idx]]$prob
+n1 <- sample(ceiling(15 / min(prob, 1 - prob)):ceiling(30 / min(prob, 1 - prob)), 1)
+
+X <- rbinom(1, size=n1, prob=prob)
+ph <- X / n1
+
+CI <- sample(80:99, 1)
+bound_type <- sample(c("lower bound", "upper bound"), 1)
+
+ao2 <- 0.5 - CI/200
+a <- 1 - CI/100
+
+ans1 <- ph + qnorm(ao2) * sqrt(ph * (1 - ph) / n1)
+ans2 <- ph - qnorm(ao2) * sqrt(ph * (1 - ph) / n1)
+ans3 <- ph + qnorm(ao2) * sqrt(0.5 * (1 - 0.5) / n1)
+ans4 <- ph - qnorm(ao2) * sqrt(0.5 * (1 - 0.5) / n1)
+
+if(bound_type == "lower bound") {
+    ans5 <- ph + qnorm(a) * sqrt(ph * (1 - ph) / n1)
+    ans6 <- ph + qnorm(a) * sqrt(0.5 * (1 - 0.5) / n1)
+} else {
+    ans5 <- ph - qnorm(a) * sqrt(ph * (1 - ph) / n1)
+    ans6 <- ph - qnorm(a) * sqrt(0.5 * (1 - 0.5) / n1)
+}
+
+```
+
+Question
+========
+`r scenario`
+
+In a sample of size `r n1`, the total `r qty` was found to be `r X`. 
+
+(Answer -1 if you do not have sufficient information to answer any part of the question.)
+
+a. Give `r get_article_num(CI)` $`r CI`\%$ symmetric confidence interval for the population proportion. 
+
+Lower Bound: ##ANSWER1##
+Upper Bound: ##ANSWER2## 
+
+b. Give a conservative $`r CI`\%$ symmetric confidence interval for the population proportion.
+
+Lower Bound: ##ANSWER3##
+Upper Bound: ##ANSWER4## 
+
+c. Give `r get_article_num(CI)` $`r CI`\%$ `r bound_type` for the population proportion. ##ANSWER5##
+d. Give a conservative $`r CI`\%$ `r bound_type` for the population proportion. ##ANSWER6##
+
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num|num|num
+extol: 0.001
+exsolution: `r fmt(ans1, 3)` | `r fmt(ans2, 3)` | `r fmt(ans3, 3)`| `r fmt(ans4, 3)` | `r fmt(ans5, 3)` | `r fmt(ans6, 3)`
+exname: Factors Impacting the Length of Intervals

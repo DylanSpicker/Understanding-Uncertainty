@@ -14,7 +14,8 @@ scenarios <- list(
         unit = "patient",
         article = "a",
         verb = "are",
-        verb2 = "is"
+        verb2 = "is",
+        verbneg = "is not"
     ),
     list(
         A = "low risk",
@@ -24,7 +25,8 @@ scenarios <- list(
         unit = "investment",
         article = "an",
         verb = "are",
-        verb2 = "is"
+        verb2 = "is",
+        verbneg = "is not"
     ),
     list(
         A = "dissatisfied",
@@ -34,7 +36,8 @@ scenarios <- list(
         unit = "customer",
         article = "a",
         verb = "are",
-        verb2 = "is"
+        verb2 = "is",
+        verbneg = "is not"
     ),
     list(
         A = "light",
@@ -44,7 +47,8 @@ scenarios <- list(
         unit = "train",
         article = "a",
         verb = "have traffic considered",
-        verb2 = "traffic is considered"
+        verb2 = "traffic is considered",
+        verb2 =neg"traffic is not considered"
     ),
     list(
         A = "needs improvement",
@@ -54,7 +58,8 @@ scenarios <- list(
         unit = "submission",
         article = "a",
         verb = "are scored",
-        verb2 = "is scored"        
+        verb2 = "is scored",
+        verb2 neg "is not scored"
     ),
     list(
         A = "budget",
@@ -64,7 +69,8 @@ scenarios <- list(
         unit = "hotel",
         article = "a",
         verb = "are",
-        verb2 = "is"        
+        verb2 = "is",
+        verbneg = "is not"        
     )
 )
 
@@ -78,6 +84,7 @@ oC <- scenarios[[sc_idx]]$C
 article <- scenarios[[sc_idx]]$article
 verb <- scenarios[[sc_idx]]$verb
 verb2 <- scenarios[[sc_idx]]$verb2
+verbneg <- scenarios[[sc_idx]]$verbneg
 unit <- scenarios[[sc_idx]]$unit
 
 
@@ -98,7 +105,7 @@ Suppose that `r pA`% of `r unit`s `r verb` `r oA` and that `r pB`% of `r unit`s 
 Consider `r article` `r unit` that is randomly selected. 
 
 a. What is the probability that the `r unit` `r verb2` "`r oC`"? ##ANSWER1##
-b. What is the probability that the `r unit` `r verb2` not "`r oA`"? ##ANSWER2##
+b. What is the probability that the `r unit` `r verbneg` "`r oA`"? ##ANSWER2##
 c. What is the probability that the `r unit` `r verb2` either "`r oA`" or "`r oB`"? ##ANSWER3##
 d. What is the probability that the `r unit` `r verb2` both "`r oA`" and "`r oB`"? ##ANSWER4##
 

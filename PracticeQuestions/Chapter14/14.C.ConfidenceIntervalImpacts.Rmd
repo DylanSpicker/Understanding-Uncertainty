@@ -1,0 +1,35 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+n1 <- sample(35:100, 1)
+n2 <- sample((n1+5):500, 1)
+bp <- sample(70:99, 1)
+cp <- sample(setdiff(70:99, bp+-3:3), 1)
+a <- round(runif(1, 1.1, 10), 1)
+d <- round(runif(1, 0.5, 10), 1)
+e <- round(runif(1, 5, 1000), 1)
+
+ans1 <- sqrt(a)
+ans2 <- (qt(0.5-bp/200, df = n1-1) / sqrt(n1)) / (qt(0.5-bp/200, df = n2-1) / sqrt(n2))
+ans3 <- qnorm(0.5-bp/200) / qnorm(0.5-cp/200)
+ans4 <- 1/sqrt(d)
+ans5 <- 1
+
+```
+
+Question
+========
+Consider forming a confidence interval for a population mean. Suppose that the confidence interval is computed based on a sample of size `r n1`, at the $`r bp`\%$ level of confidence. 
+
+a. Suppose that a second confidence interval is computed, using the same known population variance, at the same level of confidence, with a sample size that is `r a` times as large as the original sample. What is the ratio of the length of the confidence intervals (original divided by newly formed)? (If there is insufficient information, answer -1). ##ANSWER1##
+b. Suppose that a second confidence interval is computed, using the same **estimated** variance, at the same level of confidence, with a sample size of `r n2`. What is the ratio of the length of the confidence intervals (original divided by newly formed)? (If there is insufficient information, answer -1). ##ANSWER2##
+c. Suppose that a second confidence interval is computed, using the same known population variance, with the same sample size, but with a confidence level of $`r cp`\%$. What is the ratio of the length of the confidence intervals (original divided by newly formed)? (If there is insufficient information, answer -1). ##ANSWER3##
+d. Suppose that a second confidence interval is computed, using the same sample size and confidence level, but with an **estimated variance** that is `r d` times as large as the original. What is the ratio of the length of the confidence intervals (original divided by newly formed)? (If there is insufficient information, answer -1). ##ANSWER4##
+e. Suppose that a second confidence interval is computed, using the same **estimated** variance, the same sample size, and the same confidence level, but where the sample mean is `r e` higher than the initial sample mean. What is the ratio of the length of the confidence intervals (original divided by newly formed)? (If there is insufficient information, answer -1). ##ANSWER5##
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num|num
+extol: 0.001
+exsolution: `r fmt(ans1, 3)` | `r fmt(ans2, 3)` | `r fmt(ans3, 3)`| `r fmt(ans4, 3)` | `r fmt(ans5, 0)`
+exname: Factors Impacting the Length of Intervals

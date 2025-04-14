@@ -98,7 +98,7 @@ if(scenario_idx == 1) {
 
     scenario <- paste0("A delivery company offers customers the ability to send their packages either using a standard service or an express service. Of all package sent, $", format(100*p_standard, scientific=FALSE), "\\%$ are sent via the standard service. A package sent via the standard service has a ", p_late_standard, " probability of arriving late, and a package sent via the express service has a ", p_late_express, " probability of arriving late.")
 
-    question <- paste0("If an package ", result, ", what is the probability it was sent via the ", outcome," service?")
+    question <- paste0("If a package ", result, ", what is the probability it was sent via the ", outcome," service?")
 }
 
 id <- sprintf("%010d", sample(0:1000000000, 1))

@@ -1,0 +1,63 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+increase <- c("The sample size, $n$, is decreased", 
+             "The population variance is increased.",
+             "The population standard deviation is increased.",
+             "The confidence level is increased.",
+             "The level of significance, $\\alpha$, is decreased.")
+
+decrease <- c("The sample size, $n$, is increased", 
+             "The population variance is decreased.",
+             "The population standard deviation is decreased.",
+             "The confidence level is decreased.",
+             "The level of significance, $\\alpha$, is increased.")
+
+no_change <- c(
+    "The sample mean is increased.",
+    "The sample mean is decreased.",
+    "The population mean is increased.",
+    "The population mean is decreased.",
+    "The sample standard deviation is increased.",
+    "The sample standard deviation is decreased."
+)
+
+
+inc <- sample(1:3, 1)
+dec <- sample(1:(4-inc), 1)
+nc <- 5 - inc - dec
+
+inc_statements <- sample(increase, inc)
+dec_statements <- sample(decrease, dec)
+nc_statements <- sample(no_change, nc)
+
+
+if(sample(0:1,1) == 0) {
+    answers <- c(inc_statements, dec_statements, nc_statements)
+    solutions <- c(rep(TRUE, length(inc_statements)), rep(FALSE, 5 - length(inc_statements)))
+    type <- "increase"
+} else {
+    answers <- c(dec_statements, inc_statements, nc_statements)
+    solutions <- c(rep(TRUE, length(dec_statements)), rep(FALSE, 5 - length(dec_statements)))
+    type <- "decrease"
+}
+
+o <- sample(1:5)
+answers <- answers[o]
+solutions <- solutions[o]
+```
+
+Question
+========
+Consider a $100\times(1-\alpha)\%$ confidence interval for the mean of a normal distribution with known variance, $\sigma^2$, based on a random sample of $n$ observations.
+
+For which of the following changes will the width of the confidence interval `r type`, if everything else is held constant?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(answers, markup = "markdown")
+```
+
+Meta-information
+================
+extype: mchoice
+exsolution: `r mchoice2string(solutions)`
+exname: 14.10 - Factors Influencing CI Width

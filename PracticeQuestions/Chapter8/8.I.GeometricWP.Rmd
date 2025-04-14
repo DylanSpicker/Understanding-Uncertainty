@@ -31,7 +31,7 @@ events_b <- c(
 timeframes <- c(
     "on any particular day",
     "during any specific month",
-    "the production of any item",
+    "during the production of any item",
     "during any hour"
 )
 
@@ -56,7 +56,7 @@ id <- sprintf("%010d", sample(0:1000000000, 1))
 
 Question
 ========
-The probability of a `r event` occuring `r timeframe` is `r p`.
+The probability of a `r event` occurring `r timeframe` is `r p`.
 
 a. What is the probability that the first `r event_b` `r prep` `r timeframe_unit` `r Xa`? ##ANSWER1##
 b. What is the probability that, by `r timeframe_unit` `r Xb`, the first `r event_b` has still not occured ? ##ANSWER2##

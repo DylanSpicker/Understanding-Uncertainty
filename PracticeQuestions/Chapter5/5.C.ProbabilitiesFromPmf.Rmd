@@ -138,7 +138,7 @@ Question
 
 A discrete random variable $X$ has probability mass function `r pmf`
 
-a. Compte $P(X = `r a_val`)$. ##ANSWER1##
+a. Compute $P(X = `r a_val`)$. ##ANSWER1##
 a. Compute $P(X \leq `r b_val`)$. ##ANSWER2##
 c. Compute $P(X > `r c_val`)$. ##ANSWER3##
 d. Compute $P(`r lv` `r sym1` X `r sym2` `r uv`)$. ##ANSWER4##

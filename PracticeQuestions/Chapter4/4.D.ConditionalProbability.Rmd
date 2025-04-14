@@ -10,7 +10,7 @@ scenarios <- list(
     list(
         setup = "Of students at a particular University who joined a club in the past year",
         event1 = "joined a sports club",
-        event2 = "joined the scocer club",
+        event2 = "joined the soccer club",
         event3 = "it was the soccer club"
     ),
     list(

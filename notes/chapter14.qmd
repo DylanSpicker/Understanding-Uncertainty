@@ -685,6 +685,62 @@ exams2forms("14.B.CIInterpretationGeneral.Rmd",
 ```
 :::
 
+:::{#sa-14.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 14345678900
+exams2forms("14.C.ConfidenceIntervalImpacts.Rmd", 
+            edir = "../PracticeQuestions/Chapter14", 
+            n = 50)
+```
+:::
+
+:::{#sa-14.04}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 14345678900
+exams2forms("14.D.InfluenceOfFactors.Rmd", 
+            edir = "../PracticeQuestions/Chapter14", 
+            n = 50)
+```
+:::
+
+:::{#sa-14.05}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 14345678900
+exams2forms("14.E.MeanCIs.Rmd", 
+            edir = "../PracticeQuestions/Chapter14", 
+            n = 50)
+```
+:::
+
+:::{#sa-14.06}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 14345678900
+exams2forms("14.F.PropCIs.Rmd", 
+            edir = "../PracticeQuestions/Chapter14", 
+            n = 50)
+```
+:::
+
 :::
 
 ::: {.content-visible when-format='html'}
