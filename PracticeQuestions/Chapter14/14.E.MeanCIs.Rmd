@@ -100,6 +100,9 @@ if(bound_type == "lower bound") {
     ans6 <- xbar - qt(a, df = n1 - 1) * sd / sqrt(n1)
 }
 
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
 ```
 
 Question
@@ -123,6 +126,7 @@ Upper Bound: ##ANSWER4##
 c. If the population standard deviation is known to be `r sd`, give `r get_article_num(CI)` $`r CI`\%$ `r bound_type` for the mean. ##ANSWER5##
 d. If the sample standard deviation is found to be `r sd`, give `r get_article_num(CI)` $`r CI`\%$ `r bound_type` for the mean. ##ANSWER6##
 
+(Question ID: *`r id`*)
 
 Meta-information
 ================

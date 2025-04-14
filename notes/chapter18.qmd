@@ -418,5 +418,41 @@ d. What concerns or considerations may exist to select between the test identifi
 :::
 
 ::: {.content-visible when-format='html'}
+
+## Self-Assessment {.unnumbered}
+
+Note: the following questions are still experimental. Please contact me if you have any issues with these components. This can be if there are incorrect answers, or if there are any technical concerns. Each question currently has an ID with it, randomized for each version. If you have issues, reporting the specific ID will allow for easier checking!
+
+For each question, you can check your answer using the checkmark button. You can cycle through variants of the question by pressing the arrow icon. 
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(exams2forms)
+set.seed(31415)
+
+```
+
+:::{#sa-18.01}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678
+exams2forms("18.A.GoodnessOfFit.Rmd", 
+            edir = "../PracticeQuestions/Chapter18", 
+            n = 50)
+```
+:::
+
+
+:::
+
+::: {.content-visible when-format='html'}
 {{< include /calculator.qmd >}}
 :::

@@ -1,0 +1,138 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+scenarios <- list(
+  list(
+    scenario = "An individual wishes to consider whether a particular six-sided die is actually fair. They decide to test this, by considering the results of a series of die rolls. They observe the following results.",
+    options = 1:6,
+    null_probs = rep(1/6, 6),
+    null_hyp = "whether the die is actually fair."
+  ),
+  list(
+    scenario = "In a batch of flowers that a florist receives the flowers are all either red or white. During this time of the year, they require 3 times as many red flowers as white flowers. They consider a sample of flowers from the shipment to test whether it meets their needs.",
+    options = c("Red Flowers", "White Flowers"),
+    null_probs = c(0.75, 0.25),
+    null_hyp = "whether the shipment meets the needs."
+  ),
+  list(
+    scenario = "A researcher is studying the distribution of blood types in a specific population. According to known population statistics, the distribution of blood types A, B, AB, and O should be 45%, 10%, 5%, and 40% respectively. The researcher collects a sample of individuals to see if their blood type distribution matches these expected proportions.",
+    options = c("A", "B", "AB", "O"),
+    null_probs = c(0.45, 0.10, 0.05, 0.40),
+    null_hyp = "whether the blood type distribution in the sample matches the known population statistics."
+  ),
+  list(
+    scenario = "A company sells candies in bags with four different colors: red, blue, green, and yellow. They claim that each color is equally likely to be in a bag. A consumer buys several bags and counts the number of candies of each color to test this claim.",
+    options = c("Red", "Blue", "Green", "Yellow"),
+    null_probs = rep(1/4, 4),
+    null_hyp = "whether each candy color is equally likely in the bags."
+  ),
+  list(
+    scenario = "A geneticist is studying the inheritance of a particular trait that is determined by three possible genotypes: AA, Aa, and aa. According to Mendelian genetics, if both parents are heterozygous (Aa), the expected ratio of these genotypes in their offspring is 1:2:1. The geneticist examines a sample of offspring to test this theoretical ratio.",
+    options = c("AA", "Aa", "aa"),
+    null_probs = c(0.25, 0.50, 0.25),
+    null_hyp = "whether the observed genotype ratio in the offspring follows the Mendelian expectation."
+  ),
+  list(
+    scenario = "A marketing team is testing the effectiveness of four different website designs (A, B, C, and D) in generating clicks. They randomly assign users to see one of the designs and record which design they clicked on. Before the test, they had no reason to believe any design would perform better than another.",
+    options = c("A", "B", "C", "D"),
+    null_probs = rep(1/4, 4),
+    null_hyp = "whether the four website designs have the same click-through rate."
+  ),
+  list(
+    scenario = "A survey asks respondents to indicate their level of agreement with a statement on a five-point Likert scale: Strongly Disagree, Disagree, Neutral, Agree, Strongly Agree. For a particular statement, a researcher wants to know if the responses are uniformly distributed across the five categories.",
+    options = c("Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"),
+    null_probs = rep(1/5, 5),
+    null_hyp = "whether the responses are uniformly distributed across the five agreement levels."
+  ),
+  list(
+    scenario = "A factory produces items that can have one of three types of defects: Type 1, Type 2, or Type 3. Based on historical data, the expected proportion of these defects is 15%, 35%, and 50% respectively. A quality control inspector takes a sample of recently produced items to check if the current defect distribution matches the historical one.",
+    options = c("Type 1", "Type 2", "Type 3"),
+    null_probs = c(0.15, 0.35, 0.50),
+    null_hyp = "whether the current defect distribution matches the historical proportions."
+  ),
+  list(
+    scenario = "In a large city, the mode of transportation used by commuters is thought to be distributed as follows: 60% drive alone, 20% use public transit, 15% carpool, and 5% bike or walk. A transportation planner conducts a survey to see if the current distribution matches these expectations.",
+    options = c("Drive Alone", "Public Transit", "Carpool", "Bike/Walk"),
+    null_probs = c(0.60, 0.20, 0.15, 0.05),
+    null_hyp = "whether the current distribution of commuting modes matches the expected proportions."
+  ),
+  list(
+    scenario = "A researcher is investigating whether there is a preference for different types of online news sources. They categorize news sources into five types: Traditional Media, Online-Only News, Blogs, Social Media News, and Citizen Journalism. They assume that in the absence of preference, people would access these types equally.",
+    options = c("Traditional Media", "Online-Only News", "Blogs", "Social Media News", "Citizen Journalism"),
+    null_probs = rep(1/5, 5),
+    null_hyp = "whether there is no preference for the different types of online news sources."
+  ),
+  list(
+    scenario = "A teacher believes that the grades in their introductory statistics course should follow a certain distribution. There should be an equal number of As and Fs, twice as many Bs and Ds (compared to As), and four times as many Cs (compared to As). At the end of the semester, they want to compare the actual grade distribution of their class to this expected distribution.",
+    options = c("A", "B", "C", "D", "F"),
+    null_probs = c(0.10, 0.20, 0.40, 0.20, 0.10),
+    null_hyp = "whether the actual grade distribution of the class matches the teacher's expected distribution."
+  )
+)
+
+
+sc_idx <- sample(1:length(scenarios), 1)
+
+scenario <- scenarios[[sc_idx]]$scenario
+options <- scenarios[[sc_idx]]$options
+null_probs <- scenarios[[sc_idx]]$null_probs
+null_hyp <- scenarios[[sc_idx]]$null_hyp
+
+if(sample(0:1, 1) == 0) {
+    gen_probs <- null_probs
+} else {
+    gen_probs <- log(null_probs) + rnorm(length(null_probs), mean = 0, sd = 1) 
+    gen_probs <- exp(gen_probs) / sum(exp(gen_probs))
+}
+
+n <- sample(ceiling(10/min(gen_probs)):ceiling(100/min(gen_probs)), 1)
+alpha <- round(runif(1, 0.01, 0.1), 2)
+
+stand_ins <- sample(options, 2)
+
+observations <- sample(options, n, TRUE, prob = gen_probs)
+
+expected_vals <- null_probs * n
+
+ans1 <- null_probs[which(options == stand_ins[1])] * n
+ans2 <- null_probs[which(options == stand_ins[2])] * n
+ans3 <- sum((expected_vals - table(observations)[options])^2 / expected_vals)
+ans4 <- 1 - pchisq(ans3, df = length(options) - 1)
+ans5 <- c(ans4 > alpha, ans4 <= alpha)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r scenario`
+
+```{r tbl:freq_dist, echo = FALSE, results = "asis", tbl.cap = ""}
+knitr::kable(table(observations), col.names = c("Option", "Observed Frequency"))
+```
+
+Considering testing `r null_hyp`
+
+a. What is the expected cell count for '`r stand_ins[1]`'? ##ANSWER1##
+b. What is the expected cell count for '`r stand_ins[2]`'? ##ANSWER2##
+c. What is the value of the test statistic for testing the null hypothesis? ##ANSWER3##
+d. What is the $p$-value for testing the null hypothesis? ##ANSWER4##
+e. What is the conclusion, to test at an $\alpha = `r alpha`$ level of significance? 
+
+##ANSWER5##
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* We fail to reject the null hypothesis.
+* We reject the null hypothesis.
+
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num|schoice
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`|`r mchoice2string(ans5, single=TRUE)`
+extol: 0.001
+exname: Chi-Squared Test for Goodness of Fit

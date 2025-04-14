@@ -53,7 +53,6 @@ a8 <- as_r[3]
 a9 <- as_r[4]
 a10 <- as_r[5]
 
-tbl_str <- knitr::kable(table_output, format = "markdown", align='c')
 
 id <- sprintf("%010d", sample(0:1000000000, 1))
 
@@ -69,9 +68,7 @@ Below are `r n` responses.
 
 Using these data, consider the following frequency distribution. 
 
-```{r tbl:freq_dist, echo = FALSE, results = "asis", tbl.cap = "This is a table caption?"}
-tbl_str
-```
+`r knitr::kable(table_output, format = "markdown", align='c')`
 
 Fill in each of the corresponding blanks.
 

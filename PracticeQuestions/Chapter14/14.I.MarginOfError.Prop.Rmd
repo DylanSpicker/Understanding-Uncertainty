@@ -85,6 +85,9 @@ width <- abs(2 * round(qnorm(ao2) * sd / sqrt(desired_n2), 2))
 ans1 <- ceiling((qnorm(ao2) * sd / moe)^2)
 ans2 <- ceiling((qnorm(ao2) * sd / (width / 2))^2)
 
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
 ```
 
 Question
@@ -97,6 +100,8 @@ Question
 
 a. How large of a sample would be required in order for `r get_article_num(CI)` $`r CI`\%$ confidence interval to be within `r moe` of the truth? ##ANSWER1##
 b. How large of a sample would be required in order for `r get_article_num(CI)` $`r CI`\%$ confidence interval to no more than `r width` wide? ##ANSWER2##
+
+(Question ID: *`r id`*)
 
 Meta-information
 ================

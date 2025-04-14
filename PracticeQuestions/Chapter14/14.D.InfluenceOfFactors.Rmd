@@ -44,6 +44,9 @@ if(sample(0:1,1) == 0) {
 o <- sample(1:5)
 answers <- answers[o]
 solutions <- solutions[o]
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
 ```
 
 Question
@@ -51,6 +54,8 @@ Question
 Consider a $100\times(1-\alpha)\%$ confidence interval for the mean of a normal distribution with known variance, $\sigma^2$, based on a random sample of $n$ observations.
 
 For which of the following changes will the width of the confidence interval `r type`, if everything else is held constant?
+
+(Question ID: *`r id`*)
 
 ```{r questionlist, echo = FALSE, results = "asis"}
 answerlist(answers, markup = "markdown")

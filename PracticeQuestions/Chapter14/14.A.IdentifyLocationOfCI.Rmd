@@ -41,6 +41,7 @@ ans1 <- (a1 + a2)/2
 ans2 <- ifelse(meA < meB, low1, high1)
 ans3 <- ifelse(meA < meB, high1, low1)
 
+id <- sprintf("%010d", sample(0:1000000000, 1))
 
 ```
 
@@ -51,6 +52,9 @@ The following are confidence intervals for $\mu$, the true mean for a population
 a. What is the sample mean? ##ANSWER1##
 b. What is the confidence level for $A$? ##ANSWER2##
 c. What is the confidence level for $B$? ##ANSWER3## 
+
+
+(Question ID: *`r id`*)
 
 Meta-information
 ================

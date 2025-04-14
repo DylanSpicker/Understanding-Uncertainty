@@ -37,6 +37,8 @@ lb <- round(lb, 2)
 ans1 <- percent/100
 ans2 <- ifelse(wt == 0, 1, 0)
 
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
 ```
 
 Question
@@ -45,6 +47,8 @@ Suppose that `r get_article_num(percent)` $`r percent`\%$ confidence interval is
 
 a. Prior to taking the sample, what is the probability that $\theta$ is contained in $(\widehat{L}, \widehat{U})$ ? ##ANSWER1##
 b. Suppose that $\theta = `r theta_b`$. If the interval is computed as $(`r lb`, `r ub`)$, what is the probability that the interval contains $\theta$? ##ANSWER2##
+
+(Question ID: *`r id`*)
 
 Meta-information
 ================

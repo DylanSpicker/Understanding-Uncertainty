@@ -14,6 +14,8 @@ ans3 <- qnorm(0.5-bp/200) / qnorm(0.5-cp/200)
 ans4 <- 1/sqrt(d)
 ans5 <- 1
 
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
 ```
 
 Question
@@ -25,6 +27,8 @@ b. Suppose that a second confidence interval is computed, using the same **estim
 c. Suppose that a second confidence interval is computed, using the same known population variance, with the same sample size, but with a confidence level of $`r cp`\%$. What is the ratio of the length of the confidence intervals (original divided by newly formed)? (If there is insufficient information, answer -1). ##ANSWER3##
 d. Suppose that a second confidence interval is computed, using the same sample size and confidence level, but with an **estimated variance** that is `r d` times as large as the original. What is the ratio of the length of the confidence intervals (original divided by newly formed)? (If there is insufficient information, answer -1). ##ANSWER4##
 e. Suppose that a second confidence interval is computed, using the same **estimated** variance, the same sample size, and the same confidence level, but where the sample mean is `r e` higher than the initial sample mean. What is the ratio of the length of the confidence intervals (original divided by newly formed)? (If there is insufficient information, answer -1). ##ANSWER5##
+
+(Question ID: *`r id`*)
 
 Meta-information
 ================

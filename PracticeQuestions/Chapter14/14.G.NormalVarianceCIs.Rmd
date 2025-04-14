@@ -89,6 +89,9 @@ t1 <- t2 <- 10^(-d1)
 
 d3 <- d4 <- 4 - min(ceiling(log10(ans4)), 4)
 t3 <- t4 <- 10^(-d2)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
 ```
 
 Question
@@ -109,6 +112,7 @@ b. Give an approximate $`r CI`\%$ confidence interval for the standard deviation
 Lower Bound: ##ANSWER3##
 Upper Bound: ##ANSWER4## 
 
+(Question ID: *`r id`*)
 
 Meta-information
 ================
