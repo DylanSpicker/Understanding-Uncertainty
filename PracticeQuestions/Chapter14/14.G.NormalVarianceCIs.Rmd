@@ -1,0 +1,119 @@
+```{r data generation, echo = FALSE, results = "hide"}
+get_article_num <- function(num) {
+    fd <- as.numeric(substr(num, 1, 1))
+
+    if(fd == 8) {
+        "an"
+    } else {
+        "a"
+    }
+}
+
+scenarios <- list(
+    list(
+        scenario = "Suppose that the heights of individuals in a population",
+        qty = "height",
+        popmean = 168,
+        popsd = 6.5
+    ),
+    list(
+        scenario = "Suppose that systolic blood pressures of individuals in a population",
+        qty = "blood pressure",
+        popmean = 120,
+        popsd = 10
+    ),
+    list(
+        scenario = "Suppose that diastolic blood pressures of individuals in a population",
+        qty = "blood pressure",
+        popmean = 90,
+        popsd = 8
+    ),
+    list(
+        scenario = "Suppose that body temperatures of individuals in a population",
+        qty = "temperature",
+        popmean = 36.5,
+        popsd = 0.5
+    ),
+    list(
+        scenario = "Suppose that the reaction times of individuals in a population",
+        qty = "reaction time",
+        popmean = 250,
+        popsd = 50
+    ),
+    list(
+        scenario = "Suppose that weights of newborns in a population",
+        qty = "weight",
+        popmean = 3500,
+        popsd = 500
+    ),
+    list(
+        scenario = "Suppose that the serum cholesterol levels of individuals in a population",
+        qty = "serum cholesterol level",
+        popmean = 200,
+        popsd = 40
+    ),
+    list(
+        scenario = "Suppose that the red blood cell counts of individuals in a population",
+        qty = "red blood cell count",
+        popmean = 5,
+        popsd = 0.5
+    )
+)
+
+n <- sample(10:50, 1)
+
+
+sc_idx <- sample(1:length(scenarios), 1)
+scenario <- scenarios[[sc_idx]]$scenario
+qty <- scenarios[[sc_idx]]$qty
+popmean <- scenarios[[sc_idx]]$popmean
+popsd <- scenarios[[sc_idx]]$popsd
+
+
+xobs <- rnorm(n, popmean, popsd)
+
+xbar <- round(mean(xobs), 2)
+sd <- round(sd(xobs), 2)
+
+CI <- sample(80:99, 1)
+ao2 <- 0.5 - CI/200
+a <- 1 - CI/100
+
+ans1 <- (n-1) * sd^2 / qchisq(1 - ao2, df = n-1)
+ans2 <- (n-1) * sd^2 / qchisq(ao2, df = n-1)
+ans3 <- sqrt(ans1)
+ans4 <- sqrt(ans2)
+
+d1 <- d2 <- 4 - min(ceiling(log10(ans2)), 4)
+t1 <- t2 <- 10^(-d1)
+
+d3 <- d4 <- 4 - min(ceiling(log10(ans4)), 4)
+t3 <- t4 <- 10^(-d2)
+```
+
+Question
+========
+`r scenario` are approximately normally distributed.
+
+In a sample of size `r n`, the mean `r qty` was found to be `r xbar`, with a standard deviation of `r sd`. 
+
+(Answer -1 if you do not have sufficient information to answer any part of the question.)
+
+a. Give `r get_article_num(CI)` $`r CI`\%$ confidence interval for the variance. 
+
+Lower Bound: ##ANSWER1##
+Upper Bound: ##ANSWER2## 
+
+b. Give an approximate $`r CI`\%$ confidence interval for the standard deviation.
+
+Lower Bound: ##ANSWER3##
+Upper Bound: ##ANSWER4## 
+
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num
+extol: `r format(t1, scientific=FALSE)`|`r format(t2, scientific=FALSE)`|`r format(t3, scientific=FALSE)`|`r format(t4, scientific=FALSE)`
+exsolution: `r fmt(ans1, d1)` | `r fmt(ans2, d2)` | `r fmt(ans3, d3)`| `r fmt(ans4, d4)`
+exname: Normal-Based Confidence Intervals for the Variance

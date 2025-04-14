@@ -1,0 +1,113 @@
+```{r data generation, echo = FALSE, results = "hide"}
+get_article_num <- function(num) {
+    fd <- as.numeric(substr(num, 1, 1))
+
+    if(fd == 8) {
+        "an"
+    } else {
+        "a"
+    }
+}
+
+scenarios <- list(
+    list(
+        scenario = "Suppose that the heights of individuals in a population",
+        qty = "height",
+        popmean = 168,
+        popsd = 6.5
+    ),
+    list(
+        scenario = "Suppose that systolic blood pressures of individuals in a population",
+        qty = "blood pressure",
+        popmean = 120,
+        popsd = 10
+    ),
+    list(
+        scenario = "Suppose that diastolic blood pressures of individuals in a population",
+        qty = "blood pressure",
+        popmean = 90,
+        popsd = 8
+    ),
+    list(
+        scenario = "Suppose that body temperatures of individuals in a population",
+        qty = "temperature",
+        popmean = 36.5,
+        popsd = 0.5
+    ),
+    list(
+        scenario = "Suppose that the reaction times of individuals in a population",
+        qty = "reaction time",
+        popmean = 250,
+        popsd = 50
+    ),
+    list(
+        scenario = "Suppose that weights of newborns in a population",
+        qty = "weight",
+        popmean = 3500,
+        popsd = 500
+    ),
+    list(
+        scenario = "Suppose that the serum cholesterol levels of individuals in a population",
+        qty = "serum cholesterol level",
+        popmean = 200,
+        popsd = 40
+    ),
+    list(
+        scenario = "Suppose that the red blood cell counts of individuals in a population",
+        qty = "red blood cell count",
+        popmean = 5,
+        popsd = 0.5
+    )
+)
+
+dist_type <- sample(c("are approximately normally distributed.", "have an unknown population distribution."), 1)
+
+if(dist_type == "are approximately normally distributed.") {
+    n1 <- sample(10:50, 1)
+} else {
+    n1 <- sample(40:500, 1)
+}
+
+sc_idx <- sample(1:length(scenarios), 1)
+scenario <- scenarios[[sc_idx]]$scenario
+qty <- scenarios[[sc_idx]]$qty
+popmean <- scenarios[[sc_idx]]$popmean
+popsd <- scenarios[[sc_idx]]$popsd
+
+
+xobs <- rnorm(n1, popmean, popsd)
+
+xbar <- round(mean(xobs), 2)
+sd <- round(sd(xobs), 2)
+
+CI <- sample(80:99, 1)
+bound_type <- sample(c("lower bound", "upper bound"), 1)
+
+ao2 <- 0.5 - CI/200
+a <- 1 - CI/100
+
+desired_n1 <- sample(50:5000, 1)
+desired_n2 <- sample(50:5000, 1)
+
+moe <- abs(round(qnorm(ao2) * sd / sqrt(desired_n1), 2))
+width <- abs(2 * round(qnorm(ao2) * sd / sqrt(desired_n2), 2))
+
+ans1 <- ceiling((qnorm(ao2) * sd / moe)^2)
+ans2 <- ceiling((qnorm(ao2) * sd / (width / 2))^2)
+
+```
+
+Question
+========
+`r scenario` are approximately normally distributed, with a known population standard deviation of `r sd`. 
+
+a. How large of a sample would be required in order for `r get_article_num(CI)` $`r CI`\%$ confidence interval to be within `r moe` of the truth? ##ANSWER1##
+b. How large of a sample would be required in order for `r get_article_num(CI)` $`r CI`\%$ confidence interval to no more than `r width` wide? ##ANSWER2##
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num
+extol: 0
+exsolution: `r fmt(ans1, 0)`|`r fmt(ans2, 0)`
+exname: Margin of Error Sample Sizing

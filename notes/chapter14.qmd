@@ -720,7 +720,7 @@ exams2forms("14.D.InfluenceOfFactors.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 14345678900
+cache_check <- 143456789
 exams2forms("14.E.MeanCIs.Rmd", 
             edir = "../PracticeQuestions/Chapter14", 
             n = 50)
@@ -736,6 +736,48 @@ exams2forms("14.E.MeanCIs.Rmd",
 #| cache: true
 cache_check <- 14345678900
 exams2forms("14.F.PropCIs.Rmd", 
+            edir = "../PracticeQuestions/Chapter14", 
+            n = 50)
+```
+:::
+
+:::{#sa-14.07}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 143456789100
+exams2forms("14.G.NormalVarianceCIs.Rmd", 
+            edir = "../PracticeQuestions/Chapter14", 
+            n = 50)
+```
+:::
+
+:::{#sa-14.08}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 14345678900
+exams2forms("14.H.MarginOfError.Mean.Rmd", 
+            edir = "../PracticeQuestions/Chapter14", 
+            n = 50)
+```
+:::
+
+:::{#sa-14.09}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 14345678900
+exams2forms("14.I.MarginOfError.Prop.Rmd", 
             edir = "../PracticeQuestions/Chapter14", 
             n = 50)
 ```

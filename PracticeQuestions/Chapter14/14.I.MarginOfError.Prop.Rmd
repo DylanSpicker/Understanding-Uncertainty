@@ -1,0 +1,107 @@
+```{r data generation, echo = FALSE, results = "hide"}
+get_article_num <- function(num) {
+    fd <- as.numeric(substr(num, 1, 1))
+
+    if(fd == 8) {
+        "an"
+    } else {
+        "a"
+    }
+}
+
+scenarios <- list(
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals in a particular region living in poverty.",
+        qty = "number of people living in poverty",
+        prob = round(runif(1, 0.05, 0.15), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of high schoolers in a school board who own a smartphone.",
+        qty = "number of high schoolers with a smartphone",
+        prob = round(runif(1, 0.5, 0.85), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals who smoke cigarettes.",
+        qty = "number of individuals who smoke",
+        prob = round(runif(1, 0.05, 0.45), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals who are left-handed.",
+        qty = "number of left-handed individuals",
+        prob = round(runif(1, 0.05, 0.15), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals in a particular region who recycle.",
+        qty = "number of individuals who recycle",
+        prob = round(runif(1, 0.25, 0.75), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals who are vegan.",
+        qty = "number of people who are vegan",
+        prob = round(runif(1, 0.02, 0.15), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals who use social media daily.",
+        qty = "number of individuals who use social media daily",
+        prob = round(runif(1, 0.5, 0.9), 2)
+    ),
+    list(
+        scenario = "Suppose that researchers are interested in estimating the proportion of individuals who are satisfied with their jobs.",
+        qty = "number of individuals who report that they are satisfied with their jobs",
+        prob = round(runif(1, 0.3, 0.7), 2)
+    )
+)
+
+sc_idx <- sample(1:length(scenarios), 1)
+scenario <- scenarios[[sc_idx]]$scenario
+qty <- scenarios[[sc_idx]]$qty
+prob <- scenarios[[sc_idx]]$prob
+n1 <- sample(ceiling(15 / min(prob, 1 - prob)):ceiling(30 / min(prob, 1 - prob)), 1)
+X <- rbinom(1, size=n1, prob=prob)
+ph <- X / n1
+
+if(sample(0:1, 1) == 0) {
+    sd <- 0.5
+    give_info <- ""
+} else {
+    sd <- ph*(1 - ph)
+    give_info <- paste0("In a sample of size ", n1, " the total ", qty, " was found to be ", X, ".")
+}
+
+CI <- sample(80:99, 1)
+bound_type <- sample(c("lower bound", "upper bound"), 1)
+
+ao2 <- 0.5 - CI/200
+a <- 1 - CI/100
+
+max_n <- floor((qnorm(ao2) * sd / 0.01)^2)
+
+desired_n1 <- sample(50:max_n, 1)
+desired_n2 <- sample(50:max_n, 1)
+
+moe <- abs(round(qnorm(ao2) * sd / sqrt(desired_n1), 2))
+width <- abs(2 * round(qnorm(ao2) * sd / sqrt(desired_n2), 2))
+
+ans1 <- ceiling((qnorm(ao2) * sd / moe)^2)
+ans2 <- ceiling((qnorm(ao2) * sd / (width / 2))^2)
+
+```
+
+Question
+========
+`r scenario`
+
+`r give_info`
+
+(If you have insufficient information to answer the question, enter -1.)
+
+a. How large of a sample would be required in order for `r get_article_num(CI)` $`r CI`\%$ confidence interval to be within `r moe` of the truth? ##ANSWER1##
+b. How large of a sample would be required in order for `r get_article_num(CI)` $`r CI`\%$ confidence interval to no more than `r width` wide? ##ANSWER2##
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num
+extol: 0
+exsolution: `r fmt(ans1, 0)`|`r fmt(ans2, 0)`
+exname: Margin of Error Sample Sizing for Proportions

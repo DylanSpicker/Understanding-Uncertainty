@@ -1371,7 +1371,7 @@ exams2forms("11.C.ShapeOfDistribution.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 123456789400
+cache_check <- 1234567894
 
 exams2forms("11.D.SummaryStatistics.Rmd", 
             edir = "../PracticeQuestions/Chapter11", 

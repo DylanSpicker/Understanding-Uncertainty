@@ -5,7 +5,7 @@ true_statements <- c(
     "A sample is called representative if it accurately reflects the larger population.",
     "Random sampling is useful as it assists with the collection of a representative sample.",
     "The size of a sample is an important consideration for statistical inference.",
-    "There are several different methods for selectign a valid sample, with corresponding strengths and weaknesses.",
+    "There are several different methods for selecting a valid sample, with corresponding strengths and weaknesses.",
     "Sampling variability measures the variation that would be observed when taking multiple samples from the same population."
 )
 

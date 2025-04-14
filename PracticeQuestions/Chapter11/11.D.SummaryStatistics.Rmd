@@ -150,5 +150,5 @@ Meta-information
 exname: Sample Statistics
 extype: cloze
 exclozetype: num|num|num|num|num|num|num
-exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 0)`|`r fmt(ans4, 3)`|`r fmt(ans5, 3)`|`r fmt(ans6, 0)`|`r fmt(ans7, 3)`
-extol: 0.001|0.001|0|0.001|0.001|0|0
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 0)`|`r fmt(ans4, 3)`|`r fmt(ans5, 3)`|`r fmt(ans6, digits)`|`r fmt(ans7, 3)`
+extol: 0.001|0.001|0|0.001|0.001|`r 10^(-digits)`|`r 10^(-digits)`

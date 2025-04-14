@@ -18,7 +18,7 @@ stratified <- c(
 )
 
 clustered <- c(
-    "A university wants to study the satisfaction level of its students. They randomly select several classrooms and survey all the students systent in those classrooms.",
+    "A university wants to study the satisfaction level of its students. They randomly select several classrooms and survey all the students in those classrooms.",
     "A pharmaceutical company wants to test a new drug. They randomly select five hospitals and then sample all the patients being treated for the targeted condition in those hospitals.",
     "To assess the prevalence of a certain disease in a city, health officials randomly select several neighbourhoods and then examine all the residents within those neighbourhoods.",
     "To evaluate the effectiveness of a new teaching curriculum, a school district randomly selects several schools and then assesses all the students in a few randomly chosen grade levels within those schools.",

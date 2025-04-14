@@ -91,6 +91,7 @@ ans2 <- xbar - qnorm(ao2) * sd / sqrt(n1)
 ans3 <- xbar + qt(ao2, df = n1 - 1) * sd / sqrt(n1)
 ans4 <- xbar - qt(ao2, df = n1 - 1) * sd / sqrt(n1)
 
+
 if(bound_type == "lower bound") {
     ans5 <- xbar + qnorm(a) * sd / sqrt(n1)
     ans6 <- xbar + qt(a, df = n1 - 1) * sd / sqrt(n1)
