@@ -108,7 +108,7 @@ Question
 `r scenario`
 
 ```{r tbl:freq_dist, echo = FALSE, results = "asis", tbl.cap = ""}
-knitr::kable(table(observations), col.names = c("Option", "Observed Frequency"))
+knitr::kable(table(observations), col.names = c("Option", "Observed Frequency"), align = 'c')
 ```
 
 Considering testing `r null_hyp`

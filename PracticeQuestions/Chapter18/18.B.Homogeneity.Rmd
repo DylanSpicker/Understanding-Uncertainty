@@ -1,0 +1,173 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+scenarios <- list(
+  list(
+    scenario = "Researchers want to compare the effectiveness of two different teaching methods. They consider two separate classes, applying each method to one of the classes, and record the results for each of the students.",
+    populations = c("Method A", "Method B"),
+    traits = c("Pass", "Fail"),
+    null_hyp = "whether the teaching methods are equally effective.",
+    connector = "for students receiving teaching"
+  ),
+  list(
+    scenario = "Three different factories produce the same product. Samples from each factory are inspected for defects. ",
+    populations = c("Factory A", "Factory B", "Factory C"),
+    traits = c("Defective", "Non-Defective"),
+    null_hyp = "whether the factories produce defective items at equal rates.",
+    connector = "products produced at"
+  ),
+  list(
+    scenario = "Four different brands of tires are tested for tread life.",
+    populations = c("Brand A", "Brand B", "Brand C", "Brand D"),
+    traits = c("Low Wear", "Medium Wear", "High Wear"),
+    null_hyp = "whether the tire brands wear at equal rates.",
+    connector = "tires from"
+  ),
+list(
+    scenario = "A survey asks people from two different cities about their preferred mode of transportation.",
+    populations = c("City X", "City Y"),
+    traits = c("Car", "Public Transit", "Bike"),
+    null_hyp = "whether the distribution of preferred transportation modes is the same in both cities.",
+    connector = "for inhabitants of"
+  ),
+  list(
+    scenario = "Patients with a specific condition are given one of two different medications, and their improvement status is recorded.",
+    populations = c("Medication A", "Medication B"),
+    traits = c("Improved", "No Improvement"),
+    null_hyp = "whether the proportion of patients showing improvement is the same for both medications.",
+    connector = "for patients receiving"
+  ),
+  list(
+    scenario = "The distribution of blood types is compared across three different groups from different locations.",
+    populations = c("Group 1", "Group 2", "Group 3"),
+    traits = c("A", "B", "AB", "O"),
+    null_hyp = "whether the distribution of blood types is the same across the three groups.",
+    connector = "within"
+  ),
+  list(
+    scenario = "Two different types of fertilizers are used on separate plots of land, and the yield of crops is categorized.",
+    populations = c("Fertilizer X", "Fertilizer Y"),
+    traits = c("Low Yield", "High Yield"),
+    null_hyp = "whether the distribution of crop yield is the same for both fertilizers.",
+    connector = "for crops grown with"
+  ),
+  list(
+    scenario = "The preference for three different social media platforms is surveyed among students from two different universities.",
+    populations = c("University A", "University B"),
+    traits = c("Platform 1", "Platform 2", "Platform 3"),
+    null_hyp = "whether the preference for social media platforms is the same among students from both universities.",
+    connector = "among students at"
+  ),
+  list(
+    scenario = "The survival rate of plants under two different watering schedules is recorded.",
+    populations = c("Schedule 1", "Schedule 2"),
+    traits = c("Survived", "Did Not Survive"),
+    null_hyp = "whether the survival rate of plants is the same under both watering schedules.",
+    connector = "under watering"
+  ),
+  list(
+    scenario = "The distribution of customer satisfaction levels is compared for two different service providers.",
+    populations = c("Provider A", "Provider B"),
+    traits = c("Satisfied", "Neutral", "Dissatisfied"),
+    null_hyp = "whether the distribution of customer satisfaction levels is the same for both service providers.",
+    connector = "for customers of"
+  ),
+  list(
+    scenario = "The occurrence of different types of errors is tracked for two different software development teams.",
+    populations = c("Team Alpha", "Team Beta"),
+    traits = c("Syntax Error", "Logic Error", "Runtime Error"),
+    null_hyp = "whether the distribution of error types is the same for both software development teams.",
+    connector = "by"
+  ),
+  list(
+    scenario = "The purchase frequency of three different product categories is analyzed for customers from two different regions.",
+    populations = c("Region East", "Region West"),
+    traits = c("Category I", "Category II", "Category III"),
+    null_hyp = "whether the purchase frequency distribution across product categories is the same for customers from both regions.",
+    connector = "for customers in"
+  )
+)
+
+sc_idx <- sample(1:length(scenarios), 1)
+
+scenario <- scenarios[[sc_idx]]$scenario
+populations <- scenarios[[sc_idx]]$populations
+traits <- scenarios[[sc_idx]]$traits
+null_hyp <- scenarios[[sc_idx]]$null_hyp
+connector <- scenarios[[sc_idx]]$connector
+
+set_probs <- diff(c(0, sort(runif(length(traits)-1, 0, 1)), 1))
+
+probs <- list()
+
+observations <- data.frame(row.names = populations)
+observations[traits] <- 0
+
+if(sample(0:1, 1) == 0) {
+    # Generate Homogeneously
+    for(population in populations) {
+        probs[[population]] <- set_probs
+        n <- sample(ceiling(10/min(set_probs)):ceiling(100/min(set_probs)), 1)
+        observations[population, traits] <- table(sample(traits, n, TRUE, prob = probs[[population]]))[traits]
+    }    
+} else {
+    for(population in populations) {
+        probs[[population]] <- set_probs * runif(length(set_probs), 0.9, 1.1)
+        probs[[population]] <- probs[[population]] / sum(probs[[population]])
+        n <- sample(ceiling(10/min(probs[[population]])):ceiling(100/min(probs[[population]])), 1)
+        observations[population, traits] <- table(sample(traits, n, TRUE, prob = probs[[population]]))[traits]
+    }
+}
+
+
+
+alpha <- round(runif(1, 0.01, 0.1), 2)
+stand_ins <- sample(traits, 2)
+pop_stand_ins <- sample(populations, 2)
+
+expected_table <- rowSums(observations) %*% t(colSums(observations)) / sum(observations)
+row.names(expected_table) <- row.names(observations)
+
+
+ans1 <- expected_table[pop_stand_ins[1], stand_ins[1]]
+ans2 <- expected_table[pop_stand_ins[2], stand_ins[2]]
+ans3 <- sum((expected_table - observations)^2 / expected_table)
+ans4 <- 1 - pchisq(ans3, df = (length(populations) - 1) * (length(traits) - 1))
+ans5 <- c(ans4 > alpha, ans4 <= alpha)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r scenario`
+
+```{r tbl:freq_dist, echo = FALSE, results = "asis", tbl.cap = ""}
+knitr::kable(observations, align = 'c')
+```
+
+Considering testing `r null_hyp`
+
+a. What is the expected cell count for *`r stand_ins[1]`* `r connector` *`r pop_stand_ins[1]`*? ##ANSWER1##
+b. What is the expected cell count for *`r stand_ins[2]`* `r connector` *`r pop_stand_ins[2]`*? ##ANSWER2##
+c. What is the value of the test statistic for testing the null hypothesis? ##ANSWER3##
+d. What is the $p$-value for testing the null hypothesis? ##ANSWER4##
+e. What is the conclusion, to test at an $\alpha = `r alpha`$ level of significance? 
+
+##ANSWER5##
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* We fail to reject the null hypothesis.
+* We reject the null hypothesis.
+
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num|schoice
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`|`r mchoice2string(ans5, single=TRUE)`
+extol: 0.001
+exname: Chi-Squared Test for Goodness of Fit

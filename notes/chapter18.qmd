@@ -443,13 +443,40 @@ set.seed(31415)
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 12345678
+cache_check <- 123456780
 exams2forms("18.A.GoodnessOfFit.Rmd", 
             edir = "../PracticeQuestions/Chapter18", 
             n = 50)
 ```
 :::
 
+:::{#sa-18.02}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678
+exams2forms("18.B.Homogeneity.Rmd", 
+            edir = "../PracticeQuestions/Chapter18", 
+            n = 50)
+```
+:::
+
+:::{#sa-18.03}
+```{r}
+#| echo: false
+#| message: false
+#| results: 'asis'
+#| warning: false
+#| cache: true
+cache_check <- 12345678
+exams2forms("18.C.Independence.Rmd", 
+            edir = "../PracticeQuestions/Chapter18", 
+            n = 50)
+```
+:::
 
 :::
 

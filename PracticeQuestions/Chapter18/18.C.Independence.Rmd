@@ -1,0 +1,150 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+scenarios <- list(
+  list(
+    scenario = "A group of kindergarten students are given a survey where they are asked their favourite primary colour, and their favourite season. ",
+    traitA = c("Red", "Blue", "Yellow"),
+    traitB = c("Spring", "Summer", "Fall", "Winter"),
+    null_hyp = "whether there is any association between a student's favourite colour and their favourite season."
+  ),
+  list(
+    scenario = "Data on the hair colour and eye colour of individuals from a particular population are collected.",
+    traitA = c("Blonde", "Brown", "Red", "Black"),
+    traitB = c("Blue", "Green", "Brown"),
+    null_hyp = "whether eye colour and hair colour are associated with one another."
+  ),
+list(
+    scenario = "A study examines the relationship between educational attainment and employment status in a city.",
+    traitA = c("High School", "Bachelor's", "Graduate"),
+    traitB = c("Employed", "Unemployed"),
+    null_hyp = "whether there is an association between a person's level of education and their employment status."
+  ),
+  list(
+    scenario = "A marketing team wants to know if there's a link between the type of advertisement shown and whether a customer makes a purchase.",
+    traitA = c("Online Ad", "Print Ad"),
+    traitB = c("Purchase", "No Purchase"),
+    null_hyp = "whether the type of advertisement is independent of whether a customer makes a purchase."
+  ),
+  list(
+    scenario = "Researchers investigate if there's a connection between a student's participation in extracurricular activities and their academic performance.",
+    traitA = c("Participates", "Does Not Participate"),
+    traitB = c("Good Grades", "Poor Grades"),
+    null_hyp = "whether participation in extracurricular activities is independent of academic performance."
+  ),
+  list(
+    scenario = "The relationship between the type of pet owned and the owner's lifestyle (active vs. sedentary) is studied.",
+    traitA = c("Dog", "Cat", "Other"),
+    traitB = c("Active", "Sedentary"),
+    null_hyp = "whether the type of pet owned is associated with the owner's lifestyle."
+  ),
+  list(
+    scenario = "A study looks at the association between the time of day a person prefers to exercise and their self-reported energy levels.",
+    traitA = c("Morning", "Afternoon", "Evening"),
+    traitB = c("High Energy", "Low Energy"),
+    null_hyp = "whether preferred exercise time and energy levels are independent."
+  ),
+  list(
+    scenario = "The connection between a person's marital status and their level of happiness is examined.",
+    traitA = c("Single", "Married", "Divorced"),
+    traitB = c("Happy", "Not Happy"),
+    null_hyp = "whether there is an association between marital status and level of happiness."
+  ),
+  list(
+    scenario = "A car manufacturer investigates if there is a relationship between the color of a car and the likelihood of it being involved in an accident.",
+    traitA = c("Red", "White", "Black", "Other"),
+    traitB = c("Accident", "No Accident"),
+    null_hyp = "whether the color of a car is independent of its likelihood of being involved in an accident."
+  ),
+  list(
+    scenario = "A survey asks individuals about their primary source of news and their level of trust in the media.",
+    traitA = c("Online News", "Television News", "Print News"),
+    traitB = c("High Trust", "Low Trust"),
+    null_hyp = "whether the primary source of news is independent of the level of trust in the media."
+  )
+)
+
+
+sc_idx <- sample(1:length(scenarios), 1)
+
+scenario <- scenarios[[sc_idx]]$scenario
+traitA <- scenarios[[sc_idx]]$traitA
+traitB <- scenarios[[sc_idx]]$traitB
+null_hyp <- scenarios[[sc_idx]]$null_h
+
+row_probs <- diff(c(0, sort(runif(length(traitA)-1, 0, 1)), 1))
+set_probs <- diff(c(0, sort(runif(length(traitB)-1, 0, 1)), 1))
+
+probs <- list()
+
+observations <- data.frame(row.names = traitA)
+observations[traitB] <- 0
+
+if(sample(0:1, 1) == 0) {
+    # Generate Homogeneously
+    for(idx in 1:length(traitA)) {
+        probs[[traitA[idx]]] <- row_probs[idx] * set_probs
+    }    
+} else {
+    for(idx in 1:length(traitA)) {
+        probs[[traitA[idx]]] <- row_probs[idx] * set_probs * runif(length(set_probs), 0.9, 1.1)
+        probs[[traitA[idx]]] <- probs[[traitA[idx]]] / sum(probs[[traitA[idx]]])
+    }
+}
+
+overall_n <- sample(ceiling(10/min(unlist(lapply(probs, min)))):(100/min(unlist(lapply(probs, min)))), 1)
+
+observations <- matrix(rmultinom(1, size = overall_n, prob = unlist(probs)), nrow = length(traitA), ncol = length(traitB), byrow=TRUE)
+row.names(observations) <- traitA
+colnames(observations) <- traitB
+
+alpha <- round(runif(1, 0.01, 0.1), 2)
+stand_ins <- sample(traitB, 2)
+row_stand_ins <- sample(traitA, 2)
+
+expected_table <- rowSums(observations) %*% t(colSums(observations)) / sum(observations)
+row.names(expected_table) <- row.names(observations)
+
+
+ans1 <- expected_table[row_stand_ins[1], stand_ins[1]]
+ans2 <- expected_table[row_stand_ins[2], stand_ins[2]]
+ans3 <- sum((expected_table - observations)^2 / expected_table)
+ans4 <- 1 - pchisq(ans3, df = (length(traitA) - 1) * (length(traitB) - 1))
+ans5 <- c(ans4 > alpha, ans4 <= alpha)
+
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+`r scenario`
+
+```{r tbl:freq_dist, echo = FALSE, results = "asis", tbl.cap = ""}
+knitr::kable(observations, align = 'c')
+```
+
+Considering testing `r null_hyp`
+
+a. What is the expected cell count for *`r row_stand_ins[1]` / `r stand_ins[1]`* ##ANSWER1##
+b. What is the expected cell count for *`r row_stand_ins[2]` / `r stand_ins[2]`* ##ANSWER2##
+c. What is the value of the test statistic for testing the null hypothesis? ##ANSWER3##
+d. What is the $p$-value for testing the null hypothesis? ##ANSWER4##
+e. What is the conclusion, to test at an $\alpha = `r alpha`$ level of significance? 
+
+##ANSWER5##
+
+(Question ID: *`r id`*)
+
+Answerlist
+----------
+* We fail to reject the null hypothesis.
+* We reject the null hypothesis.
+
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num|schoice
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`|`r mchoice2string(ans5, single=TRUE)`
+extol: 0.001
+exname: Chi-Squared Test for Goodness of Fit
