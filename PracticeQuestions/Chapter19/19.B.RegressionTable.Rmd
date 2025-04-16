@@ -200,7 +200,7 @@ pretty_round <- function(num, digits) {
     if(abs(num) > 10^(digits - 1)) {
         round(num, 0)
     } else {
-        signif(num, digits)
+        round(signif(num, digits), digits)
     }
 }
 
