@@ -223,8 +223,8 @@ xc <- round(runif(1, min(X), max(X)), 2)
 xp <- round(runif(1, min(X), max(X)), 2)
 
 desired_test_stat <- round(runif(1, -4, 4), 2)
-seb0 <- pretty_round(summary(fitted_model)$coefficients[1,2], 2)
-seb1 <- pretty_round(summary(fitted_model)$coefficients[2,2], 2)
+seb0 <- pretty_round(summary(fitted_model)$coefficients[1,2], 3)
+seb1 <- pretty_round(summary(fitted_model)$coefficients[2,2], 3)
 estb0 <- pretty_round(fitted_model$coefficients[1], 2)
 estb1 <- pretty_round(fitted_model$coefficients[2], 2)
 
