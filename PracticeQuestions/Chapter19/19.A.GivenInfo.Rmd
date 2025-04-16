@@ -1,0 +1,79 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+n <- sample(30:100, 1)
+
+beta0 <- sample(-100:100, 1) / 20
+beta1 <- sample(-100:100, 1) / 20
+
+sd_x <- sample(1:10, 1)
+mu_x <- sample(-100:100, 1) / 10
+sd_eps <- runif(1, 0.5*beta1^2*sd_x, max(2*beta1^2*sd_x, 1))
+
+X <- rnorm(n, mu_x, sd_x)
+
+Y <- beta0 + beta1 * X + rnorm(n, 0, sd_eps)
+
+xbar <- round(mean(X), 2)
+ybar <- round(mean(Y), 2)
+sdx <- round(sd(X), 2)
+sdy <- round(sd(Y), 2)
+covxy <- round(cov(X, Y), 2)
+
+xc <- round(runif(1, min(X), max(X)), 2)
+change_dir <- sample(c("increased", "decreased"), 1)
+change_amt <- round(runif(1, 0.1, max(X)-min(X)))
+
+
+fitted_model <- lm(Y ~ X)
+sse <- round(sum(residuals(summary(fitted_model))^2), 2)
+tss <- sdy^2 * (n - 1)
+ssr <- round(tss - sse, 2)
+
+sstype <- sample(c("sum of squared errors", "regression sum of squares"), 1)
+ssother <- ifelse(sstype == "sum of squared errors", "regression sum of squares", "sum of squared errors")
+ssvalue <- ifelse(sstype == "sum of squared errors", sse, ssr)
+
+ask_for <- sample(c("coefficient of determination", "$R^2$ value"), 1)
+ask_for2 <- sample(c("estimated residual variance", "mean squared error", "estimated conditional variance"), 1)
+
+ans2 <- covxy / sdx^2
+ans1 <- ybar - xbar * ans2
+ans3 <- ans1 + ans2 * xc
+ans4 <- ifelse(change_dir == "decreased", -1*ans2*change_amt, ans2 * change_amt)
+ans5 <- sdy^2 * (n - 1)
+ans6 <- ans5 - ssvalue
+ans7 <- ifelse(ssother == "regression sum of squares", ans6 / ans5, 1 - ans6/ans5)
+ans8 <- ifelse(ssother == "regression sum of squares", ssvalue / (n-2), ans6/(n-2))
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+t1 <- 10^(min(ceiling(log10(ans5)-4), 0))
+t2 <- 10^(min(ceiling(log10(ans6)-4), 0))
+t3 <- 10^(min(ceiling(log10(sse)-4), 0))
+
+```
+
+Question
+========
+
+Information on an outcome and predictor are collected, with the goal of regressing the outcome on the predictor. 
+
+In the sample of `r n` observations, the mean of the predictor was `r xbar`, with a standard deviation of `r format(sdx, scientific=FALSE)`. Further, the mean of the outcome was `r ybar`, with a standard deviation of `r format(sdy, scientific=FALSE)`. The covariance between the two was `r covxy`. 
+
+a. What is the estimated value of the intercept in the least squares regression line? ##ANSWER1##
+b. What is the estimated value of the slope in the least squares regression line? ##ANSWER2##
+c. What is the predicted value of the outcome, if the predictor takes a value of `r xc`? ##ANSWER3##
+d. What is the predicted change in the outcome, if the predictor is `r change_dir` by `r change_amt`? ##ANSWER4##
+e. What is the total sum of squares? ##ANSWER5## 
+f. If the `r sstype` is `r format(ssvalue, scientific=FALSE)`, what is the `r ssother`? ##ANSWER6##
+g. If the `r sstype` is `r format(ssvalue, scientific=FALSE)`, what is the `r ask_for`? ##ANSWER7##
+h. If the `r sstype` is `r format(ssvalue, scientific=FALSE)`, what is the `r ask_for2`? ##ANSWER8##
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num|num|num|num|num
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`|`r fmt(ans5, 3)`|`r fmt(ans6, 3)`|`r fmt(ans7, 3)`|`r fmt(ans8, 3)`
+extol: 0.01|0.01|0.01|0.01|`r format(t1, scientific=FALSE)`|`r format(t2, scientific=FALSE)`|0.001|`r format(t3, scientific=FALSE)`
+exname: Regression questions from summary statistics

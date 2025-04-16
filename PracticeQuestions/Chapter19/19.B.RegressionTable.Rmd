@@ -1,0 +1,305 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+library(gtsummary)
+library(ggplot2)
+library(MASS)
+get_article_num <- function(num) {
+    fd <- as.numeric(substr(num, 1, 1))
+
+    if(fd == 8) {
+        "an"
+    } else {
+        "a"
+    }
+}
+
+scenarios <- list(
+  list(
+    scenario = "A store owner wants to use linear regression to understand the relationship between a diamond's cost and the number of carats it is.",
+    outcome = "cost",
+    predictor = "carat",
+    intercept = -2250,
+    slope = 7750,
+    minx = 0.2,
+    maxx = 5.1,
+    eps_sd = 1500
+  ),
+  list(
+    scenario = "A biologist is investigating the relationship between the height of a tree and its age.",
+    outcome = "height",
+    predictor = "age",
+    intercept = 2,
+    slope = 0.5,
+    minx = 5,
+    maxx = 100,
+    eps_sd = 1
+  ),
+  list(
+    scenario = "A researcher is studying if there is a link between the amount of fertilizer used and the yield of corn.",
+    outcome = "corn yield",
+    predictor = "fertilizer amount",
+    intercept = 50,
+    slope = 0.8,
+    minx = 0,
+    maxx = 200,
+    eps_sd = 5
+  ),
+  list(
+    scenario = "An economist wants to see if there's a relationship between a country's GDP and its average life expectancy.",
+    outcome = "life expectancy",
+    predictor = "GDP",
+    intercept = 65,
+    slope = 0.0001,
+    minx = 1000,
+    maxx = 100000,
+    eps_sd = 2
+  ),
+  list(
+    scenario = "A teacher is examining if the number of hours studied affects a student's exam score.",
+    outcome = "exam score",
+    predictor = "study hours",
+    intercept = 40,
+    slope = 7,
+    minx = 0,
+    maxx = 15,
+    eps_sd = 8
+  ),
+  list(
+    scenario = "A marketing team is exploring the relationship between the amount spent on advertising and product sales.",
+    outcome = "product sales",
+    predictor = "advertising spend",
+    intercept = 100,
+    slope = 2.5,
+    minx = 50,
+    maxx = 500,
+    eps_sd = 20
+  ),
+  list(
+    scenario = "A scientist is investigating if there is a relationship between the temperature of a reaction and its rate.",
+    outcome = "reaction rate",
+    predictor = "temperature",
+    intercept = 0.1,
+    slope = 0.02,
+    minx = 20,
+    maxx = 80,
+    eps_sd = 0.05
+  ),
+  list(
+    scenario = "A farmer is looking at the relationship between rainfall and crop yield.",
+    outcome = "crop yield",
+    predictor = "rainfall",
+    intercept = 30,
+    slope = 0.6,
+    minx = 10,
+    maxx = 100,
+    eps_sd = 7
+  ),
+  list(
+    scenario = "A doctor is studying the association between a patient's age and their cholesterol level.",
+    outcome = "cholesterol level",
+    predictor = "age",
+    intercept = 150,
+    slope = 1.2,
+    minx = 20,
+    maxx = 80,
+    eps_sd = 15
+  ),
+  list(
+    scenario = "A software engineer is analyzing if the number of lines of code affects the number of bugs.",
+    outcome = "number of bugs",
+    predictor = "lines of code",
+    intercept = 2,
+    slope = 0.01,
+    minx = 100,
+    maxx = 5000,
+    eps_sd = 3
+  ),
+  list(
+    scenario = "A city planner is examining the relationship between the distance from the city center and housing price.",
+    outcome = "housing price",
+    predictor = "distance from city center",
+    intercept = 500000,
+    slope = -5000,
+    minx = 1,
+    maxx = 20,
+    eps_sd = 30000
+  ),
+  list(
+    scenario = "A car manufacturer is looking at the relationship between engine size and fuel efficiency.",
+    outcome = "fuel efficiency",
+    predictor = "engine size",
+    intercept = 40,
+    slope = -5,
+    minx = 1.0,
+    maxx = 4.0,
+    eps_sd = 3
+  ),
+  list(
+    scenario = "A musician is exploring if there is a relationship between the number of practice hours and performance quality.",
+    outcome = "performance quality",
+    predictor = "practice hours",
+    intercept = 3,
+    slope = 0.8,
+    minx = 0,
+    maxx = 20,
+    eps_sd = 1.5
+  ),
+  list(
+    scenario = "A student is investigating if there is a relationship between the number of siblings and their grade point average.",
+    outcome = "grade point average",
+    predictor = "number of siblings",
+    intercept = 3.0,
+    slope = 0,
+    minx = 0,
+    maxx = 5,
+    eps_sd = 0.4
+  ),
+  list(
+    scenario = "A meteorologist is examining the relationship between air pressure and the probability of rain.",
+    outcome = "probability of rain",
+    predictor = "air pressure",
+    intercept = 0.8,
+    slope = -0.0005,
+    minx = 980,
+    maxx = 1030,
+    eps_sd = 0.1
+  ),
+  list(
+    scenario = "A fitness instructor is looking at the relationship between the number of push-ups a person can do and their cardiovascular health score.",
+    outcome = "cardiovascular health score",
+    predictor = "number of push-ups",
+    intercept = 60,
+    slope = 0.5,
+    minx = 0,
+    maxx = 50,
+    eps_sd = 5
+  ),
+  list(
+    scenario = "A coffee shop owner wants to see if there's a relationship between the temperature of a latte and customer satisfaction.",
+    outcome = "customer satisfaction",
+    predictor = "latte temperature",
+    intercept = 5,
+    slope = 0,
+    minx = 140,
+    maxx = 170,
+    eps_sd = 1.2
+  ),
+  list(
+    scenario = "A social scientist is studying the relationship between the number of social media followers and perceived popularity.",
+    outcome = "perceived popularity",
+    predictor = "number of followers",
+    intercept = 2,
+    slope = 0.00001,
+    minx = 100,
+    maxx = 100000,
+    eps_sd = 0.8
+  )
+)
+
+pretty_round <- function(num, digits) {
+    if(abs(num) > 10^(digits - 1)) {
+        round(num, 0)
+    } else {
+        signif(num, digits)
+    }
+}
+
+sc_idx <- sample(1:length(scenarios), 1)
+
+n <- sample(30:100, 1)
+scenario <- scenarios[[sc_idx]]$scenario 
+pred_name <- scenarios[[sc_idx]]$predictor
+outcome_name <- scenarios[[sc_idx]]$outcom
+
+beta0 <- scenarios[[sc_idx]]$intercept
+beta1 <- scenarios[[sc_idx]]$slope
+X <- runif(n, scenarios[[sc_idx]]$minx, scenarios[[sc_idx]]$maxx)
+Y <- beta0 + beta1 * X + rnorm(n, 0, scenarios[[sc_idx]]$eps_sd)
+
+fitted_model <- lm(Y ~ X)
+names(fitted_model$coefficients) <- c('Intercept', stringr::str_to_title(pred_name))
+
+xc <- round(runif(1, min(X), max(X)), 2)
+xp <- round(runif(1, min(X), max(X)), 2)
+
+desired_test_stat <- round(runif(1, -4, 4), 2)
+seb0 <- pretty_round(summary(fitted_model)$coefficients[1,2], 2)
+seb1 <- pretty_round(summary(fitted_model)$coefficients[2,2], 2)
+estb0 <- pretty_round(fitted_model$coefficients[1], 2)
+estb1 <- pretty_round(fitted_model$coefficients[2], 2)
+
+null_val <- round(estb1 - desired_test_stat * seb1, 2)
+
+clp <- sample(80:99, 1)
+
+xbar <- round(mean(X), 2)
+sd_x <- round(sd(X), 2)
+
+crit_v <- abs(qt(0.5 - clp/200, df = n - 2))
+
+sigma_v <- pretty_round(sigma(fitted_model), 3)
+
+ans1 <- estb0 + estb1 * xc
+ans2 <- (estb1 - null_val)/seb1
+ans3 <- estb0 - seb0 * crit_v
+ans4 <- estb0 + seb0 * crit_v
+ans5 <- estb1 - seb1 * crit_v
+ans6 <- estb1 + seb1 * crit_v
+ans7 <- estb0 + estb1 * xp - crit_v * sigma_v * sqrt(1/n + (xp - xbar)^2/((n-1)*sd_x^2))
+ans8 <- estb0 + estb1 * xp + crit_v * sigma_v * sqrt(1/n + (xp - xbar)^2/((n-1)*sd_x^2))
+
+ans9 <- estb0 + estb1 * xp - crit_v * sigma_v * sqrt(1 + 1/n + (xp - xbar)^2/((n-1)*sd_x^2))
+ans10 <- estb0 + estb1 * xp + crit_v * sigma_v * sqrt(1 + 1/n + (xp - xbar)^2/((n-1)*sd_x^2))
+id <- sprintf("%010d", sample(0:1000000000, 1))
+
+```
+
+Question
+========
+
+`r scenario` 
+
+The results of the analysis are summarized in the following regression table. 
+
+```{r}
+#| echo: false
+#| warning: false
+#| output: asis
+
+fitted_model |> 
+    tbl_regression(intercept = TRUE) |> 
+    modify_column_hide(column = c(conf.low)) |>
+    modify_column_unhide(column = std.error) |>
+    add_glance_source_note(include = c(nobs, sigma, r.squared))
+```
+
+The mean `r pred_name` is `r xbar`, with a standard deviation of `r sd_x`. 
+
+a. What is the predicted `r outcome_name` if `r pred_name` is `r xc`? ##ANSWER1##
+b. What is the value of the test statistic for testing $H_0: \beta_1 = `r null_val`$? ##ANSWER2##
+c. Give `r get_article_num(clp)` $`r clp`\%$ confidence interval for $\beta_0$.
+
+Lower Bound: ##ANSWER3## Upper Bound: ##ANSWER4##
+
+d. Give `r get_article_num(clp)` $`r clp`\%$ confidence interval for $\beta_1$
+
+Lower Bound: ##ANSWER5## Upper Bound: ##ANSWER6##
+
+e. Give `r get_article_num(clp)` $`r clp`\%$ confidence interval for the expected `r outcome_name`, if the `r pred_name` is `r xp`. 
+
+Lower Bound: ##ANSWER7## Upper Bound: ##ANSWER8##
+
+f. Give `r get_article_num(clp)` $`r clp`\%$ prediction interval for the `r outcome_name`, if the `r pred_name` is `r xp`. 
+
+Lower Bound: ##ANSWER9## Upper Bound: ##ANSWER10##
+
+
+(Question ID: *`r id`*)
+
+Meta-information
+================
+extype: cloze
+exclozetype: num|num|num|num|num|num|num|num|num|num
+exsolution: `r fmt(ans1, 3)`|`r fmt(ans2, 3)`|`r fmt(ans3, 3)`|`r fmt(ans4, 3)`|`r fmt(ans5, 3)`|`r fmt(ans6, 3)`|`r fmt(ans7, 3)`|`r fmt(ans8, 3)`|`r fmt(ans9, 3)`|`r fmt(ans10, 3)`
+extol: 0.01
+exname: Regression questions from regression table
