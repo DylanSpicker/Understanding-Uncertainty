@@ -42,7 +42,7 @@ Suppose that you are told that the sampling distribution of `r what` is $N(`r me
 a. What is the probability that the calculated mean will exceed `r value`? ##ANSWER1##
 b. If the sample size had been `r m` instead, what would the mean of the sampling distribution have been? ##ANSWER2##
 c. If the sample size had been `r m` instead, what would the variance of the sampling distribution have been? ##ANSWER3##
-d. Suppose that a sample of size `r m` is taken. What is the probability that the calculated does not exceed `r value2`? ##ANSWER4##
+d. Suppose that a sample of size `r m` is taken. What is the probability that the calculated mean does not exceed `r value2`? ##ANSWER4##
 
 Question ID: *`r id`*
 

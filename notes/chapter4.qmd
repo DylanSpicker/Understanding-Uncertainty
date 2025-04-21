@@ -966,7 +966,7 @@ exams2forms("4.E.2x2Contingency.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 123456789
+cache_check <- 1234567890
 
 exams2forms("4.F.LawOfTotalProbability2.Rmd", 
             edir = "../PracticeQuestions/Chapter4", 

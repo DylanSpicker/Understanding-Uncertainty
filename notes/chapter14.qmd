@@ -664,7 +664,7 @@ set.seed(31415)
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 12345678
+cache_check <- 1234567
 exams2forms("14.A.IdentifyLocationOfCI.Rmd", 
             edir = "../PracticeQuestions/Chapter14", 
             n = 50)
@@ -678,7 +678,7 @@ exams2forms("14.A.IdentifyLocationOfCI.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 1434567890
+cache_check <- 143456789
 exams2forms("14.B.CIInterpretationGeneral.Rmd", 
             edir = "../PracticeQuestions/Chapter14", 
             n = 50)
@@ -692,7 +692,7 @@ exams2forms("14.B.CIInterpretationGeneral.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 1434567890
+cache_check <- 143456789
 exams2forms("14.C.ConfidenceIntervalImpacts.Rmd", 
             edir = "../PracticeQuestions/Chapter14", 
             n = 50)
@@ -706,7 +706,7 @@ exams2forms("14.C.ConfidenceIntervalImpacts.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 1434567890
+cache_check <- 143456789
 exams2forms("14.D.InfluenceOfFactors.Rmd", 
             edir = "../PracticeQuestions/Chapter14", 
             n = 50)
@@ -720,7 +720,7 @@ exams2forms("14.D.InfluenceOfFactors.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 14345678
+cache_check <- 1434567
 exams2forms("14.E.MeanCIs.Rmd", 
             edir = "../PracticeQuestions/Chapter14", 
             n = 50)
@@ -734,7 +734,7 @@ exams2forms("14.E.MeanCIs.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 1434567890
+cache_check <- 143456789
 exams2forms("14.F.PropCIs.Rmd", 
             edir = "../PracticeQuestions/Chapter14", 
             n = 50)
@@ -748,7 +748,7 @@ exams2forms("14.F.PropCIs.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 14345678910
+cache_check <- 1434567891
 exams2forms("14.G.NormalVarianceCIs.Rmd", 
             edir = "../PracticeQuestions/Chapter14", 
             n = 50)
@@ -762,7 +762,7 @@ exams2forms("14.G.NormalVarianceCIs.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 1434567890
+cache_check <- 143456789
 exams2forms("14.H.MarginOfError.Mean.Rmd", 
             edir = "../PracticeQuestions/Chapter14", 
             n = 50)
@@ -776,7 +776,7 @@ exams2forms("14.H.MarginOfError.Mean.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 1434567890
+cache_check <- 143456789
 exams2forms("14.I.MarginOfError.Prop.Rmd", 
             edir = "../PracticeQuestions/Chapter14", 
             n = 50)

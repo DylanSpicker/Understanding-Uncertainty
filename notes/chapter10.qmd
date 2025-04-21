@@ -922,7 +922,7 @@ exams2forms("10.E.VariableTypes.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 123456789
+cache_check <- 12345678
 
 exams2forms("10.F.TypesOfStatistics.Rmd", 
             edir = "../PracticeQuestions/Chapter10", 
@@ -937,7 +937,7 @@ exams2forms("10.F.TypesOfStatistics.Rmd",
 #| results: 'asis'
 #| warning: false
 #| cache: true
-cache_check <- 123456789
+cache_check <- 12345678
 
 exams2forms("10.G.SamplingMethods.Rmd", 
             edir = "../PracticeQuestions/Chapter10", 

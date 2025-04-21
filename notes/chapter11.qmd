@@ -6,7 +6,7 @@ We may use tables, charts, graphs, or other numerical summaries. The idea is tha
 
 We will continue with the same type of notation that has been used throughout our study of probability. A variable, when it has not yet been observed, will be represented by a capital letter, say $X$. This notation will emphasize the fact that, until we have our sample, $X$ can be thought of as unknown and random. Once we make observations for a variable, we denote these observations as $x$. So, if we for instance, observe a sample of $100$ individuals, we may observe $x_1, x_2, \dots, x_{100}$ for these individuals. 
 
-In general, we will use $x_i$ to represent the $i$th observation of $X$, in a sample of size $n$. We may have multiple different variables that are observed for each individual. In this case, we may use $Y=y_1,\dots,y_n$ or $Z=z_1,\dots,z_n$. Generally, the ordering of the data will be arbitrary, which is to say there is no meaningful difference between individual $i=1$ and $i=10$, except that $i=1$ happens to written first in the data. With this notation, we are able to begin considering how to display data for effective summarization. When describing or summarizing data that have been collected, we will consider numeric summaries, tabular summaries, as well as graphical summaries. For numeric and tabular summaries we are thinking about condensing the data that have been collected into key representations of these values. The information will often be presented in the form of data itself -- which is to say, a table of summary numbers -- however, it is done so in a way to highlight the key features of the larger dataset. The other alternative is to use graphical displays of information.
+In general, we will use $x_i$ to represent the $i$th observation of $X$, in a sample of size $n$. We may have multiple different variables that are observed for each individual. In this case, we may use $Y=y_1,\dots,y_n$ or $Z=z_1,\dots,z_n$. Generally, the ordering of the data will be arbitrary, which is to say there is no meaningful difference between individual $i=1$ and $i=10$, except that $i=1$ happens to be written first in the data. With this notation, we are able to begin considering how to display data for effective summarization. When describing or summarizing data that have been collected, we will consider numeric summaries, tabular summaries, as well as graphical summaries. For numeric and tabular summaries we are thinking about condensing the data that have been collected into key representations of these values. The information will often be presented in the form of data itself -- which is to say, a table of summary numbers -- however, it is done so in a way to highlight the key features of the larger dataset. The other alternative is to use graphical displays of information.
 
 :::{.callout-note icon="false"}
 ## The Connection between Data and Random Variables
@@ -222,7 +222,7 @@ c. Describe or sketch the bar plots for each of the relevant frequency distribut
 ::::{.callout .solution collapse='true'}
 ## Solution
 
-a. To get the distribution for species, we add up along each row to get the total observed data into a frequency table. The relative frequency is divided by $344$.
+a. To get the distribution for species, we add up along each row to get the total observed data into a frequency table. To get the relative frequency, the frequency is divided by $344$.
 ```{r}
 #| echo: false
 

@@ -582,6 +582,7 @@ Consider the following output for a linear regression that considers explaining 
 ```{r}
 #| echo: false
 #| warning: false
+#| results: asis
 library(gtsummary)
 library(ggplot2)
 library(MASS)
@@ -608,6 +609,7 @@ Consider the following output for a linear regression that considers explaining 
 ```{r}
 #| echo: false
 #| warning: false
+#| results: asis
 
 lm(Hwt ~ Bwt, data = cats) |> 
     tbl_regression(intercept = TRUE) |> 
@@ -632,6 +634,7 @@ Consider the following output for a linear regression that considers explaining 
 ```{r}
 #| echo: false
 #| warning: false
+#| results: asis
 
 lm(dist ~ speed, data = cars) |> 
     tbl_regression(intercept = TRUE) |> 
@@ -694,10 +697,10 @@ set.seed(31415)
 ```{r}
 #| echo: false
 #| message: false
-#| results: 'asis'
+#| results: asis
 #| warning: false
 #| cache: true
-cache_check <- 123456780
+cache_check <- 12345678000
 exams2forms("19.A.GivenInfo.Rmd", 
             edir = "../PracticeQuestions/Chapter19", 
             n = 100)
@@ -708,10 +711,11 @@ exams2forms("19.A.GivenInfo.Rmd",
 ```{r}
 #| echo: false
 #| message: false
-#| results: 'asis'
+#| results: asis
 #| warning: false
 #| cache: true
-cache_check <- 1234567800
+
+cache_check <- 123456780000
 exams2forms("19.B.RegressionTable.Rmd", 
             edir = "../PracticeQuestions/Chapter19", 
             n = 100)

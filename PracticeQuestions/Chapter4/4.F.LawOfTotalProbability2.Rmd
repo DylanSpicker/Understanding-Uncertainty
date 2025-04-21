@@ -29,7 +29,7 @@ scenarios <- list(
         B = "was written by Barb",
         C = "was written by Celeste",
         event = "a line of code has an error",
-        notA = "the customer is not in demographic group one"
+        notA = "was not written by Alice"
     )
 )
 

@@ -1,4 +1,4 @@
-```{r data generation, echo = FALSE, results = "hide"}
+```{r data generation, echo = FALSE, results = "hide", warning = FALSE}
 
 library(gtsummary)
 library(ggplot2)
@@ -228,7 +228,11 @@ seb1 <- pretty_round(summary(fitted_model)$coefficients[2,2], 3)
 estb0 <- pretty_round(fitted_model$coefficients[1], 2)
 estb1 <- pretty_round(fitted_model$coefficients[2], 2)
 
-null_val <- round(estb1 - desired_test_stat * seb1, 2)
+if(seb1 == 0) {
+  null_val <- estb1
+} else {
+  null_val <- round(estb1 - desired_test_stat * seb1, 2)
+}
 
 clp <- sample(80:99, 1)
 
@@ -240,7 +244,13 @@ crit_v <- abs(qt(0.5 - clp/200, df = n - 2))
 sigma_v <- pretty_round(sigma(fitted_model), 3)
 
 ans1 <- estb0 + estb1 * xc
-ans2 <- (estb1 - null_val)/seb1
+
+if(seb1 == 0) {
+  ans2 <- 0
+} else {
+  ans2 <- (estb1 - null_val)/seb1
+}
+
 ans3 <- estb0 - seb0 * crit_v
 ans4 <- estb0 + seb0 * crit_v
 ans5 <- estb1 - seb1 * crit_v
@@ -264,7 +274,7 @@ The results of the analysis are summarized in the following regression table.
 ```{r}
 #| echo: false
 #| warning: false
-#| output: asis
+#| results: asis
 
 fitted_model |> 
     tbl_regression(intercept = TRUE) |> 

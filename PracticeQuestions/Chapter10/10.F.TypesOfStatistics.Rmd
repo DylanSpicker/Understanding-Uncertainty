@@ -40,7 +40,7 @@ predictive <- c(
     "What will be the energy consumption of our building next month based on historical data and weather forecasts?",
     "Which job applicants are most likely to be high performers based on their application data and interview scores?",
     "What is the expected price of a house in a specific neighborhood in six months?",
-    "What is the likelihood that a specific website visitor clicking on a specific advertisement?",
+    "What is the likelihood of a specific website visitor clicking on a specific advertisement?",
     "How many support tickets are we likely to receive next week?"
 )
 
